@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-# Feb. 12, 9:33am
+# Feb. 12, 11:53am
 
 Gem::Specification.new do |s|
   s.name = %q{moneta}

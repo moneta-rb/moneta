@@ -57,3 +57,12 @@ describe "Moneta::DataMapper" do
   
   it_should_behave_like "a read/write Moneta cache"
 end
+
+describe "Moneta::Rufus" do
+  before(:each) do
+    @cache = Moneta::Rufus.new(:file => "cache")
+    @cache.clear
+  end
+  
+  it_should_behave_like "a read/write Moneta cache"
+end

@@ -7,13 +7,9 @@ module Moneta
       end
     end
     
-    def has_key?(key)
+    def key?(key)
       check_expired(key)
       super
-    end
-    
-    def key?(key)
-      has_key?(key)
     end
     
     def [](key)

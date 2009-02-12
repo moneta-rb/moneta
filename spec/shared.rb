@@ -18,7 +18,7 @@ shared_examples_for "a read/write Moneta cache" do
   
   it "if a key is available, returns true from key?" do
     @cache["key"] = "value"
-    @cache.should have_key("key")
+    @cache.key?("key").should be_true
   end
   
   it "if it exists, removes and return an element from the backing store via delete" do
@@ -35,8 +35,8 @@ shared_examples_for "a read/write Moneta cache" do
     @cache["key"] = "value"
     @cache["key2"] = "value2"
     @cache.clear
-    @cache.should_not have_key("key")
-    @cache.should_not have_key("key2")
+    @cache.key?("key").should_not be_true
+    @cache.key?("key2").should_not be_true
   end
   
   it "fetches a key with a default value with fetch, if the key is not available" do
