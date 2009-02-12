@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+# Feb. 12, 9:33am
+
 Gem::Specification.new do |s|
   s.name = %q{moneta}
   s.version = "0.5.0"
