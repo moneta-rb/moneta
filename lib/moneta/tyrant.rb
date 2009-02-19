@@ -1,5 +1,5 @@
 begin
-  require "rufus/tokyo"
+  require "rufus/tokyo/tyrant"
 rescue LoadError
   puts "You need the rufus gem to use the Tyrant moneta store"
   exit
