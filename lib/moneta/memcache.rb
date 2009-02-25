@@ -12,7 +12,7 @@ module Moneta
     end
     
     def key?(key)
-      !self["key"].nil?
+      !self[key].nil?
     end
     
     alias has_key? key?
