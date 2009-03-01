@@ -9,16 +9,6 @@ describe "Moneta::Memory" do
   it_should_behave_like "a read/write Moneta cache"
 end
 
-describe "Moneta::Memcache" do
-  before(:each) do
-    @native_expires = true
-    @cache = Moneta::Memcache.new(:server => "localhost:11211", :namespace => "moneta_spec")
-    @cache.clear
-  end
-  
-  it_should_behave_like "a read/write Moneta cache"
-end
-
 describe "Moneta::File" do
   before(:each) do
     @cache = Moneta::File.new(:path => File.join(File.dirname(__FILE__), "file_cache"))
@@ -29,62 +19,8 @@ describe "Moneta::File" do
     FileUtils.rm_rf(File.join(File.dirname(__FILE__), "file_cache"))
   end
   
-  it_should_behave_like "a read/write Moneta cache"
+  if ENV['MONETA_TEST'].nil? || ENV['MONETA_TEST'] == 'file'
+    it_should_behave_like "a read/write Moneta cache"
+  end
 end
 
-describe "Moneta::Xattrs" do
-  before(:each) do
-    @cache = Moneta::Xattr.new(:file => File.join(File.dirname(__FILE__), "file_cache", "xattr_cache"))
-    @cache.clear
-  end
-  
-  after(:all) do
-    FileUtils.rm_rf(File.join(File.dirname(__FILE__), "file_cache"))
-  end
-  
-  it_should_behave_like "a read/write Moneta cache"
-end
-
-describe "Moneta::DataMapper" do
-  before(:each) do
-    @cache = Moneta::DataMapper.new(:setup => "sqlite3::memory:")
-    @cache.clear
-  end
-  
-  after(:all) do
-    MonetaHash.auto_migrate!
-  end
-  
-  it_should_behave_like "a read/write Moneta cache"
-end
-
-describe "Moneta::Rufus" do
-  before(:each) do
-    @cache = Moneta::Rufus.new(:file => "cache")
-    @cache.clear
-  end
-  
-  it_should_behave_like "a read/write Moneta cache"
-end
-
-describe "Moneta::Tyrant" do
-  before(:each) do
-    @cache = Moneta::Tyrant.new(:host => "localhost", :port => 1978)
-    @cache.clear
-  end
-  
-  it_should_behave_like "a read/write Moneta cache"
-end
-
-describe "Moneta::S3" do
-  before(:each) do
-    @cache = Moneta::S3.new(
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'], 
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-      :bucket => 'moneta_test'
-    )
-    @cache.clear
-  end
-  
-  it_should_behave_like "a read/write Moneta cache"
-end

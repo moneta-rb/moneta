@@ -17,7 +17,7 @@ module Moneta
     def initialize(options = {})
       validate_options(options)
       logger = Logger.new(STDOUT)
-      logger.level = Logger::INFO
+      logger.level = Logger::FATAL
       s3 = RightAws::S3.new(
         options[:access_key_id], 
         options[:secret_access_key], 
@@ -61,20 +61,22 @@ module Moneta
     # *<tt>:headers</tt>: Headers sent as part of the PUT request
     # *<tt>:expires_in</tt>: Number of seconds until expiration
     def store(key, value, options = {})
+      puts "store(key=#{key}, value=#{value}, options=#{options.inspect})"
       meta_headers = meta_headers_from_options(options)
       perms = options[:perms]
-      headers = options[:headers]
+      headers = options[:headers] || {}
       
       case value
       when IO
-        @bucket.put(key, value.read, meta_headers, perms)
+        @bucket.put(key, value.read, meta_headers, perms, headers)
       else
-        @bucket.put(key, value, meta_headers, perms)
+        @bucket.put(key, value, meta_headers, perms, headers)
       end
     end
     
     def update_key(key, options = {})
-      k = s3_key(key)
+      puts "update_key(key=#{key}, options=#{options.inspect})"
+      k = s3_key(key, false)
       k.save_meta(meta_headers_from_options(options)) unless k.nil?
     end
     
@@ -100,20 +102,27 @@ module Moneta
       k.nil? ? nil : k.get
     end
     
-    def s3_key(key)
+    def s3_key(key, nil_if_expired=true)
       begin
         s3_key = @bucket.key(key, true)
-        if s3_key.meta_headers.has_key?('expires-at')
-          expires_at = Time.parse(s3_key.meta_headers['expires-at'])
-          if Time.now > expires_at
-            # TODO delete the object?
-            return nil
+        if s3_key.exists?
+          puts "**** key exists: #{key}"
+          if s3_key.meta_headers.has_key?('expires-at')
+            expires_at = Time.parse(s3_key.meta_headers['expires-at'])
+            if Time.now > expires_at && nil_if_expired
+              # TODO delete the object?
+              puts "**** key expired: #{key} (at #{s3_key.meta_headers['expires-at']})"
+              return nil
+            end
           end
+          return s3_key
+        else
+          puts "**** key does not exist: #{key}"
         end
-        s3_key.exists? ? s3_key : nil
       rescue RightAws::AwsError => e
-        return nil
+        puts "**** key does not exist: #{key}"
       end
+      nil
     end
     
     def meta_headers_from_options(options={})
@@ -121,6 +130,7 @@ module Moneta
       if options[:expires_in]
         meta_headers['expires-at'] = (Time.now + options[:expires_in]).rfc2822
       end
+      puts "**** setting expires-at: #{meta_headers['expires-at']}"
       meta_headers
     end
   end
