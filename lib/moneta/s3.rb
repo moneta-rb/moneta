@@ -5,7 +5,8 @@ rescue LoadError
   exit  
 end
 
-module Moneta  
+module Moneta
+  # An S3 implementation of Moneta
   class S3
     # Initialize the Moneta::S3 store.
     #
@@ -16,8 +17,6 @@ module Moneta
     # exist.
     def initialize(options = {})
       validate_options(options)
-      logger = Logger.new(STDOUT)
-      logger.level = Logger::FATAL
       s3 = RightAws::S3.new(
         options[:access_key_id], 
         options[:secret_access_key], 
@@ -61,7 +60,7 @@ module Moneta
     # *<tt>:headers</tt>: Headers sent as part of the PUT request
     # *<tt>:expires_in</tt>: Number of seconds until expiration
     def store(key, value, options = {})
-      puts "store(key=#{key}, value=#{value}, options=#{options.inspect})"
+      debug "store(key=#{key}, value=#{value}, options=#{options.inspect})"
       meta_headers = meta_headers_from_options(options)
       perms = options[:perms]
       headers = options[:headers] || {}
@@ -75,13 +74,22 @@ module Moneta
     end
     
     def update_key(key, options = {})
-      puts "update_key(key=#{key}, options=#{options.inspect})"
+      debug "update_key(key=#{key}, options=#{options.inspect})"
       k = s3_key(key, false)
       k.save_meta(meta_headers_from_options(options)) unless k.nil?
     end
     
     def clear
       @bucket.clear
+    end
+    
+    protected
+    def logger
+      @logger ||= begin
+        logger = Logger.new(STDOUT)
+        logger.level = Logger::FATAL
+        logger
+      end
     end
     
     private
@@ -106,21 +114,21 @@ module Moneta
       begin
         s3_key = @bucket.key(key, true)
         if s3_key.exists?
-          puts "**** key exists: #{key}"
+          logger.debug "[Moneta::S3] key exists: #{key}"
           if s3_key.meta_headers.has_key?('expires-at')
             expires_at = Time.parse(s3_key.meta_headers['expires-at'])
             if Time.now > expires_at && nil_if_expired
               # TODO delete the object?
-              puts "**** key expired: #{key} (at #{s3_key.meta_headers['expires-at']})"
+              debug "key expired: #{key} (@#{s3_key.meta_headers['expires-at']})"
               return nil
             end
           end
           return s3_key
         else
-          puts "**** key does not exist: #{key}"
+          debug "key does not exist: #{key}"
         end
       rescue RightAws::AwsError => e
-        puts "**** key does not exist: #{key}"
+        debug "key does not exist: #{key}"
       end
       nil
     end
@@ -130,8 +138,12 @@ module Moneta
       if options[:expires_in]
         meta_headers['expires-at'] = (Time.now + options[:expires_in]).rfc2822
       end
-      puts "**** setting expires-at: #{meta_headers['expires-at']}"
+      debug "setting expires-at: #{meta_headers['expires-at']}"
       meta_headers
+    end
+    
+    def debug(message)
+      logger.debug "[Moneta::S3] #{message}"
     end
   end
 end
