@@ -8,7 +8,8 @@ require "moneta/memcache"
 require "moneta/file"
 require "moneta/xattr"
 require "moneta/datamapper"
-require "moneta/rufus"
-require "moneta/tyrant"
+#require "moneta/rufus"
+#require "moneta/tyrant"
+require 'moneta/s3'
 
 require File.expand_path(File.join(File.dirname(__FILE__), "shared"))
