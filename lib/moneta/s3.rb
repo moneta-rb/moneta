@@ -20,7 +20,10 @@ module Moneta
       s3 = RightAws::S3.new(
         options[:access_key_id], 
         options[:secret_access_key], 
-        {:logger => logger}
+        {
+          :logger => logger, 
+          :multi_thread => options.delete(:multi_thread) || false
+        }
       )
       @bucket = s3.bucket(options.delete(:bucket), true)
     end
