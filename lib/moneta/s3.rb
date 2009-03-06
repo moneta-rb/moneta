@@ -15,6 +15,7 @@ module Moneta
     # * <tt>:secret_access_key</tt>: The secret key
     # * <tt>:bucket</tt>: The name of bucket. Will be created if it doesn't
     # exist.
+    # * <tt>:multi_thread</tt>: Set to true if using threading
     def initialize(options = {})
       validate_options(options)
       s3 = RightAws::S3.new(
