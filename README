@@ -10,6 +10,7 @@ Out of the box, it supports:
 * In-memory store
 * The xattrs in a file system
 * DataMapper
+* S3
 
 All stores support key expiration, but only memcache supports it natively. All other stores
 emulate expiration.

@@ -7,6 +7,19 @@ end
 
 module Moneta
   # An S3 implementation of Moneta
+  #
+  # Example usage:
+  #
+  #   require 'rubygems'
+  #   require 'moneta'
+  #   require 'moneta/s3'
+  #
+  #   store = Moneta::S3.new(
+  #     :access_key_id => 'ACCESS_KEY_ID', 
+  #     :secret_access_key => 'SECRET_ACCESS_KEY', 
+  #     :bucket => 'a_bucket'
+  #   )
+  #   store['somefile'] 
   class S3
     # Initialize the Moneta::S3 store.
     #
