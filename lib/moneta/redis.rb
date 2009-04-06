@@ -7,8 +7,6 @@ end
 
 module Moneta
   class Redis
-    include Expires
-    
     def initialize(options = {})
       @cache = ::Redis.new(options)
     end
