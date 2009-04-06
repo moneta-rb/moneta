@@ -55,7 +55,7 @@ shared_examples_for "a read/write Moneta cache" do
   
   describe "when storing values with #store, and providing an expiration" do
     before(:each) do
-      @cache.store("key", "value", :expires_in => 2)
+      @cache.store("key", "value", :expires_in => 1)
     end
 
     shared_examples_for "not expired" do
