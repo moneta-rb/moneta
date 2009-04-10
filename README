@@ -11,6 +11,7 @@ Out of the box, it supports:
 * The xattrs in a file system
 * DataMapper
 * S3
+* Berkeley DB
 
 All stores support key expiration, but only memcache supports it natively. All other stores
 emulate expiration.
