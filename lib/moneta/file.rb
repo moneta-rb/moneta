@@ -1,10 +1,10 @@
 begin
-  require "fileutils"
   require "xattr"
 rescue LoadError
   puts "You need the xattr gem to use the File moneta store"
   exit
 end
+require "fileutils"
 
 module Moneta
   class File
@@ -40,7 +40,7 @@ module Moneta
       if ::File.file?(@directory)
         raise StandardError, "The path you supplied #{@directory} is a file"
       elsif !::File.exists?(@directory)
-        FileUtils.mkdir(@directory)
+        FileUtils.mkdir_p(@directory)
       end
       
       @expiration = Expiration.new(@directory)
@@ -51,9 +51,7 @@ module Moneta
         ::File.exist?(path(key))
       end
       
-      def has_key?(key)
-        ::File.exist?(path(key))
-      end
+      alias has_key? key?
       
       def [](key)
         if ::File.exist?(path(key))

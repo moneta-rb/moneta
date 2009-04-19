@@ -26,9 +26,7 @@ module Moneta
         @hash.list.include?(key)
       end
       
-      def has_key?(key)
-        @hash.list.include?(key)
-      end
+      alias has_key? key?
       
       def [](key)
         return nil unless key?(key)
