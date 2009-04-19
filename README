@@ -12,6 +12,10 @@ Out of the box, it supports:
 * DataMapper
 * S3
 * Berkeley DB
+* Redis
+* SDBM
+* Tokyo
+* CouchDB
 
 All stores support key expiration, but only memcache supports it natively. All other stores
 emulate expiration.
