@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require 'moneta/berkeley'
 
-describe "Moneta::Berkelay" do
+describe "Moneta::Berkeley" do
   before(:each) do
     @cache = Moneta::Berkeley.new(:file => File.join(File.dirname(__FILE__), "berkeley_test.db"))
     @cache.clear
