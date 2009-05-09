@@ -7,6 +7,8 @@ end
 
 module Moneta  
   class Memcache
+    include Defaults
+    
     def initialize(options = {})
       @cache = MemCache.new(options.delete(:server), options)
     end
@@ -24,12 +26,7 @@ module Moneta
     def []=(key, value)
       store(key, value)
     end
-    
-    def fetch(key, value = nil)
-      value ||= block_given? ? yield(key) : default
-      self[key] || value
-    end
-    
+        
     def delete(key)
       value = self[key]
       @cache.delete(key) if value

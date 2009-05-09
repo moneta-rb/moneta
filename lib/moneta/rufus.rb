@@ -6,7 +6,9 @@ rescue LoadError
 end
 
 module Moneta
-  class BasicRufus < ::Rufus::Tokyo::Cabinet    
+  class BasicRufus < ::Rufus::Tokyo::Cabinet 
+    include Defaults
+       
     def initialize(options = {})
       file = options[:file]
       super("#{file}.tch")
@@ -24,16 +26,7 @@ module Moneta
     
     def []=(key, value)
       super(key, Marshal.dump(value))
-    end
-    
-    def fetch(key, value = nil)
-      value ||= block_given? ? yield(key) : default
-      self[key] || value
-    end
-    
-    def store(key, value, options = {})
-      self[key] = value
-    end
+    end    
   end
   
   class Rufus < BasicRufus

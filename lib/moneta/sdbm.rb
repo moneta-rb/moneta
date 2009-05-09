@@ -2,7 +2,6 @@ require "sdbm"
 
 module Moneta
   class BasicSDBM < ::SDBM
-
     include Defaults
 
     def [](key)
@@ -13,10 +12,6 @@ module Moneta
 
     def []=(key, value)
       super(key, Marshal.dump(value))
-    end
-
-    def store(key, value, options = {})
-      self[key] = value
     end
 
     def delete(key)

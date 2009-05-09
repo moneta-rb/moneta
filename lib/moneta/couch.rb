@@ -45,10 +45,6 @@ module Moneta
       nil
     end
 
-    def store(key, value, options = {})
-      self[key] = value
-    end
-
     def update_key(key, options = {})
       val = self[key]
       self.store(key, val, options)

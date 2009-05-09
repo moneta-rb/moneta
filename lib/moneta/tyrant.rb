@@ -7,6 +7,8 @@ end
 
 module Moneta
   class Tyrant < ::Rufus::Tokyo::Tyrant
+    include Defaults
+    
     module Implementation
       def initialize(options = {})
         host = options[:host]
@@ -26,17 +28,9 @@ module Moneta
     
       def []=(key, value)
         super(key, Marshal.dump(value))
-      end
-    
-      def fetch(key, value = nil)
-        value ||= block_given? ? yield(key) : default
-        self[key] || value
-      end
-    
-      def store(key, value, options = {})
-        self[key] = value
-      end
+      end    
     end
+    
     include Implementation
     include Expires
     

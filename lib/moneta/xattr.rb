@@ -8,6 +8,7 @@ require "fileutils"
 
 module Moneta
   class Xattr
+    include Defaults
     
     def initialize(options = {})
       file = options[:file]
@@ -37,20 +38,11 @@ module Moneta
         @hash.set(key, Marshal.dump(value))
       end
       
-      def fetch(key, value = nil)
-        value ||= block_given? ? yield(key) : default
-        self[key] || value
-      end
-      
       def delete(key)
         return nil unless key?(key)
         value = self[key]
         @hash.remove(key)
         value
-      end
-      
-      def store(key, value, options = {})
-        self[key] = value
       end
       
       def clear

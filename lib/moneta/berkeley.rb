@@ -31,10 +31,6 @@ module Moneta
         @db[key] = value
       end
 
-      def store(key, value, options={})
-        @db[key] = value
-      end
-
       def [](key)
         @db[key]
       end

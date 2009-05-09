@@ -72,11 +72,7 @@ module Moneta
         value
       rescue Errno::ENOENT
       end
-      
-      def store(key, value, options = {})
-        self[key] = value
-      end
-      
+            
       def clear
         FileUtils.rm_rf(@directory)
         FileUtils.mkdir(@directory)
@@ -88,8 +84,8 @@ module Moneta
       end
     end
     include Implementation
-    include Expires
     include Defaults
+    include Expires
     
   end
 end
