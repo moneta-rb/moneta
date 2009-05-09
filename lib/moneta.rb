@@ -17,7 +17,7 @@ module Moneta
       super
     end
 
-    def fetch(key, default)
+    def fetch(key, default = nil, &blk)
       check_expired(key)
       super
     end
@@ -61,5 +61,12 @@ module Moneta
         @expiration[key] = (Time.now + options[:expires_in]).to_i.to_s
       end
     end
+  end
+  
+  module Defaults
+    def fetch(key, value = nil)
+      value ||= block_given? ? yield(key) : default
+      self[key] || value
+    end    
   end
 end

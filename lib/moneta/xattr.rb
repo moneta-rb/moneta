@@ -37,7 +37,8 @@ module Moneta
         @hash.set(key, Marshal.dump(value))
       end
       
-      def fetch(key, value)
+      def fetch(key, value = nil)
+        value ||= block_given? ? yield(key) : default
         self[key] || value
       end
       

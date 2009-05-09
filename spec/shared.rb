@@ -43,6 +43,10 @@ shared_examples_for "a read/write Moneta cache" do
     @cache.fetch("key", "value").should == "value"
   end
 
+  it "fetches a key with a block with fetch, if the key is not available" do
+    @cache.fetch("key") { |key| "value" }.should == "value"
+  end
+
   it "fetches a key with a default value with fetch, if the key is available" do
     @cache["key"] = "value2"
     @cache.fetch("key", "value").should == "value2"

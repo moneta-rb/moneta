@@ -3,6 +3,8 @@ require "sdbm"
 module Moneta
   class BasicSDBM < ::SDBM
 
+    include Defaults
+
     def [](key)
       if val = super
         Marshal.load(val)
@@ -11,10 +13,6 @@ module Moneta
 
     def []=(key, value)
       super(key, Marshal.dump(value))
-    end
-
-    def fetch(key, default)
-      self[key] || default
     end
 
     def store(key, value, options = {})

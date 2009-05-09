@@ -65,11 +65,7 @@ module Moneta
           file.puts(contents)
         end
       end
-      
-      def fetch(key, default)
-        self[key] || default
-      end
-      
+            
       def delete(key)
         value = self[key]
         FileUtils.rm(path(key))
@@ -93,6 +89,7 @@ module Moneta
     end
     include Implementation
     include Expires
+    include Defaults
     
   end
 end

@@ -7,6 +7,8 @@ end
 
 module Moneta
   class Couch
+    include Defaults
+    
     def initialize(options = {})
       @db = ::CouchRest.database!(options[:db])
       unless options[:skip_expires]
@@ -33,10 +35,6 @@ module Moneta
       @db.save_doc("_id" => key, :data => value)
     rescue RestClient::RequestFailed
       self[key]
-    end
-
-    def fetch(key, default)
-      self[key] || default
     end
 
     def delete(key)

@@ -7,6 +7,8 @@ end
 
 module Moneta
   class Redis
+    include Defaults
+    
     def initialize(options = {})
       @cache = ::Redis.new(options)
     end
@@ -24,11 +26,7 @@ module Moneta
     def []=(key, value)
       store(key, value)
     end
-    
-    def fetch(key, default)
-      @cache[key] || default
-    end
-    
+        
     def delete(key)
       value = @cache[key]
       @cache.delete(key) if value

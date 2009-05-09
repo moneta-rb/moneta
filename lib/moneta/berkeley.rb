@@ -8,9 +8,10 @@ end
 module Moneta
 
   class Berkeley
+    include Defaults
 
     def initialize(options={})
-      file = options[:file]
+      file = @file = options[:file]
       @db = Bdb::Db.new()
       @db.open(nil, file, nil, Bdb::Db::BTREE, Bdb::DB_CREATE, 0)
       unless options[:skip_expires]
@@ -18,7 +19,7 @@ module Moneta
         self.extend(StringExpires)
       end
     end
-
+    
     module Implementation
       def key?(key)
         nil | self[key]
@@ -36,10 +37,6 @@ module Moneta
 
       def [](key)
         @db[key]
-      end
-
-      def fetch(key, default)
-        self[key] || default
       end
 
       def delete(key)
