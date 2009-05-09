@@ -30,6 +30,12 @@ class HackedArray < Array
   end
 end
 
+require "../lib/moneta"
+require "moneta/memcache"
+require "moneta/tyrant"
+require "moneta/berkeley"
+
+
 stores = {
   'Redis' => { },
   'Memcached' => { :class_name => "Memcache", :server => "localhost:11211", :namespace => 'moneta_bench' },
@@ -39,7 +45,12 @@ stores = {
   'Berkeley' => { :file => "bench.bdb" },
   'Rufus' => {:file => "bench.rufus"},
   'Memory' => { },
-  'DataMapper' => { :setup => "sqlite3::memory:" }
+  'DataMapper' => { :setup => "sqlite3::memory:" },
+  # 'Couch' => {:db => "couch_test"},
+  'TC (Tyrant)' => 
+    {:name => "test.tieredtyrant", :backup => Moneta::Tyrant.new(:host => "localhost", :port => 1978), :class_name => "TieredCache"},
+  'TC (Memcached)' => 
+    {:name => "test.tieredmc", :backup => Moneta::Memcache.new(:server => "localhost:11211", :namespace => "various"), :class_name => "TieredCache"}
 }
 
 stats, keys, data, errors, summary = {}, [], HackedArray.new, HackedArray.new, HackedArray.new
@@ -79,13 +90,66 @@ puts "                  Minimum    Maximum      Total    Average        xps "
 puts "----------------------------------------------------------------------"
 puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, vlen_avg]
 
-require "../lib/moneta"
+module Moneta
+  class TieredCache
+    include Moneta::Defaults
+  
+    def initialize(options)
+      @bdb = Moneta::Berkeley.new(:file => File.join(File.dirname(__FILE__), options[:name]))
+      @mc = options[:backup]
+      # @mc = Moneta::Tyrant.new(:host => "localhost", :port => 1978)
+      # @mc  = Moneta::Memcache.new(:server => "localhost:11211", :namespace => options[:name])
+    end
+  
+    def [](key)
+      val = @bdb[key]
+      unless val
+        @bdb[key] = val if val = @mc[key]
+      end
+      val
+    end
+  
+    def []=(key, val)
+      @bdb[key] = val
+      @mc[key]  = val
+    end
+  
+    def store(key, value, options = {})
+      @bdb.store(key, value, options)
+      @mc.store(key, value, options)
+    end
+  
+    def delete(key)
+      bdb_val = @bdb.delete(key)
+      mc_val  = @mc.delete(key)
+      bdb_val || mc_val
+    end
+  
+    def clear
+      @mc.clear
+      @bdb.clear
+    end
+  
+    def update_key(name, options)
+      @mc.update_key(name, options)
+      @bdb.update_key(name, options)
+    end
+  
+    def key?(key)
+      @bdb.key?(key) || @mc.key?(key)
+    end
+  end
+end
+
 stores.each do |name, options|
   cname = options.delete(:class_name) || name
   puts "======================================================================"
   puts name
   puts "----------------------------------------------------------------------"
-  require "../lib/moneta/#{cname.downcase}"
+  begin
+    require "../lib/moneta/#{cname.downcase}"
+  rescue LoadError
+  end
   klass = Moneta.const_get(cname)
   @cache = klass.new(options)
   stats[name] = {
