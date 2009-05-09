@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'benchmark'
+require "rubygems"
 
 # Hacked arrays
 # Array modifications
@@ -32,9 +33,13 @@ end
 stores = {
   'Redis' => { },
   'Memcached' => { :class_name => "Memcache", :server => "localhost:11211", :namespace => 'moneta_bench' },
-  'MemcacheDB' => { :class_name => "Memcache", :server => "localhost:21201", :namespace => 'moneta_bench' },
-#  'Tyrant' => { :host => 'localhost', :port => 1978 }, # Breaks for any n > 50 on my machine
+  'Tyrant' => { :host => 'localhost', :port => 1978 }, # Breaks for any n > 50 on my machine
   'MongoDB' => { :host => 'localhost', :port => 27017, :db => 'moneta_bench' },
+  'LMC' => { :filename => "bench.lmc" },
+  'Berkeley' => { :file => "bench.bdb" },
+  'Rufus' => {:file => "bench.rufus"},
+  'Memory' => { },
+  'DataMapper' => { :setup => "sqlite3::memory:" }
 }
 
 stats, keys, data, errors, summary = {}, [], HackedArray.new, HackedArray.new, HackedArray.new
@@ -72,7 +77,7 @@ puts "Total keys: #{keys.size}, unique: #{keys.uniq.size}"
 puts "----------------------------------------------------------------------"
 puts "                  Minimum    Maximum      Total    Average        xps "
 puts "----------------------------------------------------------------------"
-puts "Lenght Stats   % 10i % 10i % 10i % 10i % 10.4f " % [vlen_min, vlen_max, vlen_ttl, vlen_avg]
+puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, vlen_avg]
 
 require "../lib/moneta"
 stores.each do |name, options|
@@ -95,6 +100,7 @@ stores.each do |name, options|
     m1 = Benchmark.measure do
       n.times do
         key, value = data.random
+          
         @cache[key] = value
       end
     end
