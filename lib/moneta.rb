@@ -32,8 +32,9 @@ module Moneta
     end
 
     def store(key, value, options = {})
+      ret = super(key, value)
       update_options(key, options)
-      super(key, value)
+      ret
     end
 
     private
