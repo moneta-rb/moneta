@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-# Feb. 12, 2:00pm
+# June 1, 1:00pm
 
 Gem::Specification.new do |s|
   s.name = %q{moneta}
-  s.version = "0.5.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Yehuda Katz"]
