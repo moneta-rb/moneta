@@ -80,7 +80,7 @@ module Moneta
       
       private
       def path(key)
-        ::File.join(@directory, key)
+        ::File.join(@directory, key.to_s)
       end
     end
     include Implementation
