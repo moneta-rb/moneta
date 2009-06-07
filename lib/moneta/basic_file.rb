@@ -7,13 +7,19 @@
 #  expiration make sure to turn it off, because it requires
 #  an extra file open.
 #
-#  The only key requirements are there can't be a key named
-#  "___expiration__" and any characters your operating system
-#  doesn't like! "/" is to be avoided
+#  This will create two folders.. one for the data and one
+#  for the expiration objects.
+#
+#
+#  You can optionally also specify a :namespace
+#  option that will name the two folders with that namespace
+#  That way, you can have two entire different caches in the
+#  same base path.
 #
 
 
 require 'fileutils'
+require File.join(File.dirname(__FILE__), "..", "moneta.rb")
 require File.join(File.dirname(__FILE__), "file")
 
 module Moneta
