@@ -45,6 +45,8 @@ module Moneta
           else
             delete!(key)
           end
+        else
+          data
         end
       end
     end
