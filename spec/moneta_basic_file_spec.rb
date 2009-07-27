@@ -41,6 +41,18 @@ begin
       end
     end
 
+    describe "without expires" do
+      before(:each) do
+        @cache = Moneta::BasicFile.new(:path => File.join(File.dirname(__FILE__), "basic_file_cache"), :skip_expires => true)
+        @cache.clear
+      end
+
+      it "should read and write values" do
+        @cache[:foo] = 'bar'
+        @cache[:foo].should == 'bar'
+      end
+    end
+
     after(:all) do
       FileUtils.rm_rf(File.join(File.dirname(__FILE__), "basic_file_cache"))
     end
