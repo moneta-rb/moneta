@@ -1,7 +1,10 @@
 begin
   require "memcached"
+  MemCache = Memcached
 rescue LoadError
-  puts "You need the memcached gem to use the Memcache moneta store"
+  require "memcache"
+rescue
+  puts "You need either the `memcached` or `memcache-client` gem to use the Memcache moneta store"
   exit
 end
 
@@ -10,7 +13,7 @@ module Moneta
     include Defaults
     
     def initialize(options = {})
-      @cache = Memcached.new(options.delete(:server), options)
+      @cache = MemCache.new(options.delete(:server), options)
     end
 
     def key?(key)
