@@ -16,7 +16,7 @@ module Moneta
         :db => 'cache',
         :collection => 'cache'
       }.update(options)
-      conn = XGen::Mongo::Driver::Mongo.new(options[:host], options[:port])
+      conn = XGen::Mongo::Driver::Connection.new(options[:host], options[:port])
       @cache = conn.db(options[:db]).collection(options[:collection])
     end
 
@@ -42,7 +42,7 @@ module Moneta
 
     def store(key, value, options = {})
       exp = options[:expires_in] ? (Time.now + options[:expires_in]) : nil
-      @cache.repsert({ '_id' => key }, { '_id' => key, 'data' => value, 'expires' => exp })
+      @cache.update({ '_id' => key }, { '_id' => key, 'data' => value, 'expires' => exp })
     end
 
     def update_key(key, options = {})
