@@ -67,8 +67,16 @@ module Moneta
       def clear
         Store.delete_all
       end
+
+    end
+
+    # Unimplemented
+    module Expiration
+      def update_key(key, options)
+      end
     end
 
     include Implementation
+    include Expiration
   end
 end
