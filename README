@@ -1,3 +1,48 @@
+This Fork
+=========
+
+Adds an ActiveRecord adapter to Moneta. For when you don't have/need a real key/value store in your infrastructure yet.
+
+You need a migration:
+
+  class AddCacheTable < ActiveRecord::Migration
+    # Only needed if you want to keep your cache in a separate database
+    class TheCache < ActiveRecord::Base
+      establish_connection "#{Rails.env}_cache"
+    end
+
+    def self.connection
+      TheCache.connection
+    end
+
+    def self.up
+      create_table 'moneta_cache_store', :id => false do |t|
+        t.string :key, :null => false
+        t.text :value
+      end
+
+      if mysql?
+        execute "alter table moneta_cache_store modify column `key` varchar(255) primary key"
+      else
+        execute "alter table moneta_cache_store add primary key (key)"
+      end
+    end
+
+    def self.down
+      drop_table 'moneta_cache_store'
+    end
+
+    def self.mysql?
+      ActiveRecord::Base.configurations[Rails.env]['adapter'] == 'mysql'
+    end
+  end
+
+Initialize like this:
+
+  # These two ways are both pretty dodge - surely there is a nicer AR way to get the config
+  cache = Moneta::ActiveRecord.new(:connection => YAML.load(File.open("config/database.yml"))["#{Rails.env}_cache"])
+  cache = Moneta::ActiveRecord.new(:connection => ActiveRecord::Base.connection.instance_eval { @config })
+
 Moneta: A unified interface for key/value stores
 ================================================
 
