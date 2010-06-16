@@ -18,7 +18,7 @@ module Moneta
     def initialize(options = {})
       @options = options
       Store.establish_connection(@options[:connection] || raise("Must specify :connection"))
-      Store.set_table_name(@options[:table] || 'moneta_cache_store')
+      Store.set_table_name(@options[:table] || 'moneta_store')
     end
 
     module Implementation

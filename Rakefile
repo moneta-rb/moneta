@@ -4,12 +4,12 @@ require 'rubygems/specification'
 require 'spec/rake/spectask'
 require 'date'
 
-GEM = "xaviershay-moneta"
-GEM_VERSION = "0.6.1"
+GEM = "nzx-moneta"
+GEM_VERSION = "0.6.2"
 AUTHOR = "Yehuda Katz"
 EMAIL = "wycats@gmail.com"
 HOMEPAGE = "http://www.yehudakatz.com"
-SUMMARY = "A unified interface to key/value stores, now with AR adapter"
+SUMMARY = "A unified interface to key/value stores, now with AR and replication adapters"
 
 spec = Gem::Specification.new do |s|
   s.name = GEM
