@@ -1,0 +1,83 @@
+# Moneta Specification
+
+The purpose of the moneta specification is to create a general-purpose API for interacting with key-value stores. In general, libraries that need to interact with key-value stores should be able to specify that they can use any "moneta-compliant store".
+
+# Moneta Executable Specs
+
+Moneta ships with a set of executable specs which you can use to verify spec-compliance with your moneta adapter.
+
+# Moneta Library
+
+Moneta ships with proof-of-concept adapters for over a dozen key-value stores, including in-memory, memcache, database-backed and S3. These adapters are meant as proofs-of-concept, and while the moneta project intends to maintain them (and will accept patches to improve them), you should not consider them the core of the project.
+
+# Requirements for a Moneta Adapter
+
+(See RFC 2119 for use of MUST, SHOULD, MAY, MUST NOT, and SHOULD NOT)
+
+A Moneta adapter must expose a class with the following characteristics:
+
+## Class Methods
+
+### new(options<Hash>) => Object
+
+Return an instance of the moneta adapter, with the instance methods listed below. The <code>options</code> hash is a required parameter, and the adapter may specify whatever additional requirements it needs to properly instantiate it.
+
+## Instance Methods
+
+### [](key<Object>) => Object
+
+Return the value stored in the key-value-store under the provided key. Adapters MUST return a duplicate of the original value, and consumers should expect that adapters might serialize and deserialize the key and value. As a result, both the key and value MUST be objects that can be serialized using Ruby's Marshal system.
+
+### []=(key<Object>, value<Object>) => Object(value)
+
+Store the value in the key-value-store under the provided key. Adapters MAY serialize the value using Ruby's Marshal system, and MUST NOT store a reference to the original value in the store, unless Ruby disallows duplication of the original value. Adapters SHOULD NOT simply call <code>dup</code> on the value, unless the value stores no references to other Object. For example, an adapter MAY store a <code>dup</code> of a String, but SHOULD NOT store a <code>dup</code> of <code>["hello", "world"]</code>.
+
+### fetch(key<Object>) => Object
+
+Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST raise an IndexError.
+
+### fetch(key<Object>, &block) => Object
+
+Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST yield to the block, and return the value. The adapter MUST NOT store the value returned from the block in the key-value-store.
+
+### fetch(key<Object>, value<Object>) => Object
+
+Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST return the default value provided. The adapter MUST NOT store the default value in the key-value-store.
+
+### delete(key<Object>) => Object
+
+Delete the value stored in the key-value-store for the key provided, and return the value previously stored there. After this operation, the key-value-store MUST behave as though no value was stored for the provided key.
+
+### key?(key<Object>) => [TrueClass, FalseClass]
+
+Determine whether a value exists in the key-value-store for the key provided. If a value exists, the adapter MUST return <code>true</code>. Otherwise, the adapter MUST return <code>false</code>.
+
+### store(key<Object>, value<Object>, options<Hash>) => Object(value)
+
+Behaves the same as <code>[]=</code>, but allows the client to send additional options which extensions to this specification may require.
+
+### update_key(key<Object>, options<Hash>) => nil
+
+In this specification, this operation does nothing. However, extensions to this specification may specify semantics for certain values of the <code>options</code> Hash.
+
+### clear
+
+Completely empty all keys and values from the key-value-store. Adapters MAY allow a namespace during initialization, which can scope this operation to a particular subset of keys. After calling <code>clear</code>, a <code>[]</code> operation MUST return nil for every possible key, and a <code>key?</code> query MUST return false for every possible key.
+
+# Key Equality
+
+Adapters MUST consider keys as equal to one another if and only if the value of <code>Marshal.dump(keya)</code> is the same (byte-for-byte) as <code>Marshal.dump(keyb)</code>. This does not mean that adapters are required to use <code>Marshal.dump</code> to calculate the key to use for a given key specified by the consumer of the adapter. However, if an adapter does not, it MUST guarantee that the value returned for every key is identical to the value that would be returned if it did a byte-for-byte comparison of the result of <code>Marshal.dump</code> for every operation involving a key.
+
+# Storage and Serialization
+
+In a Moneta-compliant adapter, any Ruby object that can be serialized using Ruby's marshalling system may be used for keys or values.
+
+Adapters MAY use the marshalling system to serialize Ruby objects. Adapters MUST NOT return an Object from a fetch operation that existed on the heap prior to the fetch operation. The intention of this requirement is to prevent adapters that use the heap for persistence to store direct references to Objects passed into the <code>store</code> or <code>[]=</code> methods.
+
+# Atomicity
+
+The base Moneta specification does not specify any atomicity guarantees. However, extensions to this spec may specify extensions that define additional guarantees for any of the defined operations.
+
+# Expiry
+
+The base Moneta specification does not specify any mechanism for time-based expiry. However, extensions to this spec may specify mechanisms (using <code>store</code> and <code>update_key</code>) to provide expiration semantics.
