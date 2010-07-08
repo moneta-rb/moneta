@@ -18,7 +18,7 @@ A Moneta adapter must expose a class with the following characteristics:
 
 ## Class Methods
 
-### <code>new(options<Hash>) => Object</code>
+### <code>new(options[Hash]) => Object</code>
 
 Return an instance of the moneta adapter, with the instance methods listed below. The <code>options</code> hash is a required parameter, and the adapter may specify whatever additional requirements it needs to properly instantiate it.
 
