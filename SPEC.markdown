@@ -24,39 +24,39 @@ Return an instance of the moneta adapter, with the instance methods listed below
 
 ## Instance Methods
 
-### <code>[](key<Object>) => Object</code>
+### <code>[](key[Object]) => Object</code>
 
 Return the value stored in the key-value-store under the provided key. Adapters MUST return a duplicate of the original value, and consumers should expect that adapters might serialize and deserialize the key and value. As a result, both the key and value MUST be objects that can be serialized using Ruby's Marshal system.
 
-### <code>[]=(key<Object>, value<Object>) => Object(value)</code>
+### <code>[]=(key[Object], value[Object]) => Object(value)</code>
 
 Store the value in the key-value-store under the provided key. Adapters MAY serialize the value using Ruby's Marshal system, and MUST NOT store a reference to the original value in the store, unless Ruby disallows duplication of the original value. Adapters SHOULD NOT simply call <code>dup</code> on the value, unless the value stores no references to other Object. For example, an adapter MAY store a <code>dup</code> of a String, but SHOULD NOT store a <code>dup</code> of <code>["hello", "world"]</code>.
 
-### <code>fetch(key<Object>) => Object</code>
+### <code>fetch(key[Object]) => Object</code>
 
 Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST raise an IndexError.
 
-### <code>fetch(key<Object>, &block) => Object</code>
+### <code>fetch(key[Object], &block) => Object</code>
 
 Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST yield to the block, and return the value. The adapter MUST NOT store the value returned from the block in the key-value-store.
 
-### <code>fetch(key<Object>, value<Object>) => Object</code>
+### <code>fetch(key[Object], value[Object]) => Object</code>
 
 Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST return the default value provided. The adapter MUST NOT store the default value in the key-value-store.
 
-### <code>delete(key<Object>) => Object</code>
+### <code>delete(key[Object]) => Object</code>
 
 Delete the value stored in the key-value-store for the key provided, and return the value previously stored there. After this operation, the key-value-store MUST behave as though no value was stored for the provided key.
 
-### <code>key?(key<Object>) => [TrueClass, FalseClass]</code>
+### <code>key?(key[Object]) => [TrueClass, FalseClass]</code>
 
 Determine whether a value exists in the key-value-store for the key provided. If a value exists, the adapter MUST return <code>true</code>. Otherwise, the adapter MUST return <code>false</code>.
 
-### <code>store(key<Object>, value<Object>, options<Hash>) => Object(value)</code>
+### <code>store(key[Object], value[Object], options[Hash]) => Object(value)</code>
 
 Behaves the same as <code>[]=</code>, but allows the client to send additional options which extensions to this specification may require.
 
-### <code>update_key(key<Object>, options<Hash>) => nil</code>
+### <code>update_key(key[Object], options[Hash]) => nil</code>
 
 In this specification, this operation does nothing. However, extensions to this specification may specify semantics for certain values of the <code>options</code> Hash.
 
