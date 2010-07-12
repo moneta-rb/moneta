@@ -1,12 +1,14 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/basic_file"
+  require "moneta/adapters/basic_file"
 
-  describe "Moneta::BasicFile" do
+  describe "Moneta::Adapters::BasicFile" do
     describe "without namespacing" do
       before(:each) do
-        @cache = Moneta::BasicFile.new(:path => File.join(File.dirname(__FILE__), "basic_file_cache"))
+        @cache = Moneta::Builder.build do
+          run Moneta::Adapters::BasicFile, :path => File.expand_path("../basic_file_cache", __FILE__)
+        end
         @cache.clear
       end
       
@@ -24,7 +26,12 @@ begin
     
     describe "with namespacing" do
       before(:each) do
-        @cache = Moneta::BasicFile.new(:path => File.join(File.dirname(__FILE__), "basic_file_cache"), :namespace => "test_namespace")
+        @cache = Moneta::Builder.build do
+          run Moneta::Adapters::BasicFile, 
+            :path => File.expand_path("../basic_file_cache", __FILE__),
+            :namespace => "test_namespace"
+        end
+        
         @cache.clear
       end
       
@@ -33,23 +40,16 @@ begin
       end
       
       it "should act as two stores within the same directory" do
-        @second = Moneta::BasicFile.new(:path => File.join(File.dirname(__FILE__), "basic_file_cache"), :namespace => "second_namespace")
+        @second = Moneta::Builder.build do
+          run Moneta::Adapters::BasicFile, 
+            :path => File.expand_path("../basic_file_cache", __FILE__),
+            :namespace => "second_namespace"
+        end
+        
         @second[:key] = "hello"
         @cache[:key] = "world!"
         @second[:key].should == "hello"
         @cache[:key].should == "world!"
-      end
-    end
-
-    describe "without expires" do
-      before(:each) do
-        @cache = Moneta::BasicFile.new(:path => File.join(File.dirname(__FILE__), "basic_file_cache"), :skip_expires => true)
-        @cache.clear
-      end
-
-      it "should read and write values" do
-        @cache[:foo] = 'bar'
-        @cache[:foo].should == 'bar'
       end
     end
 

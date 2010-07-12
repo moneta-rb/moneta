@@ -1,19 +1,18 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 begin
-  require 'moneta/couch'
+  require 'moneta/adapters/couch'
 
-  describe "Moneta::Couch" do
+  describe "Moneta::Adapters::Couch" do
     before(:each) do
-      @cache = Moneta::Couch.new(:db => "couch_test")
-      @expiration = Moneta::Couch.new(:db => "couch_test_expiration", :skip_expires => true)
+      @cache = Moneta::Builder.build do
+        run Moneta::Adapters::Couch, :db => "couch_test"
+      end
       @cache.clear
-      @expiration.clear
     end
 
     after(:all) do
       @cache.delete_store
-      @expiration.delete_store
     end
 
     it_should_behave_like "a read/write Moneta cache"

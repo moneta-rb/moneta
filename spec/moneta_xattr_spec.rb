@@ -1,16 +1,20 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/xattr"
+  require "moneta/adapters/xattr"
 
-  describe "Moneta::Xattrs" do
+  describe "Moneta::Adapters::Xattr" do
+    path = File.expand_path("../file_cache/xattr_cache", __FILE__)
+
     before(:each) do
-      @cache = Moneta::Xattr.new(:file => File.join(File.dirname(__FILE__), "file_cache", "xattr_cache"))
+      @cache = Moneta::Builder.build do
+        run Moneta::Adapters::Xattr, :file => path
+      end
       @cache.clear
     end
   
     after(:all) do
-      FileUtils.rm_rf(File.join(File.dirname(__FILE__), "file_cache"))
+      FileUtils.rm_rf(File.dirname(path))
     end
   
     if ENV['MONETA_TEST'].nil? || ENV['MONETA_TEST'] == 'xattrs'

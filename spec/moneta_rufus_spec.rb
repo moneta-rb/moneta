@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/rufus"
+  require "moneta/adapters/rufus"
 
-  describe "Moneta::Rufus" do
+  describe "Moneta::Adapters::Rufus" do
     before(:each) do
-      @cache = Moneta::Rufus.new(:file => "cache")
+      @cache = Moneta::Adapters::Rufus.new(:file => "cache")
       @cache.clear
     end
   

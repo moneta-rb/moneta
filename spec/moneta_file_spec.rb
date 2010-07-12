@@ -1,11 +1,13 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/file"
+  require "moneta/adapters/file"
 
-  describe "Moneta::File" do
+  describe "Moneta::Adapters::File" do
     before(:each) do
-      @cache = Moneta::File.new(:path => File.join(File.dirname(__FILE__), "file_cache"))
+      @cache = Moneta::Builder.build do
+        run Moneta::Adapters::File, :path => File.expand_path("../file_cache", __FILE__)
+      end
       @cache.clear
     end
 

@@ -1,13 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 begin
-  require "moneta/lmc"
+  require "moneta/adapters/lmc"
   require "fileutils"
 
   # Problem: If there are multiple caches around, they start
   # to block (with a system semaphore), which can be unpleasant
   # so just use one cache for the entire test run.
-  $lmc_cache = Moneta::LMC.new(:filename => "test")
+  $lmc_cache = Moneta::Builder.build do
+    run Moneta::Adapters::LMC, :filename => "test"
+  end
 
   describe "Moneta::LMC" do
     before(:all) do

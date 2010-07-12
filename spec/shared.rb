@@ -1,5 +1,10 @@
 shared_examples_for "a read/write Moneta cache" do
-  {"String" => ["key", "key2"], "Object" => [{:foo => :bar}, {:bar => :baz}]}.each do |type, (key, key2)|
+  types = {
+    "String" => ["key", "key2"],
+    "Object" => [{:foo => :bar}, {:bar => :baz}]
+  }
+
+  types.each do |type, (key, key2)|
     it "reads from keys that are #{type}s like a Hash" do
       @cache[key].should == nil
     end
@@ -42,6 +47,13 @@ shared_examples_for "a read/write Moneta cache" do
 
     it "fetches a #{type} key with a block with fetch, if the key is not available" do
       @cache.fetch(key) { |k| "value" }.should == "value"
+    end
+
+    it "does not run the block if the #{type} key is available" do
+      @cache[key] = "value"
+      unaltered = "unaltered"
+      @cache.fetch(key) { unaltered = "altered" }
+      unaltered.should == "unaltered"
     end
 
     it "fetches a #{type} key with a default value with fetch, if the key is available" do

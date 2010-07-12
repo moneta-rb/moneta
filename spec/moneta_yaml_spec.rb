@@ -1,16 +1,20 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 begin
-  require "moneta/yaml"
+  require "moneta/adapters/yaml"
 
-  describe "Moneta::YAML" do
+  describe "Moneta::Adapters::YAML" do
+    path = File.expand_path("../yaml_cache", __FILE__)
+
     before(:each) do
-      @cache = Moneta::YAML.new(:path => File.join(File.dirname(__FILE__), "yaml_cache"))
+      @cache = Moneta::Builder.new do
+        run Moneta::Adapters::YAML, :path => path
+      end
       @cache.clear
     end
 
     after(:all) do
-      FileUtils.rm_rf(File.join(File.dirname(__FILE__), "yaml_cache"))
+      FileUtils.rm_rf(path)
     end
 
     if ENV['MONETA_TEST'].nil? || ENV['MONETA_TEST'] == 'yaml'

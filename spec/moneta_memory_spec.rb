@@ -1,10 +1,16 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
-require "moneta/memory"
+require "moneta/adapters/memory"
 
-describe "Moneta::Memory" do
+describe "Moneta::Adapters::Memory" do
+  class EmptyMiddleware
+    include Moneta::Middleware
+  end
+
   before(:each) do
-    @cache = Moneta::Memory.new
+    @cache = Moneta::Builder.build do
+      run Moneta::Adapters::Memory
+    end
     @cache.clear
   end
 

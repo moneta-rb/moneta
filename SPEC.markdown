@@ -24,11 +24,11 @@ Return an instance of the moneta adapter, with the instance methods listed below
 
 ## Instance Methods
 
-### <code>[](key[Object]) => Object</code>
+### <code>\[\](key[Object]) => Object</code>
 
 Return the value stored in the key-value-store under the provided key. Adapters MUST return a duplicate of the original value, and consumers should expect that adapters might serialize and deserialize the key and value. As a result, both the key and value MUST be objects that can be serialized using Ruby's Marshal system.
 
-### <code>[]=(key[Object], value[Object]) => Object(value)</code>
+### <code>\[\]=(key[Object], value[Object]) => Object(value)</code>
 
 Store the value in the key-value-store under the provided key. Adapters MAY serialize the value using Ruby's Marshal system, and MUST NOT store a reference to the original value in the store, unless Ruby disallows duplication of the original value. Adapters SHOULD NOT simply call <code>dup</code> on the value, unless the value stores no references to other Object. For example, an adapter MAY store a <code>dup</code> of a String, but SHOULD NOT store a <code>dup</code> of <code>["hello", "world"]</code>.
 
@@ -52,9 +52,9 @@ Delete the value stored in the key-value-store for the key provided, and return 
 
 Determine whether a value exists in the key-value-store for the key provided. If a value exists, the adapter MUST return <code>true</code>. Otherwise, the adapter MUST return <code>false</code>.
 
-### <code>store(key[Object], value[Object], options[Hash]) => Object(value)</code>
+### <code>store(key[Object], value[Object]) => Object(value)</code>
 
-Behaves the same as <code>[]=</code>, but allows the client to send additional options which extensions to this specification may require.
+Behaves the same as <code>[]=</code>, but allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification).
 
 ### <code>update_key(key[Object], options[Hash]) => nil</code>
 
@@ -63,6 +63,22 @@ In this specification, this operation does nothing. However, extensions to this 
 ### <code>clear</code>
 
 Completely empty all keys and values from the key-value-store. Adapters MAY allow a namespace during initialization, which can scope this operation to a particular subset of keys. After calling <code>clear</code>, a <code>[]</code> operation MUST return nil for every possible key, and a <code>key?</code> query MUST return false for every possible key.
+
+# Additional Options Hashes
+
+The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification).
+
+* fetch
+* store
+* delete
+* key?
+* clear
+
+In the case of methods with optional arguments, the Hash MUST be provided as the final argument, and all optional arguments MUST be specified.
+
+Keys in this Hash MUST be Strings or Symbols. If they are Strings, they MUST be prefixed with a unique namespace. Namespaces MUST be separated from the name of the key with a single ".". The namespace SHOULD be the name of the gem that exposes the key.
+
+Keys in this Hash MUST NOT be Symbols unless this specification or an official extension to this specification defines a Symbol key.
 
 # Key Equality
 

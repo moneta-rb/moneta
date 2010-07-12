@@ -1,20 +1,26 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require 'moneta/berkeley'
+  require 'moneta/adapters/berkeley'
+  require 'bdb/environment'
 
-  describe "Moneta::Berkeley" do
+  describe "Moneta::Adapters::Berkeley" do
+    path = File.expand_path("../berkeley_test.db", __FILE__)
+
     before(:each) do
-      @cache = Moneta::Berkeley.new(:file => File.join(File.dirname(__FILE__), "berkeley_test.db"))
+      @cache = Moneta::Builder.build do
+        run Moneta::Adapters::Berkeley, :file => path
+      end
       @cache.clear
     end
-  
+
     after(:all) do
-      File.delete(File.join(File.dirname(__FILE__), "berkeley_test.db"))
-      File.delete(File.join(File.dirname(__FILE__), "berkeley_test.db_expiration"))
+      Moneta::Adapters::Berkeley.close_all
+      File.delete(path)
     end
-  
+
     it_should_behave_like "a read/write Moneta cache"
   end
+
 rescue SystemExit
 end

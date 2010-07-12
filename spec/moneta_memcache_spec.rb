@@ -1,12 +1,14 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 begin
-  require "moneta/memcache"
+  require "moneta/adapters/memcache"
 
-  describe "Moneta::Memcache" do
+  describe "Moneta::Adapters::Memcache" do
     before(:each) do
       @native_expires = true
-      @cache = Moneta::Memcache.new(:server => "localhost:11211", :namespace => "moneta_spec")
+      @cache = Moneta::Builder.build do
+        run Moneta::Adapters::Memcache, :server => "localhost:11211", :namespace => "moneta_spec"
+      end
       @cache.clear
     end
   
