@@ -29,7 +29,7 @@ module Moneta
         ensure_directory_created(@directory)
       end
 
-      def key?(key)
+      def key?(key, *)
         !self[key].nil?
       end
 
@@ -39,39 +39,20 @@ module Moneta
         end
       end
 
-      def raw_get(key)
-        Marshal.load(::File.read(path(key)))
-      end
-
-      def []=(key, value)
-        store(key, value)
-      end
-
-      def store(key, value, options = {})
+      def store(key, value, *)
         ensure_directory_created(::File.dirname(path(key)))
         ::File.open(path(key), "w") do |file|
-          contents = Marshal.dump(value)
-          file.puts(contents)
+          file.puts(serialize(value))
         end
       end
 
-      def update_key(key, options)
-        store(key, self[key], options)
-      end
-
-      def delete!(key)
-        FileUtils.rm(path(key))
-        nil
-      rescue Errno::ENOENT
-      end
-
-      def delete(key)
+      def delete(key, *)
         value = self[key]
         delete!(key)
         value
       end
 
-      def clear
+      def clear(*)
         FileUtils.rm_rf(@directory)
         FileUtils.mkdir(@directory)
       end
@@ -79,6 +60,16 @@ module Moneta
     private
       def path(key)
         ::File.join(@directory, key_for(key))
+      end
+
+      def raw_get(key)
+        deserialize(::File.read(path(key)))
+      end
+
+      def delete!(key)
+        FileUtils.rm(path(key))
+        nil
+      rescue Errno::ENOENT
       end
 
       def ensure_directory_created(directory_path)

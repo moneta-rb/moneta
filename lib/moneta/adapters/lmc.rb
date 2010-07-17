@@ -14,17 +14,25 @@ module Moneta
         @hash = LocalMemCache.new(:filename => options[:filename])
       end
 
-      def [](key)         @hash[Marshal.dump(key)]          end
-      def []=(key, value) @hash[Marshal.dump(key)] = value  end
-      def clear()         @hash.clear                       end
-
-      def key?(key)
-        @hash.keys.include?(Marshal.dump(key))
+      def [](key)
+        deserialize(@hash[key_for(key)])
       end
 
-      def delete(key)
+      def store(key, value, *) 
+        @hash[key_for(key)] = serialize(value)
+      end
+
+      def clear(*)
+        @hash.clear
+      end
+
+      def key?(key, *)
+        @hash.keys.include?(key_for(key))
+      end
+
+      def delete(key, *)
         value = self[key]
-        @hash.delete(Marshal.dump(key))
+        @hash.delete(key_for(key))
         value
       end
     end

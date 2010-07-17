@@ -1,39 +1,22 @@
 module Moneta
   module Adapters
     class Memory < Hash
-      def initialize(*args)
-        @expiration = {}
-        super
-      end
+      include Moneta::Defaults
 
       def [](key)
-        key = Marshal.dump(key)
-        super
+        deserialize(super(key_for(key)))
       end
 
-      def []=(key, value)
-        key = Marshal.dump(key)
-        super
+      def key?(key, *)
+        super(key_for(key))
       end
 
-      def key?(key)
-        key = Marshal.dump(key)
-        super
-      end
-
-      def fetch(key, *args)
-        key = Marshal.dump(key)
-        super
-      end
-
-      def store(key, *args)
-        key = Marshal.dump(key)
-        super
+      def store(key, value, *args)
+        super(key_for(key), serialize(value), *args)
       end
 
       def delete(key, *args)
-        key = Marshal.dump(key)
-        super
+        deserialize(super(key_for(key), *args))
       end
     end
   end

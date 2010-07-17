@@ -1,18 +1,27 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
+require 'fileutils'
 
 begin
-  require "moneta/datamapper"
-  
+  require "moneta/adapters/datamapper"
+
+  DataMapper.setup(:default, :adapter => :in_memory)
+  path = File.expand_path("../datamapper_spec.db", __FILE__)
+  FileUtils.rm(path) if File.exist?(path)
+
   describe "Moneta::DataMapper" do
 
-    describe "default repository" do
+    before(:each) do
+      DataMapper.repository(:default).adapter.reset
+    end
+
+    describe "with the default repository" do
       before(:each) do
-        @cache = Moneta::DataMapper.new(:setup => "sqlite3::memory:")
+        @cache = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{path}")
         @cache.clear
       end
-  
+
       after(:all) do
-        repository(:moneta) { MonetaHash.auto_migrate! }
+        MonetaHash.auto_migrate!(:moneta)
       end
 
       it_should_behave_like "a read/write Moneta cache"
@@ -20,23 +29,23 @@ begin
 
     describe "when :repository specified" do
       before(:each) do
-        @cache = Moneta::DataMapper.new(:repository => :sample, :setup => "sqlite3::memory:")
+        @cache = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{path}")
         @cache.clear
       end
 
       after(:all) do
-        repository(:sample) { MonetaHash.auto_migrate! }
+        MonetaHash.auto_migrate!(:sample)
       end
 
       it_should_behave_like "a read/write Moneta cache"
     end
 
-    describe "with multple stores" do
+    describe "with multiple stores" do
       before(:each) do
-        @default_cache = Moneta::DataMapper.new(:setup => "sqlite3:moneta.db")
+        @default_cache = Moneta::Adapters::DataMapper.new(:setup => "sqlite3:moneta.db")
         @default_cache.clear
 
-        @sample_cache = Moneta::DataMapper.new(:repository => :sample, :setup => "sqlite3:sample.db")
+        @sample_cache = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3:sample.db")
         @sample_cache.clear
       end
 
@@ -60,17 +69,6 @@ begin
 
         @default_cache.delete("key").should == "value"
         @default_cache.key?("key").should be_false
-        @sample_cache["key"].should == "value2"
-      end
-
-      it "does not cross contaminate when expiring" do
-        @default_cache.store("key", "value", :expires_in => 2)
-        @sample_cache["key"] = "value2"
-
-        time = Time.now
-        Time.stub!(:now).and_return { time + 2 }
-
-        @default_cache["key"].should == nil
         @sample_cache["key"].should == "value2"
       end
     end

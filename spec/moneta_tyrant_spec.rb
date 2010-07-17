@@ -1,14 +1,14 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/tyrant"
+  require "moneta/adapters/tyrant"
 
-  describe "Moneta::Tyrant" do
+  describe "Moneta::Adapters::Tyrant" do
     before(:each) do
-      @cache = Moneta::Tyrant.new(:host => "localhost", :port => 1978)
+      @cache = Moneta::Adapters::Tyrant.new(:host => "127.0.0.1", :port => 1978)
       @cache.clear
     end
-  
+
     it_should_behave_like "a read/write Moneta cache"
   end
 rescue SystemExit

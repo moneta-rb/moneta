@@ -6,52 +6,46 @@ rescue LoadError
 end
 
 module Moneta
-  class MongoDB
-    include Defaults
-    
-    def initialize(options = {})
-      options = {
-        :host => ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost',
-        :port => ENV['MONGO_RUBY_DRIVER_PORT'] || XGen::Mongo::Driver::Mongo::DEFAULT_PORT,
-        :db => 'cache',
-        :collection => 'cache'
-      }.update(options)
-      conn = XGen::Mongo::Driver::Connection.new(options[:host], options[:port])
-      @cache = conn.db(options[:db]).collection(options[:collection])
-    end
+  module Adapters
+    class MongoDB
+      include Moneta::Defaults
 
-    def key?(key)
-      !!self[key]
-    end
+      def initialize(options = {})
+        options = {
+          :host => ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost',
+          :port => ENV['MONGO_RUBY_DRIVER_PORT'] || Mongo::Connection::DEFAULT_PORT,
+          :db => 'cache',
+          :collection => 'cache'
+        }.update(options)
+        conn = Mongo::Connection.new(options[:host], options[:port])
+        @cache = conn.db(options[:db]).collection(options[:collection])
+      end
 
-    def [](key)
-      res = @cache.find_first('_id' => key)
-      res = nil if res && res['expires'] && Time.now > res['expires']
-      res && res['data']
-    end
+      def key?(key, *)
+        !!self[key]
+      end
 
-    def []=(key, value)
-      store(key, value)
-    end
+      def [](key)
+        res = @cache.find_one('_id' => key_for(key))
+        res && deserialize(res['data'])
+      end
 
-    def delete(key)
-      value = self[key]
-      @cache.remove('_id' => key) if value
-      value
-    end
+      def delete(key, *)
+        string_key = key_for(key)
 
-    def store(key, value, options = {})
-      exp = options[:expires_in] ? (Time.now + options[:expires_in]) : nil
-      @cache.update({ '_id' => key }, { '_id' => key, 'data' => value, 'expires' => exp })
-    end
+        value = self[key]
+        @cache.remove('_id' => string_key) if value
+        value
+      end
 
-    def update_key(key, options = {})
-      val = self[key]
-      self.store(key, val, options)
-    end
+      def store(key, value, *)
+        key = key_for(key)
+        @cache.insert({ '_id' => key, 'data' => serialize(value) })
+      end
 
-    def clear
-      @cache.clear
+      def clear(*)
+        @cache.remove
+      end
     end
   end
 end

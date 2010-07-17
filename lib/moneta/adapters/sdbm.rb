@@ -1,33 +1,34 @@
 require "sdbm"
 
 module Moneta
-  class BasicSDBM < ::SDBM
-    include Defaults
+  module Adapters
+    class SDBM < ::SDBM
+      include Moneta::Defaults
 
-    def [](key)
-      if val = super
-        Marshal.load(val)
+      def initialize(options = {})
+        raise "No :file options specified" unless file = options[:file]
+        super(file)
       end
-    end
 
-    def []=(key, value)
-      super(key, Marshal.dump(value))
-    end
-
-    def delete(key)
-      if val = super
-        Marshal.load(val)
+      def [](key)
+        if val = super(key_for(key))
+          deserialize(val)
+        end
       end
-    end
-  end
 
-  class SDBM < BasicSDBM
-    include Expires
+      def store(key, value, *)
+        super(key_for(key), serialize(value))
+      end
 
-    def initialize(options = {})
-      raise "No :file option specified" unless file = options[:file]
-      @expiration = BasicSDBM.new("#{file}_expires")
-      super(file)
+      def key?(key, *)
+        super(key_for(key))
+      end
+
+      def delete(key, *)
+        if val = super(key_for(key))
+          deserialize(val)
+        end
+      end
     end
   end
 end

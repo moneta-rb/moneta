@@ -11,44 +11,38 @@ end
 module Moneta
   module Adapters
     class Memcache
-      include Defaults
+      include Moneta::Defaults
 
       def initialize(options = {})
-        @cache = MemCache.new(options.delete(:server), options)
+        @cache = ::MemCache.new(options.delete(:server), options)
       end
 
-      def key?(key)
+      def key?(key, *)
         !self[key].nil?
       end
 
-      alias has_key? key?
-
       def [](key)
-        @cache.get(key_for(key))
+        deserialize(@cache.get(key_for(key)))
+      rescue MemCache::NotFound
       end
 
-      def []=(key, value)
-        store(key, value)
-      end
-
-      def delete(key)
+      def delete(key, *)
         value = self[key]
         @cache.delete(key_for(key)) if value
         value
       end
 
-      def store(key, value, options = {})
-        args = [key_for(key), value, options[:expires_in]].compact
-        @cache.set(*args)
+      def store(key, value, *)
+        @cache.set(key_for(key), serialize(value))
       end
 
-      def update_key(key, options = {})
-        val = self[key]
-        self.store(key, val, options)
+      def clear(*)
+        @cache.flush
       end
 
-      def clear
-        @cache.flush_all
+    private
+      def key_for(key)
+        [super].pack("m").strip
       end
     end
   end

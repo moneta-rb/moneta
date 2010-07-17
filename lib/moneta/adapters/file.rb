@@ -14,7 +14,7 @@ module Moneta
         end
       end
 
-      def key?(key)
+      def key?(key, *)
         ::File.exist?(path(key))
       end
 
@@ -24,21 +24,21 @@ module Moneta
         end
       end
 
-      def []=(key, value)
+      def store(key, value, *)
         ::File.open(path(key), "w") do |file|
           contents = Marshal.dump(value)
           file.puts(contents)
         end
       end
 
-      def delete(key)
+      def delete(key, *)
         value = self[key]
         FileUtils.rm(path(key))
         value
       rescue Errno::ENOENT
       end
 
-      def clear
+      def clear(*)
         FileUtils.rm_rf(@directory)
         FileUtils.mkdir(@directory)
       end

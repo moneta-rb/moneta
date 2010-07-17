@@ -1,15 +1,14 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/redis"
+  require "moneta/adapters/redis"
 
-  describe "Moneta::Redis" do
+  describe "Moneta::Adapters::Redis" do
     before(:each) do
-      @native_expires = true
-      @cache = Moneta::Redis.new
+      @cache = Moneta::Adapters::Redis.new
       @cache.clear
     end
-  
+
     it_should_behave_like "a read/write Moneta cache"
   end
 rescue SystemExit

@@ -1,12 +1,11 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 begin
-  require "moneta/mongodb"
+  require "moneta/adapters/mongodb"
 
-  describe "Moneta::MongoDB" do
+  describe "Moneta::Adapters::MongoDB" do
     before(:each) do
-      @native_expires = true
-      @cache = Moneta::MongoDB.new
+      @cache = Moneta::Adapters::MongoDB.new
       @cache.clear
     end
 

@@ -18,7 +18,7 @@ module Moneta
         FileUtils.touch(file)
       end
 
-      def key?(key)
+      def key?(key, *)
         @hash.list.include?(key_for(key))
       end
 
@@ -28,18 +28,18 @@ module Moneta
         Marshal.load(@hash.get(string_key))
       end
 
-      def []=(key, value)
+      def store(key, value, *)
         @hash.set(key_for(key), Marshal.dump(value))
       end
 
-      def delete(key)
+      def delete(key, *)
         return nil unless key?(key)
         value = self[key]
         @hash.remove(key_for(key))
         value
       end
 
-      def clear
+      def clear(*)
         @hash.list.each do |item|
           @hash.remove(item)
         end

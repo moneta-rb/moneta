@@ -9,9 +9,26 @@ shared_examples_for "a read/write Moneta cache" do
       @cache[key].should == nil
     end
 
-    it "writes to keys that are #{type}s like a Hash" do
+    it "writes String values to keys that are #{type}s like a Hash" do
       @cache[key] = "value"
       @cache[key].should == "value"
+    end
+
+    it "guarantees that a different String value is retrieved from the #{type} key" do
+      value = "value"
+      @cache[key] = value
+      @cache[key].should_not be_equal(value)
+    end
+
+    it "writes Object values to keys that are #{type}s like a Hash" do
+      @cache[key] = {:foo => :bar}
+      @cache[key].should == {:foo => :bar}
+    end
+
+    it "guarantees that a different Object value is retrieved from the #{type} key" do
+      value = {:foo => :bar}
+      @cache[key] = value
+      @cache[key].should_not be_equal(:foo => :bar)
     end
 
     it "returns false from key? if a #{type} key is not available" do

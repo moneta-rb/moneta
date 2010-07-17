@@ -6,44 +6,36 @@ rescue LoadError
 end
 
 module Moneta
-  class Redis
-    include Defaults
-    
-    def initialize(options = {})
-      @cache = ::Redis.new(options)
-    end
-    
-    def key?(key)
-      !@cache[key].nil?
-    end
-    
-    alias has_key? key?
-    
-    def [](key)
-      @cache.get(key)
-    end
-    
-    def []=(key, value)
-      store(key, value)
-    end
-        
-    def delete(key)
-      value = @cache[key]
-      @cache.delete(key) if value
-      value
-    end
-    
-    def store(key, value, options = {})
-      @cache.set(key, value, options[:expires_in])
-    end
-    
-    def update_key(key, options = {})
-      val = @cache[key]
-      self.store(key, val, options)
-    end
-    
-    def clear
-      @cache.flush_db
+  module Adapters
+    class Redis
+      include Defaults
+
+      def initialize(options = {})
+        @cache = ::Redis.new(options)
+      end
+
+      def key?(key, *)
+        !@cache[key_for(key)].nil?
+      end
+
+      def [](key)
+        deserialize(@cache.get(key_for(key)))
+      end
+
+      def delete(key, *)
+        string_key = key_for(key)
+        value = self[key]
+        @cache.del(string_key) if value
+        value
+      end
+
+      def store(key, value, *)
+        @cache.set(key_for(key), serialize(value))
+      end
+
+      def clear(*)
+        @cache.flushdb
+      end
     end
   end
 end

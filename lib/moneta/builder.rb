@@ -41,6 +41,10 @@ module Moneta
     def clear(*args)
       @adapter.clear(*args)
     end
+
+    def close
+      @adapter.close
+    end
   end
 
   class Builder

@@ -1,16 +1,18 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
 begin
-  require "moneta/sdbm"
+  require "moneta/adapters/sdbm"
 
-  describe "Moneta::SDBM" do
+  path = File.expand_path("../sdbm_cache", __FILE__)
+
+  describe "Moneta::Adapters::SDBM" do
     before(:each) do
-      @cache = Moneta::SDBM.new(:file => File.join(File.dirname(__FILE__), "sdbm_cache"))
+      @cache = Moneta::Adapters::SDBM.new(:file => path)
       @cache.clear
     end
   
     after(:all) do
-      FileUtils.rm_rf(Dir.glob(File.join(File.dirname(__FILE__), "sdbm_cache*")))
+      FileUtils.rm_rf(Dir["#{path}*"])
     end
   
     if ENV['MONETA_TEST'].nil? || ENV['MONETA_TEST'] == 'sdbm'

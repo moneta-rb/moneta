@@ -11,10 +11,6 @@ begin
       @cache.clear
     end
 
-    after(:all) do
-      @cache.delete_store
-    end
-
     it_should_behave_like "a read/write Moneta cache"
   end
 rescue SystemExit

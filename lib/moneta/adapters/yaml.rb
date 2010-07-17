@@ -13,7 +13,7 @@ module Moneta
         end
       end
 
-      def key?(key)
+      def key?(key, *)
         yaml.has_key?(key_for(key))
       end
 
@@ -22,13 +22,13 @@ module Moneta
         yaml[string_key]['value'] if yaml.key?(string_key)
       end
 
-      def []=(key, value)
+      def store(key, value, *)
         hash = yaml
         (hash[key_for(key)] ||= {})['value'] = value
         save(hash)
       end
 
-      def delete(key)
+      def delete(key, *)
         hash = yaml
         value = self[key_for(key)]
         hash.delete(key_for(key))
@@ -36,7 +36,7 @@ module Moneta
         value
       end
 
-      def clear
+      def clear(*)
         save
       end
 
