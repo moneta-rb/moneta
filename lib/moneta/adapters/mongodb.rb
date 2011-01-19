@@ -27,7 +27,7 @@ module Moneta
 
       def [](key)
         res = @cache.find_one('_id' => key_for(key))
-        res && deserialize(res['data'])
+        res && deserialize(res['data'].to_s)
       end
 
       def delete(key, *)
@@ -40,7 +40,8 @@ module Moneta
 
       def store(key, value, *)
         key = key_for(key)
-        @cache.insert({ '_id' => key, 'data' => serialize(value) })
+        serialized_value = BSON::ByteBuffer.new serialize(value)
+        @cache.insert({ '_id' => key, 'data' => serialized_value })
       end
 
       def clear(*)
