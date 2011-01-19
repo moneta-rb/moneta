@@ -12,7 +12,13 @@ module Moneta
 
       def key?(key)
         transaction do
-          @table.key? key_for(key)
+          root? key_for(key)
+        end
+      end
+
+      def keys
+        transaction true do
+          roots
         end
       end
 
