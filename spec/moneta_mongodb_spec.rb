@@ -11,7 +11,7 @@ begin
 
     describe '#initialize' do
       it 'should initialize with a URI' do
-        mock_mongo = mock(Mongo::Connection, :collection => [])
+        mock_mongo = mock(Object, :db => mock(Object, :collection => []))
         Mongo::Connection.should_receive(:from_uri).
           with('mongodb://a:b@localhost:27059/cache').
           and_return mock_mongo

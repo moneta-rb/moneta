@@ -22,7 +22,7 @@ module Moneta
           }.update(options)
           conn = Mongo::Connection.new(options[:host], options[:port])
         end
-        db = conn.db(options[:db])
+        db = options[:db] ? conn.db(options[:db]) : conn.db
         @cache = db.collection(options[:collection])
       end
 
