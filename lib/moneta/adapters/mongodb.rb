@@ -14,7 +14,7 @@ module Moneta
       def initialize(options = {})
         if options[:uri]
           conn = Mongo::Connection.from_uri options[:uri]
-          db = conn.db(URI.parse(options[:url]).gsub('/','_'))
+          db = conn.db(URI.parse(options[:uri]).path.gsub('/','_'))
         else
           options = {
             :host => ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost',
