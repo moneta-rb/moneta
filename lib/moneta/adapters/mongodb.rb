@@ -12,7 +12,7 @@ module Moneta
 
       def initialize(options = {})
         if options[:uri]
-          db = Mongo::Connection.from_uri options[:uri]
+          conn = Mongo::Connection.from_uri options[:uri]
         else
           options = {
             :host => ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost',
@@ -21,8 +21,8 @@ module Moneta
             :collection => 'cache'
           }.update(options)
           conn = Mongo::Connection.new(options[:host], options[:port])
-          db = conn.db(options[:db])
         end
+        db = conn.db(options[:db])
         @cache = db.collection(options[:collection])
       end
 
