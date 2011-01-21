@@ -14,7 +14,7 @@ module Moneta
       def initialize(options = {})
         if options[:uri]
           conn = Mongo::Connection.from_uri options[:uri]
-          db_name = URI.parse(options[:uri]).path.gsub('/','_')
+          db_name = URI.parse(options[:uri]).path.sub('/','')
           db_name ||= options[:db]
         else
           options = {
