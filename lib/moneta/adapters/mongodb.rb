@@ -4,6 +4,7 @@ rescue LoadError
   puts "You need the mongo gem to use the MongoDB moneta store"
   exit
 end
+require 'uri'
 
 module Moneta
   module Adapters
@@ -13,6 +14,7 @@ module Moneta
       def initialize(options = {})
         if options[:uri]
           conn = Mongo::Connection.from_uri options[:uri]
+          db = conn.db(URI.parse(options[:url]).gsub('/','_'))
         else
           options = {
             :host => ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost',
@@ -21,8 +23,8 @@ module Moneta
             :collection => 'cache'
           }.update(options)
           conn = Mongo::Connection.new(options[:host], options[:port])
+          db = conn.db(options[:db])
         end
-        db = options[:db] ? conn.db(options[:db]) : conn.db
         @cache = db.collection(options[:collection])
       end
 
