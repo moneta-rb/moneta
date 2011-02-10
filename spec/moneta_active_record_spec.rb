@@ -5,7 +5,7 @@ require 'moneta/adapters/active_record'
 if defined?(ActiveRecord)
   describe 'Moneta::ActiveRecord' do
     before(:each) do
-      @cache = Moneta::ActiveRecord.new(:connection => {
+      @cache = Moneta::Adapters::ActiveRecord.new(:connection => {
         :adapter  => 'sqlite3',
         :database => 'reports_test.sqlite3'
       })
