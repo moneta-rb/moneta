@@ -13,9 +13,12 @@ module Moneta
         @options = options
         unless self.class.const_defined?('Store')
           self.class.const_set('Store', Class.new(::ActiveRecord::Base)) # this prevents loading issues when active_record gem is unavailable
+          Store.set_table_name(@options[:table] || 'moneta_store')
         end
-        Store.establish_connection(@options[:connection] || raise("Must specify :connection"))
-        Store.set_table_name(@options[:table] || 'moneta_store')
+
+        if @options[:connection]
+          Store.establish_connection @options[:connection]
+        end
       end
 
       def migrate

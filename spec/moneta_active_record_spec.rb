@@ -4,18 +4,34 @@ require 'moneta/adapters/active_record'
 
 if defined?(ActiveRecord)
   describe 'Moneta::ActiveRecord' do
-    before(:each) do
-      @cache = Moneta::Adapters::ActiveRecord.new(:connection => {
-        :adapter  => 'sqlite3',
-        :database => 'reports_test.sqlite3'
-      })
-      @cache.migrate
-      @cache.clear
-    end
     after :all do
       FileUtils.rm_f File.expand_path('../reports_test.sqlite3', File.dirname(__FILE__))
     end
 
-    it_should_behave_like "a read/write Moneta cache"
+    context 'with connection option set' do
+      before(:each) do
+        @cache = Moneta::Adapters::ActiveRecord.new(:connection => {
+          :adapter  => 'sqlite3',
+          :database => 'reports_test.sqlite3'
+        })
+        @cache.migrate
+        @cache.clear
+      end
+
+      it_should_behave_like "a read/write Moneta cache"
+    end
+
+    context 'using preexisting ActiveRecord connection' do
+      describe '#initialize' do
+        it 'uses an existing connection' do
+          ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
+            :database => 'reports_test.sqlite3'
+          
+          cache = Moneta::Adapters::ActiveRecord.new
+          cache.migrate
+          Moneta::Adapters::ActiveRecord::Store.table_exists?.should be_true
+        end
+      end
+    end
   end
 end
