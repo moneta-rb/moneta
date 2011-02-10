@@ -4,6 +4,8 @@ rescue LoadError
   puts "You need the activerecord gem in order to use the ActiveRecord moneta store"
 end
 
+require 'yaml'
+
 module Moneta
   module Adapters
     class ActiveRecord
@@ -56,6 +58,15 @@ module Moneta
 
       def clear
         Store.delete_all
+      end
+
+    private
+      
+      def serialize(value)
+        value.to_yaml
+      end
+      def deserialize(value)
+        YAML::load value
       end
     end
   end
