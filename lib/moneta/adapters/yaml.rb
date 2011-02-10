@@ -7,9 +7,9 @@ module Moneta
       include Moneta::Defaults
 
       def initialize(options = {})
-        @file = File.expand_path(options[:path])
+        @file = ::File.expand_path(options[:path])
         unless ::File.exists?(@file)
-          File.open(@file, "w") { |file| file << {}.to_yaml }
+          ::File.open(@file, "w") { |file| file << {}.to_yaml }
         end
       end
 

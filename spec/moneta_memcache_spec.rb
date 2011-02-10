@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-begin
+if defined?(MemCache)
   require "moneta/adapters/memcache"
 
   describe "Moneta::Adapters::Memcache" do
@@ -14,5 +14,4 @@ begin
   
     it_should_behave_like "a read/write Moneta cache"
   end
-rescue SystemExit
 end  

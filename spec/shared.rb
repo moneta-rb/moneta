@@ -40,7 +40,7 @@ shared_examples_for "a read/write Moneta cache" do
       @cache.key?(key).should be_true
     end
 
-    it "removes and return an element with a #{type} key from the backing store via delete if it exists" do
+    it "removes and returns an element with a #{type} key from the backing store via delete if it exists" do
       @cache[key] = "value"
       @cache.delete(key).should == "value"
       @cache.key?(key).should be_false

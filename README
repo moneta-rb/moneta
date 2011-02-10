@@ -1,48 +1,3 @@
-This Fork
-=========
-
-Adds an ActiveRecord and a Monetas adapter to Moneta. The first for when you don't have/need a real key/value store in your infrastructure yet, the second for when you transparently want to replicate values to multiple stores.
-
-Moneta::ActiveRecord
-====================
-You need a migration:
-
-  class AddMonetaTable < ActiveRecord::Migration
-    # Only needed if you want to keep your cache in a separate database
-    class TheStore < ActiveRecord::Base
-      establish_connection "#{Rails.env}_store"
-    end
-
-    def self.connection
-      TheStore.connection
-    end
-
-    def self.up
-      create_table 'moneta_store', :id => false do |t|
-        t.string :key, :null => false
-        t.text :value
-      end
-
-      if mysql?
-        execute "alter table moneta_store modify column `key` varchar(255) primary key"
-      else
-        execute "alter table moneta_store add primary key (key)"
-      end
-    end
-
-    def self.down
-      drop_table 'moneta_store'
-    end
-
-    def self.mysql?
-      ActiveRecord::Base.configurations[Rails.env]['adapter'] == 'mysql'
-    end
-  end
-
-Initialize like this:
-
-  store = Moneta::ActiveRecord.new(:connection => ActiveRecord::Base.configurations["#{Rails.env}_store"])
-
 Moneta::Monetas
 ===============
 
@@ -108,3 +63,45 @@ The API:
                                 if the key has already expired, it will not be updated.
 
 #clear::                        clear all keys in this store
+
+
+Moneta::ActiveRecord
+====================
+You need a migration:
+
+  class AddMonetaTable < ActiveRecord::Migration
+    # Only needed if you want to keep your cache in a separate database
+    class TheStore < ActiveRecord::Base
+      establish_connection "#{Rails.env}_store"
+    end
+
+    def self.connection
+      TheStore.connection
+    end
+
+    def self.up
+      create_table 'moneta_store', :id => false do |t|
+        t.string :key, :null => false
+        t.text :value
+      end
+
+      if mysql?
+        execute "alter table moneta_store modify column `key` varchar(255) primary key"
+      else
+        execute "alter table moneta_store add primary key (key)"
+      end
+    end
+
+    def self.down
+      drop_table 'moneta_store'
+    end
+
+    def self.mysql?
+      ActiveRecord::Base.configurations[Rails.env]['adapter'] == 'mysql'
+    end
+  end
+
+Initialize like this:
+
+  store = Moneta::ActiveRecord.new(:connection => ActiveRecord::Base.configurations["#{Rails.env}_store"])
+

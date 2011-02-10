@@ -6,7 +6,7 @@ module Moneta
       include Moneta::Defaults
 
       def initialize(options = {})
-        options[:path] ||= File.join Dir.pwd, 'data.pstore'
+        options[:path] ||= ::File.join Dir.pwd, 'data.pstore'
         super options[:path]
       end
 
