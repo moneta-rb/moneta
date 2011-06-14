@@ -25,33 +25,35 @@ module Moneta
 
       def migrate
         unless Store.table_exists?
-          Store.connection.create_table Store.table_name, :id => false do |t|
-            t.string   'key', :primary => :true
+          Store.connection.create_table Store.table_name do |t|
+            t.string   'key_name', :primary => :true
             t.string   'value'
           end
         end
       end
 
       def key?(key)
-        record = Store.find_by_key key_for(key)
+        record = Store.find_by_key_name key_for(key)
         !record.nil?
       end
 
       def [](key)
-        record = Store.find_by_key key_for(key)
+        record = Store.find_by_key_name key_for(key)
         record ? deserialize(record.value) : nil
       end
 
       def delete(key)
-        record = Store.find_by_key key_for(key)
+        record = Store.find_by_key_name key_for(key)
         if record
-          Store.where(:key => key_for(record.key)).delete_all
+          Store.where(:key_name => key_for(record.key_name)).delete_all
           deserialize record.value
         end
       end
 
       def store(key, value, options = {})
-        record = Store.new :key => key_for(key), :value => serialize(value)
+        record = Store.find_by_key_name key_for(key)
+        record ||= Store.new :key_name => key_for(key)
+        record.value = serialize(value)
         record.save!
         value
       end

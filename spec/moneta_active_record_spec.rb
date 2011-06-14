@@ -19,6 +19,13 @@ if defined?(ActiveRecord)
       end
 
       it_should_behave_like "a read/write Moneta cache"
+
+      it 'updates an existing key/value' do
+        @cache['foo/bar'] = 4
+        @cache['foo/bar'] += 4
+        records = Moneta::Adapters::ActiveRecord::Store.find :all, :conditions => { :key_name => 'foo/bar' }
+        records.count.should == 1
+      end
     end
 
     context 'using preexisting ActiveRecord connection' do
