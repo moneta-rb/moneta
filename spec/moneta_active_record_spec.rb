@@ -23,7 +23,7 @@ if defined?(ActiveRecord)
       it 'updates an existing key/value' do
         @cache['foo/bar'] = 4
         @cache['foo/bar'] += 4
-        records = Moneta::Adapters::ActiveRecord::Store.find :all, :conditions => { :key_name => 'foo/bar' }
+        records = Moneta::Adapters::ActiveRecord::Store.find :all, :conditions => { :key => 'foo/bar' }
         records.count.should == 1
       end
     end
