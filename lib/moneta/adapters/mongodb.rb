@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 begin
   require "mongo"
 rescue LoadError
@@ -36,7 +38,7 @@ module Moneta
 
       def [](key)
         res = @cache.find_one('_id' => key_for(key))
-        res && deserialize(res['data'].to_s)
+        res ? res['data'] : nil
       end
 
       def delete(key, *)
@@ -49,9 +51,8 @@ module Moneta
 
       def store(key, value, *)
         key = key_for(key)
-        buffer = BSON::ByteBuffer.new serialize(value)
         @cache.update({ '_id' => key },
-                      { '_id' => key, 'data' => buffer.to_s },
+                      { '_id' => key, 'data' => value },
                       { :upsert => true })
       end
 
