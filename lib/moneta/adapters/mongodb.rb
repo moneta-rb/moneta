@@ -49,9 +49,9 @@ module Moneta
 
       def store(key, value, *)
         key = key_for(key)
-        serialized_value = BSON::ByteBuffer.new serialize(value)
+        buffer = BSON::ByteBuffer.new serialize(value)
         @cache.update({ '_id' => key },
-                      { '_id' => key, 'data' => serialized_value },
+                      { '_id' => key, 'data' => buffer.to_s },
                       { :upsert => true })
       end
 
