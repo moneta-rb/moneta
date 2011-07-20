@@ -14,22 +14,27 @@ module Moneta
       include Moneta::Defaults
 
       def initialize(options = {})
-        if options[:uri]
-          conn = Mongo::Connection.from_uri options[:uri]
-          db_name = URI.parse(options[:uri]).path.sub('/','')
-          db_name ||= options[:db]
+        collection = options.delete(:collection) || 'cache'
+
+        if uri = options.delete(:uri)
+          db_name = URI.parse(uri).path.sub('/','')
+          db_name ||= options.delete :db
+          conn = Mongo::Connection.from_uri uri, options
         else
           options = {
             :host => ENV['MONGO_RUBY_DRIVER_HOST'] || 'localhost',
             :port => ENV['MONGO_RUBY_DRIVER_PORT'] || Mongo::Connection::DEFAULT_PORT,
-            :db => 'cache',
-            :collection => 'cache'
+            :db => 'cache'
           }.update(options)
-          conn = Mongo::Connection.new(options[:host], options[:port])
-          db_name = options[:db]
+
+          host = options.delete :host
+          port = options.delete :port
+          db_name = options.delete :db
+
+          conn = Mongo::Connection.new(host, port, options)
         end
-        db = conn.db(db_name)
-        @cache = db.collection(options[:collection])
+        db = conn.db db_name
+        @cache = db.collection collection
       end
 
       def key?(key, *)

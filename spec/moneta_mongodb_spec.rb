@@ -13,7 +13,7 @@ begin
       it 'should initialize with a URI' do
         mock_mongo = mock(Object, :db => mock(Object, :collection => []))
         Mongo::Connection.should_receive(:from_uri).
-          with('mongodb://a:b@localhost:27059/cache').
+          with('mongodb://a:b@localhost:27059/cache', {}).
           and_return mock_mongo
         m = Moneta::Adapters::MongoDB.new :uri => 'mongodb://a:b@localhost:27059/cache'
       end
@@ -21,6 +21,14 @@ begin
         m = Moneta::Adapters::MongoDB.new
         m['example'] = 3.0
         m['example'].should == 3.0
+      end
+      it 'should pass any extra options to Mongo::Connection.new' do
+        mock_mongo = mock(Object, :db => mock(Object, :collection => nil))
+        Mongo::Connection.should_receive(:new).with('localhost', 27059,
+          hash_including(:pool_size => 5, :timeout => 22)).
+          and_return(mock_mongo)
+        m = Moneta::Adapters::MongoDB.new :uri => 'mongodb://a:b@localhost:27059/cache',
+          :pool_size => 5, :timeout => 22
       end
     end
 
