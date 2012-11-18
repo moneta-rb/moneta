@@ -1,13 +1,15 @@
-require 'rubygems'
-require 'bundler'
-Bundler.setup
-
-Bundler::GemHelper.install_tasks
-
-require 'rspec/core/rake_task'
-desc "Run all examples (or a specific spec with TASK=xxxx)"
-RSpec::Core::RakeTask.new(:examples) do |c|
-  c.rspec_opts = '-Ispec'
+begin
+  require 'bundler'
+  Bundler::GemHelper.install_tasks
+rescue Exception
 end
 
-task :default => :examples
+require 'rake/testtask'
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib' << 'test'
+  t.test_files = FileList['test/test_*.rb']
+  t.verbose = true
+end
+
+task :default => :test

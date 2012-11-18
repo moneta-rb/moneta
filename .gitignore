@@ -1,3 +1,4 @@
-moneta-*.gem
-.idea
+test/tmp
+*~
 *.swp
+*.rdb

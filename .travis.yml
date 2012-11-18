@@ -1,0 +1,25 @@
+rvm:
+  - 1.8.7
+  - 1.9.3
+#  - ruby-head
+#  - jruby
+  - rbx-18mode
+  - rbx-19mode
+services:
+  - riak
+  - couchdb
+  - redis-server
+#  - cassandra
+#  - memcached
+#  - mongodb
+before_install:
+  - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev # tokyotyrant
+  - sudo /bin/bash /etc/init.d/mongodb start
+  - memcached -d -p 22122
+matrix:
+  allow_failures:
+    - rvm: 1.8.7
+#    - rvm: ruby-head
+    - rvm: rbx-18mode
+    - rvm: rbx-19mode
+
