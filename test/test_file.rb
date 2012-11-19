@@ -5,5 +5,5 @@ describe Juno::File do
     Juno::File.new(:dir => File.join(make_tempdir, 'file'))
   end
 
-  class_eval(&JunoSpecification)
+  class_eval(&Juno::Specification)
 end

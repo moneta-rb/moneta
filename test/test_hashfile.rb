@@ -5,5 +5,5 @@ describe Juno::HashFile do
     Juno::HashFile.new(:dir => File.join(make_tempdir, 'hashfile'))
   end
 
-  class_eval(&JunoSpecification)
+  class_eval(&Juno::Specification)
 end

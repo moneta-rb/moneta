@@ -9,7 +9,7 @@ begin
         store
       end
 
-      class_eval(&JunoSpecification)
+      class_eval(&Juno::Specification)
 
       it 'updates an existing key/value' do
         @store['foo/bar'] = 4

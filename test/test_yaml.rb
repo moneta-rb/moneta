@@ -5,5 +5,5 @@ describe Juno::YAML do
     Juno::YAML.new(:file => File.join(make_tempdir, 'yaml'))
   end
 
-  class_eval(&JunoSpecification)
+  class_eval(&Juno::Specification)
 end

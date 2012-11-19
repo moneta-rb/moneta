@@ -7,8 +7,7 @@ begin
       Juno::Memcached.new(:server => 'localhost:22122', :namespace => 'juno')
     end
 
-    class_eval(&JunoSpecification)
-    class_eval(&JunoExpiresSpecification)
+    class_eval(&Juno::ExpiresSpecification)
   end
 rescue LoadError => ex
   puts "Juno::Memcached not tested: #{ex.message}"

@@ -5,5 +5,5 @@ describe Juno::PStore do
     Juno::PStore.new(:file => File.join(make_tempdir, 'pstore'))
   end
 
-  class_eval(&JunoSpecification)
+  class_eval(&Juno::Specification)
 end

@@ -8,6 +8,6 @@ begin
       store
     end
 
-    class_eval(&JunoSpecification)
+    class_eval(&Juno::Specification)
   end
 end

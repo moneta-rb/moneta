@@ -6,7 +6,7 @@ begin
       Juno::Riak.new
     end
 
-    class_eval(&JunoSpecification)
+    class_eval(&Juno::Specification)
   end
 rescue LoadError => ex
   puts "Juno::Riak not tested: #{ex.message}"

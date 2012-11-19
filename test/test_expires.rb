@@ -5,6 +5,5 @@ describe Juno::Expires do
     Juno::Expires.new(Juno::Memory.new)
   end
 
-  class_eval(&JunoSpecification)
-  class_eval(&JunoExpiresSpecification)
+  class_eval(&Juno::ExpiresSpecification)
 end

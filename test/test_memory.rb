@@ -5,5 +5,5 @@ describe Juno::Memory do
     Juno::Memory.new
   end
 
-  class_eval(&JunoSpecification)
+  class_eval(&Juno::Specification)
 end

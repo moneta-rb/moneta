@@ -15,7 +15,7 @@ begin
         Juno::DataMapper::Store.auto_migrate!(:juno)
       end
 
-      class_eval(&JunoSpecification)
+      class_eval(&Juno::Specification)
     end
 
     describe 'when :repository specified' do
@@ -27,7 +27,7 @@ begin
         Juno::DataMapper::Store.auto_migrate!(:sample)
       end
 
-      class_eval(&JunoSpecification)
+      class_eval(&Juno::Specification)
     end
 
     describe 'with multiple stores' do

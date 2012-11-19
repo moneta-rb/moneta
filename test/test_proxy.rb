@@ -5,5 +5,5 @@ describe Juno::Proxy do
     Juno::Proxy.new(Juno::Proxy.new(Juno::Memory.new))
   end
 
-  class_eval(&JunoSpecification)
+  class_eval(&Juno::Specification)
 end

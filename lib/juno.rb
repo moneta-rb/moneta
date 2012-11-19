@@ -18,6 +18,7 @@ module Juno
   autoload :MemcachedNative, 'juno/memcached_native'
   autoload :Memory,          'juno/memory'
   autoload :MongoDB,         'juno/mongodb'
+  autoload :Null,            'juno/null'
   autoload :Proxy,           'juno/proxy'
   autoload :PStore,          'juno/pstore'
   autoload :Redis,           'juno/redis'

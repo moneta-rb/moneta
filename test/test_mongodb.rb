@@ -6,7 +6,7 @@ begin
       Juno::MongoDB.new
     end
 
-    class_eval(&JunoSpecification)
+    class_eval(&Juno::Specification)
   end
 rescue LoadError => ex
   puts "Juno::MongoDB not tested: #{ex.message}"
