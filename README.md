@@ -81,7 +81,7 @@ The API
 Proxy store and Expiration
 ------------------------
 
-The memcached and redis backends supports expires values directly:
+The Cassandra, Memcached and Redis backends supports expires values directly:
 
 ~~~ ruby
 cache = Juno::Memcached.new
