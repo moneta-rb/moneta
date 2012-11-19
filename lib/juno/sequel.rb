@@ -8,8 +8,8 @@ module Juno
       @db = ::Sequel.connect(db, options)
       @db.create_table?(@table) do
         primary_key :k
-        blob :k
-        blob :v
+        String :k
+        String :v
       end
     end
 
@@ -40,6 +40,18 @@ module Juno
     end
 
     private
+
+    def serialize(value)
+      [super].pack('m').strip
+    end
+
+    def deserialize(value)
+      super(value.unpack('m').first)
+    end
+
+    def key_for(key)
+      [super].pack('m').strip
+    end
 
     def sequel_table
       @sequel_table ||= @db[@table]

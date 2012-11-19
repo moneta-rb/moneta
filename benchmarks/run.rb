@@ -49,7 +49,6 @@ stores = {
   'File' => { :dir => "bench.file" },
   'HashFile' => { :dir => "bench.hashfile" },
   'DataMapper' => { :setup => "sqlite3::memory:" },
-  'ActiveRecord' => { :db => "sqlite:/" },
   'ActiveRecord' => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
   'Sequel' => { :db => "sqlite:/" },
   # 'Couch' => {:db => "couch_test"},
