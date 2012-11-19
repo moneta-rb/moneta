@@ -12,7 +12,7 @@ module Juno
 
     def load(key, options = {})
       value = deserialize(@store.get(key_for(key)))
-      if value && expires = options[:expires]
+      if value && (expires = options[:expires])
         @store.expire(key_for(key), expires)
       end
       value
