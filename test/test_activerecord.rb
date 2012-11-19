@@ -2,9 +2,13 @@ require 'helper'
 
 begin
   describe Juno::ActiveRecord do
+    def activerecord_adapter
+      defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'
+    end
+
     describe 'with connection option set' do
       def new_store
-        Juno::ActiveRecord.new(:connection => { :adapter  => 'sqlite3', :database => File.join(make_tempdir, 'db.sqlite3')})
+        Juno::ActiveRecord.new(:connection => { :adapter => activerecord_adapter, :database => File.join(make_tempdir, 'db.sqlite3')})
       end
 
       class_eval(&Juno::Specification)
@@ -21,7 +25,7 @@ begin
       include Helper
 
       it 'uses an existing connection' do
-        ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => File.join(make_tempdir, 'db.sqlite3')
+        ActiveRecord::Base.establish_connection :adapter => activerecord_adapter, :database => File.join(make_tempdir, 'db.sqlite3')
 
         store = Juno::ActiveRecord.new
         store.table.table_exists?.must_equal true
