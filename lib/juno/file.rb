@@ -31,7 +31,7 @@ module Juno
     end
 
     def delete(key, options = {})
-      value = self[key]
+      value = load(key, options)
       ::File.unlink(store_path(key))
       value
     rescue Errno::ENOENT

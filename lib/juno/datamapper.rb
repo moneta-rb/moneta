@@ -43,7 +43,7 @@ module Juno
 
     def delete(key, options = {})
       context do
-        value = self[key]
+        value = load(key, options)
         Store.all(:k => key_for(key)).destroy!
         value
       end

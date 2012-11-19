@@ -28,7 +28,7 @@ module Juno
     end
 
     def delete(key, options = {})
-      if value = self[key]
+      if value = load(key, options)
         sequel_table.filter(:k => key_for(key)).delete
         value
       end

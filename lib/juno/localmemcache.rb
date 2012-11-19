@@ -8,7 +8,7 @@ module Juno
     end
 
     def delete(key, options = {})
-      value = self[key]
+      value = load(key, options)
       @store.delete(key_for(key))
       value
     end

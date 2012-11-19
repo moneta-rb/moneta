@@ -1,7 +1,7 @@
 module Juno
   class Expires < Proxy
     def key?(key, options = {})
-      !!self[key]
+      !!load(key, options)
     end
 
     def load(key, options = {})

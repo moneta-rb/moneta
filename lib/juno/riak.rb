@@ -12,7 +12,7 @@ module Juno
     end
 
     def key?(key, options = {})
-      !!self[key]
+      !!load(key, options)
     end
 
     def load(key, options = {})
@@ -22,7 +22,7 @@ module Juno
     end
 
     def delete(key, options = {})
-      value = self[key]
+      value = load(key, options)
       @bucket.delete(key_for(key))
       value
     end

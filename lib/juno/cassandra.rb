@@ -23,7 +23,7 @@ module Juno
     end
 
     def delete(key, options = {})
-      if value = self[key]
+      if value = load(key, options)
         @client.remove(@column_family, key_for(key))
         value
       end

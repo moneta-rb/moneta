@@ -1,5 +1,4 @@
 require 'mongo'
-require 'uri'
 
 module Juno
   class MongoDB < Base
@@ -13,7 +12,7 @@ module Juno
     end
 
     def key?(key, options = {})
-      !!self[key]
+      !!load(key, options)
     end
 
     def load(key, options = {})
@@ -22,7 +21,7 @@ module Juno
     end
 
     def delete(key, options = {})
-      value = self[key]
+      value = load(key, options)
       @store.remove('_id' => key_for(key)) if value
       value
     end
