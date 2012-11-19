@@ -10,14 +10,22 @@ end
 
 gem 'fog'
 gem 'activerecord'
-gem 'sqlite3'
 gem 'redis'
 gem 'ripple'
-gem 'tokyocabinet'
 gem 'mongo'
 gem 'sequel'
 gem 'dalli'
-gem 'memcached'
+
+if defined?(JRUBY_VERSION)
+  gem 'jdbc-sqlite3'
+  gem 'activerecord-jdbc-adapter'
+  gem 'activerecord-jdbcsqlite3-adapter'
+else
+  gem 'tokyocabinet'
+  gem 'memcached'
+  gem 'sqlite3'
+end
+
 #gem 'cassandra'
 #gem 'localmemcache'
 #gem 'fog'
