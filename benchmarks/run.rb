@@ -40,7 +40,7 @@ stores = {
   #'MongoDB' => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
   'LocalMemCache' => { :file => "bench.lmc" },
   'DBM' => { :file => "bench.dbm" },
-#  'SDBM' => { :file => "bench.sdbm" },
+  'SDBM' => { :file => "bench.sdbm" },
   'GDBM' => { :file => "bench.gdbm" },
   'Sqlite' => { :file => ":memory:" },
   'Memory' => { },

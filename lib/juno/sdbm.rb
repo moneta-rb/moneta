@@ -11,5 +11,15 @@ module Juno
       @store.close
       nil
     end
+
+    def store(key, value, options = {})
+      @store[key_for(key)] = serialize(value)
+      value
+    rescue SDBMError
+      # SDBM is not very robust!
+      # You shouldn't put to much data into it, otherwise
+      # it might raise a SDBMError.
+      value
+    end
   end
 end
