@@ -32,6 +32,7 @@ module Juno
     TYPES.each do |type, (key, key2)|
       it "reads from keys that are #{type}s like a Hash" do
         @store[key].must_equal nil
+        @store.load(key).must_equal nil
       end
 
       it "guarantees that the same String value is returned when setting a #{type} key" do
@@ -70,6 +71,7 @@ module Juno
 
       it 'must accept options' do
         @store.key?(key, :foo => 42).must_equal false
+        @store.load(key, :foo => 42).must_equal nil
         @store.fetch(key, nil, :foo => 42).must_equal nil
         @store.delete(key, :foo => 42).must_equal nil
         @store.clear(:foo => 42).must_equal nil
@@ -85,24 +87,26 @@ module Juno
       it "writes String values to keys that are #{type}s like a Hash" do
         @store[key] = 'value'
         @store[key].must_equal 'value'
+        @store.load(key).must_equal 'value'
       end
 
       it "writes Object values to keys that are #{type}s like a Hash" do
         value = {:foo => :bar}
         @store[key] = value
-        @store[key].must_equal(:foo => :bar)
+        @store[key].must_equal value
+        @store.load(key).must_equal value
       end
 
       it "guarantees that a different String value is retrieved from the #{type} key" do
         value = 'value'
         @store[key] = value
-        @store[key].wont_be_same_as(value)
+        @store[key].wont_be_same_as value
       end
 
       it "guarantees that a different Object value is retrieved from the #{type} key" do
         value = {:foo => :bar}
         @store[key] = value
-        @store[key].wont_be_same_as(:foo => :bar)
+        @store[key].wont_be_same_as value
       end
 
       it "returns true from key? if a #{type} key is available" do
@@ -131,6 +135,7 @@ module Juno
       it "stores #{key} values with #store" do
         @store.store(key, 'value').must_equal 'value'
         @store[key].must_equal 'value'
+        @store.load(key).must_equal 'value'
       end
     end
 
@@ -147,6 +152,12 @@ module Juno
     it "refuses to #[] from keys that cannot be marshalled" do
       lambda do
         @store[Struct.new(:foo).new(:bar)]
+      end.must_raise(marshal_error)
+    end
+
+    it "refuses to load from keys that cannot be marshalled" do
+      lambda do
+        @store.load(Struct.new(:foo).new(:bar), true)
       end.must_raise(marshal_error)
     end
 
@@ -184,11 +195,18 @@ module Juno
   ExpiresSpecification = proc do
     class_eval(&Specification)
 
-    it 'should support expires on store and lookup' do
+    it 'should support expires on store and #[]' do
       @store.store('key', 'value', :expires => 2)
       @store['key'].must_equal 'value'
       sleep 3
       @store['key'].must_equal nil
+    end
+
+    it 'should support expires on store and load' do
+      @store.store('key', 'value', :expires => 2)
+      @store.load('key').must_equal 'value'
+      sleep 3
+      @store.load('key').must_equal nil
     end
 
     it 'should support expires on store and key?' do
@@ -196,6 +214,17 @@ module Juno
       @store.key?('key').must_equal true
       sleep 3
       @store.key?('key').must_equal false
+    end
+
+    it 'should support updating the expiration time in load' do
+      @store.store('key2', 'value2', :expires => 2)
+      @store['key2'].must_equal 'value2'
+      sleep 1
+      @store.load('key2', :expires => 3).must_equal 'value2'
+      sleep 1
+      @store['key2'].must_equal 'value2'
+      sleep 3
+      @store['key2'].must_equal nil
     end
 
     it 'should support updating the expiration time in fetch' do
