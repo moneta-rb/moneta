@@ -9,30 +9,30 @@ module Juno
       options[:keyspace] ||= 'Juno'
       options[:host]     ||= '127.0.0.1'
       options[:port]     ||=  9160
-      @client = ::Cassandra.new(options[:keyspace], "#{options[:host]}:#{options[:port]}")
       @column_family = options[:column_family] || :Juno
+      @client = ::Cassandra.new(options[:keyspace], "#{options[:host]}:#{options[:port]}")
     end
 
     def key?(key, options = {})
-      key = key_for(key)
-      @client.exists?(@column_family, key)
+      @client.exists?(@column_family, key_for(key))
     end
 
     def [](key)
-      key = key_for(key)
-      deserialize(@client.get(@column_family, key)['value'])
+      value = @client.get(@column_family, key_for(key))
+      value ? deserialize(value['value']) : nil
     end
 
     def delete(key, options = {})
-      key = key_for(key)
-      value = self[key]
-      @client.remove(@column_family, key)
-      value
+      if value = self[key]
+        @client.remove(@column_family, key_for(key))
+        value
+      end
     end
 
     def store(key, value, options = {})
-      key = key_for(key)
-      @client.insert(@column_family, key, {'value' => serialize(value)})
+      @client.insert(@column_family, key_for(key),
+                     {'value' => serialize(value)}, :ttl => options[:expires])
+      value
     end
 
     def clear(options = {})

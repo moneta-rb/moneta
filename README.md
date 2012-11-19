@@ -28,6 +28,7 @@ Out of the box, it supports:
 * Sequel
 * Sqlite3
 * Fog cloud storage (Amazon S3, Rackspace, ...)
+* Cassandra
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.

@@ -28,5 +28,4 @@ end
 
 #gem 'cassandra'
 #gem 'localmemcache'
-#gem 'fog'
 #gem 'tokyotyrant'

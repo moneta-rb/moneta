@@ -1,7 +1,7 @@
 module Juno
   autoload :ActiveRecord,    'juno/activerecord'
   autoload :Base,            'juno/base'
-  #autoload :Cassandra,       'juno/cassandra'
+  autoload :Cassandra,       'juno/cassandra'
   autoload :Couch,           'juno/couch'
   autoload :DataMapper,      'juno/datamapper'
   autoload :DBM,             'juno/dbm'
