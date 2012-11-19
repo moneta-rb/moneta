@@ -3,7 +3,7 @@ require 'helper'
 begin
   describe Juno::Sequel do
     def new_store
-      Juno::Sequel.new(:db => 'sqlite:/')
+      Juno::Sequel.new(:db => (defined?(JRUBY_VERSION) ? 'jdbc:sqlite:/' : 'sqlite:/'))
     end
 
     class_eval(&Juno::Specification)
