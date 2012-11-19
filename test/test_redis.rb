@@ -7,6 +7,7 @@ begin
     end
 
     class_eval(&JunoSpecification)
+    class_eval(&JunoExpiresSpecification)
   end
 rescue LoadError => ex
   puts "Juno::Redis not tested: #{ex.message}"

@@ -10,6 +10,14 @@ module Juno
       @store.exists(key_for(key))
     end
 
+    def fetch(key, value = nil, options = {})
+      result = super
+      if result && expires = options[:expires]
+        @store.expire(key_for(key), expires)
+      end
+      result
+    end
+
     def [](key)
       deserialize(@store.get(key_for(key)))
     end
@@ -22,7 +30,11 @@ module Juno
     end
 
     def store(key, value, options = {})
-      @store.set(key_for(key), serialize(value))
+      key = key_for(key)
+      @store.set(key, serialize(value))
+      if expires = options[:expires]
+        @store.expire(key, expires)
+      end
       value
     end
 
