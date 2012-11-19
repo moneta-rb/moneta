@@ -19,10 +19,10 @@ module Juno
     end
 
     def delete(key, options = {})
-      string_key = key_for(key)
-      value = load(key, options)
-      @store.del(string_key) if value
-      value
+      if value = load(key, options)
+        @store.del(key_for(key))
+        value
+      end
     end
 
     def store(key, value, options = {})
