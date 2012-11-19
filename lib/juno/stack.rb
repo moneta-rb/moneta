@@ -1,7 +1,7 @@
 module Juno
   class Stack < Base
-    def initialize(options = {})
-      raise 'No option :stores specified' unless @stores = options[:stores]
+    def initialize(*stores)
+      @stores = stores
     end
 
     def key?(key, options = {})
