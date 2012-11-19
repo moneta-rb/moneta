@@ -27,6 +27,7 @@ Out of the box, it supports:
 * LocalMemCache
 * Sequel
 * Sqlite3
+* Fog cloud storage (Amazon S3, Rackspace, ...)
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
@@ -61,7 +62,7 @@ The API
 Proxy store & Expiry
 ====================
 
-The memcached backend supports expires values directly:
+The memcached and redis backends supports expires values directly:
 
 ```ruby
 cache = Juno::Memcached.new
