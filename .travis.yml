@@ -2,7 +2,7 @@ rvm:
   - 1.8.7
   - 1.9.3
 #  - ruby-head
-#  - jruby
+  - jruby
   - rbx-18mode
   - rbx-19mode
 services:
@@ -22,4 +22,4 @@ matrix:
 #    - rvm: ruby-head
     - rvm: rbx-18mode
     - rvm: rbx-19mode
-
+    - rvm: jruby

@@ -134,41 +134,46 @@ module Juno
       end
     end
 
+    def marshal_error
+      # HACK: Marshalling structs in rubinius without class name throws
+      # NoMethodError (to_sym). TODO: Create an issue for rubinius!
+      RUBY_ENGINE == 'rbx' ? NoMethodError : TypeError
+    end
 
     it "refuses to #[] from keys that cannot be marshalled" do
       lambda do
         @store[Struct.new(:foo).new(:bar)]
-      end.must_raise(TypeError)
+      end.must_raise(marshal_error)
     end
 
     it "refuses to fetch from keys that cannot be marshalled" do
       lambda do
         @store.fetch(Struct.new(:foo).new(:bar), true)
-      end.must_raise(TypeError)
+      end.must_raise(marshal_error)
     end
 
     it "refuses to #[]= to keys that cannot be marshalled" do
       lambda do
         @store[Struct.new(:foo).new(:bar)] = 'value'
-      end.must_raise(TypeError)
+      end.must_raise(marshal_error)
     end
 
     it "refuses to store to keys that cannot be marshalled" do
       lambda do
         @store.store Struct.new(:foo).new(:bar), 'value'
-      end.must_raise(TypeError)
+      end.must_raise(marshal_error)
     end
 
     it "refuses to check for key? if the key cannot be marshalled" do
       lambda do
         @store.key? Struct.new(:foo).new(:bar)
-      end.must_raise(TypeError)
+      end.must_raise(marshal_error)
     end
 
     it "refuses to delete a key if the key cannot be marshalled" do
       lambda do
         @store.delete Struct.new(:foo).new(:bar)
-      end.must_raise(TypeError)
+      end.must_raise(marshal_error)
     end
   end
 
