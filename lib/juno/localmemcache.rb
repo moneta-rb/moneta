@@ -1,14 +1,10 @@
 require 'localmemcache'
 
 module Juno
-  class LocalMemCache < Base
+  class LocalMemCache < Memory
     def initialize(options = {})
       raise 'No option :file specified' unless options[:file]
       @store = ::LocalMemCache.new(:filename => options[:file])
-    end
-
-    def key?(key, options = {})
-      @store.has_key?(key_for(key))
     end
 
     def delete(key, options = {})

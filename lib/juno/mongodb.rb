@@ -16,7 +16,7 @@ module Juno
       !!self[key]
     end
 
-    def [](key)
+    def load(key, options = {})
       value = @store.find_one('_id' => key_for(key))
       value ? deserialize(value['data']) : nil
     end

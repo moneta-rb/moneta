@@ -41,6 +41,8 @@ The API
 
 #[](key)                          retrieve a key. if the key is not available, return nil
 
+#load(key, options = {})          retrieve a key. if the key is not available, return nil
+
 #fetch(key, options = {}, &block) retrieve a key. if the key is not available, execute the
                                   block and return its return value.
 

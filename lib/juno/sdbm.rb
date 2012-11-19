@@ -1,7 +1,7 @@
 require 'sdbm'
 
 module Juno
-  class SDBM < Base
+  class SDBM < Memory
     def initialize(options = {})
       raise 'No option :file specified' unless options[:file]
       @store = ::SDBM.new(options[:file])
@@ -13,7 +13,7 @@ module Juno
     end
 
     def store(key, value, options = {})
-      @store[key_for(key)] = serialize(value)
+      super
       value
     rescue SDBMError
       # SDBM is not very robust!

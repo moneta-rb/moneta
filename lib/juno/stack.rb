@@ -8,9 +8,9 @@ module Juno
       @stores.any? {|s| s.key?(key) }
     end
 
-    def [](key)
+    def load(key, options = {})
       @stores.each do |s|
-        value = s[key]
+        value = s.load(key, options)
         return value if value
       end
       nil

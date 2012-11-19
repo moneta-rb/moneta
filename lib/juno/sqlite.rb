@@ -17,7 +17,7 @@ module Juno
       !@select.execute!(key_for(key)).empty?
     end
 
-    def [](key)
+    def load(key, options = {})
       rows = @select.execute!(key_for(key))
       rows.empty? ? nil : deserialize(rows.first.first)
     end

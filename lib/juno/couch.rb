@@ -12,7 +12,7 @@ module Juno
       false
     end
 
-    def [](key)
+    def load(key, options = {})
       deserialize(@db.get(key_for(key))['data'])
     rescue RestClient::ResourceNotFound
       nil

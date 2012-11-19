@@ -4,7 +4,7 @@ module Juno
       false
     end
 
-    def [](key)
+    def load(key, options = {})
       nil
     end
 

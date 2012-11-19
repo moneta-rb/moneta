@@ -26,7 +26,7 @@ module Juno
       !!@table.find_by_key(key_for(key))
     end
 
-    def [](key)
+    def load(key, options = {})
       record = @table.find_by_key(key_for(key))
       record ? deserialize(record.value) : nil
     end

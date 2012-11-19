@@ -12,7 +12,7 @@ module Juno
       !!@directory.files.head(key_for(key))
     end
 
-    def [](key)
+    def load(key, options = {})
       if value = get(key)
         deserialize(value.body)
       end

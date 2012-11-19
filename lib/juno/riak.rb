@@ -15,7 +15,7 @@ module Juno
       !!self[key]
     end
 
-    def [](key)
+    def load(key, options = {})
       deserialize(@bucket[key_for(key)].data)
     rescue ::Riak::HTTPFailedRequest => err
       nil

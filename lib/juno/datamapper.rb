@@ -21,7 +21,7 @@ module Juno
       context { !!Store.get(key_for(key)) }
     end
 
-    def [](key)
+    def load(key, options = {})
       context do
         record = Store.get(key_for(key))
         record ? record.v : nil

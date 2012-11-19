@@ -14,17 +14,13 @@ module Juno
       false
     end
 
-    def fetch(key, value = nil, options = {})
-      result = super
-      if result && options.include?(:expires)
-        store(key, result, options)
+    def load(key, options = {})
+      value = deserialize(@cache.get(key_for(key), false))
+      if value && options.include?(:expires)
+        store(key, value, options)
       else
-        result
+        value
       end
-    end
-
-    def [](key)
-      deserialize(@cache.get(key_for(key), false))
     rescue ::Memcached::NotFound
     end
 

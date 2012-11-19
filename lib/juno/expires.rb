@@ -4,17 +4,13 @@ module Juno
       !!self[key]
     end
 
-    def fetch(key, value = nil, options = {}, &block)
-      result = check_expired(key, super(key, value, options, &block))
-      if result && options.include?(:expires)
-        store(key, result, options)
+    def load(key, options = {})
+      value = check_expired(key, super(key, options))
+      if value && options.include?(:expires)
+        store(key, value, options)
       else
-        result
+        value
       end
-    end
-
-    def [](key)
-      check_expired(key, super(key))
     end
 
     def store(key, value, options = {})

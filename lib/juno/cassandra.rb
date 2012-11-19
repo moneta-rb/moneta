@@ -17,7 +17,7 @@ module Juno
       @client.exists?(@column_family, key_for(key))
     end
 
-    def [](key)
+    def load(key, options = {})
       value = @client.get(@column_family, key_for(key))
       value ? deserialize(value['value']) : nil
     end

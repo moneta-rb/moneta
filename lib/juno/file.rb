@@ -12,7 +12,7 @@ module Juno
       ::File.exist?(store_path(key))
     end
 
-    def [](key)
+    def load(key, options = {})
       deserialize(::File.read(store_path(key)))
     rescue Errno::ENOENT
     end

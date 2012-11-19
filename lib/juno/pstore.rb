@@ -12,7 +12,7 @@ module Juno
       @store.transaction(true) { @store.root?(key_for(key)) }
     end
 
-    def [](key)
+    def load(key, options = {})
       @store.transaction(true) { @store[key_for(key)] }
     end
 

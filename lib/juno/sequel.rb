@@ -17,7 +17,7 @@ module Juno
       !!sequel_table[:k => key_for(key)]
     end
 
-    def [](key)
+    def load(key, options = {})
       result = sequel_table[:k => key_for(key)]
       result ? deserialize(result[:v]) : nil
     end
