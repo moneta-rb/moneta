@@ -11,10 +11,11 @@ end
 gem 'fog'
 gem 'activerecord'
 gem 'redis'
-gem 'ripple'
 gem 'mongo'
 gem 'sequel'
 gem 'dalli'
+gem 'json' # Ripple/Riak needs json
+gem 'ripple'
 
 if defined?(JRUBY_VERSION)
   gem 'jdbc-sqlite3'
