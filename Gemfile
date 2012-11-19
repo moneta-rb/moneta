@@ -8,6 +8,7 @@ if RUBY_VERSION > '1.9'
   gem 'couchrest'
 end
 
+gem 'fog'
 gem 'activerecord'
 gem 'sqlite3'
 gem 'redis'
