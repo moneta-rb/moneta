@@ -137,7 +137,11 @@ module Juno
     def marshal_error
       # HACK: Marshalling structs in rubinius without class name throws
       # NoMethodError (to_sym). TODO: Create an issue for rubinius!
-      Object.const_defined?(:RUBY_ENGINE) && RUBY_ENGINE == 'rbx' ? NoMethodError : TypeError
+      if Object.const_defined?(:RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+        RUBY_VERSION < '1.9' ? ArgumentError : NoMethodError
+      else
+        TypeError
+      end
     end
 
     it "refuses to #[] from keys that cannot be marshalled" do

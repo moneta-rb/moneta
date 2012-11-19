@@ -12,7 +12,7 @@ module Juno
     def initialize(options = {})
       raise 'No option :setup specified' unless options[:setup]
       @repository = options.delete(:repository) || :juno
-      Store.storage_names[@repository] = options.delete(:table) || :juno
+      Store.storage_names[@repository] = (options.delete(:table) || :juno).to_s
       ::DataMapper.setup(@repository, options[:setup])
       context { Store.auto_upgrade! }
     end

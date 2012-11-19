@@ -8,4 +8,6 @@ begin
 
     class_eval(&Juno::Specification)
   end
+rescue LoadError => ex
+  puts "Juno::Sequel not tested: #{ex.message}"
 end
