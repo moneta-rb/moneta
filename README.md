@@ -9,26 +9,33 @@ fork was that Moneta was unmaintained for a long time.
 
 Out of the box, it supports:
 
-* File Store
-* Memcached store (memcached and dalli)
-* In-memory store
-* DataMapper
-* BerkeleyDB (dbm)
-* GDBM
-* SDBM
-* Redis
-* Riak
-* TokyoCabinet
-* CouchDB
-* MongoDB
-* ActiveRecord
-* YAML store
-* PStore
-* LocalMemCache
-* Sequel
-* Sqlite3
-* Fog cloud storage (Amazon S3, Rackspace, ...)
-* Cassandra
+* Memory:
+    * In-memory store (Juno::Memory)
+    * LocalMemCache (Juno::LocalMemCache)
+    * Memcached store (Juno::Memcached, Juno::MemcachedNative and Juno::MemcachedDalli)
+* Relational Databases:
+    * DataMapper (Juno::DataMapper)
+    * ActiveRecord (Juno::ActiveRecord)
+    * Sequel (Juno::Sequel)
+    * Sqlite3 (Juno::Sqlite)
+* Filesystem:
+    * PStore (Juno::PStore)
+    * YAML store (Juno::YAML)
+    * Filesystem directory store (Juno::File)
+    * Filesystem directory store which spreads files in subdirectories using md5 hash (Juno::HashFile)
+* Key/value databases:
+    * Berkeley DB (Juno::DBM)
+    * GDBM (Juno::GDBM)
+    * SDBM (Juno::SDBM)
+    * Redis (Juno::Redis)
+    * Riak (Juno::Riak)
+    * TokyoCabinet (Juno::TokyoCabinet)
+    * Cassandra (Juno::Cassandra)
+* Document databases:
+    * CouchDB (Juno::Couch)
+    * MongoDB (Juno::MongoDB)
+* Cloud storage
+    * Fog cloud storage which supports Amazon S3, Rackspace, etc. (Juno::Fog)
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
