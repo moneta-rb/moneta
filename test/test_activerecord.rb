@@ -4,9 +4,7 @@ begin
   describe Juno::ActiveRecord do
     describe 'with connection option set' do
       def new_store
-        store = Juno::ActiveRecord.new(:connection => { :adapter  => 'sqlite3', :database => File.join(make_tempdir, 'db.sqlite3')})
-        store.migrate
-        store
+        Juno::ActiveRecord.new(:connection => { :adapter  => 'sqlite3', :database => File.join(make_tempdir, 'db.sqlite3')})
       end
 
       class_eval(&Juno::Specification)
@@ -26,7 +24,6 @@ begin
         ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => File.join(make_tempdir, 'db.sqlite3')
 
         store = Juno::ActiveRecord.new
-        store.migrate
         store.table.table_exists?.must_equal true
       end
     end

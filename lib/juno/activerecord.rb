@@ -16,12 +16,9 @@ module Juno
                                               c
                                             end
       @table.establish_connection(options[:connection]) if options[:connection]
-    end
-
-    def migrate
       @table.connection.create_table @table.table_name do |t|
-        t.string 'key', :primary => :true
-        t.string 'value'
+        t.binary 'key', :primary => :true
+        t.binary 'value'
       end unless @table.table_exists?
     end
 

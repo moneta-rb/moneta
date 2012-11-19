@@ -6,13 +6,10 @@ module Juno
       raise 'No option :db specified' unless db = options.delete(:db)
       @table = options.delete(:table) || :juno
       @db = ::Sequel.connect(db, options)
-    end
-
-    def migrate
-      @db.create_table @table do
+      @db.create_table?(@table) do
         primary_key :k
-        String :k
-        String :v
+        blob :k
+        blob :v
       end
     end
 
