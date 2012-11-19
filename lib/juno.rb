@@ -26,6 +26,5 @@ module Juno
   autoload :Stack,           'juno/stack'
   autoload :Sqlite,          'juno/sqlite'
   autoload :TokyoCabinet,    'juno/tokyocabinet'
-  #autoload :TokyoTyrant,     'juno/tokyotyrant'
   autoload :YAML,            'juno/yaml'
 end
