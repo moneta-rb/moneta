@@ -2,12 +2,12 @@ source :rubygems
 gemspec
 
 if RUBY_VERSION > '1.9'
-  # HACK - Juno::DataMapper and CouchRest don't work currently on 1.8
-  gem 'datamapper'
-  gem 'dm-sqlite-adapter'
-  gem 'couchrest'
+  # HACK: CouchRest don't work currently on 1.8
+ gem 'couchrest'
 end
 
+gem 'datamapper'
+gem 'dm-sqlite-adapter'
 gem 'fog'
 gem 'activerecord'
 gem 'redis'

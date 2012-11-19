@@ -5,7 +5,8 @@ require 'fileutils'
 
 module Helper
   def make_tempdir
-    tmp = File.join(File.dirname(__FILE__), 'tmp')
+    # Expand path since datamapper needs absolute path in setup
+    tmp = File.expand_path(File.join(File.dirname(__FILE__), 'tmp'))
     FileUtils.mkpath(tmp)
     tmp
   end
