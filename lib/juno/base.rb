@@ -10,11 +10,7 @@ module Juno
     # @param [Hash] options
     # @api public
     def key?(key, options = {})
-      @store.has_key?(key_for(key))
-    end
-
-    def has_key?(key, options = {})
-      key?(key, options)
+      @store.key?(key_for(key))
     end
 
     # Fetch value with key. Return nil if the key doesn't exist

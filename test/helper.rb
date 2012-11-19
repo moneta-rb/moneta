@@ -184,11 +184,18 @@ module Juno
   ExpiresSpecification = proc do
     class_eval(&Specification)
 
-    it 'should support expires on store' do
+    it 'should support expires on store and lookup' do
       @store.store('key', 'value', :expires => 2)
       @store['key'].must_equal 'value'
       sleep 3
       @store['key'].must_equal nil
+    end
+
+    it 'should support expires on store and key?' do
+      @store.store('key', 'value', :expires => 2)
+      @store.key?('key').must_equal true
+      sleep 3
+      @store.key?('key').must_equal false
     end
 
     it 'should support updating the expiration time in fetch' do
@@ -204,9 +211,9 @@ module Juno
 
     it 'should respect expires in delete' do
       @store.store('key', 'value', :expires => 2)
-    @store['key'].must_equal 'value'
-    sleep 3
-    @store.delete('key').must_equal nil
+      @store['key'].must_equal 'value'
+      sleep 3
+      @store.delete('key').must_equal nil
+    end
   end
-end
 end
