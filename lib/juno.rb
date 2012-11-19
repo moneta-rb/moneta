@@ -25,6 +25,7 @@ module Juno
   autoload :Riak,            'juno/riak'
   autoload :SDBM,            'juno/sdbm'
   autoload :Sequel,          'juno/sequel'
+  autoload :Stack,           'juno/stack'
   autoload :Sqlite,          'juno/sqlite'
   autoload :TokyoCabinet,    'juno/tokyocabinet'
   #autoload :TokyoTyrant,     'juno/tokyotyrant'

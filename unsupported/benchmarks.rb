@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'benchmark'
-require "rubygems"
 
 # Hacked arrays
 # Array modifications
@@ -30,11 +29,7 @@ class HackedArray < Array
   end
 end
 
-require "../lib/juno"
-require "juno/memcache"
-require "juno/tyrant"
-require "juno/berkeley"
-
+require 'juno'
 
 stores = {
   'Redis' => { },
@@ -47,9 +42,9 @@ stores = {
   'Memory' => { },
   'DataMapper' => { :setup => "sqlite3::memory:" },
   # 'Couch' => {:db => "couch_test"},
-  'TC (Tyrant)' => 
+  'TC (Tyrant)' =>
     {:name => "test.tieredtyrant", :backup => Juno::Tyrant.new(:host => "localhost", :port => 1978), :class_name => "TieredCache"},
-  'TC (Memcached)' => 
+  'TC (Memcached)' =>
     {:name => "test.tieredmc", :backup => Juno::Memcache.new(:server => "localhost:11211", :namespace => "various"), :class_name => "TieredCache"}
 }
 
@@ -93,14 +88,14 @@ puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, 
 module Juno
   class TieredCache
     include Juno::Defaults
-  
+
     def initialize(options)
       @bdb = Juno::Berkeley.new(:file => File.join(File.dirname(__FILE__), options[:name]))
       @mc = options[:backup]
       # @mc = Juno::Tyrant.new(:host => "localhost", :port => 1978)
       # @mc  = Juno::Memcache.new(:server => "localhost:11211", :namespace => options[:name])
     end
-  
+
     def [](key)
       val = @bdb[key]
       unless val
@@ -108,33 +103,33 @@ module Juno
       end
       val
     end
-  
+
     def []=(key, val)
       @bdb[key] = val
       @mc[key]  = val
     end
-  
+
     def store(key, value, options = {})
       @bdb.store(key, value, options)
       @mc.store(key, value, options)
     end
-  
+
     def delete(key)
       bdb_val = @bdb.delete(key)
       mc_val  = @mc.delete(key)
       bdb_val || mc_val
     end
-  
+
     def clear
       @mc.clear
       @bdb.clear
     end
-  
+
     def update_key(name, options)
       @mc.update_key(name, options)
       @bdb.update_key(name, options)
     end
-  
+
     def key?(key)
       @bdb.key?(key) || @mc.key?(key)
     end
@@ -164,7 +159,7 @@ stores.each do |name, options|
     m1 = Benchmark.measure do
       n.times do
         key, value = data.random
-          
+
         @cache[key] = value
       end
     end

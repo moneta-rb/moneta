@@ -13,6 +13,10 @@ module Juno
       @store.has_key?(key_for(key))
     end
 
+    def has_key?(key, options = {})
+      key?(key, options)
+    end
+
     # Fetch value with key. Return nil if the key doesn't exist
     #
     # @param [Object] key
