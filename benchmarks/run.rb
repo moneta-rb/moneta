@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 require 'benchmark'
+require 'juno'
+require 'dm-core'
+
+DataMapper.setup(:default, :adapter => :in_memory)
 
 # Hacked arrays
 # Array modifications
@@ -29,23 +33,26 @@ class HackedArray < Array
   end
 end
 
-require 'juno'
-
 stores = {
   'Redis' => { },
-  'Memcached' => { :class_name => "Memcache", :server => "localhost:11211", :namespace => 'juno_bench' },
-  'Tyrant' => { :host => 'localhost', :port => 1978 }, # Breaks for any n > 50 on my machine
-  'MongoDB' => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
-  'LMC' => { :filename => "bench.lmc" },
-  'Berkeley' => { :file => "bench.bdb" },
-  'Rufus' => {:file => "bench.rufus"},
+  'MemcachedDalli' => { :server => "localhost:11211", :namespace => 'juno_dalli' },
+  'MemcachedNative' => { :server => "localhost:11211", :namespace => 'juno_native' },
+  #'MongoDB' => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
+  'LocalMemCache' => { :file => "bench.lmc" },
+  'DBM' => { :file => "bench.dbm" },
+#  'SDBM' => { :file => "bench.sdbm" },
+  'GDBM' => { :file => "bench.gdbm" },
+  'Sqlite' => { :file => ":memory:" },
   'Memory' => { },
+  'YAML' => { :file => "bench.yaml" },
+  'PStore' => { :file => "bench.pstore" },
+  'File' => { :dir => "bench.file" },
+  'HashFile' => { :dir => "bench.hashfile" },
   'DataMapper' => { :setup => "sqlite3::memory:" },
+  'ActiveRecord' => { :db => "sqlite:/" },
+  'ActiveRecord' => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
+  'Sequel' => { :db => "sqlite:/" },
   # 'Couch' => {:db => "couch_test"},
-  'TC (Tyrant)' =>
-    {:name => "test.tieredtyrant", :backup => Juno::Tyrant.new(:host => "localhost", :port => 1978), :class_name => "TieredCache"},
-  'TC (Memcached)' =>
-    {:name => "test.tieredmc", :backup => Juno::Memcache.new(:server => "localhost:11211", :namespace => "various"), :class_name => "TieredCache"}
 }
 
 stats, keys, data, errors, summary = {}, [], HackedArray.new, HackedArray.new, HackedArray.new
@@ -85,66 +92,12 @@ puts "                  Minimum    Maximum      Total    Average        xps "
 puts "----------------------------------------------------------------------"
 puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, vlen_avg]
 
-module Juno
-  class TieredCache
-    include Juno::Defaults
-
-    def initialize(options)
-      @bdb = Juno::Berkeley.new(:file => File.join(File.dirname(__FILE__), options[:name]))
-      @mc = options[:backup]
-      # @mc = Juno::Tyrant.new(:host => "localhost", :port => 1978)
-      # @mc  = Juno::Memcache.new(:server => "localhost:11211", :namespace => options[:name])
-    end
-
-    def [](key)
-      val = @bdb[key]
-      unless val
-        @bdb[key] = val if val = @mc[key]
-      end
-      val
-    end
-
-    def []=(key, val)
-      @bdb[key] = val
-      @mc[key]  = val
-    end
-
-    def store(key, value, options = {})
-      @bdb.store(key, value, options)
-      @mc.store(key, value, options)
-    end
-
-    def delete(key)
-      bdb_val = @bdb.delete(key)
-      mc_val  = @mc.delete(key)
-      bdb_val || mc_val
-    end
-
-    def clear
-      @mc.clear
-      @bdb.clear
-    end
-
-    def update_key(name, options)
-      @mc.update_key(name, options)
-      @bdb.update_key(name, options)
-    end
-
-    def key?(key)
-      @bdb.key?(key) || @mc.key?(key)
-    end
-  end
-end
 
 stores.each do |name, options|
   cname = options.delete(:class_name) || name
   puts "======================================================================"
   puts name
   puts "----------------------------------------------------------------------"
-  begin
-    require "../lib/juno/#{cname.downcase}"
-  rescue LoadError
-  end
   klass = Juno.const_get(cname)
   @cache = klass.new(options)
   stats[name] = {
@@ -216,14 +169,3 @@ end
 puts "======================================================================"
 puts "THE END"
 puts "======================================================================"
-
-#======================================================================
-#Summary :: 3 runs, 1000 keys
-#======================================================================
-#                  Minimum    Maximum      Total    Average       xps
-#----------------------------------------------------------------------
-#MemcacheDB         0.6202     2.7850     7.0099     1.1683   855.9366
-#Memcached          0.4483     0.6563     3.3251     0.5542  1804.4385
-#Redis              0.3282     0.5221     2.2965     0.3828  2612.6444
-#MongoDB            0.6660     1.0539     5.1667     0.8611  1161.2745
-#======================================================================

@@ -2,3 +2,4 @@ test/tmp
 *~
 *.swp
 *.rdb
+benchmarks/bench.*
