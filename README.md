@@ -33,10 +33,19 @@ Out of the box, it supports:
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
 
-The API
-=======
+Links
+-----
 
-```
+* Source: <http://github.com/minad/juno>
+* Bugs:   <http://github.com/minad/juno/issues>
+* API documentation:
+    * Latest Gem: <http://rubydoc.info/gems/juno/frames>
+    * GitHub master: <http://rubydoc.info/github/minad/juno/master/frames>
+
+The API
+-------
+
+~~~
 #initialize(options)              options differs per-store, and is used to set up the store
 
 #[](key)                          retrieve a key. if the key is not available, return nil
@@ -60,28 +69,28 @@ The API
 #clear(options = {})              clear all keys in this store
 
 #close                            close database connection
-```
+~~~
 
-Proxy store & Expiry
-====================
+Proxy store and Expiration
+------------------------
 
 The memcached and redis backends supports expires values directly:
 
-```ruby
+~~~ ruby
 cache = Juno::Memcached.new
 # Expires in 10 seconds
 cache.store(key, value, :expires => 10)
-```
+~~~
 
 You can add the expires feature to other backends using the Expires proxy:
 
-```ruby
+~~~ ruby
 cache = Juno::Expires.new(Juno::File.new(...))
 cache.store(key, value, :expires => 10)
-```
+~~~
 
 Authors
-=======
+-------
 
 * Moneta originally by wycats
 * Juno by Daniel Mendler
