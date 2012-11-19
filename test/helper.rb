@@ -228,21 +228,21 @@ module Juno
     end
 
     it 'should support updating the expiration time in fetch' do
-      @store.store('key2', 'value2', :expires => 2)
-      @store['key2'].must_equal 'value2'
+      @store.store('key3', 'value3', :expires => 2)
+      @store['key3'].must_equal 'value3'
       sleep 1
-      @store.fetch('key2', nil, :expires => 3).must_equal 'value2'
+      @store.fetch('key3', nil, :expires => 3).must_equal 'value3'
       sleep 1
-      @store['key2'].must_equal 'value2'
+      @store['key3'].must_equal 'value3'
       sleep 3
-      @store['key2'].must_equal nil
+      @store['key3'].must_equal nil
     end
 
     it 'should respect expires in delete' do
-      @store.store('key', 'value', :expires => 2)
-      @store['key'].must_equal 'value'
+      @store.store('key4', 'value4', :expires => 2)
+      @store['key4'].must_equal 'value4'
       sleep 3
-      @store.delete('key').must_equal nil
+      @store.delete('key4').must_equal nil
     end
   end
 end
