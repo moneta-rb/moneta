@@ -34,8 +34,15 @@ Out of the box, it supports:
 * Document databases:
     * CouchDB (Juno::Couch)
     * MongoDB (Juno::MongoDB)
-* Cloud storage
+* Other
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (Juno::Fog)
+    * Storage which doesn't store anything (Juno::Null)
+
+Special middleware (Proxies):
+* Juno::Expires to add expiration support to stores
+* Juno::Stack to stack multiple stores
+* Juno::Proxy basic proxy class
+* Juno::Cache combine two stores, one as backend and one as cache (e.g. Juno::File + Juno::Memory)
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
