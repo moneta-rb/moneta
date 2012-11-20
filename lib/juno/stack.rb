@@ -1,15 +1,31 @@
 module Juno
   class Stack < Base
-    def initialize(*stores)
-      @stores = stores
+    class DSL
+      attr_reader :stack
+
+      def initialize(options, &block)
+        @stack = options[:stack].to_a
+        instance_eval(&block)
+      end
+
+      def add(options = {}, &block)
+        @stack << (Hash === options ? Juno.build(options, &block) : options)
+        nil
+      end
+    end
+
+    attr_reader :stack
+
+    def initialize(options = {}, &block)
+      @stack = DSL.new(options, &block).stack
     end
 
     def key?(key, options = {})
-      @stores.any? {|s| s.key?(key) }
+      @stack.any? {|s| s.key?(key) }
     end
 
     def load(key, options = {})
-      @stores.each do |s|
+      @stack.each do |s|
         value = s.load(key, options)
         return value if value
       end
@@ -17,24 +33,24 @@ module Juno
     end
 
     def store(key, value, options = {})
-      @stores.each {|s| s.store(key, value, options) }
+      @stack.each {|s| s.store(key, value, options) }
       value
     end
 
     def delete(key, options = {})
-      @stores.inject(nil) do |value, s|
+      @stack.inject(nil) do |value, s|
         v = s.delete(key, options)
         value || v
       end
     end
 
     def clear(options = {})
-      @stores.each {|s| s.clear }
-      nil
+      @stack.each {|s| s.clear }
+      self
     end
 
     def close
-      @stores.each {|s| s.close }
+      @stack.each {|s| s.close }
       nil
     end
   end

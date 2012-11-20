@@ -34,24 +34,24 @@ class HackedArray < Array
 end
 
 stores = {
-  'Redis' => { },
-  'MemcachedDalli' => { :server => "localhost:11211", :namespace => 'juno_dalli' },
-  'MemcachedNative' => { :server => "localhost:11211", :namespace => 'juno_native' },
-  #'MongoDB' => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
-  'LocalMemCache' => { :file => "bench.lmc" },
-  'DBM' => { :file => "bench.dbm" },
-  'SDBM' => { :file => "bench.sdbm" },
-  'GDBM' => { :file => "bench.gdbm" },
-  'Sqlite' => { :file => ":memory:" },
-  'Memory' => { },
-  'YAML' => { :file => "bench.yaml" },
-  'PStore' => { :file => "bench.pstore" },
-  'File' => { :dir => "bench.file" },
-  'HashFile' => { :dir => "bench.hashfile" },
-  'DataMapper' => { :setup => "sqlite3::memory:" },
-  'ActiveRecord' => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
-  'Sequel' => { :db => "sqlite:/" },
-  # 'Couch' => {:db => "couch_test"},
+  :Redis => { },
+  :MemcachedDalli => { :server => "localhost:11211", :namespace => 'juno_dalli' },
+  :MemcachedNative => { :server => "localhost:11211", :namespace => 'juno_native' },
+  #:MongoDB => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
+  :LocalMemCache => { :file => "bench.lmc" },
+  :DBM => { :file => "bench.dbm" },
+  :SDBM => { :file => "bench.sdbm" },
+  :GDBM => { :file => "bench.gdbm" },
+  :Sqlite => { :file => ":memory:" },
+  :Memory => { },
+  :YAML => { :file => "bench.yaml" },
+  :PStore => { :file => "bench.pstore" },
+  :File => { :dir => "bench.file" },
+  :HashFile => { :dir => "bench.hashfile" },
+  :DataMapper => { :setup => "sqlite3::memory:" },
+  :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
+  :Sequel => { :db => "sqlite:/" },
+  # :Couch => {:db => "couch_test"},
 }
 
 stats, keys, data, errors, summary = {}, [], HackedArray.new, HackedArray.new, HackedArray.new
@@ -93,12 +93,10 @@ puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, 
 
 
 stores.each do |name, options|
-  cname = options.delete(:class_name) || name
   puts "======================================================================"
   puts name
   puts "----------------------------------------------------------------------"
-  klass = Juno.const_get(cname)
-  @cache = klass.new(options)
+  @cache = Juno.new(name, options)
   stats[name] = {
     :writes => [],
     :reads => [],

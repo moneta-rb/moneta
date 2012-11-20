@@ -10,39 +10,40 @@ fork was that Moneta was unmaintained for a long time.
 Out of the box, it supports:
 
 * Memory:
-    * In-memory store (Juno::Memory)
-    * LocalMemCache (Juno::LocalMemCache)
-    * Memcached store (Juno::Memcached, Juno::MemcachedNative and Juno::MemcachedDalli)
+    * In-memory store (:Memory)
+    * LocalMemCache (:LocalMemCache)
+    * Memcached store (:Memcached, :MemcachedNative and :MemcachedDalli)
 * Relational Databases:
-    * DataMapper (Juno::DataMapper)
-    * ActiveRecord (Juno::ActiveRecord)
-    * Sequel (Juno::Sequel)
-    * Sqlite3 (Juno::Sqlite)
+    * DataMapper (:DataMapper)
+    * ActiveRecord (:ActiveRecord)
+    * Sequel (:Sequel)
+    * Sqlite3 (:Sqlite)
 * Filesystem:
-    * PStore (Juno::PStore)
-    * YAML store (Juno::YAML)
-    * Filesystem directory store (Juno::File)
-    * Filesystem directory store which spreads files in subdirectories using md5 hash (Juno::HashFile)
+    * PStore (:PStore)
+    * YAML store (:YAML)
+    * Filesystem directory store (:File)
+    * Filesystem directory store which spreads files in subdirectories using md5 hash (:HashFile)
 * Key/value databases:
-    * Berkeley DB (Juno::DBM)
-    * GDBM (Juno::GDBM)
-    * SDBM (Juno::SDBM)
-    * Redis (Juno::Redis)
-    * Riak (Juno::Riak)
-    * TokyoCabinet (Juno::TokyoCabinet)
-    * Cassandra (Juno::Cassandra)
+    * Berkeley DB (:DBM)
+    * GDBM (:GDBM)
+    * SDBM (:SDBM)
+    * Redis (:Redis)
+    * Riak (:Riak)
+    * TokyoCabinet (:TokyoCabinet)
+    * Cassandra (:Cassandra)
 * Document databases:
-    * CouchDB (Juno::Couch)
-    * MongoDB (Juno::MongoDB)
+    * CouchDB (:Couch)
+    * MongoDB (:Mongo)
 * Other
-    * Fog cloud storage which supports Amazon S3, Rackspace, etc. (Juno::Fog)
-    * Storage which doesn't store anything (Juno::Null)
+    * Fog cloud storage which supports Amazon S3, Rackspace, etc. (:Fog)
+    * Storage which doesn't store anything (:Null)
 
-Special middleware (Proxies):
+Special proxies:
 * Juno::Expires to add expiration support to stores
 * Juno::Stack to stack multiple stores
 * Juno::Proxy basic proxy class
-* Juno::Cache combine two stores, one as backend and one as cache (e.g. Juno::File + Juno::Memory)
+* Juno::Transformer transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...)
+* Juno::Cache combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory)
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
@@ -56,8 +57,8 @@ Links
     * Latest Gem: <http://rubydoc.info/gems/juno/frames>
     * GitHub master: <http://rubydoc.info/github/minad/juno/master/frames>
 
-The API
--------
+Store API
+---------
 
 ~~~
 #initialize(options)              options differs per-store, and is used to set up the store
@@ -85,22 +86,54 @@ The API
 #close                            close database connection
 ~~~
 
-Proxy store and Expiration
-------------------------
+Creating a Store
+----------------
+
+There is a simple interface to create a store using `Juno.new`:
+
+~~~ ruby
+store = Juno.new(:Memcached, :server => 'localhost:11211')
+~~~
+
+If you want to have control over the proxies, you have to use `Juno.build`:
+
+~~~ ruby
+store = Juno.build do
+  # Adds expires proxy
+  use :Expires
+  # Transform key and value using Marshal
+  use :Transformer, :key => :marshal, :value => :marshal
+  # Memory backend
+  adapter :Memory
+end
+
+Expiration
+----------
 
 The Cassandra, Memcached and Redis backends supports expires values directly:
 
 ~~~ ruby
-cache = Juno::Memcached.new
+cache = Juno::Adapters::Memcached.new
 # Expires in 10 seconds
 cache.store(key, value, :expires => 10)
+
+# Or using the builder...
+cache = Juno.build do
+  adapter :Memcached
+end
 ~~~
 
 You can add the expires feature to other backends using the Expires proxy:
 
 ~~~ ruby
-cache = Juno::Expires.new(Juno::File.new(...))
+cache = Juno::Expires.new(Juno::Adapters::File.new(:dir => '...'))
 cache.store(key, value, :expires => 10)
+
+# Or using the builder...
+cache = Juno.build do
+  use :Expires
+  adapter :File, :dir => '...'
+end
 ~~~
 
 Authors

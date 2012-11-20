@@ -35,34 +35,5 @@ module Juno
     def []=(key, value)
       store(key, value)
     end
-
-    protected
-
-    # Serialize value
-    #
-    # @param [Object] value Serializable object
-    # @return [String] serialized object
-    # @api private
-    def serialize(value)
-      Marshal.dump(value)
-    end
-
-    # Deserialize value
-    #
-    # @param [String] value Serialized object
-    # @return [Object] Deserialized object
-    # @api private
-    def deserialize(value)
-      value && Marshal.load(value)
-    end
-
-    # Convert key to string
-    #
-    # @param [Object] key Key
-    # @return [String] Marshalled key
-    # @api private
-    def key_for(key)
-      String === key ? key : Marshal.dump(key)
-    end
   end
 end

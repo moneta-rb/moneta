@@ -4,12 +4,30 @@ begin
 rescue Exception
 end
 
-require 'rake/testtask'
+task :test => %w(test:parallel test:non_parallel)
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib' << 'test'
-  t.test_files = FileList['test/test_*.rb']
-  t.verbose = true
+# memcached and redis specs cannot be used in parallel
+# because of flushing and namespace lacking in redis
+
+namespace :test do
+  task :parallel do
+    if defined?(JRUBY_VERSION)
+      puts 'No tests executed in parallel in JRuby'
+    else
+      specs = Dir['spec/*_spec.rb'].reject {|s| s =~ /memcached|redis/ }
+      sh("parallel_rspec -m 15 #{specs.join(' ')}")
+    end
+  end
+
+  task :non_parallel do
+    if defined?(JRUBY_VERSION)
+      # Run all tests in jruby non-parallel
+      sh('rspec spec/*_spec.rb')
+    else
+      specs = Dir['spec/*_spec.rb'].select {|s| s =~ /memcached|redis/ }
+      sh("rspec #{specs.join(' ')}")
+    end
+  end
 end
 
 task :default => :test

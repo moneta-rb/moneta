@@ -1,4 +1,4 @@
-test/tmp
+spec/tmp
 *~
 *.swp
 *.rdb

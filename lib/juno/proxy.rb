@@ -1,7 +1,9 @@
 module Juno
   class Proxy < Base
-    def initialize(store)
-      @store = store
+    attr_reader :adapter
+
+    def initialize(adapter, options = {})
+      @adapter = adapter
     end
 
     # Exists the value with key
@@ -11,7 +13,7 @@ module Juno
     # @param [Hash] options
     # @api public
     def key?(key, options = {})
-      @store.key?(key, options)
+      @adapter.key?(key, options)
     end
 
     # Fetch value with key. Return nil if the key doesn't exist
@@ -21,7 +23,7 @@ module Juno
     # @return [Object] value
     # @api public
     def load(key, options = {})
-      @store.load(key, options)
+      @adapter.load(key, options)
     end
 
     # Store value with key
@@ -32,7 +34,7 @@ module Juno
     # @return value
     # @api public
     def store(key, value, options = {})
-      @store.store(key, value, options)
+      @adapter.store(key, value, options)
     end
 
     # Delete the key from the store and return the current value
@@ -42,7 +44,7 @@ module Juno
     # @param [Hash] options
     # @api public
     def delete(key, options = {})
-      @store.delete(key, options)
+      @adapter.delete(key, options)
     end
 
     # Clear all keys in this store
@@ -51,11 +53,12 @@ module Juno
     # @return [void]
     # @api public
     def clear(options = {})
-      @store.clear(options)
+      @adapter.clear(options)
+      self
     end
 
     def close
-      @store.close
+      @adapter.close
     end
   end
 end

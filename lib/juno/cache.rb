@@ -1,9 +1,30 @@
 module Juno
   class Cache < Base
-    attr_reader :backend, :cache
+    class DSL
+      def initialize(options, &block)
+        @cache, @backend = options[:cache], options[:backend]
+        instance_eval(&block)
+      end
 
-    def initialize(store, cache)
-      @backend, @cache = store, cache
+      def backend(options = {}, &block)
+        raise 'Backend already set' if @backend
+        @backend = Hash === options ? Juno.build(options, &block) : options
+      end
+
+      def cache(options = {}, &block)
+        raise 'Cache already set' if @cache
+        @cache = Hash === options ? Juno.build(options, &block) : options
+      end
+
+      def result
+        [@cache, @backend]
+      end
+    end
+
+    attr_reader :cache, :backend
+
+    def initialize(options = {}, &block)
+      @cache, @backend = DSL.new(options, &block).result
     end
 
     def key?(key, options = {})
@@ -32,6 +53,7 @@ module Juno
     def clear(options = {})
       @cache.clear(options)
       @backend.clear(options)
+      self
     end
 
     def close

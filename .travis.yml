@@ -16,9 +16,13 @@ before_install:
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev # tokyotyrant
   - sudo /bin/bash /etc/init.d/mongodb start
   - memcached -d -p 22122
+env:
+  - "TASK=test:parallel"
+  - "TASK=test:non_parallel"
 matrix:
   allow_failures:
 #    - rvm: ruby-head
     - rvm: jruby
     - rvm: rbx-18mode
     - rvm: rbx-19mode
+script: "bundle exec rake $TASK"

@@ -16,7 +16,4 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/minad/juno'
   s.require_paths = ['lib']
   s.summary = %{A unified interface to key/value stores, including MongoDB, Redis, Tokyo, and ActiveRecord}
-
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'minitest'
 end

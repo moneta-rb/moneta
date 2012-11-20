@@ -1,21 +1,29 @@
 source :rubygems
 gemspec
 
-if RUBY_VERSION > '1.9'
-  # HACK: CouchRest don't work currently on 1.8
- gem 'couchrest'
-end
+# Testing
+gem 'rake'
+gem 'rspec'
+gem 'parallel_tests'
 
+# Serializer
+#gem 'tnetstring'
+gem 'msgpack'
+gem 'bson'
+gem 'multi_json'
+gem 'json' # Ripple/Riak needs json
+
+# Backends
 gem 'datamapper'
 gem 'dm-sqlite-adapter'
 gem 'fog'
 gem 'activerecord'
 gem 'redis'
 gem 'mongo'
+gem 'couchrest'
 gem 'sequel'
 gem 'dalli'
-gem 'json' # Ripple/Riak needs json
-gem 'ripple'
+gem 'riak-client'
 
 if defined?(JRUBY_VERSION)
   gem 'jdbc-sqlite3'
