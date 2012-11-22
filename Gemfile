@@ -8,7 +8,6 @@ gem 'parallel_tests'
 
 # Serializer
 #gem 'tnetstring'
-gem 'msgpack'
 gem 'bson'
 gem 'multi_json'
 gem 'json' # Ripple/Riak needs json
@@ -30,6 +29,7 @@ if defined?(JRUBY_VERSION)
   gem 'activerecord-jdbc-adapter'
   gem 'activerecord-jdbcsqlite3-adapter'
 else
+  gem 'msgpack'
   gem 'tokyocabinet'
   gem 'memcached'
   gem 'sqlite3'
