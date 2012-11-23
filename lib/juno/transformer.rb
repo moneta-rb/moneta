@@ -1,11 +1,5 @@
 module Juno
   class Transformer < Proxy
-    @classes = {}
-
-    class << self
-      alias_method :original_new, :new
-    end
-
     VALUE_TRANSFORMER = {
       :marshal => { :load => '::Marshal.load(VALUE)',          :dump => '::Marshal.dump(VALUE)' },
       :base64  => { :load => "VALUE.unpack('m').first",        :dump => "[VALUE].pack('m').strip" },
@@ -29,7 +23,11 @@ module Juno
       :msgpack => { :transform => '(TMP = KEY; String === TMP ? TMP : ::MessagePack.pack(TMP))', :require => 'msgpack' },
     }
 
+    @classes = {}
+
     class << self
+      alias_method :original_new, :new
+
       def compile(keys, values)
         tmp, key = 0, 'key'
         keys.each do |tn|
@@ -39,20 +37,8 @@ module Juno
           tmp += 1
         end
 
-        dumper = 'value'
-        values.each do |tn|
-          raise "Unknown value transformer #{tn}" unless t = VALUE_TRANSFORMER[tn]
-          require t[:require] if t[:require]
-          dumper = t[:dump].gsub('VALUE', dumper)
-        end
-
-        loader = 'value'
-        values.reverse.each do |t|
-          loader = VALUE_TRANSFORMER[t][:load].gsub('VALUE', loader)
-        end
-
         klass = Class.new(Transformer)
-        if loader == 'value'
+        if values.empty?
           klass.class_eval <<-end_eval, __FILE__, __LINE__
               def key?(key, options = {})
                 @adapter.key?(#{key}, options)
@@ -71,6 +57,14 @@ module Juno
               end
             end_eval
         else
+          dumper, loader = 'value', 'value'
+          values.each_index do |i|
+            raise "Unknown value transformer #{values[i]}" unless t = VALUE_TRANSFORMER[values[i]]
+            require t[:require] if t[:require]
+            dumper = t[:dump].gsub('VALUE', dumper)
+            loader = VALUE_TRANSFORMER[values[-i-1]][:load].gsub('VALUE', loader)
+          end
+
           klass.class_eval <<-end_eval, __FILE__, __LINE__
               def key?(key, options = {})
                 @adapter.key?(#{key}, options)
@@ -98,6 +92,7 @@ module Juno
       def new(store, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
+        raise 'No option :key or :value specified' if keys.empty? || values.empty?
         klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
         klass.original_new(store, options)
       end
