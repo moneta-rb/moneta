@@ -92,7 +92,7 @@ module Juno
       def new(store, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
-        raise 'No option :key or :value specified' if keys.empty? || values.empty?
+        raise 'No option :key or :value specified' if keys.empty? && values.empty?
         klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
         klass.original_new(store, options)
       end
