@@ -38,10 +38,11 @@ module Juno
     transformer = {:key => :marshal, :value => :marshal}
     raise 'Name must be Symbol' unless Symbol === name
     case name
-    when :Sequel, :ActiveRecord, :Couch
+    when :Sequel, :ActiveRecord, :Couch, :Mongo
       # Sequel accept only base64 keys and values
       # FIXME: ActiveRecord and Couch should work only with :marshal but this
       # raises an error on 1.9
+      # Mongo accepts only valid UTF-8 strings
       transformer = {:key => [:marshal, :base64], :value => [:marshal, :base64]}
     when :Memcached, :MemcachedDalli, :MemcachedNative
       # Memcached accept only base64 keys, expires already supported
