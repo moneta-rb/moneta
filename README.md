@@ -106,6 +106,7 @@ store = Juno.build do
   # Memory backend
   adapter :Memory
 end
+~~~
 
 Expiration
 ----------
@@ -126,10 +127,14 @@ end
 You can add the expires feature to other backends using the Expires proxy:
 
 ~~~ ruby
+# Using the :expires option
+cache = Juno.new(:File, :dir => '...', :expires => true)
+
+# or using the proxy...
 cache = Juno::Expires.new(Juno::Adapters::File.new(:dir => '...'))
 cache.store(key, value, :expires => 10)
 
-# Or using the builder...
+# or using the builder...
 cache = Juno.build do
   use :Expires
   adapter :File, :dir => '...'
