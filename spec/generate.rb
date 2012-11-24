@@ -6,49 +6,104 @@ TESTS = {
   'simple_memory' => {
     :store => :Memory
   },
+  'simpl_memory_with_expires' => {
+    :store => :Memory,
+    :options => ':expires => true',
+    :specs => EXPIRES_SPECS,
+  },
   'simple_file' => {
     :store => :File,
     :options => ':dir => File.join(make_tempdir, "simple_file")'
+  },
+  'simple_file_with_expires' => {
+    :store => :File,
+    :options => ':dir => File.join(make_tempdir, "simple_file"), :expires => true',
+    :specs => EXPIRES_SPECS
   },
   'simple_hashfile' => {
     :store => :HashFile,
     :options => ':dir => File.join(make_tempdir, "simple_hashfile")'
   },
+  'simple_hashfile_with_expires' => {
+    :store => :HashFile,
+    :options => ':dir => File.join(make_tempdir, "simple_hashfile"), :expires => true',
+    :specs => EXPIRES_SPECS
+  },
   'simple_cassandra' => {
     :store => :Cassandra,
-    :specs => EXPIRES_SPECS,
+    :specs => EXPIRES_SPECS
   },
   'simple_dbm' => {
     :store => :DBM,
     :options => ':file => File.join(make_tempdir, "simple_dbm")'
   },
+  'simple_dbm_with_expires' => {
+    :store => :DBM,
+    :options => ':file => File.join(make_tempdir, "simple_dbm"), :expires => true',
+    :specs => EXPIRES_SPECS
+  },
   'simple_gdbm' => {
     :store => :GDBM,
     :options => ':file => File.join(make_tempdir, "simple_gdbm")'
+  },
+  'simple_gdbm_with_expires' => {
+    :store => :GDBM,
+    :options => ':file => File.join(make_tempdir, "simple_gdbm"), :expires => true',
+    :specs => EXPIRES_SPECS
   },
   'simple_sdbm' => {
     :store => :SDBM,
     :options => ':file => File.join(make_tempdir, "simple_sdbm")'
   },
+  'simple_sdbm_with_expires' => {
+    :store => :SDBM,
+    :options => ':file => File.join(make_tempdir, "simple_sdbm"), :expires => true',
+    :specs => EXPIRES_SPECS
+  },
   'simple_pstore' => {
     :store => :PStore,
     :options => ':file => File.join(make_tempdir, "simple_pstore")'
+  },
+  'simple_pstore_with_expires' => {
+    :store => :PStore,
+    :options => ':file => File.join(make_tempdir, "simple_pstore"), :expires => true',
+    :specs => EXPIRES_SPECS
   },
   'simple_yaml' => {
     :store => :YAML,
     :options => ':file => File.join(make_tempdir, "simple_yaml")'
   },
+  'simple_yaml_with_expires' => {
+    :store => :YAML,
+    :options => ':file => File.join(make_tempdir, "simple_yaml"), :expires => true',
+    :specs => EXPIRES_SPECS
+  },
   'simple_localmemcache' => {
     :store => :LocalMemCache,
     :options => ':file => File.join(make_tempdir, "simple_localmemcache")'
+  },
+  'simple_localmemcache_with_expires' => {
+    :store => :LocalMemCache,
+    :options => ':file => File.join(make_tempdir, "simple_localmemcache"), :expires => true',
+    :specs => EXPIRES_SPECS
   },
   'simple_tokyocabinet' => {
     :store => :TokyoCabinet,
     :options => ':file => File.join(make_tempdir, "simple_tokyocabinet")'
   },
+  'simple_tokyocabinet_with_expires' => {
+    :store => :TokyoCabinet,
+    :options => ':file => File.join(make_tempdir, "simple_tokyocabinet"), :expires => true',
+    :specs => EXPIRES_SPECS
+  },
   'simple_sqlite' => {
     :store => :Sqlite,
     :options => ':file => ":memory:"'
+  },
+  'simple_sqlite_with_expires' => {
+    :store => :Sqlite,
+    :options => ':file => ":memory:", :expires => true',
+    :specs => EXPIRES_SPECS
   },
   'simple_redis' => {
     :store => :Redis,
@@ -75,13 +130,30 @@ TESTS = {
     # We don't want Riak warnings in tests
     :preamble => "require 'riak'\n\nRiak.disable_list_keys_warnings = true\n\n"
   },
+  'simple_riak_with_expires' => {
+    :store => :Riak,
+    :options => ":bucket => 'simple_riak', :expires => true",
+    # We don't want Riak warnings in tests
+    :preamble => "require 'riak'\n\nRiak.disable_list_keys_warnings = true\n\n",
+    :specs => EXPIRES_SPECS
+  },
   'simple_couch' => {
     :store => :Couch,
     :options => ":db => 'simple_couch'"
   },
+  'simple_couch_with_expires' => {
+    :store => :Couch,
+    :options => ":db => 'simple_couch', :expires => true",
+    :specs => EXPIRES_SPECS
+  },
   'simple_mongo' => {
     :store => :Mongo,
     :options => ":db => 'simple_mongo'"
+  },
+  'simple_mongo_with_expires' => {
+    :store => :Mongo,
+    :options => ":db => 'simple_mongo', :expires => true",
+    :specs => EXPIRES_SPECS
   },
   'simple_null' => {
     :store => :Null,
@@ -95,11 +167,23 @@ TESTS = {
     :store => :Sequel,
     :options => ":db => (defined?(JRUBY_VERSION) ? 'jdbc:sqlite:/' : 'sqlite:/')"
   },
+  'simple_sequel_with_expires' => {
+    :store => :Sequel,
+    :options => ":db => (defined?(JRUBY_VERSION) ? 'jdbc:sqlite:/' : 'sqlite:/'), :expires => true",
+    :specs => EXPIRES_SPECS
+  },
   'simple_datamapper' => {
     :store => :DataMapper,
     :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper-default.sqlite3"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n"
+  },
+  'simple_datamapper_with_expires' => {
+    :store => :DataMapper,
+    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper-default.sqlite3", :expires => true',
+    # DataMapper needs default repository to be setup
+    :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
+    :specs => EXPIRES_SPECS
   },
   'simple_datamapper_with_repository' => {
     :store => :DataMapper,
@@ -111,6 +195,11 @@ TESTS = {
     :store => :ActiveRecord,
     :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord.sqlite3') }"
   },
+  'simple_activerecord_with_expires' => {
+    :store => :ActiveRecord,
+    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord.sqlite3') }, :expires => true",
+    :specs => EXPIRES_SPECS
+  },
   'simple_fog' => {
     :store                  => :Fog,
     :options => ":aws_access_key_id => 'fake_access_key_id',
@@ -119,6 +208,17 @@ TESTS = {
     :dir                    => 'juno'",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n"
+  },
+  'simple_fog_with_expires' => {
+    :store                  => :Fog,
+    :options => ":aws_access_key_id => 'fake_access_key_id',
+    :aws_secret_access_key  => 'fake_secret_access_key',
+    :provider               => 'AWS',
+    :dir                    => 'juno'
+    :expires                => true",
+    # Put Fog into testing mode
+    :preamble               => "require 'fog'\nFog.mock!\n",
+    :specs => EXPIRES_SPECS
   },
   'expires_memory' => {
     :build => %{
