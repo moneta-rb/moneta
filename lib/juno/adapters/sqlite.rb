@@ -7,10 +7,10 @@ module Juno
         raise 'No option :file specified' unless options[:file]
         table = options[:table] || 'juno'
         @db = ::SQLite3::Database.new(options[:file])
-        @db.execute("create table if not exists #{table} (key blob primary key, value blob)")
-        @select = @db.prepare("select value from #{table} where key = ?")
+        @db.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
+        @select = @db.prepare("select v from #{table} where k = ?")
         @insert = @db.prepare("insert or replace into #{table} values (?, ?)")
-        @delete = @db.prepare("delete from #{table} where key = ?")
+        @delete = @db.prepare("delete from #{table} where k = ?")
         @clear = @db.prepare("delete from #{table}")
       end
 

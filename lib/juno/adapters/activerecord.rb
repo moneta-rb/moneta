@@ -17,10 +17,13 @@ module Juno
                                                 c
                                               end
         @table.establish_connection(options[:connection]) if options[:connection]
-        @table.connection.create_table @table.table_name do |t|
-          t.binary 'k', :primary => true
-          t.binary 'v'
-        end unless @table.table_exists?
+        unless @table.table_exists?
+          @table.connection.create_table(@table.table_name) do |t|
+            t.binary :k, :null => false
+            t.binary :v
+          end
+          @table.connection.add_index(@table.table_name, :k, :unique => true)
+        end
       end
 
       def key?(key, options = {})

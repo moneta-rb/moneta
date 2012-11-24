@@ -8,8 +8,7 @@ module Juno
         @table = options.delete(:table) || :juno
         @db = ::Sequel.connect(db, options)
         @db.create_table?(@table) do
-          primary_key :k
-          String :k
+          String :k, :null => false, :primary_key => true
           String :v
         end
       end
