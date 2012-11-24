@@ -20,11 +20,12 @@ module Juno
       end
 
       def store(key, value, options = {})
-        if key?(key, options)
-          @db.update_doc(key, 'data' => value)
-        else
-          @db.save_doc('_id' => key, 'data' => value)
+        doc = {'_id' => key, 'data' => value}
+        begin
+          doc['_rev'] = @db.get(key)['_rev']
+        rescue RestClient::ResourceNotFound
         end
+        @db.save_doc(doc)
         value
       rescue RestClient::RequestFailed
         value
