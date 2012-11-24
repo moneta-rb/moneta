@@ -34,46 +34,37 @@ module Juno
   end
 
   def self.new(name, options = {})
+    expires = options.delete(:expires)
+    transformer = {:key => :marshal, :value => :marshal}
     raise 'Name must be Symbol' unless Symbol === name
     case name
     when :Sequel, :ActiveRecord, :Couch
       # Sequel accept only base64 keys and values
       # FIXME: ActiveRecord and Couch should work only with :marshal but this
       # raises an error on 1.9
-      build(options) do
-        use :Transformer, :key => [:marshal, :base64], :value => [:marshal, :base64]
-        adapter name
-      end
+      transformer = {:key => [:marshal, :base64], :value => [:marshal, :base64]}
     when :Memcached, :MemcachedDalli, :MemcachedNative
-      # Memcached accept only base64 keys
-      build(options) do
-        use :Transformer, :key => [:marshal, :base64], :value => :marshal
-        adapter name
-      end
+      # Memcached accept only base64 keys, expires already supported
+      expires = false
+      transformer = {:key => [:marshal, :base64], :value => :marshal}
     when :PStore, :YAML, :DataMapper, :Null
       # For PStore, YAML and DataMapper only the key has to be a string
-      build(options) do
-        use :Transformer, :key => :marshal
-        adapter name
-      end
+      transformer = {:key => :marshal}
     when :HashFile
       # Use spreading hashes
-      build(options) do
-        use :Transformer, :key => [:marshal, :md5, :spread], :value => :marshal
-        adapter :File
-      end
+      transformer = {:key => [:marshal, :md5, :spread], :value => :marshal}
+      name = :File
     when :File
       # Use escaping
-      build(options) do
-        use :Transformer, :key => [:marshal, :escape], :value => :marshal
-        adapter :File
-      end
-    else
-      # For all other stores marshal key and value
-      build(options) do
-        use :Transformer, :key => :marshal, :value => :marshal
-        adapter name
-      end
+      transformer = {:key => [:marshal, :escape], :value => :marshal}
+    when :Cassandra, :Redis
+      # Expires already supported
+      expires = false
+    end
+    build(options) do
+      use :Expires if expires
+      use :Transformer, transformer
+      adapter name
     end
   end
 

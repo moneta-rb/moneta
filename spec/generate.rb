@@ -120,8 +120,6 @@ TESTS = {
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n"
   },
-  # 'cache' => {
-  # },
   'expires_memory' => {
     :build => %{
 Juno.build do
