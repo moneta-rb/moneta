@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:Couch, :db => 'simple_couch', :expires => true).close
+  Juno.new(:Couch, :db => 'simple_couch_with_expires', :expires => true).close
 
   describe "simple_couch_with_expires" do
     before do
-      @store = Juno.new(:Couch, :db => 'simple_couch', :expires => true)
+      @store = Juno.new(:Couch, :db => 'simple_couch_with_expires', :expires => true)
       @store.clear
     end
 

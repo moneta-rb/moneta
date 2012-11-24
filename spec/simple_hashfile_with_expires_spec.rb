@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:HashFile, :dir => File.join(make_tempdir, "simple_hashfile"), :expires => true).close
+  Juno.new(:HashFile, :dir => File.join(make_tempdir, "simple_hashfile_with_expires"), :expires => true).close
 
   describe "simple_hashfile_with_expires" do
     before do
-      @store = Juno.new(:HashFile, :dir => File.join(make_tempdir, "simple_hashfile"), :expires => true)
+      @store = Juno.new(:HashFile, :dir => File.join(make_tempdir, "simple_hashfile_with_expires"), :expires => true)
       @store.clear
     end
 

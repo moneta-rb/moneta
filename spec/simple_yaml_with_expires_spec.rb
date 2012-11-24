@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :expires => true).close
+  Juno.new(:YAML, :file => File.join(make_tempdir, "simple_yaml_with_expires"), :expires => true).close
 
   describe "simple_yaml_with_expires" do
     before do
-      @store = Juno.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :expires => true)
+      @store = Juno.new(:YAML, :file => File.join(make_tempdir, "simple_yaml_with_expires"), :expires => true)
       @store.clear
     end
 

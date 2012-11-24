@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:SDBM, :file => File.join(make_tempdir, "simple_sdbm_with_expires"), :expires => true).close
+  Juno.new(:Memory, :expires => true).close
 
-  describe "simple_sdbm_with_expires" do
+  describe "simple_memory_with_expires" do
     before do
-      @store = Juno.new(:SDBM, :file => File.join(make_tempdir, "simple_sdbm_with_expires"), :expires => true)
+      @store = Juno.new(:Memory, :expires => true)
       @store.clear
     end
 
@@ -46,8 +46,8 @@ begin
 
   end
 rescue LoadError => ex
-  puts "Test simple_sdbm_with_expires not executed: #{ex.message}"
+  puts "Test simple_memory_with_expires not executed: #{ex.message}"
 rescue Exception => ex
-  puts "Test simple_sdbm_with_expires not executed: #{ex.message}"
+  puts "Test simple_memory_with_expires not executed: #{ex.message}"
   #puts "#{ex.backtrace.join("\n")}"
 end

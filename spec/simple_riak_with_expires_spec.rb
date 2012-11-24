@@ -6,11 +6,11 @@ begin
 
   Riak.disable_list_keys_warnings = true
 
-  Juno.new(:Riak, :bucket => 'simple_riak', :expires => true).close
+  Juno.new(:Riak, :bucket => 'simple_riak_with_expires', :expires => true).close
 
   describe "simple_riak_with_expires" do
     before do
-      @store = Juno.new(:Riak, :bucket => 'simple_riak', :expires => true)
+      @store = Juno.new(:Riak, :bucket => 'simple_riak_with_expires', :expires => true)
       @store.clear
     end
 

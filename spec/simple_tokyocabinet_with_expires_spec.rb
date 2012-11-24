@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet"), :expires => true).close
+  Juno.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet_with_expires"), :expires => true).close
 
   describe "simple_tokyocabinet_with_expires" do
     before do
-      @store = Juno.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet"), :expires => true)
+      @store = Juno.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet_with_expires"), :expires => true)
       @store.clear
     end
 

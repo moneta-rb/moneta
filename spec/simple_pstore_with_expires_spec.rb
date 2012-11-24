@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:PStore, :file => File.join(make_tempdir, "simple_pstore"), :expires => true).close
+  Juno.new(:PStore, :file => File.join(make_tempdir, "simple_pstore_with_expires"), :expires => true).close
 
   describe "simple_pstore_with_expires" do
     before do
-      @store = Juno.new(:PStore, :file => File.join(make_tempdir, "simple_pstore"), :expires => true)
+      @store = Juno.new(:PStore, :file => File.join(make_tempdir, "simple_pstore_with_expires"), :expires => true)
       @store.clear
     end
 

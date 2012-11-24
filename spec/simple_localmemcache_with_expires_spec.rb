@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache"), :expires => true).close
+  Juno.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache_with_expires"), :expires => true).close
 
   describe "simple_localmemcache_with_expires" do
     before do
-      @store = Juno.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache"), :expires => true)
+      @store = Juno.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache_with_expires"), :expires => true)
       @store.clear
     end
 

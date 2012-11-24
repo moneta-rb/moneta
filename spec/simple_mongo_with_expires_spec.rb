@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:Mongo, :db => 'simple_mongo', :expires => true).close
+  Juno.new(:Mongo, :db => 'simple_mongo_with_expires', :expires => true).close
 
   describe "simple_mongo_with_expires" do
     before do
-      @store = Juno.new(:Mongo, :db => 'simple_mongo', :expires => true)
+      @store = Juno.new(:Mongo, :db => 'simple_mongo_with_expires', :expires => true)
       @store.clear
     end
 
