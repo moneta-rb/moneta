@@ -9,7 +9,7 @@ module Juno
         @db = ::SQLite3::Database.new(options[:file])
         @db.execute("create table if not exists #{table} (key blob primary key, value blob)")
         @select = @db.prepare("select value from #{table} where key = ?")
-        @insert = @db.prepare("insert into #{table} values (?, ?)")
+        @insert = @db.prepare("insert or replace into #{table} values (?, ?)")
         @delete = @db.prepare("delete from #{table} where key = ?")
         @clear = @db.prepare("delete from #{table}")
       end

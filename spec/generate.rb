@@ -645,6 +645,13 @@ it "removes and returns a #{val_type} element with a #{key_type} key from the ba
   @store.key?(#{key1}).should == false
 end
 
+it "overwrites existing #{val_type} values with #{key_type}" do
+  @store[#{key1}] = #{val1}
+  @store[#{key1}].should == #{val1}
+  @store[#{key1}] = #{val2}
+  @store[#{key1}].should == #{val2}
+end
+
 it "does not run the block if the #{key_type} key is available" do
   @store[#{key1}] = #{val1}
   unaltered = "unaltered"

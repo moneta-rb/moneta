@@ -77,6 +77,13 @@ shared_examples_for 'store_stringkey_stringvalue' do
     @store.key?("strkey1").should == false
   end
 
+  it "overwrites existing String values with String" do
+    @store["strkey1"] = "strval1"
+    @store["strkey1"].should == "strval1"
+    @store["strkey1"] = "strval2"
+    @store["strkey1"].should == "strval2"
+  end
+
   it "does not run the block if the String key is available" do
     @store["strkey1"] = "strval1"
     unaltered = "unaltered"
@@ -241,6 +248,13 @@ shared_examples_for 'store_stringkey_objectvalue' do
     @store["strkey1"] = Value.new(:objval1)
     @store.delete("strkey1").should == Value.new(:objval1)
     @store.key?("strkey1").should == false
+  end
+
+  it "overwrites existing Object values with String" do
+    @store["strkey1"] = Value.new(:objval1)
+    @store["strkey1"].should == Value.new(:objval1)
+    @store["strkey1"] = Value.new(:objval2)
+    @store["strkey1"].should == Value.new(:objval2)
   end
 
   it "does not run the block if the String key is available" do
@@ -409,6 +423,13 @@ shared_examples_for 'store_stringkey_hashvalue' do
     @store.key?("strkey1").should == false
   end
 
+  it "overwrites existing Hash values with String" do
+    @store["strkey1"] = {"hashval1"=>"hashval2"}
+    @store["strkey1"].should == {"hashval1"=>"hashval2"}
+    @store["strkey1"] = {"hashval3"=>"hashval4"}
+    @store["strkey1"].should == {"hashval3"=>"hashval4"}
+  end
+
   it "does not run the block if the String key is available" do
     @store["strkey1"] = {"hashval1"=>"hashval2"}
     unaltered = "unaltered"
@@ -573,6 +594,13 @@ shared_examples_for 'store_objectkey_stringvalue' do
     @store[Value.new(:objkey1)] = "strval1"
     @store.delete(Value.new(:objkey1)).should == "strval1"
     @store.key?(Value.new(:objkey1)).should == false
+  end
+
+  it "overwrites existing String values with Object" do
+    @store[Value.new(:objkey1)] = "strval1"
+    @store[Value.new(:objkey1)].should == "strval1"
+    @store[Value.new(:objkey1)] = "strval2"
+    @store[Value.new(:objkey1)].should == "strval2"
   end
 
   it "does not run the block if the Object key is available" do
@@ -741,6 +769,13 @@ shared_examples_for 'store_objectkey_objectvalue' do
     @store.key?(Value.new(:objkey1)).should == false
   end
 
+  it "overwrites existing Object values with Object" do
+    @store[Value.new(:objkey1)] = Value.new(:objval1)
+    @store[Value.new(:objkey1)].should == Value.new(:objval1)
+    @store[Value.new(:objkey1)] = Value.new(:objval2)
+    @store[Value.new(:objkey1)].should == Value.new(:objval2)
+  end
+
   it "does not run the block if the Object key is available" do
     @store[Value.new(:objkey1)] = Value.new(:objval1)
     unaltered = "unaltered"
@@ -905,6 +940,13 @@ shared_examples_for 'store_objectkey_hashvalue' do
     @store[Value.new(:objkey1)] = {"hashval1"=>"hashval2"}
     @store.delete(Value.new(:objkey1)).should == {"hashval1"=>"hashval2"}
     @store.key?(Value.new(:objkey1)).should == false
+  end
+
+  it "overwrites existing Hash values with Object" do
+    @store[Value.new(:objkey1)] = {"hashval1"=>"hashval2"}
+    @store[Value.new(:objkey1)].should == {"hashval1"=>"hashval2"}
+    @store[Value.new(:objkey1)] = {"hashval3"=>"hashval4"}
+    @store[Value.new(:objkey1)].should == {"hashval3"=>"hashval4"}
   end
 
   it "does not run the block if the Object key is available" do
@@ -1073,6 +1115,13 @@ shared_examples_for 'store_hashkey_stringvalue' do
     @store.key?({"hashkey1"=>"hashkey2"}).should == false
   end
 
+  it "overwrites existing String values with Hash" do
+    @store[{"hashkey1"=>"hashkey2"}] = "strval1"
+    @store[{"hashkey1"=>"hashkey2"}].should == "strval1"
+    @store[{"hashkey1"=>"hashkey2"}] = "strval2"
+    @store[{"hashkey1"=>"hashkey2"}].should == "strval2"
+  end
+
   it "does not run the block if the Hash key is available" do
     @store[{"hashkey1"=>"hashkey2"}] = "strval1"
     unaltered = "unaltered"
@@ -1239,6 +1288,13 @@ shared_examples_for 'store_hashkey_objectvalue' do
     @store.key?({"hashkey1"=>"hashkey2"}).should == false
   end
 
+  it "overwrites existing Object values with Hash" do
+    @store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
+    @store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
+    @store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
+    @store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval2)
+  end
+
   it "does not run the block if the Hash key is available" do
     @store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     unaltered = "unaltered"
@@ -1403,6 +1459,13 @@ shared_examples_for 'store_hashkey_hashvalue' do
     @store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>"hashval2"}
     @store.delete({"hashkey1"=>"hashkey2"}).should == {"hashval1"=>"hashval2"}
     @store.key?({"hashkey1"=>"hashkey2"}).should == false
+  end
+
+  it "overwrites existing Hash values with Hash" do
+    @store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>"hashval2"}
+    @store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>"hashval2"}
+    @store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>"hashval4"}
+    @store[{"hashkey1"=>"hashkey2"}].should == {"hashval3"=>"hashval4"}
   end
 
   it "does not run the block if the Hash key is available" do
