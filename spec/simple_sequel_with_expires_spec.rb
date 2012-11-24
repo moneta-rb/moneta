@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires")).close
+  Juno.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true).close
 
   describe "simple_sequel_with_expires" do
     before do
-      @store = Juno.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"))
+      @store = Juno.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true)
       @store.clear
     end
 
