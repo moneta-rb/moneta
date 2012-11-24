@@ -4,11 +4,11 @@ require 'helper'
 begin
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
-  Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper.sqlite3").close
+  Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper").close
 
   describe "adapter_datamapper" do
     before do
-      @store = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper.sqlite3")
+      @store = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")
       @store.clear
     end
 
@@ -24,10 +24,10 @@ begin
     it_should_behave_like 'store_stringkey_objectvalue'
 
     it 'does not cross contaminate when storing' do
-      first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first.sqlite3")
+      first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
       first.clear
 
-      second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second.sqlite3")
+      second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
       second.clear
 
       first['key'] = 'value'
@@ -38,10 +38,10 @@ begin
     end
 
     it 'does not cross contaminate when deleting' do
-      first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first.sqlite3")
+      first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
       first.clear
 
-      second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second.sqlite3")
+      second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
       second.clear
 
       first['key'] = 'value'

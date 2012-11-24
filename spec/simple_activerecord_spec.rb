@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord.sqlite3') }).close
+  Juno.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord') }).close
 
   describe "simple_activerecord" do
     before do
-      @store = Juno.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord.sqlite3') })
+      @store = Juno.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord') })
       @store.clear
     end
 

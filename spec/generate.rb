@@ -98,11 +98,11 @@ TESTS = {
   },
   'simple_sqlite' => {
     :store => :Sqlite,
-    :options => ':file => ":memory:"'
+    :options => ':file => File.join(make_tempdir, "simple_sqlite")'
   },
   'simple_sqlite_with_expires' => {
     :store => :Sqlite,
-    :options => ':file => ":memory:", :expires => true',
+    :options => ':file => File.join(make_tempdir, "simple_sqlite_with_expires"), :expires => true',
     :specs => EXPIRES_SPECS
   },
   'simple_redis' => {
@@ -165,39 +165,39 @@ TESTS = {
   },
   'simple_sequel' => {
     :store => :Sequel,
-    :options => ":db => (defined?(JRUBY_VERSION) ? 'jdbc:sqlite:/' : 'sqlite:/')"
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel")'
   },
   'simple_sequel_with_expires' => {
     :store => :Sequel,
-    :options => ":db => (defined?(JRUBY_VERSION) ? 'jdbc:sqlite:/' : 'sqlite:/'), :expires => true",
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires")',
     :specs => EXPIRES_SPECS
   },
   'simple_datamapper' => {
     :store => :DataMapper,
-    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper.sqlite3"',
+    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n"
   },
   'simple_datamapper_with_expires' => {
     :store => :DataMapper,
-    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires.sqlite3", :expires => true',
+    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires", :expires => true',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :specs => EXPIRES_SPECS
   },
   'simple_datamapper_with_repository' => {
     :store => :DataMapper,
-    :options => ':repository => :repo, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_repository.sqlite3"',
+    :options => ':repository => :repo, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_repository"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n"
   },
   'simple_activerecord' => {
     :store => :ActiveRecord,
-    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord.sqlite3') }"
+    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord') }"
   },
   'simple_activerecord_with_expires' => {
     :store => :ActiveRecord,
-    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord_with_expires.sqlite3') }, :expires => true",
+    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord_with_expires') }, :expires => true",
     :specs => EXPIRES_SPECS
   },
   'simple_fog' => {
@@ -405,7 +405,7 @@ end},
     :specs => [:null, :store, :returndifferent, :marshallable_key]
   },
   'adapter_activerecord' => {
-    :build => "Juno::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord.sqlite3') })",
+    :build => "Juno::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",
     :specs => ADAPTER_SPECS,
     :tests => %{
 it 'updates an existing key/value' do
@@ -416,7 +416,7 @@ it 'updates an existing key/value' do
 end
 
 it 'uses an existing connection' do
-  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'activerecord-existing.sqlite3')
+  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'activerecord-existing')
 
   store = Juno::Adapters::ActiveRecord.new
   store.table.table_exists?.should == true
@@ -432,7 +432,7 @@ end
     :specs => ADAPTER_SPECS
   },
   'adapter_datamapper' => {
-    :build => 'Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper.sqlite3")',
+    :build => 'Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :specs => ADAPTER_SPECS + [:returndifferent_stringkey_objectvalue,
@@ -440,10 +440,10 @@ end
                                :store_stringkey_objectvalue],
     :tests => %q{
 it 'does not cross contaminate when storing' do
-  first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first.sqlite3")
+  first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
   first.clear
 
-  second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second.sqlite3")
+  second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
   second.clear
 
   first['key'] = 'value'
@@ -454,10 +454,10 @@ it 'does not cross contaminate when storing' do
 end
 
 it 'does not cross contaminate when deleting' do
-  first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first.sqlite3")
+  first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
   first.clear
 
-  second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second.sqlite3")
+  second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
   second.clear
 
   first['key'] = 'value'
@@ -536,11 +536,11 @@ end
     :specs => ADAPTER_SPECS
   },
   'adapter_sequel' => {
-    :build => "Juno::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? 'jdbc:sqlite:/' : 'sqlite:/'))",
+    :build => 'Juno::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_sqlite' => {
-    :build => 'Juno::Adapters::Sqlite.new(:file => ":memory:")',
+    :build => 'Juno::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_tokyocabinet' => {

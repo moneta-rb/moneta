@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:Sqlite, :file => ":memory:", :expires => true).close
+  Juno.new(:Sqlite, :file => File.join(make_tempdir, "simple_sqlite_with_expires"), :expires => true).close
 
   describe "simple_sqlite_with_expires" do
     before do
-      @store = Juno.new(:Sqlite, :file => ":memory:", :expires => true)
+      @store = Juno.new(:Sqlite, :file => File.join(make_tempdir, "simple_sqlite_with_expires"), :expires => true)
       @store.clear
     end
 

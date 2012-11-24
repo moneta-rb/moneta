@@ -4,11 +4,11 @@ require 'helper'
 begin
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
-  Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires.sqlite3", :expires => true).close
+  Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires", :expires => true).close
 
   describe "simple_datamapper_with_expires" do
     before do
-      @store = Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires.sqlite3", :expires => true)
+      @store = Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires", :expires => true)
       @store.clear
     end
 
