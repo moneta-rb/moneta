@@ -214,7 +214,7 @@ TESTS = {
     :options => ":aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'juno'
+    :dir                    => 'juno',
     :expires                => true",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",

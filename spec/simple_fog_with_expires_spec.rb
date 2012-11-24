@@ -7,7 +7,7 @@ begin
   Juno.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'juno'
+    :dir                    => 'juno',
     :expires                => true).close
 
   describe "simple_fog_with_expires" do
@@ -15,7 +15,7 @@ begin
       @store = Juno.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'juno'
+    :dir                    => 'juno',
     :expires                => true)
       @store.clear
     end
