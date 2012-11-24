@@ -24,14 +24,22 @@ module Juno
       end
 
       def store(key, value, options = {})
-        sequel_table.insert(:k => key, :v => value)
-        value
+        @db.transaction do
+          if key?(key, options)
+            sequel_table.update(:k => key, :v => value)
+          else
+            sequel_table.insert(:k => key, :v => value)
+          end
+          value
+        end
       end
 
       def delete(key, options = {})
-        if value = load(key, options)
-          sequel_table.filter(:k => key).delete
-          value
+        @db.transaction do
+          if value = load(key, options)
+            sequel_table.filter(:k => key).delete
+            value
+          end
         end
       end
 
