@@ -21,7 +21,7 @@ begin
     it 'updates an existing key/value' do
       @store['foo/bar'] = '1'
       @store['foo/bar'] = '2'
-      records = @store.table.find :all, :conditions => { :key => 'foo/bar' }
+      records = @store.table.find :all, :conditions => { :k => 'foo/bar' }
       records.count.should == 1
     end
 

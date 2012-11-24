@@ -13,7 +13,8 @@ gem 'multi_json'
 gem 'json' # Ripple/Riak needs json
 
 # Backends
-gem 'datamapper'
+gem 'dm-core'
+gem 'dm-migrations'
 gem 'dm-sqlite-adapter'
 gem 'fog'
 gem 'activerecord'

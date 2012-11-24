@@ -33,19 +33,21 @@ module Juno
         context do
           record = Store.get(key)
           if record
-            record.update(key, value)
+            record.update(:k => key, :v => value)
           else
             Store.create(:k => key, :v => value)
           end
+          value
         end
-        value
       end
 
       def delete(key, options = {})
         context do
-          value = load(key, options)
-          Store.all(:k => key).destroy!
-          value
+          if record = Store.get(key)
+            value = record.v
+            record.destroy!
+            value
+          end
         end
       end
 

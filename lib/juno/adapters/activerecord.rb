@@ -18,35 +18,39 @@ module Juno
                                               end
         @table.establish_connection(options[:connection]) if options[:connection]
         @table.connection.create_table @table.table_name do |t|
-          t.binary 'key', :primary => true
-          t.binary 'value'
+          t.binary 'k', :primary => true
+          t.binary 'v'
         end unless @table.table_exists?
       end
 
       def key?(key, options = {})
-        !!@table.find_by_key(key)
+        !!@table.find_by_k(key)
       end
 
       def load(key, options = {})
-        record = @table.find_by_key(key)
-        record ? record.value : nil
+        record = @table.find_by_k(key)
+        record ? record.v : nil
       end
 
       def delete(key, options = {})
-        record = @table.find_by_key(key)
-        if record
-          value = record.value
-          record.destroy
-          value
+        @table.transaction do
+          record = @table.find_by_k(key)
+          if record
+            value = record.v
+            record.destroy
+            value
+          end
         end
       end
 
       def store(key, value, options = {})
-        record = @table.find_by_key(key)
-        record ||= @table.new(:key => key)
-        record.value = value
-        record.save!
-        value
+        @table.transaction do
+          record = @table.find_by_k(key)
+          record ||= @table.new(:k => key)
+          record.v = value
+          record.save!
+          value
+        end
       end
 
       def clear(options = {})
