@@ -18,7 +18,7 @@ module Juno
 
       def load(key, options = {})
         value = @collection.find_one('_id' => key)
-        value ? value['data'] : nil
+        value ? value['data'].to_s : nil
       end
 
       def delete(key, options = {})
@@ -29,8 +29,8 @@ module Juno
 
       def store(key, value, options = {})
         @collection.update({ '_id' => key },
-                      { '_id' => key, 'data' => value },
-                      { :upsert => true })
+                           { '_id' => key, 'data' => ::BSON::Binary.new(value) },
+                           { :upsert => true })
         value
       end
 
