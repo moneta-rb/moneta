@@ -38,10 +38,12 @@ Out of the box, it supports:
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (:Fog)
     * Storage which doesn't store anything (:Null)
 
-Special proxies:
-* Juno::Expires to add expiration support to stores
-* Juno::Stack to stack multiple stores
-* Juno::Proxy basic proxy class
+In addition it supports proxies (Similar to [Rack middlewares](http://rack.rubyforge.org/)) which
+add additional features to storage backends:
+
+* Juno::Proxy proxy base class
+* Juno::Expires to add expiration support to stores which don't support it natively
+* Juno::Stack to stack multiple stores (Read returns result from first where the key is found, writes go to all stores)
 * Juno::Transformer transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...)
 * Juno::Cache combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory)
 
@@ -115,13 +117,14 @@ The Cassandra, Memcached and Redis backends supports expires values directly:
 
 ~~~ ruby
 cache = Juno::Adapters::Memcached.new
-# Expires in 10 seconds
-cache.store(key, value, :expires => 10)
 
 # Or using the builder...
 cache = Juno.build do
   adapter :Memcached
 end
+
+# Expires in 60 seconds
+cache.store(key, value, :expires => 60)
 ~~~
 
 You can add the expires feature to other backends using the Expires proxy:
@@ -130,9 +133,8 @@ You can add the expires feature to other backends using the Expires proxy:
 # Using the :expires option
 cache = Juno.new(:File, :dir => '...', :expires => true)
 
-# or using the proxy...
+# or manually by using the proxy...
 cache = Juno::Expires.new(Juno::Adapters::File.new(:dir => '...'))
-cache.store(key, value, :expires => 10)
 
 # or using the builder...
 cache = Juno.build do
@@ -144,5 +146,5 @@ end
 Authors
 -------
 
-* Moneta originally by wycats
 * Juno by Daniel Mendler
+* Moneta originally by wycats
