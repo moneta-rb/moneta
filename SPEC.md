@@ -6,10 +6,6 @@ The purpose of the juno specification is to create a general-purpose API for int
 
 Juno ships with a set of executable specs which you can use to verify spec-compliance with your juno adapter.
 
-# Juno Library
-
-Juno ships with proof-of-concept adapters for over a dozen key-value stores, including in-memory, memcache, database-backed and S3. These adapters are meant as proofs-of-concept, and while the juno project intends to maintain them (and will accept patches to improve them), you should not consider them the core of the project.
-
 # Requirements for a Juno Adapter
 
 (See RFC 2119 for use of MUST, SHOULD, MAY, MUST NOT, and SHOULD NOT)
@@ -31,10 +27,6 @@ Return the value stored in the key-value-store under the provided key. Adapters 
 ### <code>\[\]=(key[Object], value[Object]) => Object(value)</code>
 
 Store the value in the key-value-store under the provided key. Adapters MAY serialize the value using Ruby's Marshal system, and MUST NOT store a reference to the original value in the store, unless Ruby disallows duplication of the original value. Adapters SHOULD NOT simply call <code>dup</code> on the value, unless the value stores no references to other Object. For example, an adapter MAY store a <code>dup</code> of a String, but SHOULD NOT store a <code>dup</code> of <code>["hello", "world"]</code>.
-
-### <code>fetch(key[Object]) => Object</code>
-
-Return the value stored in the key-value-store under the provided key. If no value is stored under the provided key, the adapter MUST raise an IndexError.
 
 ### <code>fetch(key[Object], &block) => Object</code>
 
@@ -65,16 +57,13 @@ Completely empty all keys and values from the key-value-store. Adapters MAY allo
 The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification).
 
 * fetch
+* load
 * store
 * delete
 * key?
 * clear
 
-In the case of methods with optional arguments, the Hash MUST be provided as the final argument, and all optional arguments MUST be specified.
-
-Keys in this Hash MUST be Strings or Symbols. If they are Strings, they MUST be prefixed with a unique namespace. Namespaces MUST be separated from the name of the key with a single ".". The namespace SHOULD be the name of the gem that exposes the key.
-
-Keys in this Hash MUST NOT be Symbols unless this specification or an official extension to this specification defines a Symbol key.
+In the case of methods with optional arguments, the Hash MUST be provided as the final argument. Keys in this Hash MUST be Symbols.
 
 # Key Equality
 
