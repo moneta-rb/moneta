@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno::Adapters::LRUHash.new(:max_size => 10).close
+  Juno::Adapters::LRUHash.new.close
 
   describe "adapter_lruhash" do
     before do
-      @store = Juno::Adapters::LRUHash.new(:max_size => 10)
+      @store = Juno::Adapters::LRUHash.new
       @store.clear
     end
 

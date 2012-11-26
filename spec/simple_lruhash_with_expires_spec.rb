@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:LRUHash, :expires => true, :max_size => 10).close
+  Juno.new(:LRUHash, :expires => true).close
 
   describe "simple_lruhash_with_expires" do
     before do
-      @store = Juno.new(:LRUHash, :expires => true, :max_size => 10)
+      @store = Juno.new(:LRUHash, :expires => true)
       @store.clear
     end
 

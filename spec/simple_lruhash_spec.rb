@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno.new(:LRUHash, :max_size => 10).close
+  Juno.new(:LRUHash).close
 
   describe "simple_lruhash" do
     before do
-      @store = Juno.new(:LRUHash, :max_size => 10)
+      @store = Juno.new(:LRUHash)
       @store.clear
     end
 

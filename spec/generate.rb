@@ -13,11 +13,10 @@ TESTS = {
   },
   'simple_lruhash' => {
     :store => :LRUHash,
-    :options => ':max_size => 10',
   },
   'simple_lruhash_with_expires' => {
     :store => :LRUHash,
-    :options => ':expires => true, :max_size => 10',
+    :options => ':expires => true',
     :specs => EXPIRES_SPECS,
   },
   'simple_file' => {
@@ -529,7 +528,7 @@ end
     :specs => [:null, :store]
   },
   'adapter_lruhash' => {
-    :build => 'Juno::Adapters::LRUHash.new(:max_size => 10)',
+    :build => 'Juno::Adapters::LRUHash.new',
     :specs => [:null, :store]
   },
   'adapter_mongo' => {
