@@ -1,4 +1,16 @@
 module Juno
+  # Combines two stores. One is used as cache, the other as backend.
+  #
+  # Example:
+  #
+  # ~~~ ruby
+  # Juno.build do
+  #   use(:Cache) do
+  #    backend { adapter :File, :dir => 'data' }
+  #    cache { adapter :Memory }
+  #   end
+  # end
+  # ~~~
   class Cache < Base
     class DSL
       def initialize(options, &block)

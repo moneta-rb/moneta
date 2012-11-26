@@ -1,4 +1,18 @@
 module Juno
+  # Combines multiple stores. Reads return the result from the first store,
+  # writes go to all stores.
+  #
+  # Example:
+  #
+  # ~~~ ruby
+  # Juno.build do
+  #   use(:Stack) do
+  #     add { adapter :Redis }
+  #     add { adapter :File, :dir => 'data' }
+  #     add { adapter :File, :dir => 'replicate' }
+  #   end
+  # end
+  # ~~~
   class Stack < Base
     class DSL
       attr_reader :stack

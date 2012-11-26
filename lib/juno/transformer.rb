@@ -1,4 +1,14 @@
 module Juno
+  # Transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...).
+  #
+  # Example:
+  #
+  # ~~~ ruby
+  # Juno.build do
+  #   transformer :key => [:marshal, :escape], :value => [:marshal]
+  #   adapter :File, :dir => 'data'
+  # end
+  # ~~~
   class Transformer < Proxy
     VALUE_TRANSFORMER = {
       :marshal => { :load => '::Marshal.load(VALUE)',          :dump => '::Marshal.dump(VALUE)' },

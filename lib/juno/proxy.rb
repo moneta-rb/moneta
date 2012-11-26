@@ -1,4 +1,5 @@
 module Juno
+  # Proxy base class
   class Proxy < Base
     attr_reader :adapter
 

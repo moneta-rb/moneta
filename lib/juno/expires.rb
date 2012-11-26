@@ -1,4 +1,5 @@
 module Juno
+  # Adds expiration support to the underlying store
   class Expires < Proxy
     def key?(key, options = {})
       !!load(key, options)
