@@ -9,13 +9,14 @@ module Juno
   #   end
   class Transformer < Proxy
     VALUE_TRANSFORMER = {
-      :marshal => { :load => '::Marshal.load(VALUE)',          :dump => '::Marshal.dump(VALUE)' },
-      :base64  => { :load => "VALUE.unpack('m').first",        :dump => "[VALUE].pack('m').strip" },
-      :json    => { :load => '::MultiJson.load(VALUE).first',  :dump => '::MultiJson.dump([VALUE])', :require => 'multi_json' },
-      :yaml    => { :load => '::YAML.load(VALUE)',             :dump => '::YAML.dump(VALUE)',        :require => 'yaml' },
+      :marshal  => { :load => '::Marshal.load(VALUE)',          :dump => '::Marshal.dump(VALUE)' },
+      :base64   => { :load => "VALUE.unpack('m').first",        :dump => "[VALUE].pack('m').strip" },
+      :json     => { :load => '::MultiJson.load(VALUE).first',  :dump => '::MultiJson.dump([VALUE])', :require => 'multi_json' },
+      :yaml     => { :load => '::YAML.load(VALUE)',             :dump => '::YAML.dump(VALUE)',        :require => 'yaml' },
       #:tnet    => { :load => '::TNetstring.parse(VALUE)',      :dump => '::TNetstring.dump(VALUE)', :require => 'tnetstring' },
-      :msgpack => { :load => '::MessagePack.unpack(VALUE)',    :dump => '::MessagePack.pack(VALUE)', :require => 'msgpack' },
-      :bson    => { :load => '::BSON.deserialize(VALUE)["v"]', :dump => '::BSON.serialize({"v"=>VALUE})',   :require => 'bson' },
+      :msgpack  => { :load => '::MessagePack.unpack(VALUE)',    :dump => '::MessagePack.pack(VALUE)', :require => 'msgpack' },
+      :bson     => { :load => '::BSON.deserialize(VALUE)["v"]', :dump => '::BSON.serialize({"v"=>VALUE})',   :require => 'bson' },
+      :compress => { :load => '::Zlib::Inflate.inflate(VALUE)', :dump => '::Zlib::Deflate.deflate(VALUE)', :require => 'zlib' },
     }
 
     KEY_TRANSFORMER = {
@@ -27,7 +28,7 @@ module Juno
       :bson    => { :transform => '(TMP = KEY; String === TMP ? TMP : ::BSON.serialize({"k"=>TMP}).to_s)', :require => 'bson' },
       :yaml    => { :transform => '(TMP = KEY; String === TMP ? TMP : ::YAML.dump(TMP))',      :require => 'yaml' },
       :marshal => { :transform => '(TMP = KEY; String === TMP ? TMP : ::Marshal.dump(TMP))' },
-      #:tnet    => { :transform => '(TMP = KEY; String === TMP ? TMP : ::TNetstring.dump(TMP))', :require => 'tnetstring' },
+      #:tnet   => { :transform => '(TMP = KEY; String === TMP ? TMP : ::TNetstring.dump(TMP))', :require => 'tnetstring' },
       :msgpack => { :transform => '(TMP = KEY; String === TMP ? TMP : ::MessagePack.pack(TMP))', :require => 'msgpack' },
     }
 

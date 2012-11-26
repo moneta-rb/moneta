@@ -333,6 +333,15 @@ Juno.build do
 end},
     :specs => [:null_stringkey_stringvalue, :store_stringkey_stringvalue]
   },
+  'transformer_compress' => {
+    :build => %{
+Juno.build do
+  use :Transformer, :value => :compress
+  adapter :Memory
+end},
+    :value => %w(String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_json' => {
     :build => %{
 Juno.build do
