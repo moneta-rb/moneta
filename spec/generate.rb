@@ -11,6 +11,15 @@ TESTS = {
     :options => ':expires => true',
     :specs => EXPIRES_SPECS,
   },
+  'simple_lruhash' => {
+    :store => :LRUHash,
+    :options => ':max_size => 10',
+  },
+  'simple_lruhash_with_expires' => {
+    :store => :LRUHash,
+    :options => ':expires => true, :max_size => 10',
+    :specs => EXPIRES_SPECS,
+  },
   'simple_file' => {
     :store => :File,
     :options => ':dir => File.join(make_tempdir, "simple_file")'
@@ -508,6 +517,10 @@ end
   },
   'adapter_memory' => {
     :build => 'Juno::Adapters::Memory.new',
+    :specs => [:null, :store]
+  },
+  'adapter_lruhash' => {
+    :build => 'Juno::Adapters::LRUHash.new(:max_size => 10)',
     :specs => [:null, :store]
   },
   'adapter_mongo' => {

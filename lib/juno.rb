@@ -17,6 +17,7 @@ module Juno
     autoload :Fog,             'juno/adapters/fog'
     autoload :GDBM,            'juno/adapters/gdbm'
     autoload :LocalMemCache,   'juno/adapters/localmemcache'
+    autoload :LRUHash,         'juno/adapters/lruhash'
     autoload :Memcached,       'juno/adapters/memcached'
     autoload :MemcachedDalli,  'juno/adapters/memcached_dalli'
     autoload :MemcachedNative, 'juno/adapters/memcached_native'

@@ -24,6 +24,7 @@ gem 'couchrest'
 gem 'sequel'
 gem 'dalli'
 gem 'riak-client'
+gem 'hashery'
 
 if defined?(JRUBY_VERSION)
   gem 'jdbc-sqlite3'

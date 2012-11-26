@@ -11,6 +11,7 @@ Out of the box, it supports:
 
 * Memory:
     * In-memory store (:Memory)
+    * LRU hash (:LRUHash)
     * LocalMemCache (:LocalMemCache)
     * Memcached store (:Memcached, :MemcachedNative and :MemcachedDalli)
 * Relational Databases:
