@@ -4,15 +4,13 @@ module Juno
   #
   # Example:
   #
-  # ~~~ ruby
-  # Juno.build do
-  #   use(:Stack) do
-  #     add { adapter :Redis }
-  #     add { adapter :File, :dir => 'data' }
-  #     add { adapter :File, :dir => 'replicate' }
+  #   Juno.build do
+  #     use(:Stack) do
+  #       add { adapter :Redis }
+  #       add { adapter :File, :dir => 'data' }
+  #       add { adapter :File, :dir => 'replicate' }
+  #     end
   #   end
-  # end
-  # ~~~
   class Stack < Base
     class DSL
       attr_reader :stack
