@@ -332,6 +332,14 @@ Juno.build do
 end},
     :specs => [:null_stringkey_stringvalue, :store_stringkey_stringvalue]
   },
+  'lock' => {
+    :build => %{
+Juno.build do
+  use :Lock
+  adapter :Memory
+end},
+    :specs => [:null, :store]
+  },
   'transformer_compress' => {
     :build => %{
 Juno.build do

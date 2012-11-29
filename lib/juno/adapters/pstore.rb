@@ -38,8 +38,7 @@ module Juno
 
       if RUBY_VERSION > '1.9'
         def new_store(options)
-          # Create a thread-safe pstore by default
-          ::PStore.new(options[:file], options.include?(:thread_safe) ? options[:thread_safe] : true)
+          ::PStore.new(options[:file], options[:threadsafe])
         end
       else
         def new_store(options)

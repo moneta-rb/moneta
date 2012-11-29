@@ -3,6 +3,7 @@ module Juno
   autoload :Builder,           'juno/builder'
   autoload :Cache,             'juno/cache'
   autoload :Expires,           'juno/expires'
+  autoload :Lock,              'juno/lock'
   autoload :Proxy,             'juno/proxy'
   autoload :Stack,             'juno/stack'
   autoload :Transformer,       'juno/transformer'
@@ -36,6 +37,7 @@ module Juno
 
   def self.new(name, options = {})
     expires = options.delete(:expires)
+    threadsafe = options.delete(:threadsafe)
     transformer = {:key => :marshal, :value => :marshal}
     raise 'Name must be Symbol' unless Symbol === name
     case name
@@ -65,6 +67,7 @@ module Juno
     build(options) do
       use :Expires if expires
       use :Transformer, transformer
+      use :Lock if threadsafe
       adapter name
     end
   end
