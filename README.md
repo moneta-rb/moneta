@@ -50,6 +50,15 @@ Out of the box, it supports the following backends:
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (:Fog)
     * Storage which doesn't store anything (:Null)
 
+Supported serializers:
+
+* Marshal
+* YAML
+* JSON (via multi_json)
+* MessagePack
+* BSON
+* Ox
+
 Proxies
 -------
 
