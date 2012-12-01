@@ -145,6 +145,14 @@ cache = Juno.build do
 end
 ~~~
 
+Alternatives
+------------
+
+* [Moneta](https://github.com/wycats/moneta): Juno is based on Moneta, but Juno supports more features and more backends and is actively developed
+* [Horcrux](https://github.com/technoweenie/horcrux): Used at github, supports batch operations but only Memcached backend
+* [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
+* [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore
+
 Authors
 -------
 
