@@ -7,7 +7,18 @@ Juno provides a standard interface for interacting with various kinds of key/val
 is based on Moneta and replaces it with a mostly compatible interface. The reason for the
 fork was that Moneta was unmaintained for a long time.
 
-Out of the box, it supports:
+Juno is very feature rich:
+
+* Supports for a lot of backends (See below)
+* Supports proxies (Similar to [Rack middlewares](http://rack.rubyforge.org/))
+* Custom serialization via `Juno::Transformer` proxy (Marshal/JSON/YAML and many more)
+* Custom key transformation
+* Expiration for all stores (Added via proxy if not supported natively)
+
+Supported backends
+------------------
+
+Out of the box, it supports the following backends:
 
 * Memory:
     * In-memory store (:Memory)
@@ -39,15 +50,18 @@ Out of the box, it supports:
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (:Fog)
     * Storage which doesn't store anything (:Null)
 
+Proxies
+-------
+
 In addition it supports proxies (Similar to [Rack middlewares](http://rack.rubyforge.org/)) which
 add additional features to storage backends:
 
-* Juno::Proxy proxy base class
-* Juno::Expires to add expiration support to stores which don't support it natively
-* Juno::Stack to stack multiple stores (Read returns result from first where the key is found, writes go to all stores)
-* Juno::Transformer transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...)
-* Juno::Cache combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory)
-* Juno::Lock to make store thread safe
+* `Juno::Proxy` proxy base class
+* `Juno::Expires` to add expiration support to stores which don't support it natively
+* `Juno::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores)
+* `Juno::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...)
+* `Juno::Cache` combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory)
+* `Juno::Lock` to make store thread safe
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
@@ -61,8 +75,8 @@ Links
     * Latest Gem: <http://rubydoc.info/gems/juno/frames>
     * GitHub master: <http://rubydoc.info/github/minad/juno/master/frames>
 
-Store API
----------
+Juno API
+--------
 
 ~~~
 #initialize(options)              options differs per-store, and is used to set up the store
