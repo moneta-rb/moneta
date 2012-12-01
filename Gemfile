@@ -35,6 +35,7 @@ else
   gem 'tokyocabinet'
   gem 'memcached'
   gem 'sqlite3'
+  gem 'ox'
 end
 
 #gem 'cassandra'

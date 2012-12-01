@@ -369,6 +369,14 @@ end},
     :value => %w(Hash String),
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_ox' => {
+    :build => %{
+Juno.build do
+  use :Transformer, :key => :ox, :value => :ox
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent]
+  },
 #  'transformer_tnet' => {
 #    :build => %{
 #Juno.build do
