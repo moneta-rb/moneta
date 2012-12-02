@@ -121,17 +121,17 @@ TESTS = {
   'simple_memcached' => {
     :store => :Memcached,
     :specs => EXPIRES_SPECS,
-    :options => ':server => "localhost:22122", :namespace => "simple_memcached"'
+    :options => ':namespace => "simple_memcached"'
   },
   'simple_memcached_dalli' => {
     :store => :MemcachedDalli,
     :specs => EXPIRES_SPECS,
-    :options => ':server => "localhost:22122", :namespace => "simple_memcached_dalli"'
+    :options => ':namespace => "simple_memcached_dalli"'
   },
   'simple_memcached_native' => {
     :store => :MemcachedNative,
     :specs => EXPIRES_SPECS,
-    :options => ':server => "localhost:22122", :namespace => "simple_memcached_native"'
+    :options => ':namespace => "simple_memcached_native"'
   },
   'simple_riak' => {
     :store => :Riak,
@@ -509,15 +509,15 @@ end
     :specs => ADAPTER_SPECS
   },
   'adapter_memcached_dalli' => {
-    :build => 'Juno::Adapters::MemcachedDalli.new(:server => "localhost:22122", :namespace => "adapter_memcached_dalli")',
+    :build => 'Juno::Adapters::MemcachedDalli.new(:namespace => "adapter_memcached_dalli")',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_memcached_native' => {
-    :build => 'Juno::Adapters::MemcachedNative.new(:server => "localhost:22122", :namespace => "adapter_memcached_native")',
+    :build => 'Juno::Adapters::MemcachedNative.new(:namespace => "adapter_memcached_native")',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_memcached' => {
-    :build => 'Juno::Adapters::Memcached.new(:server => "localhost:22122", :namespace => "adapter_memcached")',
+    :build => 'Juno::Adapters::Memcached.new(:namespace => "adapter_memcached")',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_memory' => {
