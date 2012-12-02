@@ -1,3 +1,5 @@
+require 'thread'
+
 module Juno
   class Lock < Proxy
     def initialize(adapter, options = {})
