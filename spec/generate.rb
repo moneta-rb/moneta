@@ -817,11 +817,11 @@ TESTS.each do |name, options|
   specs = [options.delete(:specs) || SIMPLE_SPECS].flatten
   specs_code = []
   specs.each do |s|
-    specs_code << "    it_should_behave_like '#{s}'" if SPECS[s.to_s]
+    specs_code << "  it_should_behave_like '#{s}'" if SPECS[s.to_s]
     key.each do |k|
       value.each do |v|
         x = "#{s}_#{k.downcase}key_#{v.downcase}value"
-        specs_code << "    it_should_behave_like '#{x}'" if SPECS[x]
+        specs_code << "  it_should_behave_like '#{x}'" if SPECS[x]
       end
     end
   end
@@ -834,25 +834,13 @@ TESTS.each do |name, options|
 
   code = %{#{header}require 'helper'
 
-begin
-  #{preamble}store = #{build.gsub("\n", "\n  ")}
-  store['foo'] = 'bar'
-  store.clear
-  store.close
-
-  describe #{name.inspect} do
-    let(:store) do
-      #{build.gsub("\n", "\n      ")}
-    end
-
-    include_context 'juno_store'
-#{specs_code.join("\n")}#{options[:tests].to_s.gsub("\n", "\n    ")}
+describe_juno #{name.inspect} do
+  #{preamble}def new_store
+    #{build.gsub("\n", "\n    ")}
   end
-rescue LoadError => ex
-  puts "\\e[31mTest #{name} not executed: \#{ex.message}\\e[0m"
-rescue Exception => ex
-  puts "\\e[31mTest #{name} not executed: \#{ex.message}\\e[0m"
-  puts ex.backtrace.join("\\n")
+
+  include_context 'setup_store'
+#{specs_code.join("\n")}#{options[:tests].to_s.gsub("\n", "\n  ")}
 end
 }
 

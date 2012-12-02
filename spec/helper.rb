@@ -38,7 +38,36 @@ def marshal_error
   end
 end
 
-shared_context 'juno_store' do
+class InitializeStore
+  def initialize(&block)
+    instance_eval(&block)
+    store = new_store
+    store['foo'] = 'bar'
+    store.clear
+    store.close
+  end
+
+  def method_missing(*args)
+  end
+end
+
+def describe_juno(name, &block)
+  begin
+    InitializeStore.new(&block)
+    describe(name, &block)
+  rescue LoadError => ex
+    puts "\e[31mTest #{name} not executed: #{ex.message}\e[0m"
+  rescue Exception => ex
+    puts "\e[31mTest #{name} not executed: #{ex.message}\e[0m"
+    puts ex.backtrace.join("\n")
+  end
+end
+
+shared_context 'setup_store' do
+  let(:store) do
+    new_store
+  end
+
   before do
     store.clear
   end
