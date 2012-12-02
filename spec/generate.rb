@@ -580,8 +580,12 @@ end
     :build => 'Juno::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
     :specs => ADAPTER_SPECS
   },
-  'adapter_tokyocabinet' => {
-    :build => 'Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet"))',
+  'adapter_tokyocabinet_bdb' => {
+    :build => 'Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_bdb"), :type => :bdb)',
+    :specs => ADAPTER_SPECS
+  },
+  'adapter_tokyocabinet_hdb' => {
+    :build => 'Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_hdb"), :type => :hdb)',
     :specs => ADAPTER_SPECS
   },
   'adapter_yaml' => {

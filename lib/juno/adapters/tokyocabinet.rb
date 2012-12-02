@@ -6,10 +6,13 @@ module Juno
       def initialize(options = {})
         file = options[:file]
         raise 'No option :file specified' unless options[:file]
-        @memory = ::TokyoCabinet::HDB.new
-        unless @memory.open(file, ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
-          raise @memory.errmsg(@memory.ecode)
-        end
+        if options[:type] == :bdb
+          @memory = ::TokyoCabinet::BDB.new
+          @memory.open(file, ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
+        else
+          @memory = ::TokyoCabinet::HDB.new
+          @memory.open(file, ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
+        end or raise @memory.errmsg(@memory.ecode)
       end
 
       def key?(key, options = {})

@@ -2,11 +2,11 @@
 require 'helper'
 
 begin
-  Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet")).close
+  Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_bdb"), :type => :bdb).close
 
-  describe "adapter_tokyocabinet" do
+  describe "adapter_tokyocabinet_bdb" do
     before do
-      @store = Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet"))
+      @store = Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_bdb"), :type => :bdb)
       @store.clear
     end
 
@@ -20,8 +20,8 @@ begin
 
   end
 rescue LoadError => ex
-  puts "Test adapter_tokyocabinet not executed: #{ex.message}"
+  puts "Test adapter_tokyocabinet_bdb not executed: #{ex.message}"
 rescue Exception => ex
-  puts "Test adapter_tokyocabinet not executed: #{ex.message}"
+  puts "Test adapter_tokyocabinet_bdb not executed: #{ex.message}"
   #puts "#{ex.backtrace.join("\n")}"
 end
