@@ -37,3 +37,13 @@ def marshal_error
     TypeError
   end
 end
+
+shared_context 'juno_store' do
+  before do
+    store.clear
+  end
+
+  after do
+    store.close.should == nil if store
+  end
+end
