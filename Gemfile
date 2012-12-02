@@ -36,6 +36,7 @@ else
   gem 'memcached'
   gem 'sqlite3'
   gem 'ox'
+  gem 'bson_ext'
 end
 
 #gem 'cassandra'

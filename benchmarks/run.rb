@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
+
+$: << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'benchmark'
 require 'juno'
-require 'dm-core'
 
-DataMapper.setup(:default, :adapter => :in_memory)
+begin
+  require 'dm-core'
+  DataMapper.setup(:default, :adapter => :in_memory)
+rescue LoadError
+end
 
 # Hacked arrays
 # Array modifications
@@ -37,7 +42,7 @@ stores = {
   :Redis => { },
   :MemcachedDalli => { :server => "localhost:11211", :namespace => 'juno_dalli' },
   :MemcachedNative => { :server => "localhost:11211", :namespace => 'juno_native' },
-  #:MongoDB => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
+  :Mongo => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
   :LocalMemCache => { :file => "bench.lmc" },
   :DBM => { :file => "bench.dbm" },
   :SDBM => { :file => "bench.sdbm" },
@@ -51,7 +56,7 @@ stores = {
   :DataMapper => { :setup => "sqlite3::memory:" },
   :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
   :Sequel => { :db => "sqlite:/" },
-  # :Couch => {:db => "couch_test"},
+  :Couch => {:db => "couch_test"},
 }
 
 stats, keys, data, errors, summary = {}, [], HackedArray.new, HackedArray.new, HackedArray.new
@@ -93,10 +98,17 @@ puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, 
 
 
 stores.each do |name, options|
+  begin
+    @cache = Juno.new(name, options)
+    @cache['test'] = 'test'
+    @cache.clear
+  rescue Exception => ex
+    puts "#{name} not benchmarked - #{ex.message}"
+    next
+  end
   puts "======================================================================"
   puts name
   puts "----------------------------------------------------------------------"
-  @cache = Juno.new(name, options)
   stats[name] = {
     :writes => [],
     :reads => [],
