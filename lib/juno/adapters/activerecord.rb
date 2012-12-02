@@ -14,11 +14,12 @@ module Juno
         @table = self.class.tables[table] ||= begin
                                                 c = Class.new(::ActiveRecord::Base)
                                                 c.table_name = table
+                                                c.primary_key = :k
                                                 c
                                               end
         @table.establish_connection(options[:connection]) if options[:connection]
         unless @table.table_exists?
-          @table.connection.create_table(@table.table_name) do |t|
+          @table.connection.create_table(@table.table_name, :id => false) do |t|
             t.binary :k, :null => false
             t.binary :v
           end
@@ -39,19 +40,16 @@ module Juno
         @table.transaction do
           record = @table.find_by_k(key)
           if record
-            value = record.v
             record.destroy
-            value
+            record.v
           end
         end
       end
 
       def store(key, value, options = {})
         @table.transaction do
-          record = @table.find_by_k(key)
-          record ||= @table.new(:k => key)
-          record.v = value
-          record.save!
+          record = @table.find_or_initialize_by_k(key)
+          record.update_attributes(:v => value)
           value
         end
       end
