@@ -11,10 +11,9 @@ services:
   - redis-server
 #  - cassandra
 #  - memcached
-#  - mongodb
+  - mongodb
 before_install:
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev # tokyotyrant
-  - sudo /bin/bash /etc/init.d/mongodb start
   - memcached -d -p 22122
 env:
   - "TASK=test:parallel"
