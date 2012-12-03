@@ -5,6 +5,13 @@ module Juno
     # Fog backend (Cloud storage services)
     # @api public
     class Fog < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :dir - Fog directory
+      # * Other options passed to Fog::Storage
       def initialize(options = {})
         raise 'No option :dir specified' unless dir = options.delete(:dir)
         storage = ::Fog::Storage.new(options)

@@ -5,6 +5,15 @@ module Juno
     # MongoDB backend
     # @api public
     class Mongo < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :collection - MongoDB collection name (default juno)
+      # * :host - MongoDB server host (default localhost)
+      # * :port - MongoDB server port (default mongodb default port)
+      # * :db - MongoDB database (default juno)
       def initialize(options = {})
         collection = options.delete(:collection) || 'juno'
         host = options.delete(:host) || 'localhost'

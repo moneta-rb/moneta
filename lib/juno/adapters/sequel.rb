@@ -5,6 +5,14 @@ module Juno
     # Sequel backend
     # @api public
     class Sequel < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :db - Sequel database
+      # * :table - Table name (default :juno)
+      # * All other options passed to Sequel#connect
       def initialize(options = {})
         raise 'No option :db specified' unless db = options.delete(:db)
         @table = options.delete(:table) || :juno

@@ -5,6 +5,13 @@ module Juno
     # Memcached backend (using gem dalli)
     # @api public
     class MemcachedDalli < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :server - Memcached server (default localhost:11211)
+      # * Other options passed to Dalli::Client
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'
         @cache = ::Dalli::Client.new(server, options)

@@ -5,6 +5,13 @@ module Juno
     # Sqlite3 backend
     # @api public
     class Sqlite < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :file - Database file
+      # * :table - Table name (default juno)
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]
         table = options[:table] || 'juno'

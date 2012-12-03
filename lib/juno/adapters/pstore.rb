@@ -5,6 +5,12 @@ module Juno
     # PStore backend
     # @api public
     class PStore < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :file - PStore file
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]
         FileUtils.mkpath(::File.dirname(options[:file]))

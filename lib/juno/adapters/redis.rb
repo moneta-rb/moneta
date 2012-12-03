@@ -5,6 +5,9 @@ module Juno
     # Redis backend
     # @api public
     class Redis < Base
+      # Constructor
+      #
+      # @param [Hash] options passed to Redis
       def initialize(options = {})
         @redis = ::Redis.new(options)
       end

@@ -5,7 +5,14 @@ module Juno
     # CouchDB backend
     # @api public
     class Couch < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :db - Couch database
       def initialize(options = {})
+        raise 'No option :db specified' unless options[:db]
         @db = ::CouchRest.database!(options[:db])
       end
 

@@ -12,6 +12,14 @@ module Juno
         property :v, Object, :lazy => false
       end
 
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :setup - Datamapper setup string
+      # * :repository - Repository name (default :juno)
+      # * :table - Table name (default :juno)
       def initialize(options = {})
         raise 'No option :setup specified' unless options[:setup]
         @repository = options.delete(:repository) || :juno

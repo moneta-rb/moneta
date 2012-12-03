@@ -11,6 +11,13 @@ module Juno
 
       attr_reader :table
 
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :table - Table name (default juno)
+      # * :connection - ActiveRecord connection
       def initialize(options = {})
         table = options[:table] || 'juno'
         @table = self.class.tables[table] ||= begin

@@ -8,6 +8,13 @@ module Juno
     # Riak backend
     # @api public
     class Riak < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :bucket - Bucket name (default juno)
+      # * All other options passed to Riak::Client
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'juno'
         @bucket = ::Riak::Client.new(options).bucket(bucket)

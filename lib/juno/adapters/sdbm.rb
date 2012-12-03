@@ -5,6 +5,12 @@ module Juno
     # SDBM backend
     # @api public
     class SDBM < Memory
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :file - Database file
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]
         @memory = ::SDBM.new(options[:file])

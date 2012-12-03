@@ -5,6 +5,13 @@ module Juno
     # TokyoCabinet backend
     # @api public
     class TokyoCabinet < Memory
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :file - Database file
+      # * :type - Database type (default :hdb, :bdb and :hdb possible)
       def initialize(options = {})
         file = options[:file]
         raise 'No option :file specified' unless options[:file]

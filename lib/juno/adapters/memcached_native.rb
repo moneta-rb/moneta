@@ -5,6 +5,14 @@ module Juno
     # Memcached backend (using gem memcached)
     # @api public
     class MemcachedNative < Base
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :server - Memcached server (default localhost:11211)
+      # * :namespace - Key namespace
+      # * Other options passed to Memcached
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
