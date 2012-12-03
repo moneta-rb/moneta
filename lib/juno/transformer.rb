@@ -102,6 +102,14 @@ module Juno
         klass
       end
 
+      # Constructor
+      #
+      # @param [Juno store] store The underlying store
+      # @param [Hash] options
+      #
+      # Options:
+      #   * :key - List of key transformers in the order in which they should be applied
+      #   * :value - List of value transformers in the order in which they should be applied
       def new(store, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
