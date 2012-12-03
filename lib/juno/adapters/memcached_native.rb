@@ -2,6 +2,8 @@ require 'memcached'
 
 module Juno
   module Adapters
+    # Memcached backend (using gem memcached)
+    # @api public
     class MemcachedNative < Base
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'

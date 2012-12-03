@@ -2,6 +2,8 @@ require 'sdbm'
 
 module Juno
   module Adapters
+    # SDBM backend
+    # @api public
     class SDBM < Memory
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]

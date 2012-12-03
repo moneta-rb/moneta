@@ -7,6 +7,8 @@ module Juno
   #     transformer :key => [:marshal, :escape], :value => [:marshal]
   #     adapter :File, :dir => 'data'
   #   end
+  #
+  # @api public
   class Transformer < Proxy
     VALUE_TRANSFORMER = {
       :marshal  => { :load => '::Marshal.load(VALUE)',          :dump => '::Marshal.dump(VALUE)' },

@@ -2,6 +2,8 @@ require 'tokyocabinet'
 
 module Juno
   module Adapters
+    # TokyoCabinet backend
+    # @api public
     class TokyoCabinet < Memory
       def initialize(options = {})
         file = options[:file]

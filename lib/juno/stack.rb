@@ -11,6 +11,8 @@ module Juno
   #       add { adapter :File, :dir => 'replicate' }
   #     end
   #   end
+  #
+  # @api public
   class Stack < Base
     class DSL
       attr_reader :stack

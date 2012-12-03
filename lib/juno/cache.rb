@@ -9,6 +9,8 @@ module Juno
   #      cache { adapter :Memory }
   #     end
   #   end
+  #
+  # @api public
   class Cache < Base
     class DSL
       def initialize(options, &block)

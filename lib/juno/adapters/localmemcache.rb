@@ -2,6 +2,8 @@ require 'localmemcache'
 
 module Juno
   module Adapters
+    # LocalMemCache backend
+    # @api public
     class LocalMemCache < Memory
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]

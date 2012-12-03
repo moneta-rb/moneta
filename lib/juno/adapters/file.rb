@@ -2,6 +2,8 @@ require 'fileutils'
 
 module Juno
   module Adapters
+    # Filesystem backend
+    # @api public
     class File < Base
       def initialize(options = {})
         raise 'No option :dir specified' unless @dir = options[:dir]

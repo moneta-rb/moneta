@@ -2,6 +2,8 @@ require 'dalli'
 
 module Juno
   module Adapters
+    # Memcached backend (using gem dalli)
+    # @api public
     class MemcachedDalli < Base
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'

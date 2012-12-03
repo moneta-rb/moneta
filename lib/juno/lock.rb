@@ -1,6 +1,8 @@
 require 'thread'
 
 module Juno
+  # Locks the underlying stores with a Mutex
+  # @api public
   class Lock < Proxy
     def initialize(adapter, options = {})
       super

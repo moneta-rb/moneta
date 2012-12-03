@@ -5,6 +5,8 @@ require 'riak'
 
 module Juno
   module Adapters
+    # Riak backend
+    # @api public
     class Riak < Base
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'juno'

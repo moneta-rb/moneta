@@ -5,6 +5,8 @@ require 'cassandra'
 
 module Juno
   module Adapters
+    # Cassandra backend
+    # @api public
     class Cassandra < Base
       def initialize(options = {})
         options[:keyspace] ||= 'Juno'

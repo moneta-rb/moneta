@@ -2,6 +2,8 @@ require 'yaml/store'
 
 module Juno
   module Adapters
+    # YAML::Store backend
+    # @api public
     class YAML < Juno::Adapters::PStore
       protected
 

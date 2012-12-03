@@ -2,6 +2,8 @@ require 'sequel'
 
 module Juno
   module Adapters
+    # Sequel backend
+    # @api public
     class Sequel < Base
       def initialize(options = {})
         raise 'No option :db specified' unless db = options.delete(:db)

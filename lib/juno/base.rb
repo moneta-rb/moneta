@@ -1,5 +1,6 @@
 module Juno
   # Simple interface to key/value stores with Hash-like interface.
+  # @api public
   class Base
     # Explicitly close the store
     # @api public

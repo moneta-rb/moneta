@@ -2,6 +2,8 @@ require 'pstore'
 
 module Juno
   module Adapters
+    # PStore backend
+    # @api public
     class PStore < Base
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]

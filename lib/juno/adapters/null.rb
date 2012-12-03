@@ -1,5 +1,7 @@
 module Juno
   module Adapters
+    # Null backend which doesn't store anything
+    # @api public
     class Null < Base
       def initialize(options = {})
       end

@@ -2,6 +2,8 @@ require 'mongo'
 
 module Juno
   module Adapters
+    # MongoDB backend
+    # @api public
     class Mongo < Base
       def initialize(options = {})
         collection = options.delete(:collection) || 'juno'

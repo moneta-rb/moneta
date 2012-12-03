@@ -3,6 +3,8 @@ require 'dm-migrations'
 
 module Juno
   module Adapters
+    # Datamapper backend
+    # @api public
     class DataMapper < Base
       class Store
         include ::DataMapper::Resource

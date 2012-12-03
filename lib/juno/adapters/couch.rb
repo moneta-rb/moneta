@@ -2,6 +2,8 @@ require 'couchrest'
 
 module Juno
   module Adapters
+    # CouchDB backend
+    # @api public
     class Couch < Base
       def initialize(options = {})
         @db = ::CouchRest.database!(options[:db])

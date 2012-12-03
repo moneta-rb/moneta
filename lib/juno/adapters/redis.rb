@@ -2,6 +2,8 @@ require 'redis'
 
 module Juno
   module Adapters
+    # Redis backend
+    # @api public
     class Redis < Base
       def initialize(options = {})
         @redis = ::Redis.new(options)

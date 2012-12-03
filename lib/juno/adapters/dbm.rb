@@ -2,6 +2,8 @@ require 'dbm'
 
 module Juno
   module Adapters
+    # DBM backend (Berkeley DB)
+    # @api public
     class DBM < Memory
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]

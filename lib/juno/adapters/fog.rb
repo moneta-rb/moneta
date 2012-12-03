@@ -2,6 +2,8 @@ require 'fog'
 
 module Juno
   module Adapters
+    # Fog backend (Cloud storage services)
+    # @api public
     class Fog < Base
       def initialize(options = {})
         raise 'No option :dir specified' unless dir = options.delete(:dir)

@@ -1,5 +1,7 @@
 module Juno
   module Adapters
+    # Memory backend using a hash to store the entries
+    # @api public
     class Memory < Base
       def initialize(options = {})
         @memory = {}

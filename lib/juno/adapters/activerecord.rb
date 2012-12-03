@@ -2,6 +2,8 @@ require 'active_record'
 
 module Juno
   module Adapters
+    # ActiveRecord as key/value stores
+    # @api public
     class ActiveRecord < Base
       def self.tables
         @tables ||= {}

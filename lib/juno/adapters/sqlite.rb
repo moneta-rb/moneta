@@ -2,6 +2,8 @@ require 'sqlite3'
 
 module Juno
   module Adapters
+    # Sqlite3 backend
+    # @api public
     class Sqlite < Base
       def initialize(options = {})
         raise 'No option :file specified' unless options[:file]

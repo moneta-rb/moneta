@@ -1,4 +1,6 @@
 module Juno
+  # Builder implements the DSL to build a chain of store proxies
+  # @api private
   class Builder
     def build
       klass, options, block = @proxies.first
