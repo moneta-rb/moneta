@@ -20,12 +20,13 @@ module Juno
       # * :connection - ActiveRecord connection
       def initialize(options = {})
         table = options[:table] || 'juno'
-        @table = self.class.tables[table] ||= begin
-                                                c = Class.new(::ActiveRecord::Base)
-                                                c.table_name = table
-                                                c.primary_key = :k
-                                                c
-                                              end
+        @table = self.class.tables[table] ||=
+          begin
+            c = Class.new(::ActiveRecord::Base)
+            c.table_name = table
+            c.primary_key = :k
+            c
+          end
         @table.establish_connection(options[:connection]) if options[:connection]
         unless @table.table_exists?
           @table.connection.create_table(@table.table_name, :id => false) do |t|
