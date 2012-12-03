@@ -11,7 +11,7 @@ module Juno
       #
       # Options:
       # * :dir - Fog directory
-      # * Other options passed to Fog::Storage
+      # * Other options passed to Fog::Storage#new
       def initialize(options = {})
         raise 'No option :dir specified' unless dir = options.delete(:dir)
         storage = ::Fog::Storage.new(options)

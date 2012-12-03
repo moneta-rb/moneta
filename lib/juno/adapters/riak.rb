@@ -14,7 +14,7 @@ module Juno
       #
       # Options:
       # * :bucket - Bucket name (default juno)
-      # * All other options passed to Riak::Client
+      # * All other options passed to Riak::Client#new
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'juno'
         @bucket = ::Riak::Client.new(options).bucket(bucket)

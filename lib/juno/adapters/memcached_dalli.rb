@@ -11,7 +11,7 @@ module Juno
       #
       # Options:
       # * :server - Memcached server (default localhost:11211)
-      # * Other options passed to Dalli::Client
+      # * Other options passed to Dalli::Client#new
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'
         @cache = ::Dalli::Client.new(server, options)

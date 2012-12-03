@@ -12,7 +12,7 @@ module Juno
       # Options:
       # * :server - Memcached server (default localhost:11211)
       # * :namespace - Key namespace
-      # * Other options passed to Memcached
+      # * Other options passed to Memcached#new
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
