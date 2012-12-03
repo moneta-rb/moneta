@@ -62,8 +62,7 @@ module Juno
     case name
     when :Sequel, :ActiveRecord, :Couch
       # Sequel accept only base64 keys and values
-      # FIXME: ActiveRecord and Couch should work only with :marshal but this
-      # raises an error on 1.9
+      # FIXME: Couch should work only with :marshal but this raises an error on 1.9
       transformer = {:key => [:marshal, :base64], :value => [:marshal, :base64]}
     when :Memcached, :MemcachedDalli, :MemcachedNative
       # Memcached accept only base64 keys, expires already supported

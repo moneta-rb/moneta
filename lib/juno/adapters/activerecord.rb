@@ -29,8 +29,9 @@ module Juno
         @table.establish_connection(options[:connection]) if options[:connection]
         unless @table.table_exists?
           @table.connection.create_table(@table.table_name, :id => false) do |t|
-            t.binary :k, :null => false
-            t.binary :v
+            # Do not use binary columns (Issue #17)
+            t.string :k, :null => false
+            t.string :v
           end
           @table.connection.add_index(@table.table_name, :k, :unique => true)
         end
