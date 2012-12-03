@@ -10,7 +10,7 @@ fork was that Moneta was unmaintained for a long time.
 Juno is very feature rich:
 
 * Supports for a lot of backends (See below)
-* Supports proxies (Similar to [Rack middlewares](http://rack.rubyforge.org/))
+* Supports proxies (Similar to [Rack middlewares](http://rack.github.com/))
 * Custom serialization via `Juno::Transformer` proxy (Marshal/JSON/YAML and many more)
 * Custom key transformation via `Juno::Transformer` proxy
 * Expiration for all stores (Added via proxy if not supported natively)
@@ -62,7 +62,7 @@ Supported serializers:
 Proxies
 -------
 
-In addition it supports proxies (Similar to [Rack middlewares](http://rack.rubyforge.org/)) which
+In addition it supports proxies (Similar to [Rack middlewares](http://rack.github.com/)) which
 add additional features to storage backends:
 
 * `Juno::Proxy` proxy base class
