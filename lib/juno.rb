@@ -35,6 +35,25 @@ module Juno
     autoload :YAML,            'juno/adapters/yaml'
   end
 
+  # Create new Juno store with default proxies
+  # which works in most cases if you don't want fine
+  # control over the proxy chain. It uses Marshal on the
+  # keys and values. Use Juno#build if you want to have fine control!
+  #
+  # @param [Symbol] name Name of adapter (See Juno::Adapters)
+  # @param [Hash] options
+  #
+  # Options:
+  # * :expires - Ensure that store supports expiration by inserting
+  #   Juno::Expires if the underlying adapter doesn't support it natively
+  # * :threadsafe - Ensure that the store is thread safe by inserting Juno::Lock
+  # * All other options passed to the adapter
+  #
+  # Supported adapters:
+  # * :HashFile (Store which spreads the entries using a md5 hash, e.g. cache/42/391dd7535aebef91b823286ac67fcd)
+  # * :File (normal file store)
+  # * :Memcached (Memcached store)
+  # * ... (All other adapters from Juno::Adapters)
   def self.new(name, options = {})
     expires = options.delete(:expires)
     threadsafe = options.delete(:threadsafe)
@@ -72,6 +91,16 @@ module Juno
     end
   end
 
+  # Build your own store chain!
+  #
+  # @params [Hash] options Options passed to the proxies and adapter
+  #
+  # Example:
+  #
+  #     Juno.build do
+  #       use :Expires
+  #       adapter :Memory
+  #     end
   def self.build(options = {}, &block)
     Builder.new(options, &block).build
   end
