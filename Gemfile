@@ -27,6 +27,7 @@ gem 'riak-client'
 gem 'hashery'
 
 if defined?(JRUBY_VERSION)
+  gem 'msgpack-jruby'
   gem 'jdbc-sqlite3'
   gem 'activerecord-jdbc-adapter'
   gem 'activerecord-jdbcsqlite3-adapter'
