@@ -16,6 +16,7 @@ module Juno
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
+        @default_ttl = options[:default_ttl] || 604800
         @cache = ::Memcached.new(server, options)
       end
 
@@ -44,7 +45,8 @@ module Juno
       end
 
       def store(key, value, options = {})
-        @cache.set(key, value, options[:expires] || @cache.options[:default_ttl], false)
+        # TTL must be Fixnum
+        @cache.set(key, value, options[:expires] || @default_ttl, false)
         value
       end
 
