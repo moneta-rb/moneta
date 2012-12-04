@@ -31,7 +31,7 @@ if defined?(JRUBY_VERSION)
   gem 'jdbc-sqlite3'
   gem 'activerecord-jdbc-adapter'
   gem 'activerecord-jdbcsqlite3-adapter'
-
+  gem 'jruby-memcached'
   gem 'ffi' # gdbm for jruby needs ffi
   gem 'gdbm'
 else
