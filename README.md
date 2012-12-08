@@ -72,6 +72,7 @@ add additional features to storage backends:
 * `Juno::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...)
 * `Juno::Cache` combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory)
 * `Juno::Lock` to make store thread safe
+* `Juno::Logger` to log database accesses
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
