@@ -4,6 +4,10 @@ module Juno
   class Proxy < Base
     attr_reader :adapter
 
+    # Constructor
+    #
+    # @param [Juno store] underlying adapter
+    # @param [Hash] options
     def initialize(adapter, options = {})
       @adapter = adapter
     end

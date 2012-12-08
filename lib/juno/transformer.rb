@@ -104,18 +104,18 @@ module Juno
 
       # Constructor
       #
-      # @param [Juno store] store The underlying store
+      # @param [Juno store] adapter The underlying store
       # @param [Hash] options
       #
       # Options:
       # * :key - List of key transformers in the order in which they should be applied
       # * :value - List of value transformers in the order in which they should be applied
-      def new(store, options = {})
+      def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise 'No option :key or :value specified' if keys.empty? && values.empty?
         klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
-        klass.original_new(store, options)
+        klass.original_new(adapter, options)
       end
     end
   end

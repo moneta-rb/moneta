@@ -4,9 +4,16 @@ module Juno
   # Locks the underlying stores with a Mutex
   # @api public
   class Lock < Proxy
+    # Constructor
+    #
+    # @param [Juno store] adapter The underlying store
+    # @param [Hash] options
+    #
+    # Options:
+    # * :mutex - Mutex object (default Mutex.new)
     def initialize(adapter, options = {})
       super
-      @lock = Mutex.new
+      @lock = options[:mutex] || Mutex.new
     end
 
     def key?(key, options = {})
