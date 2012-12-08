@@ -12,7 +12,6 @@ gem 'bert'
 gem 'bencode'
 gem 'bson'
 gem 'multi_json'
-gem 'json' # Ripple/Riak needs json
 
 # Backends
 gem 'dm-core'
