@@ -48,7 +48,7 @@ module Juno
   # * :expires - If options is true, ensure that store supports expiration by inserting
   #   Juno::Expires if the underlying adapter doesn't support it natively
   # * :threadsafe - If options is true, ensure that the store is thread safe by inserting Juno::Lock
-  # * :logger - If options is true, add logger to chain
+  # * :logger - If options is a true or Hash, add logger to chain (Hash is passed to logger as options)
   # * All other options passed to the adapter
   #
   # Supported adapters:
@@ -85,18 +85,16 @@ module Juno
       # Expires already supported
       expires = false
     end
-    build(options) do
-      use :Logger if logger
+    build do
+      use :Logger, Hash === logger ? logger : {} if logger
       use :Expires if expires
       use :Transformer, transformer
       use :Lock if threadsafe
-      adapter name
+      adapter name, options
     end
   end
 
   # Build your own store chain!
-  #
-  # @params [Hash] options Options passed to the proxies and adapter
   #
   # Example:
   #
@@ -104,7 +102,7 @@ module Juno
   #       use :Expires
   #       adapter :Memory
   #     end
-  def self.build(options = {}, &block)
-    Builder.new(options, &block).build
+  def self.build(&block)
+    Builder.new(&block).build
   end
 end

@@ -7,7 +7,7 @@ describe_juno "simple_riak_with_expires" do
   Riak.disable_list_keys_warnings = true
 
   def new_store
-    Juno.new(:Riak, :bucket => 'simple_riak_with_expires', :expires => true, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_riak_with_expires.log'), 'a'))
+    Juno.new(:Riak, :bucket => 'simple_riak_with_expires', :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_riak_with_expires.log'), 'a')})
   end
 
   include_context 'setup_store'

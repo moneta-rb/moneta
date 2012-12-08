@@ -18,14 +18,16 @@ module Juno
         instance_eval(&block)
       end
 
-      def backend(options = {}, &block)
+      def backend(store = nil, &block)
         raise 'Backend already set' if @backend
-        @backend = Hash === options ? Juno.build(options, &block) : options
+        raise 'Only argument or block allowed' if store && block
+        @backend = store || Juno.build(&block)
       end
 
-      def cache(options = {}, &block)
+      def cache(store = nil, &block)
         raise 'Cache already set' if @cache
-        @cache = Hash === options ? Juno.build(options, &block) : options
+        raise 'Only argument or block allowed' if store && block
+        @cache = store || Juno.build(&block)
       end
 
       def result

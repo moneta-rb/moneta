@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_yaml" do
   def new_store
-    Juno.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_yaml.log'), 'a'))
+    Juno.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_yaml.log'), 'a')})
   end
 
   include_context 'setup_store'

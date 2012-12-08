@@ -6,8 +6,8 @@ module Juno
     # @api public
     class Format
       def initialize(options)
-        @prefix = options[:logprefix] || 'Juno '
-        @out = options[:logout] || STDOUT
+        @prefix = options[:prefix] || 'Juno '
+        @out = options[:out] || STDOUT
       end
 
       def call(entry)

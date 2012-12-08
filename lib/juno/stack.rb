@@ -22,8 +22,9 @@ module Juno
         instance_eval(&block)
       end
 
-      def add(options = {}, &block)
-        @stack << (Hash === options ? Juno.build(options, &block) : options)
+      def add(store = nil, &block)
+        raise 'Only argument or block allowed' if store && block
+        @stack << (store || Juno.build(&block))
         nil
       end
     end

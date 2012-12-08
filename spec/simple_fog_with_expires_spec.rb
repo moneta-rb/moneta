@@ -9,7 +9,7 @@ describe_juno "simple_fog_with_expires" do
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
         :dir                    => 'juno',
-        :expires                => true, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_fog_with_expires.log'), 'a'))
+        :expires                => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_fog_with_expires.log'), 'a')})
   end
 
   include_context 'setup_store'

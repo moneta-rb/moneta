@@ -855,7 +855,7 @@ TESTS.each do |name, options|
   opts = options.delete(:options)
   opts = ', ' << opts if opts
 
-  build ||= "Juno.new(#{store.inspect}#{opts}, :logger => true, :logout => File.open(File.join(make_tempdir, '#{name}.log'), 'a'))"
+  build ||= "Juno.new(#{store.inspect}#{opts}, :logger => {:out => File.open(File.join(make_tempdir, '#{name}.log'), 'a')})"
 
   code = %{#{header}require 'helper'
 

@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_gdbm" do
   def new_store
-    Juno.new(:GDBM, :file => File.join(make_tempdir, "simple_gdbm"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_gdbm.log'), 'a'))
+    Juno.new(:GDBM, :file => File.join(make_tempdir, "simple_gdbm"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_gdbm.log'), 'a')})
   end
 
   include_context 'setup_store'

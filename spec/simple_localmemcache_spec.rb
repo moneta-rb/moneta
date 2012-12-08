@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_localmemcache" do
   def new_store
-    Juno.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_localmemcache.log'), 'a'))
+    Juno.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_localmemcache.log'), 'a')})
   end
 
   include_context 'setup_store'

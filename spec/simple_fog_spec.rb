@@ -8,7 +8,7 @@ describe_juno "simple_fog" do
     Juno.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
-        :dir                    => 'juno', :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_fog.log'), 'a'))
+        :dir                    => 'juno', :logger => {:out => File.open(File.join(make_tempdir, 'simple_fog.log'), 'a')})
   end
 
   include_context 'setup_store'

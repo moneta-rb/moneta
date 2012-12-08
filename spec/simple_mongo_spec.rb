@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_mongo" do
   def new_store
-    Juno.new(:Mongo, :db => 'simple_mongo', :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_mongo.log'), 'a'))
+    Juno.new(:Mongo, :db => 'simple_mongo', :logger => {:out => File.open(File.join(make_tempdir, 'simple_mongo.log'), 'a')})
   end
 
   include_context 'setup_store'

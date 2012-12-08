@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_mongo_with_expires" do
   def new_store
-    Juno.new(:Mongo, :db => 'simple_mongo_with_expires', :expires => true, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_mongo_with_expires.log'), 'a'))
+    Juno.new(:Mongo, :db => 'simple_mongo_with_expires', :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_mongo_with_expires.log'), 'a')})
   end
 
   include_context 'setup_store'

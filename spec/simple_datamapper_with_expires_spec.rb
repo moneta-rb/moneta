@@ -5,7 +5,7 @@ describe_juno "simple_datamapper_with_expires" do
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires", :expires => true, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_datamapper_with_expires.log'), 'a'))
+    Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires", :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_datamapper_with_expires.log'), 'a')})
   end
 
   include_context 'setup_store'

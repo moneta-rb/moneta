@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_pstore" do
   def new_store
-    Juno.new(:PStore, :file => File.join(make_tempdir, "simple_pstore"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_pstore.log'), 'a'))
+    Juno.new(:PStore, :file => File.join(make_tempdir, "simple_pstore"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_pstore.log'), 'a')})
   end
 
   include_context 'setup_store'

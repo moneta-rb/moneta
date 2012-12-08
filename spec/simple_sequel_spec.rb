@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_sequel" do
   def new_store
-    Juno.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_sequel.log'), 'a'))
+    Juno.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_sequel.log'), 'a')})
   end
 
   include_context 'setup_store'

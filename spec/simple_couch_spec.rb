@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_couch" do
   def new_store
-    Juno.new(:Couch, :db => 'simple_couch', :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_couch.log'), 'a'))
+    Juno.new(:Couch, :db => 'simple_couch', :logger => {:out => File.open(File.join(make_tempdir, 'simple_couch.log'), 'a')})
   end
 
   include_context 'setup_store'
