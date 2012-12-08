@@ -35,6 +35,7 @@ if defined?(JRUBY_VERSION)
   gem 'ffi' # gdbm for jruby needs ffi
   gem 'gdbm'
 else
+  gem 'qlzruby'
   gem 'lzoruby'
   gem 'snappy'
   gem 'bert'

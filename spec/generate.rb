@@ -356,6 +356,14 @@ end},
     :value => %w(String),
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_quicklz' => {
+    :build => %{Juno.build do
+  use :Transformer, :value => :quicklz
+  adapter :Memory
+end},
+    :value => %w(String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_json' => {
     :build => %{Juno.build do
   use :Transformer, :key => :json, :value => :json
