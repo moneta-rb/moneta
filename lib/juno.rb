@@ -4,6 +4,7 @@ module Juno
   autoload :Cache,             'juno/cache'
   autoload :Expires,           'juno/expires'
   autoload :Lock,              'juno/lock'
+  autoload :Logger,            'juno/logger'
   autoload :Proxy,             'juno/proxy'
   autoload :Stack,             'juno/stack'
   autoload :Transformer,       'juno/transformer'
@@ -44,9 +45,10 @@ module Juno
   # @param [Hash] options
   #
   # Options:
-  # * :expires - Ensure that store supports expiration by inserting
+  # * :expires - If options is true, ensure that store supports expiration by inserting
   #   Juno::Expires if the underlying adapter doesn't support it natively
-  # * :threadsafe - Ensure that the store is thread safe by inserting Juno::Lock
+  # * :threadsafe - If options is true, ensure that the store is thread safe by inserting Juno::Lock
+  # * :logger - If options is true, add logger to chain
   # * All other options passed to the adapter
   #
   # Supported adapters:
@@ -56,6 +58,7 @@ module Juno
   # * ... (All other adapters from Juno::Adapters)
   def self.new(name, options = {})
     expires = options.delete(:expires)
+    logger = options.delete(:logger)
     threadsafe = options.delete(:threadsafe)
     transformer = {:key => :marshal, :value => :marshal}
     raise 'Name must be Symbol' unless Symbol === name
@@ -83,6 +86,7 @@ module Juno
       expires = false
     end
     build(options) do
+      use :Logger if logger
       use :Expires if expires
       use :Transformer, transformer
       use :Lock if threadsafe

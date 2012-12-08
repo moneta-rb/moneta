@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_activerecord_with_expires" do
   def new_store
-    Juno.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord_with_expires') }, :expires => true)
+    Juno.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord_with_expires') }, :expires => true, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_activerecord_with_expires.log'), 'a'))
   end
 
   include_context 'setup_store'

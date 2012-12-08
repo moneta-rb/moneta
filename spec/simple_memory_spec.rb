@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_memory" do
   def new_store
-    Juno.new(:Memory)
+    Juno.new(:Memory, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_memory.log'), 'a'))
   end
 
   include_context 'setup_store'

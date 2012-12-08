@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_lruhash" do
   def new_store
-    Juno.new(:LRUHash)
+    Juno.new(:LRUHash, :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_lruhash.log'), 'a'))
   end
 
   include_context 'setup_store'

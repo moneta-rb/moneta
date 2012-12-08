@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_sdbm" do
   def new_store
-    Juno.new(:SDBM, :file => File.join(make_tempdir, "simple_sdbm"))
+    Juno.new(:SDBM, :file => File.join(make_tempdir, "simple_sdbm"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_sdbm.log'), 'a'))
   end
 
   include_context 'setup_store'

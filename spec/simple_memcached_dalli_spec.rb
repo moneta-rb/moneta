@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_memcached_dalli" do
   def new_store
-    Juno.new(:MemcachedDalli, :namespace => "simple_memcached_dalli")
+    Juno.new(:MemcachedDalli, :namespace => "simple_memcached_dalli", :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_memcached_dalli.log'), 'a'))
   end
 
   include_context 'setup_store'

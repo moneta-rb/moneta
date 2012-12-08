@@ -5,7 +5,7 @@ describe_juno "simple_datamapper" do
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper")
+    Juno.new(:DataMapper, :setup => "sqlite3://#{make_tempdir}/simple_datamapper", :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_datamapper.log'), 'a'))
   end
 
   include_context 'setup_store'

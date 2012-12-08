@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_tokyocabinet" do
   def new_store
-    Juno.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet"))
+    Juno.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet"), :logger => true, :logout => File.open(File.join(make_tempdir, 'simple_tokyocabinet.log'), 'a'))
   end
 
   include_context 'setup_store'
