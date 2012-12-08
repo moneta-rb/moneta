@@ -20,9 +20,11 @@ module Juno
       :marshal  => { :load => '::Marshal.load(value)',           :dump => '::Marshal.dump(value)' },
       :msgpack  => { :load => '::MessagePack.unpack(value)',     :dump => '::MessagePack.pack(value)', :require => 'msgpack' },
       :ox       => { :load => '::Ox.parse_obj(value)',           :dump => '::Ox.dump(value)', :require => 'ox' },
+      :snappy   => { :load => '::Snappy.inflate(value)',         :dump => '::Snappy.deflate(value)', :require => 'snappy' },
+      :lzo      => { :load => '::LZO.decompress(value)',         :dump => '::LZO.compress(value)', :require => 'lzoruby' },
       :tnet     => { :load => '::TNetstring.parse(value).first', :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
       :uuencode => { :load => "value.unpack('u').first",         :dump => "[value].pack('u').strip" },
-      :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' }
+      :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' },
     }
 
     KEY_TRANSFORMER = {

@@ -340,6 +340,22 @@ end},
     :value => %w(String),
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_lzo' => {
+    :build => %{Juno.build do
+  use :Transformer, :value => :lzo
+  adapter :Memory
+end},
+    :value => %w(String),
+    :specs => [:null, :store, :returndifferent]
+  },
+  'transformer_snappy' => {
+    :build => %{Juno.build do
+  use :Transformer, :value => :snappy
+  adapter :Memory
+end},
+    :value => %w(String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_json' => {
     :build => %{Juno.build do
   use :Transformer, :key => :json, :value => :json
