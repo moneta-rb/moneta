@@ -13,6 +13,7 @@ module Juno
     VALUE_TRANSFORMER = {
       #:tnet    => { :load => '::TNetstring.parse(value)',      :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
       :base64   => { :load => "value.unpack('m').first",        :dump => "[value].pack('m').strip" },
+      :bencode  => { :load => '::BEncode.load(value)',          :dump => '::BEncode.dump(value)', :require => 'bencode' },
       :bert     => { :load => '::BERT.decode(value)',           :dump => '::BERT.encode(value)', :require => 'bert' },
       :bson     => { :load => '::BSON.deserialize(value)["v"]', :dump => '::BSON.serialize({"v"=>value})', :require => 'bson' },
       :compress => { :load => '::Zlib::Inflate.inflate(value)', :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
@@ -26,6 +27,7 @@ module Juno
     KEY_TRANSFORMER = {
       #:tnet   => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
       :base64  => { :transform => "[key].pack('m').strip" },
+      :bencode => { :transform => '::BEncode.dump(key)', :require => 'bencode' },
       :bert    => { :transform => '::BERT.encode(key)', :require => 'bert' },
       :bson    => { :transform => '(tmp = key; String === tmp ? tmp : ::BSON.serialize({"k"=>tmp}).to_s)', :require => 'bson' },
       :escape  => { :transform => "key.gsub(/[^a-zA-Z0-9_-]+/) { '%%' + $&.unpack('H2' * $&.bytesize).join('%%').upcase }" },
