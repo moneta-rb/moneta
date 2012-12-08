@@ -130,8 +130,8 @@ If you want to have control over the proxies, you have to use `Juno.build`:
 store = Juno.build do
   # Adds expires proxy
   use :Expires
-  # Transform key and value using Marshal
-  use :Transformer, :key => :marshal, :value => :marshal
+  # Transform key using Marshal and Base64 and value using Marshal
+  use :Transformer, :key => [:marshal, :base64], :value => :marshal
   # Memory backend
   adapter :Memory
 end
