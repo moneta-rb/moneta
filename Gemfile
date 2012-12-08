@@ -7,7 +7,7 @@ gem 'rspec'
 gem 'parallel_tests'
 
 # Serializer
-#gem 'tnetstring'
+gem 'tnetstring'
 gem 'bert'
 gem 'bencode'
 gem 'bson'

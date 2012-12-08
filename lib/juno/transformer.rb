@@ -11,22 +11,21 @@ module Juno
   # @api public
   class Transformer < Proxy
     VALUE_TRANSFORMER = {
-      #:tnet    => { :load => '::TNetstring.parse(value)',      :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
-      :base64   => { :load => "value.unpack('m').first",        :dump => "[value].pack('m').strip" },
-      :bencode  => { :load => '::BEncode.load(value)',          :dump => '::BEncode.dump(value)', :require => 'bencode' },
-      :bert     => { :load => '::BERT.decode(value)',           :dump => '::BERT.encode(value)', :require => 'bert' },
-      :bson     => { :load => '::BSON.deserialize(value)["v"]', :dump => '::BSON.serialize({"v"=>value})', :require => 'bson' },
-      :compress => { :load => '::Zlib::Inflate.inflate(value)', :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
-      :json     => { :load => '::MultiJson.load(value).first',  :dump => '::MultiJson.dump([value])', :require => 'multi_json' },
-      :marshal  => { :load => '::Marshal.load(value)',          :dump => '::Marshal.dump(value)' },
-      :msgpack  => { :load => '::MessagePack.unpack(value)',    :dump => '::MessagePack.pack(value)', :require => 'msgpack' },
-      :ox       => { :load => '::Ox.parse_obj(value)',          :dump => '::Ox.dump(value)', :require => 'ox' },
-      :uuencode => { :load => "value.unpack('u').first",        :dump => "[value].pack('u').strip" },
-      :yaml     => { :load => '::YAML.load(value)',             :dump => '::YAML.dump(value)', :require => 'yaml' }
+      :base64   => { :load => "value.unpack('m').first",         :dump => "[value].pack('m').strip" },
+      :bencode  => { :load => '::BEncode.load(value)',           :dump => '::BEncode.dump(value)', :require => 'bencode' },
+      :bert     => { :load => '::BERT.decode(value)',            :dump => '::BERT.encode(value)', :require => 'bert' },
+      :bson     => { :load => '::BSON.deserialize(value)["v"]',  :dump => '::BSON.serialize({"v"=>value})', :require => 'bson' },
+      :compress => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
+      :json     => { :load => '::MultiJson.load(value).first',   :dump => '::MultiJson.dump([value])', :require => 'multi_json' },
+      :marshal  => { :load => '::Marshal.load(value)',           :dump => '::Marshal.dump(value)' },
+      :msgpack  => { :load => '::MessagePack.unpack(value)',     :dump => '::MessagePack.pack(value)', :require => 'msgpack' },
+      :ox       => { :load => '::Ox.parse_obj(value)',           :dump => '::Ox.dump(value)', :require => 'ox' },
+      :tnet     => { :load => '::TNetstring.parse(value).first', :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
+      :uuencode => { :load => "value.unpack('u').first",         :dump => "[value].pack('u').strip" },
+      :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' }
     }
 
     KEY_TRANSFORMER = {
-      #:tnet    => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
       :base64   => { :transform => "[key].pack('m').strip" },
       :bencode  => { :transform => '::BEncode.dump(key)', :require => 'bencode' },
       :bert     => { :transform => '::BERT.encode(key)', :require => 'bert' },
@@ -38,6 +37,7 @@ module Juno
       :msgpack  => { :transform => '(tmp = key; String === tmp ? tmp : ::MessagePack.pack(tmp))', :require => 'msgpack' },
       :ox       => { :transform => '(tmp = key; String === tmp ? tmp : ::Ox.dump(tmp))' },
       :spread   => { :transform => '(tmp = key; ::File.join(tmp[0..1], tmp[2..-1]))' },
+      :tnet     => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
       :uuencode => { :transform => "[key].pack('u').strip" },
       :yaml     => { :transform => '(tmp = key; String === tmp ? tmp : ::YAML.dump(tmp))', :require => 'yaml' },
     }

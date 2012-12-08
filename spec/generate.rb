@@ -383,15 +383,15 @@ end},
 end},
     :specs => [:null, :store, :returndifferent]
   },
-#  'transformer_tnet' => {
-#    :build => %{Juno.build do
-#  use :Transformer, :key => :tnet, :value => :tnet
-#  adapter :Memory
-#end},
-#    :key => %w(Hash String),
-#    :value => %w(Hash String),
-#    :specs => [:null, :store, :returndifferent]
-#  },
+  'transformer_tnet' => {
+    :build => %{Juno.build do
+ use :Transformer, :key => :tnet, :value => :tnet
+ adapter :Memory
+end},
+    :key => %w(Hash String),
+    :value => %w(Hash String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_msgpack' => {
     :build => %{Juno.build do
   use :Transformer, :key => :msgpack, :value => :msgpack
