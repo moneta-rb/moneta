@@ -1,5 +1,9 @@
 module Juno
+  # Logger proxy
+  # @api public
   class Logger < Proxy
+    # Standard formatter used by the logger
+    # @api public
     class Format
       def initialize(options)
         @prefix = options[:logprefix] || 'Juno '
@@ -9,6 +13,8 @@ module Juno
       def call(entry)
         @out.write(format(entry))
       end
+
+      protected
 
       def format(entry)
         args = entry[:args]
@@ -27,6 +33,15 @@ module Juno
       end
     end
 
+    # Constructor
+    #
+    # @param [Juno store] adapter The underlying store
+    # @param [Hash] options
+    #
+    # Options:
+    # * :logger - Callable logger object (default Juno::Logger::Format)
+    # * :logprefix - Prefix string (default 'Juno ')
+    # * :logout - Output (default STDOUT)
     def initialize(adapter, options = {})
       super
       @logger = options[:logger] || Format.new(options)
