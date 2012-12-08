@@ -8,6 +8,7 @@ gem 'parallel_tests'
 
 # Serializer
 #gem 'tnetstring'
+gem 'bert'
 gem 'bson'
 gem 'multi_json'
 gem 'json' # Ripple/Riak needs json

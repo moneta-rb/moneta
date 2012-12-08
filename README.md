@@ -58,6 +58,7 @@ Supported serializers:
 * MessagePack
 * BSON
 * Ox
+* BERT
 
 Proxies
 -------

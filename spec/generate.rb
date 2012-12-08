@@ -349,6 +349,15 @@ end},
     :value => %w(Hash String),
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_bert' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => :bert, :value => :bert
+  adapter :Memory
+end},
+    :key => %w(Hash String),
+    :value => %w(Hash String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_bson' => {
     :build => %{Juno.build do
   use :Transformer, :key => :bson, :value => :bson
