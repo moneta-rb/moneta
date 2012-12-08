@@ -21,23 +21,25 @@ module Juno
       :marshal  => { :load => '::Marshal.load(value)',          :dump => '::Marshal.dump(value)' },
       :msgpack  => { :load => '::MessagePack.unpack(value)',    :dump => '::MessagePack.pack(value)', :require => 'msgpack' },
       :ox       => { :load => '::Ox.parse_obj(value)',          :dump => '::Ox.dump(value)', :require => 'ox' },
+      :uuencode => { :load => "value.unpack('u').first",        :dump => "[value].pack('u').strip" },
       :yaml     => { :load => '::YAML.load(value)',             :dump => '::YAML.dump(value)', :require => 'yaml' }
     }
 
     KEY_TRANSFORMER = {
-      #:tnet   => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
-      :base64  => { :transform => "[key].pack('m').strip" },
-      :bencode => { :transform => '::BEncode.dump(key)', :require => 'bencode' },
-      :bert    => { :transform => '::BERT.encode(key)', :require => 'bert' },
-      :bson    => { :transform => '(tmp = key; String === tmp ? tmp : ::BSON.serialize({"k"=>tmp}).to_s)', :require => 'bson' },
-      :escape  => { :transform => "key.gsub(/[^a-zA-Z0-9_-]+/) { '%%' + $&.unpack('H2' * $&.bytesize).join('%%').upcase }" },
-      :json    => { :transform => '(tmp = key; String === tmp ? tmp : ::MultiJson.dump(tmp))', :require => 'multi_json' },
-      :marshal => { :transform => '(tmp = key; String === tmp ? tmp : ::Marshal.dump(tmp))' },
-      :md5     => { :transform => '::Digest::MD5.hexdigest(key)', :require => 'digest/md5' },
-      :msgpack => { :transform => '(tmp = key; String === tmp ? tmp : ::MessagePack.pack(tmp))', :require => 'msgpack' },
-      :ox      => { :transform => '(tmp = key; String === tmp ? tmp : ::Ox.dump(tmp))' },
-      :spread  => { :transform => '(tmp = key; ::File.join(tmp[0..1], tmp[2..-1]))' },
-      :yaml    => { :transform => '(tmp = key; String === tmp ? tmp : ::YAML.dump(tmp))', :require => 'yaml' },
+      #:tnet    => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
+      :base64   => { :transform => "[key].pack('m').strip" },
+      :bencode  => { :transform => '::BEncode.dump(key)', :require => 'bencode' },
+      :bert     => { :transform => '::BERT.encode(key)', :require => 'bert' },
+      :bson     => { :transform => '(tmp = key; String === tmp ? tmp : ::BSON.serialize({"k"=>tmp}).to_s)', :require => 'bson' },
+      :escape   => { :transform => "key.gsub(/[^a-zA-Z0-9_-]+/) { '%%' + $&.unpack('H2' * $&.bytesize).join('%%').upcase }" },
+      :json     => { :transform => '(tmp = key; String === tmp ? tmp : ::MultiJson.dump(tmp))', :require => 'multi_json' },
+      :marshal  => { :transform => '(tmp = key; String === tmp ? tmp : ::Marshal.dump(tmp))' },
+      :md5      => { :transform => '::Digest::MD5.hexdigest(key)', :require => 'digest/md5' },
+      :msgpack  => { :transform => '(tmp = key; String === tmp ? tmp : ::MessagePack.pack(tmp))', :require => 'msgpack' },
+      :ox       => { :transform => '(tmp = key; String === tmp ? tmp : ::Ox.dump(tmp))' },
+      :spread   => { :transform => '(tmp = key; ::File.join(tmp[0..1], tmp[2..-1]))' },
+      :uuencode => { :transform => "[key].pack('u').strip" },
+      :yaml     => { :transform => '(tmp = key; String === tmp ? tmp : ::YAML.dump(tmp))', :require => 'yaml' },
     }
 
     @classes = {}

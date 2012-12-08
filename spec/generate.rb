@@ -415,6 +415,13 @@ end},
 end},
     :specs => [:null, :store, :returndifferent, :marshallable_key]
   },
+  'transformer_marshal_uuencode' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :uuencode], :value => [:marshal, :uuencode]
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
   'transformer_marshal_escape' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
