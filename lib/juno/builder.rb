@@ -22,6 +22,7 @@ module Juno
 
     def use(proxy, options = {}, &block)
       proxy = Juno.const_get(proxy) if Symbol === proxy
+      raise 'You must give a Class or a Symbol' unless Class === proxy
       @proxies.unshift [proxy, options, block]
     end
 
