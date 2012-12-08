@@ -8,7 +8,6 @@ gem 'parallel_tests'
 
 # Serializer
 gem 'tnetstring'
-gem 'bert'
 gem 'bencode'
 gem 'bson'
 gem 'multi_json'
@@ -36,6 +35,7 @@ if defined?(JRUBY_VERSION)
   gem 'ffi' # gdbm for jruby needs ffi
   gem 'gdbm'
 else
+  gem 'bert'
   gem 'msgpack'
   gem 'tokyocabinet'
   gem 'memcached'
