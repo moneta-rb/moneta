@@ -13,6 +13,7 @@ Juno is very feature rich:
 * Supports proxies (Similar to [Rack middlewares](http://rack.github.com/))
 * Custom serialization via `Juno::Transformer` proxy (Marshal/JSON/YAML and many more)
 * Custom key transformation via `Juno::Transformer` proxy
+* Value compression via `Juno::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
 * Expiration for all stores (Added via proxy if not supported natively)
 
 Supported backends
