@@ -439,6 +439,13 @@ end},
 end},
     :specs => [:null, :store, :returndifferent, :marshallable_key]
   },
+  'transformer_marshal_prefix' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :prefix], :value => :marshal, :prefix => 'juno'
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
   'transformer_marshal_uuencode' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :uuencode], :value => [:marshal, :uuencode]

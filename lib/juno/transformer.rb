@@ -38,7 +38,8 @@ module Juno
       :marshal  => { :transform => '(tmp = key; String === tmp ? tmp : ::Marshal.dump(tmp))' },
       :md5      => { :transform => '::Digest::MD5.hexdigest(key)', :require => 'digest/md5' },
       :msgpack  => { :transform => '(tmp = key; String === tmp ? tmp : ::MessagePack.pack(tmp))', :require => 'msgpack' },
-      :ox       => { :transform => '(tmp = key; String === tmp ? tmp : ::Ox.dump(tmp))' },
+      :prefix   => { :transform => '@prefix+key' },
+      :ox       => { :transform => '(tmp = key; String === tmp ? tmp : ::Ox.dump(tmp))', :require => 'ox' },
       :spread   => { :transform => '(tmp = key; ::File.join(tmp[0..1], tmp[2..-1]))' },
       :tnet     => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
       :uuencode => { :transform => "[key].pack('u').strip" },
@@ -46,6 +47,11 @@ module Juno
     }
 
     @classes = {}
+
+    def initialize(adapter, options = {})
+      super
+      @prefix = options[:prefix]
+    end
 
     class << self
       alias_method :original_new, :new
@@ -113,11 +119,13 @@ module Juno
       # Options:
       # * :key - List of key transformers in the order in which they should be applied
       # * :value - List of value transformers in the order in which they should be applied
+      # * :prefix - Prefix string for key namespacing (Used by the :prefix key transformer)
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise 'No option :key or :value specified' if keys.empty? && values.empty?
         klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
+        raise 'No option :prefix specified' if keys.include?(:prefix) && !options[:prefix]
         klass.original_new(adapter, options)
       end
     end
