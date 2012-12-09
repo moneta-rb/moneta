@@ -23,4 +23,8 @@ matrix:
     - rvm: jruby
     - rvm: rbx-18mode
     - rvm: rbx-19mode
+  # Parallel tests do not work on jruby
+  exclude:
+    - rvm: jruby
+      env: "TASK=test:parallel"
 script: "bundle exec rake $TASK"
