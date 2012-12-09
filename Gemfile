@@ -1,16 +1,32 @@
 source :rubygems
 gemspec
 
+def alternatives(gems)
+  if defined?(JRUBY_VERSION)
+    [gems[:jruby]].flatten.compact.each { gem name }
+  else
+    [gems[:mri]].flatten.compact.each { gem name }
+  end
+end
+
 # Testing
 gem 'rake'
 gem 'rspec'
 gem 'parallel_tests'
 
-# Serializer
+# Serializer used by Transformer
 gem 'tnetstring'
 gem 'bencode'
-gem 'bson'
 gem 'multi_json'
+alternatives :mri => 'bson_ext', :jruby => 'bson'
+alternatives :mri => 'ox'
+alternatives :mri => 'msgpack', :jruby => 'msgpack-jruby'
+alternatives :mri => 'bert'
+
+# Compressors used by Transformer
+alternatives :mri => 'qlzruby'
+alternatives :mri => 'lzoruby'
+alternatives :mri => 'snappy'
 
 # Backends
 gem 'dm-core'
@@ -25,27 +41,9 @@ gem 'sequel'
 gem 'dalli'
 gem 'riak-client'
 gem 'hashery'
-
-if defined?(JRUBY_VERSION)
-  gem 'msgpack-jruby'
-  gem 'jdbc-sqlite3'
-  gem 'activerecord-jdbc-adapter'
-  gem 'activerecord-jdbcsqlite3-adapter'
-  gem 'jruby-memcached'
-  gem 'ffi' # gdbm for jruby needs ffi
-  gem 'gdbm'
-else
-  gem 'qlzruby'
-  gem 'lzoruby'
-  gem 'snappy'
-  gem 'bert'
-  gem 'msgpack'
-  gem 'tokyocabinet'
-  gem 'memcached'
-  gem 'sqlite3'
-  gem 'ox'
-  gem 'bson_ext'
-end
-
 #gem 'cassandra'
 #gem 'localmemcache'
+alternatives :mri => 'tokyocabinet'
+alternatives :mri => 'memcached', :jruby => 'jruby-memcached'
+alternatives :mri => 'sqlite3', :jruby => %w(jdbc-sqlite3 activerecord-jdbc-adapter activerecord-jdbcsqlite3-adapter)
+alternatives :jruby => %w(ffi gdbm) # gdbm for jruby needs ffi
