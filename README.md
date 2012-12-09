@@ -200,7 +200,7 @@ use Rack::Cache,
       :entitystore => 'juno://Memory?expires=true'
 
 # Or used named Juno stores
-Rack::Cache::Juno['named_metastore'] = Juno.build
+Rack::Cache::Juno['named_metastore'] = Juno.build do
   use :Expires
   adapter :Memory
 end
