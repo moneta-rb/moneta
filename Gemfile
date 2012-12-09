@@ -3,9 +3,9 @@ gemspec
 
 def alternatives(gems)
   if defined?(JRUBY_VERSION)
-    [gems[:jruby]].flatten.compact.each { gem name }
+    [gems[:jruby]].flatten.compact.each {|g| gem g }
   else
-    [gems[:mri]].flatten.compact.each { gem name }
+    [gems[:mri]].flatten.compact.each {|g| gem g }
   end
 end
 
