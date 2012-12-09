@@ -14,6 +14,7 @@ module Juno
   #
   # @api public
   class Stack < Base
+    # @api private
     class DSL
       attr_reader :stack
 

@@ -10,6 +10,7 @@ module Juno
   #
   # @api public
   class Transformer < Proxy
+    # Available value transformers (Encoding and decoding)
     VALUE_TRANSFORMER = {
       :base64   => { :load => "value.unpack('m').first",         :dump => "[value].pack('m').strip" },
       :bencode  => { :load => '::BEncode.load(value)',           :dump => '::BEncode.dump(value)', :require => 'bencode' },
@@ -28,6 +29,7 @@ module Juno
       :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' },
     }
 
+    # Available key transformers (Only encoding, one direction)
     KEY_TRANSFORMER = {
       :base64   => { :transform => "[key].pack('m').strip" },
       :bencode  => { :transform => '::BEncode.dump(key)', :require => 'bencode' },
@@ -55,6 +57,26 @@ module Juno
 
     class << self
       alias_method :original_new, :new
+
+      # Constructor
+      #
+      # @param [Juno store] adapter The underlying store
+      # @param [Hash] options
+      #
+      # Options:
+      # * :key - List of key transformers in the order in which they should be applied
+      # * :value - List of value transformers in the order in which they should be applied
+      # * :prefix - Prefix string for key namespacing (Used by the :prefix key transformer)
+      def new(adapter, options = {})
+        keys = [options[:key]].flatten.compact
+        values = [options[:value]].flatten.compact
+        raise 'Option :key or :value is required' if keys.empty? && values.empty?
+        klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
+        raise 'Option :prefix is required' if keys.include?(:prefix) && !options[:prefix]
+        klass.original_new(adapter, options)
+      end
+
+      private
 
       def compile(keys, values)
         tmp, key = 0, 'key'
@@ -109,24 +131,6 @@ module Juno
           end_eval
         end
         klass
-      end
-
-      # Constructor
-      #
-      # @param [Juno store] adapter The underlying store
-      # @param [Hash] options
-      #
-      # Options:
-      # * :key - List of key transformers in the order in which they should be applied
-      # * :value - List of value transformers in the order in which they should be applied
-      # * :prefix - Prefix string for key namespacing (Used by the :prefix key transformer)
-      def new(adapter, options = {})
-        keys = [options[:key]].flatten.compact
-        values = [options[:value]].flatten.compact
-        raise 'Option :key or :value is required' if keys.empty? && values.empty?
-        klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
-        raise 'Option :prefix is required' if keys.include?(:prefix) && !options[:prefix]
-        klass.original_new(adapter, options)
       end
     end
   end

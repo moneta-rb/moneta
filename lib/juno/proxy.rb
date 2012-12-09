@@ -63,6 +63,8 @@ module Juno
       self
     end
 
+    # Close this store
+    # @api public
     def close
       @adapter.close
     end

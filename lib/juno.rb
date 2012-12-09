@@ -70,17 +70,17 @@ module Juno
     when :Memcached, :MemcachedDalli, :MemcachedNative
       # Memcached accept only base64 keys, expires already supported
       expires = false
-      transformer = {:key => [:marshal, :base64], :value => :marshal}
+      transformer[:key] = [:marshal, :base64]
     when :PStore, :YAML, :DataMapper, :Null
       # For PStore, YAML and DataMapper only the key has to be a string
-      transformer = {:key => :marshal}
+      transformer.delete(:value)
     when :HashFile
       # Use spreading hashes
-      transformer = {:key => [:marshal, :md5, :spread], :value => :marshal}
+      transformer[:key] = [:marshal, :md5, :spread]
       name = :File
     when :File
       # Use escaping
-      transformer = {:key => [:marshal, :escape], :value => :marshal}
+      transformer[:key] = [:marshal, :escape]
     when :Cassandra, :Redis
       # Expires already supported
       expires = false

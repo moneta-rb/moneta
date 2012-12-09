@@ -1,7 +1,7 @@
 module Juno
   # Adds expiration support to the underlying store
   #
-  # #store and #load support the :expires options to set/update
+  # #store and #load support the :expires option to set/update
   # the expiration time.
   #
   # @api public

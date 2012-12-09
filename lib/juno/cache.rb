@@ -12,6 +12,7 @@ module Juno
   #
   # @api public
   class Cache < Base
+    # @api private
     class DSL
       def initialize(options, &block)
         @cache, @backend = options[:cache], options[:backend]
