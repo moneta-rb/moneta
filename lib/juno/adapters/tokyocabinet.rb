@@ -14,7 +14,7 @@ module Juno
       # * :type - Database type (default :hdb, :bdb and :hdb possible)
       def initialize(options = {})
         file = options[:file]
-        raise 'No option :file specified' unless options[:file]
+        raise 'Option :file is required' unless options[:file]
         if options[:type] == :bdb
           @memory = ::TokyoCabinet::BDB.new
           @memory.open(file, ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)

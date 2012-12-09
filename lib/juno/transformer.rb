@@ -123,9 +123,9 @@ module Juno
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
-        raise 'No option :key or :value specified' if keys.empty? && values.empty?
+        raise 'Option :key or :value is required' if keys.empty? && values.empty?
         klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
-        raise 'No option :prefix specified' if keys.include?(:prefix) && !options[:prefix]
+        raise 'Option :prefix is required' if keys.include?(:prefix) && !options[:prefix]
         klass.original_new(adapter, options)
       end
     end

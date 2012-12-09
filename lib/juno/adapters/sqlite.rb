@@ -13,7 +13,7 @@ module Juno
       # * :file - Database file
       # * :table - Table name (default juno)
       def initialize(options = {})
-        raise 'No option :file specified' unless options[:file]
+        raise 'Option :file is required' unless options[:file]
         table = options[:table] || 'juno'
         @db = ::SQLite3::Database.new(options[:file])
         @db.execute("create table if not exists #{table} (k blob not null primary key, v blob)")

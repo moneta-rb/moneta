@@ -12,7 +12,7 @@ module Juno
       # Options:
       # * :db - Couch database
       def initialize(options = {})
-        raise 'No option :db specified' unless options[:db]
+        raise 'Option :db is required' unless options[:db]
         @db = ::CouchRest.database!(options[:db])
       end
 

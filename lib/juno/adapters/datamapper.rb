@@ -21,7 +21,7 @@ module Juno
       # * :repository - Repository name (default :juno)
       # * :table - Table name (default :juno)
       def initialize(options = {})
-        raise 'No option :setup specified' unless options[:setup]
+        raise 'Option :setup is required' unless options[:setup]
         @repository = options.delete(:repository) || :juno
         Store.storage_names[@repository] = (options.delete(:table) || :juno).to_s
         ::DataMapper.setup(@repository, options[:setup])

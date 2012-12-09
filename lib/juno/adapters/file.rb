@@ -6,7 +6,7 @@ module Juno
     # @api public
     class File < Base
       def initialize(options = {})
-        raise 'No option :dir specified' unless @dir = options[:dir]
+        raise 'Option :dir is required' unless @dir = options[:dir]
         FileUtils.mkpath(@dir)
         raise "#{@dir} is not a dir" unless ::File.directory?(@dir)
       end
