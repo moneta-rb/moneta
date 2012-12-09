@@ -348,6 +348,14 @@ end},
     :value => %w(String),
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_lzma' => {
+    :build => %{Juno.build do
+  use :Transformer, :value => :lzma
+  adapter :Memory
+end},
+    :value => %w(String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_snappy' => {
     :build => %{Juno.build do
   use :Transformer, :value => :snappy
@@ -862,7 +870,7 @@ SPECS.each do |key, code|
     "shared_examples_for '#{key}' do\n  " << code.gsub("\n", "\n  ") << "\nend\n\n"
 end
 specs_code.gsub!(/\n +\n/, "\n\n")
-File.open(File.join(File.dirname(__FILE__), "junospecs.rb"), 'w') {|out| out << specs_code }
+File.open(File.join(File.dirname(__FILE__), 'junospecs.rb'), 'w') {|out| out << specs_code }
 
 TESTS.each do |name, options|
   build = options.delete(:build)
@@ -901,5 +909,5 @@ end
 }
 
   code.gsub!(/\n +\n/, "\n\n")
-  File.open(File.join(File.dirname(__FILE__), "#{name}_spec.rb"), 'w') {|out| out << code }
+  File.open(File.join(File.dirname(__FILE__), 'juno', "#{name}_spec.rb"), 'w') {|out| out << code }
 end

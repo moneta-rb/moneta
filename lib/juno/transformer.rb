@@ -18,6 +18,7 @@ module Juno
       :bson     => { :load => "::BSON.deserialize(value)['v']",  :dump => "::BSON.serialize('v'=>value)", :require => 'bson' },
       :compress => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
       :json     => { :load => '::MultiJson.load(value).first',   :dump => '::MultiJson.dump([value])', :require => 'multi_json' },
+      :lzma     => { :load => '::LZMA.decompress(value)',        :dump => '::LZMA.compress(value)', :require => 'lzma' },
       :lzo      => { :load => '::LZO.decompress(value)',         :dump => '::LZO.compress(value)', :require => 'lzoruby' },
       :marshal  => { :load => '::Marshal.load(value)',           :dump => '::Marshal.dump(value)' },
       :msgpack  => { :load => '::MessagePack.unpack(value)',     :dump => '::MessagePack.pack(value)', :require => 'msgpack' },
