@@ -47,3 +47,7 @@ alternatives :mri => 'tokyocabinet'
 alternatives :mri => 'memcached', :jruby => 'jruby-memcached'
 alternatives :mri => 'sqlite3', :jruby => %w(jdbc-sqlite3 activerecord-jdbc-adapter activerecord-jdbcsqlite3-adapter)
 alternatives :jruby => %w(ffi gdbm) # gdbm for jruby needs ffi
+
+# Integration
+gem 'rack'
+gem 'rack-cache'

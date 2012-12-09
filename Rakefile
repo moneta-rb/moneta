@@ -14,7 +14,7 @@ namespace :test do
     if defined?(JRUBY_VERSION)
       puts 'No tests executed in parallel in JRuby'
     else
-      specs = Dir['spec/*_spec.rb'].reject {|s| s =~ /memcached|redis/ }
+      specs = Dir['spec/*/*_spec.rb'].reject {|s| s =~ /memcached|redis/ }
       sh("parallel_rspec -m 15 #{specs.join(' ')}")
     end
   end
@@ -22,9 +22,9 @@ namespace :test do
   task :non_parallel do
     if defined?(JRUBY_VERSION)
       # Run all tests in jruby non-parallel
-      sh('rspec spec/*_spec.rb')
+      sh('rspec spec/*/*_spec.rb')
     else
-      specs = Dir['spec/*_spec.rb'].select {|s| s =~ /memcached|redis/ }
+      specs = Dir['spec/*/*_spec.rb'].select {|s| s =~ /memcached|redis/ }
       sh("rspec #{specs.join(' ')}")
     end
   end

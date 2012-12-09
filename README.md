@@ -171,6 +171,44 @@ cache = Juno.build do
 end
 ~~~
 
+Framework Integration
+---------------------
+
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for Rack and Rack-Cache.
+
+Use Juno as a Rack session store:
+
+~~~ ruby
+require 'rack/session/juno'
+
+use Rack::Session::Juno, :store => :Redis
+use Rack::Session::Juno, :store => Juno.new(:Memory, :expires => true)
+
+use Rack::Session::Juno do
+  use :Expires
+  adapter :Memory
+end
+~~~
+
+Use Juno as a Rack-Cache store:
+
+~~~ ruby
+require 'rack/cache/juno'
+
+use Rack::Cache,
+      :metastore   => 'juno://Memory?expires=true',
+      :entitystore => 'juno://Memory?expires=true'
+
+# Or used named Juno stores
+Rack::Cache::Juno['named_metastore'] = Juno.build
+  use :Expires
+  adapter :Memory
+end
+use Rack::Cache,
+      :metastore => 'juno://named_metastore',
+      :entity_store => 'juno://named_entitystore'
+~~~
+
 Alternatives
 ------------
 
