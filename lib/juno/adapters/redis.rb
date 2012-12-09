@@ -32,9 +32,10 @@ module Juno
       end
 
       def store(key, value, options = {})
-        @redis.set(key, value)
         if expires = options[:expires]
-          @redis.expire(key, expires)
+          @redis.setex(key, expires, value)
+        else
+          @redis.set(key, value)
         end
         value
       end
