@@ -45,10 +45,11 @@ module Juno
   # @param [Hash] options
   #
   # Options:
-  # * :expires - If options is true, ensure that store supports expiration by inserting
+  # * :expires - If true, ensure that store supports expiration by inserting
   #   Juno::Expires if the underlying adapter doesn't support it natively
-  # * :threadsafe - If options is true, ensure that the store is thread safe by inserting Juno::Lock
-  # * :logger - If options is a true or Hash, add logger to chain (Hash is passed to logger as options)
+  # * :threadsafe - If true, ensure that the store is thread safe by inserting Juno::Lock
+  # * :logger - If true or Hash, add logger to chain (Hash is passed to logger as options)
+  # * :compress - If true, compress value with zlib, or specify custom compress, e.g. :quicklz
   # * All other options passed to the adapter
   #
   # Supported adapters:
@@ -60,27 +61,30 @@ module Juno
     expires = options.delete(:expires)
     logger = options.delete(:logger)
     threadsafe = options.delete(:threadsafe)
-    transformer = {:key => :marshal, :value => :marshal}
+    compress = options.delete(:compress)
+    transformer = { :key => [:marshal], :value => [:marshal] }
+    transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise 'Name must be Symbol' unless Symbol === name
     case name
     when :Sequel, :ActiveRecord, :Couch
       # Sequel accept only base64 keys and values
       # FIXME: Couch should work only with :marshal but this raises an error on 1.9
-      transformer = {:key => [:marshal, :base64], :value => [:marshal, :base64]}
+      transformer[:key] << :base64
+      transformer[:value] << :base64
     when :Memcached, :MemcachedDalli, :MemcachedNative
       # Memcached accept only base64 keys, expires already supported
       expires = false
-      transformer[:key] = [:marshal, :base64]
+      transformer[:key] << :base64
     when :PStore, :YAML, :DataMapper, :Null
       # For PStore, YAML and DataMapper only the key has to be a string
-      transformer.delete(:value)
+      transformer.delete(:value) if transformer[:value] == [:marshal]
     when :HashFile
       # Use spreading hashes
-      transformer[:key] = [:marshal, :md5, :spread]
+      transformer[:key] << :md5 << :spread
       name = :File
     when :File
       # Use escaping
-      transformer[:key] = [:marshal, :escape]
+      transformer[:key] << :escape
     when :Cassandra, :Redis
       # Expires already supported
       expires = false

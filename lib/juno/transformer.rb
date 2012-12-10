@@ -16,7 +16,6 @@ module Juno
       :bencode  => { :load => '::BEncode.load(value)',           :dump => '::BEncode.dump(value)', :require => 'bencode' },
       :bert     => { :load => '::BERT.decode(value)',            :dump => '::BERT.encode(value)', :require => 'bert' },
       :bson     => { :load => "::BSON.deserialize(value)['v']",  :dump => "::BSON.serialize('v'=>value)", :require => 'bson' },
-      :compress => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
       :json     => { :load => '::MultiJson.load(value).first',   :dump => '::MultiJson.dump([value])', :require => 'multi_json' },
       :lzma     => { :load => '::LZMA.decompress(value)',        :dump => '::LZMA.compress(value)', :require => 'lzma' },
       :lzo      => { :load => '::LZO.decompress(value)',         :dump => '::LZO.compress(value)', :require => 'lzoruby' },
@@ -28,6 +27,7 @@ module Juno
       :tnet     => { :load => '::TNetstring.parse(value).first', :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
       :uuencode => { :load => "value.unpack('u').first",         :dump => "[value].pack('u').strip" },
       :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' },
+      :zlib => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
     }
 
     # Available key transformers (Only encoding, one direction)

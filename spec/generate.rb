@@ -12,6 +12,14 @@ TESTS = {
     :options => ':expires => true',
     :specs => EXPIRES_SPECS,
   },
+  'simple_memory_with_compress' => {
+    :store => :Memory,
+    :options => ':compress => true',
+  },
+  'simple_memory_with_quicklz_compress' => {
+    :store => :Memory,
+    :options => ':compress => :quicklz',
+  },
   'simple_lruhash' => {
     :store => :LRUHash,
   },
@@ -332,9 +340,9 @@ end},
 end},
     :specs => [:null, :store]
   },
-  'transformer_compress' => {
+  'transformer_zlib' => {
     :build => %{Juno.build do
-  use :Transformer, :value => :compress
+  use :Transformer, :value => :zlib
   adapter :Memory
 end},
     :value => %w(String),
