@@ -50,6 +50,9 @@ module Juno
   # * :threadsafe - If true, ensure that the store is thread safe by inserting Juno::Lock
   # * :logger - If true or Hash, add logger to chain (Hash is passed to logger as options)
   # * :compress - If true, compress value with zlib, or specify custom compress, e.g. :quicklz
+  # * :serializer - Serializer used for key and value (default :marshal, disable with nil)
+  # * :key_serializer - Serializer used for key (default :serializer)
+  # * :value_serializer - Serializer used for key (default :serializer)
   # * All other options passed to the adapter
   #
   # Supported adapters:
@@ -62,7 +65,10 @@ module Juno
     logger = options.delete(:logger)
     threadsafe = options.delete(:threadsafe)
     compress = options.delete(:compress)
-    transformer = { :key => [:marshal], :value => [:marshal] }
+    serializer = options.delete(:serializer) || :marshal
+    key_serializer = options.delete(:key_serializer) || serializer
+    value_serializer = options.delete(:value_serializer) || serializer
+    transformer = { :key => [key_serializer], :value => [value_serializer] }
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise 'Name must be Symbol' unless Symbol === name
     case name

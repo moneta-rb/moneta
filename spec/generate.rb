@@ -16,6 +16,24 @@ TESTS = {
     :store => :Memory,
     :options => ':compress => true',
   },
+  'simple_memory_with_json_serializer' => {
+    :store => :Memory,
+    :options => ':serializer => :json',
+    :key => %w(Hash String),
+    :value => %w(Hash String),
+    :specs => [:null, :store, :returndifferent],
+  },
+  'simple_memory_with_json_key_serializer' => {
+    :store => :Memory,
+    :options => ':key_serializer => :json',
+    :key => %w(Hash String),
+    :specs => [:null, :store, :returndifferent],
+  },
+  'simple_memory_with_json_value_serializer' => {
+    :store => :Memory,
+    :options => ':value_serializer => :json',
+    :value => %w(Hash String),
+  },
   'simple_memory_with_quicklz_compress' => {
     :store => :Memory,
     :options => ':compress => :quicklz',
