@@ -24,7 +24,7 @@ alternatives :mri => 'msgpack', :jruby => 'msgpack-jruby'
 alternatives :mri => 'bert'
 
 # Compressors used by Transformer
-gem 'ruby-lzma'
+alternatives :mri => 'ruby-lzma'
 alternatives :mri => 'qlzruby'
 alternatives :mri => 'lzoruby'
 alternatives :mri => 'snappy'
