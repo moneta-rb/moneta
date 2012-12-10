@@ -15,6 +15,7 @@ Juno is very feature rich:
 * Custom key transformation via `Juno::Transformer` proxy
 * Value compression via `Juno::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
 * Expiration for all stores (Added via proxy if not supported natively)
+* Integration with Rack as session store and Rack-Cache
 
 Supported backends
 ------------------
