@@ -9,7 +9,7 @@ fork was that Moneta was unmaintained for a long time.
 
 Juno is very feature rich:
 
-* Supports for a lot of backends (See below)
+* Supports a lot of backends (See below)
 * Supports proxies (Similar to [Rack middlewares](http://rack.github.com/))
 * Custom serialization via `Juno::Transformer` proxy (Marshal/JSON/YAML and many more)
 * Custom key transformation via `Juno::Transformer` proxy
