@@ -27,7 +27,7 @@ module Juno
       :tnet     => { :load => '::TNetstring.parse(value).first', :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
       :uuencode => { :load => "value.unpack('u').first",         :dump => "[value].pack('u').strip" },
       :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' },
-      :zlib => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
+      :zlib     => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
     }
 
     # Available key transformers (Only encoding, one direction)
