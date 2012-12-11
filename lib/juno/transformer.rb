@@ -49,8 +49,6 @@ module Juno
       :yaml     => { :transform => '(tmp = key; String === tmp ? tmp : ::YAML.dump(tmp))', :require => 'yaml' },
     }
 
-    @classes = {}
-
     def initialize(adapter, options = {})
       super
       @prefix = options[:prefix]
@@ -72,9 +70,12 @@ module Juno
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise 'Option :key or :value is required' if keys.empty? && values.empty?
-        klass = @classes["#{keys.join('-')}+#{values.join('-')}"] ||= compile(keys, values)
         raise 'Option :prefix is required' if keys.include?(:prefix) && !options[:prefix]
-        klass.original_new(adapter, options)
+        name = ''
+        name << keys.map(&:to_s).map(&:capitalize).join << 'Key' unless keys.empty?
+        name << values.map(&:to_s).map(&:capitalize).join << 'Value' unless values.empty?
+        const_set(name, compile(keys, values)) unless const_defined?(name)
+        const_get(name).original_new(adapter, options)
       end
 
       private
