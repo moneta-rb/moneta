@@ -33,8 +33,8 @@ module Juno
     # Available key transformers (Only encoding, one direction)
     KEY_TRANSFORMER = {
       :base64   => { :transform => "[key].pack('m').strip" },
-      :bencode  => { :transform => '::BEncode.dump(key)', :require => 'bencode' },
-      :bert     => { :transform => '::BERT.encode(key)', :require => 'bert' },
+      :bencode  => { :transform => '(tmp = key; String === tmp ? tmp : ::BEncode.dump(tmp))', :require => 'bencode' },
+      :bert     => { :transform => '(tmp = key; String === tmp ? tmp : ::BERT.encode(tmp))', :require => 'bert' },
       :bson     => { :transform => "(tmp = key; String === tmp ? tmp : ::BSON.serialize('k'=>tmp).to_s)", :require => 'bson' },
       :escape   => { :transform => "key.gsub(/[^a-zA-Z0-9_-]+/) { '%%' + $&.unpack('H2' * $&.bytesize).join('%%').upcase }" },
       :json     => { :transform => '(tmp = key; String === tmp ? tmp : ::MultiJson.dump(tmp))', :require => 'multi_json' },
