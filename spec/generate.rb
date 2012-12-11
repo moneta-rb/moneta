@@ -501,6 +501,41 @@ end},
 end},
     :specs => [:null, :store, :returndifferent, :marshallable_key]
   },
+  'transformer_marshal_sha1' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :sha1], :value => :marshal
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
+  'transformer_marshal_sha256' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :sha256], :value => :marshal
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
+  'transformer_marshal_sha384' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :sha384], :value => :marshal
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
+  'transformer_marshal_sha512' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :sha512], :value => :marshal
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
+  'transformer_marshal_rmd160' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => [:marshal, :rmd160], :value => :marshal
+  adapter :Memory
+end},
+    :specs => [:null, :store, :returndifferent, :marshallable_key]
+  },
   'transformer_marshal_md5_spread' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :md5, :spread], :value => :marshal
