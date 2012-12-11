@@ -53,6 +53,7 @@ module Juno
   # * :serializer - Serializer used for key and value (default :marshal, disable with nil)
   # * :key_serializer - Serializer used for key (default :serializer)
   # * :value_serializer - Serializer used for key (default :serializer)
+  # * :prefix - Key prefix used for namespacing (default none)
   # * All other options passed to the adapter
   #
   # Supported adapters:
@@ -68,7 +69,8 @@ module Juno
     serializer = options.delete(:serializer) || :marshal
     key_serializer = options.delete(:key_serializer) || serializer
     value_serializer = options.delete(:value_serializer) || serializer
-    transformer = { :key => [key_serializer], :value => [value_serializer] }
+    transformer = { :key => [key_serializer], :value => [value_serializer], :prefix => options.delete(:prefix) }
+    transformer[:key] << :prefix if transformer[:prefix]
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise 'Name must be Symbol' unless Symbol === name
     case name

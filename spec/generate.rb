@@ -16,6 +16,10 @@ TESTS = {
     :store => :Memory,
     :options => ':compress => true',
   },
+  'simple_memory_with_prefix' => {
+    :store => :Memory,
+    :options => ':prefix => "juno"',
+  },
   'simple_memory_with_json_serializer' => {
     :store => :Memory,
     :options => ':serializer => :json',
