@@ -51,8 +51,8 @@ module Juno
   # * :logger - If true or Hash, add logger to chain (Hash is passed to logger as options)
   # * :compress - If true, compress value with zlib, or specify custom compress, e.g. :quicklz
   # * :serializer - Serializer used for key and value (default :marshal, disable with nil)
-  # * :key_serializer - Serializer used for key (default :serializer)
-  # * :value_serializer - Serializer used for key (default :serializer)
+  # * :key_serializer - Serializer used for key (default options[:serializer])
+  # * :value_serializer - Serializer used for key (default options[:serializer])
   # * :prefix - Key prefix used for namespacing (default none)
   # * All other options passed to the adapter
   #
