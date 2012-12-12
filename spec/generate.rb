@@ -576,6 +576,10 @@ end
     :build => "Juno::Adapters::Cassandra.new",
     :specs => ADAPTER_SPECS
   },
+  'adapter_cookie' => {
+    :build => 'Juno::Adapters::Cookie.new',
+    :specs => ADAPTER_SPECS
+  },
   'adapter_couch' => {
     :build => "Juno::Adapters::Couch.new(:db => 'adapter_couch')",
     :specs => ADAPTER_SPECS

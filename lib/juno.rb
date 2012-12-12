@@ -8,10 +8,12 @@ module Juno
   autoload :Proxy,             'juno/proxy'
   autoload :Stack,             'juno/stack'
   autoload :Transformer,       'juno/transformer'
+  autoload :Cookie,            'juno/cookie'
 
   module Adapters
     autoload :ActiveRecord,    'juno/adapters/activerecord'
     autoload :Cassandra,       'juno/adapters/cassandra'
+    autoload :Cookie,          'juno/adapters/cookie'
     autoload :Couch,           'juno/adapters/couch'
     autoload :DataMapper,      'juno/adapters/datamapper'
     autoload :DBM,             'juno/adapters/dbm'
