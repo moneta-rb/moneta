@@ -1,8 +1,7 @@
 module Juno
   # Combines two stores. One is used as cache, the other as backend.
   #
-  # Example:
-  #
+  # @example Add cache to chain
   #   Juno.build do
   #     use(:Cache) do
   #      backend { adapter :File, :dir => 'data' }

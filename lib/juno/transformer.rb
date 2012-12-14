@@ -1,8 +1,7 @@
 module Juno
   # Transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...).
   #
-  # Example:
-  #
+  # @example Add transformer to chain
   #   Juno.build do
   #     transformer :key => [:marshal, :escape], :value => [:marshal]
   #     adapter :File, :dir => 'data'

@@ -108,12 +108,11 @@ module Juno
 
   # Build your own store chain!
   #
-  # Example:
-  #
-  #     Juno.build do
-  #       use :Expires
-  #       adapter :Memory
-  #     end
+  # @example Juno builder
+  #   Juno.build do
+  #     use :Expires
+  #     adapter :Memory
+  #   end
   def self.build(&block)
     Builder.new(&block).build
   end

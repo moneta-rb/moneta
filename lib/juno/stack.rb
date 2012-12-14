@@ -2,8 +2,7 @@ module Juno
   # Combines multiple stores. Reads return the result from the first store,
   # writes go to all stores.
   #
-  # Example:
-  #
+  # @example Add stack to chain
   #   Juno.build do
   #     use(:Stack) do
   #       add { adapter :Redis }
