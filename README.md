@@ -221,5 +221,6 @@ Alternatives
 Authors
 -------
 
-* Juno by Daniel Mendler
+* Daniel Mendler
+* Hannes Georg
 * Moneta originally by wycats
