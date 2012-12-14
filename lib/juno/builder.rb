@@ -5,12 +5,10 @@ module Juno
     # @api private
     def build
       klass, options, block = @proxies.first
-      store = klass.new(options, &block)
-      @proxies[1..-1].each do |proxy|
+      @proxies[1..-1].inject([klass.new(options, &block)]) do |stores, proxy|
         klass, options, block = proxy
-        store = klass.new(store, options, &block)
+        stores << klass.new(stores.last, options, &block)
       end
-      store
     end
 
     def initialize(&block)

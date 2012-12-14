@@ -8,7 +8,6 @@ module Juno
   autoload :Proxy,             'juno/proxy'
   autoload :Stack,             'juno/stack'
   autoload :Transformer,       'juno/transformer'
-  autoload :Cookie,            'juno/cookie'
 
   module Adapters
     autoload :ActiveRecord,    'juno/adapters/activerecord'
@@ -116,6 +115,6 @@ module Juno
   #     adapter :Memory
   #   end
   def self.build(&block)
-    Builder.new(&block).build
+    Builder.new(&block).build.last
   end
 end
