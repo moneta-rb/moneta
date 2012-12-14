@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name             = 'juno'
   s.version          = Juno::VERSION
   s.date             = Date.today.to_s
-  s.authors          = ['Daniel Mendler', 'Yehuda Katz', 'Derek Kastner']
-  s.email            = %w{mail@daniel-mendler.de wycats@gmail.com dkastner@gmail.com}
+  s.authors          = ['Daniel Mendler', 'Hannes Georg']
+  s.email            = %w{mail@daniel-mendler.de hannes.georg@googlemail.com}
   s.description      = 'A unified interface to key/value stores (moneta replacement)'
   s.extra_rdoc_files = %w{README.md SPEC.md LICENSE}
   s.files            = `git ls-files`.split("\n")
