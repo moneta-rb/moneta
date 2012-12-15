@@ -61,12 +61,12 @@ In addition it supports proxies (Similar to [Rack middlewares](http://rack.githu
 add additional features to storage backends:
 
 * `Juno::Proxy` proxy base class
-* `Juno::Expires` to add expiration support to stores which don't support it natively
-* `Juno::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores)
-* `Juno::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...)
-* `Juno::Cache` combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory)
-* `Juno::Lock` to make store thread safe
-* `Juno::Logger` to log database accesses
+* `Juno::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
+* `Juno::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use :Stack`.
+* `Juno::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.
+* `Juno::Cache` combine two stores, one as backend and one as cache (e.g. Juno::Adapters::File + Juno::Adapters::Memory). Add it in the builder using `use :Cache`.
+* `Juno::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
+* `Juno::Logger` to log database accesses. Add it in the builder using `use :Logger`.
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
