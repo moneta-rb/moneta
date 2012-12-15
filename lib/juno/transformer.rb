@@ -46,7 +46,7 @@ module Juno
 
         key = compile_transformer(keys, 'key')
 
-        klass = Class.new(Transformer)
+        klass = Class.new(self)
         if values.empty?
           klass.class_eval <<-end_eval, __FILE__, __LINE__
             def key?(key, options = {})
@@ -151,7 +151,7 @@ module Juno
     # Allowed key transformers (Read it like a regular expression!)
     KEY_TRANSFORMER = compile_validator('serialize? prefix? (encode | (digest spread?))?')
 
-    private
+    protected
 
     def hmac_load(value)
       hash, value = value[0..31], value[32..-1]
