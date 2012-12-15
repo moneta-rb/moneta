@@ -9,50 +9,6 @@ module Juno
   #
   # @api public
   class Transformer < Proxy
-    # Available value transformers (Encoding and decoding)
-    VALUE_TRANSFORMER = {
-      :base64   => { :load => "value.unpack('m').first",         :dump => "[value].pack('m').strip" },
-      :bencode  => { :load => '::BEncode.load(value)',           :dump => '::BEncode.dump(value)', :require => 'bencode' },
-      :bert     => { :load => '::BERT.decode(value)',            :dump => '::BERT.encode(value)', :require => 'bert' },
-      :bson     => { :load => "::BSON.deserialize(value)['v']",  :dump => "::BSON.serialize('v'=>value)", :require => 'bson' },
-      :json     => { :load => '::MultiJson.load(value).first',   :dump => '::MultiJson.dump([value])', :require => 'multi_json' },
-      :lzma     => { :load => '::LZMA.decompress(value)',        :dump => '::LZMA.compress(value)', :require => 'lzma' },
-      :lzo      => { :load => '::LZO.decompress(value)',         :dump => '::LZO.compress(value)', :require => 'lzoruby' },
-      :marshal  => { :load => '::Marshal.load(value)',           :dump => '::Marshal.dump(value)' },
-      :msgpack  => { :load => '::MessagePack.unpack(value)',     :dump => '::MessagePack.pack(value)', :require => 'msgpack' },
-      :ox       => { :load => '::Ox.parse_obj(value)',           :dump => '::Ox.dump(value)', :require => 'ox' },
-      :snappy   => { :load => '::Snappy.inflate(value)',         :dump => '::Snappy.deflate(value)', :require => 'snappy' },
-      :quicklz  => { :load => '::QuickLZ.decompress(value)',     :dump => '::QuickLZ.compress(value)', :require => 'qlzruby' },
-      :tnet     => { :load => '::TNetstring.parse(value).first', :dump => '::TNetstring.dump(value)', :require => 'tnetstring' },
-      :uuencode => { :load => "value.unpack('u').first",         :dump => "[value].pack('u').strip" },
-      :yaml     => { :load => '::YAML.load(value)',              :dump => '::YAML.dump(value)', :require => 'yaml' },
-      :zlib     => { :load => '::Zlib::Inflate.inflate(value)',  :dump => '::Zlib::Deflate.deflate(value)', :require => 'zlib' },
-    }
-
-    # Available key transformers (Only encoding, one direction)
-    KEY_TRANSFORMER = {
-      :base64   => { :transform => "[key].pack('m').strip" },
-      :bencode  => { :transform => '(tmp = key; String === tmp ? tmp : ::BEncode.dump(tmp))', :require => 'bencode' },
-      :bert     => { :transform => '(tmp = key; String === tmp ? tmp : ::BERT.encode(tmp))', :require => 'bert' },
-      :bson     => { :transform => "(tmp = key; String === tmp ? tmp : ::BSON.serialize('k'=>tmp).to_s)", :require => 'bson' },
-      :escape   => { :transform => "key.gsub(/[^a-zA-Z0-9_-]+/) { '%%' + $&.unpack('H2' * $&.bytesize).join('%%').upcase }" },
-      :json     => { :transform => '(tmp = key; String === tmp ? tmp : ::MultiJson.dump(tmp))', :require => 'multi_json' },
-      :marshal  => { :transform => '(tmp = key; String === tmp ? tmp : ::Marshal.dump(tmp))' },
-      :md5      => { :transform => '::Digest::MD5.hexdigest(key)', :require => 'digest/md5' },
-      :msgpack  => { :transform => '(tmp = key; String === tmp ? tmp : ::MessagePack.pack(tmp))', :require => 'msgpack' },
-      :prefix   => { :transform => '@prefix+key' },
-      :rmd160   => { :transform => '::Digest::RMD160.hexdigest(key)', :require => 'digest/rmd160' },
-      :ox       => { :transform => '(tmp = key; String === tmp ? tmp : ::Ox.dump(tmp))', :require => 'ox' },
-      :sha1     => { :transform => '::Digest::SHA1.hexdigest(key)', :require => 'digest/sha1' },
-      :sha256   => { :transform => '::Digest::SHA256.hexdigest(key)', :require => 'digest/sha2' },
-      :sha384   => { :transform => '::Digest::SHA384.hexdigest(key)', :require => 'digest/sha2' },
-      :sha512   => { :transform => '::Digest::SHA512.hexdigest(key)', :require => 'digest/sha2' },
-      :spread   => { :transform => '(tmp = key; ::File.join(tmp[0..1], tmp[2..-1]))' },
-      :tnet     => { :transform => '(tmp = key; String === tmp ? tmp : ::TNetstring.dump(tmp))', :require => 'tnetstring' },
-      :uuencode => { :transform => "[key].pack('u').strip" },
-      :yaml     => { :transform => '(tmp = key; String === tmp ? tmp : ::YAML.dump(tmp))', :require => 'yaml' },
-    }
-
     def initialize(adapter, options = {})
       super
       @prefix = options[:prefix]
@@ -85,13 +41,10 @@ module Juno
       private
 
       def compile(keys, values)
-        tmp, key = 0, 'key'
-        keys.each do |tn|
-          raise "Unknown key transformer #{tn}" unless t = KEY_TRANSFORMER[tn]
-          require t[:require] if t[:require]
-          key = t[:transform].gsub('key', key).gsub('tmp', "x#{tmp}")
-          tmp += 1
-        end
+        raise 'Invalid key transformer chain' if KEY_TRANSFORMER !~ keys.map(&:inspect).join
+        raise 'Invalid value transformer chain' if VALUE_TRANSFORMER !~ values.map(&:inspect).join
+
+        key = compile_transformer(keys, 'key')
 
         klass = Class.new(Transformer)
         if values.empty?
@@ -110,13 +63,8 @@ module Juno
             end
           end_eval
         else
-          dumper, loader = 'value', 'value'
-          values.each_index do |i|
-            raise "Unknown value transformer #{values[i]}" unless t = VALUE_TRANSFORMER[values[i]]
-            require t[:require] if t[:require]
-            dumper = t[:dump].gsub('value', dumper)
-            loader = VALUE_TRANSFORMER[values[-i-1]][:load].gsub('value', loader)
-          end
+          dump = compile_transformer(values, 'value')
+          load = compile_transformer(values.reverse, 'value', 1)
 
           klass.class_eval <<-end_eval, __FILE__, __LINE__
             def key?(key, options = {})
@@ -124,20 +72,78 @@ module Juno
             end
             def load(key, options = {})
               value = @adapter.load(#{key}, options)
-              value && #{loader}
+              value && #{load}
             end
             def store(key, value, options = {})
-              @adapter.store(#{key}, #{dumper}, options)
+              @adapter.store(#{key}, #{dump}, options)
               value
             end
             def delete(key, options = {})
               value = @adapter.delete(#{key}, options)
-              value && #{loader}
+              value && #{load}
             end
           end_eval
         end
         klass
       end
+
+      # Compile transformer validator regular expression
+      def compile_validator(s)
+        Regexp.new(s.gsub(/\w+/) do
+                     '(' + TRANSFORMER.select {|k,v| v.first.to_s == $& }.map {|v| ":#{v.first}" }.join('|') + ')'
+                   end.gsub(/\s+/, '').sub(/\A/, '\A').sub(/\Z/, '\Z'))
+      end
+
+      # Returned compiled transformer code string
+      def compile_transformer(transformer, var, i = 2)
+        transformer.inject(var) do |value, name|
+          raise "Unknown transformer #{name}" unless t = TRANSFORMER[name]
+          require t[3] if t[3]
+          code = t[i]
+          if t[0] == :serialize && var == 'key'
+            "(tmp = #{value}; String === tmp ? tmp : #{code.gsub('value', 'tmp')})"
+          else
+            code.gsub('value', value)
+          end
+        end
+      end
     end
+
+    # Available key/value transformers
+    TRANSFORMER = {
+      # Name    => [ Type,       Load,                              Dump,                                Library         ],
+      :bencode  => [ :serialize, '::BEncode.load(value)',           '::BEncode.dump(value)',             'bencode'       ],
+      :bert     => [ :serialize, '::BERT.decode(value)',            '::BERT.encode(value)',              'bert'          ],
+      :bson     => [ :serialize, "::BSON.deserialize(value)['v']",  "::BSON.serialize('v'=>value).to_s", 'bson'          ],
+      :json     => [ :serialize, '::MultiJson.load(value).first',   '::MultiJson.dump([value])',         'multi_json'    ],
+      :marshal  => [ :serialize, '::Marshal.load(value)',           '::Marshal.dump(value)'                              ],
+      :msgpack  => [ :serialize, '::MessagePack.unpack(value)',     '::MessagePack.pack(value)',         'msgpack'       ],
+      :ox       => [ :serialize, '::Ox.parse_obj(value)',           '::Ox.dump(value)',                  'ox'            ],
+      :tnet     => [ :serialize, '::TNetstring.parse(value).first', '::TNetstring.dump(value)',          'tnetstring'    ],
+      :yaml     => [ :serialize, '::YAML.load(value)',              '::YAML.dump(value)',                'yaml'          ],
+      :lzma     => [ :compress,  '::LZMA.decompress(value)',        '::LZMA.compress(value)',            'lzma'          ],
+      :lzo      => [ :compress,  '::LZO.decompress(value)',         '::LZO.compress(value)',             'lzoruby'       ],
+      :snappy   => [ :compress,  '::Snappy.inflate(value)',         '::Snappy.deflate(value)',           'snappy'        ],
+      :quicklz  => [ :compress,  '::QuickLZ.decompress(value)',     '::QuickLZ.compress(value)',         'qlzruby'       ],
+      :zlib     => [ :compress,  '::Zlib::Inflate.inflate(value)',  '::Zlib::Deflate.deflate(value)',    'zlib'          ],
+      :base64   => [ :encode,    "value.unpack('m').first",         "[value].pack('m').strip"                            ],
+      :uuencode => [ :encode,    "value.unpack('u').first",         "[value].pack('u').strip"                            ],
+      :escape   => [ :encode,    "value.gsub(/((?:%[0-9a-fA-F]{2})+)/){ [$1.delete('%')].pack('H*') }",
+                                 "value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }" ],
+      :md5      => [ :digest,    nil,                               '::Digest::MD5.hexdigest(value)',    'digest/md5'    ],
+      :rmd160   => [ :digest,    nil,                               '::Digest::RMD160.hexdigest(value)', 'digest/rmd160' ],
+      :sha1     => [ :digest,    nil,                               '::Digest::SHA1.hexdigest(value)',   'digest/sha1'   ],
+      :sha256   => [ :digest,    nil,                               '::Digest::SHA256.hexdigest(value)', 'digest/sha2'   ],
+      :sha384   => [ :digest,    nil,                               '::Digest::SHA384.hexdigest(value)', 'digest/sha2'   ],
+      :sha512   => [ :digest,    nil,                               '::Digest::SHA512.hexdigest(value)', 'digest/sha2'   ],
+      :prefix   => [ :prefix,    nil,                               '@prefix+value'                                      ],
+      :spread   => [ :spread,    nil,                               '(tmp = value; ::File.join(tmp[0..1], tmp[2..-1]))'  ],
+    }
+
+    # Allowed value transformers (Read it like a regular expression!)
+    VALUE_TRANSFORMER = compile_validator('serialize? compress? encode?')
+
+    # Allowed key transformers (Read it like a regular expression!)
+    KEY_TRANSFORMER = compile_validator('serialize? prefix? (encode | (digest spread?))?')
   end
 end
