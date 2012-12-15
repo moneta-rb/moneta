@@ -31,9 +31,7 @@ module Juno
         values = [options[:value]].flatten.compact
         raise 'Option :key or :value is required' if keys.empty? && values.empty?
         raise 'Option :prefix is required' if keys.include?(:prefix) && !options[:prefix]
-        name = ''
-        name << keys.map(&:to_s).map(&:capitalize).join << 'Key' unless keys.empty?
-        name << values.map(&:to_s).map(&:capitalize).join << 'Value' unless values.empty?
+        name = class_name(keys, values)
         const_set(name, compile(keys, values)) unless const_defined?(name)
         const_get(name).original_new(adapter, options)
       end
@@ -106,6 +104,11 @@ module Juno
             code.gsub('value', value)
           end
         end
+      end
+
+      def class_name(keys, values)
+        (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join << 'Key') <<
+          (values.empty? ? '' : values.map(&:to_s).map(&:capitalize).join << 'Value')
       end
     end
 
