@@ -14,9 +14,11 @@ module Juno
       #
       # Options:
       # * :bucket - Bucket name (default juno)
+      # * :content_type - Default content type (default application/octet-stream)
       # * All other options passed to Riak::Client#new
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'juno'
+        @content_type = options.delete(:content_type) || 'application/octet-stream'
         @bucket = ::Riak::Client.new(options).bucket(bucket)
       end
 
@@ -38,7 +40,7 @@ module Juno
 
       def store(key, value, options = {})
         obj = ::Riak::RObject.new(@bucket, key)
-        obj.content_type = 'application/octet-stream'
+        obj.content_type = options[:content_type] || @content_type
         obj.raw_data = value
         obj.store(options)
         value
