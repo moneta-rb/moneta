@@ -105,6 +105,15 @@ TESTS = {
     :options => ':file => File.join(make_tempdir, "simple_sdbm_with_expires"), :expires => true',
     :specs => EXPIRES_SPECS
   },
+  'simple_leveldb' => {
+    :store => :LevelDB,
+    :options => ':dir => File.join(make_tempdir, "simple_leveldb")'
+  },
+  'simple_leveldb_with_expires' => {
+    :store => :LevelDB,
+    :options => ':dir => File.join(make_tempdir, "simple_leveldb_with_expires"), :expires => true',
+    :specs => EXPIRES_SPECS
+  },
   'simple_pstore' => {
     :store => :PStore,
     :options => ':file => File.join(make_tempdir, "simple_pstore")'
@@ -697,6 +706,10 @@ end
   },
   'adapter_sdbm' => {
     :build => 'Juno::Adapters::SDBM.new(:file => File.join(make_tempdir, "adapter_sdbm"))',
+    :specs => ADAPTER_SPECS
+  },
+  'adapter_leveldb' => {
+    :build => 'Juno::Adapters::LevelDB.new(:dir => File.join(make_tempdir, "adapter_leveldb"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_sequel' => {

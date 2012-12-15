@@ -44,6 +44,7 @@ gem 'riak-client'
 gem 'hashery'
 #gem 'cassandra'
 #gem 'localmemcache'
+alternatives :mri => 'leveldb-ruby'
 alternatives :mri => 'tokyocabinet'
 alternatives :mri => 'memcached', :jruby => 'jruby-memcached'
 alternatives :mri => 'sqlite3', :jruby => %w(jdbc-sqlite3 activerecord-jdbc-adapter activerecord-jdbcsqlite3-adapter)

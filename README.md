@@ -47,6 +47,7 @@ Out of the box, it supports the following backends:
     * Riak (`:Riak`)
     * TokyoCabinet (`:TokyoCabinet`)
     * Cassandra (`:Cassandra`)
+    * LevelDB (`:LevelDB`)
 * Document databases:
     * CouchDB (`:Couch`)
     * MongoDB (`:Mongo`)
