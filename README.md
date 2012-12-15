@@ -223,4 +223,4 @@ Authors
 
 * Daniel Mendler
 * Hannes Georg
-* Moneta originally by wycats
+* Moneta originally by Yehuda Katz and contributors
