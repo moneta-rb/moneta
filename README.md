@@ -25,34 +25,34 @@ Supported backends
 Out of the box, it supports the following backends:
 
 * Memory:
-    * In-memory store (:Memory)
-    * LRU hash (:LRUHash)
-    * LocalMemCache (:LocalMemCache)
+    * In-memory store (`:Memory`)
+    * LRU hash (`:LRUHash`)
+    * LocalMemCache (`:LocalMemCache`)
     * Memcached store (:Memcached, :MemcachedNative and :MemcachedDalli)
 * Relational Databases:
-    * DataMapper (:DataMapper)
-    * ActiveRecord (:ActiveRecord)
-    * Sequel (:Sequel)
-    * Sqlite3 (:Sqlite)
+    * DataMapper (`:DataMapper`)
+    * ActiveRecord (`:ActiveRecord`)
+    * Sequel (`:Sequel`)
+    * Sqlite3 (`:Sqlite`)
 * Filesystem:
-    * PStore (:PStore)
-    * YAML store (:YAML)
-    * Filesystem directory store (:File)
-    * Filesystem directory store which spreads files in subdirectories using md5 hash (:HashFile)
+    * PStore (`:PStore`)
+    * YAML store (`:YAML`)
+    * Filesystem directory store (`:File`)
+    * Filesystem directory store which spreads files in subdirectories using md5 hash (`:HashFile`)
 * Key/value databases:
-    * Berkeley DB (:DBM)
-    * GDBM (:GDBM)
-    * SDBM (:SDBM)
-    * Redis (:Redis)
-    * Riak (:Riak)
-    * TokyoCabinet (:TokyoCabinet)
-    * Cassandra (:Cassandra)
+    * Berkeley DB (`:DBM`)
+    * GDBM (`:GDBM`)
+    * SDBM (`:SDBM`)
+    * Redis (`:Redis`)
+    * Riak (`:Riak`)
+    * TokyoCabinet (`:TokyoCabinet`)
+    * Cassandra (`:Cassandra`)
 * Document databases:
-    * CouchDB (:Couch)
-    * MongoDB (:Mongo)
+    * CouchDB (`:Couch`)
+    * MongoDB (`:Mongo`)
 * Other
-    * Fog cloud storage which supports Amazon S3, Rackspace, etc. (:Fog)
-    * Storage which doesn't store anything (:Null)
+    * Fog cloud storage which supports Amazon S3, Rackspace, etc. (`:Fog`)
+    * Storage which doesn't store anything (`:Null`)
 
 Proxies
 -------
@@ -76,28 +76,28 @@ Supported serializers and compressors (`Juno::Transformer`)
 
 Supported serializers:
 
-* BEncode (:bencode)
-* BERT (:bert)
-* BSON (:bson)
-* JSON (:json)
-* Marshal (:marshal)
-* MessagePack (:msgpack)
-* Ox (:ox)
-* TNetStrings (:tnet)
-* YAML (:yaml)
+* BEncode (`:bencode`)
+* BERT (`:bert`)
+* BSON (`:bson`)
+* JSON (`:json`)
+* Marshal (`:marshal`)
+* MessagePack (`:msgpack`)
+* Ox (`:ox`)
+* TNetStrings (`:tnet`)
+* YAML (`:yaml`)
 
 Supported value compressors:
 
-* LZMA (:lzma)
-* LZO (:lzo)
-* Snappy (:snappy)
-* QuickLZ (:quicklz)
-* Zlib (:zlib)
+* LZMA (`:lzma`)
+* LZO (`:lzo`)
+* Snappy (`:snappy`)
+* QuickLZ (`:quicklz`)
+* Zlib (`:zlib`)
 
 Special transformers:
 
 * Digests (MD5, Shas, ...)
-* Add prefix to keys (:prefix)
+* Add prefix to keys (`:prefix`)
 * HMAC to verify values (:hmac, useful for Rack::JunoCookies)
 
 Links
