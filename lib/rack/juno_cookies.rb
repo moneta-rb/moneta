@@ -23,7 +23,7 @@ module Rack
   #     adapter :Cookie
   #   end
   #
-  #   run lambda{|env|
+  #   run lambda { |env|
   #     req = Rack::Request.new(env)
   #     req.cookies #=> is now a Juno store!!
   #     req.cookies['key'] #=> retrieves 'juno.key'
