@@ -210,6 +210,22 @@ use Rack::Cache,
       :entity_store => 'juno://named_entitystore'
 ~~~
 
+Use Juno to store cookies in Rack:
+
+~~~ ruby
+require 'rack/juno_cookies'
+
+use Rack::JunoCookies, :domain => 'example.com', :path => '/path'
+run lambda{|env|
+  req = Rack::Request.new(env)
+  req.cookies #=> is now a Juno store!!
+  req.cookies['key'] #=> retrieves 'key'
+  req.cookies['key'] = 'value' #=> sets 'key'
+  req.cookies.delete('key') #=> removes 'key'
+  [200,{},[]]
+}
+~~~
+
 Alternatives
 ------------
 

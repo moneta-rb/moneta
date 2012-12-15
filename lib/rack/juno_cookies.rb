@@ -6,19 +6,19 @@ module Rack
   # on the cookie hash.
   #
   # @example config.ru
-  #   # Add Juno::Cookie somewhere in your rack stack
-  #   use Juno::Cookie
+  #   # Add Rack::JunoCookies somewhere in your rack stack
+  #   use Rack::JunoCookies
   #
   #   run lambda{|env| [200,{},[]] }
   #   # But this doesn't do much
   #
   # @example config.ru
   #   # Give it some options
-  #   use Juno::Cookie, :domain => 'example.com', :path => '/path'
+  #   use Rack::JunoCookies, :domain => 'example.com', :path => '/path'
   #
   # @example config.ru
   #   # Pass it a block like the one passed to Juno.build
-  #   use Juno::Cookie do
+  #   use Rack::JunoCookies do
   #     use :Transformer, :key => :prefix, :prefix => 'juno.'
   #     adapter :Cookie
   #   end
