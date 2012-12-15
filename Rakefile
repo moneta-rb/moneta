@@ -15,7 +15,7 @@ namespace :test do
       puts 'No tests executed in parallel in JRuby'
     else
       specs = Dir['spec/*/*_spec.rb'].reject {|s| s =~ /memcached|redis/ }
-      sh("parallel_rspec -m 15 #{specs.join(' ')}")
+      sh("parallel_rspec -m 5 #{specs.join(' ')}")
     end
   end
 
