@@ -28,7 +28,7 @@ Out of the box, it supports the following backends:
     * In-memory store (`:Memory`)
     * LRU hash (`:LRUHash`)
     * LocalMemCache (`:LocalMemCache`)
-    * Memcached store (:Memcached, :MemcachedNative and :MemcachedDalli)
+    * Memcached store (`:Memcached`, `:MemcachedNative` and `:MemcachedDalli`)
 * Relational Databases:
     * DataMapper (`:DataMapper`)
     * ActiveRecord (`:ActiveRecord`)
