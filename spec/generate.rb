@@ -782,7 +782,8 @@ end
 it 'should accept options' do
   store.key?(#{key1}, :option1 => 1).should == false
   store.load(#{key1}, :option2 => 2).should == nil
-  store.fetch(#{key1}, nil, :option3 => 3).should == nil
+  store.fetch(#{key1}, 42, :option3 => 3).should == 42
+  store.fetch(#{key1}, :option3 => 3) { 42 }.should == 42
   store.delete(#{key1}, :option4 => 4).should == nil
   store.clear(:option5 => 5).should equal(store)
   store.store(#{key1}, #{val1}, :option6 => 6).should == #{val1}

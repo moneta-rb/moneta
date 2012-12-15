@@ -7,15 +7,27 @@ module Juno
     def close
     end
 
-    # Fetch value with key. Return default if value is nil.
+    # Fetch value with key
+    #
+    # This is a overloaded method:
+    #
+    # * fetch(key, options = {}, &block) retrieve a key. if the key is not available, execute the
+    #                                    block and return its return value.
+    #
+    # * fetch(key, value, options = {})  retrieve a key. if the key is not available, return the value.
     #
     # @param [Object] key
-    # @param [Object] value Default value
+    # @param [Object] default Default value
     # @param [Hash] options
     # @return [Object] value from store
     # @api public
-    def fetch(key, value = nil, options = {})
-      load(key, options) || (block_given? && yield(key)) || value
+    def fetch(key, default = nil, options = nil)
+      if block_given?
+        raise ArgumentError, 'Only one argument accepted if block is given' if options
+        load(key, default || {}) || yield(key)
+      else
+        load(key, options || {}) || default
+      end
     end
 
     # Fetch value with key. Return nil if the key doesn't exist

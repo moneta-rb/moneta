@@ -45,7 +45,8 @@ shared_examples_for 'null_stringkey_stringvalue' do
   it 'should accept options' do
     store.key?("strkey1", :option1 => 1).should == false
     store.load("strkey1", :option2 => 2).should == nil
-    store.fetch("strkey1", nil, :option3 => 3).should == nil
+    store.fetch("strkey1", 42, :option3 => 3).should == 42
+    store.fetch("strkey1", :option3 => 3) { 42 }.should == 42
     store.delete("strkey1", :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store("strkey1", "strval1", :option6 => 6).should == "strval1"
@@ -218,7 +219,8 @@ shared_examples_for 'null_stringkey_objectvalue' do
   it 'should accept options' do
     store.key?("strkey1", :option1 => 1).should == false
     store.load("strkey1", :option2 => 2).should == nil
-    store.fetch("strkey1", nil, :option3 => 3).should == nil
+    store.fetch("strkey1", 42, :option3 => 3).should == 42
+    store.fetch("strkey1", :option3 => 3) { 42 }.should == 42
     store.delete("strkey1", :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store("strkey1", Value.new(:objval1), :option6 => 6).should == Value.new(:objval1)
@@ -391,7 +393,8 @@ shared_examples_for 'null_stringkey_hashvalue' do
   it 'should accept options' do
     store.key?("strkey1", :option1 => 1).should == false
     store.load("strkey1", :option2 => 2).should == nil
-    store.fetch("strkey1", nil, :option3 => 3).should == nil
+    store.fetch("strkey1", 42, :option3 => 3).should == 42
+    store.fetch("strkey1", :option3 => 3) { 42 }.should == 42
     store.delete("strkey1", :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store("strkey1", {"hashval1"=>"hashval2"}, :option6 => 6).should == {"hashval1"=>"hashval2"}
@@ -564,7 +567,8 @@ shared_examples_for 'null_objectkey_stringvalue' do
   it 'should accept options' do
     store.key?(Value.new(:objkey1), :option1 => 1).should == false
     store.load(Value.new(:objkey1), :option2 => 2).should == nil
-    store.fetch(Value.new(:objkey1), nil, :option3 => 3).should == nil
+    store.fetch(Value.new(:objkey1), 42, :option3 => 3).should == 42
+    store.fetch(Value.new(:objkey1), :option3 => 3) { 42 }.should == 42
     store.delete(Value.new(:objkey1), :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store(Value.new(:objkey1), "strval1", :option6 => 6).should == "strval1"
@@ -737,7 +741,8 @@ shared_examples_for 'null_objectkey_objectvalue' do
   it 'should accept options' do
     store.key?(Value.new(:objkey1), :option1 => 1).should == false
     store.load(Value.new(:objkey1), :option2 => 2).should == nil
-    store.fetch(Value.new(:objkey1), nil, :option3 => 3).should == nil
+    store.fetch(Value.new(:objkey1), 42, :option3 => 3).should == 42
+    store.fetch(Value.new(:objkey1), :option3 => 3) { 42 }.should == 42
     store.delete(Value.new(:objkey1), :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store(Value.new(:objkey1), Value.new(:objval1), :option6 => 6).should == Value.new(:objval1)
@@ -910,7 +915,8 @@ shared_examples_for 'null_objectkey_hashvalue' do
   it 'should accept options' do
     store.key?(Value.new(:objkey1), :option1 => 1).should == false
     store.load(Value.new(:objkey1), :option2 => 2).should == nil
-    store.fetch(Value.new(:objkey1), nil, :option3 => 3).should == nil
+    store.fetch(Value.new(:objkey1), 42, :option3 => 3).should == 42
+    store.fetch(Value.new(:objkey1), :option3 => 3) { 42 }.should == 42
     store.delete(Value.new(:objkey1), :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store(Value.new(:objkey1), {"hashval1"=>"hashval2"}, :option6 => 6).should == {"hashval1"=>"hashval2"}
@@ -1083,7 +1089,8 @@ shared_examples_for 'null_hashkey_stringvalue' do
   it 'should accept options' do
     store.key?({"hashkey1"=>"hashkey2"}, :option1 => 1).should == false
     store.load({"hashkey1"=>"hashkey2"}, :option2 => 2).should == nil
-    store.fetch({"hashkey1"=>"hashkey2"}, nil, :option3 => 3).should == nil
+    store.fetch({"hashkey1"=>"hashkey2"}, 42, :option3 => 3).should == 42
+    store.fetch({"hashkey1"=>"hashkey2"}, :option3 => 3) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store({"hashkey1"=>"hashkey2"}, "strval1", :option6 => 6).should == "strval1"
@@ -1256,7 +1263,8 @@ shared_examples_for 'null_hashkey_objectvalue' do
   it 'should accept options' do
     store.key?({"hashkey1"=>"hashkey2"}, :option1 => 1).should == false
     store.load({"hashkey1"=>"hashkey2"}, :option2 => 2).should == nil
-    store.fetch({"hashkey1"=>"hashkey2"}, nil, :option3 => 3).should == nil
+    store.fetch({"hashkey1"=>"hashkey2"}, 42, :option3 => 3).should == 42
+    store.fetch({"hashkey1"=>"hashkey2"}, :option3 => 3) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store({"hashkey1"=>"hashkey2"}, Value.new(:objval1), :option6 => 6).should == Value.new(:objval1)
@@ -1429,7 +1437,8 @@ shared_examples_for 'null_hashkey_hashvalue' do
   it 'should accept options' do
     store.key?({"hashkey1"=>"hashkey2"}, :option1 => 1).should == false
     store.load({"hashkey1"=>"hashkey2"}, :option2 => 2).should == nil
-    store.fetch({"hashkey1"=>"hashkey2"}, nil, :option3 => 3).should == nil
+    store.fetch({"hashkey1"=>"hashkey2"}, 42, :option3 => 3).should == 42
+    store.fetch({"hashkey1"=>"hashkey2"}, :option3 => 3) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
     store.store({"hashkey1"=>"hashkey2"}, {"hashval1"=>"hashval2"}, :option6 => 6).should == {"hashval1"=>"hashval2"}
