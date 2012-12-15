@@ -11,7 +11,7 @@ module Juno
   class Transformer < Proxy
     def initialize(adapter, options = {})
       super
-      @prefix = options[:prefix]
+      @prefix, @secret = options[:prefix], options[:secret]
     end
 
     class << self
@@ -26,11 +26,13 @@ module Juno
       # * :key - List of key transformers in the order in which they should be applied
       # * :value - List of value transformers in the order in which they should be applied
       # * :prefix - Prefix string for key namespacing (Used by the :prefix key transformer)
+      # * :secret - HMAC secret to verify values (Used by the :hmac value transformer)
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise 'Option :key or :value is required' if keys.empty? && values.empty?
-        raise 'Option :prefix is required' if keys.include?(:prefix) && !options[:prefix]
+        raise 'Option :prefix is required for :prefix key transformer' if keys.include?(:prefix) && !options[:prefix]
+        raise 'Option :secret is required for :hmac value transformer' if values.include?(:hmac) && !options[:secret]
         name = class_name(keys, values)
         const_set(name, compile(keys, values)) unless const_defined?(name)
         const_get(name).original_new(adapter, options)
@@ -131,8 +133,8 @@ module Juno
       :zlib     => [ :compress,  '::Zlib::Inflate.inflate(value)',  '::Zlib::Deflate.deflate(value)',    'zlib'          ],
       :base64   => [ :encode,    "value.unpack('m').first",         "[value].pack('m').strip"                            ],
       :uuencode => [ :encode,    "value.unpack('u').first",         "[value].pack('u').strip"                            ],
-      :escape   => [ :encode,    "value.gsub(/((?:%[0-9a-fA-F]{2})+)/){ [$1.delete('%')].pack('H*') }",
-                                 "value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }" ],
+      :escape   => [ :encode,    'unescape(value)',                 'escape(value)'                                      ],
+      :hmac     => [ :hmac,      'hmac_load(value)',                'hmac_dump(value)',                  'openssl'       ],
       :md5      => [ :digest,    nil,                               '::Digest::MD5.hexdigest(value)',    'digest/md5'    ],
       :rmd160   => [ :digest,    nil,                               '::Digest::RMD160.hexdigest(value)', 'digest/rmd160' ],
       :sha1     => [ :digest,    nil,                               '::Digest::SHA1.hexdigest(value)',   'digest/sha1'   ],
@@ -144,9 +146,28 @@ module Juno
     }
 
     # Allowed value transformers (Read it like a regular expression!)
-    VALUE_TRANSFORMER = compile_validator('serialize? compress? encode?')
+    VALUE_TRANSFORMER = compile_validator('serialize? compress? hmac? encode?')
 
     # Allowed key transformers (Read it like a regular expression!)
     KEY_TRANSFORMER = compile_validator('serialize? prefix? (encode | (digest spread?))?')
+
+    private
+
+    def hmac_load(value)
+      hash, value = value[0..31], value[32..-1]
+      value if hash == OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), @secret, value)
+    end
+
+    def hmac_dump(value)
+      OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), @secret, value) << value
+    end
+
+    def escape(value)
+      value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }
+    end
+
+    def unescape(value)
+      value.gsub(/((?:%[0-9a-fA-F]{2})+)/){ [$1.delete('%')].pack('H*') }
+    end
   end
 end

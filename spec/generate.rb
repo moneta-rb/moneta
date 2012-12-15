@@ -476,82 +476,89 @@ end},
 end},
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_marshal_hmac' => {
+    :build => %{Juno.build do
+  use :Transformer, :key => :marshal, :value => [:marshal, :hmac], :secret => 'secret'
+  adapter :Memory
+end},
+    :specs => SIMPLE_SPECS
+  },
   'transformer_marshal_base64' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :base64], :value => [:marshal, :base64]
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_prefix' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :prefix], :value => :marshal, :prefix => 'juno'
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_uuencode' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :uuencode], :value => [:marshal, :uuencode]
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_escape' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_md5' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :md5], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha1' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :sha1], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha256' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :sha256], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha384' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :sha384], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha512' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :sha512], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_rmd160' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :rmd160], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'transformer_marshal_md5_spread' => {
     :build => %{Juno.build do
   use :Transformer, :key => [:marshal, :md5, :spread], :value => :marshal
   adapter :Memory
 end},
-    :specs => [:null, :store, :returndifferent, :marshallable_key]
+    :specs => SIMPLE_SPECS
   },
   'adapter_activerecord' => {
     :build => "Juno::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",
