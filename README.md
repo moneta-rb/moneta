@@ -54,6 +54,11 @@ Out of the box, it supports the following backends:
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (`:Fog`)
     * Storage which doesn't store anything (`:Null`)
 
+Some of the backends are not exactly based on key/value stores, e.g. the relational ones. These
+are useful if you already use the corresponding backend in your application. You get a key/value
+store for free then without installing any additional services and you still have the possibility
+to upgrade to a real key/value store.
+
 Proxies
 -------
 
