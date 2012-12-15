@@ -25,7 +25,8 @@ module Rack
   #
   #   run lambda do |env|
   #     req = Rack::Request.new(env)
-  #     req.cookies #=> is now a Juno store!!
+  #     req.cookies #=> is now a Juno store!
+  #     env['rack.request.cookie_hash'] #=> is now a Juno store!
   #     req.cookies['key'] #=> retrieves 'juno.key'
   #     req.cookies['key'] = 'value' #=> sets 'juno.key'
   #     req.cookies.delete('key') #=> removes 'juno.key'

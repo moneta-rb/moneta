@@ -231,7 +231,9 @@ use Rack::Cache,
       :entity_store => 'juno://named_entitystore'
 ~~~
 
-Use Juno to store cookies in Rack:
+Use Juno to store cookies in Rack. It uses the `Juno::Adapters::Cookie`. You might
+wonder what the purpose of this store or Rack middleware is: It makes it possible
+to use all the transformers on the cookies (e.g. :prefix, :marshal and :hmac for value verification).
 
 ~~~ ruby
 require 'rack/juno_cookies'
@@ -239,7 +241,8 @@ require 'rack/juno_cookies'
 use Rack::JunoCookies, :domain => 'example.com', :path => '/path'
 run lambda do |env|
   req = Rack::Request.new(env)
-  req.cookies #=> is now a Juno store!!
+  req.cookies #=> is now a Juno store!
+  env['rack.request.cookie_hash'] #=> is now a Juno store!
   req.cookies['key'] #=> retrieves 'key'
   req.cookies['key'] = 'value' #=> sets 'key'
   req.cookies.delete('key') #=> removes 'key'
