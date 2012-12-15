@@ -52,16 +52,6 @@ Out of the box, it supports the following backends:
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (:Fog)
     * Storage which doesn't store anything (:Null)
 
-Supported serializers:
-
-* Marshal
-* YAML
-* JSON (via multi_json)
-* MessagePack
-* BSON
-* Ox
-* BERT
-
 Proxies
 -------
 
@@ -78,6 +68,35 @@ add additional features to storage backends:
 
 The Juno API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
+
+Supported serializers and compressors (`Juno::Transformer`)
+-----------------------------------------------------------
+
+Supported serializers:
+
+* BEncode (:bencode)
+* BERT (:bert)
+* BSON (:bson)
+* JSON (:json)
+* Marshal (:marshal)
+* MessagePack (:msgpack)
+* Ox (:ox)
+* TNetStrings (:tnet)
+* YAML (:yaml)
+
+Supported value compressors:
+
+* LZMA (:lzma)
+* LZO (:lzo)
+* Snappy (:snappy)
+* QuickLZ (:quicklz)
+* Zlib (:zlib)
+
+Special transformers:
+
+* Digests (MD5, Shas, ...)
+* Add prefix to keys (:prefix)
+* HMAC to verify values (:hmac, useful for Rack::JunoCookies)
 
 Links
 -----
