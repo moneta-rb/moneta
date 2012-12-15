@@ -237,14 +237,14 @@ Use Juno to store cookies in Rack:
 require 'rack/juno_cookies'
 
 use Rack::JunoCookies, :domain => 'example.com', :path => '/path'
-run lambda { |env|
+run lambda do |env|
   req = Rack::Request.new(env)
   req.cookies #=> is now a Juno store!!
   req.cookies['key'] #=> retrieves 'key'
   req.cookies['key'] = 'value' #=> sets 'key'
   req.cookies.delete('key') #=> removes 'key'
-  [200,{},[]]
-}
+  [200, {}, []]
+end
 ~~~
 
 Alternatives

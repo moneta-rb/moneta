@@ -9,7 +9,7 @@ module Rack
   #   # Add Rack::JunoCookies somewhere in your rack stack
   #   use Rack::JunoCookies
   #
-  #   run lambda{|env| [200,{},[]] }
+  #   run lambda { |env| [200, {}, []] }
   #   # But this doesn't do much
   #
   # @example config.ru
@@ -23,14 +23,14 @@ module Rack
   #     adapter :Cookie
   #   end
   #
-  #   run lambda { |env|
+  #   run lambda do |env|
   #     req = Rack::Request.new(env)
   #     req.cookies #=> is now a Juno store!!
   #     req.cookies['key'] #=> retrieves 'juno.key'
   #     req.cookies['key'] = 'value' #=> sets 'juno.key'
   #     req.cookies.delete('key') #=> removes 'juno.key'
-  #     [200,{},[]]
-  #   }
+  #     [200, {}, []]
+  #   end
   #
   class JunoCookies
     def initialize(app, options = {}, &block)
