@@ -34,7 +34,7 @@ module Rack
   #
   class JunoCookies
     def initialize(app, options = {}, &block)
-      @app = app
+      @app, @pool = app, []
       if block
         raise 'Use either block or options' unless options.empty?
         @builder = Juno::Builder.new(&block)
@@ -44,7 +44,7 @@ module Rack
     end
 
     def call(env)
-      stores = @builder.build
+      stores = @pool.pop || @builder.build
       env['rack.request.cookie_hash'] = stores.last
       env['rack.request.cookie_string'] = env['HTTP_COOKIE']
       stores.first.reset(Rack::Utils.parse_query(env['HTTP_COOKIE']))
@@ -56,6 +56,7 @@ module Rack
           Rack::Utils.set_cookie_header!(headers, key, cookie)
         end
       end
+      @pool << stores
       [status, headers, body]
     end
   end
