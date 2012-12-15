@@ -65,20 +65,7 @@ The following methods may all take an additional Hash as a final argument. This 
 
 In the case of methods with optional arguments, the Hash MUST be provided as the final argument. Keys in this Hash MUST be Symbols.
 
-# Key Equality
-
-Adapters MUST consider keys as equal to one another if and only if the value of <code>Marshal.dump(keya)</code> is the same (byte-for-byte) as <code>Marshal.dump(keyb)</code>. This does not mean that adapters are required to use <code>Marshal.dump</code> to calculate the key to use for a given key specified by the consumer of the adapter. However, if an adapter does not, it MUST guarantee that the value returned for every key is identical to the value that would be returned if it did a byte-for-byte comparison of the result of <code>Marshal.dump</code> for every operation involving a key.
-
-# Storage and Serialization
-
-In a Juno-compliant adapter, any Ruby object that can be serialized using Ruby's marshalling system may be used for keys or values.
-
-Adapters MAY use the marshalling system to serialize Ruby objects. Adapters MUST NOT return an Object from a fetch operation that existed on the heap prior to the fetch operation. The intention of this requirement is to prevent adapters that use the heap for persistence to store direct references to Objects passed into the <code>store</code> or <code>[]=</code> methods.
-
 # Atomicity
 
 The base Juno specification does not specify any atomicity guarantees. However, extensions to this spec may specify extensions that define additional guarantees for any of the defined operations.
 
-# Expiry
-
-The base Juno specification does not specify any mechanism for time-based expiry. However, extensions to this spec may specify mechanisms (using <code>store</code> to provide expiration semantics.
