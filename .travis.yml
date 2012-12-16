@@ -14,6 +14,13 @@ services:
   - mongodb
 before_install:
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev
+before_script:
+  - |
+    cassandra-cli << EOF
+    create keyspace Juno;
+    use Juno;
+    create column family Juno;
+    EOF
 env:
   - "TASK=test:parallel"
   - "TASK=test:non_parallel"
