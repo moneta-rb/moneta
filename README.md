@@ -15,7 +15,7 @@ Juno is very feature rich:
 * Custom key transformation via `Juno::Transformer` proxy
 * Value compression via `Juno::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
 * Expiration for all stores (Added via proxy `Juno::Expires` if not supported natively)
-* Integration with Rack as cookie and session store and Rack-Cache
+* Integration with [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
 Juno is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/juno).
 
@@ -104,7 +104,7 @@ Special transformers:
 
 * Digests (MD5, Shas, ...)
 * Add prefix to keys (`:prefix`)
-* HMAC to verify values (:hmac, useful for Rack::JunoCookies)
+* HMAC to verify values (`:hmac`, useful for `Rack::JunoCookies`)
 
 Links
 -----
@@ -202,9 +202,9 @@ end
 Framework Integration
 ---------------------
 
-Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for Rack and Rack-Cache.
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
 
-Use Juno as a Rack session store:
+Use Juno as a [Rack](http://rack.github.com/) session store:
 
 ~~~ ruby
 require 'rack/session/juno'
@@ -218,7 +218,7 @@ use Rack::Session::Juno do
 end
 ~~~
 
-Use Juno as a Rack-Cache store:
+Use Juno as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store:
 
 ~~~ ruby
 require 'rack/cache/juno'
@@ -237,7 +237,7 @@ use Rack::Cache,
       :entity_store => 'juno://named_entitystore'
 ~~~
 
-Use Juno to store cookies in Rack. It uses the `Juno::Adapters::Cookie`. You might
+Use Juno to store cookies in [Rack](http://rack.github.com/). It uses the `Juno::Adapters::Cookie`. You might
 wonder what the purpose of this store or Rack middleware is: It makes it possible
 to use all the transformers on the cookies (e.g. :prefix, :marshal and :hmac for value verification).
 
