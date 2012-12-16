@@ -1,0 +1,3 @@
+create keyspace Juno;
+use Juno;
+create column family Juno;

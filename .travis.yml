@@ -15,12 +15,7 @@ services:
 before_install:
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev
 before_script:
-  - |
-    cassandra-cli << EOF
-    create keyspace Juno;
-    use Juno;
-    create column family Juno;
-    EOF
+  - cassandra-cli -f ./spec/juno.cassandra
 env:
   - "TASK=test:parallel"
   - "TASK=test:non_parallel"
