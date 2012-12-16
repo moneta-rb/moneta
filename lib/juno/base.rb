@@ -12,9 +12,9 @@ module Juno
     # This is a overloaded method:
     #
     # * fetch(key, options = {}, &block) retrieve a key. if the key is not available, execute the
-    #                                    block and return its return value.
+    #   block and return its return value.
     #
-    # * fetch(key, value, options = {})  retrieve a key. if the key is not available, return the value.
+    # * fetch(key, value, options = {}) retrieve a key. if the key is not available, return the value.
     #
     # @param [Object] key
     # @param [Object] default Default value
