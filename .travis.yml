@@ -9,7 +9,7 @@ services:
   - riak
   - couchdb
   - redis-server
-#  - cassandra
+  - cassandra
   - memcached
   - mongodb
 before_install:
