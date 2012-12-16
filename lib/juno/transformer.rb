@@ -133,8 +133,8 @@ module Juno
       :zlib     => [ :compress,  '::Zlib::Inflate.inflate(value)',  '::Zlib::Deflate.deflate(value)',    'zlib'          ],
       :base64   => [ :encode,    "value.unpack('m').first",         "[value].pack('m').strip"                            ],
       :uuencode => [ :encode,    "value.unpack('u').first",         "[value].pack('u').strip"                            ],
-      :escape   => [ :encode,    'unescape(value)',                 'escape(value)'                                      ],
-      :hmac     => [ :hmac,      'hmac_load(value)',                'hmac_dump(value)',                  'openssl'       ],
+      :escape   => [ :encode,    'Escape.unescape(value)',          'Escape.escape(value)'                               ],
+      :hmac     => [ :hmac,      'HMAC.verify(value, @secret)',     'HMAC.sign(value, @secret)' ,        'openssl'       ],
       :md5      => [ :digest,    nil,                               '::Digest::MD5.hexdigest(value)',    'digest/md5'    ],
       :rmd160   => [ :digest,    nil,                               '::Digest::RMD160.hexdigest(value)', 'digest/rmd160' ],
       :sha1     => [ :digest,    nil,                               '::Digest::SHA1.hexdigest(value)',   'digest/sha1'   ],
@@ -151,23 +151,25 @@ module Juno
     # Allowed key transformers (Read it like a regular expression!)
     KEY_TRANSFORMER = compile_validator('serialize? prefix? (encode | (digest spread?))?')
 
-    protected
+    module Escape
+      def self.escape(value)
+        value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }
+      end
 
-    def hmac_load(value)
-      hash, value = value[0..31], value[32..-1]
-      value if hash == OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), @secret, value)
+      def self.unescape(value)
+        value.gsub(/((?:%[0-9a-fA-F]{2})+)/){ [$1.delete('%')].pack('H*') }
+      end
     end
 
-    def hmac_dump(value)
-      OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), @secret, value) << value
-    end
+    module HMAC
+      def self.verify(value, secret)
+        hash, value = value[0..31], value[32..-1]
+        value if hash == OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), secret, value)
+      end
 
-    def escape(value)
-      value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }
-    end
-
-    def unescape(value)
-      value.gsub(/((?:%[0-9a-fA-F]{2})+)/){ [$1.delete('%')].pack('H*') }
+      def self.sign(value, secret)
+        OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), secret, value) << value
+      end
     end
   end
 end
