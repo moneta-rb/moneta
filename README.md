@@ -239,7 +239,7 @@ use Rack::Cache,
 
 Use Juno to store cookies in [Rack](http://rack.github.com/). It uses the `Juno::Adapters::Cookie`. You might
 wonder what the purpose of this store or Rack middleware is: It makes it possible
-to use all the transformers on the cookies (e.g. :prefix, :marshal and :hmac for value verification).
+to use all the transformers on the cookies (e.g. `:prefix`, `:marshal` and `:hmac` for value verification).
 
 ~~~ ruby
 require 'rack/juno_cookies'
