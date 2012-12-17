@@ -1,6 +1,7 @@
 # Copyright: 2011 TMX Credit
 # Author: Potapov Sergey (aka Blake)
 
+require 'i18n'
 require 'riak'
 
 module Juno
