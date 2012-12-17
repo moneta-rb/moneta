@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "simple_cassandra" do
   def new_store
-    Juno.new(:Cassandra, :logger => {:out => File.open(File.join(make_tempdir, 'simple_cassandra.log'), 'a')})
+    Juno.new(:Cassandra, :keyspace => "simple_cassandra", :logger => {:out => File.open(File.join(make_tempdir, 'simple_cassandra.log'), 'a')})
   end
 
   include_context 'setup_store'

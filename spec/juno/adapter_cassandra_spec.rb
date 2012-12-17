@@ -3,7 +3,7 @@ require 'helper'
 
 describe_juno "adapter_cassandra" do
   def new_store
-    Juno::Adapters::Cassandra.new
+    Juno::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')
   end
 
   include_context 'setup_store'

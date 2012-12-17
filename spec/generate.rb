@@ -76,7 +76,8 @@ TESTS = {
   },
   'simple_cassandra' => {
     :store => :Cassandra,
-    :specs => EXPIRES_SPECS
+    :options => ':keyspace => "simple_cassandra"',
+    :specs => EXPIRES_SPECS,
   },
   'simple_dbm' => {
     :store => :DBM,
@@ -589,7 +590,7 @@ end
 }
   },
   'adapter_cassandra' => {
-    :build => "Juno::Adapters::Cassandra.new",
+    :build => "Juno::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
     :specs => ADAPTER_SPECS
   },
   'adapter_cookie' => {
