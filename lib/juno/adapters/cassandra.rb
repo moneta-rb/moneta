@@ -26,12 +26,16 @@ module Juno
         unless @client.keyspaces.include?(keyspace)
           cf_def = ::Cassandra::ColumnFamily.new(:keyspace => keyspace, :name => @cf.to_s)
           ks_def = ::Cassandra::Keyspace.new(:name => keyspace,
-                                             :strategy_class => 'org.apache.cassandra.locator.SimpleStrategy',
+                                             :strategy_class => 'SimpleStrategy',
                                              :replication_factor => 1,
                                              :cf_defs => [cf_def])
-          @client.add_keyspace(ks_def)
           # Wait for keyspace to be created (issue #24)
           10.times do
+            begin
+              @client.add_keyspace(ks_def)
+            rescue Exception => ex
+              puts "Cassandra: #{ex.message}"
+            end
             break if @client.keyspaces.include?(keyspace)
             sleep 0.1
           end
