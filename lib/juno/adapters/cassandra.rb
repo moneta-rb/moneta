@@ -27,6 +27,7 @@ module Juno
           cf_def = ::Cassandra::ColumnFamily.new(:keyspace => keyspace, :name => @cf.to_s)
           ks_def = ::Cassandra::Keyspace.new(:name => keyspace,
                                              :strategy_class => 'SimpleStrategy',
+                                             :strategy_options => { 'replication_factor' => '1' },
                                              :replication_factor => 1,
                                              :cf_defs => [cf_def])
           # Wait for keyspace to be created (issue #24)
