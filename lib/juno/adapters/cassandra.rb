@@ -21,16 +21,25 @@ module Juno
         options[:keyspace] ||= 'Juno'
         options[:host]     ||= '127.0.0.1'
         options[:port]     ||=  9160
-        @column_family = options[:column_family] || :Juno
-        @client = ::Cassandra.new(options[:keyspace], "#{options[:host]}:#{options[:port]}")
+        @cf = (options[:column_family] || 'Juno').to_sym
+        @client = ::Cassandra.new('system', "#{options[:host]}:#{options[:port]}")
+        unless @client.keyspaces.include?(options[:keyspace])
+          cf_def = ::Cassandra::ColumnFamily.new(:keyspace => options[:keyspace], :name => @cf.to_s)
+          ks_def = ::Cassandra::Keyspace.new(:name => options[:keyspace],
+                                             :strategy_class => 'org.apache.cassandra.locator.SimpleStrategy',
+                                             :replication_factor => 1,
+                                             :cf_defs => [cf_def])
+          @client.add_keyspace(ks_def)
+        end
+        @client.keyspace = options[:keyspace]
       end
 
       def key?(key, options = {})
-        @client.exists?(@column_family, key)
+        @client.exists?(@cf, key)
       end
 
       def load(key, options = {})
-        value = @client.get(@column_family, key)
+        value = @client.get(@cf, key)
         if value
           if options.include?(:expires)
             store(key, value['value'], options)
@@ -42,19 +51,18 @@ module Juno
 
       def delete(key, options = {})
         if value = load(key, options)
-          @client.remove(@column_family, key)
+          @client.remove(@cf, key)
           value
         end
       end
 
       def store(key, value, options = {})
-        @client.insert(@column_family, key,
-                       {'value' => value}, :ttl => options[:expires])
+        @client.insert(@cf, key, {'value' => value}, :ttl => options[:expires])
         value
       end
 
       def clear(options = {})
-        @client.each_key(@column_family) do |key|
+        @client.each_key(@cf) do |key|
           delete(key)
         end
         self
