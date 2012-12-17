@@ -30,9 +30,9 @@ module Juno
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
-        raise 'Option :key or :value is required' if keys.empty? && values.empty?
-        raise 'Option :prefix is required for :prefix key transformer' if keys.include?(:prefix) && !options[:prefix]
-        raise 'Option :secret is required for :hmac value transformer' if values.include?(:hmac) && !options[:secret]
+        raise ArgumentError, 'Option :key or :value is required' if keys.empty? && values.empty?
+        raise ArgumentError, 'Option :prefix is required for :prefix key transformer' if keys.include?(:prefix) && !options[:prefix]
+        raise ArgumentError, 'Option :secret is required for :hmac value transformer' if values.include?(:hmac) && !options[:secret]
         name = class_name(keys, values)
         const_set(name, compile(keys, values)) unless const_defined?(name)
         const_get(name).original_new(adapter, options)
@@ -41,8 +41,8 @@ module Juno
       private
 
       def compile(keys, values)
-        raise 'Invalid key transformer chain' if KEY_TRANSFORMER !~ keys.map(&:inspect).join
-        raise 'Invalid value transformer chain' if VALUE_TRANSFORMER !~ values.map(&:inspect).join
+        raise ArgumentError, 'Invalid key transformer chain' if KEY_TRANSFORMER !~ keys.map(&:inspect).join
+        raise ArgumentError, 'Invalid value transformer chain' if VALUE_TRANSFORMER !~ values.map(&:inspect).join
 
         key = compile_transformer(keys, 'key')
 
@@ -97,7 +97,7 @@ module Juno
       # Returned compiled transformer code string
       def compile_transformer(transformer, var, i = 2)
         transformer.inject(var) do |value, name|
-          raise "Unknown transformer #{name}" unless t = TRANSFORMER[name]
+          raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
           require t[3] if t[3]
           code = t[i]
           if t[0] == :serialize && var == 'key'

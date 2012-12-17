@@ -12,7 +12,7 @@ module Juno
       # Options:
       # * :file - PStore file
       def initialize(options = {})
-        raise 'Option :file is required' unless options[:file]
+        raise ArgumentError, 'Option :file is required' unless options[:file]
         FileUtils.mkpath(::File.dirname(options[:file]))
         @pstore = new_store(options)
       end

@@ -23,7 +23,7 @@ module Juno
       end
 
       def add(store = nil, &block)
-        raise 'Only argument or block allowed' if store && block
+        raise ArgumentError, 'Only argument or block allowed' if store && block
         @stack << (store || Juno.build(&block))
         nil
       end

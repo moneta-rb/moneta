@@ -37,7 +37,7 @@ module Rack
     def initialize(app, options = {}, &block)
       @app, @pool = app, []
       if block
-        raise 'Use either block or options' unless options.empty?
+        raise ArgumentError, 'Use either block or options' unless options.empty?
         @builder = Juno::Builder.new(&block)
       else
         @builder = Juno::Builder.new { adapter :Cookie, options }

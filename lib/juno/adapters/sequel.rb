@@ -14,7 +14,7 @@ module Juno
       # * :table - Table name (default :juno)
       # * All other options passed to Sequel#connect
       def initialize(options = {})
-        raise 'Option :db is required' unless db = options.delete(:db)
+        raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
         @table = options.delete(:table) || :juno
         @db = ::Sequel.connect(db, options)
         @db.create_table?(@table) do

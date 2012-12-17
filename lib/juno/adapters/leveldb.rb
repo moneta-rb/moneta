@@ -13,7 +13,7 @@ module Juno
       # * :dir - Database path
       # * All other options passed to LevelDB::DB#new
       def initialize(options = {})
-        raise 'Option :dir is required' unless options[:dir]
+        raise ArgumentError, 'Option :dir is required' unless options[:dir]
         @memory = ::LevelDB::DB.new(options[:dir])
       end
 

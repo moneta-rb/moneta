@@ -10,10 +10,10 @@ module Rack
       def initialize(app, options = {}, &block)
         super
         if block
-          raise 'Use either block or option :store' if options[:store]
+          raise ArgumentError, 'Use either block or option :store' if options[:store]
           @pool = ::Juno.build(&block)
         else
-          raise 'Option :store is required' unless @pool = options[:store]
+          raise ArgumentError, 'Option :store is required' unless @pool = options[:store]
           @pool = ::Juno.new(@pool, :expires => true) if Symbol === @pool
         end
         @mutex = Mutex.new

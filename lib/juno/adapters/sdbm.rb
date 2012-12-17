@@ -12,7 +12,7 @@ module Juno
       # Options:
       # * :file - Database file
       def initialize(options = {})
-        raise 'Option :file is required' unless options[:file]
+        raise ArgumentError, 'Option :file is required' unless options[:file]
         @memory = ::SDBM.new(options[:file])
       end
 

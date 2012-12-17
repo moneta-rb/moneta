@@ -12,7 +12,7 @@ module Juno
     end
 
     def initialize(&block)
-      raise 'No block given' unless block_given?
+      raise ArgumentError, 'No block given' unless block_given?
       @proxies = []
       instance_eval(&block)
     end
@@ -23,7 +23,7 @@ module Juno
     # @param [Hash] options Options hash
     def use(proxy, options = {}, &block)
       proxy = Juno.const_get(proxy) if Symbol === proxy
-      raise 'You must give a Class or a Symbol' unless Class === proxy
+      raise ArgumentError, 'You must give a Class or a Symbol' unless Class === proxy
       @proxies.unshift [proxy, options, block]
       nil
     end

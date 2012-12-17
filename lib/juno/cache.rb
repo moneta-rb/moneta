@@ -20,13 +20,13 @@ module Juno
 
       def backend(store = nil, &block)
         raise 'Backend already set' if @backend
-        raise 'Only argument or block allowed' if store && block
+        raise ArgumentError, 'Only argument or block allowed' if store && block
         @backend = store || Juno.build(&block)
       end
 
       def cache(store = nil, &block)
         raise 'Cache already set' if @cache
-        raise 'Only argument or block allowed' if store && block
+        raise ArgumentError, 'Only argument or block allowed' if store && block
         @cache = store || Juno.build(&block)
       end
 

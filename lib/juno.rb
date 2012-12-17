@@ -74,7 +74,7 @@ module Juno
     transformer = { :key => [key_serializer], :value => [value_serializer], :prefix => options.delete(:prefix) }
     transformer[:key] << :prefix if transformer[:prefix]
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
-    raise 'Name must be Symbol' unless Symbol === name
+    raise ArgumentError, 'Name must be Symbol' unless Symbol === name
     case name
     when :Sequel, :ActiveRecord, :Couch
       # Sequel accept only base64 keys and values

@@ -13,7 +13,7 @@ module Juno
       # * :dir - Fog directory
       # * Other options passed to Fog::Storage#new
       def initialize(options = {})
-        raise 'Option :dir is required' unless dir = options.delete(:dir)
+        raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
         storage = ::Fog::Storage.new(options)
         @directory = storage.directories.create(:key => dir)
       end
