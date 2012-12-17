@@ -18,20 +18,25 @@ module Juno
       # * :host - Server host name (default 127.0.0.1)
       # * :port - Server port (default 9160)
       def initialize(options = {})
-        options[:keyspace] ||= 'juno'
-        options[:host]     ||= '127.0.0.1'
-        options[:port]     ||=  9160
+        options[:host] ||= '127.0.0.1'
+        options[:port] ||=  9160
+        keyspace = (options[:keyspace] ||= 'juno')
         @cf = (options[:column_family] || 'juno').to_sym
         @client = ::Cassandra.new('system', "#{options[:host]}:#{options[:port]}")
-        unless @client.keyspaces.include?(options[:keyspace])
-          cf_def = ::Cassandra::ColumnFamily.new(:keyspace => options[:keyspace], :name => @cf.to_s)
-          ks_def = ::Cassandra::Keyspace.new(:name => options[:keyspace],
+        unless @client.keyspaces.include?(keyspace)
+          cf_def = ::Cassandra::ColumnFamily.new(:keyspace => keyspace, :name => @cf.to_s)
+          ks_def = ::Cassandra::Keyspace.new(:name => keyspace,
                                              :strategy_class => 'org.apache.cassandra.locator.SimpleStrategy',
                                              :replication_factor => 1,
                                              :cf_defs => [cf_def])
           @client.add_keyspace(ks_def)
+          # Wait for keyspace to be created (issue #24)
+          10.times do
+            break if @client.keyspaces.include?(keyspace)
+            sleep 0.1
+          end
         end
-        @client.keyspace = options[:keyspace]
+        @client.keyspace = keyspace
       end
 
       def key?(key, options = {})
