@@ -18,10 +18,10 @@ module Juno
       # * :host - Server host name (default 127.0.0.1)
       # * :port - Server port (default 9160)
       def initialize(options = {})
-        options[:keyspace] ||= 'Juno'
+        options[:keyspace] ||= 'juno'
         options[:host]     ||= '127.0.0.1'
         options[:port]     ||=  9160
-        @cf = (options[:column_family] || 'Juno').to_sym
+        @cf = (options[:column_family] || 'juno').to_sym
         @client = ::Cassandra.new('system', "#{options[:host]}:#{options[:port]}")
         unless @client.keyspaces.include?(options[:keyspace])
           cf_def = ::Cassandra::ColumnFamily.new(:keyspace => options[:keyspace], :name => @cf.to_s)
