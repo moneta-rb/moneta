@@ -23,13 +23,13 @@ module Juno
       end
 
       def load(key, options = {})
-        @db.get(key)['data']
+        @db.get(key)['value']
       rescue RestClient::ResourceNotFound
         nil
       end
 
       def store(key, value, options = {})
-        doc = {'_id' => key, 'data' => value}
+        doc = {'_id' => key, 'value' => value}
         begin
           doc['_rev'] = @db.get(key)['_rev']
         rescue RestClient::ResourceNotFound
@@ -43,7 +43,7 @@ module Juno
       def delete(key, options = {})
         value = @db.get(key)
         @db.delete_doc('_id' => value['_id'], '_rev' => value['_rev'])
-        value['data']
+        value['value']
       rescue RestClient::ResourceNotFound
         nil
       end

@@ -31,7 +31,13 @@ module Juno
 
       def load(key, options = {})
         value = @client.get(@column_family, key)
-        value ? value['value'] : nil
+        if value
+          if options.include?(:expires)
+            store(key, value['value'], options)
+          else
+            value['value']
+          end
+        end
       end
 
       def delete(key, options = {})
