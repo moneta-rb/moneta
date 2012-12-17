@@ -13,8 +13,8 @@ module Juno
       # @param [Hash] options
       #
       # Options:
-      # * :keyspace - Cassandra keyspace (default Juno)
-      # * :column_family - Cassandra column family (default :Juno)
+      # * :keyspace - Cassandra keyspace (default 'juno')
+      # * :column_family - Cassandra column family (default 'juno')
       # * :host - Server host name (default 127.0.0.1)
       # * :port - Server port (default 9160)
       def initialize(options = {})
