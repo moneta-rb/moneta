@@ -2,6 +2,16 @@ module Juno
   # Simple interface to key/value stores with Hash-like interface.
   # @api public
   class Base
+    # Exists the value with key
+    #
+    # @param [Object] key
+    # @return [Boolean]
+    # @param [Hash] options
+    # @api public
+    def key?(key, options = {})
+      !!load(key, options)
+    end
+
     # Explicitly close the store
     # @api public
     def close

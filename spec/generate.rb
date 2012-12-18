@@ -79,6 +79,10 @@ TESTS = {
     :options => ':keyspace => "simple_cassandra"',
     :specs => EXPIRES_SPECS,
   },
+  'simple_hbase' => {
+    :store => :HBase,
+    :specs => EXPIRES_SPECS,
+  },
   'simple_dbm' => {
     :store => :DBM,
     :options => ':file => File.join(make_tempdir, "simple_dbm")'
@@ -601,6 +605,10 @@ end
     :build => "Juno::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
     :specs => ADAPTER_SPECS
   },
+  'adapter_hbase' => {
+    :build => "Juno::Adapters::HBase.new",
+    :specs => ADAPTER_SPECS
+  },
   'adapter_cookie' => {
     :build => 'Juno::Adapters::Cookie.new',
     :specs => ADAPTER_SPECS
@@ -895,6 +903,18 @@ it 'should support updating the expiration time in load' do
   store[#{key2}].should == #{val2}
   sleep 1
   store.load(#{key2}, :expires => 3).should == #{val2}
+  store[#{key2}].should == #{val2}
+  sleep 1
+  store[#{key2}].should == #{val2}
+  sleep 3
+  store[#{key2}].should == nil
+end
+
+it 'should support updating the expiration time in key?' do
+  store.store(#{key2}, #{val2}, :expires => 2)
+  store[#{key2}].should == #{val2}
+  sleep 1
+  store.key?(#{key2}, :expires => 3).should be_true
   store[#{key2}].should == #{val2}
   sleep 1
   store[#{key2}].should == #{val2}

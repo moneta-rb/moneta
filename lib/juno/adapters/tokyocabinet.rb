@@ -24,10 +24,6 @@ module Juno
         end or raise @memory.errmsg(@memory.ecode)
       end
 
-      def key?(key, options = {})
-        !!load(key, options)
-      end
-
       def delete(key, options = {})
         value = load(key, options)
         if value

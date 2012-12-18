@@ -17,10 +17,6 @@ module Juno
         @cache = ::Dalli::Client.new(server, options)
       end
 
-      def key?(key, options = {})
-        !!@cache.get(key)
-      end
-
       def load(key, options = {})
         value = @cache.get(key)
         if value && options.include?(:expires)

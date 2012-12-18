@@ -152,6 +152,18 @@ shared_examples_for 'expires_stringkey_stringvalue' do
     store["strkey2"].should == nil
   end
 
+  it 'should support updating the expiration time in key?' do
+    store.store("strkey2", "strval2", :expires => 2)
+    store["strkey2"].should == "strval2"
+    sleep 1
+    store.key?("strkey2", :expires => 3).should be_true
+    store["strkey2"].should == "strval2"
+    sleep 1
+    store["strkey2"].should == "strval2"
+    sleep 3
+    store["strkey2"].should == nil
+  end
+
   it 'should support updating the expiration time in fetch' do
     store.store("strkey1", "strval1", :expires => 2)
     store["strkey1"].should == "strval1"
@@ -319,6 +331,18 @@ shared_examples_for 'expires_stringkey_objectvalue' do
     store["strkey2"].should == Value.new(:objval2)
     sleep 1
     store.load("strkey2", :expires => 3).should == Value.new(:objval2)
+    store["strkey2"].should == Value.new(:objval2)
+    sleep 1
+    store["strkey2"].should == Value.new(:objval2)
+    sleep 3
+    store["strkey2"].should == nil
+  end
+
+  it 'should support updating the expiration time in key?' do
+    store.store("strkey2", Value.new(:objval2), :expires => 2)
+    store["strkey2"].should == Value.new(:objval2)
+    sleep 1
+    store.key?("strkey2", :expires => 3).should be_true
     store["strkey2"].should == Value.new(:objval2)
     sleep 1
     store["strkey2"].should == Value.new(:objval2)
@@ -500,6 +524,18 @@ shared_examples_for 'expires_stringkey_hashvalue' do
     store["strkey2"].should == nil
   end
 
+  it 'should support updating the expiration time in key?' do
+    store.store("strkey2", {"hashval3"=>"hashval4"}, :expires => 2)
+    store["strkey2"].should == {"hashval3"=>"hashval4"}
+    sleep 1
+    store.key?("strkey2", :expires => 3).should be_true
+    store["strkey2"].should == {"hashval3"=>"hashval4"}
+    sleep 1
+    store["strkey2"].should == {"hashval3"=>"hashval4"}
+    sleep 3
+    store["strkey2"].should == nil
+  end
+
   it 'should support updating the expiration time in fetch' do
     store.store("strkey1", {"hashval1"=>"hashval2"}, :expires => 2)
     store["strkey1"].should == {"hashval1"=>"hashval2"}
@@ -667,6 +703,18 @@ shared_examples_for 'expires_objectkey_stringvalue' do
     store[Value.new(:objkey2)].should == "strval2"
     sleep 1
     store.load(Value.new(:objkey2), :expires => 3).should == "strval2"
+    store[Value.new(:objkey2)].should == "strval2"
+    sleep 1
+    store[Value.new(:objkey2)].should == "strval2"
+    sleep 3
+    store[Value.new(:objkey2)].should == nil
+  end
+
+  it 'should support updating the expiration time in key?' do
+    store.store(Value.new(:objkey2), "strval2", :expires => 2)
+    store[Value.new(:objkey2)].should == "strval2"
+    sleep 1
+    store.key?(Value.new(:objkey2), :expires => 3).should be_true
     store[Value.new(:objkey2)].should == "strval2"
     sleep 1
     store[Value.new(:objkey2)].should == "strval2"
@@ -848,6 +896,18 @@ shared_examples_for 'expires_objectkey_objectvalue' do
     store[Value.new(:objkey2)].should == nil
   end
 
+  it 'should support updating the expiration time in key?' do
+    store.store(Value.new(:objkey2), Value.new(:objval2), :expires => 2)
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
+    sleep 1
+    store.key?(Value.new(:objkey2), :expires => 3).should be_true
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
+    sleep 1
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
+    sleep 3
+    store[Value.new(:objkey2)].should == nil
+  end
+
   it 'should support updating the expiration time in fetch' do
     store.store(Value.new(:objkey1), Value.new(:objval1), :expires => 2)
     store[Value.new(:objkey1)].should == Value.new(:objval1)
@@ -1015,6 +1075,18 @@ shared_examples_for 'expires_objectkey_hashvalue' do
     store[Value.new(:objkey2)].should == {"hashval3"=>"hashval4"}
     sleep 1
     store.load(Value.new(:objkey2), :expires => 3).should == {"hashval3"=>"hashval4"}
+    store[Value.new(:objkey2)].should == {"hashval3"=>"hashval4"}
+    sleep 1
+    store[Value.new(:objkey2)].should == {"hashval3"=>"hashval4"}
+    sleep 3
+    store[Value.new(:objkey2)].should == nil
+  end
+
+  it 'should support updating the expiration time in key?' do
+    store.store(Value.new(:objkey2), {"hashval3"=>"hashval4"}, :expires => 2)
+    store[Value.new(:objkey2)].should == {"hashval3"=>"hashval4"}
+    sleep 1
+    store.key?(Value.new(:objkey2), :expires => 3).should be_true
     store[Value.new(:objkey2)].should == {"hashval3"=>"hashval4"}
     sleep 1
     store[Value.new(:objkey2)].should == {"hashval3"=>"hashval4"}
@@ -1196,6 +1268,18 @@ shared_examples_for 'expires_hashkey_stringvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == nil
   end
 
+  it 'should support updating the expiration time in key?' do
+    store.store({"hashkey3"=>"hashkey4"}, "strval2", :expires => 2)
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+    sleep 1
+    store.key?({"hashkey3"=>"hashkey4"}, :expires => 3).should be_true
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+    sleep 3
+    store[{"hashkey3"=>"hashkey4"}].should == nil
+  end
+
   it 'should support updating the expiration time in fetch' do
     store.store({"hashkey1"=>"hashkey2"}, "strval1", :expires => 2)
     store[{"hashkey1"=>"hashkey2"}].should == "strval1"
@@ -1370,6 +1454,18 @@ shared_examples_for 'expires_hashkey_objectvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == nil
   end
 
+  it 'should support updating the expiration time in key?' do
+    store.store({"hashkey3"=>"hashkey4"}, Value.new(:objval2), :expires => 2)
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+    sleep 1
+    store.key?({"hashkey3"=>"hashkey4"}, :expires => 3).should be_true
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+    sleep 3
+    store[{"hashkey3"=>"hashkey4"}].should == nil
+  end
+
   it 'should support updating the expiration time in fetch' do
     store.store({"hashkey1"=>"hashkey2"}, Value.new(:objval1), :expires => 2)
     store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
@@ -1537,6 +1633,18 @@ shared_examples_for 'expires_hashkey_hashvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>"hashval4"}
     sleep 1
     store.load({"hashkey3"=>"hashkey4"}, :expires => 3).should == {"hashval3"=>"hashval4"}
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>"hashval4"}
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>"hashval4"}
+    sleep 3
+    store[{"hashkey3"=>"hashkey4"}].should == nil
+  end
+
+  it 'should support updating the expiration time in key?' do
+    store.store({"hashkey3"=>"hashkey4"}, {"hashval3"=>"hashval4"}, :expires => 2)
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>"hashval4"}
+    sleep 1
+    store.key?({"hashkey3"=>"hashkey4"}, :expires => 3).should be_true
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>"hashval4"}
     sleep 1
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>"hashval4"}
