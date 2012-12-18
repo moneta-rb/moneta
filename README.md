@@ -182,6 +182,10 @@ end
 
 # Expires in 60 seconds
 cache.store(key, value, :expires => 60)
+
+# Update expires time if value is found
+cache.load(key, :expires => 30)
+cache.key?(key, :expires => 30)
 ~~~
 
 You can add the expires feature to other backends using the Expires proxy:
