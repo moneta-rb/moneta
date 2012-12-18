@@ -86,7 +86,7 @@ module Juno
       # Memcached accept only base64 keys, expires already supported
       expires = false
       transformer[:key] << :base64
-    when :PStore, :YAML, :DataMapper, :Null
+    when :PStore, :YAML, :DataMapper
       # For PStore, YAML and DataMapper only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]
     when :HashFile
