@@ -7,28 +7,20 @@ describe_juno "adapter_lruhash" do
   end
 
   include_context 'setup_store'
-  it_should_behave_like 'null_objectkey_objectvalue'
-  it_should_behave_like 'null_objectkey_stringvalue'
-  it_should_behave_like 'null_objectkey_hashvalue'
-  it_should_behave_like 'null_objectkey_booleanvalue'
-  it_should_behave_like 'null_stringkey_objectvalue'
   it_should_behave_like 'null_stringkey_stringvalue'
-  it_should_behave_like 'null_stringkey_hashvalue'
-  it_should_behave_like 'null_stringkey_booleanvalue'
-  it_should_behave_like 'null_hashkey_objectvalue'
-  it_should_behave_like 'null_hashkey_stringvalue'
-  it_should_behave_like 'null_hashkey_hashvalue'
-  it_should_behave_like 'null_hashkey_booleanvalue'
-  it_should_behave_like 'store_objectkey_objectvalue'
-  it_should_behave_like 'store_objectkey_stringvalue'
-  it_should_behave_like 'store_objectkey_hashvalue'
-  it_should_behave_like 'store_objectkey_booleanvalue'
-  it_should_behave_like 'store_stringkey_objectvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
-  it_should_behave_like 'store_stringkey_hashvalue'
-  it_should_behave_like 'store_stringkey_booleanvalue'
-  it_should_behave_like 'store_hashkey_objectvalue'
-  it_should_behave_like 'store_hashkey_stringvalue'
-  it_should_behave_like 'store_hashkey_hashvalue'
-  it_should_behave_like 'store_hashkey_booleanvalue'
+  it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it 'should delete oldest' do
+    store = Juno::Adapters::LRUHash.new(:max_size => 10)
+    store[0]  = 'y'
+    (1..1000).each do |i|
+      store[i] = 'x'
+      store[0].should == 'y'
+      store.instance_variable_get(:@entry).size.should == [10, i+1].min
+      (0...[9, i-1].min).each do |j|
+        store.instance_variable_get(:@entry)[i-j].should_not be_nil
+      end
+      store.key?(i-9).should be_false if i > 9
+    end
+  end
 end

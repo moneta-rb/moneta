@@ -703,7 +703,21 @@ end
   },
   'adapter_lruhash' => {
     :build => 'Juno::Adapters::LRUHash.new',
-    :specs => [:null, :store]
+    :specs => ADAPTER_SPECS,
+    :tests => %{
+it 'should delete oldest' do
+  store = Juno::Adapters::LRUHash.new(:max_size => 10)
+  store[0]  = 'y'
+  (1..1000).each do |i|
+    store[i] = 'x'
+    store[0].should == 'y'
+    store.instance_variable_get(:@entry).size.should == [10, i+1].min
+    (0...[9, i-1].min).each do |j|
+      store.instance_variable_get(:@entry)[i-j].should_not be_nil
+    end
+    store.key?(i-9).should be_false if i > 9
+  end
+end}
   },
   'adapter_mongo' => {
     :build => 'Juno::Adapters::Mongo.new(:db => "adapter_mongo")',
