@@ -877,7 +877,9 @@ end}
   store[#{key1}] = #{val1}
   store[#{key1}].should_not be_equal(#{val1})
 end}
-    SPECS["returndifferent_#{key_type.downcase}key_#{val_type.downcase}value"] = code
+    if val_type != 'Boolean'
+      SPECS["returndifferent_#{key_type.downcase}key_#{val_type.downcase}value"] = code
+    end
 
     code = %{it 'should support expires on store and #[]' do
   store.store(#{key1}, #{val1}, :expires => 2)

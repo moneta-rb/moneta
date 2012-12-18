@@ -50,15 +50,12 @@ describe_juno "expires_file" do
   it_should_behave_like 'returndifferent_objectkey_objectvalue'
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_objectkey_hashvalue'
-  it_should_behave_like 'returndifferent_objectkey_booleanvalue'
   it_should_behave_like 'returndifferent_stringkey_objectvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_hashvalue'
-  it_should_behave_like 'returndifferent_stringkey_booleanvalue'
   it_should_behave_like 'returndifferent_hashkey_objectvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
-  it_should_behave_like 'returndifferent_hashkey_booleanvalue'
   it_should_behave_like 'require_marshallable'
   it 'should delete expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)

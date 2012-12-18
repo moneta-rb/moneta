@@ -102,16 +102,6 @@ shared_examples_for 'store_stringkey_booleanvalue' do
   end
 end
 
-#################### returndifferent_stringkey_booleanvalue ####################
-
-shared_examples_for 'returndifferent_stringkey_booleanvalue' do
-  it "guarantees that a different Boolean value is retrieved from the String key" do
-    value = true
-    store["strkey1"] = true
-    store["strkey1"].should_not be_equal(true)
-  end
-end
-
 #################### expires_stringkey_booleanvalue ####################
 
 shared_examples_for 'expires_stringkey_booleanvalue' do
@@ -854,16 +844,6 @@ shared_examples_for 'store_objectkey_booleanvalue' do
   end
 end
 
-#################### returndifferent_objectkey_booleanvalue ####################
-
-shared_examples_for 'returndifferent_objectkey_booleanvalue' do
-  it "guarantees that a different Boolean value is retrieved from the Object key" do
-    value = true
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey1)].should_not be_equal(true)
-  end
-end
-
 #################### expires_objectkey_booleanvalue ####################
 
 shared_examples_for 'expires_objectkey_booleanvalue' do
@@ -1603,16 +1583,6 @@ shared_examples_for 'store_hashkey_booleanvalue' do
   it "fetches a Hash key with a default value with fetch, if the key is available" do
     store[{"hashkey1"=>"hashkey2"}] = true
     store.fetch({"hashkey1"=>"hashkey2"}, false).should == true
-  end
-end
-
-#################### returndifferent_hashkey_booleanvalue ####################
-
-shared_examples_for 'returndifferent_hashkey_booleanvalue' do
-  it "guarantees that a different Boolean value is retrieved from the Hash key" do
-    value = true
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(true)
   end
 end
 

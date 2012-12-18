@@ -37,13 +37,10 @@ describe_juno "transformer_yaml" do
   it_should_behave_like 'returndifferent_objectkey_objectvalue'
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_objectkey_hashvalue'
-  it_should_behave_like 'returndifferent_objectkey_booleanvalue'
   it_should_behave_like 'returndifferent_stringkey_objectvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_hashvalue'
-  it_should_behave_like 'returndifferent_stringkey_booleanvalue'
   it_should_behave_like 'returndifferent_hashkey_objectvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
-  it_should_behave_like 'returndifferent_hashkey_booleanvalue'
 end
