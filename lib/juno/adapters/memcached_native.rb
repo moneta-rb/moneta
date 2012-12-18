@@ -20,13 +20,6 @@ module Juno
         @cache = ::Memcached.new(server, options)
       end
 
-      def key?(key, options = {})
-        @cache.get(key, false)
-        true
-      rescue ::Memcached::NotFound
-        false
-      end
-
       def load(key, options = {})
         value = @cache.get(key, false)
         if value && options.include?(:expires)

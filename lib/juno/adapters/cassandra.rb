@@ -45,7 +45,14 @@ module Juno
       end
 
       def key?(key, options = {})
-        @client.exists?(@cf, key)
+        if @client.exists?(@cf, key)
+          if options.include?(:expires) && (value = load(key))
+            store(key, value, options)
+          end
+          true
+        else
+          false
+        end
       end
 
       def load(key, options = {})

@@ -13,7 +13,14 @@ module Juno
       end
 
       def key?(key, options = {})
-        @redis.exists(key)
+        if @redis.exists(key)
+          if expires = options[:expires]
+            @redis.expire(key, expires)
+          end
+          true
+        else
+          false
+        end
       end
 
       def load(key, options = {})
