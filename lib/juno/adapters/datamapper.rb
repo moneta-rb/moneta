@@ -29,7 +29,7 @@ module Juno
       end
 
       def key?(key, options = {})
-        context { !!Store.get(key) }
+        context { Store.get(key) != nil }
       end
 
       def load(key, options = {})

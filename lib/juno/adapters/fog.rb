@@ -19,7 +19,7 @@ module Juno
       end
 
       def key?(key, options = {})
-        !!@directory.files.head(key)
+        @directory.files.head(key) != nil
       end
 
       def load(key, options = {})

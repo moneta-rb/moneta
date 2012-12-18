@@ -24,7 +24,7 @@ module Juno
       end
 
       def key?(key, options = {})
-        !!sequel_table[:k => key]
+        sequel_table[:k => key] != nil
       end
 
       def load(key, options = {})

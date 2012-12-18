@@ -17,7 +17,7 @@ module Juno
       end
 
       def key?(key, options = {})
-        !!@db.get(key)
+        @db.get(key) != nil
       rescue RestClient::ResourceNotFound
         false
       end

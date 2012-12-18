@@ -39,7 +39,7 @@ module Juno
       end
 
       def key?(key, options = {})
-        !!@table.find_by_k(key)
+        @table.find_by_k(key) != nil
       end
 
       def load(key, options = {})

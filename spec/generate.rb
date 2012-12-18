@@ -767,9 +767,10 @@ KEYS = {
 }
 
 VALUES = {
+  'Boolean' => [true, false],
   'String' => ['strval1', 'strval2'].map(&:inspect),
+  'Hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
   'Object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
-  'Hash' => [{'hashval1' => 'hashval2'}, {'hashval3' => 'hashval4'}].map(&:inspect)
 }
 
 KEYS.each do |key_type, (key1,key2)|
@@ -834,6 +835,8 @@ end
 it "returns true from key? if a #{key_type} key is available" do
   store[#{key1}] = #{val1}
   store.key?(#{key1}).should == true
+  store[#{key2}] = #{val2}
+  store.key?(#{key2}).should == true
 end
 
 it "stores #{val_type} values with #{key_type} keys with #store" do
@@ -1006,7 +1009,7 @@ TESTS.each do |name, options|
   build = options.delete(:build)
   store = options.delete(:store)
   key = [options.delete(:key) || %w(Object String Hash)].flatten
-  value = [options.delete(:value) || %w(Object String Hash)].flatten
+  value = [options.delete(:value) || %w(Object String Hash Boolean)].flatten
 
   specs = [options.delete(:specs) || SIMPLE_SPECS].flatten
   specs_code = []

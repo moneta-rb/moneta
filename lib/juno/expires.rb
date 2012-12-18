@@ -7,7 +7,7 @@ module Juno
   # @api public
   class Expires < Proxy
     def key?(key, options = {})
-      !!load(key, options)
+      load(key, options) != nil
     end
 
     def load(key, options = {})

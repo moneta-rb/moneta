@@ -9,7 +9,7 @@ module Juno
     # @param [Hash] options
     # @api public
     def key?(key, options = {})
-      !!load(key, options)
+      load(key, options) != nil
     end
 
     # Explicitly close the store

@@ -10,10 +10,13 @@ describe_juno "null_adapter" do
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
   it_should_behave_like 'null_objectkey_hashvalue'
+  it_should_behave_like 'null_objectkey_booleanvalue'
   it_should_behave_like 'null_stringkey_objectvalue'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'null_stringkey_hashvalue'
+  it_should_behave_like 'null_stringkey_booleanvalue'
   it_should_behave_like 'null_hashkey_objectvalue'
   it_should_behave_like 'null_hashkey_stringvalue'
   it_should_behave_like 'null_hashkey_hashvalue'
+  it_should_behave_like 'null_hashkey_booleanvalue'
 end

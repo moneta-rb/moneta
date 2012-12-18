@@ -28,7 +28,7 @@ module Juno
       end
 
       def key?(key, options = {})
-        !!@table.get(key, @column).first
+        @table.get(key, @column).first != nil
       end
 
       def load(key, options = {})
