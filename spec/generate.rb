@@ -386,6 +386,14 @@ end},
     :value => %w(String),
     :specs => [:null, :store, :returndifferent]
   },
+  'transformer_bzip2' => {
+    :build => %{Juno.build do
+  use :Transformer, :value => :bzip2
+  adapter :Memory
+end},
+    :value => %w(String),
+    :specs => [:null, :store, :returndifferent]
+  },
   'transformer_lzo' => {
     :build => %{Juno.build do
   use :Transformer, :value => :lzo

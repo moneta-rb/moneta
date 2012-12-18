@@ -126,6 +126,7 @@ module Juno
       :ox       => [ :serialize, '::Ox.parse_obj(value)',           '::Ox.dump(value)',                  'ox'            ],
       :tnet     => [ :serialize, '::TNetstring.parse(value).first', '::TNetstring.dump(value)',          'tnetstring'    ],
       :yaml     => [ :serialize, '::YAML.load(value)',              '::YAML.dump(value)',                'yaml'          ],
+      :bzip2    => [ :compress,  '::Bzip2.uncompress(value)',       '::Bzip2.compress(value)',           'bzip2'         ],
       :lzma     => [ :compress,  '::LZMA.decompress(value)',        '::LZMA.compress(value)',            'lzma'          ],
       :lzo      => [ :compress,  '::LZO.decompress(value)',         '::LZO.compress(value)',             'lzoruby'       ],
       :snappy   => [ :compress,  '::Snappy.inflate(value)',         '::Snappy.deflate(value)',           'snappy'        ],
