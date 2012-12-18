@@ -17,15 +17,15 @@ module Juno
         clear
       end
 
+      def key?(key, options = {})
+        @entry.key?(key)
+      end
+
       def load(key, options = {})
         if entry = @entry[key]
           entry.insert_after(@list)
           entry.value
         end
-      end
-
-      def key?(key, options = {})
-        @entry.key?(key)
       end
 
       def store(key, value, options = {})
@@ -43,8 +43,7 @@ module Juno
       end
 
       def delete(key, options = {})
-        if entry = @entry[key]
-          @entry.delete(key)
+        if entry = @entry.delete(key)
           @size -= entry.value.bytesize
           entry.unlink
           entry.value
