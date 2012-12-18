@@ -41,13 +41,14 @@ Out of the box, it supports the following backends:
     * Filesystem directory store which spreads files in subdirectories using md5 hash (`:HashFile`)
 * Key/value databases:
     * Berkeley DB (`:DBM`)
+    * Cassandra (`:Cassandra`)
     * GDBM (`:GDBM`)
-    * SDBM (`:SDBM`)
+    * HBase (`:HBase`)
+    * LevelDB (`:LevelDB`)
     * Redis (`:Redis`)
     * Riak (`:Riak`)
+    * SDBM (`:SDBM`)
     * TokyoCabinet (`:TokyoCabinet`)
-    * Cassandra (`:Cassandra`)
-    * LevelDB (`:LevelDB`)
 * Document databases:
     * CouchDB (`:Couch`)
     * MongoDB (`:Mongo`)
