@@ -59,7 +59,7 @@ describe_juno "expires_file" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'returndifferent_hashkey_booleanvalue'
-  it_should_behave_like 'marshallable_key'
+  it_should_behave_like 'require_marshallable'
   it 'should delete expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)
     store['foo'].should == 'bar'

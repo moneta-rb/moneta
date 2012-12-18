@@ -46,5 +46,5 @@ describe_juno "transformer_marshal_rmd160" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'returndifferent_hashkey_booleanvalue'
-  it_should_behave_like 'marshallable_key'
+  it_should_behave_like 'require_marshallable'
 end
