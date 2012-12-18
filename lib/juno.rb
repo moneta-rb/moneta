@@ -19,6 +19,7 @@ module Juno
     autoload :File,            'juno/adapters/file'
     autoload :Fog,             'juno/adapters/fog'
     autoload :GDBM,            'juno/adapters/gdbm'
+    autoload :HBase,           'juno/adapters/hbase'
     autoload :LevelDB,         'juno/adapters/leveldb'
     autoload :LocalMemCache,   'juno/adapters/localmemcache'
     autoload :LRUHash,         'juno/adapters/lruhash'

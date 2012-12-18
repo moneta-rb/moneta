@@ -81,6 +81,11 @@ TESTS = {
   },
   'simple_hbase' => {
     :store => :HBase,
+    :options => ':table => "simple_hbase"',
+  },
+  'simple_hbase_with_expires' => {
+    :store => :HBase,
+    :options => ':table => "simple_hbase", :expires => true',
     :specs => EXPIRES_SPECS,
   },
   'simple_dbm' => {
@@ -606,7 +611,7 @@ end
     :specs => ADAPTER_SPECS
   },
   'adapter_hbase' => {
-    :build => "Juno::Adapters::HBase.new",
+    :build => "Juno::Adapters::HBase.new(:table => 'adapter_hbase')",
     :specs => ADAPTER_SPECS
   },
   'adapter_cookie' => {
