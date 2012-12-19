@@ -77,7 +77,7 @@ module Juno
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise ArgumentError, 'Name must be Symbol' unless Symbol === name
     case name
-    when :Sequel, :ActiveRecord, :Couch
+    when :Sequel, :ActiveRecord, :Couch, :DataMapper
       # Sequel accept only base64 keys and values
       # FIXME: Couch should work only with :marshal but this raises an error on 1.9
       transformer[:key] << :base64
@@ -86,8 +86,8 @@ module Juno
       # Memcached accept only base64 keys, expires already supported
       expires = false
       transformer[:key] << :base64
-    when :PStore, :YAML, :DataMapper
-      # For PStore, YAML and DataMapper only the key has to be a string
+    when :PStore, :YAML, :Null
+      # For PStore and YAML only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]
     when :HashFile
       # Use spreading hashes

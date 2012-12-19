@@ -2226,9 +2226,9 @@ shared_examples_for 'expires_hashkey_objectvalue' do
   end
 end
 
-#################### require_marshallable ####################
+#################### marshallable_key ####################
 
-shared_examples_for 'require_marshallable' do
+shared_examples_for 'marshallable_key' do
   it 'refuses to #[] from keys that cannot be marshalled' do
     expect do
       store[Struct.new(:foo).new(:bar)]
@@ -2259,12 +2259,6 @@ shared_examples_for 'require_marshallable' do
     end.to raise_error(marshal_error)
   end
 
-  it 'refuses to store to values that cannot be marshalled' do
-    expect do
-      store.store 'key', Struct.new(:foo).new(:bar)
-    end.to raise_error(marshal_error)
-  end
-
   it 'refuses to check for key? if the key cannot be marshalled' do
     expect do
       store.key? Struct.new(:foo).new(:bar)
@@ -2274,6 +2268,16 @@ shared_examples_for 'require_marshallable' do
   it 'refuses to delete a key if the key cannot be marshalled' do
     expect do
       store.delete Struct.new(:foo).new(:bar)
+    end.to raise_error(marshal_error)
+  end
+end
+
+#################### marshallable_value ####################
+
+shared_examples_for 'marshallable_value' do
+  it 'refuses to store values that cannot be marshalled' do
+    expect do
+      store.store 'key', Struct.new(:foo).new(:bar)
     end.to raise_error(marshal_error)
   end
 end

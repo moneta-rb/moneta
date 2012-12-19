@@ -40,6 +40,7 @@ describe_juno "simple_activerecord_with_expires" do
   it_should_behave_like 'returndifferent_hashkey_objectvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
-  it_should_behave_like 'require_marshallable'
+  it_should_behave_like 'marshallable_key'
+  it_should_behave_like 'marshallable_value'
   it_should_behave_like 'expires_stringkey_stringvalue'
 end

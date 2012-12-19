@@ -25,5 +25,6 @@ describe_juno "simple_memory_with_json_value_serializer" do
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
-  it_should_behave_like 'require_marshallable'
+  it_should_behave_like 'marshallable_key'
+  it_should_behave_like 'marshallable_value'
 end

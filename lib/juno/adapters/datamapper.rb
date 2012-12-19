@@ -8,8 +8,8 @@ module Juno
     class DataMapper < Base
       class Store
         include ::DataMapper::Resource
-        property :k, String, :key => true
-        property :v, Object, :lazy => false
+        property :k, Text, :key => true
+        property :v, Text, :lazy => false
       end
 
       # Constructor
