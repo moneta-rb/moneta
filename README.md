@@ -26,7 +26,7 @@ Out of the box, it supports the following backends:
 
 * Memory:
     * In-memory store (`:Memory`)
-    * LRU hash (`:LRUHash`)
+    * LRU hash - prefer this over :Memory! (`:LRUHash`)
     * LocalMemCache (`:LocalMemCache`)
     * Memcached store (`:Memcached`, `:MemcachedNative` and `:MemcachedDalli`)
 * Relational Databases:
