@@ -2,7 +2,7 @@
 
 $: << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'benchmark'
-require 'juno'
+require 'moneta'
 
 begin
   require 'dm-core'
@@ -40,9 +40,9 @@ end
 
 stores = {
   :Redis => { },
-  :MemcachedDalli => { :server => "localhost:11211", :namespace => 'juno_dalli' },
-  :MemcachedNative => { :server => "localhost:11211", :namespace => 'juno_native' },
-  :Mongo => { :host => 'localhost', :port => 27017, :db => 'juno_bench' },
+  :MemcachedDalli => { :server => "localhost:11211", :namespace => 'moneta_dalli' },
+  :MemcachedNative => { :server => "localhost:11211", :namespace => 'moneta_native' },
+  :Mongo => { :host => 'localhost', :port => 27017, :db => 'moneta_bench' },
   :LocalMemCache => { :file => "bench.lmc" },
   :DBM => { :file => "bench.dbm" },
   :SDBM => { :file => "bench.sdbm" },
@@ -68,7 +68,7 @@ vlen_min, vlen_max, vlen_ttl, vlen_avg = 99999, 0, 0, 0
 ds = dict.size
 
 puts "======================================================================"
-puts "Comparison of write/read between Juno Stores"
+puts "Comparison of write/read between Moneta Stores"
 puts "======================================================================"
 
 puts "Data loading..."
@@ -99,7 +99,7 @@ puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, 
 
 stores.each do |name, options|
   begin
-    @cache = Juno.new(name, options)
+    @cache = Moneta.new(name, options)
     @cache['test'] = 'test'
     @cache.clear
   rescue Exception => ex

@@ -18,7 +18,7 @@ TESTS = {
   },
   'simple_memory_with_prefix' => {
     :store => :Memory,
-    :options => ':prefix => "juno"',
+    :options => ':prefix => "moneta"',
   },
   'simple_memory_with_json_serializer' => {
     :store => :Memory,
@@ -226,7 +226,7 @@ TESTS = {
     :specs => [:null, :marshallable_key, :returndifferent]
   },
   'null_adapter' => {
-    :build => 'Juno::Adapters::Null.new',
+    :build => 'Moneta::Adapters::Null.new',
     :specs => :null
   },
   'simple_sequel' => {
@@ -271,7 +271,7 @@ TESTS = {
     :options => ":aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'juno'",
+    :dir                    => 'moneta'",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n"
   },
@@ -280,21 +280,21 @@ TESTS = {
     :options => ":aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'juno',
+    :dir                    => 'moneta',
     :expires                => true",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
     :specs => EXPIRES_SPECS
   },
   'expires_memory' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Expires
   adapter :Memory
 end},
     :specs => [:null, :store, :expires]
   },
   'expires_file' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Expires
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
   adapter :File, :dir => File.join(make_tempdir, "expires-file")
@@ -314,7 +314,7 @@ end
 }
   },
   'proxy_redis' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Proxy
   use :Proxy
   adapter :Redis
@@ -322,7 +322,7 @@ end},
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'proxy_expires_memory' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Proxy
   use :Expires
   use :Proxy
@@ -331,7 +331,7 @@ end},
     :specs => [:null, :store, :expires]
   },
   'cache_file_memory' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use(:Cache) do
     backend { adapter :File, :dir => File.join(make_tempdir, "cache_file_memory") }
     cache { adapter :Memory }
@@ -352,19 +352,19 @@ end
 }
   },
   'cache_memory_null' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use(:Cache) do
-    backend(Juno::Adapters::Memory.new)
-    cache(Juno::Adapters::Null.new)
+    backend(Moneta::Adapters::Memory.new)
+    cache(Moneta::Adapters::Null.new)
   end
 end},
     :specs => ADAPTER_SPECS
   },
   'stack_file_memory' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use(:Stack) do
-    add(Juno.new(:Null))
-    add(Juno::Adapters::Null.new)
+    add(Moneta.new(:Null))
+    add(Moneta::Adapters::Null.new)
     add { adapter :File, :dir => File.join(make_tempdir, "stack-file1") }
     add { adapter :Memory }
   end
@@ -372,10 +372,10 @@ end},
     :specs => ADAPTER_SPECS
   },
   'stack_memory_file' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use(:Stack) do
-    add(Juno.new(:Null))
-    add(Juno::Adapters::Null.new)
+    add(Moneta.new(:Null))
+    add(Moneta::Adapters::Null.new)
     add { adapter :Memory }
     add { adapter :File, :dir => File.join(make_tempdir, "stack-file2") }
   end
@@ -383,14 +383,14 @@ end},
     :specs => [:null_stringkey_stringvalue, :store_stringkey_stringvalue]
   },
   'lock' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Lock
   adapter :Memory
 end},
     :specs => [:null, :store]
   },
   'transformer_zlib' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :value => :zlib
   adapter :Memory
 end},
@@ -398,7 +398,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_bzip2' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :value => :bzip2
   adapter :Memory
 end},
@@ -406,7 +406,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_lzo' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :value => :lzo
   adapter :Memory
 end},
@@ -414,7 +414,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_lzma' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :value => :lzma
   adapter :Memory
 end},
@@ -422,7 +422,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_snappy' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :value => :snappy
   adapter :Memory
 end},
@@ -430,7 +430,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_quicklz' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :value => :quicklz
   adapter :Memory
 end},
@@ -438,7 +438,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_json' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :json, :value => :json
   adapter :Memory
 end},
@@ -447,7 +447,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_bert' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :bert, :value => :bert
   adapter :Memory
 end},
@@ -456,7 +456,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_bencode' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :bencode, :value => :bencode
   adapter :Memory
 end},
@@ -465,7 +465,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_bson' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :bson, :value => :bson
   adapter :Memory
 end},
@@ -474,14 +474,14 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_ox' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :ox, :value => :ox
   adapter :Memory
 end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_tnet' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
  use :Transformer, :key => :tnet, :value => :tnet
  adapter :Memory
 end},
@@ -490,7 +490,7 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_msgpack' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :msgpack, :value => :msgpack
   adapter :Memory
 end},
@@ -499,98 +499,98 @@ end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_yaml' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :yaml, :value => :yaml
   adapter :Memory
 end},
     :specs => [:null, :store, :returndifferent]
   },
   'transformer_marshal_hmac' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => :marshal, :value => [:marshal, :hmac], :secret => 'secret'
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_base64' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :base64], :value => [:marshal, :base64]
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_prefix' => {
-    :build => %{Juno.build do
-  use :Transformer, :key => [:marshal, :prefix], :value => :marshal, :prefix => 'juno'
+    :build => %{Moneta.build do
+  use :Transformer, :key => [:marshal, :prefix], :value => :marshal, :prefix => 'moneta'
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_uuencode' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :uuencode], :value => [:marshal, :uuencode]
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_escape' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_md5' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :md5], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha1' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :sha1], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha256' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :sha256], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha384' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :sha384], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_sha512' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :sha512], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_rmd160' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :rmd160], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'transformer_marshal_md5_spread' => {
-    :build => %{Juno.build do
+    :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :md5, :spread], :value => :marshal
   adapter :Memory
 end},
     :specs => SIMPLE_SPECS
   },
   'adapter_activerecord' => {
-    :build => "Juno::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",
+    :build => "Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",
     :specs => ADAPTER_SPECS,
     :tests => %{
 it 'updates an existing key/value' do
@@ -603,38 +603,38 @@ end
 it 'uses an existing connection' do
   ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'activerecord-existing')
 
-  store = Juno::Adapters::ActiveRecord.new
+  store = Moneta::Adapters::ActiveRecord.new
   store.table.should be_table_exists
 end
 }
   },
   'adapter_cassandra' => {
-    :build => "Juno::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
+    :build => "Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
     :specs => ADAPTER_SPECS
   },
   'adapter_hbase' => {
-    :build => "Juno::Adapters::HBase.new(:table => 'adapter_hbase')",
+    :build => "Moneta::Adapters::HBase.new(:table => 'adapter_hbase')",
     :specs => ADAPTER_SPECS
   },
   'adapter_cookie' => {
-    :build => 'Juno::Adapters::Cookie.new',
+    :build => 'Moneta::Adapters::Cookie.new',
     :specs => ADAPTER_SPECS
   },
   'adapter_couch' => {
-    :build => "Juno::Adapters::Couch.new(:db => 'adapter_couch')",
+    :build => "Moneta::Adapters::Couch.new(:db => 'adapter_couch')",
     :specs => ADAPTER_SPECS
   },
   'adapter_datamapper' => {
-    :build => 'Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")',
+    :build => 'Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :specs => ADAPTER_SPECS,
     :tests => %q{
 it 'does not cross contaminate when storing' do
-  first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+  first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
   first.clear
 
-  second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
   second.clear
 
   first['key'] = 'value'
@@ -645,10 +645,10 @@ it 'does not cross contaminate when storing' do
 end
 
 it 'does not cross contaminate when deleting' do
-  first = Juno::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+  first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
   first.clear
 
-  second = Juno::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
   second.clear
 
   first['key'] = 'value'
@@ -661,52 +661,52 @@ end
 }
   },
   'adapter_dbm' => {
-    :build => 'Juno::Adapters::DBM.new(:file => File.join(make_tempdir, "adapter_dbm"))',
+    :build => 'Moneta::Adapters::DBM.new(:file => File.join(make_tempdir, "adapter_dbm"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_file' => {
-    :build => 'Juno::Adapters::File.new(:dir => File.join(make_tempdir, "adapter_file"))',
+    :build => 'Moneta::Adapters::File.new(:dir => File.join(make_tempdir, "adapter_file"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_fog' => {
-    :build => "Juno::Adapters::Fog.new(:aws_access_key_id => 'fake_access_key_id',
+    :build => "Moneta::Adapters::Fog.new(:aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'juno')",
+    :dir                    => 'moneta')",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
     :specs => ADAPTER_SPECS
   },
   'adapter_gdbm' => {
-    :build => 'Juno::Adapters::GDBM.new(:file => File.join(make_tempdir, "adapter_gdbm"))',
+    :build => 'Moneta::Adapters::GDBM.new(:file => File.join(make_tempdir, "adapter_gdbm"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_localmemcache' => {
-    :build => 'Juno::Adapters::LocalMemCache.new(:file => File.join(make_tempdir, "adapter_localmemcache"))',
+    :build => 'Moneta::Adapters::LocalMemCache.new(:file => File.join(make_tempdir, "adapter_localmemcache"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_memcached_dalli' => {
-    :build => 'Juno::Adapters::MemcachedDalli.new(:namespace => "adapter_memcached_dalli")',
+    :build => 'Moneta::Adapters::MemcachedDalli.new(:namespace => "adapter_memcached_dalli")',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_memcached_native' => {
-    :build => 'Juno::Adapters::MemcachedNative.new(:namespace => "adapter_memcached_native")',
+    :build => 'Moneta::Adapters::MemcachedNative.new(:namespace => "adapter_memcached_native")',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_memcached' => {
-    :build => 'Juno::Adapters::Memcached.new(:namespace => "adapter_memcached")',
+    :build => 'Moneta::Adapters::Memcached.new(:namespace => "adapter_memcached")',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_memory' => {
-    :build => 'Juno::Adapters::Memory.new',
+    :build => 'Moneta::Adapters::Memory.new',
     :specs => [:null, :store]
   },
   'adapter_lruhash' => {
-    :build => 'Juno::Adapters::LRUHash.new',
+    :build => 'Moneta::Adapters::LRUHash.new',
     :specs => ADAPTER_SPECS,
     :tests => %{
 it 'should delete oldest' do
-  store = Juno::Adapters::LRUHash.new(:max_size => 10)
+  store = Moneta::Adapters::LRUHash.new(:max_size => 10)
   store[0]  = 'y'
   (1..1000).each do |i|
     store[i] = 'x'
@@ -720,52 +720,52 @@ it 'should delete oldest' do
 end}
   },
   'adapter_mongo' => {
-    :build => 'Juno::Adapters::Mongo.new(:db => "adapter_mongo")',
+    :build => 'Moneta::Adapters::Mongo.new(:db => "adapter_mongo")',
     :specs => ADAPTER_SPECS
   },
   'adapter_pstore' => {
-    :build => 'Juno::Adapters::PStore.new(:file => File.join(make_tempdir, "adapter_pstore"))',
+    :build => 'Moneta::Adapters::PStore.new(:file => File.join(make_tempdir, "adapter_pstore"))',
     :specs => ADAPTER_SPECS + [:null_stringkey_objectvalue,
                                :store_stringkey_objectvalue,
                                :returndifferent_stringkey_objectvalue]
   },
   'adapter_redis' => {
-    :build => 'Juno::Adapters::Redis.new',
+    :build => 'Moneta::Adapters::Redis.new',
     :specs => ADAPTER_SPECS + [:expires_stringkey_stringvalue]
   },
   'adapter_riak' => {
-    :build => 'Juno::Adapters::Riak.new',
+    :build => 'Moneta::Adapters::Riak.new',
     :options => ":bucket => 'adapter_riak'",
     :specs => ADAPTER_SPECS,
     # We don't want Riak warnings in tests
     :preamble => "require 'riak'\n\nRiak.disable_list_keys_warnings = true\n\n"
   },
   'adapter_sdbm' => {
-    :build => 'Juno::Adapters::SDBM.new(:file => File.join(make_tempdir, "adapter_sdbm"))',
+    :build => 'Moneta::Adapters::SDBM.new(:file => File.join(make_tempdir, "adapter_sdbm"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_leveldb' => {
-    :build => 'Juno::Adapters::LevelDB.new(:dir => File.join(make_tempdir, "adapter_leveldb"))',
+    :build => 'Moneta::Adapters::LevelDB.new(:dir => File.join(make_tempdir, "adapter_leveldb"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_sequel' => {
-    :build => 'Juno::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))',
+    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_sqlite' => {
-    :build => 'Juno::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
+    :build => 'Moneta::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_tokyocabinet_bdb' => {
-    :build => 'Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_bdb"), :type => :bdb)',
+    :build => 'Moneta::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_bdb"), :type => :bdb)',
     :specs => ADAPTER_SPECS
   },
   'adapter_tokyocabinet_hdb' => {
-    :build => 'Juno::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_hdb"), :type => :hdb)',
+    :build => 'Moneta::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_hdb"), :type => :hdb)',
     :specs => ADAPTER_SPECS
   },
   'adapter_yaml' => {
-    :build => 'Juno::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',
+    :build => 'Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',
     :specs => ADAPTER_SPECS + [:null_stringkey_objectvalue,
                                :store_stringkey_objectvalue,
                                :returndifferent_stringkey_objectvalue]
@@ -1025,7 +1025,7 @@ SPECS.each do |key, code|
     "shared_examples_for '#{key}' do\n  " << code.gsub("\n", "\n  ") << "\nend\n\n"
 end
 specs_code.gsub!(/\n +\n/, "\n\n")
-File.open(File.join(File.dirname(__FILE__), 'junospecs.rb'), 'w') {|out| out << specs_code }
+File.open(File.join(File.dirname(__FILE__), 'monetaspecs.rb'), 'w') {|out| out << specs_code }
 
 TESTS.each do |name, options|
   build = options.delete(:build)
@@ -1049,11 +1049,11 @@ TESTS.each do |name, options|
   opts = options.delete(:options)
   opts = ', ' << opts if opts
 
-  build ||= "Juno.new(#{store.inspect}#{opts}, :logger => {:out => File.open(File.join(make_tempdir, '#{name}.log'), 'a')})"
+  build ||= "Moneta.new(#{store.inspect}#{opts}, :logger => {:out => File.open(File.join(make_tempdir, '#{name}.log'), 'a')})"
 
   code = %{#{header}require 'helper'
 
-describe_juno #{name.inspect} do
+describe_moneta #{name.inspect} do
   #{preamble}def new_store
     #{build.gsub("\n", "\n    ")}
   end
@@ -1064,5 +1064,5 @@ end
 }
 
   code.gsub!(/\n +\n/, "\n\n")
-  File.open(File.join(File.dirname(__FILE__), 'juno', "#{name}_spec.rb"), 'w') {|out| out << code }
+  File.open(File.join(File.dirname(__FILE__), 'moneta', "#{name}_spec.rb"), 'w') {|out| out << code }
 end

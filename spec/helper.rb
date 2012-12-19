@@ -1,6 +1,6 @@
-require 'juno'
+require 'moneta'
 require 'fileutils'
-require 'junospecs'
+require 'monetaspecs'
 
 class Value
   attr_accessor :x
@@ -51,7 +51,7 @@ class InitializeStore
   end
 end
 
-def describe_juno(name, &block)
+def describe_moneta(name, &block)
   begin
     InitializeStore.new(&block)
     describe(name, &block)

@@ -1,23 +1,19 @@
-Juno: A unified interface for key/value stores
-==============================================
+Moneta: A unified interface for key/value stores
+================================================
 
-[![Build Status](https://secure.travis-ci.org/minad/juno.png?branch=master)](http://travis-ci.org/minad/juno) [![Dependency Status](https://gemnasium.com/minad/juno.png?travis)](https://gemnasium.com/minad/juno) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/juno)
+[![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/moneta)
 
-Juno provides a standard interface for interacting with various kinds of key/value stores. Juno
-is based on Moneta and replaces it with a mostly compatible interface. The reason for the
-fork was that Moneta was unmaintained for a long time.
-
-Juno is very feature rich:
+Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta is very feature rich:
 
 * Supports a lot of backends (See below)
 * Supports proxies (Similar to [Rack middlewares](http://rack.github.com/))
-* Custom serialization via `Juno::Transformer` proxy (Marshal/JSON/YAML and many more)
-* Custom key transformation via `Juno::Transformer` proxy
-* Value compression via `Juno::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
-* Expiration for all stores (Added via proxy `Juno::Expires` if not supported natively)
+* Custom serialization via `Moneta::Transformer` proxy (Marshal/JSON/YAML and many more)
+* Custom key transformation via `Moneta::Transformer` proxy
+* Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
+* Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Integration with [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
-Juno is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/juno).
+Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
 Supported backends
 ------------------
@@ -67,19 +63,19 @@ Proxies
 In addition it supports proxies (Similar to [Rack middlewares](http://rack.github.com/)) which
 add additional features to storage backends:
 
-* `Juno::Proxy` proxy base class
-* `Juno::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
-* `Juno::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use :Stack`.
-* `Juno::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.
-* `Juno::Cache` combine two stores, one as backend and one as cache (e.g. `Juno::Adapters::File` + `Juno::Adapters::Memory`). Add it in the builder using `use :Cache`.
-* `Juno::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
-* `Juno::Logger` to log database accesses. Add it in the builder using `use :Logger`.
+* `Moneta::Proxy` proxy base class
+* `Moneta::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
+* `Moneta::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use :Stack`.
+* `Moneta::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.
+* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::Memory`). Add it in the builder using `use :Cache`.
+* `Moneta::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
+* `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
 
-The Juno API is purposely extremely similar to the Hash API. In order so support an
+The Moneta API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
 
-Supported serializers and compressors (`Juno::Transformer`)
------------------------------------------------------------
+Supported serializers and compressors (`Moneta::Transformer`)
+-------------------------------------------------------------
 
 Supported serializers:
 
@@ -105,18 +101,18 @@ Special transformers:
 
 * Digests (MD5, Shas, ...)
 * Add prefix to keys (`:prefix`)
-* HMAC to verify values (`:hmac`, useful for `Rack::JunoCookies`)
+* HMAC to verify values (`:hmac`, useful for `Rack::MonetaCookies`)
 
 Links
 -----
 
-* Source: <http://github.com/minad/juno>
-* Bugs:   <http://github.com/minad/juno/issues>
+* Source: <http://github.com/minad/moneta>
+* Bugs:   <http://github.com/minad/moneta/issues>
 * API documentation:
-    * Latest Gem: <http://rubydoc.info/gems/juno/frames>
-    * GitHub master: <http://rubydoc.info/github/minad/juno/master/frames>
+    * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
+    * GitHub master: <http://rubydoc.info/github/minad/moneta/master/frames>
 
-Juno API
+Moneta API
 --------
 
 ~~~
@@ -148,16 +144,16 @@ Juno API
 Creating a Store
 ----------------
 
-There is a simple interface to create a store using `Juno.new`:
+There is a simple interface to create a store using `Moneta.new`:
 
 ~~~ ruby
-store = Juno.new(:Memcached, :server => 'localhost:11211')
+store = Moneta.new(:Memcached, :server => 'localhost:11211')
 ~~~
 
-If you want to have control over the proxies, you have to use `Juno.build`:
+If you want to have control over the proxies, you have to use `Moneta.build`:
 
 ~~~ ruby
-store = Juno.build do
+store = Moneta.build do
   # Adds expires proxy
   use :Expires
   # Transform key using Marshal and Base64 and value using Marshal
@@ -173,10 +169,10 @@ Expiration
 The Cassandra, Memcached and Redis backends supports expires values directly:
 
 ~~~ ruby
-cache = Juno::Adapters::Memcached.new
+cache = Moneta::Adapters::Memcached.new
 
 # Or using the builder...
-cache = Juno.build do
+cache = Moneta.build do
   adapter :Memcached
 end
 
@@ -192,13 +188,13 @@ You can add the expires feature to other backends using the Expires proxy:
 
 ~~~ ruby
 # Using the :expires option
-cache = Juno.new(:File, :dir => '...', :expires => true)
+cache = Moneta.new(:File, :dir => '...', :expires => true)
 
 # or manually by using the proxy...
-cache = Juno::Expires.new(Juno::Adapters::File.new(:dir => '...'))
+cache = Moneta::Expires.new(Moneta::Adapters::File.new(:dir => '...'))
 
 # or using the builder...
-cache = Juno.build do
+cache = Moneta.build do
   use :Expires
   adapter :File, :dir => '...'
 end
@@ -209,51 +205,51 @@ Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
 
-Use Juno as a [Rack](http://rack.github.com/) session store:
+Use Moneta as a [Rack](http://rack.github.com/) session store:
 
 ~~~ ruby
-require 'rack/session/juno'
+require 'rack/session/moneta'
 
-use Rack::Session::Juno, :store => :Redis
-use Rack::Session::Juno, :store => Juno.new(:Memory, :expires => true)
+use Rack::Session::Moneta, :store => :Redis
+use Rack::Session::Moneta, :store => Moneta.new(:Memory, :expires => true)
 
-use Rack::Session::Juno do
+use Rack::Session::Moneta do
   use :Expires
   adapter :Memory
 end
 ~~~
 
-Use Juno as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store:
+Use Moneta as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store:
 
 ~~~ ruby
-require 'rack/cache/juno'
+require 'rack/cache/moneta'
 
 use Rack::Cache,
-      :metastore   => 'juno://Memory?expires=true',
-      :entitystore => 'juno://Memory?expires=true'
+      :metastore   => 'moneta://Memory?expires=true',
+      :entitystore => 'moneta://Memory?expires=true'
 
-# Or used named Juno stores
-Rack::Cache::Juno['named_metastore'] = Juno.build do
+# Or used named Moneta stores
+Rack::Cache::Moneta['named_metastore'] = Moneta.build do
   use :Expires
   adapter :Memory
 end
 use Rack::Cache,
-      :metastore => 'juno://named_metastore',
-      :entity_store => 'juno://named_entitystore'
+      :metastore => 'moneta://named_metastore',
+      :entity_store => 'moneta://named_entitystore'
 ~~~
 
-Use Juno to store cookies in [Rack](http://rack.github.com/). It uses the `Juno::Adapters::Cookie`. You might
+Use Moneta to store cookies in [Rack](http://rack.github.com/). It uses the `Moneta::Adapters::Cookie`. You might
 wonder what the purpose of this store or Rack middleware is: It makes it possible
 to use all the transformers on the cookies (e.g. `:prefix`, `:marshal` and `:hmac` for value verification).
 
 ~~~ ruby
-require 'rack/juno_cookies'
+require 'rack/moneta_cookies'
 
-use Rack::JunoCookies, :domain => 'example.com', :path => '/path'
+use Rack::MonetaCookies, :domain => 'example.com', :path => '/path'
 run lambda do |env|
   req = Rack::Request.new(env)
-  req.cookies #=> is now a Juno store!
-  env['rack.request.cookie_hash'] #=> is now a Juno store!
+  req.cookies #=> is now a Moneta store!
+  env['rack.request.cookie_hash'] #=> is now a Moneta store!
   req.cookies['key'] #=> retrieves 'key'
   req.cookies['key'] = 'value' #=> sets 'key'
   req.cookies.delete('key') #=> removes 'key'
@@ -264,14 +260,13 @@ end
 Alternatives
 ------------
 
-* [Moneta](https://github.com/wycats/moneta): Juno is based on Moneta, but Juno supports more features and more backends and is actively developed
 * [Horcrux](https://github.com/technoweenie/horcrux): Used at github, supports batch operations but only Memcached backend
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
-* [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Juno can be used directly with the ToyStore Memory adapter
+* [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
 
 Authors
 -------
 
 * Daniel Mendler
 * Hannes Georg
-* Moneta originally by Yehuda Katz and contributors
+* Originally by Yehuda Katz and contributors

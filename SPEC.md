@@ -1,22 +1,22 @@
-# Juno Specification
+# Moneta Specification
 
-The purpose of the juno specification is to create a general-purpose API for interacting with key-value stores. In general, libraries that need to interact with key-value stores should be able to specify that they can use any "juno-compliant store".
+The purpose of the moneta specification is to create a general-purpose API for interacting with key-value stores. In general, libraries that need to interact with key-value stores should be able to specify that they can use any "moneta-compliant store".
 
-# Juno Executable Specs
+# Moneta Executable Specs
 
-Juno ships with a set of executable specs which you can use to verify spec-compliance with your juno adapter.
+Moneta ships with a set of executable specs which you can use to verify spec-compliance with your moneta adapter.
 
-# Requirements for a Juno Adapter
+# Requirements for a Moneta Adapter
 
 (See RFC 2119 for use of MUST, SHOULD, MAY, MUST NOT, and SHOULD NOT)
 
-A Juno adapter must expose a class with the following characteristics:
+A Moneta adapter must expose a class with the following characteristics:
 
 ## Class Methods
 
 ### <code>new(options[Hash]) => Object</code>
 
-Return an instance of the juno adapter, with the instance methods listed below. The <code>options</code> hash is a required parameter, and the adapter may specify whatever additional requirements it needs to properly instantiate it.
+Return an instance of the moneta adapter, with the instance methods listed below. The <code>options</code> hash is a required parameter, and the adapter may specify whatever additional requirements it needs to properly instantiate it.
 
 ## Instance Methods
 
@@ -67,5 +67,5 @@ In the case of methods with optional arguments, the Hash MUST be provided as the
 
 # Atomicity
 
-The base Juno specification does not specify any atomicity guarantees. However, extensions to this spec may specify extensions that define additional guarantees for any of the defined operations.
+The base Moneta specification does not specify any atomicity guarantees. However, extensions to this spec may specify extensions that define additional guarantees for any of the defined operations.
 
