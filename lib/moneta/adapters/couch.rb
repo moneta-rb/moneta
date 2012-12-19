@@ -10,9 +10,9 @@ module Moneta
       # @param [Hash] options
       #
       # Options:
-      # * :db - Couch database
+      # * :db - Couch database (default moneta)
       def initialize(options = {})
-        raise ArgumentError, 'Option :db is required' unless options[:db]
+        options[:db] ||= 'moneta'
         @db = ::CouchRest.database!(options[:db])
       end
 
