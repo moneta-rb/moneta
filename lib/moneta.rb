@@ -6,6 +6,7 @@ module Moneta
   autoload :Lock,              'moneta/lock'
   autoload :Logger,            'moneta/logger'
   autoload :Proxy,             'moneta/proxy'
+  autoload :Server,            'moneta/server'
   autoload :Shared,            'moneta/shared'
   autoload :Stack,             'moneta/stack'
   autoload :Transformer,       'moneta/transformer'
@@ -13,6 +14,7 @@ module Moneta
   module Adapters
     autoload :ActiveRecord,    'moneta/adapters/activerecord'
     autoload :Cassandra,       'moneta/adapters/cassandra'
+    autoload :Client,          'moneta/adapters/client'
     autoload :Cookie,          'moneta/adapters/cookie'
     autoload :Couch,           'moneta/adapters/couch'
     autoload :DataMapper,      'moneta/adapters/datamapper'

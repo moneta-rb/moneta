@@ -1,5 +1,3 @@
-require 'drb'
-
 module Moneta
   # Shares a store between processes
   #
@@ -20,13 +18,9 @@ module Moneta
     # Options:
     # * :port - TCP port (default 9000)
     # * :host - Hostname (default empty)
-    # * :socket - Unix socket (default none)
-    # * :uri - drbunix://socket or druby://host:port
-    # * :table - Table name (default moneta)
+    # * :file - Unix socket file name (default none)
     def initialize(options = {}, &block)
-      options[:port] ||= 9000
-      @uri = options[:uri] || (options[:socket] ? "drbunix://#{options[:socket]}" :
-                               "druby://#{options[:host]}:#{options[:port]}")
+      @options = options
       @builder = Builder.new(&block)
     end
 
@@ -40,6 +34,7 @@ module Moneta
 
     def store(key, value, options = {})
       with_adapter {|a| a.store(key, value, options) }
+      value
     end
 
     def delete(key, options = {})
@@ -53,24 +48,26 @@ module Moneta
 
     def close
       if @server
-        @adapter.close
-        @server.stop_service
+        @server.stop
         @server = nil
       end
-      @adapter = nil
+      if @adapter
+        @adapter.close
+        @adapter = nil
+      end
     end
 
     private
 
     def with_adapter
-      yield(@adapter ||= DRb::DRbObject.new(nil, @uri))
-    rescue DRb::DRbConnError => ex
-      puts ex.message
+      yield(@adapter ||= Adapters::Client.new(@options))
+    rescue Exception => ex
+      puts "Failed to connect: #{ex.message}"
       begin
         @adapter = Lock.new(@builder.build.last)
-        @server = DRb::DRbServer.new(@uri, @adapter)
-      rescue Errno::EADDRINUSE => ex
-        puts ex.message
+        @server = Server.new(@adapter, @options)
+      rescue Exception => ex
+        puts "Failed to start server: #{ex.message}"
         @adapter = nil
       end
       retry
