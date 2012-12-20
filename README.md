@@ -257,6 +257,12 @@ run lambda do |env|
 end
 ~~~
 
+More information
+----------------
+
+* http://yehudakatz.com/2009/02/12/whats-the-point/
+* http://yehudakatz.com/2009/02/12/initial-release-of-moneta-unified-keyvalue-store-api/
+
 Alternatives
 ------------
 
