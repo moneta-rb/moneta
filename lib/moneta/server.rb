@@ -1,6 +1,8 @@
 require 'socket'
 
 module Moneta
+  # Moneta server
+  # @api public
   class Server
     DEFAULT_PORT = 9000
 
@@ -18,6 +20,15 @@ module Moneta
 
     include Util
 
+    # Constructor
+    #
+    # @param [Hash] options
+    #
+    # Options:
+    # * :port - TCP port (default 9000)
+    # * :host - Hostname (default empty)
+    # * :file - Unix socket file name (default none)
+    # * :timeout - Timeout in select call (default 1)
     def initialize(store, options = {})
       @store = store
       @timeout = options[:timeout] || 1

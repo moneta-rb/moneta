@@ -2,9 +2,19 @@ require 'socket'
 
 module Moneta
   module Adapters
+    # Moneta client backend
+    # @api public
     class Client < Base
       include Server::Util
 
+      # Constructor
+      #
+      # @param [Hash] options
+      #
+      # Options:
+      # * :port - TCP port (default 9000)
+      # * :host - Hostname (default empty)
+      # * :file - Unix socket file name (default none)
       def initialize(options = {})
         @socket = options[:file] ? UNIXSocket.open(options[:file]) :
           TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || Server::DEFAULT_PORT)
