@@ -69,7 +69,7 @@ module Moneta
       begin
         @adapter = Lock.new(@builder.build.last)
         @server = DRb::DRbServer.new(@uri, @adapter)
-      rescue Errno::EADDRINUSE
+      rescue Errno::EADDRINUSE => ex
         puts ex.message
         @adapter = nil
       end
