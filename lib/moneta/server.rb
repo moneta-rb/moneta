@@ -27,7 +27,6 @@ module Moneta
     #
     # Options:
     # * :port - TCP port (default 9000)
-    # * :host - Hostname (default empty)
     # * :file - Unix socket file name (default none)
     def initialize(store, options = {})
       @store = store
