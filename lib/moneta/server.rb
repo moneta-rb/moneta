@@ -5,6 +5,7 @@ module Moneta
   # @api public
   class Server
     DEFAULT_PORT = 9000
+    TIMEOUT = 1
 
     module Util
       def read(io)
@@ -28,10 +29,8 @@ module Moneta
     # * :port - TCP port (default 9000)
     # * :host - Hostname (default empty)
     # * :file - Unix socket file name (default none)
-    # * :timeout - Timeout in select call (default 1)
     def initialize(store, options = {})
       @store = store
-      @timeout = options[:timeout] || 1
       @server = options[:file] ? UNIXServer.open(options[:file]) :
         TCPServer.open(options[:port] || DEFAULT_PORT)
       @clients = [@server]
@@ -66,7 +65,7 @@ module Moneta
     end
 
     def accept
-      ios = IO.select(@clients, nil, @clients, @timeout)
+      ios = IO.select(@clients, nil, @clients, TIMEOUT)
       return nil unless ios
       ios[2].each do |io|
         io.close

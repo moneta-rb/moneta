@@ -7,6 +7,22 @@ TESTS = {
   'simple_client_tcp' => {
     :preamble => "$tcp_server ||= Moneta::Server.new(Moneta.new(:Memory))\n",
     :store => :Client,
+    :tests => %{
+it 'should support multiple clients' do
+  client = Moneta.new(:Client)
+  client['shared_key'] = 'shared_val'
+  (1..100).each do |i|
+    Thread.new do
+      client = Moneta.new(:Client)
+      (1.100).each do |j|
+        client['shared_key'].should == 'shared_val'
+        client["key-\#{j}-\#{i}"] = "val-\#{j}-\#{i}"
+        client["key-\#{j}-\#{i}"].should == "val-\#{j}-\#{i}"
+      end
+    end
+  end
+end
+}
   },
   'simple_client_unix' => {
     :preamble => "$unix_server ||= Moneta::Server.new(Moneta.new(:Memory), :file => File.join(make_tempdir, 'simple_client_unix'))\nafter(:all) { $unix_server.stop; $unix_server = nil }\n",
