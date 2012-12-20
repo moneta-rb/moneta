@@ -10,7 +10,7 @@ module Moneta
   #   end
   #
   # @api public
-  class Shared < Base
+  class Shared < Proxy
     # Constructor
     #
     # @param [Hash] options
@@ -25,24 +25,24 @@ module Moneta
     end
 
     def key?(key, options = {})
-      with_adapter {|a| a.key?(key, options) }
+      connect { super }
     end
 
     def load(key, options = {})
-      with_adapter {|a| a.load(key, options) }
+      connect { super }
     end
 
     def store(key, value, options = {})
-      with_adapter {|a| a.store(key, value, options) }
+      connect { super }
       value
     end
 
     def delete(key, options = {})
-      with_adapter {|a| a.delete(key, options) }
+      connect { super }
     end
 
     def clear(options = {})
-      with_adapter {|a| a.clear(options) }
+      connect { super }
       self
     end
 
@@ -59,8 +59,9 @@ module Moneta
 
     private
 
-    def with_adapter
-      yield(@adapter ||= Adapters::Client.new(@options))
+    def connect
+      @adapter ||= Adapters::Client.new(@options)
+      yield
     rescue Exception => ex
       puts "Failed to connect: #{ex.message}"
       begin
