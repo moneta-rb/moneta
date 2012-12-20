@@ -11,6 +11,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Custom key transformation via `Moneta::Transformer` proxy
 * Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
+* Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
