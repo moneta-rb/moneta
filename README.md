@@ -70,6 +70,7 @@ add additional features to storage backends:
 * `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::Memory`). Add it in the builder using `use :Cache`.
 * `Moneta::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
+* `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use :Shared`.
 
 The Moneta API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
@@ -254,6 +255,31 @@ run lambda do |env|
   req.cookies['key'] = 'value' #=> sets 'key'
   req.cookies.delete('key') #=> removes 'key'
   [200, {}, []]
+end
+~~~
+
+Advanced - Build your own key value server
+------------------------------------------
+
+You can use Moneta to build your own key/value server which is shared between
+multiple processes. If you run the following code in two different processes,
+they will share the same data which will also be persistet in the database `shared.db`.
+
+~~~ ruby
+require 'moneta'
+
+store = Moneta.build do
+  use :Transformer, :key => :marshal, :value => :marshal
+  use :Shared do
+    use :Cache do
+      cache do
+        adapter :LRUHash
+      end
+      backend do
+        adapter :GDBM, :file => 'shared.db'
+      end
+    end
+  end
 end
 ~~~
 

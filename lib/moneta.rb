@@ -6,6 +6,7 @@ module Moneta
   autoload :Lock,              'moneta/lock'
   autoload :Logger,            'moneta/logger'
   autoload :Proxy,             'moneta/proxy'
+  autoload :Shared,            'moneta/shared'
   autoload :Stack,             'moneta/stack'
   autoload :Transformer,       'moneta/transformer'
 
