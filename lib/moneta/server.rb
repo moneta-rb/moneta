@@ -36,16 +36,19 @@ module Moneta
         TCPServer.open(options[:port] || DEFAULT_PORT)
       @clients = [@server]
       @running = true
-      @thread = Thread.new { mainloop while @running }
+      @thread = Thread.new do
+        mainloop while @running
+        File.unlink(options[:file]) if options[:file]
+      end
     end
 
     def stop
       if @thread
         @running = false
-        @thread.join
-        @thread = nil
         @server.close
         @server = nil
+        @thread.join
+        @thread = nil
       end
     end
 

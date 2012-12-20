@@ -2,7 +2,7 @@
 require 'helper'
 
 describe_moneta "adapter_client" do
-  Moneta::Server.new(Moneta.new(:Memory)) rescue nil
+  $tcp_server ||= Moneta::Server.new(Moneta.new(:Memory))
   def new_store
     Moneta::Adapters::Client.new
   end
