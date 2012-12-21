@@ -6,6 +6,8 @@ module Moneta
     #
     # @api public
     class LRUHash < Base
+      include Mixins::IncrementSupport
+
       # Constructor
       #
       # @param [Hash] options

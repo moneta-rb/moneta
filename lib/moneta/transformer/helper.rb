@@ -1,5 +1,6 @@
 module Moneta
   class Transformer
+    # @api private
     module Helper
       def self.escape(value)
         value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }

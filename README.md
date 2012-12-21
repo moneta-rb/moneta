@@ -8,7 +8,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Supports proxies (Similar to [Rack middlewares](http://rack.github.com/))
 * Custom serialization via `Moneta::Transformer` proxy (Marshal/JSON/YAML and many more)
 * Custom key transformation via `Moneta::Transformer` proxy
-* Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
+* Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
@@ -284,8 +284,7 @@ end
 ### Rails cache store
 
 Add the cache store in your application configuration `config/environments/*.rb`. Unfortunately the
-Moneta cache store is quite limited and doesn't support increment/decrement and matchers. If you
-need these features use different server-specific implementations, e.g. [redis-store](https://github.com/jodosha/redis-store).
+Moneta cache store doesn't support matchers. If you need these features use a different server-specific implementation.
 
 ~~~ ruby
 require 'moneta'

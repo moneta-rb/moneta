@@ -31,13 +31,6 @@ module Moneta
         value
       end
 
-      def delete(key, options = {})
-        if value = load(key, options)
-          @redis.del(key)
-          value
-        end
-      end
-
       def store(key, value, options = {})
         if expires = options[:expires]
           @redis.setex(key, expires, value)
@@ -45,6 +38,17 @@ module Moneta
           @redis.set(key, value)
         end
         value
+      end
+
+      def delete(key, options = {})
+        if value = load(key, options)
+          @redis.del(key)
+          value
+        end
+      end
+
+      def increment(key, amount = 1, options = {})
+        @redis.incrby(key, amount)
       end
 
       def clear(options = {})

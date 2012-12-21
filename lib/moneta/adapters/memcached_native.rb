@@ -30,6 +30,12 @@ module Moneta
       rescue ::Memcached::NotFound
       end
 
+      def store(key, value, options = {})
+        # TTL must be Fixnum
+        @cache.set(key, value, options[:expires] || @default_ttl, false)
+        value
+      end
+
       def delete(key, options = {})
         value = @cache.get(key, false)
         @cache.delete(key)
@@ -37,10 +43,25 @@ module Moneta
       rescue ::Memcached::NotFound
       end
 
-      def store(key, value, options = {})
-        # TTL must be Fixnum
-        @cache.set(key, value, options[:expires] || @default_ttl, false)
-        value
+      def increment(key, amount = 1, options = {})
+        result = if amount >= 0
+          @cache.increment(key, amount)
+        else
+          @cache.decrement(key, -amount)
+        end
+        # HACK: Throw error if applied to invalid value
+        if result == 0
+          puts 'Warning: Tried to increment non integer value'
+          value = @cache.get(key, false) rescue nil
+          raise 'Tried to increment non integer value' unless value.to_s == value.to_i.to_s
+        end
+        result
+      rescue ::Memcached::NotFound => ex
+        # WARNING: The creation of counters is not multiprocess safe
+        # if the counter exists, everything is fine
+        puts 'Warning: Counter created in a non thread-safe manner'
+        store(key, amount.to_s, options)
+        amount
       end
 
       def clear(options = {})

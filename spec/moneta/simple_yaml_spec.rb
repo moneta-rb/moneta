@@ -7,7 +7,7 @@ describe_moneta "simple_yaml" do
   end
 
   def load_value(value)
-    Marshal.load(value)
+    value
   end
 
   include_context 'setup_store'
@@ -45,4 +45,6 @@ describe_moneta "simple_yaml" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
+  it_should_behave_like 'increment'
+  it_should_behave_like 'transform_value'
 end

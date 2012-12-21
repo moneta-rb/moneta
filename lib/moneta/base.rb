@@ -12,6 +12,20 @@ module Moneta
       load(key, options) != nil
     end
 
+    # Atomically increment integer value with key
+    #
+    # Not every Moneta store implements this method,
+    # a NotImplementedError if it is not supported.
+    #
+    # @param [Object] key
+    # @param [Integer] amount
+    # @param [Hash] options
+    # @return [Object] value from store
+    # @api public
+    def increment(key, amount = 1, options = {})
+      raise NotImplementedError, 'increment is not supported'
+    end
+
     # Explicitly close the store
     # @api public
     def close

@@ -8,16 +8,29 @@ module ActiveSupport
         extend Strategy::LocalCache
       end
 
+      def increment(key, amount = 1, options = nil)
+        instrument(:increment, key, :amount => amount) do
+          @store.increment(key, amount, moneta_options(options))
+        end
+      end
+
+      def decrement(key, amount = 1, options = nil)
+        instrument(:decrement, key, :amount => amount) do
+          @store.increment(key, -amount, moneta_options(options))
+        end
+      end
+
       def clear(options = nil)
         instrument(:clear, nil, nil) do
-          @store.clear(options || {})
+          @store.clear(moneta_options(options))
         end
       end
 
       protected
 
       def read_entry(key, options)
-        @store.load(key, moneta_options(options))
+        entry = @store.load(key, moneta_options(options))
+        entry && (ActiveSupport::Cache::Entry === entry ? entry : ActiveSupport::Cache::Entry.new(entry))
       end
 
       def write_entry(key, entry, options)

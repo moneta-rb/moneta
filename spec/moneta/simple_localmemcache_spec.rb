@@ -47,4 +47,5 @@ describe_moneta "simple_localmemcache" do
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'transform_value'
+  it_should_behave_like 'not_increment'
 end

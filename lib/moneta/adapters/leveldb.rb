@@ -14,20 +14,20 @@ module Moneta
       # * All other options passed to LevelDB::DB#new
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless options[:dir]
-        @memory = ::LevelDB::DB.new(options[:dir])
+        @hash = ::LevelDB::DB.new(options[:dir])
       end
 
       def key?(key, options = {})
-        @memory.includes?(key)
+        @hash.includes?(key)
       end
 
       def clear(options = {})
-        @memory.each {|k,v| delete(k, options) }
+        @hash.each {|k,v| delete(k, options) }
         self
       end
 
       def close
-        @memory.close
+        @hash.close
         nil
       end
     end

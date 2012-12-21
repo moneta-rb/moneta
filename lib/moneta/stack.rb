@@ -59,6 +59,12 @@ module Moneta
       end
     end
 
+    def increment(key, amount = 1, options = {})
+      last = nil
+      @stack.each {|s| last = s.increment(key, amount, options) }
+      last
+    end
+
     def clear(options = {})
       @stack.each {|s| s.clear }
       self

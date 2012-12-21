@@ -2,7 +2,7 @@
 require 'helper'
 
 describe_moneta "simple_client_tcp" do
-  $tcp_server ||= Moneta::Server.new(Moneta.new(:Memory))
+  $tcp_server ||= Moneta::Server.new(Moneta::Adapters::Memory.new)
   def new_store
     Moneta.new(:Client, :logger => {:out => File.open(File.join(make_tempdir, 'simple_client_tcp.log'), 'a')})
   end
@@ -48,6 +48,7 @@ describe_moneta "simple_client_tcp" do
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'transform_value'
+  it_should_behave_like 'increment'
   it 'should support multiple clients' do
     client = Moneta.new(:Client)
     client['shared_key'] = 'shared_val'

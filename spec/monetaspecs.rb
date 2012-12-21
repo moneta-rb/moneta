@@ -2226,6 +2226,68 @@ shared_examples_for 'expires_hashkey_objectvalue' do
   end
 end
 
+#################### not_increment ####################
+
+shared_examples_for 'not_increment' do
+  it 'should not support increment' do
+    expect do
+      store.increment('inckey')
+    end.to raise_error(NotImplementedError)
+  end
+end
+
+#################### increment ####################
+
+shared_examples_for 'increment' do
+  it 'should initialize in increment' do
+    store.key?('inckey').should be_false
+    store.increment('inckey').should == 1
+    store.key?('inckey').should be_true
+    store.load('inckey', :raw => true).should == '1'
+    store['inckey'].should == '1'
+
+    store.delete('inckey', :raw => true).should == '1'
+    store.key?('inckey').should be_false
+
+    store.increment('inckey', 42).should == 42
+    store.key?('inckey').should be_true
+    store.load('inckey', :raw => true).should == '42'
+    store['inckey'].should == '42'
+    store.delete('inckey', :raw => true).should == '42'
+  end
+
+  it 'should support incrementing existing value' do
+    store.increment('inckey').should == 1
+    store.increment('inckey', 42).should == 43
+    store.load('inckey', :raw => true).should == '43'
+  end
+
+  it 'should support deleting integer value' do
+    store.increment('inckey').should == 1
+    store.delete('inckey').should == '1'
+    store.key?('inckey').should be_false
+  end
+
+  it 'should support decrementing existing value' do
+    store.increment('inckey', 10).should == 10
+    store.increment('inckey', -5).should == 5
+    store.load('inckey', :raw => true).should == '5'
+  end
+
+  it 'interpret raw value as integer' do
+    store.store('inckey', '42', :raw => true)
+    store.increment('inckey').should == 43
+    store.load('inckey', :raw => true).should == '43'
+  end
+
+  it 'should raise error on non integer value' do
+    store['strkey'] = 'value'
+    expect do
+      store.increment('strkey')
+    end.to raise_error
+  end
+end
+
 #################### marshallable_key ####################
 
 shared_examples_for 'marshallable_key' do
@@ -2291,6 +2353,14 @@ shared_examples_for 'transform_value' do
 
     store.store('key', 'value', :raw => true)
     store.load('key', :raw => true).should == 'value'
+    store.delete('key', :raw => true).should == 'value'
+  end
+
+  it 'should return unmarshalled value' do
+    store.store('key', 'unmarshalled value', :raw => true)
+    store.load('key', :raw => true).should == 'unmarshalled value'
+    store['key'].should == 'unmarshalled value'
+    store.delete('key').should == 'unmarshalled value'
   end
 end
 
@@ -2307,6 +2377,14 @@ shared_examples_for 'transform_value_with_expires' do
 
     store.store('key', 'value', :raw => true)
     store.load('key', :raw => true).should == 'value'
+    store.delete('key', :raw => true).should == 'value'
+  end
+
+  it 'should return unmarshalled value' do
+    store.store('key', 'unmarshalled value', :raw => true)
+    store.load('key', :raw => true).should == 'unmarshalled value'
+    store['key'].should == 'unmarshalled value'
+    store.delete('key').should == 'unmarshalled value'
   end
 end
 

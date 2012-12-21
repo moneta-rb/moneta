@@ -26,9 +26,10 @@ alternatives :mri => 'bert'
 # Compressors used by Transformer
 alternatives :mri => 'bzip2-ruby'
 alternatives :mri => 'ruby-lzma'
-alternatives :mri => 'qlzruby'
 alternatives :mri => 'lzoruby'
 alternatives :mri => 'snappy'
+# QuickLZ segfaults because of an assertion, fix this before activating it again
+# alternatives :mri => 'qlzruby'
 
 # Backends
 gem 'dm-core'

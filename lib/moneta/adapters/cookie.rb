@@ -22,13 +22,13 @@ module Moneta
       end
 
       def clear(options = {})
-        @memory.each_key { |key| @cookies[key] = nil }
+        @hash.each_key { |key| @cookies[key] = nil }
         super
         self
       end
 
       def reset(cookies)
-        @cookies, @memory = {}, cookies
+        @cookies, @hash = {}, cookies
       end
     end
   end

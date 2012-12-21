@@ -16,24 +16,24 @@ module Moneta
         file = options[:file]
         raise ArgumentError, 'Option :file is required' unless options[:file]
         if options[:type] == :bdb
-          @memory = ::TokyoCabinet::BDB.new
-          @memory.open(file, ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
+          @hash = ::TokyoCabinet::BDB.new
+          @hash.open(file, ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
         else
-          @memory = ::TokyoCabinet::HDB.new
-          @memory.open(file, ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
-        end or raise @memory.errmsg(@memory.ecode)
+          @hash = ::TokyoCabinet::HDB.new
+          @hash.open(file, ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
+        end or raise @hash.errmsg(@hash.ecode)
       end
 
       def delete(key, options = {})
         value = load(key, options)
         if value
-          @memory.delete(key)
+          @hash.delete(key)
           value
         end
       end
 
       def close
-        @memory.close
+        @hash.close
         nil
       end
     end

@@ -32,18 +32,19 @@ module Moneta
       # * :prefix - Prefix string for key namespacing (Used by the :prefix key transformer)
       # * :secret - HMAC secret to verify values (Used by the :hmac value transformer)
       # * :maxlen - Maximum key length (Used by the :truncate key transformer)
+      # * :quiet - Disable error message
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise ArgumentError, 'Option :key or :value is required' if keys.empty? && values.empty?
-        name = class_name(keys, values)
-        const_set(name, compile(keys, values)) unless const_defined?(name)
+        name = class_name(options[:quiet] ? 'Quiet' : '', keys, values)
+        const_set(name, compile(options, keys, values)) unless const_defined?(name)
         const_get(name).original_new(adapter, options)
       end
 
       private
 
-      def compile(keys, values)
+      def compile(options, keys, values)
         raise ArgumentError, 'Invalid key transformer chain' if KEY_TRANSFORMER !~ keys.map(&:inspect).join
         raise ArgumentError, 'Invalid value transformer chain' if VALUE_TRANSFORMER !~ values.map(&:inspect).join
 
@@ -58,6 +59,9 @@ module Moneta
           end
           def key?(key, options = {})
             @adapter.key?(#{key}, options)
+          end
+          def increment(key, amount = 1, options = {})
+            @adapter.increment(#{key}, amount, options)
           end
         end_eval
 
@@ -84,7 +88,12 @@ module Moneta
             def load(key, options = {})
               raw = options.delete(:raw)
               value = @adapter.load(#{key}, options)
-              value && (raw ? value : #{load})
+              begin
+                return #{load} if value && !raw
+              rescue Exception => ex
+                #{options[:quiet] ? '' : 'puts "Tried to load invalid value: #{ex.message}"'}
+              end
+              value
             end
             def store(key, value, options = {})
               raw = options.delete(:raw)
@@ -94,7 +103,12 @@ module Moneta
             def delete(key, options = {})
               raw = options.delete(:raw)
               value = @adapter.delete(#{key}, options)
-              value && (raw ? value : #{load})
+              begin
+                return #{load} if value && !raw
+              rescue Exception => ex
+                #{options[:quiet] ? '' : 'puts "Tried to delete invalid value: #{ex.message}"'}
+              end
+              value
             end
           end_eval
         end
@@ -132,8 +146,8 @@ module Moneta
         end
       end
 
-      def class_name(keys, values)
-        (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join << 'Key') <<
+      def class_name(prefix, keys, values)
+        prefix << (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join << 'Key') <<
           (values.empty? ? '' : values.map(&:to_s).map(&:capitalize).join << 'Value')
       end
     end

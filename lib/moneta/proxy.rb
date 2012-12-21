@@ -53,6 +53,20 @@ module Moneta
       @adapter.delete(key, options)
     end
 
+    # Atomically increment integer value with key
+    #
+    # Not every Moneta store implements this method,
+    # a NotImplementedError if it is not supported.
+    #
+    # @param [Object] key
+    # @param [Integer] amount
+    # @param [Hash] options
+    # @return [Object] value from store
+    # @api public
+    def increment(key, amount = 1, options = {})
+      @adapter.increment(key, amount, options)
+    end
+
     # Clear all keys in this store
     #
     # @param [Hash] options

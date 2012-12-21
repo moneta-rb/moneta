@@ -25,12 +25,23 @@ module Moneta
         @pstore.transaction(true) { @pstore[key] }
       end
 
+      def store(key, value, options = {})
+        @pstore.transaction { @pstore[key] = value }
+      end
+
       def delete(key, options = {})
         @pstore.transaction { @pstore.delete(key) }
       end
 
-      def store(key, value, options = {})
-        @pstore.transaction { @pstore[key] = value }
+      def increment(key, amount = 1, options = {})
+        @pstore.transaction do
+          value = @pstore[key]
+          intvalue = value.to_i
+          raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
+          intvalue += amount
+          @pstore[key] = intvalue.to_s
+          intvalue
+        end
       end
 
       def clear(options = {})

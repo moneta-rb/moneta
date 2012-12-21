@@ -50,4 +50,5 @@ describe_moneta "expires_memory" do
   it_should_behave_like 'expires_hashkey_stringvalue'
   it_should_behave_like 'expires_hashkey_hashvalue'
   it_should_behave_like 'expires_hashkey_booleanvalue'
+  it_should_behave_like 'increment'
 end

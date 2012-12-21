@@ -31,4 +31,5 @@ describe_moneta "simple_memory_with_json_value_serializer" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'transform_value'
+  it_should_behave_like 'increment'
 end

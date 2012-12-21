@@ -41,6 +41,11 @@ module Moneta
         read_result
       end
 
+      def increment(key, amount = 1, options = {})
+        write(@socket, [:increment, key, amount, options])
+        read_result
+      end
+
       def clear(options = {})
         write(@socket, [:clear, options])
         read_result

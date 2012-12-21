@@ -13,11 +13,11 @@ module Moneta
       # * :file - Database file
       def initialize(options = {})
         raise ArgumentError, 'Option :file is required' unless options[:file]
-        @memory = ::SDBM.new(options[:file])
+        @hash = ::SDBM.new(options[:file])
       end
 
       def close
-        @memory.close
+        @hash.close
         nil
       end
 

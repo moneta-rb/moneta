@@ -18,6 +18,10 @@ module Moneta
       wrap(:delete, key, options) { super }
     end
 
+    def increment(key, amount = 1, options = {})
+      wrap(:increment, key, amount, options) { super }
+    end
+
     def clear(options = {})
       wrap(:clear, options) { super }
     end

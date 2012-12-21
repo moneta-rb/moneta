@@ -38,4 +38,5 @@ describe_moneta "lock" do
   it_should_behave_like 'store_hashkey_stringvalue'
   it_should_behave_like 'store_hashkey_hashvalue'
   it_should_behave_like 'store_hashkey_booleanvalue'
+  it_should_behave_like 'increment'
 end

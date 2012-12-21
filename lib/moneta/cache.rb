@@ -59,6 +59,10 @@ module Moneta
       @backend.store(key, value, options)
     end
 
+    def increment(key, amount = 1, options = {})
+      @cache.store(key, @backend.increment(key, amount, options), options)
+    end
+
     def delete(key, options = {})
       @cache.delete(key, options)
       @backend.delete(key, options)

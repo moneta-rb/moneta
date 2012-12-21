@@ -27,7 +27,7 @@ module Moneta
       end
 
       def store(key, value, options = {})
-        @cache.set(key, value, options[:expires])
+        @cache.set(key, value, options[:expires], :raw => true)
         value
       end
 
@@ -35,6 +35,23 @@ module Moneta
         value = @cache.get(key)
         @cache.delete(key)
         value
+      end
+
+      def increment(key, amount = 1, options = {})
+        # FIXME: There is a Dalli bug, load(key) returns a wrong value after increment
+        # therefore we set default = nil and create the counter manually
+        result = if amount >= 0
+                   @cache.incr(key, amount, options[:expires], nil)
+                 else
+                   @cache.decr(key, -amount, options[:expires], nil)
+                 end
+        if result
+          result
+        else
+          puts 'Warning: Counter created in a non thread-safe manner'
+          store(key, amount, options)
+          amount
+        end
       end
 
       def clear(options = {})

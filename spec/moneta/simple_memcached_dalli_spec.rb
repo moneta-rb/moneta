@@ -48,4 +48,5 @@ describe_moneta "simple_memcached_dalli" do
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'transform_value'
   it_should_behave_like 'expires_stringkey_stringvalue'
+  it_should_behave_like 'increment'
 end

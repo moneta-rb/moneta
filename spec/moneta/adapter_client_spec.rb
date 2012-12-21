@@ -2,7 +2,7 @@
 require 'helper'
 
 describe_moneta "adapter_client" do
-  $tcp_server ||= Moneta::Server.new(Moneta.new(:Memory))
+  $tcp_server ||= Moneta::Server.new(Moneta::Adapters::Memory.new)
   def new_store
     Moneta::Adapters::Client.new
   end
@@ -15,4 +15,5 @@ describe_moneta "adapter_client" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'increment'
 end

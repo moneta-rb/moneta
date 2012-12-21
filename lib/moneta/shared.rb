@@ -38,6 +38,7 @@ module Moneta
     private
 
     def wrap(*args)
+      tries ||= 0
       @adapter ||= Adapters::Client.new(@options)
       yield
     rescue Exception => ex
@@ -49,7 +50,11 @@ module Moneta
         puts "Failed to start server: #{ex.message}"
         @adapter = nil
       end
-      retry
+      if (tries += 1) > 2
+        raise
+      else
+        retry
+      end
     end
   end
 end

@@ -74,6 +74,28 @@ describe ActiveSupport::Cache::MonetaStore do
     result.should include('rabbit')
   end
 
+  it 'increments a key' do
+    3.times { @store.increment 'counter' }
+    @store.read('counter').should == '3'
+  end
+
+  it 'decrements a key' do
+    3.times { @store.increment 'counter' }
+    2.times { @store.decrement 'counter' }
+    @store.read('counter').should == '1'
+  end
+
+  it 'increments a key by given value' do
+    @store.increment 'counter', 3
+    @store.read('counter').should == '3'
+  end
+
+  it 'decrements a key by given value' do
+    3.times { @store.increment 'counter' }
+    @store.decrement 'counter', 2
+    @store.read('counter').should == '1'
+  end
+
   describe 'notifications' do
     it 'notifies on #fetch' do
       with_notifications do
@@ -130,6 +152,26 @@ describe ActiveSupport::Cache::MonetaStore do
       exist = @events.first
       exist.name.should == 'cache_exist?.active_support'
       exist.payload.should == { :key => 'the smiths' }
+    end
+
+    it 'notifies on #increment' do
+      with_notifications do
+        @store.increment 'pearl jam'
+      end
+
+      increment = @events.first
+      increment.name.should == 'cache_increment.active_support'
+      increment.payload.should == { :key => 'pearl jam', :amount => 1 }
+    end
+
+    it 'notifies on #decrement' do
+      with_notifications do
+        @store.decrement 'placebo'
+      end
+
+      decrement = @events.first
+      decrement.name.should == 'cache_decrement.active_support'
+      decrement.payload.should == { :key => 'placebo', :amount => 1 }
     end
 
     it 'should notify on clear' do

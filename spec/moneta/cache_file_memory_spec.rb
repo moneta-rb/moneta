@@ -19,6 +19,7 @@ describe_moneta "cache_file_memory" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'not_increment'
   it 'should store loaded values in cache' do
     store.backend['foo'] = 'bar'
     store.cache['foo'].should == nil

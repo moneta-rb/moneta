@@ -7,7 +7,7 @@ describe_moneta "simple_yaml_with_expires" do
   end
 
   def load_value(value)
-    Marshal.load(value)
+    value
   end
 
   include_context 'setup_store'
@@ -46,4 +46,6 @@ describe_moneta "simple_yaml_with_expires" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'expires_stringkey_stringvalue'
+  it_should_behave_like 'increment'
+  it_should_behave_like 'transform_value_with_expires'
 end

@@ -14,6 +14,7 @@ describe_moneta "adapter_lruhash" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'increment'
   it 'should delete oldest' do
     store = Moneta::Adapters::LRUHash.new(:max_size => 10)
     store[0]  = 'y'

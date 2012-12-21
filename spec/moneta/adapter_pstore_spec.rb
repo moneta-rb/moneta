@@ -14,6 +14,7 @@ describe_moneta "adapter_pstore" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'increment'
   it_should_behave_like 'null_stringkey_objectvalue'
   it_should_behave_like 'store_stringkey_objectvalue'
   it_should_behave_like 'returndifferent_stringkey_objectvalue'
