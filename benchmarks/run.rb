@@ -39,6 +39,7 @@ class HackedArray < Array
 end
 
 stores = {
+  :Client => { },
   :Redis => { },
   :MemcachedDalli => { :server => "localhost:11211", :namespace => 'moneta_dalli' },
   :MemcachedNative => { :server => "localhost:11211", :namespace => 'moneta_native' },
