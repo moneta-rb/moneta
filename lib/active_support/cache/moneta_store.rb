@@ -2,37 +2,39 @@ module ActiveSupport
   module Cache
     class MonetaStore < Store
       def initialize(options = nil)
+        @store = options.delete(:store)
         super(options)
-        @store = options[:store]
         extend Strategy::LocalCache
       end
 
       def clear(options = nil)
-        @store.clear(options || {})
-      end
-
-      def increment(key, amount = 1, options = nil)
-        @store[key] += amount
-      end
-
-      def decrement(key, amount = 1, options = nil)
-        @store[key] -= amount
+        instrument(:clear, nil, nil) do
+          @store.clear(options || {})
+        end
       end
 
       protected
 
       def read_entry(key, options)
-        @store.load(key, options || {})
+        @store.load(key, moneta_options(options))
       end
 
       def write_entry(key, entry, options)
-        @store.store(key, entry, options || {})
+        @store.store(key, entry, moneta_options(options))
         true
       end
 
       def delete_entry(key, options)
-        @store.delete(key, options || {})
+        @store.delete(key, moneta_options(options))
         true
+      end
+
+      private
+
+      def moneta_options(options)
+        options ||= {}
+        options[:expires] = options.delete(:expires_in).to_i if options.include?(:expires_in)
+        options
       end
     end
   end
