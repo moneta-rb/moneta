@@ -11,25 +11,37 @@ module Moneta
     end
 
     def load(key, options = {})
-      value = check_expired(key, super(key, options))
-      if value && options.include?(:expires)
-        store(key, value, options)
+      if options.include?(:raw)
+        super
       else
-        value
+        value = check_expired(key, super)
+        if value && options.include?(:expires)
+          store(key, value, options)
+        else
+          value
+        end
       end
     end
 
     def store(key, value, options = {})
-      if expires = options.delete(:expires)
-        super(key, [value, Time.now.to_i + expires].compact, options)
+      if options.include?(:raw)
+        super
       else
-        super(key, [value], options)
+        if expires = options.delete(:expires)
+          super(key, [value, Time.now.to_i + expires], options)
+        else
+          super(key, [value], options)
+        end
+        value
       end
-      value
     end
 
     def delete(key, options = {})
-      check_expired(key, super, false)
+      if options.include?(:raw)
+        super
+      else
+        check_expired(key, super, false)
+      end
     end
 
     protected
