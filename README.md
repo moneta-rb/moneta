@@ -11,7 +11,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, QuickLZ, LZO)
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
-* Integration with [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
+* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
@@ -56,6 +56,7 @@ Out of the box, it supports the following backends:
     * CouchDB (`:Couch`)
     * MongoDB (`:Mongo`)
 * Other
+    * Moneta key/value server client (`:Client` works with `Moneta::Server`)
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (`:Fog`)
     * Storage which doesn't store anything (`:Null`)
 
