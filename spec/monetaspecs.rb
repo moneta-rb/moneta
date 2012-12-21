@@ -2226,16 +2226,6 @@ shared_examples_for 'expires_hashkey_objectvalue' do
   end
 end
 
-#################### transform_values ####################
-
-shared_examples_for 'transform_values' do
-
-  it 'should transform value' do
-    store['key'] = 'value'
-    load_value(store.load('key', :raw => true)).should == 'value'
-  end
-end
-
 #################### marshallable_key ####################
 
 shared_examples_for 'marshallable_key' do
@@ -2292,9 +2282,9 @@ shared_examples_for 'marshallable_value' do
   end
 end
 
-#################### bypass_transformer ####################
+#################### transform_value ####################
 
-shared_examples_for 'bypass_transformer' do
+shared_examples_for 'transform_value' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
     load_value(store.load('key', :raw => true)).should == 'value'
@@ -2304,9 +2294,9 @@ shared_examples_for 'bypass_transformer' do
   end
 end
 
-#################### bypass_transformer_with_expires ####################
+#################### transform_value_with_expires ####################
 
-shared_examples_for 'bypass_transformer_with_expires' do
+shared_examples_for 'transform_value_with_expires' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
     load_value(store.load('key', :raw => true)).should == ['value']

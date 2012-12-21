@@ -7,7 +7,7 @@ describe_moneta "simple_memory_with_quicklz_compress" do
   end
 
   def load_value(value)
-    Marshal.load(value)
+    Marshal.load(::QuickLZ.decompress(value))
   end
 
   include_context 'setup_store'
@@ -46,5 +46,5 @@ describe_moneta "simple_memory_with_quicklz_compress" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
-  it_should_behave_like 'bypass_transformer'
+  it_should_behave_like 'transform_value'
 end

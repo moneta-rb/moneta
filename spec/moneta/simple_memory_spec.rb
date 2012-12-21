@@ -46,5 +46,5 @@ describe_moneta "simple_memory" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
-  it_should_behave_like 'bypass_transformer'
+  it_should_behave_like 'transform_value'
 end

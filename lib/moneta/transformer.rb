@@ -64,12 +64,15 @@ module Moneta
         if values.empty?
           klass.class_eval <<-end_eval, __FILE__, __LINE__
             def load(key, options = {})
+              options.delete(:raw)
               @adapter.load(#{key}, options)
             end
             def store(key, value, options = {})
+              options.delete(:raw)
               @adapter.store(#{key}, value, options)
             end
             def delete(key, options = {})
+              options.delete(:raw)
               @adapter.delete(#{key}, options)
             end
           end_eval
@@ -79,16 +82,19 @@ module Moneta
 
           klass.class_eval <<-end_eval, __FILE__, __LINE__
             def load(key, options = {})
+              raw = options.delete(:raw)
               value = @adapter.load(#{key}, options)
-              value && (options[:raw] ? value : #{load})
+              value && (raw ? value : #{load})
             end
             def store(key, value, options = {})
-              @adapter.store(#{key}, options[:raw] ? value : #{dump}, options)
+              raw = options.delete(:raw)
+              @adapter.store(#{key}, raw ? value : #{dump}, options)
               value
             end
             def delete(key, options = {})
+              raw = options.delete(:raw)
               value = @adapter.delete(#{key}, options)
-              value && (options[:raw] ? value : #{load})
+              value && (raw ? value : #{load})
             end
           end_eval
         end

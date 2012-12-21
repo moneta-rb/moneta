@@ -47,4 +47,5 @@ describe_moneta "transformer_yaml" do
   it_should_behave_like 'returndifferent_hashkey_objectvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
+  it_should_behave_like 'transform_value'
 end

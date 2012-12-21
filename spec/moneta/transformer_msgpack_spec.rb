@@ -26,4 +26,5 @@ describe_moneta "transformer_msgpack" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_hashvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'transform_value'
 end

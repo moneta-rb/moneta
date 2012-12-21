@@ -2,7 +2,7 @@
 require 'helper'
 
 describe_moneta "simple_client_unix" do
-  $unix_server ||= Moneta::Server.new(Moneta::Adapters::Memory.new, :file => File.join(make_tempdir, 'simple_client_unix'))
+  $unix_server ||= Moneta::Server.new(Moneta.new(:Memory), :file => File.join(make_tempdir, 'simple_client_unix'))
   after(:all) { $unix_server.stop; $unix_server = nil }
   def new_store
     Moneta.new(:Client, :file => File.join(make_tempdir, 'simple_client_unix'), :logger => {:out => File.open(File.join(make_tempdir, 'simple_client_unix.log'), 'a')})
@@ -48,5 +48,5 @@ describe_moneta "simple_client_unix" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
-  it_should_behave_like 'bypass_transformer'
+  it_should_behave_like 'transform_value'
 end

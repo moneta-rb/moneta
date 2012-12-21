@@ -23,4 +23,5 @@ describe_moneta "transformer_bzip2" do
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
+  it_should_behave_like 'transform_value'
 end

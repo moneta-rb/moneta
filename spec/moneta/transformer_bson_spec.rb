@@ -10,7 +10,7 @@ describe_moneta "transformer_bson" do
   end
 
   def load_value(value)
-    ::BSON.load(value)['v']
+    ::BSON.deserialize(value)['v']
   end
 
   include_context 'setup_store'
@@ -26,4 +26,5 @@ describe_moneta "transformer_bson" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_hashvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'transform_value'
 end

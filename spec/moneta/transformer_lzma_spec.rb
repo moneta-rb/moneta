@@ -10,7 +10,7 @@ describe_moneta "transformer_lzma" do
   end
 
   def load_value(value)
-    ::LZMA.uncompress(value)
+    ::LZMA.decompress(value)
   end
 
   include_context 'setup_store'
@@ -23,4 +23,5 @@ describe_moneta "transformer_lzma" do
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
+  it_should_behave_like 'transform_value'
 end
