@@ -258,11 +258,19 @@ end
 
 ### Rails session store
 
-Yet to come!
+Add the session store in your application configuration.
+
+~~~ ruby
+config.session_store :moneta_store, :store => Moneta.new(:Memory)
+~~~
 
 ### Rails cache store
 
-Yet to come!
+Add the cache store in your application configuration.
+
+~~~ ruby
+config.cache_store :moneta_store, :store => Moneta.new(:Memory)
+~~~
 
 ## Advanced - Build your own key value server
 
