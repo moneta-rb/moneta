@@ -275,7 +275,8 @@ config.cache_store :moneta_store, :store => Moneta.new(:Memory)
 
 # Use the Moneta builder
 config.cache_store :moneta_store, :store => Moneta.build do
-  ...
+  use :Expires
+  adapter :Memory
 end
 ~~~
 
@@ -294,7 +295,8 @@ config.cache_store :moneta_store, :store => Moneta.new(:Memory)
 
 # Use the Moneta builder
 config.cache_store :moneta_store, :store => Moneta.build do
-  ...
+  use :Expires
+  adapter :Memory
 end
 ~~~
 
