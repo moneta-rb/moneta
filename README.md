@@ -196,7 +196,7 @@ end
 
 ## Framework Integration
 
-Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
 
 ### Rack session store
 
