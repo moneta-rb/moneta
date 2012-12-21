@@ -130,7 +130,7 @@ stores.each do |name, options|
       end
     end
     stats[name][:writes] << m1.real
-    print "W "
+    print 'W '
     m2 = Benchmark.measure do
       n.times do
         key, value = data.random
@@ -142,10 +142,10 @@ stores.each do |name, options|
     stats[name][:totals] << (m1.real + m2.real)
     stats[name][:avgs] << (m1.real + m2.real)
   end
-  print "\n"
-  puts "----------------------------------------------------------------------"
-  puts "                  Minimum    Maximum      Total    Average        xps "
-  puts "----------------------------------------------------------------------"
+  puts ''
+  puts '----------------------------------------------------------------------'
+  puts '                  Minimum    Maximum      Total    Average        xps '
+  puts '----------------------------------------------------------------------'
   tcmin, tcmax, tctot, tcavg = 99999, 0, 0, 0
   [:writes, :reads].each do |sname|
     cmin, cmax, ctot, cavg = 99999, 0, 0, 0
@@ -158,27 +158,24 @@ stores.each do |name, options|
       tctot = tctot + val
     end
     cavg = ctot / c
-    puts "%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f " % ["#{name} #{sname}", cmin, cmax, ctot, cavg, n / cavg]
+    puts '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f ' % ["#{name} #{sname}", cmin, cmax, ctot, cavg, n / cavg]
   end
   tcavg = tctot / (c * 2)
-  puts "%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f " % ["#{name} avgs", tcmin, tcmax, tctot, tcavg, n / tcavg]
+  puts '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f ' % ["#{name} avgs", tcmin, tcmax, tctot, tcavg, n / tcavg]
   summary << [name, tcmin, tcmax, tctot, tcavg, n / tcavg]
 end
-puts "----------------------------------------------------------------------"
+puts '----------------------------------------------------------------------'
 if errors.size > 0
   puts "Errors : #{errors.size}"
 #  puts errors.inspect
 else
-  puts "No errors in reading!"
+  puts 'No errors in reading!'
 end
-puts "======================================================================"
+puts '======================================================================'
 puts "Summary :: #{c} runs, #{n} keys"
-puts "======================================================================"
-puts "                  Minimum    Maximum      Total    Average        xps "
-puts "----------------------------------------------------------------------"
+puts '======================================================================'
+puts '                  Minimum    Maximum      Total    Average        xps '
+puts '----------------------------------------------------------------------'
 summary.each do |sry|
-  puts "%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f " % sry
+  puts '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f ' % sry
 end
-puts "======================================================================"
-puts "THE END"
-puts "======================================================================"
