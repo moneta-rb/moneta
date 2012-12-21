@@ -1,5 +1,4 @@
-Moneta: A unified interface for key/value stores
-================================================
+# Moneta: A unified interface for key/value stores
 
 [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/moneta)
 
@@ -16,8 +15,15 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
-Supported backends
-------------------
+## Links
+
+* Source: <http://github.com/minad/moneta>
+* Bugs:   <http://github.com/minad/moneta/issues>
+* API documentation:
+    * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
+    * GitHub master: <http://rubydoc.info/github/minad/moneta/master/frames>
+
+## Supported backends
 
 Out of the box, it supports the following backends:
 
@@ -58,8 +64,7 @@ are useful if you already use the corresponding backend in your application. You
 store for free then without installing any additional services and you still have the possibility
 to upgrade to a real key/value store.
 
-Proxies
--------
+## Proxies
 
 In addition it supports proxies (Similar to [Rack middlewares](http://rack.github.com/)) which
 add additional features to storage backends:
@@ -76,8 +81,7 @@ add additional features to storage backends:
 The Moneta API is purposely extremely similar to the Hash API. In order so support an
 identical API across stores, it does not support iteration or partial matches.
 
-Supported serializers and compressors (`Moneta::Transformer`)
--------------------------------------------------------------
+## Supported serializers and compressors (`Moneta::Transformer`)
 
 Supported serializers:
 
@@ -105,17 +109,7 @@ Special transformers:
 * Add prefix to keys (`:prefix`)
 * HMAC to verify values (`:hmac`, useful for `Rack::MonetaCookies`)
 
-Links
------
-
-* Source: <http://github.com/minad/moneta>
-* Bugs:   <http://github.com/minad/moneta/issues>
-* API documentation:
-    * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
-    * GitHub master: <http://rubydoc.info/github/minad/moneta/master/frames>
-
-Moneta API
---------
+## Moneta API
 
 ~~~
 #initialize(options)              options differs per-store, and is used to set up the store
@@ -143,8 +137,7 @@ Moneta API
 #close                            close database connection
 ~~~
 
-Creating a Store
-----------------
+### Creating a Store
 
 There is a simple interface to create a store using `Moneta.new`:
 
@@ -165,8 +158,7 @@ store = Moneta.build do
 end
 ~~~
 
-Expiration
-----------
+### Expiration
 
 The Cassandra, Memcached and Redis backends supports expires values directly:
 
@@ -202,10 +194,11 @@ cache = Moneta.build do
 end
 ~~~
 
-Framework Integration
----------------------
+## Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
+
+### Rack session store
 
 Use Moneta as a [Rack](http://rack.github.com/) session store:
 
@@ -220,6 +213,8 @@ use Rack::Session::Moneta do
   adapter :Memory
 end
 ~~~
+
+### Rack cache
 
 Use Moneta as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store:
 
@@ -240,6 +235,8 @@ use Rack::Cache,
       :entity_store => 'moneta://named_entitystore'
 ~~~
 
+### Rack cookies
+
 Use Moneta to store cookies in [Rack](http://rack.github.com/). It uses the `Moneta::Adapters::Cookie`. You might
 wonder what the purpose of this store or Rack middleware is: It makes it possible
 to use all the transformers on the cookies (e.g. `:prefix`, `:marshal` and `:hmac` for value verification).
@@ -259,8 +256,15 @@ run lambda do |env|
 end
 ~~~
 
-Advanced - Build your own key value server
-------------------------------------------
+### Rails session store
+
+Yet to come!
+
+### Rails cache store
+
+Yet to come!
+
+## Advanced - Build your own key value server
 
 You can use Moneta to build your own key/value server which is shared between
 multiple processes. If you run the following code in two different processes,
@@ -284,21 +288,18 @@ store = Moneta.build do
 end
 ~~~
 
-More information
-----------------
+## More information
 
 * http://yehudakatz.com/2009/02/12/whats-the-point/
 * http://yehudakatz.com/2009/02/12/initial-release-of-moneta-unified-keyvalue-store-api/
 
-Alternatives
-------------
+## Alternatives
 
 * [Horcrux](https://github.com/technoweenie/horcrux): Used at github, supports batch operations but only Memcached backend
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
 * [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
 
-Authors
--------
+## Authors
 
 * Daniel Mendler
 * Hannes Georg
