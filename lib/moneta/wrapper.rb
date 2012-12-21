@@ -11,7 +11,7 @@ module Moneta
     end
 
     def store(key, value, options = {})
-      wrap(:key, key, value, options) { super }
+      wrap(:store, key, value, options) { super }
     end
 
     def delete(key, options = {})
