@@ -10,6 +10,7 @@ module Moneta
   autoload :Shared,            'moneta/shared'
   autoload :Stack,             'moneta/stack'
   autoload :Transformer,       'moneta/transformer'
+  autoload :Wrapper,           'moneta/wrapper'
 
   module Adapters
     autoload :ActiveRecord,    'moneta/adapters/activerecord'

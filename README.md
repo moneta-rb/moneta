@@ -70,7 +70,7 @@ to upgrade to a real key/value store.
 In addition it supports proxies (Similar to [Rack middlewares](http://rack.github.com/)) which
 add additional features to storage backends:
 
-* `Moneta::Proxy` proxy base class
+* `Moneta::Proxy` and `Moneta::Wrapper` proxy base classes
 * `Moneta::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
 * `Moneta::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use :Stack`.
 * `Moneta::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.

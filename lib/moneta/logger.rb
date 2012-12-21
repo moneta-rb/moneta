@@ -1,7 +1,7 @@
 module Moneta
   # Logger proxy
   # @api public
-  class Logger < Proxy
+  class Logger < Wrapper
     # Standard formatter used by the logger
     # @api public
     class Format
@@ -47,36 +47,11 @@ module Moneta
       @logger = options[:logger] || Format.new(options)
     end
 
-    def key?(key, options = {})
-      log(:key?, key, options) { super }
-    end
-
-    def load(key, options = {})
-      log(:load, key, options) { super }
-    end
-
-    def store(key, value, options = {})
-      log(:store, key, value, options) { super }
-    end
-
-    def delete(key, options = {})
-      log(:delete, key, options) { super }
-    end
-
-    def clear(options = {})
-      log(:clear, options) { super; nil }
-      self
-    end
-
-    def close
-      log(:close) { super }
-    end
-
     protected
 
-    def log(method, *args)
+    def wrap(method, *args)
       ret = yield
-      @logger.call(:method => method, :args => args, :return => ret)
+      @logger.call(:method => method, :args => args, :return => (method == :clear ? 'self' : ret))
       ret
     rescue Exception => error
       @logger.call(:method => method, :args => args, :error => error)

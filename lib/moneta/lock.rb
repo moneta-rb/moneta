@@ -3,7 +3,7 @@ require 'thread'
 module Moneta
   # Locks the underlying stores with a Mutex
   # @api public
-  class Lock < Proxy
+  class Lock < Wrapper
     # Constructor
     #
     # @param [Moneta store] adapter The underlying store
@@ -16,29 +16,10 @@ module Moneta
       @lock = options[:mutex] || Mutex.new
     end
 
-    def key?(key, options = {})
-      @lock.synchronize { super }
-    end
+    protected
 
-    def load(key, options = {})
-      @lock.synchronize { super }
-    end
-
-    def store(key, value, options = {})
-      @lock.synchronize { super }
-    end
-
-    def delete(key, options = {})
-      @lock.synchronize { super }
-    end
-
-    def clear(options = {})
-      @lock.synchronize { super }
-      self
-    end
-
-    def close
-      @lock.synchronize { super }
+    def wrap(*args, &block)
+      @lock.synchronize(&block)
     end
   end
 end
