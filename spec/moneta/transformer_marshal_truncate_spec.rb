@@ -45,4 +45,5 @@ describe_moneta "transformer_marshal_truncate" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'bypass_transformer'
 end

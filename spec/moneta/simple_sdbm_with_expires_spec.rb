@@ -42,5 +42,6 @@ describe_moneta "simple_sdbm_with_expires" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'bypass_transformer'
   it_should_behave_like 'expires_stringkey_stringvalue'
 end

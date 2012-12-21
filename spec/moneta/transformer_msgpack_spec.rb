@@ -22,4 +22,8 @@ describe_moneta "transformer_msgpack" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_hashvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it 'should transform value' do
+    store['key'] = 'value'
+    store.load('key', :raw => true).should == ::MessagePack.pack('value')
+  end
 end

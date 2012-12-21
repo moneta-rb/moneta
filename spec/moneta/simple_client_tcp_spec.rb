@@ -43,6 +43,7 @@ describe_moneta "simple_client_tcp" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'bypass_transformer'
   it 'should support multiple clients' do
     client = Moneta.new(:Client)
     client['shared_key'] = 'shared_val'

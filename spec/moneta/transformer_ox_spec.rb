@@ -43,4 +43,8 @@ describe_moneta "transformer_ox" do
   it_should_behave_like 'returndifferent_hashkey_objectvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
+  it 'should transform value' do
+    store['key'] = 'value'
+    store.load('key', :raw => true).should == ::Ox.dump('value')
+  end
 end

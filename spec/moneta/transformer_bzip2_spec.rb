@@ -19,4 +19,8 @@ describe_moneta "transformer_bzip2" do
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
+  it 'should transform value' do
+    store['key'] = 'value'
+    store.load('key', :raw => true).should == ::Bzip2.compress('value')
+  end
 end

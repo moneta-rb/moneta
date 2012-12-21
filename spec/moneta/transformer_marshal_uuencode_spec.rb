@@ -45,4 +45,8 @@ describe_moneta "transformer_marshal_uuencode" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it 'should transform value' do
+    store['key'] = 'value'
+    store.load('key', :raw => true).should == [::Marshal.dump('value')].pack('u').strip
+  end
 end

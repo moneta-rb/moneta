@@ -2282,3 +2282,17 @@ shared_examples_for 'marshallable_value' do
   end
 end
 
+#################### bypass_transformer ####################
+
+shared_examples_for 'bypass_transformer' do
+  it 'allows to bypass transformer with :raw' do
+    store['key'] = 'value'
+    store.load('key', :raw => true).should == Marshal.dump('value')
+    store.store('key', 'value', :raw => true)
+    store.load('key', :raw => true).should == 'value'
+    expect do
+      store['key']
+    end.to raise_error(Exception)
+  end
+end
+
