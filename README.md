@@ -262,7 +262,7 @@ end
 
 ### Rails session store
 
-Add the session store in your application configuration.
+Add the session store in your application configuration `config/environments/*.rb`.
 
 ~~~ ruby
 require 'moneta'
@@ -282,7 +282,9 @@ end
 
 ### Rails cache store
 
-Add the cache store in your application configuration.
+Add the cache store in your application configuration `config/environments/*.rb`. Unfortunately the
+Moneta cache store is quite limited and doesn't support increment/decrement and matchers. If you
+need these features use different server-specific implementations, e.g. [redis-store](https://github.com/jodosha/redis-store).
 
 ~~~ ruby
 require 'moneta'
