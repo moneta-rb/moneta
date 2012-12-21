@@ -76,7 +76,7 @@ module Moneta
     compress = options.delete(:compress)
     serializer = options.include?(:serializer) ? options.delete(:serializer) : :marshal
     key_serializer = options.include?(:key_serializer) ? options.delete(:key_serializer) : serializer
-    value_serializer = options.include?(:value_serializer) ? options.delete(:value_serialiizer) : serializer
+    value_serializer = options.include?(:value_serializer) ? options.delete(:value_serializer) : serializer
     transformer = { :key => [key_serializer], :value => [value_serializer], :prefix => options.delete(:prefix) }
     transformer[:key] << :prefix if transformer[:prefix]
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress

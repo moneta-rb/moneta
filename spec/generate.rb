@@ -74,7 +74,8 @@ end
     :store => :Memory,
     :options => ':value_serializer => :json',
     :value => %w(Hash String),
-    :specs => [:null, :store, :returndifferent, :marshallable_key],
+    :specs => [:null, :store, :returndifferent, :marshallable_key, :transform_value],
+    :load_value => '::MultiJson.load(value).first'
   },
   'simple_memory_with_quicklz_compress' => {
     :store => :Memory,
