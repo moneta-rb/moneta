@@ -5,6 +5,7 @@ module Moneta
   autoload :Expires,           'moneta/expires'
   autoload :Lock,              'moneta/lock'
   autoload :Logger,            'moneta/logger'
+  autoload :Net,               'moneta/net'
   autoload :Proxy,             'moneta/proxy'
   autoload :Server,            'moneta/server'
   autoload :Shared,            'moneta/shared'

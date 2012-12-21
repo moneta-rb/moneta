@@ -4,22 +4,8 @@ module Moneta
   # Moneta server
   # @api public
   class Server
-    DEFAULT_PORT = 9000
     TIMEOUT = 1
-
-    module Util
-      def read(io)
-        size = io.read(4).unpack('N').first
-        Marshal.load(io.read(size))
-      end
-
-      def write(io, o)
-        s = Marshal.dump(o)
-        io.write([s.bytesize].pack('N') << s)
-      end
-    end
-
-    include Util
+    include Net
 
     # Constructor
     #
@@ -57,10 +43,7 @@ module Moneta
       handle(client) if client
     rescue Exception => ex
       puts "#{ex.message}\n#{ex.backtrace.join("\n")}"
-      if client
-        client.close
-        @clients.delete(client)
-      end
+      write(client, Error.new(ex.message)) if client
     end
 
     def accept
@@ -89,6 +72,7 @@ module Moneta
         write(client, @store.send(method, *args))
       when :store, :clear
         @store.send(method, *args)
+        write(client, nil)
       else
         raise 'Invalid method call'
       end
