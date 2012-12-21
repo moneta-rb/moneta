@@ -1,13 +1,12 @@
 module Moneta
   # Transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...).
+  # You can bypass the transformer (e.g. serialization) by using the `:raw` option.
   #
   # @example Add transformer to chain
   #   Moneta.build do
   #     transformer :key => [:marshal, :escape], :value => [:marshal]
   #     adapter :File, :dir => 'data'
   #   end
-  #
-  # You can bypass the transformer (e.g. serialization) by using the `:raw` option:
   #
   # @example Bypass serialization
   #   store.store('key', 'value', :raw => true)
