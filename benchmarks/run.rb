@@ -10,9 +10,8 @@ begin
 rescue LoadError
 end
 
-# Hacked arrays
 # Array modifications
-class HackedArray < Array
+class Array
   # Random keys/values
   attr_reader :keys_used
   def random_key(no_repeat = true, clean_keys_used = false)
@@ -60,8 +59,8 @@ stores = {
   :Couch => {:db => "couch_test"},
 }
 
-stats, keys, data, errors, summary = {}, [], HackedArray.new, HackedArray.new, HackedArray.new
-dict = HackedArray.new_from_string 'abcdefghijklnopq123456789'
+stats, keys, data, errors, summary = {}, [], [], [], []
+dict = Array.new_from_string 'abcdefghijklnopq123456789'
 n = ARGV[0] ? ARGV[0].to_i : 100
 m = ARGV[1] ? ARGV[1].to_i : 10
 c = ARGV[2] ? ARGV[2].to_i : 3
