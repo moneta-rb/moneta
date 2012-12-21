@@ -631,6 +631,13 @@ end},
 end},
     :specs => SIMPLE_SPECS
   },
+  'transformer_marshal_truncate' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => [:marshal, :truncate], :value => :marshal, :maxlen => 64
+  adapter :Memory
+end},
+    :specs => SIMPLE_SPECS
+  },
   'adapter_activerecord' => {
     :build => "Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",
     :specs => ADAPTER_SPECS,
