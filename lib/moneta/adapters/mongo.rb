@@ -25,7 +25,7 @@ module Moneta
 
       def load(key, options = {})
         value = @collection.find_one('_id' => key)
-        value ? value['value'].to_s : nil
+        value && value['value'].to_s
       end
 
       def delete(key, options = {})

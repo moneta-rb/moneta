@@ -44,7 +44,7 @@ module Moneta
 
       def load(key, options = {})
         record = @table.find_by_k(key)
-        record ? record.v : nil
+        record && record.v
       end
 
       def delete(key, options = {})

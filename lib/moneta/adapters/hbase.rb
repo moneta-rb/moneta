@@ -33,7 +33,7 @@ module Moneta
 
       def load(key, options = {})
         value = @table.get(key, @column).first
-        value ? value.value : nil
+        value && value.value
       end
 
       def delete(key, options = {})

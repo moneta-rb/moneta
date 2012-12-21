@@ -35,7 +35,7 @@ module Moneta
       def load(key, options = {})
         context do
           record = Store.get(key)
-          record ? record.v : nil
+          record && record.v
         end
       end
 

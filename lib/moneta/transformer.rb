@@ -7,6 +7,16 @@ module Moneta
   #     adapter :File, :dir => 'data'
   #   end
   #
+  # You can bypass the transformer (e.g. serialization) by using the `:raw` option:
+  #
+  # @example Bypass serialization
+  #   store.store('key', 'value', :raw => true)
+  #   store['key'] => Error
+  #   store.load('key', :raw => true) => 'value'
+  #
+  #   store['key'] = 'value'
+  #   store.load('key', :raw => true) => "\x04\bI\"\nvalue\x06:\x06ET"
+  #
   # @api public
   class Transformer < Proxy
     class << self
@@ -71,15 +81,15 @@ module Moneta
           klass.class_eval <<-end_eval, __FILE__, __LINE__
             def load(key, options = {})
               value = @adapter.load(#{key}, options)
-              value && #{load}
+              value && (options[:raw] ? value : #{load})
             end
             def store(key, value, options = {})
-              @adapter.store(#{key}, #{dump}, options)
+              @adapter.store(#{key}, options[:raw] ? value : #{dump}, options)
               value
             end
             def delete(key, options = {})
               value = @adapter.delete(#{key}, options)
-              value && #{load}
+              value && (options[:raw] ? value : #{load})
             end
           end_eval
         end

@@ -24,7 +24,7 @@ module Moneta
 
       def load(key, options = {})
         value = @directory.files.get(key)
-        value ? value.body : nil
+        value && value.body
       end
 
       def delete(key, options = {})

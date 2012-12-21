@@ -29,7 +29,7 @@ module Moneta
 
       def load(key, options = {})
         result = sequel_table[:k => key]
-        result ? result[:v] : nil
+        result && result[:v]
       end
 
       def store(key, value, options = {})
