@@ -2,7 +2,8 @@ module ActiveSupport
   module Cache
     class MonetaStore < Store
       def initialize(options = nil)
-        @store = options.delete(:store)
+        raise ArgumentError, 'Option :store is required' unless @store = options.delete(:store)
+        @store = ::Moneta.new(@store, :expires => true) if Symbol === @store
         super(options)
         extend Strategy::LocalCache
       end

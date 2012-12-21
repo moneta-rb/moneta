@@ -205,9 +205,13 @@ Use Moneta as a [Rack](http://rack.github.com/) session store:
 ~~~ ruby
 require 'rack/session/moneta'
 
+# Use only the adapter name
 use Rack::Session::Moneta, :store => :Redis
+
+# Use Moneta.new
 use Rack::Session::Moneta, :store => Moneta.new(:Memory, :expires => true)
 
+# Use the Moneta builder
 use Rack::Session::Moneta do
   use :Expires
   adapter :Memory
@@ -261,7 +265,18 @@ end
 Add the session store in your application configuration.
 
 ~~~ ruby
-config.session_store :moneta_store, :store => Moneta.new(:Memory)
+require 'moneta'
+
+# Only by adapter name
+config.cache_store :moneta_store, :store => :Memory
+
+# Use Moneta.new
+config.cache_store :moneta_store, :store => Moneta.new(:Memory)
+
+# Use the Moneta builder
+config.cache_store :moneta_store, :store => Moneta.build do
+  ...
+end
 ~~~
 
 ### Rails cache store
@@ -269,7 +284,18 @@ config.session_store :moneta_store, :store => Moneta.new(:Memory)
 Add the cache store in your application configuration.
 
 ~~~ ruby
+require 'moneta'
+
+# Only by adapter name
+config.cache_store :moneta_store, :store => :Memory
+
+# Use Moneta.new
 config.cache_store :moneta_store, :store => Moneta.new(:Memory)
+
+# Use the Moneta builder
+config.cache_store :moneta_store, :store => Moneta.build do
+  ...
+end
 ~~~
 
 ## Advanced - Build your own key value server
