@@ -38,25 +38,29 @@ class Array
 end
 
 stores = {
-  :Client => { },
-  :Redis => { },
-  :MemcachedDalli => { :server => "localhost:11211", :namespace => 'moneta_dalli' },
-  :MemcachedNative => { :server => "localhost:11211", :namespace => 'moneta_native' },
-  :Mongo => { :host => 'localhost', :port => 27017, :db => 'moneta_bench' },
-  :LocalMemCache => { :file => "bench.lmc" },
-  :DBM => { :file => "bench.dbm" },
-  :SDBM => { :file => "bench.sdbm" },
-  :GDBM => { :file => "bench.gdbm" },
-  :Sqlite => { :file => ":memory:" },
-  :Memory => { },
-  :YAML => { :file => "bench.yaml" },
-  :PStore => { :file => "bench.pstore" },
-  :File => { :dir => "bench.file" },
-  :HashFile => { :dir => "bench.hashfile" },
-  :DataMapper => { :setup => "sqlite3::memory:" },
   :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
-  :Sequel => { :db => "sqlite:/" },
-  :Couch => {:db => "couch_test"},
+  :Client => { },
+  :Couch => {:db => 'couch_test'},
+  :DBM => { :file => 'bench.dbm' },
+  :DataMapper => { :setup => 'sqlite3::memory:' },
+  :File => { :dir => 'bench.file' },
+  :GDBM => { :file => 'bench.gdbm' },
+  :HBase => { },
+  :HashFile => { :dir => 'bench.hashfile' },
+  :LRUHash => { },
+  :LevelDB => { :dir => 'bench.leveldb' },
+  :LocalMemCache => { :file => 'bench.lmc' },
+  :MemcachedDalli => { :server => 'localhost:11211', :namespace => 'moneta_dalli' },
+  :MemcachedNative => { :server => 'localhost:11211', :namespace => 'moneta_native' },
+  :Memory => { },
+  :Mongo => { :host => 'localhost', :port => 27017, :db => 'moneta_bench' },
+  :PStore => { :file => 'bench.pstore' },
+  :Redis => { },
+  :Riak => { },
+  :SDBM => { :file => 'bench.sdbm' },
+  :Sequel => { :db => 'sqlite:/' },
+  :Sqlite => { :file => ':memory:' },
+  :YAML => { :file => 'bench.yaml' },
 }
 
 stats, keys, data, errors, summary = {}, [], [], [], []
@@ -67,11 +71,11 @@ c = ARGV[2] ? ARGV[2].to_i : 3
 vlen_min, vlen_max, vlen_ttl, vlen_avg = 99999, 0, 0, 0
 ds = dict.size
 
-puts "======================================================================"
-puts "Comparison of write/read between Moneta Stores"
-puts "======================================================================"
+puts '======================================================================'
+puts 'Comparison of write/read between Moneta Stores'
+puts '======================================================================'
 
-puts "Data loading..."
+puts 'Data loading...'
 n.times do |x|
   klen = 6 + rand(3)
   vlen = (rand(m) + 1) * (rand(m) + rand(m) + 1)
@@ -86,15 +90,15 @@ n.times do |x|
 end
 vlen_avg = vlen_ttl / n
 
-puts "----------------------------------------------------------------------"
+puts '----------------------------------------------------------------------'
 #puts data.inspect
 puts "Total keys: #{keys.size}, unique: #{keys.uniq.size}"
 #puts keys.sort.inspect
 
-puts "----------------------------------------------------------------------"
-puts "                  Minimum    Maximum      Total    Average        xps "
-puts "----------------------------------------------------------------------"
-puts "Lenght Stats   % 10i % 10i % 10i % 10i " % [vlen_min, vlen_max, vlen_ttl, vlen_avg]
+puts '----------------------------------------------------------------------'
+puts '                  Minimum    Maximum      Total    Average        xps '
+puts '----------------------------------------------------------------------'
+puts 'Lenght Stats   % 10i % 10i % 10i % 10i ' % [vlen_min, vlen_max, vlen_ttl, vlen_avg]
 
 
 stores.each do |name, options|
@@ -106,9 +110,9 @@ stores.each do |name, options|
     puts "#{name} not benchmarked - #{ex.message}"
     next
   end
-  puts "======================================================================"
+  puts '======================================================================'
   puts name
-  puts "----------------------------------------------------------------------"
+  puts '----------------------------------------------------------------------'
   stats[name] = {
     :writes => [],
     :reads => [],
