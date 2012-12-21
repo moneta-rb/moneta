@@ -9,6 +9,10 @@ describe_moneta "transformer_marshal_escape" do
     end
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

@@ -6,6 +6,10 @@ describe_moneta "simple_memory_with_compress" do
     Moneta.new(:Memory, :compress => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_memory_with_compress.log'), 'a')})
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -42,4 +46,5 @@ describe_moneta "simple_memory_with_compress" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'bypass_transformer'
 end

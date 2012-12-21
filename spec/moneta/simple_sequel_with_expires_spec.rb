@@ -6,6 +6,10 @@ describe_moneta "simple_sequel_with_expires" do
     Moneta.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_sequel_with_expires.log'), 'a')})
   end
 
+  def load_value(value)
+    ::Marshal.load(value.unpack('m').first)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

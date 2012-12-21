@@ -9,6 +9,10 @@ describe_moneta "transformer_zlib" do
     end
   end
 
+  def load_value(value)
+    ::Zlib::Inflate.inflate(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_stringvalue'
   it_should_behave_like 'null_stringkey_stringvalue'
@@ -19,8 +23,4 @@ describe_moneta "transformer_zlib" do
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
-  it 'should transform value' do
-    store['key'] = 'value'
-    store.load('key', :raw => true).should == ::Zlib::Deflate.deflate('value')
-  end
 end

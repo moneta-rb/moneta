@@ -9,6 +9,10 @@ describe_moneta "transformer_marshal_hmac" do
     end
   end
 
+  def load_value(value)
+    ::Marshal.load(::Moneta::Transformer::Helper.hmacverify(value, 'secret'))
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -45,4 +49,5 @@ describe_moneta "transformer_marshal_hmac" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'bypass_transformer'
 end

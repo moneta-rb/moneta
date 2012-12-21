@@ -9,6 +9,10 @@ describe_moneta "transformer_marshal_base64" do
     end
   end
 
+  def load_value(value)
+    ::Marshal.load(value.unpack('m').first)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -45,8 +49,5 @@ describe_moneta "transformer_marshal_base64" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
-  it 'should transform value' do
-    store['key'] = 'value'
-    store.load('key', :raw => true).should == [::Marshal.dump('value')].pack('m').strip
-  end
+  it_should_behave_like 'bypass_transformer'
 end

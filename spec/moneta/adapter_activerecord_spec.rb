@@ -6,6 +6,10 @@ describe_moneta "adapter_activerecord" do
     Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'

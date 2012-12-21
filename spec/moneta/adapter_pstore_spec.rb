@@ -6,6 +6,10 @@ describe_moneta "adapter_pstore" do
     Moneta::Adapters::PStore.new(:file => File.join(make_tempdir, "adapter_pstore"))
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'

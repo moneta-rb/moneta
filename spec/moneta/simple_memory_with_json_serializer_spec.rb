@@ -6,6 +6,10 @@ describe_moneta "simple_memory_with_json_serializer" do
     Moneta.new(:Memory, :serializer => :json, :logger => {:out => File.open(File.join(make_tempdir, 'simple_memory_with_json_serializer.log'), 'a')})
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_hashkey_hashvalue'
   it_should_behave_like 'null_hashkey_stringvalue'

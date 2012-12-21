@@ -9,6 +9,10 @@ describe_moneta "transformer_msgpack" do
     end
   end
 
+  def load_value(value)
+    ::MessagePack.unpack(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_hashkey_hashvalue'
   it_should_behave_like 'null_hashkey_stringvalue'
@@ -22,8 +26,4 @@ describe_moneta "transformer_msgpack" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_hashvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
-  it 'should transform value' do
-    store['key'] = 'value'
-    store.load('key', :raw => true).should == ::MessagePack.pack('value')
-  end
 end

@@ -6,6 +6,10 @@ describe_moneta "simple_pstore" do
     Moneta.new(:PStore, :file => File.join(make_tempdir, "simple_pstore"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_pstore.log'), 'a')})
   end
 
+  def load_value(value)
+    value
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -42,4 +46,5 @@ describe_moneta "simple_pstore" do
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'bypass_transformer'
 end

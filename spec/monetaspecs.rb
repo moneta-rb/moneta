@@ -2226,6 +2226,16 @@ shared_examples_for 'expires_hashkey_objectvalue' do
   end
 end
 
+#################### transform_values ####################
+
+shared_examples_for 'transform_values' do
+
+  it 'should transform value' do
+    store['key'] = 'value'
+    load_value(store.load('key', :raw => true)).should == 'value'
+  end
+end
+
 #################### marshallable_key ####################
 
 shared_examples_for 'marshallable_key' do
@@ -2287,12 +2297,10 @@ end
 shared_examples_for 'bypass_transformer' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
-    store.load('key', :raw => true).should == Marshal.dump('value')
+    load_value(store.load('key', :raw => true)).should == 'value'
+
     store.store('key', 'value', :raw => true)
     store.load('key', :raw => true).should == 'value'
-    expect do
-      store['key']
-    end.to raise_error(Exception)
   end
 end
 
@@ -2301,17 +2309,14 @@ end
 shared_examples_for 'bypass_transformer_with_expires' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
-    store.load('key', :raw => true).should == Marshal.dump(['value'])
+    load_value(store.load('key', :raw => true)).should == ['value']
 
     store.store('key', 'value', :expires => 10)
-    Marshal.load(store.load('key', :raw => true)).first.should == 'value'
-    Marshal.load(store.load('key', :raw => true)).last.should be_an_instance_of(Fixnum)
+    load_value(store.load('key', :raw => true)).first.should == 'value'
+    load_value(store.load('key', :raw => true)).last.should respond_to(:to_int)
 
     store.store('key', 'value', :raw => true)
     store.load('key', :raw => true).should == 'value'
-    expect do
-      store['key']
-    end.to raise_error(Exception)
   end
 end
 

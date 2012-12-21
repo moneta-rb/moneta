@@ -6,6 +6,10 @@ describe_moneta "simple_memcached_native" do
     Moneta.new(:MemcachedNative, :namespace => "simple_memcached_native", :logger => {:out => File.open(File.join(make_tempdir, 'simple_memcached_native.log'), 'a')})
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

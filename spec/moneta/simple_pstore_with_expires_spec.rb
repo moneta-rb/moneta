@@ -6,6 +6,10 @@ describe_moneta "simple_pstore_with_expires" do
     Moneta.new(:PStore, :file => File.join(make_tempdir, "simple_pstore_with_expires"), :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_pstore_with_expires.log'), 'a')})
   end
 
+  def load_value(value)
+    value
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -43,4 +47,5 @@ describe_moneta "simple_pstore_with_expires" do
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'expires_stringkey_stringvalue'
+  it_should_behave_like 'bypass_transformer_with_expires'
 end

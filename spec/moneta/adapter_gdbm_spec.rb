@@ -6,6 +6,10 @@ describe_moneta "adapter_gdbm" do
     Moneta::Adapters::GDBM.new(:file => File.join(make_tempdir, "adapter_gdbm"))
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'

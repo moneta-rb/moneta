@@ -9,6 +9,10 @@ describe_moneta "transformer_ox" do
     end
   end
 
+  def load_value(value)
+    ::Ox.parse_obj(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -43,8 +47,4 @@ describe_moneta "transformer_ox" do
   it_should_behave_like 'returndifferent_hashkey_objectvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
-  it 'should transform value' do
-    store['key'] = 'value'
-    store.load('key', :raw => true).should == ::Ox.dump('value')
-  end
 end

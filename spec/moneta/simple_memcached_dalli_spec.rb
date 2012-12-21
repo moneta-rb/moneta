@@ -6,6 +6,10 @@ describe_moneta "simple_memcached_dalli" do
     Moneta.new(:MemcachedDalli, :namespace => "simple_memcached_dalli", :logger => {:out => File.open(File.join(make_tempdir, 'simple_memcached_dalli.log'), 'a')})
   end
 
+  def load_value(value)
+    Marshal.load(value)
+  end
+
   include_context 'setup_store'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
