@@ -18,7 +18,7 @@ module Moneta
       def raw
         @raw_store ||=
           begin
-            store = with(:raw => true)
+            store = with(:raw => true, :only => [:load, :store, :delete])
             store.instance_variable_set(:@raw_store, store)
             store
           end

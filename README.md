@@ -199,6 +199,43 @@ cache = Moneta.build do
 end
 ~~~
 
+### Incrementation and raw access
+
+The stores support the `#increment` which allows atomic increments of unsigned integer values. If you increment
+a non existing value, it will be created. If you increment a non integer value an exception will be raised.
+
+~~~ ruby
+store.increment('counter') => 1 # counter created
+store.increment('counter') => 2
+store.increment('counter', -1) => 1
+store.increment('counter', 13) => 14
+store.increment('counter', 0) => 14
+store['name'] = 'Moneta'
+store.increment('name') => Exception
+~~~
+
+If you want to access the counter value you have to use raw access to the datastore. This is only important
+if you have a `Moneta::Transformer` somewhere in your proxy chain which transforms the values e.g. with `Marshal`.
+
+~~~ ruby
+store.increment('counter') => 1 # counter created
+store.load('counter', :raw => true) => '1'
+
+store.store('counter', '10', :raw => true)
+store.increment('counter') => 11
+~~~
+
+Fortunately there is a nicer way to do this using some syntactic sugar!
+
+~~~ ruby
+store.increment('counter') => 1 # counter created
+store.raw['counter'] => '1'
+store.raw.load('counter') => '1'
+
+store.raw['counter'] = '10'
+store.increment('counter') => 11
+~~~
+
 ## Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
