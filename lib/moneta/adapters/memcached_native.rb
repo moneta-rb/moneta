@@ -52,7 +52,6 @@ module Moneta
         end
         # HACK: Throw error if applied to invalid value
         if result == 0
-          puts 'Warning: Tried to increment non integer value'
           value = @cache.get(key, false) rescue nil
           raise 'Tried to increment non integer value' unless value.to_s == value.to_i.to_s
         end

@@ -73,10 +73,6 @@ module Moneta
         value
       end
 
-      def increment(key, amount = 1, options = {})
-        @client.add(@cf, key, amount, 'value')
-      end
-
       def delete(key, options = {})
         if value = load(key, options)
           @client.remove(@cf, key)

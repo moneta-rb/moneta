@@ -252,7 +252,6 @@ counters.increment('counter') => 11
 Stores which support incrementation (you have to use `Moneta::Lock` if you want to use the store in a multithreading environment.)
 
 * ActiveRecord
-* Cassandra
 * File
 * HBase
 * LRUHash
@@ -268,6 +267,7 @@ Stores which support incrementation (you have to use `Moneta::Lock` if you want 
 
 Stores which don't support incrementation:
 
+* Cassandra
 * Couch
 * DataMapper
 * Fog

@@ -32,23 +32,29 @@ module Moneta
       end
 
       def load(key, options = {})
-        value = @table.get(key, @column).first
-        value && value.value
+        cell = @table.get(key, @column).first
+        cell && unpack(cell.value)
       end
 
       def store(key, value, options = {})
-        @table.mutate_row(key, @column => value)
+        @table.mutate_row(key, @column => pack(value))
         value
       end
 
       def increment(key, amount = 1, options = {})
-        @table.atomic_increment(key, @column, amount)
+        result = @table.atomic_increment(key, @column, amount)
+        # HACK: Throw error if applied to invalid value
+        if result == 0
+          value = load(key)
+          raise 'Tried to increment non integer value' unless value.to_s == value.to_i.to_s
+        end
+        result
       end
 
       def delete(key, options = {})
         if value = load(key, options)
           @table.delete_row(key)
-          value
+          unpack(value)
         end
       end
 
@@ -62,6 +68,33 @@ module Moneta
       def close
         @db.close
         nil
+      end
+
+      private
+
+      def pack(value)
+        intvalue = value.to_i
+        if intvalue >= 0 && intvalue <= 0xFFFFFFFFFFFFFFFF && intvalue.to_s == value
+          # Pack as 8 byte big endian
+          [intvalue].pack('Q>')
+        elsif value.bytesize >= 8
+          # Add nul character to make value distinguishable from integer
+          value << "\0"
+        else
+          value
+        end
+      end
+
+      def unpack(value)
+        if value.bytesize == 8
+          # Unpack 8 byte big endian
+          value.unpack('Q>').first.to_s
+        elsif value.bytesize >= 9 && value[-1] == ?\0
+          # Remove nul character
+          value[0..-2]
+        else
+          value
+        end
       end
     end
   end
