@@ -1089,15 +1089,6 @@ it "removes all #{key_type} keys from the store with clear" do
   store.key?(#{key2}).should_not == true
 end
 
-it "stores #{key_type} after clear" do
-  store[#{key1}] = #{val1}
-  store[#{key2}] = #{val2}
-  store.clear.should equal(store)
-  store[#{key1}] = #{val1}
-  store[#{key1}].should == #{val1}
-  store[#{key2}].should be_nil
-end
-
 it "fetches a #{key_type} key with a default value with fetch, if the key is not available" do
   store.fetch(#{key1}, #{val1}).should == #{val1}
 end
@@ -1140,6 +1131,15 @@ it "stores #{val_type} values with #{key_type} keys with #store" do
   store.store(#{key1}, value).should equal(value)
   store[#{key1}].should == #{val1}
   store.load(#{key1}).should == #{val1}
+end
+
+it "stores #{key_type} after clear" do
+  store[#{key1}] = #{val1}
+  store[#{key2}] = #{val2}
+  store.clear.should equal(store)
+  store[#{key1}] = #{val1}
+  store[#{key1}].should == #{val1}
+  store[#{key2}].should be_nil
 end
 
 it "removes and returns a #{val_type} element with a #{key_type} key from the backing store via delete if it exists" do

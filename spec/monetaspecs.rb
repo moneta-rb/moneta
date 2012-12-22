@@ -29,15 +29,6 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     store.key?("strkey2").should_not == true
   end
 
-  it "stores String after clear" do
-    store["strkey1"] = true
-    store["strkey2"] = false
-    store.clear.should equal(store)
-    store["strkey1"] = true
-    store["strkey1"].should == true
-    store["strkey2"].should be_nil
-  end
-
   it "fetches a String key with a default value with fetch, if the key is not available" do
     store.fetch("strkey1", true).should == true
   end
@@ -83,6 +74,15 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.store("strkey1", value).should equal(value)
     store["strkey1"].should == true
     store.load("strkey1").should == true
+  end
+
+  it "stores String after clear" do
+    store["strkey1"] = true
+    store["strkey2"] = false
+    store.clear.should equal(store)
+    store["strkey1"] = true
+    store["strkey1"].should == true
+    store["strkey2"].should be_nil
   end
 
   it "removes and returns a Boolean element with a String key from the backing store via delete if it exists" do
@@ -227,15 +227,6 @@ shared_examples_for 'null_stringkey_stringvalue' do
     store.key?("strkey2").should_not == true
   end
 
-  it "stores String after clear" do
-    store["strkey1"] = "strval1"
-    store["strkey2"] = "strval2"
-    store.clear.should equal(store)
-    store["strkey1"] = "strval1"
-    store["strkey1"].should == "strval1"
-    store["strkey2"].should be_nil
-  end
-
   it "fetches a String key with a default value with fetch, if the key is not available" do
     store.fetch("strkey1", "strval1").should == "strval1"
   end
@@ -281,6 +272,15 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.store("strkey1", value).should equal(value)
     store["strkey1"].should == "strval1"
     store.load("strkey1").should == "strval1"
+  end
+
+  it "stores String after clear" do
+    store["strkey1"] = "strval1"
+    store["strkey2"] = "strval2"
+    store.clear.should equal(store)
+    store["strkey1"] = "strval1"
+    store["strkey1"].should == "strval1"
+    store["strkey2"].should be_nil
   end
 
   it "removes and returns a String element with a String key from the backing store via delete if it exists" do
@@ -435,15 +435,6 @@ shared_examples_for 'null_stringkey_hashvalue' do
     store.key?("strkey2").should_not == true
   end
 
-  it "stores String after clear" do
-    store["strkey1"] = {"hashval1"=>["array1", 1]}
-    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.clear.should equal(store)
-    store["strkey1"] = {"hashval1"=>["array1", 1]}
-    store["strkey1"].should == {"hashval1"=>["array1", 1]}
-    store["strkey2"].should be_nil
-  end
-
   it "fetches a String key with a default value with fetch, if the key is not available" do
     store.fetch("strkey1", {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
   end
@@ -489,6 +480,15 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.store("strkey1", value).should equal(value)
     store["strkey1"].should == {"hashval1"=>["array1", 1]}
     store.load("strkey1").should == {"hashval1"=>["array1", 1]}
+  end
+
+  it "stores String after clear" do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+    store["strkey2"].should be_nil
   end
 
   it "removes and returns a Hash element with a String key from the backing store via delete if it exists" do
@@ -643,15 +643,6 @@ shared_examples_for 'null_stringkey_objectvalue' do
     store.key?("strkey2").should_not == true
   end
 
-  it "stores String after clear" do
-    store["strkey1"] = Value.new(:objval1)
-    store["strkey2"] = Value.new(:objval2)
-    store.clear.should equal(store)
-    store["strkey1"] = Value.new(:objval1)
-    store["strkey1"].should == Value.new(:objval1)
-    store["strkey2"].should be_nil
-  end
-
   it "fetches a String key with a default value with fetch, if the key is not available" do
     store.fetch("strkey1", Value.new(:objval1)).should == Value.new(:objval1)
   end
@@ -697,6 +688,15 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.store("strkey1", value).should equal(value)
     store["strkey1"].should == Value.new(:objval1)
     store.load("strkey1").should == Value.new(:objval1)
+  end
+
+  it "stores String after clear" do
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey2"] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+    store["strkey2"].should be_nil
   end
 
   it "removes and returns a Object element with a String key from the backing store via delete if it exists" do
@@ -851,15 +851,6 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     store.key?(Value.new(:objkey2)).should_not == true
   end
 
-  it "stores Object after clear" do
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey2)] = false
-    store.clear.should equal(store)
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey1)].should == true
-    store[Value.new(:objkey2)].should be_nil
-  end
-
   it "fetches a Object key with a default value with fetch, if the key is not available" do
     store.fetch(Value.new(:objkey1), true).should == true
   end
@@ -905,6 +896,15 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store.store(Value.new(:objkey1), value).should equal(value)
     store[Value.new(:objkey1)].should == true
     store.load(Value.new(:objkey1)).should == true
+  end
+
+  it "stores Object after clear" do
+    store[Value.new(:objkey1)] = true
+    store[Value.new(:objkey2)] = false
+    store.clear.should equal(store)
+    store[Value.new(:objkey1)] = true
+    store[Value.new(:objkey1)].should == true
+    store[Value.new(:objkey2)].should be_nil
   end
 
   it "removes and returns a Boolean element with a Object key from the backing store via delete if it exists" do
@@ -1049,15 +1049,6 @@ shared_examples_for 'null_objectkey_stringvalue' do
     store.key?(Value.new(:objkey2)).should_not == true
   end
 
-  it "stores Object after clear" do
-    store[Value.new(:objkey1)] = "strval1"
-    store[Value.new(:objkey2)] = "strval2"
-    store.clear.should equal(store)
-    store[Value.new(:objkey1)] = "strval1"
-    store[Value.new(:objkey1)].should == "strval1"
-    store[Value.new(:objkey2)].should be_nil
-  end
-
   it "fetches a Object key with a default value with fetch, if the key is not available" do
     store.fetch(Value.new(:objkey1), "strval1").should == "strval1"
   end
@@ -1103,6 +1094,15 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store.store(Value.new(:objkey1), value).should equal(value)
     store[Value.new(:objkey1)].should == "strval1"
     store.load(Value.new(:objkey1)).should == "strval1"
+  end
+
+  it "stores Object after clear" do
+    store[Value.new(:objkey1)] = "strval1"
+    store[Value.new(:objkey2)] = "strval2"
+    store.clear.should equal(store)
+    store[Value.new(:objkey1)] = "strval1"
+    store[Value.new(:objkey1)].should == "strval1"
+    store[Value.new(:objkey2)].should be_nil
   end
 
   it "removes and returns a String element with a Object key from the backing store via delete if it exists" do
@@ -1257,15 +1257,6 @@ shared_examples_for 'null_objectkey_hashvalue' do
     store.key?(Value.new(:objkey2)).should_not == true
   end
 
-  it "stores Object after clear" do
-    store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.clear.should equal(store)
-    store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey2)].should be_nil
-  end
-
   it "fetches a Object key with a default value with fetch, if the key is not available" do
     store.fetch(Value.new(:objkey1), {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
   end
@@ -1311,6 +1302,15 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store.store(Value.new(:objkey1), value).should equal(value)
     store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
     store.load(Value.new(:objkey1)).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it "stores Object after clear" do
+    store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey2)].should be_nil
   end
 
   it "removes and returns a Hash element with a Object key from the backing store via delete if it exists" do
@@ -1465,15 +1465,6 @@ shared_examples_for 'null_objectkey_objectvalue' do
     store.key?(Value.new(:objkey2)).should_not == true
   end
 
-  it "stores Object after clear" do
-    store[Value.new(:objkey1)] = Value.new(:objval1)
-    store[Value.new(:objkey2)] = Value.new(:objval2)
-    store.clear.should equal(store)
-    store[Value.new(:objkey1)] = Value.new(:objval1)
-    store[Value.new(:objkey1)].should == Value.new(:objval1)
-    store[Value.new(:objkey2)].should be_nil
-  end
-
   it "fetches a Object key with a default value with fetch, if the key is not available" do
     store.fetch(Value.new(:objkey1), Value.new(:objval1)).should == Value.new(:objval1)
   end
@@ -1519,6 +1510,15 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store.store(Value.new(:objkey1), value).should equal(value)
     store[Value.new(:objkey1)].should == Value.new(:objval1)
     store.load(Value.new(:objkey1)).should == Value.new(:objval1)
+  end
+
+  it "stores Object after clear" do
+    store[Value.new(:objkey1)] = Value.new(:objval1)
+    store[Value.new(:objkey2)] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store[Value.new(:objkey1)] = Value.new(:objval1)
+    store[Value.new(:objkey1)].should == Value.new(:objval1)
+    store[Value.new(:objkey2)].should be_nil
   end
 
   it "removes and returns a Object element with a Object key from the backing store via delete if it exists" do
@@ -1673,15 +1673,6 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     store.key?({"hashkey3"=>"hashkey4"}).should_not == true
   end
 
-  it "stores Hash after clear" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey3"=>"hashkey4"}] = false
-    store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey1"=>"hashkey2"}].should == true
-    store[{"hashkey3"=>"hashkey4"}].should be_nil
-  end
-
   it "fetches a Hash key with a default value with fetch, if the key is not available" do
     store.fetch({"hashkey1"=>"hashkey2"}, true).should == true
   end
@@ -1727,6 +1718,15 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
     store[{"hashkey1"=>"hashkey2"}].should == true
     store.load({"hashkey1"=>"hashkey2"}).should == true
+  end
+
+  it "stores Hash after clear" do
+    store[{"hashkey1"=>"hashkey2"}] = true
+    store[{"hashkey3"=>"hashkey4"}] = false
+    store.clear.should equal(store)
+    store[{"hashkey1"=>"hashkey2"}] = true
+    store[{"hashkey1"=>"hashkey2"}].should == true
+    store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it "removes and returns a Boolean element with a Hash key from the backing store via delete if it exists" do
@@ -1871,15 +1871,6 @@ shared_examples_for 'null_hashkey_stringvalue' do
     store.key?({"hashkey3"=>"hashkey4"}).should_not == true
   end
 
-  it "stores Hash after clear" do
-    store[{"hashkey1"=>"hashkey2"}] = "strval1"
-    store[{"hashkey3"=>"hashkey4"}] = "strval2"
-    store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = "strval1"
-    store[{"hashkey1"=>"hashkey2"}].should == "strval1"
-    store[{"hashkey3"=>"hashkey4"}].should be_nil
-  end
-
   it "fetches a Hash key with a default value with fetch, if the key is not available" do
     store.fetch({"hashkey1"=>"hashkey2"}, "strval1").should == "strval1"
   end
@@ -1925,6 +1916,15 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
     store[{"hashkey1"=>"hashkey2"}].should == "strval1"
     store.load({"hashkey1"=>"hashkey2"}).should == "strval1"
+  end
+
+  it "stores Hash after clear" do
+    store[{"hashkey1"=>"hashkey2"}] = "strval1"
+    store[{"hashkey3"=>"hashkey4"}] = "strval2"
+    store.clear.should equal(store)
+    store[{"hashkey1"=>"hashkey2"}] = "strval1"
+    store[{"hashkey1"=>"hashkey2"}].should == "strval1"
+    store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it "removes and returns a String element with a Hash key from the backing store via delete if it exists" do
@@ -2079,15 +2079,6 @@ shared_examples_for 'null_hashkey_hashvalue' do
     store.key?({"hashkey3"=>"hashkey4"}).should_not == true
   end
 
-  it "stores Hash after clear" do
-    store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
-    store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
-    store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
-    store[{"hashkey3"=>"hashkey4"}].should be_nil
-  end
-
   it "fetches a Hash key with a default value with fetch, if the key is not available" do
     store.fetch({"hashkey1"=>"hashkey2"}, {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
   end
@@ -2133,6 +2124,15 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
     store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
     store.load({"hashkey1"=>"hashkey2"}).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it "stores Hash after clear" do
+    store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
+    store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
+    store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
+    store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it "removes and returns a Hash element with a Hash key from the backing store via delete if it exists" do
@@ -2287,15 +2287,6 @@ shared_examples_for 'null_hashkey_objectvalue' do
     store.key?({"hashkey3"=>"hashkey4"}).should_not == true
   end
 
-  it "stores Hash after clear" do
-    store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
-    store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
-    store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
-    store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
-    store[{"hashkey3"=>"hashkey4"}].should be_nil
-  end
-
   it "fetches a Hash key with a default value with fetch, if the key is not available" do
     store.fetch({"hashkey1"=>"hashkey2"}, Value.new(:objval1)).should == Value.new(:objval1)
   end
@@ -2341,6 +2332,15 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
     store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
     store.load({"hashkey1"=>"hashkey2"}).should == Value.new(:objval1)
+  end
+
+  it "stores Hash after clear" do
+    store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
+    store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
+    store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
+    store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it "removes and returns a Object element with a Hash key from the backing store via delete if it exists" do
