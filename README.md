@@ -254,7 +254,12 @@ counters.increment('counter') => 11
 For raw data access as described before the class `Moneta::OptionMerger` is used. It works like this:
 
 ~~~ ruby
-store.with(:raw => true).load('key') # All methods after `with` get the options passed
+# All methods after `with` get the options passed
+store.with(:raw => true).load('key')
+
+# You can also specify the methods
+store.with(:raw => true, :only => :load).load('key')
+store.with(:raw => true, :except => [:key?, :increment]).load('key')
 
 # Syntactic sugar for raw access
 store.raw.load('key')

@@ -1,4 +1,5 @@
 module Moneta
+  # @api private
   class OptionMerger < Wrapper
     METHODS = [:key?, :load, :store, :delete, :increment, :clear].freeze
 
