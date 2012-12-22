@@ -1,13 +1,13 @@
 module Moneta
   class OptionMerger < Wrapper
-    def initialize(adapter, options)
+    def initialize(adapter, optionmerger)
       super
-      @options = options
+      @optionmerger = optionmerger
     end
 
     def wrap(method, *args)
       options = args.last
-      options.merge!(@options[method]) if Hash === options && @options.include?(method)
+      options.merge!(@optionmerger[method]) if Hash === options && @optionmerger.include?(method)
       yield
     end
   end

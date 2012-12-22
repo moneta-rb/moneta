@@ -29,7 +29,7 @@ module Moneta
       :sha256   => [ :digest,    nil,                                 '::Digest::SHA256.hexdigest(value)', 'digest/sha2'   ],
       :sha384   => [ :digest,    nil,                                 '::Digest::SHA384.hexdigest(value)', 'digest/sha2'   ],
       :sha512   => [ :digest,    nil,                                 '::Digest::SHA512.hexdigest(value)', 'digest/sha2'   ],
-      :prefix   => [ :prefix,    nil,                                 '@prefix+value'                                      ],
+      :prefix   => [ :prefix,    nil,                                 '(options[:prefix]||@prefix)+value'                  ],
       :spread   => [ :spread,    nil,                                 'Helper.spread(value)'                               ],
     }
 

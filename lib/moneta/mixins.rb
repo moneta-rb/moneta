@@ -10,9 +10,11 @@ module Moneta
         elsif options.include?(:except)
           list -= [options.delete(:except)].compact.flatten
         end
-        map = {}
-        list.each {|method| (map[method] ||= {}).merge!(options) }
-        OptionMerger.new(self, map)
+        optionmerger = (@optionmerger || {}).dup
+        list.each do |method|
+          optionmerger[method] = (optionmerger[method] ||= {}).merge(options)
+        end
+        OptionMerger.new(self, optionmerger)
       end
 
       def raw
@@ -22,6 +24,10 @@ module Moneta
             store.instance_variable_set(:@raw_store, store)
             store
           end
+      end
+
+      def prefix(prefix)
+        with(:prefix => prefix, :except => :clear)
       end
     end
 

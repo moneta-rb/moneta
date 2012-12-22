@@ -37,6 +37,7 @@ module Moneta
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise ArgumentError, 'Option :key or :value is required' if keys.empty? && values.empty?
+        options[:prefix] ||= '' if keys.include?(:prefix)
         name = class_name(options[:quiet] ? 'Quiet' : '', keys, values)
         const_set(name, compile(options, keys, values)) unless const_defined?(name)
         const_get(name).original_new(adapter, options)
