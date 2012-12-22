@@ -6,6 +6,18 @@ module Moneta
   #
   # @api public
   class Expires < Proxy
+    # Constructor
+    #
+    # @param [Moneta store] adapter The underlying store
+    # @param [Hash] options
+    #
+    # Options:
+    # * :expires - Default expiration time (default none)
+    def initialize(adapter, options = {})
+      super
+      @expires = options[:expires]
+    end
+
     def key?(key, options = {})
       load(key, options) != nil
     end
@@ -27,7 +39,7 @@ module Moneta
       if options.include?(:raw)
         super
       else
-        if expires = options.delete(:expires)
+        if expires = (options.delete(:expires) || @expires)
           super(key, [value, Time.now.to_i + expires], options)
         else
           super(key, [value], options)

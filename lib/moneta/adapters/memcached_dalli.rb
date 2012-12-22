@@ -11,8 +11,10 @@ module Moneta
       #
       # Options:
       # * :server - Memcached server (default localhost:11211)
+      # * :expires - Default expiration time (default none)
       # * Other options passed to Dalli::Client#new
       def initialize(options = {})
+        options[:expires_in] = options.delete(:expires)
         server = options.delete(:server) || 'localhost:11211'
         @cache = ::Dalli::Client.new(server, options)
       end

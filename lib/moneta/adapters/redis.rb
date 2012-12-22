@@ -7,8 +7,13 @@ module Moneta
     class Redis < Base
       # Constructor
       #
-      # @param [Hash] options passed to Redis#new
+      # @param [Hash] options
+      #
+      # Options:
+      # * :expires - Default expiration time (default none)
+      # * Other options passed to Redis#new
       def initialize(options = {})
+        @expires = options.delete(:expires)
         @redis = ::Redis.new(options)
       end
 
@@ -32,7 +37,7 @@ module Moneta
       end
 
       def store(key, value, options = {})
-        if expires = options[:expires]
+        if expires = (options[:expires] || @expires)
           @redis.setex(key, expires, value)
         else
           @redis.set(key, value)
@@ -48,7 +53,10 @@ module Moneta
       end
 
       def increment(key, amount = 1, options = {})
-        @redis.incrby(key, amount)
+        value = @redis.incrby(key, amount)
+        expires = (options[:expires] || @expires)
+        @redis.expire(key, expires) if expires
+        value
       end
 
       def clear(options = {})

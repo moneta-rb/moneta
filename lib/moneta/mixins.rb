@@ -18,6 +18,10 @@ module Moneta
       def prefix(prefix)
         with(:prefix => prefix, :except => :clear)
       end
+
+      def expires(expires)
+        with(:expires => expires, :only => [:store, :increment])
+      end
     end
 
     module IncrementSupport

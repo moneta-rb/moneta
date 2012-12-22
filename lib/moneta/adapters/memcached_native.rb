@@ -12,11 +12,12 @@ module Moneta
       # Options:
       # * :server - Memcached server (default localhost:11211)
       # * :namespace - Key namespace
+      # * :expires - Default expiration time (default 604800)
       # * Other options passed to Memcached#new
       def initialize(options = {})
         server = options.delete(:server) || 'localhost:11211'
+        @expires = options.delete(:expires) || 604800
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
-        @default_ttl = options[:default_ttl] || 604800
         @cache = ::Memcached.new(server, options)
       end
 
@@ -32,7 +33,7 @@ module Moneta
 
       def store(key, value, options = {})
         # TTL must be Fixnum
-        @cache.set(key, value, options[:expires] || @default_ttl, false)
+        @cache.set(key, value, options[:expires] || @expires, false)
         value
       end
 

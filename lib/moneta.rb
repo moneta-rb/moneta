@@ -55,7 +55,7 @@ module Moneta
   # @param [Hash] options
   #
   # Options:
-  # * :expires - If true, ensure that store supports expiration by inserting
+  # * :expires - If true or integer, ensure that store supports expiration by inserting
   #   Moneta::Expires if the underlying adapter doesn't support it natively
   # * :threadsafe - If true, ensure that the store is thread safe by inserting Moneta::Lock
   # * :logger - If true or Hash, add logger to chain (Hash is passed to logger as options)
@@ -90,6 +90,7 @@ module Moneta
       transformer[:value] << :base64
     when :Memcached, :MemcachedDalli, :MemcachedNative
       # Memcached accept only base64 keys, expires already supported
+      options[:expires] = expires if Integer === expires
       expires = false
       transformer[:key] << :base64
     when :PStore, :YAML, :Null
@@ -104,11 +105,12 @@ module Moneta
       transformer[:key] << :escape
     when :Cassandra, :Redis
       # Expires already supported
+      options[:expires] = expires if Integer === expires
       expires = false
     end
     build do
       use :Logger, Hash === logger ? logger : {} if logger
-      use :Expires if expires
+      use :Expires, :expires => (Integer === expires ? expires : nil) if expires
       use :Transformer, transformer
       use :Lock if threadsafe
       adapter name, options

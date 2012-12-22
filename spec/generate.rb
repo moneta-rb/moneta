@@ -1171,6 +1171,17 @@ it 'should respect expires in delete' do
   store[#{key2}].should == #{val2}
   sleep 2
   store.delete(#{key2}).should == nil
+end
+
+it 'should support the #expires syntactic sugar' do
+  store['longlive_key'] = 'longlive_value'
+  store.expires(2).store(#{key2}, #{val2})
+  store[#{key2}].should == #{val2}
+  sleep 1
+  store[#{key2}].should == #{val2}
+  sleep 2
+  store.delete(#{key2}).should == nil
+  store['longlive_key'].should == 'longlive_value'
 end}
     SPECS["expires_#{key_type.downcase}key_#{val_type.downcase}value"] = code
 

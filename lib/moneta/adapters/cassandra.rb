@@ -17,9 +17,11 @@ module Moneta
       # * :column_family - Cassandra column family (default 'moneta')
       # * :host - Server host name (default 127.0.0.1)
       # * :port - Server port (default 9160)
+      # * :expires - Default expiration time (default none)
       def initialize(options = {})
         options[:host] ||= '127.0.0.1'
         options[:port] ||=  9160
+        @expires = options[:expires]
         keyspace = (options[:keyspace] ||= 'moneta')
         @cf = (options[:column_family] || 'moneta').to_sym
         @client = ::Cassandra.new('system', "#{options[:host]}:#{options[:port]}")
@@ -74,7 +76,7 @@ module Moneta
       end
 
       def store(key, value, options = {})
-        @client.insert(@cf, key, {'value' => value}, :ttl => options[:expires])
+        @client.insert(@cf, key, {'value' => value}, :ttl => (options[:expires] || @expires))
         value
       end
 

@@ -176,6 +176,17 @@ shared_examples_for 'expires_stringkey_booleanvalue' do
     sleep 2
     store.delete("strkey2").should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store("strkey2", false)
+    store["strkey2"].should == false
+    sleep 1
+    store["strkey2"].should == false
+    sleep 2
+    store.delete("strkey2").should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_stringkey_stringvalue ####################
@@ -363,6 +374,17 @@ shared_examples_for 'expires_stringkey_stringvalue' do
     store["strkey2"].should == "strval2"
     sleep 2
     store.delete("strkey2").should == nil
+  end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store("strkey2", "strval2")
+    store["strkey2"].should == "strval2"
+    sleep 1
+    store["strkey2"].should == "strval2"
+    sleep 2
+    store.delete("strkey2").should == nil
+    store['longlive_key'].should == 'longlive_value'
   end
 end
 
@@ -552,6 +574,17 @@ shared_examples_for 'expires_stringkey_hashvalue' do
     sleep 2
     store.delete("strkey2").should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store("strkey2", {"hashval3"=>["array2", {"hashval4"=>42}]})
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    sleep 1
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    sleep 2
+    store.delete("strkey2").should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_stringkey_objectvalue ####################
@@ -740,6 +773,17 @@ shared_examples_for 'expires_stringkey_objectvalue' do
     sleep 2
     store.delete("strkey2").should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store("strkey2", Value.new(:objval2))
+    store["strkey2"].should == Value.new(:objval2)
+    sleep 1
+    store["strkey2"].should == Value.new(:objval2)
+    sleep 2
+    store.delete("strkey2").should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_objectkey_booleanvalue ####################
@@ -917,6 +961,17 @@ shared_examples_for 'expires_objectkey_booleanvalue' do
     store[Value.new(:objkey2)].should == false
     sleep 2
     store.delete(Value.new(:objkey2)).should == nil
+  end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store(Value.new(:objkey2), false)
+    store[Value.new(:objkey2)].should == false
+    sleep 1
+    store[Value.new(:objkey2)].should == false
+    sleep 2
+    store.delete(Value.new(:objkey2)).should == nil
+    store['longlive_key'].should == 'longlive_value'
   end
 end
 
@@ -1106,6 +1161,17 @@ shared_examples_for 'expires_objectkey_stringvalue' do
     sleep 2
     store.delete(Value.new(:objkey2)).should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store(Value.new(:objkey2), "strval2")
+    store[Value.new(:objkey2)].should == "strval2"
+    sleep 1
+    store[Value.new(:objkey2)].should == "strval2"
+    sleep 2
+    store.delete(Value.new(:objkey2)).should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_objectkey_hashvalue ####################
@@ -1293,6 +1359,17 @@ shared_examples_for 'expires_objectkey_hashvalue' do
     store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     sleep 2
     store.delete(Value.new(:objkey2)).should == nil
+  end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store(Value.new(:objkey2), {"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    sleep 1
+    store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    sleep 2
+    store.delete(Value.new(:objkey2)).should == nil
+    store['longlive_key'].should == 'longlive_value'
   end
 end
 
@@ -1482,6 +1559,17 @@ shared_examples_for 'expires_objectkey_objectvalue' do
     sleep 2
     store.delete(Value.new(:objkey2)).should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store(Value.new(:objkey2), Value.new(:objval2))
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
+    sleep 1
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
+    sleep 2
+    store.delete(Value.new(:objkey2)).should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_hashkey_booleanvalue ####################
@@ -1659,6 +1747,17 @@ shared_examples_for 'expires_hashkey_booleanvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == false
     sleep 2
     store.delete({"hashkey3"=>"hashkey4"}).should == nil
+  end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store({"hashkey3"=>"hashkey4"}, false)
+    store[{"hashkey3"=>"hashkey4"}].should == false
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == false
+    sleep 2
+    store.delete({"hashkey3"=>"hashkey4"}).should == nil
+    store['longlive_key'].should == 'longlive_value'
   end
 end
 
@@ -1848,6 +1947,17 @@ shared_examples_for 'expires_hashkey_stringvalue' do
     sleep 2
     store.delete({"hashkey3"=>"hashkey4"}).should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store({"hashkey3"=>"hashkey4"}, "strval2")
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+    sleep 2
+    store.delete({"hashkey3"=>"hashkey4"}).should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_hashkey_hashvalue ####################
@@ -2036,6 +2146,17 @@ shared_examples_for 'expires_hashkey_hashvalue' do
     sleep 2
     store.delete({"hashkey3"=>"hashkey4"}).should == nil
   end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store({"hashkey3"=>"hashkey4"}, {"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    sleep 2
+    store.delete({"hashkey3"=>"hashkey4"}).should == nil
+    store['longlive_key'].should == 'longlive_value'
+  end
 end
 
 #################### null_hashkey_objectvalue ####################
@@ -2223,6 +2344,17 @@ shared_examples_for 'expires_hashkey_objectvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
     sleep 2
     store.delete({"hashkey3"=>"hashkey4"}).should == nil
+  end
+
+  it 'should support the #expires syntactic sugar' do
+    store['longlive_key'] = 'longlive_value'
+    store.expires(2).store({"hashkey3"=>"hashkey4"}, Value.new(:objval2))
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+    sleep 1
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+    sleep 2
+    store.delete({"hashkey3"=>"hashkey4"}).should == nil
+    store['longlive_key'].should == 'longlive_value'
   end
 end
 
