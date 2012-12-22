@@ -10,6 +10,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Custom key transformation via `Moneta::Transformer` proxy
 * Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
+* Atomic incrementation and decrementation for most stores (Method `#increment`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
@@ -79,9 +80,6 @@ add additional features to storage backends:
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
 * `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use :Shared`.
 
-The Moneta API is purposely extremely similar to the Hash API. In order so support an
-identical API across stores, it does not support iteration or partial matches.
-
 ## Supported serializers and compressors (`Moneta::Transformer`)
 
 Supported serializers:
@@ -140,6 +138,9 @@ Special transformers:
 
 #close                                    close database connection.
 ~~~
+
+The Moneta API is purposely extremely similar to the Hash API. In order so support an
+identical API across stores, it does not support iteration or partial matches.
 
 ### Creating a Store
 
