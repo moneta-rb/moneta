@@ -236,6 +236,19 @@ store.raw['counter'] = '10'
 store.increment('counter') => 11
 ~~~
 
+You can also keep the `raw` store in a variable and use it like this:
+
+~~~ ruby
+counters = store.raw
+
+counters.increment('counter') => 1 # counter created
+counters['counter'] => '1'
+counters.load('counter') => '1'
+
+counters['counter'] = '10'
+counters.increment('counter') => 11
+~~~
+
 ## Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
