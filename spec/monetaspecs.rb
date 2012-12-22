@@ -2530,6 +2530,8 @@ shared_examples_for 'increment' do
     store.increment('inckey', 10).should == 10
     store.increment('inckey', -5).should == 5
     store.raw['inckey'].should == '5'
+    store.increment('inckey', -5).should == 0
+    store.raw['inckey'].should == '0'
   end
 
   it 'interpret raw value as integer' do
