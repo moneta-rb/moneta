@@ -7,6 +7,7 @@ module Moneta
   autoload :Logger,            'moneta/logger'
   autoload :Mixins,            'moneta/mixins'
   autoload :Net,               'moneta/net'
+  autoload :OptionMerger,      'moneta/optionmerger'
   autoload :Proxy,             'moneta/proxy'
   autoload :Server,            'moneta/server'
   autoload :Shared,            'moneta/shared'

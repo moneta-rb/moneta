@@ -1105,6 +1105,8 @@ SPECS['increment'] = %{it 'should initialize in increment with 1' do
   store.key?('inckey').should be_false
   store.increment('inckey').should == 1
   store.key?('inckey').should be_true
+  store.raw['inckey'].should == '1'
+  store.raw.load('inckey').should == '1'
   store.load('inckey', :raw => true).should == '1'
   store['inckey'].should == '1'
 
@@ -1115,7 +1117,7 @@ end
 it 'should initialize in increment with higher value' do
   store.increment('inckey', 42).should == 42
   store.key?('inckey').should be_true
-  store.load('inckey', :raw => true).should == '42'
+  store.raw['inckey'].should == '42'
   store['inckey'].should == '42'
   store.delete('inckey', :raw => true).should == '42'
 end
@@ -1123,7 +1125,7 @@ end
 it 'should initialize in increment with 0' do
   store.increment('inckey', 0).should == 0
   store.key?('inckey').should be_true
-  store.load('inckey', :raw => true).should == '0'
+  store.raw['inckey'].should == '0'
   store['inckey'].should == '0'
   store.delete('inckey', :raw => true).should == '0'
 end
@@ -1131,13 +1133,13 @@ end
 it 'should support incrementing existing value by value' do
   store.increment('inckey').should == 1
   store.increment('inckey', 42).should == 43
-  store.load('inckey', :raw => true).should == '43'
+  store.raw['inckey'].should == '43'
 end
 
 it 'should support incrementing existing value by 0' do
   store.increment('inckey').should == 1
   store.increment('inckey', 0).should == 1
-  store.load('inckey', :raw => true).should == '1'
+  store.raw['inckey'].should == '1'
 end
 
 it 'should support deleting integer value' do
@@ -1149,13 +1151,13 @@ end
 it 'should support decrementing existing value' do
   store.increment('inckey', 10).should == 10
   store.increment('inckey', -5).should == 5
-  store.load('inckey', :raw => true).should == '5'
+  store.raw['inckey'].should == '5'
 end
 
 it 'interpret raw value as integer' do
   store.store('inckey', '42', :raw => true)
   store.increment('inckey').should == 43
-  store.load('inckey', :raw => true).should == '43'
+  store.raw['inckey'].should == '43'
 end
 
 it 'should raise error on non integer value' do
@@ -1220,6 +1222,19 @@ SPECS['transform_value']  = %{it 'allows to bypass transformer with :raw' do
   store.store('key', 'value', :raw => true)
   store.load('key', :raw => true).should == 'value'
   store.delete('key', :raw => true).should == 'value'
+end
+
+it 'allows to bypass transformer with raw syntactic sugar' do
+  store['key'] = 'value'
+  load_value(store.raw.load('key')).should == 'value'
+
+  store.raw.store('key', 'value')
+  store.raw['key'].should == 'value'
+  store.raw.load('key').should == 'value'
+  store.raw.delete('key').should == 'value'
+
+  store.raw['key'] = 'value2'
+  store.raw['key'].should == 'value2'
 end
 
 it 'should return unmarshalled value' do

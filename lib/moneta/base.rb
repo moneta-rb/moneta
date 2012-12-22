@@ -2,6 +2,8 @@ module Moneta
   # Simple interface to key/value stores with Hash-like interface.
   # @api public
   class Base
+    include Mixins::WithOptions
+
     # Exists the value with key
     #
     # @param [Object] key
