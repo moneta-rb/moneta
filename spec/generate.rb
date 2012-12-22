@@ -474,7 +474,7 @@ end
     add { adapter :Memory }
   end
 end},
-    :specs => ADAPTER_INCR_SPECS
+    :specs => ADAPTER_SPECS
   },
   'stack_memory_file' => {
     :build => %{Moneta.build do
