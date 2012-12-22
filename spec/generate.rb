@@ -129,12 +129,12 @@ end
   'simple_hbase' => {
     :store => :HBase,
     :options => ':table => "simple_hbase"',
-    :specs => SIMPLE_SPECS
+    :specs => SIMPLE_INCR_SPECS
   },
   'simple_hbase_with_expires' => {
     :store => :HBase,
     :options => ':table => "simple_hbase", :expires => true',
-    :specs => EXPIRES_SPECS,
+    :specs => EXPIRES_INCR_SPECS,
   },
   'simple_dbm' => {
     :store => :DBM,
@@ -760,7 +760,7 @@ end}
   },
   'adapter_hbase' => {
     :build => "Moneta::Adapters::HBase.new(:table => 'adapter_hbase')",
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_INCR_SPECS
   },
   'adapter_cookie' => {
     :build => 'Moneta::Adapters::Cookie.new',

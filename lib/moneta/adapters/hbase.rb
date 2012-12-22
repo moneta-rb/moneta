@@ -36,16 +36,20 @@ module Moneta
         value && value.value
       end
 
+      def store(key, value, options = {})
+        @table.mutate_row(key, @column => value)
+        value
+      end
+
+      def increment(key, amount = 1, options = {})
+        @table.atomic_increment(key, @column, amount)
+      end
+
       def delete(key, options = {})
         if value = load(key, options)
           @table.delete_row(key)
           value
         end
-      end
-
-      def store(key, value, options = {})
-        @table.mutate_row(key, @column => value)
-        value
       end
 
       def clear(options = {})
