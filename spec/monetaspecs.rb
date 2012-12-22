@@ -2239,7 +2239,7 @@ end
 #################### increment ####################
 
 shared_examples_for 'increment' do
-  it 'should initialize in increment' do
+  it 'should initialize in increment with 1' do
     store.key?('inckey').should be_false
     store.increment('inckey').should == 1
     store.key?('inckey').should be_true
@@ -2248,7 +2248,9 @@ shared_examples_for 'increment' do
 
     store.delete('inckey', :raw => true).should == '1'
     store.key?('inckey').should be_false
+  end
 
+  it 'should initialize in increment with higher value' do
     store.increment('inckey', 42).should == 42
     store.key?('inckey').should be_true
     store.load('inckey', :raw => true).should == '42'
@@ -2256,10 +2258,24 @@ shared_examples_for 'increment' do
     store.delete('inckey', :raw => true).should == '42'
   end
 
-  it 'should support incrementing existing value' do
+  it 'should initialize in increment with 0' do
+    store.increment('inckey', 0).should == 0
+    store.key?('inckey').should be_true
+    store.load('inckey', :raw => true).should == '0'
+    store['inckey'].should == '0'
+    store.delete('inckey', :raw => true).should == '0'
+  end
+
+  it 'should support incrementing existing value by value' do
     store.increment('inckey').should == 1
     store.increment('inckey', 42).should == 43
     store.load('inckey', :raw => true).should == '43'
+  end
+
+  it 'should support incrementing existing value by 0' do
+    store.increment('inckey').should == 1
+    store.increment('inckey', 0).should == 1
+    store.load('inckey', :raw => true).should == '1'
   end
 
   it 'should support deleting integer value' do

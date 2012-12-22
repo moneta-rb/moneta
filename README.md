@@ -113,29 +113,32 @@ Special transformers:
 ## Moneta API
 
 ~~~
-#initialize(options)              options differs per-store, and is used to set up the store
+#initialize(options)                      options differs per-store, and is used to set up the store.
 
-#[](key)                          retrieve a key. if the key is not available, return nil
+#[](key)                                  retrieve a key. If the key is not available, return nil.
 
-#load(key, options = {})          retrieve a key. if the key is not available, return nil
+#load(key, options = {})                  retrieve a key. If the key is not available, return nil.
 
-#fetch(key, options = {}, &block) retrieve a key. if the key is not available, execute the
-                                  block and return its return value.
+#fetch(key, options = {}, &block)         retrieve a key. If the key is not available, execute the
+                                          block and return its return value.
 
-#fetch(key, value, options = {})  retrieve a key. if the key is not available, return the value
+#fetch(key, value, options = {})          retrieve a key. If the key is not available, return the value,
 
-#[]=(key, value)                  set a value for a key. if the key is already used, clobber it.
-                                  keys set using []= will never expire
+#[]=(key, value)                          set a value for a key. If the key is already used, clobber it.
+                                          keys set using []= will never expire.
 
-#delete(key, options = {})        delete the key from the store and return the current value
+#store(key, value, options = {})          same as []=, but you can supply options.
 
-#key?(key, options = {})          true if the key exists, false if it does not
+#delete(key, options = {})                delete the key from the store and return the current value.
 
-#store(key, value, options = {})  same as []=, but you can supply options
+#key?(key, options = {})                  true if the key exists, false if it does not.
 
-#clear(options = {})              clear all keys in this store
+#increment(key, amount = 1, options = {}) increment numeric value. This is a atomic operation
+                                          which is not supported by all stores. Returns current value.
 
-#close                            close database connection
+#clear(options = {})                      clear all keys in this store.
+
+#close                                    close database connection.
 ~~~
 
 ### Creating a Store
