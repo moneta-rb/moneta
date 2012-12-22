@@ -269,6 +269,10 @@ substore = store.prefix('sub')
 substore['key'] = 'value'
 store['key'] => nil
 store['subkey'] => 'value'
+
+# Set expiration time for all keys
+short_lived_store = long_lived_store.expires(60)
+short_lived_store['key'] = 'value'
 ~~~
 
 ## Framework Integration
