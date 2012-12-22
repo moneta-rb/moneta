@@ -337,14 +337,14 @@ end
   },
   'simple_activerecord' => {
     :store => :ActiveRecord,
-    :specs => SIMPLE_SPECS,
+    :specs => SIMPLE_INCR_SPECS,
     :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord') }",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_activerecord_with_expires' => {
     :store => :ActiveRecord,
     :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord_with_expires') }, :expires => true",
-    :specs => EXPIRES_SPECS,
+    :specs => EXPIRES_INCR_SPECS,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_fog' => {
@@ -714,7 +714,7 @@ end},
   },
   'adapter_activerecord' => {
     :build => "Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",
-    :specs => ADAPTER_SPECS,
+    :specs => ADAPTER_INCR_SPECS,
     :tests => %{
 it 'updates an existing key/value' do
   store['foo/bar'] = '1'

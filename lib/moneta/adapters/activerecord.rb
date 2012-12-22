@@ -47,6 +47,14 @@ module Moneta
         record && record.v
       end
 
+      def store(key, value, options = {})
+        @table.transaction do
+          record = @table.find_or_initialize_by_k(key)
+          record.update_attributes(:v => value)
+          value
+        end
+      end
+
       def delete(key, options = {})
         @table.transaction do
           record = @table.find_by_k(key)
@@ -57,11 +65,17 @@ module Moneta
         end
       end
 
-      def store(key, value, options = {})
+      def increment(key, amount = 1, options = {})
         @table.transaction do
           record = @table.find_or_initialize_by_k(key)
-          record.update_attributes(:v => value)
-          value
+          record.lock!
+          value = record.v
+          intvalue = value.to_i
+          raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
+          intvalue += amount
+          record.v = intvalue.to_s
+          record.save!
+          intvalue
         end
       end
 
