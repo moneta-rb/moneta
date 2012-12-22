@@ -5,6 +5,8 @@ module Moneta
     # Filesystem backend
     # @api public
     class File < Base
+      include Mixins::IncrementSupport
+
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless @dir = options[:dir]
         FileUtils.mkpath(@dir)
@@ -50,7 +52,24 @@ module Moneta
         self
       end
 
+      def increment(key, amount = 1, options = {})
+        lock(key) { super }
+      end
+
       protected
+
+      def lock(key, &block)
+        path = store_path(key)
+        return yield unless ::File.exist?(path)
+        ::File.open(path, 'r+') do |f|
+          begin
+            f.flock ::File::LOCK_EX
+            yield
+          ensure
+            f.flock ::File::LOCK_UN
+          end
+        end
+      end
 
       def store_path(key)
         ::File.join(@dir, key)

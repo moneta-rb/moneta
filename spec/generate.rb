@@ -104,22 +104,22 @@ end
   'simple_file' => {
     :store => :File,
     :options => ':dir => File.join(make_tempdir, "simple_file")',
-    :specs => SIMPLE_SPECS
+    :specs => SIMPLE_INCR_SPECS
   },
   'simple_file_with_expires' => {
     :store => :File,
     :options => ':dir => File.join(make_tempdir, "simple_file_with_expires"), :expires => true',
-    :specs => EXPIRES_SPECS
+    :specs => EXPIRES_INCR_SPECS
   },
   'simple_hashfile' => {
     :store => :HashFile,
     :options => ':dir => File.join(make_tempdir, "simple_hashfile")',
-    :specs => SIMPLE_SPECS
+    :specs => SIMPLE_INCR_SPECS
   },
   'simple_hashfile_with_expires' => {
     :store => :HashFile,
     :options => ':dir => File.join(make_tempdir, "simple_hashfile_with_expires"), :expires => true',
-    :specs => EXPIRES_SPECS
+    :specs => EXPIRES_INCR_SPECS
   },
   'simple_cassandra' => {
     :store => :Cassandra,
@@ -387,7 +387,7 @@ end}
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
   adapter :File, :dir => File.join(make_tempdir, "expires-file")
 end},
-    :specs => [:null, :store, :expires, :returndifferent, :marshallable_key],
+    :specs => [:null, :store, :expires, :returndifferent, :marshallable_key, :increment],
     :tests => %{
 it 'should delete expired value in underlying file storage' do
   store.store('foo', 'bar', :expires => 2)
@@ -425,7 +425,7 @@ end},
     cache { adapter :Memory }
   end
 end},
-    :specs => ADAPTER_SPECS,
+    :specs => ADAPTER_INCR_SPECS,
     :tests => %{
 it 'should store loaded values in cache' do
   store.backend['foo'] = 'bar'
@@ -474,7 +474,7 @@ end
     add { adapter :Memory }
   end
 end},
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_INCR_SPECS
   },
   'stack_memory_file' => {
     :build => %{Moneta.build do
@@ -485,7 +485,7 @@ end},
     add { adapter :File, :dir => File.join(make_tempdir, "stack-file2") }
   end
 end},
-    :specs => [:null_stringkey_stringvalue, :store_stringkey_stringvalue]
+    :specs => [:null_stringkey_stringvalue, :store_stringkey_stringvalue, :not_increment]
   },
   'lock' => {
     :build => %{Moneta.build do
@@ -812,7 +812,7 @@ end
   },
   'adapter_file' => {
     :build => 'Moneta::Adapters::File.new(:dir => File.join(make_tempdir, "adapter_file"))',
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_INCR_SPECS
   },
   'adapter_fog' => {
     :build => "Moneta::Adapters::Fog.new(:aws_access_key_id => 'fake_access_key_id',

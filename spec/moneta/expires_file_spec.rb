@@ -61,6 +61,7 @@ describe_moneta "expires_file" do
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_hashvalue'
   it_should_behave_like 'marshallable_key'
+  it_should_behave_like 'increment'
   it 'should delete expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)
     store['foo'].should == 'bar'
