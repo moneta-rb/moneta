@@ -3,18 +3,7 @@ module Moneta
   module Mixins
     module WithOptions
       def with(options)
-        list = [:key?, :load, :store, :delete, :increment, :clear]
-        if options.include?(:only)
-          raise ArgumentError, 'Either :only or :except is allowed' if options.include?(:except)
-          list = [options.delete(:only)].compact.flatten
-        elsif options.include?(:except)
-          list -= [options.delete(:except)].compact.flatten
-        end
-        optionmerger = (@optionmerger || {}).dup
-        list.each do |method|
-          optionmerger[method] = (optionmerger[method] ||= {}).merge(options)
-        end
-        OptionMerger.new(self, optionmerger)
+        OptionMerger.new(self, options)
       end
 
       def raw
