@@ -16,4 +16,15 @@ describe_moneta "adapter_memcached" do
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'expires_stringkey_stringvalue'
   it_should_behave_like 'increment'
+  it 'should support default expiration time' do
+    store = Moneta::Adapters::Memcached.new(:expires => 2, :namespace => "adapter_memcached")
+    store.store('key1', 'val1')
+    store.store('key2', 'val2', :expires => 60)
+    store.load('key1').should == 'val1'
+    sleep 1
+    store.load('key1').should == 'val1'
+    sleep 2
+    store.load('key1').should == nil
+    store['key2'].should == 'val2'
+  end
 end

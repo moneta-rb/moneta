@@ -16,4 +16,15 @@ describe_moneta "adapter_cassandra" do
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'expires_stringkey_stringvalue'
+  it 'should support default expiration time' do
+    store = Moneta::Adapters::Cassandra.new(:expires => 2, :keyspace => 'adapter_cassandra')
+    store.store('key1', 'val1')
+    store.store('key2', 'val2', :expires => 60)
+    store.load('key1').should == 'val1'
+    sleep 1
+    store.load('key1').should == 'val1'
+    sleep 2
+    store.load('key1').should == nil
+    store['key2'].should == 'val2'
+  end
 end

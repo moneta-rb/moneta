@@ -51,4 +51,15 @@ describe_moneta "expires_memory" do
   it_should_behave_like 'expires_hashkey_hashvalue'
   it_should_behave_like 'expires_hashkey_booleanvalue'
   it_should_behave_like 'increment'
+  it 'should support default expiration time' do
+    store = Moneta.new(:Memory, :expires => 2)
+    store.store('key1', 'val1')
+    store.store('key2', 'val2', :expires => 60)
+    store.load('key1').should == 'val1'
+    sleep 1
+    store.load('key1').should == 'val1'
+    sleep 2
+    store.load('key1').should == nil
+    store['key2'].should == 'val2'
+  end
 end

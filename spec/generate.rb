@@ -373,7 +373,19 @@ end
   use :Expires
   adapter :Memory
 end},
-    :specs => [:null, :store, :expires, :increment]
+    :specs => [:null, :store, :expires, :increment],
+    :tests => %{
+it 'should support default expiration time' do
+  store = Moneta.new(:Memory, :expires => 2)
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should == nil
+  store['key2'].should == 'val2'
+end}
   },
   'expires_file' => {
     :build => %{Moneta.build do
@@ -738,7 +750,19 @@ end
   },
   'adapter_cassandra' => {
     :build => "Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
-    :specs => ADAPTER_EXPIRES_SPECS
+    :specs => ADAPTER_EXPIRES_SPECS,
+    :tests => %{
+it 'should support default expiration time' do
+  store = Moneta::Adapters::Cassandra.new(:expires => 2, :keyspace => 'adapter_cassandra')
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should == nil
+  store['key2'].should == 'val2'
+end}
   },
   'adapter_hbase' => {
     :build => "Moneta::Adapters::HBase.new(:table => 'adapter_hbase')",
@@ -815,15 +839,52 @@ end
   },
   'adapter_memcached_dalli' => {
     :build => 'Moneta::Adapters::MemcachedDalli.new(:namespace => "adapter_memcached_dalli")',
-    :specs => ADAPTER_EXPIRES_INCR_SPECS
+    :specs => ADAPTER_EXPIRES_INCR_SPECS,
+    :tests => %{
+it 'should support default expiration time' do
+  store = Moneta::Adapters::MemcachedDalli.new(:expires => 2, :namespace => "adapter_memcached_dalli")
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should == nil
+  store['key2'].should == 'val2'
+end}
   },
   'adapter_memcached_native' => {
     :build => 'Moneta::Adapters::MemcachedNative.new(:namespace => "adapter_memcached_native")',
-    :specs => ADAPTER_EXPIRES_INCR_SPECS
+    :specs => ADAPTER_EXPIRES_INCR_SPECS,
+    :tests => %{
+it 'should support default expiration time' do
+  store = Moneta::Adapters::MemcachedNative.new(:expires => 2, :namespace => "adapter_memcached_native")
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should == nil
+  store['key2'].should == 'val2'
+end
+}
   },
   'adapter_memcached' => {
     :build => 'Moneta::Adapters::Memcached.new(:namespace => "adapter_memcached")',
-    :specs => ADAPTER_EXPIRES_INCR_SPECS
+    :specs => ADAPTER_EXPIRES_INCR_SPECS,
+    :tests => %{
+it 'should support default expiration time' do
+  store = Moneta::Adapters::Memcached.new(:expires => 2, :namespace => "adapter_memcached")
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should == nil
+  store['key2'].should == 'val2'
+end}
   },
   'adapter_memory' => {
     :build => 'Moneta::Adapters::Memory.new',
@@ -857,7 +918,19 @@ end}
   },
   'adapter_redis' => {
     :build => 'Moneta::Adapters::Redis.new',
-    :specs => ADAPTER_EXPIRES_INCR_SPECS
+    :specs => ADAPTER_EXPIRES_INCR_SPECS,
+    :tests => %{
+it 'should support default expiration time' do
+  store = Moneta::Adapters::Redis.new(:expires => 2)
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should == nil
+  store['key2'].should == 'val2'
+end}
   },
   'adapter_riak' => {
     :build => 'Moneta::Adapters::Riak.new',
