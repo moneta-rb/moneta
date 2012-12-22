@@ -79,12 +79,6 @@ end
     :key => %w(Hash String),
     :specs => [:null, :store, :returndifferent, :increment],
   },
-  'simple_memory_with_json_md5_key_serializer' => {
-    :store => :Memory,
-    :options => ':key_serializer => [:json, :md5]',
-    :key => %w(Hash String),
-    :specs => [:null, :store, :returndifferent, :increment],
-  },
   'simple_memory_with_json_value_serializer' => {
     :store => :Memory,
     :options => ':value_serializer => :json',
