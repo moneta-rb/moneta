@@ -68,16 +68,20 @@ module Moneta
         end
       end
 
+      def store(key, value, options = {})
+        @client.insert(@cf, key, {'value' => value}, :ttl => (options[:expires] || @expires))
+        value
+      end
+
+      def increment(key, amount = 1, options = {})
+        @client.add(@cf, key, amount, 'value')
+      end
+
       def delete(key, options = {})
         if value = load(key, options)
           @client.remove(@cf, key)
           value
         end
-      end
-
-      def store(key, value, options = {})
-        @client.insert(@cf, key, {'value' => value}, :ttl => (options[:expires] || @expires))
-        value
       end
 
       def clear(options = {})
