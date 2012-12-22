@@ -249,6 +249,23 @@ counters['counter'] = '10'
 counters.increment('counter') => 11
 ~~~
 
+### Syntactic sugar and option merger
+
+For raw data access as described before the class `Moneta::OptionMerger` is used. It works like this:
+
+~~~ ruby
+store.with(:raw => true).load('key') # All methods after `with` get the options passed
+
+# Syntactic sugar for raw access
+store.raw.load('key')
+
+# Access substore where all keys get a prefix
+substore = store.prefix('sub')
+substore['key'] = 'value'
+store['key'] => nil
+store['subkey'] => 'value'
+~~~
+
 ## Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
