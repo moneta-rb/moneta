@@ -30,4 +30,9 @@ namespace :test do
   end
 end
 
+task :benchmarks do
+  Dir.chdir('benchmarks')
+  ruby('run.rb')
+end
+
 task :default => :test

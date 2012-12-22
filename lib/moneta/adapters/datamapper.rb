@@ -41,8 +41,7 @@ module Moneta
 
       def store(key, value, options = {})
         context do
-          record = Store.get(key)
-          if record
+          if record = Store.get(key)
             record.update(:k => key, :v => value)
           else
             Store.create(:k => key, :v => value)

@@ -17,6 +17,7 @@ before_install:
 env:
   - "TASK=test:parallel"
   - "TASK=test:non_parallel"
+  - "TASK=benchmarks"
 matrix:
   allow_failures:
 #    - rvm: ruby-head
