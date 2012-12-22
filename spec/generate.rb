@@ -302,7 +302,7 @@ end
   'simple_sequel_with_expires' => {
     :store => :Sequel,
     :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true',
-    :specs => EXPIRES_SPECS,
+    :specs => EXPIRES_INCR_SPECS,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_datamapper' => {

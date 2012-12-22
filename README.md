@@ -249,6 +249,32 @@ counters['counter'] = '10'
 counters.increment('counter') => 11
 ~~~
 
+Stores which support incrementation (you have to use `Moneta::Lock` if you want to use the store in a multithreading environment.)
+
+* ActiveRecord
+* Cassandra
+* File
+* HBase
+* LRUHash
+* LevelDB
+* Memcached
+* Memory
+* Redis
+* SDBM/DBM/GDBM
+* Sequel
+* Sqlite
+* TokyoCabinet
+* YAML/PStore
+
+Stores which don't support incrementation:
+
+* Couch
+* DataMapper
+* Fog
+* LocalMemCache
+* Mongo
+* Riak
+
 ### Syntactic sugar and option merger
 
 For raw data access as described before the class `Moneta::OptionMerger` is used. It works like this:
