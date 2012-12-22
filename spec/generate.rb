@@ -124,7 +124,7 @@ end
   'simple_cassandra' => {
     :store => :Cassandra,
     :options => ':keyspace => "simple_cassandra"',
-    :specs => NATIVE_EXPIRES_INCR_SPECS,
+    :specs => NATIVE_EXPIRES_SPECS,
   },
   'simple_hbase' => {
     :store => :HBase,
@@ -744,7 +744,7 @@ end
   },
   'adapter_cassandra' => {
     :build => "Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
-    :specs => ADAPTER_EXPIRES_INCR_SPECS,
+    :specs => ADAPTER_EXPIRES_SPECS,
     :tests => %{
 it 'should support default expiration time' do
   store = Moneta::Adapters::Cassandra.new(:expires => 2, :keyspace => 'adapter_cassandra')
