@@ -39,17 +39,17 @@ module Moneta
       end
 
       def key?(key, options = {})
-        @table.find_by_k(key) != nil
+        !@table.where(:k => key).empty?
       end
 
       def load(key, options = {})
-        record = @table.find_by_k(key)
+        record = @table.where(:k => key).first
         record && record.v
       end
 
       def store(key, value, options = {})
         @table.transaction do
-          record = @table.find_or_initialize_by_k(key)
+          record = @table.where(:k => key).first_or_initialize
           record.update_attributes(:v => value)
           value
         end
@@ -57,8 +57,7 @@ module Moneta
 
       def delete(key, options = {})
         @table.transaction do
-          record = @table.find_by_k(key)
-          if record
+          if record = @table.where(:k => key).first
             record.destroy
             record.v
           end
@@ -67,7 +66,7 @@ module Moneta
 
       def increment(key, amount = 1, options = {})
         @table.transaction do
-          record = @table.find_or_initialize_by_k(key)
+          record = @table.where(:k => key).first_or_initialize
           record.lock!
           value = record.v
           intvalue = value.to_i
