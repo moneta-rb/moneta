@@ -15,29 +15,30 @@ module Moneta
       # * All other options passed to Sequel#connect
       def initialize(options = {})
         raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
-        @table = options.delete(:table) || :moneta
+        table = options.delete(:table) || :moneta
         @db = ::Sequel.connect(db, options)
-        @db.create_table?(@table) do
+        @db.create_table?(table) do
           String :k, :null => false, :primary_key => true
           String :v
         end
+        @table = @db[table]
       end
 
       def key?(key, options = {})
-        sequel_table[:k => key] != nil
+        @table[:k => key] != nil
       end
 
       def load(key, options = {})
-        result = sequel_table[:k => key]
+        result = @table[:k => key]
         result && result[:v]
       end
 
       def store(key, value, options = {})
         @db.transaction do
           if key?(key, options)
-            sequel_table.update(:k => key, :v => value)
+            @table.update(:k => key, :v => value)
           else
-            sequel_table.insert(:k => key, :v => value)
+            @table.insert(:k => key, :v => value)
           end
           value
         end
@@ -46,21 +47,15 @@ module Moneta
       def delete(key, options = {})
         @db.transaction do
           if value = load(key, options)
-            sequel_table.filter(:k => key).delete
+            @table.filter(:k => key).delete
             value
           end
         end
       end
 
       def clear(options = {})
-        sequel_table.delete
+        @table.delete
         self
-      end
-
-      private
-
-      def sequel_table
-        @sequel_table ||= @db[@table]
       end
     end
   end
