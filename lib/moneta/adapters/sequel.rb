@@ -29,8 +29,8 @@ module Moneta
       end
 
       def load(key, options = {})
-        result = @table[:k => key]
-        result && result[:v]
+        record = @table[:k => key]
+        record && record[:v]
       end
 
       def store(key, value, options = {})
@@ -41,6 +41,23 @@ module Moneta
             @table.insert(:k => key, :v => value)
           end
           value
+        end
+      end
+
+      def increment(key, amount = 1, options = {})
+        @db.transaction do
+          locked_table = @table.for_update
+          if record = locked_table[:k => key]
+            value = record[:v]
+            intvalue = value.to_i
+            raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
+            intvalue += amount
+            locked_table.update(:k => key, :v => intvalue.to_s)
+            intvalue
+          else
+            locked_table.insert(:k => key, :v => amount.to_s)
+            amount
+          end
         end
       end
 

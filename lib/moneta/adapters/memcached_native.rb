@@ -58,9 +58,6 @@ module Moneta
         end
         result
       rescue ::Memcached::NotFound => ex
-        # WARNING: The creation of counters is not multiprocess safe
-        # if the counter exists, everything is fine
-        puts 'Warning: Counter created in a non thread-safe manner'
         store(key, amount.to_s, options)
         amount
       end

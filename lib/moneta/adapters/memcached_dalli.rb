@@ -50,7 +50,6 @@ module Moneta
         if result
           result
         else
-          puts 'Warning: Counter created in a non thread-safe manner'
           store(key, amount, options)
           amount
         end

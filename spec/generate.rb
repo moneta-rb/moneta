@@ -297,7 +297,7 @@ end
     :store => :Sequel,
     :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel")',
     :load_value => '::Marshal.load(value.unpack(\'m\').first)',
-    :specs => SIMPLE_SPECS
+    :specs => SIMPLE_INCR_SPECS
   },
   'simple_sequel_with_expires' => {
     :store => :Sequel,
@@ -943,7 +943,7 @@ end}
   },
   'adapter_sequel' => {
     :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))',
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_INCR_SPECS
   },
   'adapter_sqlite' => {
     :build => 'Moneta::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
