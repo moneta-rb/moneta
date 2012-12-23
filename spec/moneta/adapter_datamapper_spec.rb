@@ -13,10 +13,11 @@ describe_moneta "adapter_datamapper" do
   end
 
   include_context 'setup_store'
-  it_should_behave_like 'null_stringkey_stringvalue'
-  it_should_behave_like 'store_stringkey_stringvalue'
-  it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'not_increment'
+  it_should_behave_like 'null_stringkey_stringvalue'
+  it_should_behave_like 'persist_stringkey_stringvalue'
+  it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'store_stringkey_stringvalue'
   it 'does not cross contaminate when storing' do
     first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
     first.clear
