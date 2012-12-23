@@ -29,6 +29,7 @@ module Moneta
     end
 
     # Explicitly close the store
+    # @return nil
     # @api public
     def close
     end

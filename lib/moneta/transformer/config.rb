@@ -36,9 +36,9 @@ module Moneta
     }
 
     # Allowed value transformers (Read it like a regular expression!)
-    VALUE_TRANSFORMER = compile_validator('serialize? compress? hmac? encode?')
+    VALUE_TRANSFORMER = 'serialize? compress? hmac? encode?'
 
     # Allowed key transformers (Read it like a regular expression!)
-    KEY_TRANSFORMER = compile_validator('serialize? prefix? ((encode? truncate?) | (digest spread?))?')
+    KEY_TRANSFORMER = 'serialize? prefix? ((encode? truncate?) | (digest spread?))?'
   end
 end

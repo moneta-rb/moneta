@@ -1,5 +1,5 @@
 module Moneta
-  # Builder implements the DSL to build a chain of store proxies
+  # Builder implements the DSL to build a stack of Moneta store proxies
   # @api private
   class Builder
     # @api private
@@ -17,7 +17,7 @@ module Moneta
       instance_eval(&block)
     end
 
-    # Add proxy to chain
+    # Add proxy to stack
     #
     # @param [Symbol or Class] proxy Name of proxy class or proxy class
     # @param [Hash] options Options hash
@@ -28,7 +28,7 @@ module Moneta
       nil
     end
 
-    # Add adapter to chain
+    # Add adapter to stack
     #
     # @param [Symbol] name Name of adapter class
     # @param [Hash] options Options hash

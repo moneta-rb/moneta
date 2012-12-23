@@ -4,6 +4,7 @@ require 'thread'
 
 module Rack
   module Session
+    # @api public
     class Moneta < Abstract::ID
       attr_reader :mutex, :pool
 

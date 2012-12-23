@@ -216,7 +216,7 @@ store.increment('name')        # raises an Exception
 ~~~
 
 If you want to access the counter value you have to use raw access to the datastore. This is only important
-if you have a `Moneta::Transformer` somewhere in your proxy chain which transforms the values e.g. with `Marshal`.
+if you have a `Moneta::Transformer` somewhere in your proxy stack which transforms the values e.g. with `Marshal`.
 
 ~~~ ruby
 store.increment('counter')          # returns 1, counter created

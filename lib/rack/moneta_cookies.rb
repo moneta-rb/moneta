@@ -33,6 +33,7 @@ module Rack
   #     [200, {}, []]
   #   end
   #
+  # @api public
   class MonetaCookies
     def initialize(app, options = {}, &block)
       @app, @pool = app, []

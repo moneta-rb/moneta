@@ -5,8 +5,10 @@ require 'rack/cache/entitystore'
 
 module Rack
   module Cache
+    # @api public
     Moneta = {}
 
+    # @api private
     module MonetaResolver
       include Rack::Utils
 
@@ -29,6 +31,7 @@ module Rack
     end
 
     class MetaStore
+      # @api public
       class Moneta < MetaStore
         extend MonetaResolver
 
@@ -50,10 +53,12 @@ module Rack
         end
       end
 
+      # @api public
       MONETA = Moneta
     end
 
     class EntityStore
+      # @api public
       class Moneta < EntityStore
         extend MonetaResolver
 
@@ -87,6 +92,7 @@ module Rack
         end
       end
 
+      # @api public
       MONETA = Moneta
     end
   end

@@ -2,7 +2,7 @@ module Moneta
   # Transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...).
   # You can bypass the transformer (e.g. serialization) by using the `:raw` option.
   #
-  # @example Add transformer to chain
+  # @example Add `Moneta::Transformer` to proxy stack
   #   Moneta.build do
   #     transformer :key => [:marshal, :escape], :value => [:marshal]
   #     adapter :File, :dir => 'data'
@@ -25,6 +25,7 @@ module Moneta
       #
       # @param [Moneta store] adapter The underlying store
       # @param [Hash] options
+      # @return [Transformer] new Moneta transformer
       #
       # Options:
       # * :key - List of key transformers in the order in which they should be applied
@@ -46,8 +47,11 @@ module Moneta
       private
 
       def compile(options, keys, values)
-        raise ArgumentError, 'Invalid key transformer chain' if KEY_TRANSFORMER !~ keys.map(&:inspect).join
-        raise ArgumentError, 'Invalid value transformer chain' if VALUE_TRANSFORMER !~ values.map(&:inspect).join
+        @key_validator ||= compile_validator(KEY_TRANSFORMER)
+        @value_validator ||= compile_validator(VALUE_TRANSFORMER)
+
+        raise ArgumentError, 'Invalid key transformer chain' if @key_validator !~ keys.map(&:inspect).join
+        raise ArgumentError, 'Invalid value transformer chain' if @value_validator !~ values.map(&:inspect).join
 
         key = compile_transformer(keys, 'key')
 

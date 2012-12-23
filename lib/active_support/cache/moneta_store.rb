@@ -1,5 +1,6 @@
 module ActiveSupport
   module Cache
+    # @api public
     class MonetaStore < Store
       def initialize(options = nil)
         raise ArgumentError, 'Option :store is required' unless @store = options.delete(:store)

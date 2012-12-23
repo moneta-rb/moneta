@@ -2,7 +2,7 @@ module Moneta
   # Combines multiple stores. Reads return the result from the first store,
   # writes go to all stores.
   #
-  # @example Add stack to chain
+  # @example Add `Moneta::Stack` to proxy stack
   #   Moneta.build do
   #     use(:Stack) do
   #       add { adapter :Redis }

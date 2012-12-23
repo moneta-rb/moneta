@@ -47,18 +47,20 @@ module Moneta
   end
 
   # Create new Moneta store with default proxies
-  # which works in most cases if you don't want fine
-  # control over the proxy chain. It uses Marshal on the
+  #
+  # This works in most cases if you don't want fine
+  # control over the proxy stack. It uses Marshal on the
   # keys and values. Use Moneta#build if you want to have fine control!
   #
   # @param [Symbol] name Name of adapter (See Moneta::Adapters)
   # @param [Hash] options
+  # @return [Moneta store] newly created Moneta store
   #
   # Options:
   # * :expires - If true or integer, ensure that store supports expiration by inserting
   #   Moneta::Expires if the underlying adapter doesn't support it natively
   # * :threadsafe - If true, ensure that the store is thread safe by inserting Moneta::Lock
-  # * :logger - If true or Hash, add logger to chain (Hash is passed to logger as options)
+  # * :logger - If true or Hash, add logger to proxy stack (Hash is passed to logger as options)
   # * :compress - If true, compress value with zlib, or specify custom compress, e.g. :quicklz
   # * :serializer - Serializer used for key and value, disable with nil (default :marshal)
   # * :key_serializer - Serializer used for key, disable with nil (default options[:serializer] if not provided)
@@ -71,6 +73,8 @@ module Moneta
   # * :File (normal file store)
   # * :Memcached (Memcached store)
   # * ... (All other adapters from Moneta::Adapters)
+  #
+  # @api public
   def self.new(name, options = {})
     expires = options.delete(:expires)
     logger = options.delete(:logger)
@@ -116,13 +120,17 @@ module Moneta
     end
   end
 
-  # Build your own store chain!
+  # Configure your own Moneta proxy stack!
+  #
+  # @return [Moneta store] newly created Moneta store
   #
   # @example Moneta builder
   #   Moneta.build do
   #     use :Expires
   #     adapter :Memory
   #   end
+  #
+  # @api public
   def self.build(&block)
     Builder.new(&block).build.last
   end

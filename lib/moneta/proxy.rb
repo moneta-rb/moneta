@@ -78,6 +78,7 @@ module Moneta
     end
 
     # Close this store
+    # @return nil
     # @api public
     def close
       @adapter.close
