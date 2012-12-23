@@ -432,6 +432,14 @@ store = Moneta.build do
 end
 ~~~
 
+## Testing and Benchmarks
+
+Testing is done using [Travis-CI](http://travis-ci.org/minad/moneta). Currently we support Ruby 1.8.7 and 1.9.3.
+
+Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/minad/moneta) for each build. Take a look there
+to compare the speed of the different key value stores. The impact of Moneta should be minimal since it is
+only a thin layer on top of the different stores.
+
 ## More information
 
 * http://yehudakatz.com/2009/02/12/whats-the-point/
