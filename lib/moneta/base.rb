@@ -68,9 +68,11 @@ module Moneta
     def fetch(key, default = nil, options = nil)
       if block_given?
         raise ArgumentError, 'Only one argument accepted if block is given' if options
-        load(key, default || {}) || yield(key)
+        result = load(key, default || {})
+        result == nil ? yield(key) : result
       else
-        load(key, options || {}) || default
+        result = load(key, options || {})
+        result == nil ? default : result
       end
     end
 
