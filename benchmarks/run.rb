@@ -5,7 +5,7 @@ require 'benchmark'
 require 'moneta'
 
 STORES = {
-  :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => 'bench.activerecord' } },
+  :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
   :Cassandra => {},
   :Client => {},
   :Couch => {},
