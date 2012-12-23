@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name             = 'moneta'
   s.version          = Moneta::VERSION
   s.date             = Date.today.to_s
-  s.authors          = ['Daniel Mendler', 'Yehuda Katz' 'Hannes Georg']
+  s.authors          = ['Daniel Mendler', 'Yehuda Katz', 'Hannes Georg']
   s.email            = %w{mail@daniel-mendler.de wycats@gmail.com hannes.georg@googlemail.com}
   s.description      = 'A unified interface to key/value stores'
   s.extra_rdoc_files = %w{README.md SPEC.md LICENSE}
