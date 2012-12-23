@@ -51,6 +51,12 @@ Behaves the same as <code>[]=</code>, but allows the client to send additional o
 ### <code>increment(key[Object], amount[Integer] = 1, options[Hash] => {}) => Integer(value)</code>
 
 Increments a value atomically. This method is not supported by all stores and might raise a <code>NotImplementedError</code>.
+This method MUST accept negative values, but the result MUST be unsigned.
+
+### <code>decrement(key[Object], amount[Integer] = 1, options[Hash] => {}) => Integer(value)</code>
+
+Decrements a value atomically. This method is not supported by all stores and might raise a <code>NotImplementedError</code>.
+This method MUST accept negative values, but the result MUST be unsigned.
 
 ### <code>clear(options[Hash] => {})</code>
 
