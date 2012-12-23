@@ -7,7 +7,14 @@ require 'moneta'
 begin
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
-rescue LoadError
+rescue LoadError => ex
+  puts "Failed to load DataMapper - #{ex.message}"
+end
+
+begin
+  server = Moneta::Server.new(Moneta.new(:Memory))
+rescue
+  puts "Failed to start Moneta server - #{ex.message}"
 end
 
 class Array
