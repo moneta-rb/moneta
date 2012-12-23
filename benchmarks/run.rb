@@ -4,37 +4,7 @@ $: << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'benchmark'
 require 'moneta'
 
-begin
-  require 'dm-core'
-  DataMapper.setup(:default, :adapter => :in_memory)
-rescue LoadError => ex
-  puts "Failed to load DataMapper - #{ex.message}"
-end
-
-Process.fork do
-  begin
-    Moneta::Server.new(Moneta.new(:Memory)).run
-  rescue Exception => ex
-    puts "Failed to start Moneta server - #{ex.message}"
-  end
-end
-sleep 1 # Wait for server
-
-class String
-  def random(n)
-    (1..n).map { self[rand(size),1] }.join
-  end
-end
-
-class Array
-  def randomize
-    rest, result = dup, []
-    result << rest.slice!(rand(rest.size)) until result.size == size
-    result
-  end
-end
-
-stores = {
+STORES = {
   :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => 'bench.activerecord' } },
   :Cassandra => {},
   :Client => {},
@@ -55,16 +25,13 @@ stores = {
   :PStore => { :file => 'bench.pstore' },
   :Redis => {},
   :Riak => {},
-  :SDBM => { :file => 'bench.sdbm' },
+  # SDBM is unstable
+  # :SDBM => { :file => 'bench.sdbm' },
   :Sequel => { :db => 'sqlite:/' },
   :Sqlite => { :file => ':memory:' },
-  :YAML => { :file => 'bench.yaml' },
+  # YAML is so fucking slow
+  # :YAML => { :file => 'bench.yaml' },
 }
-
-stats, keys, data, errors, summary = {}, [], [], [], []
-dict = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'
-vlen_min, vlen_max, vlen_total = 0xFFFFFFFF, 0, 0
-klen_min, klen_max, klen_total = 0xFFFFFFFF, 0, 0
 
 RUNS = 3
 KEYS = 100
@@ -72,128 +39,145 @@ MIN_KEY_SIZE = 3
 MAX_KEY_SIZE = 128
 MIN_VALUE_SIZE = 1
 MAX_VALUE_SIZE = 1024 * 10
+DICT = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'.freeze
 
-puts '======================================================================'
-puts 'Comparison of write/read between Moneta Stores'
-puts '======================================================================'
+class String
+  def random(n)
+    (1..n).map { self[rand(size),1] }.join
+  end
+end
 
-stores.each do |name, options|
+class Array
+  def sum
+    inject(0, &:+)
+  end
+
+  def randomize
+    rest, result = dup, []
+    result << rest.slice!(rand(rest.size)) until result.size == size
+    result
+  end
+end
+
+Process.fork do
   begin
+    Moneta::Server.new(Moneta.new(:Memory)).run
+  rescue Exception => ex
+    puts "\e[31mFailed to start Moneta server - #{ex.message}\e[0m"
+  end
+end
+sleep 1 # Wait for server
+
+STORES.each do |name, options|
+  begin
+    if name == :DataMapper
+      begin
+        require 'dm-core'
+        DataMapper.setup(:default, :adapter => :in_memory)
+      rescue LoadError => ex
+        puts "\e[31mFailed to load DataMapper - #{ex.message}\e[0m"
+      end
+    end
+
     cache = Moneta.new(name, options.dup)
     cache['test'] = 'test'
   rescue Exception => ex
-    puts "#{name} not benchmarked - #{ex.message}"
-    stores.delete(name)
+    puts "\e[31m#{name} not benchmarked - #{ex.message}\e[0m"
+    STORES.delete(name)
   ensure
     cache.close if cache
   end
 end
 
-puts 'Data loading...'
+HEADER = "\n                  Minimum    Maximum      Total    Average      Ops/s"
+SEPARATOR = '=' * 69
+
+puts "\e[1m\e[34m#{SEPARATOR}\nComparison of write/read between Moneta Stores\n#{SEPARATOR}\e[0m"
+
+stats, keys, data, summary = {}, [], [], ''
+
 KEYS.times do |x|
-  klen = rand(MAX_KEY_SIZE - MIN_KEY_SIZE) + MIN_KEY_SIZE
-  vlen = rand(MAX_VALUE_SIZE - MIN_VALUE_SIZE) + MIN_VALUE_SIZE
+  key_size = rand(MAX_KEY_SIZE - MIN_KEY_SIZE) + MIN_KEY_SIZE
+  val_size = rand(MAX_VALUE_SIZE - MIN_VALUE_SIZE) + MIN_VALUE_SIZE
 
-  key = dict.random(klen)
-  value = dict.random(vlen)
-
+  key = DICT.random(key_size)
   keys << key
-  data << [key, value]
-
-  vlen_min = value.size if value.size < vlen_min
-  vlen_max = value.size if value.size > vlen_max
-  vlen_total = vlen_total + value.size
-
-  klen_min = key.size if key.size < klen_min
-  klen_max = key.size if key.size > klen_max
-  klen_total = klen_total + key.size
+  data << [key, DICT.random(val_size)]
 end
 
-puts '----------------------------------------------------------------------'
-puts "Total keys: #{keys.size}, unique: #{keys.uniq.size}"
-puts '----------------------------------------------------------------------'
-puts '                  Minimum    Maximum      Total    Average        xps '
-puts '----------------------------------------------------------------------'
-puts 'Key Length     % 10i % 10i % 10i % 10i ' % [klen_min, klen_max, klen_total, klen_total / KEYS]
-puts 'Value Length   % 10i % 10i % 10i % 10i ' % [vlen_min, vlen_max, vlen_total, vlen_total / KEYS]
+puts %{Total keys: #{keys.size}, Unique keys: #{keys.uniq.size}
+                  Minimum    Maximum      Total    Average}
+key_sizes = data.map(&:first).map(&:size)
+val_sizes = data.map(&:last).map(&:size)
+puts 'Key Length     % 10i % 10i % 10i % 10i ' % [key_sizes.min, key_sizes.max, key_sizes.sum, key_sizes.sum / KEYS]
+puts 'Value Length   % 10i % 10i % 10i % 10i ' % [val_sizes.min, val_sizes.max, val_sizes.sum, val_sizes.sum / KEYS]
 
-stores.each do |name, options|
+STORES.each do |name, options|
   begin
-    puts '======================================================================'
-    puts name
-    puts '----------------------------------------------------------------------'
+    puts "\n\e[1m\e[34m#{SEPARATOR}\n#{name}\n#{SEPARATOR}\e[0m"
+
     cache = Moneta.new(name, options.dup)
 
     stats[name] = {
-      :writes => [],
-      :reads => [],
-      :totals => [],
-      :averages => [],
+      :write => [],
+      :read => [],
+      :sum => [],
+      :error => []
     }
 
-    puts name
+    %w(Rehearse Measure).each do |type|
+      state = ''
+      print "%s [%#{2 * RUNS}s] " % [type, state]
 
-    RUNS.times do |round|
-      cache.clear
-      print "[#{round + 1}] W"
-      data = data.randomize
-      m1 = Benchmark.measure do
-        data.each do |key, value|
-          cache[key] = value
+      RUNS.times do |run|
+        cache.clear
+        print "%s[%-#{2 * RUNS}s] " % ["\b" * (2 * RUNS + 3), state << 'W']
+
+        data = data.randomize
+        m1 = Benchmark.measure do
+          data.each {|k,v| cache[k] = v }
+        end
+
+        print "%s[%-#{2 * RUNS}s] " % ["\b" * (2 * RUNS + 3), state << 'R']
+
+        data = data.randomize
+        error = 0
+        m2 = Benchmark.measure do
+          data.each do |k, v|
+            error += 1 if v != cache[k]
+          end
+        end
+
+        if type == 'Measure'
+          stats[name][:write] << m1.real
+          stats[name][:error] << error
+          stats[name][:read] << m2.real
+          stats[name][:sum] << (m1.real + m2.real)
         end
       end
-      stats[name][:writes] << m1.real
-      print 'R '
-      data = data.randomize
-      m2 = Benchmark.measure do
-        data.each do |key, value|
-          res = cache[key]
-          errors << [name, key, value, res] unless res == value
-        end
-      end
-      stats[name][:reads] << m2.real
-      stats[name][:totals] << (m1.real + m2.real)
-      stats[name][:averages] << (m1.real + m2.real)
     end
-    puts ''
-    puts '----------------------------------------------------------------------'
-    puts '                  Minimum    Maximum      Total    Average        xps '
-    puts '----------------------------------------------------------------------'
-    tcmin, tcmax, tctot, tcavg = 0xFFFFFFFF, 0, 0, 0
-    [:writes, :reads].each do |sname|
-      cmin, cmax, ctot, cavg = 0xFFFFFFFF, 0, 0, 0
-      stats[name][sname].each do |val|
-        cmin = val if val < cmin
-        tcmin = val if val < tcmin
-        cmax = val if val > cmax
-        tcmax = val if val > tcmax
-        ctot = ctot + val
-        tctot = tctot + val
-      end
-      cavg = ctot / RUNS
-      puts '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f ' % ["#{name} #{sname}", cmin, cmax, ctot, cavg, KEYS / cavg]
+
+    puts HEADER
+    [:write, :read, :sum].each do |i|
+      total = stats[name][i].sum
+      line = '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.3f' %
+        ["#{name} #{i}", stats[name][i].min, stats[name][i].max, total, total / RUNS, (RUNS * KEYS) / total]
+      summary << line << "\n" if i == :sum
+      puts line
     end
-    tcavg = tctot / (RUNS * 2)
-    puts '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f ' % ["#{name} avgs", tcmin, tcmax, tctot, tcavg, KEYS / tcavg]
-    summary << [name, tcmin, tcmax, tctot, tcavg, KEYS / tcavg]
-  rescue Exception => ex
-    puts "Failed to benchmark #{name} - #{ex.message}"
+
+    errors = stats[name][:error].sum
+    if errors > 0
+      puts "\e[31m%-14.14s % 10d % 10d % 10d % 10.4f\e[0m" %
+        ['Read errors', stats[name][:error].min, stats[name][:error].max, errors, errors / RUNS]
+    else
+      puts "\e[32mNo read errors"
+    end
+  rescue StandardError => ex
+    puts "\n\e[31mFailed to benchmark #{name} - #{ex.message}\e[0m\n"
   ensure
     cache.close if cache
   end
 end
-puts '----------------------------------------------------------------------'
-if errors.size > 0
-  puts "Errors : #{errors.size}"
-#  puts errors.inspect
-else
-  puts 'No errors in reading!'
-end
-puts '======================================================================'
-puts "Summary: #{RUNS} runs, #{KEYS} keys"
-puts '======================================================================'
-puts '                  Minimum    Maximum      Total    Average        xps '
-puts '----------------------------------------------------------------------'
-summary.each do |sry|
-  puts '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.4f ' % sry
-end
+
+puts "\n\e[1m\e[34m#{SEPARATOR}\nSummary: #{RUNS} runs, #{KEYS} keys\e[34m\n#{SEPARATOR}\e[0m#{HEADER}\n#{summary}"
