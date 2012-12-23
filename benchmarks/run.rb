@@ -33,6 +33,13 @@ STORES = {
   # :YAML => { :file => 'bench.yaml' },
 }
 
+#STORES = {
+#  :Client => {},
+#  :Memory => {},
+#  :MemcachedDalli => {},
+#  :MemcachedNative => {},
+#}
+
 RUNS = 3
 KEYS = 100
 MIN_KEY_SIZE = 3
@@ -92,7 +99,7 @@ end
 HEADER = "\n                  Minimum    Maximum      Total    Average      Ops/s"
 SEPARATOR = '=' * 69
 
-puts "\e[1m\e[34m#{SEPARATOR}\nComparison of write/read between Moneta Stores\n#{SEPARATOR}\e[0m"
+puts "\e[1m\e[34m#{SEPARATOR}\n\e[34mComparison of write/read between Moneta Stores\n\e[34m#{SEPARATOR}\e[0m"
 
 stats, keys, data, summary = {}, [], [], ''
 
@@ -114,7 +121,7 @@ puts 'Value Length   % 10i % 10i % 10i % 10i ' % [val_sizes.min, val_sizes.max, 
 
 STORES.each do |name, options|
   begin
-    puts "\n\e[1m\e[34m#{SEPARATOR}\n#{name}\n#{SEPARATOR}\e[0m"
+    puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34m#{name}\n\e[34m#{SEPARATOR}\e[0m"
 
     cache = Moneta.new(name, options.dup)
 
@@ -180,4 +187,4 @@ STORES.each do |name, options|
   end
 end
 
-puts "\n\e[1m\e[34m#{SEPARATOR}\nSummary: #{RUNS} runs, #{KEYS} keys\e[34m\n#{SEPARATOR}\e[0m#{HEADER}\n#{summary}"
+puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mSummary: #{RUNS} runs, #{KEYS} keys\n\e[34m#{SEPARATOR}\e[0m#{HEADER}\n#{summary}"
