@@ -437,8 +437,9 @@ end
 Testing is done using [Travis-CI](http://travis-ci.org/minad/moneta). Currently we support Ruby 1.8.7 and 1.9.3.
 
 Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/minad/moneta) for each build. Take a look there
-to compare the speed of the different key value stores. The impact of Moneta should be minimal since it is
-only a thin layer on top of the different stores.
+to compare the speed of the different key value stores for different key/value sizes and size distributions.
+Feel free to add your own configurations! The impact of Moneta should be minimal since it is only a thin layer
+on top of the different stores.
 
 ## More information
 
