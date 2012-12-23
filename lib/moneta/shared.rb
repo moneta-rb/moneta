@@ -39,7 +39,6 @@ module Moneta
     private
 
     def wrap(*args)
-      tries ||= 0
       @adapter ||= Adapters::Client.new(@options)
       yield
     rescue Exception => ex
@@ -56,6 +55,7 @@ module Moneta
         @adapter.close if @adapter
         @adapter = nil
       end
+      tries ||= 0
       if (tries += 1) > 2
         raise
       else

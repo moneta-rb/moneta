@@ -57,14 +57,14 @@ stores = {
   :Riak => {},
   :SDBM => { :file => 'bench.sdbm' },
   :Sequel => { :db => 'sqlite:/' },
-  :Sqlite => { :file => 'bench.sqlite' },
+  :Sqlite => { :file => ':memory:' },
   :YAML => { :file => 'bench.yaml' },
 }
 
 stats, keys, data, errors, summary = {}, [], [], [], []
 dict = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'
-vlen_min, vlen_max, vlen_total = 99999, 0, 0
-klen_min, klen_max, klen_total = 99999, 0, 0
+vlen_min, vlen_max, vlen_total = 0xFFFFFFFF, 0, 0
+klen_min, klen_max, klen_total = 0xFFFFFFFF, 0, 0
 
 RUNS = 3
 KEYS = 100
@@ -131,18 +131,22 @@ stores.each do |name, options|
       :averages => [],
     }
 
+    puts name
+
     RUNS.times do |round|
       cache.clear
       print "[#{round + 1}] W"
+      data = data.randomize
       m1 = Benchmark.measure do
-        data.randomize.each do |key, value|
+        data.each do |key, value|
           cache[key] = value
         end
       end
       stats[name][:writes] << m1.real
       print 'R '
+      data = data.randomize
       m2 = Benchmark.measure do
-        data.randomize.each do |key, value|
+        data.each do |key, value|
           res = cache[key]
           errors << [name, key, value, res] unless res == value
         end
@@ -155,9 +159,9 @@ stores.each do |name, options|
     puts '----------------------------------------------------------------------'
     puts '                  Minimum    Maximum      Total    Average        xps '
     puts '----------------------------------------------------------------------'
-    tcmin, tcmax, tctot, tcavg = 99999, 0, 0, 0
+    tcmin, tcmax, tctot, tcavg = 0xFFFFFFFF, 0, 0, 0
     [:writes, :reads].each do |sname|
-      cmin, cmax, ctot, cavg = 99999, 0, 0, 0
+      cmin, cmax, ctot, cavg = 0xFFFFFFFF, 0, 0, 0
       stats[name][sname].each do |val|
         cmin = val if val < cmin
         tcmin = val if val < tcmin
