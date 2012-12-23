@@ -84,6 +84,9 @@ STORES.each do |name, options|
       rescue LoadError => ex
         puts "\e[31mFailed to load DataMapper - #{ex.message}\e[0m"
       end
+    elsif name == :Riak
+      require 'riak'
+      Riak.disable_list_keys_warnings = true
     end
 
     cache = Moneta.new(name, options.dup)
