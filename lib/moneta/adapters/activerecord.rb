@@ -43,39 +43,33 @@ module Moneta
       end
 
       def load(key, options = {})
-        record = @table.where(:k => key).first
+        record = @table.select(:v).where(:k => key).first
         record && record.v
       end
 
       def store(key, value, options = {})
-        @table.transaction do
-          record = @table.where(:k => key).first_or_initialize
-          record.update_attributes(:v => value)
-          value
-        end
+        record = @table.select(:k).where(:k => key).first_or_initialize
+        record.v = value
+        record.save
+        value
       end
 
       def delete(key, options = {})
-        @table.transaction do
-          if record = @table.where(:k => key).first
-            record.destroy
-            record.v
-          end
+        if record = @table.where(:k => key).first
+          record.destroy
+          record.v
         end
       end
 
       def increment(key, amount = 1, options = {})
-        @table.transaction do
-          record = @table.where(:k => key).first_or_initialize
-          record.lock!
-          value = record.v
-          intvalue = value.to_i
-          raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
-          intvalue += amount
-          record.v = intvalue.to_s
-          record.save!
-          intvalue
-        end
+        record = @table.where(:k => key).lock.first_or_initialize
+        value = record.v
+        intvalue = value.to_i
+        raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
+        intvalue += amount
+        record.v = intvalue.to_s
+        record.save
+        intvalue
       end
 
       def clear(options = {})
