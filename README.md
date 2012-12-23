@@ -205,35 +205,35 @@ The stores support the `#increment` which allows atomic increments of unsigned i
 a non existing value, it will be created. If you increment a non integer value an exception will be raised.
 
 ~~~ ruby
-store.increment('counter') => 1 # counter created
-store.increment('counter') => 2
-store.increment('counter', -1) => 1
-store.increment('counter', 13) => 14
-store.increment('counter', 0) => 14
+store.increment('counter')     # returns 1, counter created
+store.increment('counter')     # returns 2
+store.increment('counter', -1) # returns 1
+store.increment('counter', 13) # returns 14
+store.increment('counter', 0)  # returns 14
 store['name'] = 'Moneta'
-store.increment('name') => Exception
+store.increment('name')        # raises an Exception
 ~~~
 
 If you want to access the counter value you have to use raw access to the datastore. This is only important
 if you have a `Moneta::Transformer` somewhere in your proxy chain which transforms the values e.g. with `Marshal`.
 
 ~~~ ruby
-store.increment('counter') => 1 # counter created
-store.load('counter', :raw => true) => '1'
+store.increment('counter')          # returns 1, counter created
+store.load('counter', :raw => true) # returns 1
 
 store.store('counter', '10', :raw => true)
-store.increment('counter') => 11
+store.increment('counter') # returns 11
 ~~~
 
 Fortunately there is a nicer way to do this using some syntactic sugar!
 
 ~~~ ruby
-store.increment('counter') => 1 # counter created
-store.raw['counter'] => '1'
-store.raw.load('counter') => '1'
+store.increment('counter') # returns 1, counter created
+store.raw['counter']       # returns 1
+store.raw.load('counter')  # returns 1
 
 store.raw['counter'] = '10'
-store.increment('counter') => 11
+store.increment('counter') # returns 11
 ~~~
 
 You can also keep the `raw` store in a variable and use it like this:
@@ -241,12 +241,12 @@ You can also keep the `raw` store in a variable and use it like this:
 ~~~ ruby
 counters = store.raw
 
-counters.increment('counter') => 1 # counter created
-counters['counter'] => '1'
-counters.load('counter') => '1'
+counters.increment('counter') # returns 1, counter created
+counters['counter']           # returns 1
+counters.load('counter')      # returns 1
 
 counters['counter'] = '10'
-counters.increment('counter') => 11
+counters.increment('counter') # returns 11
 ~~~
 
 Stores which support incrementation (you have to use `Moneta::Lock` if you want to use the store in a multithreading environment.)
@@ -280,7 +280,7 @@ Stores which don't support incrementation:
 For raw data access as described before the class `Moneta::OptionMerger` is used. It works like this:
 
 ~~~ ruby
-# All methods after `with` get the options passed
+# All methods after 'with' get the options passed
 store.with(:raw => true).load('key')
 
 # You can also specify the methods
@@ -293,8 +293,8 @@ store.raw.load('key')
 # Access substore where all keys get a prefix
 substore = store.prefix('sub')
 substore['key'] = 'value'
-store['key'] => nil
-store['subkey'] => 'value'
+store['key']    # returns nil
+store['subkey'] # returns 'value'
 
 # Set expiration time for all keys
 short_lived_store = long_lived_store.expires(60)

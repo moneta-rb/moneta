@@ -6,7 +6,7 @@ module Moneta
 
     # Constructor
     #
-    # @param [Moneta store] underlying adapter
+    # @param [Moneta store] adapter underlying adapter
     # @param [Hash] options
     def initialize(adapter, options = {})
       @adapter = adapter
