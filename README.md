@@ -2,13 +2,13 @@
 
 [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/moneta)
 
-Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta is very feature rich:
+Moneta provides a standard interface for interacting with various kinds of key/value stores. A short overview of the features:
 
 * Supports a lot of backends (See below)
-* Supports proxies (Similar to [Rack middlewares](http://rack.github.com/))
-* Custom serialization via `Moneta::Transformer` proxy (Marshal/JSON/YAML and many more)
-* Custom key transformation via `Moneta::Transformer` proxy
-* Value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
+* Allows a full configuration of the serialization -> compression -> adapter stack using proxies (Similar to [Rack middlewares](http://rack.github.com/))
+    * Configurable serialization via `Moneta::Transformer` proxy (Marshal/JSON/YAML and many more)
+    * Configurable value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
+    * Configurable key transformation via `Moneta::Transformer` proxy
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Atomic incrementation and decrementation for most stores (Method `#increment`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
