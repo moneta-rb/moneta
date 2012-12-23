@@ -89,10 +89,9 @@ module Moneta
       transformer[:key] << :base64
       transformer[:value] << :base64
     when :Memcached, :MemcachedDalli, :MemcachedNative
-      # Memcached accept only base64 keys, expires already supported
+      # Memcached supports expires already
       options[:expires] = expires if Integer === expires
       expires = false
-      transformer[:key] << :base64
     when :PStore, :YAML, :Null
       # For PStore and YAML only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]

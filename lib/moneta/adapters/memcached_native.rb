@@ -18,6 +18,9 @@ module Moneta
         server = options.delete(:server) || 'localhost:11211'
         @expires = options.delete(:expires) || 604800
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
+        # We don't want a limitation on the key charset. Therefore we use the binary protocol.
+        # It is also faster.
+        options[:binary_protocol] = true unless options.include?(:binary_protocol)
         @cache = ::Memcached.new(server, options)
       end
 
