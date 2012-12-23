@@ -19,6 +19,8 @@ module Moneta
     # Not every Moneta store implements this method,
     # a NotImplementedError if it is not supported.
     #
+    # This method also accepts negative amounts.
+    #
     # @param [Object] key
     # @param [Integer] amount
     # @param [Hash] options
@@ -26,6 +28,21 @@ module Moneta
     # @api public
     def increment(key, amount = 1, options = {})
       raise NotImplementedError, 'increment is not supported'
+    end
+
+    # Atomically decrement integer value with key
+    #
+    # This is just syntactic sugar for calling #increment with a negative value.
+    #
+    # This method also accepts negative amounts.
+    #
+    # @param [Object] key
+    # @param [Integer] amount
+    # @param [Hash] options
+    # @return [Object] value from store
+    # @api public
+    def decrement(key, amount = 1, options = {})
+      increment(key, -amount, options)
     end
 
     # Explicitly close the store

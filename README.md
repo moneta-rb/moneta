@@ -10,7 +10,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
     * Configurable value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
     * Configurable key transformation via `Moneta::Transformer` proxy
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
-* Atomic incrementation and decrementation for most stores (Method `#increment`)
+* Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
@@ -111,7 +111,7 @@ Special transformers:
 ## Moneta API
 
 The Moneta API is purposely extremely similar to the Hash API with a few minor additions.
-There are the additional methods `#load`, `#increment` and `#close`. Every method takes also a optional
+There are the additional methods `#load`, `#increment`, `#decrement` and `#close`. Every method takes also a optional
 option hash. In order so support an identical API across stores, Moneta does not support iteration or partial matches.
 
 ~~~
@@ -137,6 +137,10 @@ option hash. In order so support an identical API across stores, Moneta does not
 
 #increment(key, amount = 1, options = {}) increment numeric value. This is a atomic operation
                                           which is not supported by all stores. Returns current value.
+
+#decrement(key, amount = 1, options = {}) increment numeric value. This is a atomic operation
+                                          which is not supported by all stores. Returns current value.
+                                          This is just syntactic sugar for incrementing with a negative value.
 
 #clear(options = {})                      clear all keys in this store.
 
@@ -211,6 +215,7 @@ store.increment('counter')     # returns 2
 store.increment('counter', -1) # returns 1
 store.increment('counter', 13) # returns 14
 store.increment('counter', 0)  # returns 14
+store.decrement('counter')     # returns 13
 store['name'] = 'Moneta'
 store.increment('name')        # raises an Exception
 ~~~

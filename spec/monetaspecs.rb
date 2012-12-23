@@ -2469,7 +2469,13 @@ end
 #################### not_increment ####################
 
 shared_examples_for 'not_increment' do
-  it 'should not support increment' do
+  it 'should not support #increment' do
+    expect do
+      store.increment('inckey')
+    end.to raise_error(NotImplementedError)
+  end
+
+  it 'should not support #decrement' do
     expect do
       store.increment('inckey')
     end.to raise_error(NotImplementedError)
@@ -2479,7 +2485,7 @@ end
 #################### increment ####################
 
 shared_examples_for 'increment' do
-  it 'should initialize in increment with 1' do
+  it 'should initialize in #increment with 1' do
     store.key?('inckey').should be_false
     store.increment('inckey').should == 1
     store.key?('inckey').should be_true
@@ -2492,7 +2498,7 @@ shared_examples_for 'increment' do
     store.key?('inckey').should be_false
   end
 
-  it 'should initialize in increment with higher value' do
+  it 'should initialize in #increment with higher value' do
     store.increment('inckey', 42).should == 42
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '42'
@@ -2500,7 +2506,7 @@ shared_examples_for 'increment' do
     store.delete('inckey', :raw => true).should == '42'
   end
 
-  it 'should initialize in increment with 0' do
+  it 'should initialize in #increment with 0' do
     store.increment('inckey', 0).should == 0
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '0'
@@ -2508,10 +2514,28 @@ shared_examples_for 'increment' do
     store.delete('inckey', :raw => true).should == '0'
   end
 
+  it 'should initialize in #decrement with 0' do
+    store.decrement('inckey', 0).should == 0
+    store.raw['inckey'].should == '0'
+  end
+
+  it 'should initialize in #decrement with negative value' do
+    store.decrement('inckey', -42).should == 42
+    store.raw['inckey'].should == '42'
+  end
+
   it 'should support incrementing existing value by value' do
     store.increment('inckey').should == 1
     store.increment('inckey', 42).should == 43
     store.raw['inckey'].should == '43'
+  end
+
+  it 'should support decrementing existing value by value' do
+    store.increment('inckey').should == 1
+    store.decrement('inckey').should == 0
+    store.increment('inckey', 42).should == 42
+    store.decrement('inckey', 2).should == 40
+    store.raw['inckey'].should == '40'
   end
 
   it 'should support incrementing existing value by 0' do
@@ -2540,10 +2564,17 @@ shared_examples_for 'increment' do
     store.raw['inckey'].should == '43'
   end
 
-  it 'should raise error on non integer value' do
+  it 'should raise error in #increment on non integer value' do
     store['strkey'] = 'value'
     expect do
       store.increment('strkey')
+    end.to raise_error
+  end
+
+  it 'should raise error in #decrement on non integer value' do
+    store['strkey'] = 'value'
+    expect do
+      store.decrement('strkey')
     end.to raise_error
   end
 end
