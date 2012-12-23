@@ -70,7 +70,7 @@ puts '======================================================================'
 
 stores.each do |name, options|
   begin
-    cache = Moneta.new(name, options)
+    cache = Moneta.new(name, options.dup)
     cache['test'] = 'test'
   rescue Exception => ex
     puts "#{name} not benchmarked - #{ex.message}"
@@ -113,7 +113,7 @@ stores.each do |name, options|
     puts '======================================================================'
     puts name
     puts '----------------------------------------------------------------------'
-    cache = Moneta.new(name, options)
+    cache = Moneta.new(name, options.dup)
 
     stats[name] = {
       :writes => [],
