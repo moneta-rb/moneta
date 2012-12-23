@@ -1,0 +1,9 @@
+master
+
+  * Memcached: Use binary protocol and no base64 encoding of the keys
+  * Transformer: Remove newlines from base64 encodes values
+  * Server: Add method #run which will block and #running? to allow forking
+
+0.7.0
+
+  * Major rewrite
