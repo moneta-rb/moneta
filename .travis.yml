@@ -35,30 +35,50 @@ matrix:
       env: "TASK=test:parallel"
     - rvm: 1.8.7
       env: "TASK=benchmarks CONFIG=uniform_small"
+    - rvm: 1.8.7
       env: "TASK=benchmarks CONFIG=uniform_medium"
+    - rvm: 1.8.7
       env: "TASK=benchmarks CONFIG=uniform_large"
+    - rvm: 1.8.7
       env: "TASK=benchmarks CONFIG=normal_small"
+    - rvm: 1.8.7
       env: "TASK=benchmarks CONFIG=normal_medium"
+    - rvm: 1.8.7
       env: "TASK=benchmarks CONFIG=normal_large"
     - rvm: jruby
       env: "TASK=benchmarks CONFIG=uniform_small"
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=uniform_medium"
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=uniform_large"
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=normal_small"
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=normal_medium"
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=normal_large"
     - rvm: rbx-18mode
       env: "TASK=benchmarks CONFIG=uniform_small"
+    - rvm: rbx-18mode
       env: "TASK=benchmarks CONFIG=uniform_medium"
+    - rvm: rbx-18mode
       env: "TASK=benchmarks CONFIG=uniform_large"
+    - rvm: rbx-18mode
       env: "TASK=benchmarks CONFIG=normal_small"
+    - rvm: rbx-18mode
       env: "TASK=benchmarks CONFIG=normal_medium"
+    - rvm: rbx-18mode
       env: "TASK=benchmarks CONFIG=normal_large"
     - rvm: rbx-19mode
       env: "TASK=benchmarks CONFIG=uniform_small"
+    - rvm: rbx-19mode
       env: "TASK=benchmarks CONFIG=uniform_medium"
+    - rvm: rbx-19mode
       env: "TASK=benchmarks CONFIG=uniform_large"
+    - rvm: rbx-19mode
       env: "TASK=benchmarks CONFIG=normal_small"
+    - rvm: rbx-19mode
       env: "TASK=benchmarks CONFIG=normal_medium"
+    - rvm: rbx-19mode
       env: "TASK=benchmarks CONFIG=normal_large"
 script: "bundle exec rake $TASK"
