@@ -13,21 +13,21 @@ end
 
 begin
   server = Moneta::Server.new(Moneta.new(:Memory))
-rescue
+rescue Exception => ex
   puts "Failed to start Moneta server - #{ex.message}"
 end
 
+class String
+  def random(n)
+    (1..n).map { self[rand(size),1] }.join
+  end
+end
+
 class Array
-  def random_index
-    rand(size)
-  end
-
-  def random_value
-    self[random_index]
-  end
-
-  def random_subset(n)
-    (1..n).map{|x| random_value }
+  def randomize
+    rest, result = dup, []
+    result << rest.slice!(rand(rest.size)) until result.size == size
+    result
   end
 end
 
@@ -60,7 +60,7 @@ stores = {
 }
 
 stats, keys, data, errors, summary = {}, [], [], [], []
-dict = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'.split('')
+dict = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'
 vlen_min, vlen_max, vlen_total, vlen_average = 99999, 0, 0, 0
 klen_min, klen_max, klen_total, klen_average = 99999, 0, 0, 0
 
@@ -92,8 +92,9 @@ KEYS.times do |x|
   klen = rand(MAX_KEY_SIZE - MIN_KEY_SIZE) + MIN_KEY_SIZE
   vlen = rand(MAX_VALUE_SIZE - MIN_VALUE_SIZE) + MIN_VALUE_SIZE
 
-  key = dict.random_subset(klen).join
-  value = dict.random_subset(vlen).join
+  key = dict.random(klen)
+  value = dict.random(vlen)
+
   keys << key
   data << [key, value]
 
@@ -133,16 +134,14 @@ stores.each do |name, options|
       cache.clear
       print "[#{round + 1}] W"
       m1 = Benchmark.measure do
-        KEYS.times do
-          key, value = data.random_value
+        data.randomize.each do |key, value|
           cache[key] = value
         end
       end
       stats[name][:writes] << m1.real
       print 'R '
       m2 = Benchmark.measure do
-        KEYS.times do
-          key, value = data.random_value
+        data.randomize.each do |key, value|
           res = cache[key]
           errors << [name, key, value, res] unless res == value
         end
