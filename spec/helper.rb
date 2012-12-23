@@ -34,6 +34,14 @@ class Value
   end
 end
 
+def start_server(*args)
+  server = Moneta::Server.new(*args)
+  Thread.new { server.run }
+  sleep 0.1 until server.running?
+rescue Exception => ex
+  puts "Failed to start server - #{ex.message}"
+end
+
 def make_tempdir
   # Expand path since datamapper needs absolute path in setup
   tempdir = File.expand_path(File.join(File.dirname(__FILE__), 'tmp'))

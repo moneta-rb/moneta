@@ -4,9 +4,6 @@ module Moneta
   # Moneta server
   # @api public
   class Server
-    TIMEOUT = 1
-    include Net
-
     # Constructor
     #
     # @param [Hash] options
@@ -16,34 +13,51 @@ module Moneta
     # * :file - Unix socket file name (default none)
     def initialize(store, options = {})
       @store = store
-      @server = options[:file] ? UNIXServer.open(options[:file]) :
-        TCPServer.open(options[:port] || DEFAULT_PORT)
+      @server =
+        if @file = options[:file]
+          UNIXServer.open(@file)
+        else
+          TCPServer.open(options[:port] || DEFAULT_PORT)
+        end
       @clients = [@server]
+      @running = false
+    end
+
+    def running?
+      @running
+    end
+
+    def run
+      raise 'Already running' if @running
+      @stop = false
       @running = true
-      @thread = Thread.new do
-        mainloop while @running
-        File.unlink(options[:file]) if options[:file]
+      begin
+        until @stop
+          mainloop
+        end
+      ensure
+        File.unlink(@file) if @file
       end
     end
 
     def stop
-      if @thread
-        @running = false
-        @server.close
-        @server = nil
-        @thread.join
-        @thread = nil
-      end
+      raise 'Not running' unless @running
+      @stop = true
+      @server.close
+      @server = nil
     end
 
     private
+
+    include Net
+    TIMEOUT = 1
 
     def mainloop
       client = accept
       handle(client) if client
     rescue Exception => ex
       puts "#{ex.message}\n#{ex.backtrace.join("\n")}"
-      write(client, Error.new(ex.message)) if client
+      write(client, Exception.new(ex.message)) if client
     end
 
     def accept
@@ -72,7 +86,7 @@ module Moneta
         write(client, @store.send(method, *args))
       when :store, :clear
         @store.send(method, *args)
-        write(client, nil)
+        client.write(@nil ||= pack(nil))
       else
         raise 'Invalid method call'
       end

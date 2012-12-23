@@ -61,7 +61,7 @@ module Moneta
 
       def read_result
         result = read(@socket)
-        raise result if Error === result
+        raise result if Exception === result
         result
       end
     end

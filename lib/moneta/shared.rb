@@ -27,7 +27,8 @@ module Moneta
     def close
       if @server
         @server.stop
-        @server = nil
+        @thread.join
+        @server = @thread = nil
       end
       if @adapter
         @adapter.close
@@ -44,10 +45,15 @@ module Moneta
     rescue Exception => ex
       puts "Failed to connect: #{ex.message}"
       begin
+        # TODO: Implement this using forking (MRI) and threading (JRuby)
+        # to get maximal performance
         @adapter = Lock.new(@builder.build.last)
         @server = Server.new(@adapter, @options)
+        @thread = Thread.new { @server.run }
+        sleep 0.1 until @server.running?
       rescue Exception => ex
         puts "Failed to start server: #{ex.message}"
+        @adapter.close if @adapter
         @adapter = nil
       end
       if (tries += 1) > 2

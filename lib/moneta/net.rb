@@ -3,7 +3,10 @@ module Moneta
   module Net
     DEFAULT_PORT = 9000
 
-    class Error < Exception; end
+    def pack(o)
+      s = Marshal.dump(o)
+      [s.bytesize].pack('N') << s
+    end
 
     def read(io)
       size = io.read(4).unpack('N').first
@@ -11,8 +14,7 @@ module Moneta
     end
 
     def write(io, o)
-      s = Marshal.dump(o)
-      io.write([s.bytesize].pack('N') << s)
+      io.write(pack(o))
     end
   end
 end

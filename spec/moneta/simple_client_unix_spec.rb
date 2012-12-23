@@ -2,8 +2,7 @@
 require 'helper'
 
 describe_moneta "simple_client_unix" do
-  $unix_server ||= Moneta::Server.new(Moneta::Adapters::Memory.new, :file => File.join(make_tempdir, 'simple_client_unix'))
-  after(:all) { $unix_server.stop; $unix_server = nil }
+  start_server(Moneta::Adapters::Memory.new, :file => File.join(make_tempdir, 'simple_client_unix'))
   def new_store
     Moneta.new(:Client, :file => File.join(make_tempdir, 'simple_client_unix'), :logger => {:out => File.open(File.join(make_tempdir, 'simple_client_unix.log'), 'a')})
   end

@@ -11,11 +11,14 @@ rescue LoadError => ex
   puts "Failed to load DataMapper - #{ex.message}"
 end
 
-begin
-  server = Moneta::Server.new(Moneta.new(:Memory))
-rescue Exception => ex
-  puts "Failed to start Moneta server - #{ex.message}"
+Process.fork do
+  begin
+    Moneta::Server.new(Moneta.new(:Memory)).run
+  rescue Exception => ex
+    puts "Failed to start Moneta server - #{ex.message}"
+  end
 end
+sleep 1 # Wait for server
 
 class String
   def random(n)
@@ -61,8 +64,8 @@ stores = {
 
 stats, keys, data, errors, summary = {}, [], [], [], []
 dict = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'
-vlen_min, vlen_max, vlen_total, vlen_average = 99999, 0, 0, 0
-klen_min, klen_max, klen_total, klen_average = 99999, 0, 0, 0
+vlen_min, vlen_max, vlen_total = 99999, 0, 0
+klen_min, klen_max, klen_total = 99999, 0, 0
 
 RUNS = 3
 KEYS = 100
@@ -106,15 +109,14 @@ KEYS.times do |x|
   klen_max = key.size if key.size > klen_max
   klen_total = klen_total + key.size
 end
-vlen_average = vlen_total / KEYS
 
 puts '----------------------------------------------------------------------'
 puts "Total keys: #{keys.size}, unique: #{keys.uniq.size}"
 puts '----------------------------------------------------------------------'
 puts '                  Minimum    Maximum      Total    Average        xps '
 puts '----------------------------------------------------------------------'
-puts 'Key Length     % 10i % 10i % 10i % 10i ' % [klen_min, klen_max, klen_total, klen_average]
-puts 'Value Length   % 10i % 10i % 10i % 10i ' % [vlen_min, vlen_max, vlen_total, vlen_average]
+puts 'Key Length     % 10i % 10i % 10i % 10i ' % [klen_min, klen_max, klen_total, klen_total / KEYS]
+puts 'Value Length   % 10i % 10i % 10i % 10i ' % [vlen_min, vlen_max, vlen_total, vlen_total / KEYS]
 
 stores.each do |name, options|
   begin
