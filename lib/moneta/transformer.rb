@@ -140,9 +140,9 @@ module Moneta
           require t[3] if t[3]
           code = t[i]
           if t[0] == :serialize && var == 'key'
-            "(tmp = #{value}; String === tmp ? tmp : #{code.gsub('value', 'tmp')})"
+            "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
           else
-            code.gsub('value', value)
+            code % value
           end
         end
       end
