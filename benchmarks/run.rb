@@ -97,21 +97,57 @@ SEPARATOR = '=' * 68
 
 puts "\e[1m\e[34m#{SEPARATOR}\n\e[34mComparison of write/read between Moneta Stores\n\e[34m#{SEPARATOR}\e[0m"
 
+def normal_rand(mean, stddev)
+  # Box-Muller transform
+  theta = 2 * Math::PI * (rand(1e10) / 1e10)
+  scale = stddev * Math.sqrt(-2 * Math.log(1 - (rand(1e10) / 1e10)))
+  [mean + scale * Math.cos(theta),
+   mean + scale * Math.sin(theta)]
+end
+
+def dist_uniform(min, max)
+  rand(max - min) + min
+end
+
+def dist_normal(min, max)
+  mean = (min + max) / 2
+  stddev = (max - min) / 4
+  loop do
+    val = normal_rand(mean, stddev)
+    return val.first if val.first >= min && val.first <= max
+    return val.last if val.last >= min && val.last <= max
+  end
+end
+
 stats, keys, data, summary = {}, [], [], []
 
 KEYS.times do |x|
-  key_size = rand(MAX_KEY_SIZE - MIN_KEY_SIZE) + MIN_KEY_SIZE
-  val_size = rand(MAX_VALUE_SIZE - MIN_VALUE_SIZE) + MIN_VALUE_SIZE
-
-  key = DICT.random(key_size)
+  key = DICT.random(dist_normal(MIN_KEY_SIZE, MAX_KEY_SIZE))
   keys << key
-  data << [key, DICT.random(val_size)]
+  data << [key, DICT.random(dist_normal(MIN_VALUE_SIZE, MAX_VALUE_SIZE))]
 end
+
+key_sizes, val_sizes = data.map(&:first).map(&:size), data.map(&:last).map(&:size)
+
+def write_histogram(file, sizes)
+  min = sizes.min
+  delta = sizes.max - min
+  histogram = []
+  sizes.each do |s|
+    s = 10 * (s - min) / delta
+    histogram[s] ||= 0
+    histogram[s] += 1
+  end
+  File.open(file, 'w') do |f|
+    histogram.each_with_index { |n,i| f.puts "#{i*delta/10+min} #{n}" }
+  end
+end
+
+write_histogram('key.histogram', key_sizes)
+write_histogram('value.histogram', val_sizes)
 
 puts %{Total keys: #{keys.size}, Unique keys: #{keys.uniq.size}
                          Minimum  Maximum    Total  Average}
-key_sizes = data.map(&:first).map(&:size)
-val_sizes = data.map(&:last).map(&:size)
 puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_sizes.min, key_sizes.max, key_sizes.sum, key_sizes.sum / KEYS]
 puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_sizes.min, val_sizes.max, val_sizes.sum, val_sizes.sum / KEYS]
 

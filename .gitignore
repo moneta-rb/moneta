@@ -3,5 +3,7 @@ spec/tmp
 *~
 *.swp
 *.rdb
+.#*
+benchmarks/*.histogram
 benchmarks/bench.*
 Gemfile.lock
