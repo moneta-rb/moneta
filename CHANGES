@@ -4,6 +4,7 @@ master
   * Transformer: Remove newlines from base64 encodes values
   * Server: Add method #run which will block and #running? to allow forking
   * SDBM: #store might raise errors (Don't use SDBM, it is unstable!)
+  * Add #decrement method
 
 0.7.0
 
