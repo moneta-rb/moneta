@@ -3,6 +3,7 @@ master
   * Memcached: Use binary protocol and no base64 encoding of the keys
   * Transformer: Remove newlines from base64 encodes values
   * Server: Add method #run which will block and #running? to allow forking
+  * SDBM: #store might raise errors (Don't use SDBM, it is unstable!)
 
 0.7.0
 
