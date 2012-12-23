@@ -17,7 +17,12 @@ before_install:
 env:
   - "TASK=test:parallel"
   - "TASK=test:non_parallel"
-  - "TASK=benchmarks"
+  - "TASK=benchmarks CONFIG=uniform_small"
+  - "TASK=benchmarks CONFIG=uniform_medium"
+  - "TASK=benchmarks CONFIG=uniform_large"
+  - "TASK=benchmarks CONFIG=normal_small"
+  - "TASK=benchmarks CONFIG=normal_medium"
+  - "TASK=benchmarks CONFIG=normal_large"
 matrix:
   allow_failures:
 #    - rvm: ruby-head
@@ -29,11 +34,31 @@ matrix:
     - rvm: jruby
       env: "TASK=test:parallel"
     - rvm: 1.8.7
-      env: "TASK=benchmarks"
+      env: "TASK=benchmarks CONFIG=uniform_small"
+      env: "TASK=benchmarks CONFIG=uniform_medium"
+      env: "TASK=benchmarks CONFIG=uniform_large"
+      env: "TASK=benchmarks CONFIG=normal_small"
+      env: "TASK=benchmarks CONFIG=normal_medium"
+      env: "TASK=benchmarks CONFIG=normal_large"
     - rvm: jruby
-      env: "TASK=benchmarks"
+      env: "TASK=benchmarks CONFIG=uniform_small"
+      env: "TASK=benchmarks CONFIG=uniform_medium"
+      env: "TASK=benchmarks CONFIG=uniform_large"
+      env: "TASK=benchmarks CONFIG=normal_small"
+      env: "TASK=benchmarks CONFIG=normal_medium"
+      env: "TASK=benchmarks CONFIG=normal_large"
     - rvm: rbx-18mode
-      env: "TASK=benchmarks"
+      env: "TASK=benchmarks CONFIG=uniform_small"
+      env: "TASK=benchmarks CONFIG=uniform_medium"
+      env: "TASK=benchmarks CONFIG=uniform_large"
+      env: "TASK=benchmarks CONFIG=normal_small"
+      env: "TASK=benchmarks CONFIG=normal_medium"
+      env: "TASK=benchmarks CONFIG=normal_large"
     - rvm: rbx-19mode
-      env: "TASK=benchmarks"
+      env: "TASK=benchmarks CONFIG=uniform_small"
+      env: "TASK=benchmarks CONFIG=uniform_medium"
+      env: "TASK=benchmarks CONFIG=uniform_large"
+      env: "TASK=benchmarks CONFIG=normal_small"
+      env: "TASK=benchmarks CONFIG=normal_medium"
+      env: "TASK=benchmarks CONFIG=normal_large"
 script: "bundle exec rake $TASK"

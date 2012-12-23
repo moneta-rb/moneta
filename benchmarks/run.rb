@@ -33,12 +33,75 @@ STORES = {
   # :YAML => { :file => 'bench.yaml' },
 }
 
-RUNS = 3
-KEYS = 100
-MIN_KEY_SIZE = 3
-MAX_KEY_SIZE = 128
-MIN_VALUE_SIZE = 1
-MAX_VALUE_SIZE = 1024 * 10
+CONFIGS = {
+  :uniform_small => {
+    :runs => 3,
+    :keys => 1000,
+    :min_key_length => 1,
+    :max_key_length => 32,
+    :key_dist => :uniform,
+    :min_val_length => 0,
+    :max_val_length => 256,
+    :val_dist => :uniform
+  },
+  :uniform_medium => {
+    :runs => 3,
+    :keys => 100,
+    :min_key_length => 3,
+    :max_key_length => 200,
+    :key_dist => :uniform,
+    :min_val_length => 0,
+    :max_val_length => 1024,
+    :val_dist => :uniform
+  },
+  :uniform_large => {
+    :runs => 3,
+    :keys => 100,
+    :min_key_length => 3,
+    :max_key_length => 200,
+    :key_dist => :uniform,
+    :min_val_length => 0,
+    :max_val_length => 10240,
+    :val_dist => :uniform
+  },
+  :normal_small => {
+    :runs => 3,
+    :keys => 1000,
+    :min_key_length => 1,
+    :max_key_length => 32,
+    :key_dist => :normal,
+    :min_val_length => 0,
+    :max_val_length => 256,
+    :val_dist => :normal
+  },
+  :normal_medium => {
+    :runs => 3,
+    :keys => 100,
+    :min_key_length => 3,
+    :max_key_length => 200,
+    :key_dist => :normal,
+    :min_val_length => 0,
+    :max_val_length => 1024,
+    :val_dist => :normal
+  },
+  :normal_large => {
+    :runs => 3,
+    :keys => 100,
+    :min_key_length => 3,
+    :max_key_length => 200,
+    :key_dist => :normal,
+    :min_val_length => 0,
+    :max_val_length => 10240,
+    :val_dist => :normal
+  },
+}
+
+config_name = ARGV.size == 1 ? ARGV.first.to_sym : :uniform_medium
+unless config = CONFIGS[config_name]
+  puts "Configuration #{config_name} not found"
+  exit
+end
+
 DICT = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'.freeze
 
 class String
@@ -95,39 +158,46 @@ end
 HEADER = "\n                         Minimum  Maximum    Total  Average    Ops/s"
 SEPARATOR = '=' * 68
 
-puts "\e[1m\e[34m#{SEPARATOR}\n\e[34mComparison of write/read between Moneta Stores\n\e[34m#{SEPARATOR}\e[0m"
-
-def normal_rand(mean, stddev)
-  # Box-Muller transform
-  theta = 2 * Math::PI * (rand(1e10) / 1e10)
-  scale = stddev * Math.sqrt(-2 * Math.log(1 - (rand(1e10) / 1e10)))
-  [mean + scale * Math.cos(theta),
-   mean + scale * Math.sin(theta)]
+puts "\e[1m\e[36m#{SEPARATOR}\n\e[36mConfig #{config_name}\n\e[36m#{SEPARATOR}\e[0m"
+config.each do |k,v|
+  puts '%-16s = %-10s' % [k,v]
 end
 
-def dist_uniform(min, max)
-  rand(max - min) + min
-end
+module Rand
+  extend self
 
-def dist_normal(min, max)
-  mean = (min + max) / 2
-  stddev = (max - min) / 4
-  loop do
-    val = normal_rand(mean, stddev)
-    return val.first if val.first >= min && val.first <= max
-    return val.last if val.last >= min && val.last <= max
+  def normal_rand(mean, stddev)
+    # Box-Muller transform
+    theta = 2 * Math::PI * (rand(1e10) / 1e10)
+    scale = stddev * Math.sqrt(-2 * Math.log(1 - (rand(1e10) / 1e10)))
+    [mean + scale * Math.cos(theta),
+     mean + scale * Math.sin(theta)]
+  end
+
+  def uniform(min, max)
+    rand(max - min) + min
+  end
+
+  def normal(min, max)
+    mean = (min + max) / 2
+    stddev = (max - min) / 4
+    loop do
+      val = normal_rand(mean, stddev)
+      return val.first if val.first >= min && val.first <= max
+      return val.last if val.last >= min && val.last <= max
+    end
   end
 end
 
-stats, keys, data, summary = {}, [], [], []
+stats, data, summary = {}, {}, []
 
-KEYS.times do |x|
-  key = DICT.random(dist_normal(MIN_KEY_SIZE, MAX_KEY_SIZE))
-  keys << key
-  data << [key, DICT.random(dist_normal(MIN_VALUE_SIZE, MAX_VALUE_SIZE))]
+until data.size == config[:keys]
+  key = DICT.random(Rand.send(config[:key_dist], config[:min_key_length], config[:max_key_length]))
+  data[key] = DICT.random(Rand.send(config[:val_dist], config[:min_val_length], config[:max_val_length]))
 end
 
-key_sizes, val_sizes = data.map(&:first).map(&:size), data.map(&:last).map(&:size)
+key_lengths, val_lengths = data.keys.map(&:size), data.values.map(&:size)
+data = data.to_a
 
 def write_histogram(file, sizes)
   min = sizes.min
@@ -143,13 +213,13 @@ def write_histogram(file, sizes)
   end
 end
 
-write_histogram('key.histogram', key_sizes)
-write_histogram('value.histogram', val_sizes)
+write_histogram('key.histogram', key_lengths)
+write_histogram('value.histogram', val_lengths)
 
-puts %{Total keys: #{keys.size}, Unique keys: #{keys.uniq.size}
-                         Minimum  Maximum    Total  Average}
-puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_sizes.min, key_sizes.max, key_sizes.sum, key_sizes.sum / KEYS]
-puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_sizes.min, val_sizes.max, val_sizes.sum, val_sizes.sum / KEYS]
+puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mComputing keys and values...\n\e[34m#{SEPARATOR}\e[0m"
+puts %{                         Minimum  Maximum    Total  Average}
+puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_lengths.min, key_lengths.max, key_lengths.sum, key_lengths.sum / data.size]
+puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_lengths.min, val_lengths.max, val_lengths.sum, val_lengths.sum / data.size]
 
 STORES.each do |name, options|
   begin
@@ -166,18 +236,18 @@ STORES.each do |name, options|
 
     %w(Rehearse Measure).each do |type|
       state = ''
-      print "%s [%#{2 * RUNS}s] " % [type, state]
+      print "%s [%#{2 * config[:runs]}s] " % [type, state]
 
-      RUNS.times do |run|
+      config[:runs].times do |run|
         cache.clear
-        print "%s[%-#{2 * RUNS}s] " % ["\b" * (2 * RUNS + 3), state << 'W']
+        print "%s[%-#{2 * config[:runs]}s] " % ["\b" * (2 * config[:runs] + 3), state << 'W']
 
         data = data.randomize
         m1 = Benchmark.measure do
           data.each {|k,v| cache[k] = v }
         end
 
-        print "%s[%-#{2 * RUNS}s] " % ["\b" * (2 * RUNS + 3), state << 'R']
+        print "%s[%-#{2 * config[:runs]}s] " % ["\b" * (2 * config[:runs] + 3), state << 'R']
 
         data = data.randomize
         error = 0
@@ -199,10 +269,10 @@ STORES.each do |name, options|
     puts HEADER
     [:write, :read, :sum].each do |i|
       total = stats[name][i].sum
-      ops = (RUNS * KEYS) / total
+      ops = (config[:runs] * data.size) / total
       line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d' %
         [name, i, stats[name][i].min * 1000, stats[name][i].max * 1000,
-         total * 1000, total * 1000 / RUNS, ops]
+         total * 1000, total * 1000 / config[:runs], ops]
       summary << [-ops, line << "\n"] if i == :sum
       puts line
     end
@@ -210,7 +280,7 @@ STORES.each do |name, options|
     errors = stats[name][:error].sum
     if errors > 0
       puts "\e[31m%-23.23s % 8d % 8d % 8d % 8d\e[0m" %
-        ['Read errors', stats[name][:error].min, stats[name][:error].max, errors, errors / RUNS]
+        ['Read errors', stats[name][:error].min, stats[name][:error].max, errors, errors / config[:runs]]
     else
       puts "\e[32mNo read errors"
     end
@@ -221,7 +291,7 @@ STORES.each do |name, options|
   end
 end
 
-puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mSummary: #{RUNS} runs, #{KEYS} keys\n\e[34m#{SEPARATOR}\e[0m#{HEADER}\n"
+puts "\n\e[1m\e[36m#{SEPARATOR}\n\e[36mSummary #{config_name}: #{config[:runs]} runs, #{data.size} keys\n\e[36m#{SEPARATOR}\e[0m#{HEADER}\n"
 summary.sort_by(&:first).each do |entry|
   puts entry.last
 end

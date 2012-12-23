@@ -32,7 +32,7 @@ end
 
 task :benchmarks do
   Dir.chdir('benchmarks')
-  ruby('run.rb')
+  ruby("run.rb #{ENV['CONFIG']}")
 end
 
 task :default => :test
