@@ -44,7 +44,6 @@ stores = {
   :File => { :dir => 'bench.file' },
   :GDBM => { :file => 'bench.gdbm' },
   :HBase => {},
-  :HBase => {},
   :HashFile => { :dir => 'bench.hashfile' },
   :LRUHash => {},
   :LevelDB => { :dir => 'bench.leveldb' },
@@ -70,7 +69,7 @@ klen_min, klen_max, klen_total = 99999, 0, 0
 RUNS = 3
 KEYS = 100
 MIN_KEY_SIZE = 3
-MAX_KEY_SIZE = 64
+MAX_KEY_SIZE = 128
 MIN_VALUE_SIZE = 1
 MAX_VALUE_SIZE = 1024 * 10
 
