@@ -110,6 +110,10 @@ Special transformers:
 
 ## Moneta API
 
+The Moneta API is purposely extremely similar to the Hash API with a few minor additions.
+There are the additional methods `#load`, `#increment` and `#close`. Every method takes also a optional
+option hash. In order so support an identical API across stores, Moneta does not support iteration or partial matches.
+
 ~~~
 #initialize(options)                      options differs per-store, and is used to set up the store.
 
@@ -138,9 +142,6 @@ Special transformers:
 
 #close                                    close database connection.
 ~~~
-
-The Moneta API is purposely extremely similar to the Hash API. In order so support an
-identical API across stores, it does not support iteration or partial matches.
 
 ### Creating a Store
 
