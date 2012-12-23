@@ -432,6 +432,15 @@ store = Moneta.build do
 end
 ~~~
 
+If you want to go further, you might want to take a look at `Moneta::Server` and `Moneta::Adapters::Client` which
+are used by `Moneta::Shared` and provide the networking communication. But be aware that they are experimental
+and subjected to change. They provide an acceptable performance (for being ruby only), but don't have a stable protocol yet.
+
+You might wonder why I didn't use [DRB](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/drb/rdoc/DRb.html) to implement server and client -
+in fact my first versions used it, but with much worse performance and it was real fun to implement the networking directly :)
+There is still much room for improvement and experiments, try [EventMachine](http://eventmachine.rubyforge.org/),
+try [Kgio](http://bogomips.org/kgio/), ...
+
 ## Testing and Benchmarks
 
 Testing is done using [Travis-CI](http://travis-ci.org/minad/moneta). Currently we support Ruby 1.8.7 and 1.9.3.
