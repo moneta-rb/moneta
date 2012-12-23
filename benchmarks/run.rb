@@ -33,13 +33,6 @@ STORES = {
   # :YAML => { :file => 'bench.yaml' },
 }
 
-#STORES = {
-#  :Client => {},
-#  :Memory => {},
-#  :MemcachedDalli => {},
-#  :MemcachedNative => {},
-#}
-
 RUNS = 3
 KEYS = 100
 MIN_KEY_SIZE = 3
@@ -99,12 +92,12 @@ STORES.each do |name, options|
   end
 end
 
-HEADER = "\n                  Minimum    Maximum      Total    Average      Ops/s"
-SEPARATOR = '=' * 69
+HEADER = "\n                         Minimum  Maximum    Total  Average    Ops/s"
+SEPARATOR = '=' * 68
 
 puts "\e[1m\e[34m#{SEPARATOR}\n\e[34mComparison of write/read between Moneta Stores\n\e[34m#{SEPARATOR}\e[0m"
 
-stats, keys, data, summary = {}, [], [], ''
+stats, keys, data, summary = {}, [], [], []
 
 KEYS.times do |x|
   key_size = rand(MAX_KEY_SIZE - MIN_KEY_SIZE) + MIN_KEY_SIZE
@@ -116,11 +109,11 @@ KEYS.times do |x|
 end
 
 puts %{Total keys: #{keys.size}, Unique keys: #{keys.uniq.size}
-                  Minimum    Maximum      Total    Average}
+                         Minimum  Maximum    Total  Average}
 key_sizes = data.map(&:first).map(&:size)
 val_sizes = data.map(&:last).map(&:size)
-puts 'Key Length     % 10i % 10i % 10i % 10i ' % [key_sizes.min, key_sizes.max, key_sizes.sum, key_sizes.sum / KEYS]
-puts 'Value Length   % 10i % 10i % 10i % 10i ' % [val_sizes.min, val_sizes.max, val_sizes.sum, val_sizes.sum / KEYS]
+puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_sizes.min, key_sizes.max, key_sizes.sum, key_sizes.sum / KEYS]
+puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_sizes.min, val_sizes.max, val_sizes.sum, val_sizes.sum / KEYS]
 
 STORES.each do |name, options|
   begin
@@ -170,15 +163,17 @@ STORES.each do |name, options|
     puts HEADER
     [:write, :read, :sum].each do |i|
       total = stats[name][i].sum
-      line = '%-14.14s % 10.4f % 10.4f % 10.4f % 10.4f % 10.3f' %
-        ["#{name} #{i}", stats[name][i].min, stats[name][i].max, total, total / RUNS, (RUNS * KEYS) / total]
-      summary << line << "\n" if i == :sum
+      ops = (RUNS * KEYS) / total
+      line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d' %
+        [name, i, stats[name][i].min * 1000, stats[name][i].max * 1000,
+         total * 1000, total * 1000 / RUNS, ops]
+      summary << [-ops, line << "\n"] if i == :sum
       puts line
     end
 
     errors = stats[name][:error].sum
     if errors > 0
-      puts "\e[31m%-14.14s % 10d % 10d % 10d % 10.4f\e[0m" %
+      puts "\e[31m%-23.23s % 8d % 8d % 8d % 8d\e[0m" %
         ['Read errors', stats[name][:error].min, stats[name][:error].max, errors, errors / RUNS]
     else
       puts "\e[32mNo read errors"
@@ -190,4 +185,7 @@ STORES.each do |name, options|
   end
 end
 
-puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mSummary: #{RUNS} runs, #{KEYS} keys\n\e[34m#{SEPARATOR}\e[0m#{HEADER}\n#{summary}"
+puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mSummary: #{RUNS} runs, #{KEYS} keys\n\e[34m#{SEPARATOR}\e[0m#{HEADER}\n"
+summary.sort_by(&:first).each do |entry|
+  puts entry.last
+end

@@ -20,7 +20,8 @@ module Moneta
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
         # We don't want a limitation on the key charset. Therefore we use the binary protocol.
         # It is also faster.
-        options[:binary_protocol] = true unless options.include?(:binary_protocol)
+        #options[:binary_protocol] = true unless options.include?(:binary_protocol)
+        #options[:exception_retry_limit] = 0
         @cache = ::Memcached.new(server, options)
       end
 
