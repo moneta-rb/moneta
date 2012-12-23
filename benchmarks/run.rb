@@ -25,12 +25,12 @@ class Array
 end
 
 stores = {
-  :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
+  :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => 'bench.activerecord' } },
   :Cassandra => {},
   :Client => {},
   :Couch => {},
   :DBM => { :file => 'bench.dbm' },
-  :DataMapper => { :setup => 'sqlite3::memory:' },
+  :DataMapper => { :setup => 'sqlite3:bench.datamapper' },
   :File => { :dir => 'bench.file' },
   :GDBM => { :file => 'bench.gdbm' },
   :HBase => {},
@@ -48,7 +48,7 @@ stores = {
   :Riak => {},
   :SDBM => { :file => 'bench.sdbm' },
   :Sequel => { :db => 'sqlite:/' },
-  :Sqlite => { :file => ':memory:' },
+  :Sqlite => { :file => 'bench.sqlite' },
   :YAML => { :file => 'bench.yaml' },
 }
 
@@ -70,7 +70,7 @@ puts '======================================================================'
 
 stores.each do |name, options|
   begin
-    cache = Moneta.new(name, options.dup)
+    cache = Moneta.new(name, options)
     cache['test'] = 'test'
   rescue Exception => ex
     puts "#{name} not benchmarked - #{ex.message}"
@@ -113,7 +113,7 @@ stores.each do |name, options|
     puts '======================================================================'
     puts name
     puts '----------------------------------------------------------------------'
-    cache = Moneta.new(name, options.dup)
+    cache = Moneta.new(name, options)
 
     stats[name] = {
       :writes => [],
