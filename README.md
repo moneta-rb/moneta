@@ -445,7 +445,8 @@ try [Kgio](http://bogomips.org/kgio/), ...
 
 ### ToyStore ORM
 
-If you want something more advanced, use John Nunemaker's [ToyStore](https://github.com/jnunemaker/toystore) which works
+If you want something more advanced to handle your objects and relations,
+use John Nunemaker's [ToyStore](https://github.com/jnunemaker/toystore) which works
 together with Moneta. Assuming that `Person` is a `ToyStore::Object` you can
 add persistence using Moneta as follows:
 
