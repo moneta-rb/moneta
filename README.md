@@ -408,7 +408,9 @@ config.cache_store :moneta_store, :store => Moneta.build do
 end
 ~~~
 
-## Advanced - Build your own key value server
+## Advanced
+
+### Build your own key value server
 
 You can use Moneta to build your own key/value server which is shared between
 multiple processes. If you run the following code in two different processes,
@@ -440,6 +442,17 @@ You might wonder why I didn't use [DRb](http://www.ruby-doc.org/stdlib-1.9.3/lib
 in fact my first versions used it, but with much worse performance and it was real fun to implement the networking directly :)
 There is still much room for improvement and experiments, try [EventMachine](http://eventmachine.rubyforge.org/),
 try [Kgio](http://bogomips.org/kgio/), ...
+
+### ToyStore ORM
+
+If you want something more advanced, use John Nunemaker's [ToyStore](https://github.com/jnunemaker/toystore) which works
+together with Moneta. Assuming that `Person` is a `ToyStore::Object` you can
+add persistence using Moneta as follows:
+
+~~~ ruby
+# Use the Moneta Redis backend
+Person.adapter :memory, Moneta.new(:Redis)
+~~~
 
 ## Testing and Benchmarks
 
