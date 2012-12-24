@@ -3,6 +3,8 @@ module Moneta
   module Net
     DEFAULT_PORT = 9000
 
+    class Error < RuntimeError; end
+
     def pack(o)
       s = Marshal.dump(o)
       [s.bytesize].pack('N') << s

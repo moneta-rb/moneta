@@ -57,7 +57,7 @@ module Moneta
       handle(client) if client
     rescue Exception => ex
       puts "#{ex.message}\n#{ex.backtrace.join("\n")}"
-      write(client, Exception.new(ex.message)) if client
+      write(client, Error.new(ex.message)) if client
     end
 
     def accept
