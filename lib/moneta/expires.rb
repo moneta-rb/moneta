@@ -10,9 +10,7 @@ module Moneta
     #
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
-    #
-    # Options:
-    # * :expires - Default expiration time (default none)
+    # @option options [String] :expires Default expiration time
     def initialize(adapter, options = {})
       super
       @expires = options[:expires]

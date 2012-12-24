@@ -10,10 +10,8 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :file - Database file
-      # * :table - Table name (default moneta)
+      # @option options [String] :file Database file
+      # @option options [String] :table ('moneta') Table name
       def initialize(options = {})
         raise ArgumentError, 'Option :file is required' unless options[:file]
         table = options[:table] || 'moneta'

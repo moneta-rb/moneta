@@ -8,14 +8,12 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :server - Memcached server (default localhost:11211)
-      # * :namespace - Key namespace
-      # * :expires - Default expiration time (default 604800)
-      # * Other options passed to Memcached#new
+      # @option options [String] :server ('127.0.0.1:11211') Memcached server
+      # @option options [String] :namespace Key namespace
+      # @option options [String] :expires (604800) Default expiration time
+      # @option options Other options passed to `Memcached#new`
       def initialize(options = {})
-        server = options.delete(:server) || 'localhost:11211'
+        server = options.delete(:server) || '127.0.0.1:11211'
         @expires = options.delete(:expires) || 604800
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
         # We don't want a limitation on the key charset. Therefore we use the binary protocol.

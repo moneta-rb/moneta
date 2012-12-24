@@ -8,10 +8,8 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :dir - Fog directory
-      # * Other options passed to Fog::Storage#new
+      # @option options [String] :dir Fog directory
+      # @option options Other options passed to `Fog::Storage#new`
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
         storage = ::Fog::Storage.new(options)

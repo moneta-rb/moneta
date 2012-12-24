@@ -7,10 +7,8 @@ module Moneta
     # Constructor
     #
     # @param [Hash] options
-    #
-    # Options:
-    # * :port - TCP port (default 9000)
-    # * :file - Unix socket file name (default none)
+    # @option options [Integer] :port (9000) TCP port
+    # @option options [String] :file Alternative Unix socket file name
     def initialize(store, options = {})
       @store = store
       @server =

@@ -26,14 +26,12 @@ module Moneta
       # @param [Moneta store] adapter The underlying store
       # @param [Hash] options
       # @return [Transformer] new Moneta transformer
-      #
-      # Options:
-      # * :key - List of key transformers in the order in which they should be applied
-      # * :value - List of value transformers in the order in which they should be applied
-      # * :prefix - Prefix string for key namespacing (Used by the :prefix key transformer)
-      # * :secret - HMAC secret to verify values (Used by the :hmac value transformer)
-      # * :maxlen - Maximum key length (Used by the :truncate key transformer)
-      # * :quiet - Disable error message
+      # @option options [Array] :key List of key transformers in the order in which they should be applied
+      # @option options [Array] :value List of value transformers in the order in which they should be applied
+      # @option options [String] :prefix Prefix string for key namespacing (Used by the :prefix key transformer)
+      # @option options [String] :secret HMAC secret to verify values (Used by the :hmac value transformer)
+      # @option options [Integer] :maxlen Maximum key length (Used by the :truncate key transformer)
+      # @option options [Boolean] :quiet Disable error message
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact

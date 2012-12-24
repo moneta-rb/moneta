@@ -11,11 +11,9 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :bucket - Bucket name (default moneta)
-      # * :content_type - Default content type (default application/octet-stream)
-      # * All other options passed to Riak::Client#new
+      # @option options [String] :bucket ('moneta') Bucket name
+      # @option options [String] :content_type ('application/octet-stream') Default content type
+      # @option options All other options passed to `Riak::Client#new`
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'moneta'
         @content_type = options.delete(:content_type) || 'application/octet-stream'

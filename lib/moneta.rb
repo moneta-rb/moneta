@@ -55,18 +55,17 @@ module Moneta
   # @param [Symbol] name Name of adapter (See Moneta::Adapters)
   # @param [Hash] options
   # @return [Moneta store] newly created Moneta store
-  #
-  # Options:
-  # * :expires - If true or integer, ensure that store supports expiration by inserting
-  #   Moneta::Expires if the underlying adapter doesn't support it natively
-  # * :threadsafe - If true, ensure that the store is thread safe by inserting Moneta::Lock
-  # * :logger - If true or Hash, add logger to proxy stack (Hash is passed to logger as options)
-  # * :compress - If true, compress value with zlib, or specify custom compress, e.g. :quicklz
-  # * :serializer - Serializer used for key and value, disable with nil (default :marshal)
-  # * :key_serializer - Serializer used for key, disable with nil (default options[:serializer] if not provided)
-  # * :value_serializer - Serializer used for key, disable with nil (default options[:serializer] if not provided)
-  # * :prefix - Key prefix used for namespacing (default none)
-  # * All other options passed to the adapter
+  # @option options [Boolean/Integer] :expires Ensure that store supports expiration by inserting
+  #                                            `Moneta::Expires` if the underlying adapter doesn't support it natively
+  #                                            and set default expiration time
+  # @option options [Boolean] :threadsafe (false) Ensure that the store is thread safe by inserting Moneta::Lock
+  # @option options [Boolean/Hash] :logger (false) Add logger to proxy stack (Hash is passed to logger as options)
+  # @option options [Boolean/Symbol] :compress (false) If true, compress value with zlib, or specify custom compress, e.g. :quicklz
+  # @option options [Symbol] :serializer (:marshal) Serializer used for key and value, disable with nil
+  # @option options [Symbol] :key_serializer (options[:serializer]) Serializer used for key, disable with nil
+  # @option options [Symbol] :value_serializer (options[:serializer]) Serializer used for value, disable with nil
+  # @option options [String] :prefix Key prefix used for namespacing (default none)
+  # @option options All other options passed to the adapter
   #
   # Supported adapters:
   # * :HashFile (Store which spreads the entries using a md5 hash, e.g. cache/42/391dd7535aebef91b823286ac67fcd)

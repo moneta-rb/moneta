@@ -11,13 +11,11 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :keyspace - Cassandra keyspace (default 'moneta')
-      # * :column_family - Cassandra column family (default 'moneta')
-      # * :host - Server host name (default 127.0.0.1)
-      # * :port - Server port (default 9160)
-      # * :expires - Default expiration time (default none)
+      # @option options [String] :keyspace ('moneta') Cassandra keyspace
+      # @option options [String] :column_family ('moneta') Cassandra column family
+      # @option options [String] :host ('127.0.0.1') Server host name
+      # @option options [Integer] :port (9160) Server port
+      # @option options [String] :expires Default expiration time
       def initialize(options = {})
         options[:host] ||= '127.0.0.1'
         options[:port] ||=  9160

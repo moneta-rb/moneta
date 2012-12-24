@@ -8,9 +8,7 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :file - PStore file
+      # @option options [String] :file PStore file
       def initialize(options = {})
         raise ArgumentError, 'Option :file is required' unless options[:file]
         FileUtils.mkpath(::File.dirname(options[:file]))

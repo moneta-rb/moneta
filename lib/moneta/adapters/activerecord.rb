@@ -14,10 +14,8 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :table - Table name (default moneta)
-      # * :connection - ActiveRecord connection
+      # @option options [String] :table ('moneta') Table name
+      # @option options [Hash]   :connection ActiveRecord connection configuration
       def initialize(options = {})
         table = options[:table] || 'moneta'
         @table = self.class.tables[table] ||=

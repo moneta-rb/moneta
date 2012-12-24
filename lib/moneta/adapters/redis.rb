@@ -8,10 +8,8 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :expires - Default expiration time (default none)
-      # * Other options passed to Redis#new
+      # @option options [String] :expires Default expiration time
+      # @option options Other options passed to `Redis#new`
       def initialize(options = {})
         @expires = options.delete(:expires)
         @redis = ::Redis.new(options)

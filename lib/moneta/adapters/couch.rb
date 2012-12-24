@@ -8,9 +8,7 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :db - Couch database (default moneta)
+      # @option options [String] :db ('moneta') Couch database
       def initialize(options = {})
         options[:db] ||= 'moneta'
         @db = ::CouchRest.database!(options[:db])

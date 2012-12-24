@@ -8,9 +8,7 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :file - Database file
+      # @option options [String] :file Database file
       def initialize(options = {})
         raise ArgumentError, 'Option :file is required' unless options[:file]
         @hash = ::SDBM.new(options[:file])

@@ -37,11 +37,9 @@ module Moneta
     #
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
-    #
-    # Options:
-    # * :logger - Callable logger object (default Moneta::Logger::Format)
-    # * :logprefix - Prefix string (default 'Moneta ')
-    # * :logout - Output (default STDOUT)
+    # @option options [Object] :logger (Moneta::Logger::Format) Callable logger object
+    # @option options [String] :logprefix ('Moneta ') Prefix string
+    # @option options [IO] :logout (STDOUT) Output
     def initialize(adapter, options = {})
       super
       @logger = options[:logger] || Format.new(options)

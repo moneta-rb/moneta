@@ -8,10 +8,8 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :dir - Database path
-      # * All other options passed to LevelDB::DB#new
+      # @option options [String] :dir - Database path
+      # @option options All other options passed to `LevelDB::DB#new`
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless options[:dir]
         @hash = ::LevelDB::DB.new(options[:dir])

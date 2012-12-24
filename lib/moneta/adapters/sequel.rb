@@ -8,11 +8,9 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :db - Sequel database
-      # * :table - Table name (default :moneta)
-      # * All other options passed to Sequel#connect
+      # @option options [String] :db Sequel database
+      # @option options [String/Symbol] :table (:moneta) Table name
+      # @option options All other options passed to `Sequel#connect`
       def initialize(options = {})
         raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
         table = options.delete(:table) || :moneta

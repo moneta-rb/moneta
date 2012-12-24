@@ -11,9 +11,7 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :max_size - Maximum byte size of hash values (default 1024000)
+      # @option options [Integer] :max_size (1024000) Maximum total byte size of hash values
       def initialize(options = {})
         @max_size = options[:max_size] || 1024000
         clear

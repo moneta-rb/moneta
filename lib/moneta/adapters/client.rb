@@ -10,11 +10,9 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :port - TCP port (default 9000)
-      # * :host - Hostname (default empty)
-      # * :file - Unix socket file name (default none)
+      # @option options [Integer] :port (9000) TCP port
+      # @option options [String] :host ('127.0.0.1') Hostname
+      # @option options [String] :file Unix socket file name as alternative to `:port` and `:host`
       def initialize(options = {})
         @socket = options[:file] ? UNIXSocket.open(options[:file]) :
           TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || DEFAULT_PORT)

@@ -7,6 +7,10 @@ module Moneta
     class File < Base
       include Mixins::IncrementSupport
 
+      # Constructor
+      #
+      # @param [Hash] options
+      # @option options [String] :dir Directory where files will be stored
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless @dir = options[:dir]
         FileUtils.mkpath(@dir)

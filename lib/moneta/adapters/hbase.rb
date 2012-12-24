@@ -8,13 +8,11 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :host - Server host name (default 127.0.0.1)
-      # * :port - Server port (default 9090)
-      # * :table - Table name (default moneta)
-      # * :column_family - Column family (default moneta)
-      # * :column - Column (default value)
+      # @option options [String] :host ('127.0.0.1') Server host name
+      # @option options [Integer] :port (9090) Server port
+      # @option options [String] :table ('moneta') Table name
+      # @option options [String] :column_family ('moneta') Column family
+      # @option options [String] :column ('value') Column
       def initialize(options = {})
         options[:host] ||= '127.0.0.1'
         options[:port] ||= '9090'

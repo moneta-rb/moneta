@@ -8,10 +8,8 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :file - Database file
-      # * :type - Database type (default :hdb, :bdb and :hdb possible)
+      # @option options [String] :file Database file
+      # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)
       def initialize(options = {})
         file = options[:file]
         raise ArgumentError, 'Option :file is required' unless options[:file]

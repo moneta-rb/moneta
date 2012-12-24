@@ -8,15 +8,13 @@ module Moneta
       # Constructor
       #
       # @param [Hash] options
-      #
-      # Options:
-      # * :collection - MongoDB collection name (default moneta)
-      # * :host - MongoDB server host (default localhost)
-      # * :port - MongoDB server port (default mongodb default port)
-      # * :db - MongoDB database (default moneta)
+      # @option options [String] :collection ('moneta') MongoDB collection name
+      # @option options [String] :host ('127.0.0.1') MongoDB server host
+      # @option options [Integer] :port (MongoDB default port) MongoDB server port
+      # @option options [String] :db ('moneta') MongoDB database
       def initialize(options = {})
         collection = options.delete(:collection) || 'moneta'
-        host = options.delete(:host) || 'localhost'
+        host = options.delete(:host) || '127.0.0.1'
         port = options.delete(:port) || ::Mongo::Connection::DEFAULT_PORT
         db = options.delete(:db) || 'moneta'
         connection = ::Mongo::Connection.new(host, port, options)
