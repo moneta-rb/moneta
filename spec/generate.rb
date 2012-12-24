@@ -970,7 +970,7 @@ end}
   },
   'adapter_pstore' => {
     :build => 'Moneta::Adapters::PStore.new(:file => File.join(make_tempdir, "adapter_pstore"))',
-    :specs => STANDARD_SPECS.stringkeys_only
+    :specs => STANDARD_SPECS.without_transform
   },
   'adapter_redis' => {
     :build => 'Moneta::Adapters::Redis.new',
@@ -1021,8 +1021,7 @@ end}
   },
   'adapter_yaml' => {
     :build => 'Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',
-    :specs => TRANSFORMER_SPECS.stringkeys_only,
-    :specs => STANDARD_SPECS
+    :specs => STANDARD_SPECS.simplevalues_only.simplekeys_only.without_transform
   },
   'optionmerger' => {
     :store => :Memory,
