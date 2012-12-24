@@ -1,4 +1,4 @@
-master
+0.7.1
 
   * Memcached: Use binary protocol and no base64 encoding of the keys
   * Transformer: Remove newlines from base64 encodes values
