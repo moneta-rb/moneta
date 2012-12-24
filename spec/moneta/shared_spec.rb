@@ -4,7 +4,7 @@ require 'helper'
 describe_moneta "shared" do
   def new_store
     Moneta.build do
-      use(:Shared) do
+      use(:Shared, :port => 9001) do
         adapter :Memory
       end
     end
