@@ -24,17 +24,18 @@ module Moneta
       end
 
       def load(key, options = {})
-        value = @collection.find_one('_id' => key)
+        value = @collection.find_one('_id' => ::BSON::Binary.new(key))
         value && value['value'].to_s
       end
 
       def delete(key, options = {})
         value = load(key, options)
-        @collection.remove('_id' => key) if value
+        @collection.remove('_id' => ::BSON::Binary.new(key)) if value
         value
       end
 
       def store(key, value, options = {})
+        key = ::BSON::Binary.new(key)
         @collection.update({ '_id' => key },
                            { '_id' => key, 'value' => ::BSON::Binary.new(value) },
                            { :upsert => true })

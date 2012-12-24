@@ -423,7 +423,7 @@ end
   },
   'simple_fog' => {
     :store                  => :Fog,
-    :specs                  => STANDARD_SPECS.without_increment.without_persist,
+    :specs                  => STANDARD_SPECS.without_increment,
     :options => ":aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
@@ -440,7 +440,7 @@ end
     :expires                => true",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
-    :specs => STANDARD_SPECS.without_increment.with_expires.without_persist
+    :specs => STANDARD_SPECS.without_increment.with_expires
   },
   'expires_memory' => {
     :build => %{Moneta.build do
@@ -883,7 +883,7 @@ end
     :dir                    => 'moneta')",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
-    :specs => ADAPTER_SPECS.without_increment.without_persist
+    :specs => ADAPTER_SPECS.without_increment
   },
   'adapter_gdbm' => {
     :build => 'Moneta::Adapters::GDBM.new(:file => File.join(make_tempdir, "adapter_gdbm"))',
