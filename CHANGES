@@ -11,4 +11,8 @@ master
 
 0.7.0
 
-  * Major rewrite
+  * Major rewrite by Daniel Mendler
+
+0.6.0
+
+  * First public release by Yehuda Katz
