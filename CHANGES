@@ -7,6 +7,7 @@ master
   * Add #decrement method
   * Fix #fetch to handle false correctly
   * Fix Expires middleware to handle boolean and nil values correctly
+  * Base64 encode Riak keys since Riak needs valid UTF-8 for the REST interface
 
 0.7.0
 
