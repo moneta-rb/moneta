@@ -1,6 +1,13 @@
 require 'moneta'
 require 'fileutils'
 require 'monetaspecs'
+require 'rspec/core/formatters/progress_formatter'
+
+RSpec::Core::Formatters::ProgressFormatter.class_eval do
+  def example_passed(example)
+    # do nothing
+  end
+end
 
 module Moneta
   class Transformer < Proxy
