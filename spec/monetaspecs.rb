@@ -140,8 +140,8 @@ shared_examples_for 'persist_nilkey_nilvalue' do
     store[0] = 0
     store[nil] = nil
     store.close
+    @store = nil
 
-    store = new_store
     store[0].should == 0
     store[nil].should == nil
   end
@@ -159,10 +159,10 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it "guarantees that the same Integer value is returned when setting a Nil key" do
-    value = -10
+    value = 41
     (store[0] = value).should equal(value)
 
-    value = 42
+    value = -12
     (store[nil] = value).should equal(value)
   end
 
@@ -177,28 +177,28 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it "removes all Nil keys from the store with clear" do
-    store[0] = -10
-    store[nil] = 42
+    store[0] = 41
+    store[nil] = -12
     store.clear.should equal(store)
     store.key?(0).should_not ==  true
     store.key?(nil).should_not == true
   end
 
   it "fetches a Nil key with a default value with fetch, if the key is not available" do
-    store.fetch(0, -10).should == -10
-    store.fetch(nil, 42).should == 42
+    store.fetch(0, 41).should == 41
+    store.fetch(nil, -12).should == -12
   end
 
   it "fetches a Nil key with a block with fetch, if the key is not available" do
     key = 0
-    value = -10
+    value = 41
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = nil
-    value = 42
+    value = -12
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -212,7 +212,7 @@ shared_examples_for 'null_nilkey_integervalue' do
     store.fetch(0, :option3 => 3) { 42 }.should == 42
     store.delete(0, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(0, -10, :option6 => 6).should == -10
+    store.store(0, 41, :option6 => 6).should == 41
   end
 end
 
@@ -220,71 +220,71 @@ end
 
 shared_examples_for 'store_nilkey_integervalue' do
   it "writes Integer values to keys that are Nils like a Hash" do
-    store[0] = -10
-    store[0].should == -10
-    store.load(0).should == -10
+    store[0] = 41
+    store[0].should == 41
+    store.load(0).should == 41
 
-    store[nil] = 42
-    store[nil].should == 42
-    store.load(nil).should == 42
+    store[nil] = -12
+    store[nil].should == -12
+    store.load(nil).should == -12
   end
 
   it "returns true from key? if a Nil key is available" do
-    store[0] = -10
+    store[0] = 41
     store.key?(0).should == true
-    store[nil] = 42
+    store[nil] = -12
     store.key?(nil).should == true
   end
 
   it "stores Integer values with Nil keys with #store" do
-    value = -10
+    value = 41
     store.store(0, value).should equal(value)
-    store[0].should == -10
-    store.load(0).should == -10
+    store[0].should == 41
+    store.load(0).should == 41
 
-    value = 42
+    value = -12
     store.store(nil, value).should equal(value)
-    store[nil].should == 42
-    store.load(nil).should == 42
+    store[nil].should == -12
+    store.load(nil).should == -12
   end
 
   it "stores Nil after clear" do
-    store[0] = -10
-    store[nil] = 42
+    store[0] = 41
+    store[nil] = -12
     store.clear.should equal(store)
-    store[0] = -10
-    store[0].should == -10
+    store[0] = 41
+    store[0].should == 41
     store[nil].should be_nil
   end
 
   it "removes and returns a Integer element with a Nil key from the backing store via delete if it exists" do
-    store[0] = -10
-    store.delete(0).should == -10
+    store[0] = 41
+    store.delete(0).should == 41
     store.key?(0).should == false
 
-    store[nil] = 42
-    store.delete(nil).should == 42
+    store[nil] = -12
+    store.delete(nil).should == -12
     store.key?(nil).should == false
   end
 
   it "overwrites existing Integer values with Nil" do
-    store[0] = -10
-    store[0].should == -10
-    store[0] = 42
-    store[0].should == 42
+    store[0] = 41
+    store[0].should == 41
+    store[0] = -12
+    store[0].should == -12
   end
 
   it "fetches a Nil key with a default value with fetch, if the key is available" do
-    store[0] = -10
-    store.fetch(0, 42).should == -10
+    store[0] = 41
+    store.fetch(0, -12).should == 41
   end
   it "does not run the block if the Nil key is available" do
-    store[0] = -10
+    store[0] = 41
     unaltered = 'unaltered'
     store.fetch(0) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[nil] = 42
+    store[nil] = -12
     unaltered = 'unaltered'
     store.fetch(nil) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -295,13 +295,13 @@ end
 
 shared_examples_for 'persist_nilkey_integervalue' do
   it "persists Integer values with Nil keys" do
-    store[0] = -10
-    store[nil] = 42
+    store[0] = 41
+    store[nil] = -12
     store.close
+    @store = nil
 
-    store = new_store
-    store[0].should == -10
-    store[nil].should == 42
+    store[0].should == 41
+    store[nil].should == -12
   end
 end
 
@@ -317,10 +317,10 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it "guarantees that the same Boolean value is returned when setting a Nil key" do
-    value = true
+    value = false
     (store[0] = value).should equal(value)
 
-    value = false
+    value = true
     (store[nil] = value).should equal(value)
   end
 
@@ -335,28 +335,28 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it "removes all Nil keys from the store with clear" do
-    store[0] = true
-    store[nil] = false
+    store[0] = false
+    store[nil] = true
     store.clear.should equal(store)
     store.key?(0).should_not ==  true
     store.key?(nil).should_not == true
   end
 
   it "fetches a Nil key with a default value with fetch, if the key is not available" do
-    store.fetch(0, true).should == true
-    store.fetch(nil, false).should == false
+    store.fetch(0, false).should == false
+    store.fetch(nil, true).should == true
   end
 
   it "fetches a Nil key with a block with fetch, if the key is not available" do
     key = 0
-    value = true
+    value = false
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = nil
-    value = false
+    value = true
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -370,7 +370,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     store.fetch(0, :option3 => 3) { 42 }.should == 42
     store.delete(0, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(0, true, :option6 => 6).should == true
+    store.store(0, false, :option6 => 6).should == false
   end
 end
 
@@ -378,71 +378,71 @@ end
 
 shared_examples_for 'store_nilkey_booleanvalue' do
   it "writes Boolean values to keys that are Nils like a Hash" do
-    store[0] = true
-    store[0].should == true
-    store.load(0).should == true
+    store[0] = false
+    store[0].should == false
+    store.load(0).should == false
 
-    store[nil] = false
-    store[nil].should == false
-    store.load(nil).should == false
+    store[nil] = true
+    store[nil].should == true
+    store.load(nil).should == true
   end
 
   it "returns true from key? if a Nil key is available" do
-    store[0] = true
+    store[0] = false
     store.key?(0).should == true
-    store[nil] = false
+    store[nil] = true
     store.key?(nil).should == true
   end
 
   it "stores Boolean values with Nil keys with #store" do
-    value = true
-    store.store(0, value).should equal(value)
-    store[0].should == true
-    store.load(0).should == true
-
     value = false
+    store.store(0, value).should equal(value)
+    store[0].should == false
+    store.load(0).should == false
+
+    value = true
     store.store(nil, value).should equal(value)
-    store[nil].should == false
-    store.load(nil).should == false
+    store[nil].should == true
+    store.load(nil).should == true
   end
 
   it "stores Nil after clear" do
-    store[0] = true
-    store[nil] = false
+    store[0] = false
+    store[nil] = true
     store.clear.should equal(store)
-    store[0] = true
-    store[0].should == true
+    store[0] = false
+    store[0].should == false
     store[nil].should be_nil
   end
 
   it "removes and returns a Boolean element with a Nil key from the backing store via delete if it exists" do
-    store[0] = true
-    store.delete(0).should == true
+    store[0] = false
+    store.delete(0).should == false
     store.key?(0).should == false
 
-    store[nil] = false
-    store.delete(nil).should == false
+    store[nil] = true
+    store.delete(nil).should == true
     store.key?(nil).should == false
   end
 
   it "overwrites existing Boolean values with Nil" do
-    store[0] = true
-    store[0].should == true
     store[0] = false
     store[0].should == false
+    store[0] = true
+    store[0].should == true
   end
 
   it "fetches a Nil key with a default value with fetch, if the key is available" do
-    store[0] = true
-    store.fetch(0, false).should == true
+    store[0] = false
+    store.fetch(0, true).should == false
   end
   it "does not run the block if the Nil key is available" do
-    store[0] = true
+    store[0] = false
     unaltered = 'unaltered'
     store.fetch(0) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[nil] = false
+    store[nil] = true
     unaltered = 'unaltered'
     store.fetch(nil) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -453,13 +453,13 @@ end
 
 shared_examples_for 'persist_nilkey_booleanvalue' do
   it "persists Boolean values with Nil keys" do
-    store[0] = true
-    store[nil] = false
+    store[0] = false
+    store[nil] = true
     store.close
+    @store = nil
 
-    store = new_store
-    store[0].should == true
-    store[nil].should == false
+    store[0].should == false
+    store[nil].should == true
   end
 end
 
@@ -628,8 +628,8 @@ shared_examples_for 'persist_nilkey_stringvalue' do
     store[0] = "strval1"
     store[nil] = "strval2"
     store.close
+    @store = nil
 
-    store = new_store
     store[0].should == "strval1"
     store[nil].should == "strval2"
   end
@@ -800,8 +800,8 @@ shared_examples_for 'persist_nilkey_hashvalue' do
     store[0] = {"hashval1"=>["array1", 1]}
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
+    @store = nil
 
-    store = new_store
     store[0].should == {"hashval1"=>["array1", 1]}
     store[nil].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
@@ -972,8 +972,8 @@ shared_examples_for 'persist_nilkey_objectvalue' do
     store[0] = Value.new(:objval1)
     store[nil] = Value.new(:objval2)
     store.close
+    @store = nil
 
-    store = new_store
     store[0].should == Value.new(:objval1)
     store[nil].should == Value.new(:objval2)
   end
@@ -1119,8 +1119,8 @@ shared_examples_for 'persist_integerkey_nilvalue' do
     store[-10] = 0
     store[42] = nil
     store.close
+    @store = nil
 
-    store = new_store
     store[-10].should == 0
     store[42].should == nil
   end
@@ -1138,10 +1138,10 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it "guarantees that the same Integer value is returned when setting a Integer key" do
-    value = -10
+    value = 41
     (store[-10] = value).should equal(value)
 
-    value = 42
+    value = -12
     (store[42] = value).should equal(value)
   end
 
@@ -1156,28 +1156,28 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it "removes all Integer keys from the store with clear" do
-    store[-10] = -10
-    store[42] = 42
+    store[-10] = 41
+    store[42] = -12
     store.clear.should equal(store)
     store.key?(-10).should_not ==  true
     store.key?(42).should_not == true
   end
 
   it "fetches a Integer key with a default value with fetch, if the key is not available" do
-    store.fetch(-10, -10).should == -10
-    store.fetch(42, 42).should == 42
+    store.fetch(-10, 41).should == 41
+    store.fetch(42, -12).should == -12
   end
 
   it "fetches a Integer key with a block with fetch, if the key is not available" do
     key = -10
-    value = -10
+    value = 41
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = 42
-    value = 42
+    value = -12
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -1191,7 +1191,7 @@ shared_examples_for 'null_integerkey_integervalue' do
     store.fetch(-10, :option3 => 3) { 42 }.should == 42
     store.delete(-10, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(-10, -10, :option6 => 6).should == -10
+    store.store(-10, 41, :option6 => 6).should == 41
   end
 end
 
@@ -1199,71 +1199,71 @@ end
 
 shared_examples_for 'store_integerkey_integervalue' do
   it "writes Integer values to keys that are Integers like a Hash" do
-    store[-10] = -10
-    store[-10].should == -10
-    store.load(-10).should == -10
+    store[-10] = 41
+    store[-10].should == 41
+    store.load(-10).should == 41
 
-    store[42] = 42
-    store[42].should == 42
-    store.load(42).should == 42
+    store[42] = -12
+    store[42].should == -12
+    store.load(42).should == -12
   end
 
   it "returns true from key? if a Integer key is available" do
-    store[-10] = -10
+    store[-10] = 41
     store.key?(-10).should == true
-    store[42] = 42
+    store[42] = -12
     store.key?(42).should == true
   end
 
   it "stores Integer values with Integer keys with #store" do
-    value = -10
+    value = 41
     store.store(-10, value).should equal(value)
-    store[-10].should == -10
-    store.load(-10).should == -10
+    store[-10].should == 41
+    store.load(-10).should == 41
 
-    value = 42
+    value = -12
     store.store(42, value).should equal(value)
-    store[42].should == 42
-    store.load(42).should == 42
+    store[42].should == -12
+    store.load(42).should == -12
   end
 
   it "stores Integer after clear" do
-    store[-10] = -10
-    store[42] = 42
+    store[-10] = 41
+    store[42] = -12
     store.clear.should equal(store)
-    store[-10] = -10
-    store[-10].should == -10
+    store[-10] = 41
+    store[-10].should == 41
     store[42].should be_nil
   end
 
   it "removes and returns a Integer element with a Integer key from the backing store via delete if it exists" do
-    store[-10] = -10
-    store.delete(-10).should == -10
+    store[-10] = 41
+    store.delete(-10).should == 41
     store.key?(-10).should == false
 
-    store[42] = 42
-    store.delete(42).should == 42
+    store[42] = -12
+    store.delete(42).should == -12
     store.key?(42).should == false
   end
 
   it "overwrites existing Integer values with Integer" do
-    store[-10] = -10
-    store[-10].should == -10
-    store[-10] = 42
-    store[-10].should == 42
+    store[-10] = 41
+    store[-10].should == 41
+    store[-10] = -12
+    store[-10].should == -12
   end
 
   it "fetches a Integer key with a default value with fetch, if the key is available" do
-    store[-10] = -10
-    store.fetch(-10, 42).should == -10
+    store[-10] = 41
+    store.fetch(-10, -12).should == 41
   end
   it "does not run the block if the Integer key is available" do
-    store[-10] = -10
+    store[-10] = 41
     unaltered = 'unaltered'
     store.fetch(-10) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[42] = 42
+    store[42] = -12
     unaltered = 'unaltered'
     store.fetch(42) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -1274,13 +1274,13 @@ end
 
 shared_examples_for 'persist_integerkey_integervalue' do
   it "persists Integer values with Integer keys" do
-    store[-10] = -10
-    store[42] = 42
+    store[-10] = 41
+    store[42] = -12
     store.close
+    @store = nil
 
-    store = new_store
-    store[-10].should == -10
-    store[42].should == 42
+    store[-10].should == 41
+    store[42].should == -12
   end
 end
 
@@ -1296,10 +1296,10 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it "guarantees that the same Boolean value is returned when setting a Integer key" do
-    value = true
+    value = false
     (store[-10] = value).should equal(value)
 
-    value = false
+    value = true
     (store[42] = value).should equal(value)
   end
 
@@ -1314,28 +1314,28 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it "removes all Integer keys from the store with clear" do
-    store[-10] = true
-    store[42] = false
+    store[-10] = false
+    store[42] = true
     store.clear.should equal(store)
     store.key?(-10).should_not ==  true
     store.key?(42).should_not == true
   end
 
   it "fetches a Integer key with a default value with fetch, if the key is not available" do
-    store.fetch(-10, true).should == true
-    store.fetch(42, false).should == false
+    store.fetch(-10, false).should == false
+    store.fetch(42, true).should == true
   end
 
   it "fetches a Integer key with a block with fetch, if the key is not available" do
     key = -10
-    value = true
+    value = false
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = 42
-    value = false
+    value = true
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -1349,7 +1349,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     store.fetch(-10, :option3 => 3) { 42 }.should == 42
     store.delete(-10, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(-10, true, :option6 => 6).should == true
+    store.store(-10, false, :option6 => 6).should == false
   end
 end
 
@@ -1357,71 +1357,71 @@ end
 
 shared_examples_for 'store_integerkey_booleanvalue' do
   it "writes Boolean values to keys that are Integers like a Hash" do
-    store[-10] = true
-    store[-10].should == true
-    store.load(-10).should == true
+    store[-10] = false
+    store[-10].should == false
+    store.load(-10).should == false
 
-    store[42] = false
-    store[42].should == false
-    store.load(42).should == false
+    store[42] = true
+    store[42].should == true
+    store.load(42).should == true
   end
 
   it "returns true from key? if a Integer key is available" do
-    store[-10] = true
+    store[-10] = false
     store.key?(-10).should == true
-    store[42] = false
+    store[42] = true
     store.key?(42).should == true
   end
 
   it "stores Boolean values with Integer keys with #store" do
-    value = true
-    store.store(-10, value).should equal(value)
-    store[-10].should == true
-    store.load(-10).should == true
-
     value = false
+    store.store(-10, value).should equal(value)
+    store[-10].should == false
+    store.load(-10).should == false
+
+    value = true
     store.store(42, value).should equal(value)
-    store[42].should == false
-    store.load(42).should == false
+    store[42].should == true
+    store.load(42).should == true
   end
 
   it "stores Integer after clear" do
-    store[-10] = true
-    store[42] = false
+    store[-10] = false
+    store[42] = true
     store.clear.should equal(store)
-    store[-10] = true
-    store[-10].should == true
+    store[-10] = false
+    store[-10].should == false
     store[42].should be_nil
   end
 
   it "removes and returns a Boolean element with a Integer key from the backing store via delete if it exists" do
-    store[-10] = true
-    store.delete(-10).should == true
+    store[-10] = false
+    store.delete(-10).should == false
     store.key?(-10).should == false
 
-    store[42] = false
-    store.delete(42).should == false
+    store[42] = true
+    store.delete(42).should == true
     store.key?(42).should == false
   end
 
   it "overwrites existing Boolean values with Integer" do
-    store[-10] = true
-    store[-10].should == true
     store[-10] = false
     store[-10].should == false
+    store[-10] = true
+    store[-10].should == true
   end
 
   it "fetches a Integer key with a default value with fetch, if the key is available" do
-    store[-10] = true
-    store.fetch(-10, false).should == true
+    store[-10] = false
+    store.fetch(-10, true).should == false
   end
   it "does not run the block if the Integer key is available" do
-    store[-10] = true
+    store[-10] = false
     unaltered = 'unaltered'
     store.fetch(-10) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[42] = false
+    store[42] = true
     unaltered = 'unaltered'
     store.fetch(42) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -1432,13 +1432,13 @@ end
 
 shared_examples_for 'persist_integerkey_booleanvalue' do
   it "persists Boolean values with Integer keys" do
-    store[-10] = true
-    store[42] = false
+    store[-10] = false
+    store[42] = true
     store.close
+    @store = nil
 
-    store = new_store
-    store[-10].should == true
-    store[42].should == false
+    store[-10].should == false
+    store[42].should == true
   end
 end
 
@@ -1607,8 +1607,8 @@ shared_examples_for 'persist_integerkey_stringvalue' do
     store[-10] = "strval1"
     store[42] = "strval2"
     store.close
+    @store = nil
 
-    store = new_store
     store[-10].should == "strval1"
     store[42].should == "strval2"
   end
@@ -1779,8 +1779,8 @@ shared_examples_for 'persist_integerkey_hashvalue' do
     store[-10] = {"hashval1"=>["array1", 1]}
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
+    @store = nil
 
-    store = new_store
     store[-10].should == {"hashval1"=>["array1", 1]}
     store[42].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
@@ -1951,8 +1951,8 @@ shared_examples_for 'persist_integerkey_objectvalue' do
     store[-10] = Value.new(:objval1)
     store[42] = Value.new(:objval2)
     store.close
+    @store = nil
 
-    store = new_store
     store[-10].should == Value.new(:objval1)
     store[42].should == Value.new(:objval2)
   end
@@ -2098,8 +2098,8 @@ shared_examples_for 'persist_booleankey_nilvalue' do
     store[true] = 0
     store[false] = nil
     store.close
+    @store = nil
 
-    store = new_store
     store[true].should == 0
     store[false].should == nil
   end
@@ -2117,10 +2117,10 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it "guarantees that the same Integer value is returned when setting a Boolean key" do
-    value = -10
+    value = 41
     (store[true] = value).should equal(value)
 
-    value = 42
+    value = -12
     (store[false] = value).should equal(value)
   end
 
@@ -2135,28 +2135,28 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it "removes all Boolean keys from the store with clear" do
-    store[true] = -10
-    store[false] = 42
+    store[true] = 41
+    store[false] = -12
     store.clear.should equal(store)
     store.key?(true).should_not ==  true
     store.key?(false).should_not == true
   end
 
   it "fetches a Boolean key with a default value with fetch, if the key is not available" do
-    store.fetch(true, -10).should == -10
-    store.fetch(false, 42).should == 42
+    store.fetch(true, 41).should == 41
+    store.fetch(false, -12).should == -12
   end
 
   it "fetches a Boolean key with a block with fetch, if the key is not available" do
     key = true
-    value = -10
+    value = 41
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = false
-    value = 42
+    value = -12
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -2170,7 +2170,7 @@ shared_examples_for 'null_booleankey_integervalue' do
     store.fetch(true, :option3 => 3) { 42 }.should == 42
     store.delete(true, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(true, -10, :option6 => 6).should == -10
+    store.store(true, 41, :option6 => 6).should == 41
   end
 end
 
@@ -2178,71 +2178,71 @@ end
 
 shared_examples_for 'store_booleankey_integervalue' do
   it "writes Integer values to keys that are Booleans like a Hash" do
-    store[true] = -10
-    store[true].should == -10
-    store.load(true).should == -10
+    store[true] = 41
+    store[true].should == 41
+    store.load(true).should == 41
 
-    store[false] = 42
-    store[false].should == 42
-    store.load(false).should == 42
+    store[false] = -12
+    store[false].should == -12
+    store.load(false).should == -12
   end
 
   it "returns true from key? if a Boolean key is available" do
-    store[true] = -10
+    store[true] = 41
     store.key?(true).should == true
-    store[false] = 42
+    store[false] = -12
     store.key?(false).should == true
   end
 
   it "stores Integer values with Boolean keys with #store" do
-    value = -10
+    value = 41
     store.store(true, value).should equal(value)
-    store[true].should == -10
-    store.load(true).should == -10
+    store[true].should == 41
+    store.load(true).should == 41
 
-    value = 42
+    value = -12
     store.store(false, value).should equal(value)
-    store[false].should == 42
-    store.load(false).should == 42
+    store[false].should == -12
+    store.load(false).should == -12
   end
 
   it "stores Boolean after clear" do
-    store[true] = -10
-    store[false] = 42
+    store[true] = 41
+    store[false] = -12
     store.clear.should equal(store)
-    store[true] = -10
-    store[true].should == -10
+    store[true] = 41
+    store[true].should == 41
     store[false].should be_nil
   end
 
   it "removes and returns a Integer element with a Boolean key from the backing store via delete if it exists" do
-    store[true] = -10
-    store.delete(true).should == -10
+    store[true] = 41
+    store.delete(true).should == 41
     store.key?(true).should == false
 
-    store[false] = 42
-    store.delete(false).should == 42
+    store[false] = -12
+    store.delete(false).should == -12
     store.key?(false).should == false
   end
 
   it "overwrites existing Integer values with Boolean" do
-    store[true] = -10
-    store[true].should == -10
-    store[true] = 42
-    store[true].should == 42
+    store[true] = 41
+    store[true].should == 41
+    store[true] = -12
+    store[true].should == -12
   end
 
   it "fetches a Boolean key with a default value with fetch, if the key is available" do
-    store[true] = -10
-    store.fetch(true, 42).should == -10
+    store[true] = 41
+    store.fetch(true, -12).should == 41
   end
   it "does not run the block if the Boolean key is available" do
-    store[true] = -10
+    store[true] = 41
     unaltered = 'unaltered'
     store.fetch(true) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[false] = 42
+    store[false] = -12
     unaltered = 'unaltered'
     store.fetch(false) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -2253,13 +2253,13 @@ end
 
 shared_examples_for 'persist_booleankey_integervalue' do
   it "persists Integer values with Boolean keys" do
-    store[true] = -10
-    store[false] = 42
+    store[true] = 41
+    store[false] = -12
     store.close
+    @store = nil
 
-    store = new_store
-    store[true].should == -10
-    store[false].should == 42
+    store[true].should == 41
+    store[false].should == -12
   end
 end
 
@@ -2275,10 +2275,10 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it "guarantees that the same Boolean value is returned when setting a Boolean key" do
-    value = true
+    value = false
     (store[true] = value).should equal(value)
 
-    value = false
+    value = true
     (store[false] = value).should equal(value)
   end
 
@@ -2293,28 +2293,28 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it "removes all Boolean keys from the store with clear" do
-    store[true] = true
-    store[false] = false
+    store[true] = false
+    store[false] = true
     store.clear.should equal(store)
     store.key?(true).should_not ==  true
     store.key?(false).should_not == true
   end
 
   it "fetches a Boolean key with a default value with fetch, if the key is not available" do
-    store.fetch(true, true).should == true
-    store.fetch(false, false).should == false
+    store.fetch(true, false).should == false
+    store.fetch(false, true).should == true
   end
 
   it "fetches a Boolean key with a block with fetch, if the key is not available" do
     key = true
-    value = true
+    value = false
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = false
-    value = false
+    value = true
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -2328,7 +2328,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     store.fetch(true, :option3 => 3) { 42 }.should == 42
     store.delete(true, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(true, true, :option6 => 6).should == true
+    store.store(true, false, :option6 => 6).should == false
   end
 end
 
@@ -2336,71 +2336,71 @@ end
 
 shared_examples_for 'store_booleankey_booleanvalue' do
   it "writes Boolean values to keys that are Booleans like a Hash" do
-    store[true] = true
-    store[true].should == true
-    store.load(true).should == true
+    store[true] = false
+    store[true].should == false
+    store.load(true).should == false
 
-    store[false] = false
-    store[false].should == false
-    store.load(false).should == false
+    store[false] = true
+    store[false].should == true
+    store.load(false).should == true
   end
 
   it "returns true from key? if a Boolean key is available" do
-    store[true] = true
+    store[true] = false
     store.key?(true).should == true
-    store[false] = false
+    store[false] = true
     store.key?(false).should == true
   end
 
   it "stores Boolean values with Boolean keys with #store" do
-    value = true
-    store.store(true, value).should equal(value)
-    store[true].should == true
-    store.load(true).should == true
-
     value = false
+    store.store(true, value).should equal(value)
+    store[true].should == false
+    store.load(true).should == false
+
+    value = true
     store.store(false, value).should equal(value)
-    store[false].should == false
-    store.load(false).should == false
+    store[false].should == true
+    store.load(false).should == true
   end
 
   it "stores Boolean after clear" do
-    store[true] = true
-    store[false] = false
+    store[true] = false
+    store[false] = true
     store.clear.should equal(store)
-    store[true] = true
-    store[true].should == true
+    store[true] = false
+    store[true].should == false
     store[false].should be_nil
   end
 
   it "removes and returns a Boolean element with a Boolean key from the backing store via delete if it exists" do
-    store[true] = true
-    store.delete(true).should == true
+    store[true] = false
+    store.delete(true).should == false
     store.key?(true).should == false
 
-    store[false] = false
-    store.delete(false).should == false
+    store[false] = true
+    store.delete(false).should == true
     store.key?(false).should == false
   end
 
   it "overwrites existing Boolean values with Boolean" do
-    store[true] = true
-    store[true].should == true
     store[true] = false
     store[true].should == false
+    store[true] = true
+    store[true].should == true
   end
 
   it "fetches a Boolean key with a default value with fetch, if the key is available" do
-    store[true] = true
-    store.fetch(true, false).should == true
+    store[true] = false
+    store.fetch(true, true).should == false
   end
   it "does not run the block if the Boolean key is available" do
-    store[true] = true
+    store[true] = false
     unaltered = 'unaltered'
     store.fetch(true) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[false] = false
+    store[false] = true
     unaltered = 'unaltered'
     store.fetch(false) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -2411,13 +2411,13 @@ end
 
 shared_examples_for 'persist_booleankey_booleanvalue' do
   it "persists Boolean values with Boolean keys" do
-    store[true] = true
-    store[false] = false
+    store[true] = false
+    store[false] = true
     store.close
+    @store = nil
 
-    store = new_store
-    store[true].should == true
-    store[false].should == false
+    store[true].should == false
+    store[false].should == true
   end
 end
 
@@ -2586,8 +2586,8 @@ shared_examples_for 'persist_booleankey_stringvalue' do
     store[true] = "strval1"
     store[false] = "strval2"
     store.close
+    @store = nil
 
-    store = new_store
     store[true].should == "strval1"
     store[false].should == "strval2"
   end
@@ -2758,8 +2758,8 @@ shared_examples_for 'persist_booleankey_hashvalue' do
     store[true] = {"hashval1"=>["array1", 1]}
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
+    @store = nil
 
-    store = new_store
     store[true].should == {"hashval1"=>["array1", 1]}
     store[false].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
@@ -2930,8 +2930,8 @@ shared_examples_for 'persist_booleankey_objectvalue' do
     store[true] = Value.new(:objval1)
     store[false] = Value.new(:objval2)
     store.close
+    @store = nil
 
-    store = new_store
     store[true].should == Value.new(:objval1)
     store[false].should == Value.new(:objval2)
   end
@@ -3077,8 +3077,8 @@ shared_examples_for 'persist_stringkey_nilvalue' do
     store["strkey1"] = 0
     store["strkey2"] = nil
     store.close
+    @store = nil
 
-    store = new_store
     store["strkey1"].should == 0
     store["strkey2"].should == nil
   end
@@ -3096,10 +3096,10 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it "guarantees that the same Integer value is returned when setting a String key" do
-    value = -10
+    value = 41
     (store["strkey1"] = value).should equal(value)
 
-    value = 42
+    value = -12
     (store["strkey2"] = value).should equal(value)
   end
 
@@ -3114,28 +3114,28 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it "removes all String keys from the store with clear" do
-    store["strkey1"] = -10
-    store["strkey2"] = 42
+    store["strkey1"] = 41
+    store["strkey2"] = -12
     store.clear.should equal(store)
     store.key?("strkey1").should_not ==  true
     store.key?("strkey2").should_not == true
   end
 
   it "fetches a String key with a default value with fetch, if the key is not available" do
-    store.fetch("strkey1", -10).should == -10
-    store.fetch("strkey2", 42).should == 42
+    store.fetch("strkey1", 41).should == 41
+    store.fetch("strkey2", -12).should == -12
   end
 
   it "fetches a String key with a block with fetch, if the key is not available" do
     key = "strkey1"
-    value = -10
+    value = 41
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = "strkey2"
-    value = 42
+    value = -12
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -3149,7 +3149,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     store.fetch("strkey1", :option3 => 3) { 42 }.should == 42
     store.delete("strkey1", :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store("strkey1", -10, :option6 => 6).should == -10
+    store.store("strkey1", 41, :option6 => 6).should == 41
   end
 end
 
@@ -3157,71 +3157,71 @@ end
 
 shared_examples_for 'store_stringkey_integervalue' do
   it "writes Integer values to keys that are Strings like a Hash" do
-    store["strkey1"] = -10
-    store["strkey1"].should == -10
-    store.load("strkey1").should == -10
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
+    store.load("strkey1").should == 41
 
-    store["strkey2"] = 42
-    store["strkey2"].should == 42
-    store.load("strkey2").should == 42
+    store["strkey2"] = -12
+    store["strkey2"].should == -12
+    store.load("strkey2").should == -12
   end
 
   it "returns true from key? if a String key is available" do
-    store["strkey1"] = -10
+    store["strkey1"] = 41
     store.key?("strkey1").should == true
-    store["strkey2"] = 42
+    store["strkey2"] = -12
     store.key?("strkey2").should == true
   end
 
   it "stores Integer values with String keys with #store" do
-    value = -10
+    value = 41
     store.store("strkey1", value).should equal(value)
-    store["strkey1"].should == -10
-    store.load("strkey1").should == -10
+    store["strkey1"].should == 41
+    store.load("strkey1").should == 41
 
-    value = 42
+    value = -12
     store.store("strkey2", value).should equal(value)
-    store["strkey2"].should == 42
-    store.load("strkey2").should == 42
+    store["strkey2"].should == -12
+    store.load("strkey2").should == -12
   end
 
   it "stores String after clear" do
-    store["strkey1"] = -10
-    store["strkey2"] = 42
+    store["strkey1"] = 41
+    store["strkey2"] = -12
     store.clear.should equal(store)
-    store["strkey1"] = -10
-    store["strkey1"].should == -10
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
     store["strkey2"].should be_nil
   end
 
   it "removes and returns a Integer element with a String key from the backing store via delete if it exists" do
-    store["strkey1"] = -10
-    store.delete("strkey1").should == -10
+    store["strkey1"] = 41
+    store.delete("strkey1").should == 41
     store.key?("strkey1").should == false
 
-    store["strkey2"] = 42
-    store.delete("strkey2").should == 42
+    store["strkey2"] = -12
+    store.delete("strkey2").should == -12
     store.key?("strkey2").should == false
   end
 
   it "overwrites existing Integer values with String" do
-    store["strkey1"] = -10
-    store["strkey1"].should == -10
-    store["strkey1"] = 42
-    store["strkey1"].should == 42
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
+    store["strkey1"] = -12
+    store["strkey1"].should == -12
   end
 
   it "fetches a String key with a default value with fetch, if the key is available" do
-    store["strkey1"] = -10
-    store.fetch("strkey1", 42).should == -10
+    store["strkey1"] = 41
+    store.fetch("strkey1", -12).should == 41
   end
   it "does not run the block if the String key is available" do
-    store["strkey1"] = -10
+    store["strkey1"] = 41
     unaltered = 'unaltered'
     store.fetch("strkey1") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store["strkey2"] = 42
+    store["strkey2"] = -12
     unaltered = 'unaltered'
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -3232,13 +3232,13 @@ end
 
 shared_examples_for 'persist_stringkey_integervalue' do
   it "persists Integer values with String keys" do
-    store["strkey1"] = -10
-    store["strkey2"] = 42
+    store["strkey1"] = 41
+    store["strkey2"] = -12
     store.close
+    @store = nil
 
-    store = new_store
-    store["strkey1"].should == -10
-    store["strkey2"].should == 42
+    store["strkey1"].should == 41
+    store["strkey2"].should == -12
   end
 end
 
@@ -3254,10 +3254,10 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it "guarantees that the same Boolean value is returned when setting a String key" do
-    value = true
+    value = false
     (store["strkey1"] = value).should equal(value)
 
-    value = false
+    value = true
     (store["strkey2"] = value).should equal(value)
   end
 
@@ -3272,28 +3272,28 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it "removes all String keys from the store with clear" do
-    store["strkey1"] = true
-    store["strkey2"] = false
+    store["strkey1"] = false
+    store["strkey2"] = true
     store.clear.should equal(store)
     store.key?("strkey1").should_not ==  true
     store.key?("strkey2").should_not == true
   end
 
   it "fetches a String key with a default value with fetch, if the key is not available" do
-    store.fetch("strkey1", true).should == true
-    store.fetch("strkey2", false).should == false
+    store.fetch("strkey1", false).should == false
+    store.fetch("strkey2", true).should == true
   end
 
   it "fetches a String key with a block with fetch, if the key is not available" do
     key = "strkey1"
-    value = true
+    value = false
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = "strkey2"
-    value = false
+    value = true
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -3307,7 +3307,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     store.fetch("strkey1", :option3 => 3) { 42 }.should == 42
     store.delete("strkey1", :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store("strkey1", true, :option6 => 6).should == true
+    store.store("strkey1", false, :option6 => 6).should == false
   end
 end
 
@@ -3315,71 +3315,71 @@ end
 
 shared_examples_for 'store_stringkey_booleanvalue' do
   it "writes Boolean values to keys that are Strings like a Hash" do
-    store["strkey1"] = true
-    store["strkey1"].should == true
-    store.load("strkey1").should == true
+    store["strkey1"] = false
+    store["strkey1"].should == false
+    store.load("strkey1").should == false
 
-    store["strkey2"] = false
-    store["strkey2"].should == false
-    store.load("strkey2").should == false
+    store["strkey2"] = true
+    store["strkey2"].should == true
+    store.load("strkey2").should == true
   end
 
   it "returns true from key? if a String key is available" do
-    store["strkey1"] = true
+    store["strkey1"] = false
     store.key?("strkey1").should == true
-    store["strkey2"] = false
+    store["strkey2"] = true
     store.key?("strkey2").should == true
   end
 
   it "stores Boolean values with String keys with #store" do
-    value = true
-    store.store("strkey1", value).should equal(value)
-    store["strkey1"].should == true
-    store.load("strkey1").should == true
-
     value = false
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == false
+    store.load("strkey1").should == false
+
+    value = true
     store.store("strkey2", value).should equal(value)
-    store["strkey2"].should == false
-    store.load("strkey2").should == false
+    store["strkey2"].should == true
+    store.load("strkey2").should == true
   end
 
   it "stores String after clear" do
-    store["strkey1"] = true
-    store["strkey2"] = false
+    store["strkey1"] = false
+    store["strkey2"] = true
     store.clear.should equal(store)
-    store["strkey1"] = true
-    store["strkey1"].should == true
+    store["strkey1"] = false
+    store["strkey1"].should == false
     store["strkey2"].should be_nil
   end
 
   it "removes and returns a Boolean element with a String key from the backing store via delete if it exists" do
-    store["strkey1"] = true
-    store.delete("strkey1").should == true
+    store["strkey1"] = false
+    store.delete("strkey1").should == false
     store.key?("strkey1").should == false
 
-    store["strkey2"] = false
-    store.delete("strkey2").should == false
+    store["strkey2"] = true
+    store.delete("strkey2").should == true
     store.key?("strkey2").should == false
   end
 
   it "overwrites existing Boolean values with String" do
-    store["strkey1"] = true
-    store["strkey1"].should == true
     store["strkey1"] = false
     store["strkey1"].should == false
+    store["strkey1"] = true
+    store["strkey1"].should == true
   end
 
   it "fetches a String key with a default value with fetch, if the key is available" do
-    store["strkey1"] = true
-    store.fetch("strkey1", false).should == true
+    store["strkey1"] = false
+    store.fetch("strkey1", true).should == false
   end
   it "does not run the block if the String key is available" do
-    store["strkey1"] = true
+    store["strkey1"] = false
     unaltered = 'unaltered'
     store.fetch("strkey1") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store["strkey2"] = false
+    store["strkey2"] = true
     unaltered = 'unaltered'
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -3390,13 +3390,13 @@ end
 
 shared_examples_for 'persist_stringkey_booleanvalue' do
   it "persists Boolean values with String keys" do
-    store["strkey1"] = true
-    store["strkey2"] = false
+    store["strkey1"] = false
+    store["strkey2"] = true
     store.close
+    @store = nil
 
-    store = new_store
-    store["strkey1"].should == true
-    store["strkey2"].should == false
+    store["strkey1"].should == false
+    store["strkey2"].should == true
   end
 end
 
@@ -3565,8 +3565,8 @@ shared_examples_for 'persist_stringkey_stringvalue' do
     store["strkey1"] = "strval1"
     store["strkey2"] = "strval2"
     store.close
+    @store = nil
 
-    store = new_store
     store["strkey1"].should == "strval1"
     store["strkey2"].should == "strval2"
   end
@@ -3737,8 +3737,8 @@ shared_examples_for 'persist_stringkey_hashvalue' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
+    @store = nil
 
-    store = new_store
     store["strkey1"].should == {"hashval1"=>["array1", 1]}
     store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
@@ -3909,8 +3909,8 @@ shared_examples_for 'persist_stringkey_objectvalue' do
     store["strkey1"] = Value.new(:objval1)
     store["strkey2"] = Value.new(:objval2)
     store.close
+    @store = nil
 
-    store = new_store
     store["strkey1"].should == Value.new(:objval1)
     store["strkey2"].should == Value.new(:objval2)
   end
@@ -4056,8 +4056,8 @@ shared_examples_for 'persist_objectkey_nilvalue' do
     store[Value.new(:objkey1)] = 0
     store[Value.new(:objkey2)] = nil
     store.close
+    @store = nil
 
-    store = new_store
     store[Value.new(:objkey1)].should == 0
     store[Value.new(:objkey2)].should == nil
   end
@@ -4075,10 +4075,10 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it "guarantees that the same Integer value is returned when setting a Object key" do
-    value = -10
+    value = 41
     (store[Value.new(:objkey1)] = value).should equal(value)
 
-    value = 42
+    value = -12
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
@@ -4093,28 +4093,28 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it "removes all Object keys from the store with clear" do
-    store[Value.new(:objkey1)] = -10
-    store[Value.new(:objkey2)] = 42
+    store[Value.new(:objkey1)] = 41
+    store[Value.new(:objkey2)] = -12
     store.clear.should equal(store)
     store.key?(Value.new(:objkey1)).should_not ==  true
     store.key?(Value.new(:objkey2)).should_not == true
   end
 
   it "fetches a Object key with a default value with fetch, if the key is not available" do
-    store.fetch(Value.new(:objkey1), -10).should == -10
-    store.fetch(Value.new(:objkey2), 42).should == 42
+    store.fetch(Value.new(:objkey1), 41).should == 41
+    store.fetch(Value.new(:objkey2), -12).should == -12
   end
 
   it "fetches a Object key with a block with fetch, if the key is not available" do
     key = Value.new(:objkey1)
-    value = -10
+    value = 41
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = Value.new(:objkey2)
-    value = 42
+    value = -12
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -4128,7 +4128,7 @@ shared_examples_for 'null_objectkey_integervalue' do
     store.fetch(Value.new(:objkey1), :option3 => 3) { 42 }.should == 42
     store.delete(Value.new(:objkey1), :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(Value.new(:objkey1), -10, :option6 => 6).should == -10
+    store.store(Value.new(:objkey1), 41, :option6 => 6).should == 41
   end
 end
 
@@ -4136,71 +4136,71 @@ end
 
 shared_examples_for 'store_objectkey_integervalue' do
   it "writes Integer values to keys that are Objects like a Hash" do
-    store[Value.new(:objkey1)] = -10
-    store[Value.new(:objkey1)].should == -10
-    store.load(Value.new(:objkey1)).should == -10
+    store[Value.new(:objkey1)] = 41
+    store[Value.new(:objkey1)].should == 41
+    store.load(Value.new(:objkey1)).should == 41
 
-    store[Value.new(:objkey2)] = 42
-    store[Value.new(:objkey2)].should == 42
-    store.load(Value.new(:objkey2)).should == 42
+    store[Value.new(:objkey2)] = -12
+    store[Value.new(:objkey2)].should == -12
+    store.load(Value.new(:objkey2)).should == -12
   end
 
   it "returns true from key? if a Object key is available" do
-    store[Value.new(:objkey1)] = -10
+    store[Value.new(:objkey1)] = 41
     store.key?(Value.new(:objkey1)).should == true
-    store[Value.new(:objkey2)] = 42
+    store[Value.new(:objkey2)] = -12
     store.key?(Value.new(:objkey2)).should == true
   end
 
   it "stores Integer values with Object keys with #store" do
-    value = -10
+    value = 41
     store.store(Value.new(:objkey1), value).should equal(value)
-    store[Value.new(:objkey1)].should == -10
-    store.load(Value.new(:objkey1)).should == -10
+    store[Value.new(:objkey1)].should == 41
+    store.load(Value.new(:objkey1)).should == 41
 
-    value = 42
+    value = -12
     store.store(Value.new(:objkey2), value).should equal(value)
-    store[Value.new(:objkey2)].should == 42
-    store.load(Value.new(:objkey2)).should == 42
+    store[Value.new(:objkey2)].should == -12
+    store.load(Value.new(:objkey2)).should == -12
   end
 
   it "stores Object after clear" do
-    store[Value.new(:objkey1)] = -10
-    store[Value.new(:objkey2)] = 42
+    store[Value.new(:objkey1)] = 41
+    store[Value.new(:objkey2)] = -12
     store.clear.should equal(store)
-    store[Value.new(:objkey1)] = -10
-    store[Value.new(:objkey1)].should == -10
+    store[Value.new(:objkey1)] = 41
+    store[Value.new(:objkey1)].should == 41
     store[Value.new(:objkey2)].should be_nil
   end
 
   it "removes and returns a Integer element with a Object key from the backing store via delete if it exists" do
-    store[Value.new(:objkey1)] = -10
-    store.delete(Value.new(:objkey1)).should == -10
+    store[Value.new(:objkey1)] = 41
+    store.delete(Value.new(:objkey1)).should == 41
     store.key?(Value.new(:objkey1)).should == false
 
-    store[Value.new(:objkey2)] = 42
-    store.delete(Value.new(:objkey2)).should == 42
+    store[Value.new(:objkey2)] = -12
+    store.delete(Value.new(:objkey2)).should == -12
     store.key?(Value.new(:objkey2)).should == false
   end
 
   it "overwrites existing Integer values with Object" do
-    store[Value.new(:objkey1)] = -10
-    store[Value.new(:objkey1)].should == -10
-    store[Value.new(:objkey1)] = 42
-    store[Value.new(:objkey1)].should == 42
+    store[Value.new(:objkey1)] = 41
+    store[Value.new(:objkey1)].should == 41
+    store[Value.new(:objkey1)] = -12
+    store[Value.new(:objkey1)].should == -12
   end
 
   it "fetches a Object key with a default value with fetch, if the key is available" do
-    store[Value.new(:objkey1)] = -10
-    store.fetch(Value.new(:objkey1), 42).should == -10
+    store[Value.new(:objkey1)] = 41
+    store.fetch(Value.new(:objkey1), -12).should == 41
   end
   it "does not run the block if the Object key is available" do
-    store[Value.new(:objkey1)] = -10
+    store[Value.new(:objkey1)] = 41
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey1)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[Value.new(:objkey2)] = 42
+    store[Value.new(:objkey2)] = -12
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey2)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -4211,13 +4211,13 @@ end
 
 shared_examples_for 'persist_objectkey_integervalue' do
   it "persists Integer values with Object keys" do
-    store[Value.new(:objkey1)] = -10
-    store[Value.new(:objkey2)] = 42
+    store[Value.new(:objkey1)] = 41
+    store[Value.new(:objkey2)] = -12
     store.close
+    @store = nil
 
-    store = new_store
-    store[Value.new(:objkey1)].should == -10
-    store[Value.new(:objkey2)].should == 42
+    store[Value.new(:objkey1)].should == 41
+    store[Value.new(:objkey2)].should == -12
   end
 end
 
@@ -4233,10 +4233,10 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it "guarantees that the same Boolean value is returned when setting a Object key" do
-    value = true
+    value = false
     (store[Value.new(:objkey1)] = value).should equal(value)
 
-    value = false
+    value = true
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
@@ -4251,28 +4251,28 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it "removes all Object keys from the store with clear" do
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey2)] = false
+    store[Value.new(:objkey1)] = false
+    store[Value.new(:objkey2)] = true
     store.clear.should equal(store)
     store.key?(Value.new(:objkey1)).should_not ==  true
     store.key?(Value.new(:objkey2)).should_not == true
   end
 
   it "fetches a Object key with a default value with fetch, if the key is not available" do
-    store.fetch(Value.new(:objkey1), true).should == true
-    store.fetch(Value.new(:objkey2), false).should == false
+    store.fetch(Value.new(:objkey1), false).should == false
+    store.fetch(Value.new(:objkey2), true).should == true
   end
 
   it "fetches a Object key with a block with fetch, if the key is not available" do
     key = Value.new(:objkey1)
-    value = true
+    value = false
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = Value.new(:objkey2)
-    value = false
+    value = true
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -4286,7 +4286,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     store.fetch(Value.new(:objkey1), :option3 => 3) { 42 }.should == 42
     store.delete(Value.new(:objkey1), :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store(Value.new(:objkey1), true, :option6 => 6).should == true
+    store.store(Value.new(:objkey1), false, :option6 => 6).should == false
   end
 end
 
@@ -4294,71 +4294,71 @@ end
 
 shared_examples_for 'store_objectkey_booleanvalue' do
   it "writes Boolean values to keys that are Objects like a Hash" do
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey1)].should == true
-    store.load(Value.new(:objkey1)).should == true
+    store[Value.new(:objkey1)] = false
+    store[Value.new(:objkey1)].should == false
+    store.load(Value.new(:objkey1)).should == false
 
-    store[Value.new(:objkey2)] = false
-    store[Value.new(:objkey2)].should == false
-    store.load(Value.new(:objkey2)).should == false
+    store[Value.new(:objkey2)] = true
+    store[Value.new(:objkey2)].should == true
+    store.load(Value.new(:objkey2)).should == true
   end
 
   it "returns true from key? if a Object key is available" do
-    store[Value.new(:objkey1)] = true
+    store[Value.new(:objkey1)] = false
     store.key?(Value.new(:objkey1)).should == true
-    store[Value.new(:objkey2)] = false
+    store[Value.new(:objkey2)] = true
     store.key?(Value.new(:objkey2)).should == true
   end
 
   it "stores Boolean values with Object keys with #store" do
-    value = true
-    store.store(Value.new(:objkey1), value).should equal(value)
-    store[Value.new(:objkey1)].should == true
-    store.load(Value.new(:objkey1)).should == true
-
     value = false
+    store.store(Value.new(:objkey1), value).should equal(value)
+    store[Value.new(:objkey1)].should == false
+    store.load(Value.new(:objkey1)).should == false
+
+    value = true
     store.store(Value.new(:objkey2), value).should equal(value)
-    store[Value.new(:objkey2)].should == false
-    store.load(Value.new(:objkey2)).should == false
+    store[Value.new(:objkey2)].should == true
+    store.load(Value.new(:objkey2)).should == true
   end
 
   it "stores Object after clear" do
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey2)] = false
+    store[Value.new(:objkey1)] = false
+    store[Value.new(:objkey2)] = true
     store.clear.should equal(store)
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey1)].should == true
+    store[Value.new(:objkey1)] = false
+    store[Value.new(:objkey1)].should == false
     store[Value.new(:objkey2)].should be_nil
   end
 
   it "removes and returns a Boolean element with a Object key from the backing store via delete if it exists" do
-    store[Value.new(:objkey1)] = true
-    store.delete(Value.new(:objkey1)).should == true
+    store[Value.new(:objkey1)] = false
+    store.delete(Value.new(:objkey1)).should == false
     store.key?(Value.new(:objkey1)).should == false
 
-    store[Value.new(:objkey2)] = false
-    store.delete(Value.new(:objkey2)).should == false
+    store[Value.new(:objkey2)] = true
+    store.delete(Value.new(:objkey2)).should == true
     store.key?(Value.new(:objkey2)).should == false
   end
 
   it "overwrites existing Boolean values with Object" do
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey1)].should == true
     store[Value.new(:objkey1)] = false
     store[Value.new(:objkey1)].should == false
+    store[Value.new(:objkey1)] = true
+    store[Value.new(:objkey1)].should == true
   end
 
   it "fetches a Object key with a default value with fetch, if the key is available" do
-    store[Value.new(:objkey1)] = true
-    store.fetch(Value.new(:objkey1), false).should == true
+    store[Value.new(:objkey1)] = false
+    store.fetch(Value.new(:objkey1), true).should == false
   end
   it "does not run the block if the Object key is available" do
-    store[Value.new(:objkey1)] = true
+    store[Value.new(:objkey1)] = false
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey1)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[Value.new(:objkey2)] = false
+    store[Value.new(:objkey2)] = true
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey2)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -4369,13 +4369,13 @@ end
 
 shared_examples_for 'persist_objectkey_booleanvalue' do
   it "persists Boolean values with Object keys" do
-    store[Value.new(:objkey1)] = true
-    store[Value.new(:objkey2)] = false
+    store[Value.new(:objkey1)] = false
+    store[Value.new(:objkey2)] = true
     store.close
+    @store = nil
 
-    store = new_store
-    store[Value.new(:objkey1)].should == true
-    store[Value.new(:objkey2)].should == false
+    store[Value.new(:objkey1)].should == false
+    store[Value.new(:objkey2)].should == true
   end
 end
 
@@ -4544,8 +4544,8 @@ shared_examples_for 'persist_objectkey_stringvalue' do
     store[Value.new(:objkey1)] = "strval1"
     store[Value.new(:objkey2)] = "strval2"
     store.close
+    @store = nil
 
-    store = new_store
     store[Value.new(:objkey1)].should == "strval1"
     store[Value.new(:objkey2)].should == "strval2"
   end
@@ -4716,8 +4716,8 @@ shared_examples_for 'persist_objectkey_hashvalue' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
+    @store = nil
 
-    store = new_store
     store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
@@ -4888,8 +4888,8 @@ shared_examples_for 'persist_objectkey_objectvalue' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store[Value.new(:objkey2)] = Value.new(:objval2)
     store.close
+    @store = nil
 
-    store = new_store
     store[Value.new(:objkey1)].should == Value.new(:objval1)
     store[Value.new(:objkey2)].should == Value.new(:objval2)
   end
@@ -5035,8 +5035,8 @@ shared_examples_for 'persist_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}] = 0
     store[{"hashkey3"=>"hashkey4"}] = nil
     store.close
+    @store = nil
 
-    store = new_store
     store[{"hashkey1"=>"hashkey2"}].should == 0
     store[{"hashkey3"=>"hashkey4"}].should == nil
   end
@@ -5054,10 +5054,10 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it "guarantees that the same Integer value is returned when setting a Hash key" do
-    value = -10
+    value = 41
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
 
-    value = 42
+    value = -12
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
@@ -5072,28 +5072,28 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it "removes all Hash keys from the store with clear" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store[{"hashkey3"=>"hashkey4"}] = 42
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store[{"hashkey3"=>"hashkey4"}] = -12
     store.clear.should equal(store)
     store.key?({"hashkey1"=>"hashkey2"}).should_not ==  true
     store.key?({"hashkey3"=>"hashkey4"}).should_not == true
   end
 
   it "fetches a Hash key with a default value with fetch, if the key is not available" do
-    store.fetch({"hashkey1"=>"hashkey2"}, -10).should == -10
-    store.fetch({"hashkey3"=>"hashkey4"}, 42).should == 42
+    store.fetch({"hashkey1"=>"hashkey2"}, 41).should == 41
+    store.fetch({"hashkey3"=>"hashkey4"}, -12).should == -12
   end
 
   it "fetches a Hash key with a block with fetch, if the key is not available" do
     key = {"hashkey1"=>"hashkey2"}
-    value = -10
+    value = 41
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = {"hashkey3"=>"hashkey4"}
-    value = 42
+    value = -12
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -5107,7 +5107,7 @@ shared_examples_for 'null_hashkey_integervalue' do
     store.fetch({"hashkey1"=>"hashkey2"}, :option3 => 3) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store({"hashkey1"=>"hashkey2"}, -10, :option6 => 6).should == -10
+    store.store({"hashkey1"=>"hashkey2"}, 41, :option6 => 6).should == 41
   end
 end
 
@@ -5115,71 +5115,71 @@ end
 
 shared_examples_for 'store_hashkey_integervalue' do
   it "writes Integer values to keys that are Hashs like a Hash" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store[{"hashkey1"=>"hashkey2"}].should == -10
-    store.load({"hashkey1"=>"hashkey2"}).should == -10
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store[{"hashkey1"=>"hashkey2"}].should == 41
+    store.load({"hashkey1"=>"hashkey2"}).should == 41
 
-    store[{"hashkey3"=>"hashkey4"}] = 42
-    store[{"hashkey3"=>"hashkey4"}].should == 42
-    store.load({"hashkey3"=>"hashkey4"}).should == 42
+    store[{"hashkey3"=>"hashkey4"}] = -12
+    store[{"hashkey3"=>"hashkey4"}].should == -12
+    store.load({"hashkey3"=>"hashkey4"}).should == -12
   end
 
   it "returns true from key? if a Hash key is available" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
+    store[{"hashkey1"=>"hashkey2"}] = 41
     store.key?({"hashkey1"=>"hashkey2"}).should == true
-    store[{"hashkey3"=>"hashkey4"}] = 42
+    store[{"hashkey3"=>"hashkey4"}] = -12
     store.key?({"hashkey3"=>"hashkey4"}).should == true
   end
 
   it "stores Integer values with Hash keys with #store" do
-    value = -10
+    value = 41
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
-    store[{"hashkey1"=>"hashkey2"}].should == -10
-    store.load({"hashkey1"=>"hashkey2"}).should == -10
+    store[{"hashkey1"=>"hashkey2"}].should == 41
+    store.load({"hashkey1"=>"hashkey2"}).should == 41
 
-    value = 42
+    value = -12
     store.store({"hashkey3"=>"hashkey4"}, value).should equal(value)
-    store[{"hashkey3"=>"hashkey4"}].should == 42
-    store.load({"hashkey3"=>"hashkey4"}).should == 42
+    store[{"hashkey3"=>"hashkey4"}].should == -12
+    store.load({"hashkey3"=>"hashkey4"}).should == -12
   end
 
   it "stores Hash after clear" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store[{"hashkey3"=>"hashkey4"}] = 42
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store[{"hashkey3"=>"hashkey4"}] = -12
     store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store[{"hashkey1"=>"hashkey2"}].should == -10
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store[{"hashkey1"=>"hashkey2"}].should == 41
     store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it "removes and returns a Integer element with a Hash key from the backing store via delete if it exists" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store.delete({"hashkey1"=>"hashkey2"}).should == -10
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store.delete({"hashkey1"=>"hashkey2"}).should == 41
     store.key?({"hashkey1"=>"hashkey2"}).should == false
 
-    store[{"hashkey3"=>"hashkey4"}] = 42
-    store.delete({"hashkey3"=>"hashkey4"}).should == 42
+    store[{"hashkey3"=>"hashkey4"}] = -12
+    store.delete({"hashkey3"=>"hashkey4"}).should == -12
     store.key?({"hashkey3"=>"hashkey4"}).should == false
   end
 
   it "overwrites existing Integer values with Hash" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store[{"hashkey1"=>"hashkey2"}].should == -10
-    store[{"hashkey1"=>"hashkey2"}] = 42
-    store[{"hashkey1"=>"hashkey2"}].should == 42
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store[{"hashkey1"=>"hashkey2"}].should == 41
+    store[{"hashkey1"=>"hashkey2"}] = -12
+    store[{"hashkey1"=>"hashkey2"}].should == -12
   end
 
   it "fetches a Hash key with a default value with fetch, if the key is available" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store.fetch({"hashkey1"=>"hashkey2"}, 42).should == -10
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store.fetch({"hashkey1"=>"hashkey2"}, -12).should == 41
   end
   it "does not run the block if the Hash key is available" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
+    store[{"hashkey1"=>"hashkey2"}] = 41
     unaltered = 'unaltered'
     store.fetch({"hashkey1"=>"hashkey2"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[{"hashkey3"=>"hashkey4"}] = 42
+    store[{"hashkey3"=>"hashkey4"}] = -12
     unaltered = 'unaltered'
     store.fetch({"hashkey3"=>"hashkey4"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -5190,13 +5190,13 @@ end
 
 shared_examples_for 'persist_hashkey_integervalue' do
   it "persists Integer values with Hash keys" do
-    store[{"hashkey1"=>"hashkey2"}] = -10
-    store[{"hashkey3"=>"hashkey4"}] = 42
+    store[{"hashkey1"=>"hashkey2"}] = 41
+    store[{"hashkey3"=>"hashkey4"}] = -12
     store.close
+    @store = nil
 
-    store = new_store
-    store[{"hashkey1"=>"hashkey2"}].should == -10
-    store[{"hashkey3"=>"hashkey4"}].should == 42
+    store[{"hashkey1"=>"hashkey2"}].should == 41
+    store[{"hashkey3"=>"hashkey4"}].should == -12
   end
 end
 
@@ -5212,10 +5212,10 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it "guarantees that the same Boolean value is returned when setting a Hash key" do
-    value = true
+    value = false
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
 
-    value = false
+    value = true
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
@@ -5230,28 +5230,28 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it "removes all Hash keys from the store with clear" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey3"=>"hashkey4"}] = false
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store[{"hashkey3"=>"hashkey4"}] = true
     store.clear.should equal(store)
     store.key?({"hashkey1"=>"hashkey2"}).should_not ==  true
     store.key?({"hashkey3"=>"hashkey4"}).should_not == true
   end
 
   it "fetches a Hash key with a default value with fetch, if the key is not available" do
-    store.fetch({"hashkey1"=>"hashkey2"}, true).should == true
-    store.fetch({"hashkey3"=>"hashkey4"}, false).should == false
+    store.fetch({"hashkey1"=>"hashkey2"}, false).should == false
+    store.fetch({"hashkey3"=>"hashkey4"}, true).should == true
   end
 
   it "fetches a Hash key with a block with fetch, if the key is not available" do
     key = {"hashkey1"=>"hashkey2"}
-    value = true
+    value = false
     store.fetch(key) do |k|
       k.should equal(key)
       value
     end.should equal(value)
 
     key = {"hashkey3"=>"hashkey4"}
-    value = false
+    value = true
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -5265,7 +5265,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     store.fetch({"hashkey1"=>"hashkey2"}, :option3 => 3) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, :option4 => 4).should == nil
     store.clear(:option5 => 5).should equal(store)
-    store.store({"hashkey1"=>"hashkey2"}, true, :option6 => 6).should == true
+    store.store({"hashkey1"=>"hashkey2"}, false, :option6 => 6).should == false
   end
 end
 
@@ -5273,71 +5273,71 @@ end
 
 shared_examples_for 'store_hashkey_booleanvalue' do
   it "writes Boolean values to keys that are Hashs like a Hash" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey1"=>"hashkey2"}].should == true
-    store.load({"hashkey1"=>"hashkey2"}).should == true
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store[{"hashkey1"=>"hashkey2"}].should == false
+    store.load({"hashkey1"=>"hashkey2"}).should == false
 
-    store[{"hashkey3"=>"hashkey4"}] = false
-    store[{"hashkey3"=>"hashkey4"}].should == false
-    store.load({"hashkey3"=>"hashkey4"}).should == false
+    store[{"hashkey3"=>"hashkey4"}] = true
+    store[{"hashkey3"=>"hashkey4"}].should == true
+    store.load({"hashkey3"=>"hashkey4"}).should == true
   end
 
   it "returns true from key? if a Hash key is available" do
-    store[{"hashkey1"=>"hashkey2"}] = true
+    store[{"hashkey1"=>"hashkey2"}] = false
     store.key?({"hashkey1"=>"hashkey2"}).should == true
-    store[{"hashkey3"=>"hashkey4"}] = false
+    store[{"hashkey3"=>"hashkey4"}] = true
     store.key?({"hashkey3"=>"hashkey4"}).should == true
   end
 
   it "stores Boolean values with Hash keys with #store" do
-    value = true
-    store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
-    store[{"hashkey1"=>"hashkey2"}].should == true
-    store.load({"hashkey1"=>"hashkey2"}).should == true
-
     value = false
+    store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == false
+    store.load({"hashkey1"=>"hashkey2"}).should == false
+
+    value = true
     store.store({"hashkey3"=>"hashkey4"}, value).should equal(value)
-    store[{"hashkey3"=>"hashkey4"}].should == false
-    store.load({"hashkey3"=>"hashkey4"}).should == false
+    store[{"hashkey3"=>"hashkey4"}].should == true
+    store.load({"hashkey3"=>"hashkey4"}).should == true
   end
 
   it "stores Hash after clear" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey3"=>"hashkey4"}] = false
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store[{"hashkey3"=>"hashkey4"}] = true
     store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey1"=>"hashkey2"}].should == true
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store[{"hashkey1"=>"hashkey2"}].should == false
     store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it "removes and returns a Boolean element with a Hash key from the backing store via delete if it exists" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store.delete({"hashkey1"=>"hashkey2"}).should == true
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store.delete({"hashkey1"=>"hashkey2"}).should == false
     store.key?({"hashkey1"=>"hashkey2"}).should == false
 
-    store[{"hashkey3"=>"hashkey4"}] = false
-    store.delete({"hashkey3"=>"hashkey4"}).should == false
+    store[{"hashkey3"=>"hashkey4"}] = true
+    store.delete({"hashkey3"=>"hashkey4"}).should == true
     store.key?({"hashkey3"=>"hashkey4"}).should == false
   end
 
   it "overwrites existing Boolean values with Hash" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey1"=>"hashkey2"}].should == true
     store[{"hashkey1"=>"hashkey2"}] = false
     store[{"hashkey1"=>"hashkey2"}].should == false
+    store[{"hashkey1"=>"hashkey2"}] = true
+    store[{"hashkey1"=>"hashkey2"}].should == true
   end
 
   it "fetches a Hash key with a default value with fetch, if the key is available" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store.fetch({"hashkey1"=>"hashkey2"}, false).should == true
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store.fetch({"hashkey1"=>"hashkey2"}, true).should == false
   end
   it "does not run the block if the Hash key is available" do
-    store[{"hashkey1"=>"hashkey2"}] = true
+    store[{"hashkey1"=>"hashkey2"}] = false
     unaltered = 'unaltered'
     store.fetch({"hashkey1"=>"hashkey2"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
 
-    store[{"hashkey3"=>"hashkey4"}] = false
+    store[{"hashkey3"=>"hashkey4"}] = true
     unaltered = 'unaltered'
     store.fetch({"hashkey3"=>"hashkey4"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -5348,13 +5348,13 @@ end
 
 shared_examples_for 'persist_hashkey_booleanvalue' do
   it "persists Boolean values with Hash keys" do
-    store[{"hashkey1"=>"hashkey2"}] = true
-    store[{"hashkey3"=>"hashkey4"}] = false
+    store[{"hashkey1"=>"hashkey2"}] = false
+    store[{"hashkey3"=>"hashkey4"}] = true
     store.close
+    @store = nil
 
-    store = new_store
-    store[{"hashkey1"=>"hashkey2"}].should == true
-    store[{"hashkey3"=>"hashkey4"}].should == false
+    store[{"hashkey1"=>"hashkey2"}].should == false
+    store[{"hashkey3"=>"hashkey4"}].should == true
   end
 end
 
@@ -5523,8 +5523,8 @@ shared_examples_for 'persist_hashkey_stringvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
     store.close
+    @store = nil
 
-    store = new_store
     store[{"hashkey1"=>"hashkey2"}].should == "strval1"
     store[{"hashkey3"=>"hashkey4"}].should == "strval2"
   end
@@ -5695,8 +5695,8 @@ shared_examples_for 'persist_hashkey_hashvalue' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
+    @store = nil
 
-    store = new_store
     store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
@@ -5867,8 +5867,8 @@ shared_examples_for 'persist_hashkey_objectvalue' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
     store.close
+    @store = nil
 
-    store = new_store
     store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
     store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
   end
@@ -5880,8 +5880,8 @@ shared_examples_for 'not_persist' do
   it "does not persist values" do
     store['key'] = 'val'
     store.close
+    @store = nil
 
-    store = new_store
     store['key'].should be_nil
   end
 end

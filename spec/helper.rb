@@ -91,8 +91,8 @@ def describe_moneta(name, &block)
 end
 
 shared_context 'setup_store' do
-  let(:store) do
-    new_store
+  def store
+    @store ||= new_store
   end
 
   before do

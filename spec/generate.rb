@@ -1121,8 +1121,8 @@ KEYS = {
 
 VALUES = {
   'Nil' => [0, 'nil'],
-  'Integer' => [-10, 42],
-  'Boolean' => [true, false],
+  'Integer' => [41, -12],
+  'Boolean' => [false, true],
   'String' => ['strval1', 'strval2'].map(&:inspect),
   'Hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
   'Object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
@@ -1291,8 +1291,8 @@ end}
   store[#{key1}] = #{val1}
   store[#{key2}] = #{val2}
   store.close
+  @store = nil
 
-  store = new_store
   store[#{key1}].should == #{val1}
   store[#{key2}].should == #{val2}
 end}
@@ -1303,8 +1303,8 @@ end
 SPECS['not_persist'] = %{it "does not persist values" do
   store['key'] = 'val'
   store.close
+  @store = nil
 
-  store = new_store
   store['key'].should be_nil
 end}
 
