@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # ActiveRecord as key/value stores
     # @api public
-    class ActiveRecord < Base
+    class ActiveRecord
+      include Defaults
+
       def self.tables
         @tables ||= {}
       end

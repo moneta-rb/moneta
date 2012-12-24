@@ -4,8 +4,9 @@ module Moneta
   module Adapters
     # Moneta client backend
     # @api public
-    class Client < Base
+    class Client
       include Net
+      include Defaults
 
       # Constructor
       #

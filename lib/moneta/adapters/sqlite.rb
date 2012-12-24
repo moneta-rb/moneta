@@ -4,8 +4,9 @@ module Moneta
   module Adapters
     # Sqlite3 backend
     # @api public
-    class Sqlite < Base
-      include Mixins::IncrementSupport
+    class Sqlite
+      include Defaults
+      include IncrementSupport
 
       # Constructor
       #

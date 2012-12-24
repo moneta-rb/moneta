@@ -2,7 +2,9 @@ module Moneta
   module Adapters
     # Null backend which doesn't store anything
     # @api public
-    class Null < Base
+    class Null
+      include Defaults
+
       def initialize(options = {})
       end
 

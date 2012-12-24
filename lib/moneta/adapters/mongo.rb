@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # MongoDB backend
     # @api public
-    class Mongo < Base
+    class Mongo
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

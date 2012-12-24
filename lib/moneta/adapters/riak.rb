@@ -7,7 +7,9 @@ module Moneta
   module Adapters
     # Riak backend
     # @api public
-    class Riak < Base
+    class Riak
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # PStore backend
     # @api public
-    class PStore < Base
+    class PStore
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

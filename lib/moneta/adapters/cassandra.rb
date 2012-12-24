@@ -7,7 +7,9 @@ module Moneta
   module Adapters
     # Cassandra backend
     # @api public
-    class Cassandra < Base
+    class Cassandra
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

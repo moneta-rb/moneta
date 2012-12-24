@@ -5,8 +5,9 @@ module Moneta
     # Based on Hashery::LRUHash but simpler and measures memory usage instead of hash size.
     #
     # @api public
-    class LRUHash < Base
-      include Mixins::IncrementSupport
+    class LRUHash
+      include Defaults
+      include IncrementSupport
 
       # Constructor
       #

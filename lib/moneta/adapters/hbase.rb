@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # HBase thrift backend
     # @api public
-    class HBase < Base
+    class HBase
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

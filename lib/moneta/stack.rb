@@ -12,7 +12,9 @@ module Moneta
   #   end
   #
   # @api public
-  class Stack < Base
+  class Stack
+    include Defaults
+
     # @api private
     class DSL
       attr_reader :stack

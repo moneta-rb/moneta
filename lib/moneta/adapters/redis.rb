@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # Redis backend
     # @api public
-    class Redis < Base
+    class Redis
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

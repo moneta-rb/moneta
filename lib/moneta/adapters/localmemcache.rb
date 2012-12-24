@@ -4,8 +4,9 @@ module Moneta
   module Adapters
     # LocalMemCache backend
     # @api public
-    class LocalMemCache < Base
-      include Mixins::HashAdapter
+    class LocalMemCache
+      include Defaults
+      include HashAdapter
 
       # Constructor
       #

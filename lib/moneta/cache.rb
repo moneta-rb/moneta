@@ -10,7 +10,9 @@ module Moneta
   #   end
   #
   # @api public
-  class Cache < Base
+  class Cache
+    include Defaults
+
     # @api private
     class DSL
       def initialize(options, &block)

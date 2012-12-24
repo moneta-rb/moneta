@@ -5,7 +5,9 @@ module Moneta
   module Adapters
     # Datamapper backend
     # @api public
-    class DataMapper < Base
+    class DataMapper
+      include Defaults
+
       class Store
         include ::DataMapper::Resource
         property :k, Text, :key => true

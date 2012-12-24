@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # Fog backend (Cloud storage services)
     # @api public
-    class Fog < Base
+    class Fog
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

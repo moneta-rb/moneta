@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # CouchDB backend
     # @api public
-    class Couch < Base
+    class Couch
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

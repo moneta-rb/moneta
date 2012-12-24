@@ -4,8 +4,9 @@ module Moneta
   module Adapters
     # Filesystem backend
     # @api public
-    class File < Base
-      include Mixins::IncrementSupport
+    class File
+      include Defaults
+      include IncrementSupport
 
       # Constructor
       #

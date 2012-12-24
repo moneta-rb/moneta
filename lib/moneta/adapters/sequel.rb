@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # Sequel backend
     # @api public
-    class Sequel < Base
+    class Sequel
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

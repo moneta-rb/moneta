@@ -1,7 +1,9 @@
 module Moneta
   # Proxy base class
   # @api public
-  class Proxy < Base
+  class Proxy
+    include Defaults
+
     attr_reader :adapter
 
     # Constructor

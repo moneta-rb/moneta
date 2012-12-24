@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # Memcached backend (using gem memcached)
     # @api public
-    class MemcachedNative < Base
+    class MemcachedNative
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options

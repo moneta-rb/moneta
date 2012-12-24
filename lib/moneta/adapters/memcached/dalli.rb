@@ -4,7 +4,9 @@ module Moneta
   module Adapters
     # Memcached backend (using gem dalli)
     # @api public
-    class MemcachedDalli < Base
+    class MemcachedDalli
+      include Defaults
+
       # Constructor
       #
       # @param [Hash] options
