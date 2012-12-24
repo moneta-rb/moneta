@@ -6,6 +6,7 @@ master
   * SDBM: #store might raise errors (Don't use SDBM, it is unstable!)
   * Add #decrement method
   * Fix #fetch to handle false correctly
+  * Fix Expires middleware to handle boolean and nil values correctly
 
 0.7.0
 

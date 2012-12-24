@@ -467,7 +467,7 @@ end}
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
   adapter :File, :dir => File.join(make_tempdir, "expires-file")
 end},
-    :specs => STANDARD_SPECS.with_expires,
+    :specs => STANDARD_SPECS.with_expires.stringvalues_only,
     :tests => %{
 it 'should delete expired value in underlying file storage' do
   store.store('foo', 'bar', :expires => 2)

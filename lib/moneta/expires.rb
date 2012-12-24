@@ -19,52 +19,46 @@ module Moneta
     end
 
     def key?(key, options = {})
-      load(key, options) != nil
+      load_entry(key, options) != nil
     end
 
     def load(key, options = {})
-      if options.include?(:raw)
-        super
-      else
-        value = check_expired(key, super)
-        if value && options.include?(:expires)
-          store(key, value, options)
-        else
-          value
-        end
-      end
+      return super if options.include?(:raw)
+      value, expires = load_entry(key, options)
+      value
     end
 
     def store(key, value, options = {})
-      if options.include?(:raw)
-        super
+      return super if options.include?(:raw)
+      if expires = (options.delete(:expires) || @expires)
+        super(key, [value, Time.now.to_i + expires], options)
       else
-        if expires = (options.delete(:expires) || @expires)
-          super(key, [value, Time.now.to_i + expires], options)
-        else
-          super(key, [value], options)
-        end
-        value
+        super(key, [value], options)
       end
+      value
     end
 
     def delete(key, options = {})
-      if options.include?(:raw)
-        super
-      else
-        check_expired(key, super, false)
-      end
+      return super if options.include?(:raw)
+      value, expires = super
+      value if !expires || Time.now.to_i <= expires
     end
 
-    protected
+    private
 
-    def check_expired(key, value, delete_expired = true)
-      value, expires = value
-      if expires && Time.now.to_i > expires
-        delete(key) if delete_expired
-        nil
-      else
-        value
+    def load_entry(key, options)
+      new_expires = options.delete(:expires)
+      if entry = @adapter.load(key, options)
+        value, expires = entry
+        if expires && Time.now.to_i > expires
+          delete(key)
+          nil
+        elsif new_expires
+          @adapter.store(key, [value, Time.now.to_i + new_expires], options)
+          entry
+        else
+          entry
+        end
       end
     end
   end
