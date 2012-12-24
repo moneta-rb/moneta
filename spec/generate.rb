@@ -142,7 +142,7 @@ end
     :store => :Memory,
     :options => ':compress => true',
     :load_value => 'Marshal.load(::Zlib::Inflate.inflate(value))',
-    :specs => STANDARD_SPECS
+    :specs => STANDARD_SPECS.without_persist
   },
   'simple_memory_with_prefix' => {
     :store => :Memory,
