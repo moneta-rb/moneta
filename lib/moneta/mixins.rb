@@ -1,6 +1,6 @@
 module Moneta
   # @api private
-  module WithOptions
+  module OptionSupport
     def with(options)
       OptionMerger.new(self, options)
     end
@@ -26,7 +26,7 @@ module Moneta
   # Simple interface to key/value stores with Hash-like interface.
   # @api public
   module Defaults
-    include WithOptions
+    include OptionSupport
 
     # Exists the value with key
     #

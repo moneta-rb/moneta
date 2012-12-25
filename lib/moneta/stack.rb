@@ -38,13 +38,13 @@ module Moneta
     end
 
     def key?(key, options = {})
-      @stack.any? {|s| s.key?(key) }
+      @stack.any? {|s| s.key?(key, options) }
     end
 
     def load(key, options = {})
       @stack.each do |s|
         value = s.load(key, options)
-        return value if value
+        return value if value != nil
       end
       nil
     end
@@ -54,6 +54,12 @@ module Moneta
       value
     end
 
+    def increment(key, amount = 1, options = {})
+      last = nil
+      @stack.each {|s| last = s.increment(key, amount, options) }
+      last
+    end
+
     def delete(key, options = {})
       @stack.inject(nil) do |value, s|
         v = s.delete(key, options)
@@ -61,14 +67,8 @@ module Moneta
       end
     end
 
-    def increment(key, amount = 1, options = {})
-      last = nil
-      @stack.each {|s| last = s.increment(key, amount, options) }
-      last
-    end
-
     def clear(options = {})
-      @stack.each {|s| s.clear }
+      @stack.each {|s| s.clear(options) }
       self
     end
 

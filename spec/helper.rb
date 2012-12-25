@@ -41,12 +41,6 @@ class Value
   end
 end
 
-def safe_load_value(value)
-  load_value(value)
-rescue Exception => ex
-  value
-end
-
 def start_server(*args)
   server = Moneta::Server.new(*args)
   Thread.new { server.run }

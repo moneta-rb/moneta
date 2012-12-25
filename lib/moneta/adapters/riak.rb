@@ -23,18 +23,18 @@ module Moneta
       end
 
       def key?(key, options = {})
-        @bucket.exists?(key, options)
+        @bucket.exists?(key, options.dup)
       end
 
       def load(key, options = {})
-        @bucket.get(key, options).raw_data
+        @bucket.get(key, options.dup).raw_data
       rescue ::Riak::FailedRequest => ex
         nil
       end
 
       def delete(key, options = {})
         value = load(key, options)
-        @bucket.delete(key, options)
+        @bucket.delete(key, options.dup)
         value
       end
 
@@ -42,7 +42,7 @@ module Moneta
         obj = ::Riak::RObject.new(@bucket, key)
         obj.content_type = options[:content_type] || @content_type
         obj.raw_data = value
-        obj.store(options)
+        obj.store(options.dup)
         value
       end
 

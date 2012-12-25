@@ -49,9 +49,9 @@ module Moneta
 
     def load(key, options = {})
       value = @cache.load(key, options)
-      unless value
+      if value == nil
         value = @backend.load(key, options)
-        @cache.store(key, value, options) if value
+        @cache.store(key, value, options) if value != nil
       end
       value
     end
@@ -62,9 +62,8 @@ module Moneta
     end
 
     def increment(key, amount = 1, options = {})
-      value = @backend.increment(key, amount, options)
-      @cache.store(key, value.to_s, options)
-      value
+      @cache.delete(key, options)
+      @backend.increment(key, amount, options)
     end
 
     def delete(key, options = {})

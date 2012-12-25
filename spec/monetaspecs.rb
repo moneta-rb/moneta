@@ -6000,10 +6000,6 @@ shared_examples_for 'increment' do
     store.raw.load('inckey').should == '1'
     store.load('inckey', :raw => true).should == '1'
 
-    # WARNING: Undefined behaviour!
-    result = safe_load_value(store.raw['inckey'])
-    store['inckey'].should == result
-
     store.delete('inckey', :raw => true).should == '1'
     store.key?('inckey').should be_false
   end
@@ -6012,11 +6008,6 @@ shared_examples_for 'increment' do
     store.increment('inckey', 42).should == 42
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '42'
-
-    # WARNING: Undefined behaviour!
-    result = safe_load_value(store.raw['inckey'])
-    store['inckey'].should == result
-
     store.delete('inckey', :raw => true).should == '42'
   end
 
@@ -6024,22 +6015,7 @@ shared_examples_for 'increment' do
     store.increment('inckey', 0).should == 0
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '0'
-
-    # WARNING: Undefined behaviour!
-    result = safe_load_value(store.raw['inckey'])
-    store['inckey'].should == result
-
     store.delete('inckey', :raw => true).should == '0'
-  end
-
-  it 'should support deleting integer value' do
-    store.increment('inckey').should == 1
-
-    # WARNING: Undefined behaviour!
-    result = safe_load_value(store.raw['inckey'])
-    store.delete('inckey').should == result
-
-    store.key?('inckey').should be_false
   end
 
   it 'should initialize in #decrement with 0' do
@@ -6185,8 +6161,22 @@ shared_examples_for 'transform_value' do
   it 'should return unmarshalled value' do
     store.store('key', 'unmarshalled value', :raw => true)
     store.load('key', :raw => true).should == 'unmarshalled value'
-    store['key'].should == 'unmarshalled value'
-    store.delete('key').should == 'unmarshalled value'
+  end
+
+  it 'might raise exception on invalid value' do
+    store.store('key', 'unmarshalled value', :raw => true)
+
+    begin
+      store['key'].should == load_value('unmarshalled value')
+      store.delete('key').should == load_value('unmarshalled value')
+    rescue Exception => ex
+      expect do
+        store['key']
+      end.to raise_error
+      expect do
+        store.delete('key')
+      end.to raise_error
+    end
   end
 end
 
@@ -6195,7 +6185,13 @@ end
 shared_examples_for 'transform_value_with_expires' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
-    load_value(store.load('key', :raw => true)).should == ['value']
+    load_value(store.load('key', :raw => true)).should == 'value'
+    store['key'] = [1,2,3]
+    load_value(store.load('key', :raw => true)).should == [[1,2,3]]
+    store['key'] = nil
+    load_value(store.load('key', :raw => true)).should == [nil]
+    store['key'] = false
+    load_value(store.load('key', :raw => true)).should == false
 
     store.store('key', 'value', :expires => 10)
     load_value(store.load('key', :raw => true)).first.should == 'value'
@@ -6209,8 +6205,22 @@ shared_examples_for 'transform_value_with_expires' do
   it 'should return unmarshalled value' do
     store.store('key', 'unmarshalled value', :raw => true)
     store.load('key', :raw => true).should == 'unmarshalled value'
-    store['key'].should == 'unmarshalled value'
-    store.delete('key').should == 'unmarshalled value'
+  end
+
+  it 'might raise exception on invalid value' do
+    store.store('key', 'unmarshalled value', :raw => true)
+
+    begin
+      store['key'].should == load_value('unmarshalled value')
+      store.delete('key').should == load_value('unmarshalled value')
+    rescue Exception => ex
+      expect do
+        store['key']
+      end.to raise_error
+      expect do
+        store.delete('key')
+      end.to raise_error
+    end
   end
 end
 

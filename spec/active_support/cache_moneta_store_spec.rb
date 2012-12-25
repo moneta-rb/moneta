@@ -76,24 +76,24 @@ describe ActiveSupport::Cache::MonetaStore do
 
   it 'increments a key' do
     3.times { @store.increment 'counter' }
-    @store.read('counter').should == '3'
+    @store.read('counter', :raw => true).should == '3'
   end
 
   it 'decrements a key' do
     3.times { @store.increment 'counter' }
     2.times { @store.decrement 'counter' }
-    @store.read('counter').should == '1'
+    @store.read('counter', :raw => true).should == '1'
   end
 
   it 'increments a key by given value' do
     @store.increment 'counter', 3
-    @store.read('counter').should == '3'
+    @store.read('counter', :raw => true).should == '3'
   end
 
   it 'decrements a key by given value' do
     3.times { @store.increment 'counter' }
     @store.decrement 'counter', 2
-    @store.read('counter').should == '1'
+    @store.read('counter', :raw => true).should == '1'
   end
 
   describe 'notifications' do

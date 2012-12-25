@@ -17,7 +17,11 @@ module Moneta
     end
 
     def key?(key, options = {})
+      # Transformer might raise exception
       load_entry(key, options) != nil
+    rescue Exception
+      options.include?(:expires) && (options = options.dup; options.delete(:expires))
+      super(key, options)
     end
 
     def load(key, options = {})
@@ -28,10 +32,13 @@ module Moneta
 
     def store(key, value, options = {})
       return super if options.include?(:raw)
-      if expires = (options.delete(:expires) || @expires)
+      expires = options.include?(:expires) && (options = options.dup; options.delete(:expires))
+      if expires ||= @expires
         super(key, [value, Time.now.to_i + expires], options)
-      else
+      elsif Array === value || value == nil
         super(key, [value], options)
+      else
+        super(key, value, options)
       end
       value
     end
@@ -45,8 +52,9 @@ module Moneta
     private
 
     def load_entry(key, options)
-      new_expires = options.delete(:expires)
-      if entry = @adapter.load(key, options)
+      new_expires = options.include?(:expires) && (options = options.dup; options.delete(:expires))
+      entry = @adapter.load(key, options)
+      if entry != nil
         value, expires = entry
         if expires && Time.now.to_i > expires
           delete(key)

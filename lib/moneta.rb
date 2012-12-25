@@ -9,12 +9,12 @@ module Moneta
   autoload :Logger,            'moneta/logger'
   autoload :Net,               'moneta/mixins'
   autoload :OptionMerger,      'moneta/optionmerger'
+  autoload :OptionSupport,     'moneta/mixins'
   autoload :Proxy,             'moneta/proxy'
   autoload :Server,            'moneta/server'
   autoload :Shared,            'moneta/shared'
   autoload :Stack,             'moneta/stack'
   autoload :Transformer,       'moneta/transformer'
-  autoload :WithOptions,       'moneta/mixins'
   autoload :Wrapper,           'moneta/wrapper'
 
   module Adapters

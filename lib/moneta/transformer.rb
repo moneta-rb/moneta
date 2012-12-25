@@ -31,27 +31,24 @@ module Moneta
       # @option options [String] :prefix Prefix string for key namespacing (Used by the :prefix key transformer)
       # @option options [String] :secret HMAC secret to verify values (Used by the :hmac value transformer)
       # @option options [Integer] :maxlen Maximum key length (Used by the :truncate key transformer)
-      # @option options [Boolean] :quiet Disable error message
       def new(adapter, options = {})
         keys = [options[:key]].flatten.compact
         values = [options[:value]].flatten.compact
         raise ArgumentError, 'Option :key or :value is required' if keys.empty? && values.empty?
         options[:prefix] ||= '' if keys.include?(:prefix)
-        name = class_name(options[:quiet] ? 'Quiet' : '', keys, values)
-        const_set(name, compile(options, keys, values)) unless const_defined?(name)
+        name = class_name(keys, values)
+        const_set(name, compile(keys, values)) unless const_defined?(name)
         const_get(name).original_new(adapter, options)
       end
 
       private
 
-      def compile(options, keys, values)
+      def compile(keys, values)
         @key_validator ||= compile_validator(KEY_TRANSFORMER)
         @value_validator ||= compile_validator(VALUE_TRANSFORMER)
 
         raise ArgumentError, 'Invalid key transformer chain' if @key_validator !~ keys.map(&:inspect).join
         raise ArgumentError, 'Invalid value transformer chain' if @value_validator !~ values.map(&:inspect).join
-
-        key = compile_transformer(keys, 'key')
 
         klass = Class.new(self)
         klass.class_eval <<-end_eval, __FILE__, __LINE__
@@ -60,62 +57,90 @@ module Moneta
             #{compile_initializer('key', keys)}
             #{compile_initializer('value', values)}
           end
+        end_eval
+
+        key = compile_transformer(keys, 'key')
+        dump = compile_transformer(values, 'value')
+        load = compile_transformer(values.reverse, 'value', 1)
+
+        if values.empty?
+          compile_key_transformer(klass, key)
+        elsif keys.empty?
+          compile_value_transformer(klass, load, dump)
+        else
+          compile_key_value_transformer(klass, key, load, dump)
+        end
+
+        klass
+      end
+
+      def compile_key_transformer(klass, key)
+        klass.class_eval <<-end_eval, __FILE__, __LINE__
           def key?(key, options = {})
             @adapter.key?(#{key}, options)
           end
           def increment(key, amount = 1, options = {})
             @adapter.increment(#{key}, amount, options)
           end
+          def load(key, options = {})
+            options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.load(#{key}, options)
+          end
+          def store(key, value, options = {})
+            options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.store(#{key}, value, options)
+          end
+          def delete(key, options = {})
+            options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.delete(#{key}, options)
+          end
         end_eval
+      end
 
-        if values.empty?
-          klass.class_eval <<-end_eval, __FILE__, __LINE__
-            def load(key, options = {})
-              options.delete(:raw)
-              @adapter.load(#{key}, options)
-            end
-            def store(key, value, options = {})
-              options.delete(:raw)
-              @adapter.store(#{key}, value, options)
-            end
-            def delete(key, options = {})
-              options.delete(:raw)
-              @adapter.delete(#{key}, options)
-            end
-          end_eval
-        else
-          dump = compile_transformer(values, 'value')
-          load = compile_transformer(values.reverse, 'value', 1)
+      def compile_value_transformer(klass, load, dump)
+        klass.class_eval <<-end_eval, __FILE__, __LINE__
+          def load(key, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            value = @adapter.load(key, options)
+            value && !raw ? #{load} : value
+          end
+          def store(key, value, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.store(key, raw ? value : #{dump}, options)
+            value
+          end
+          def delete(key, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            value = @adapter.delete(key, options)
+            value && !raw ? #{load} : value
+          end
+        end_eval
+      end
 
-          klass.class_eval <<-end_eval, __FILE__, __LINE__
-            def load(key, options = {})
-              raw = options.delete(:raw)
-              value = @adapter.load(#{key}, options)
-              begin
-                return #{load} if value && !raw
-              rescue Exception => ex
-                #{options[:quiet] ? '' : 'puts "Tried to load invalid value: #{ex.message}"'}
-              end
-              value
-            end
-            def store(key, value, options = {})
-              raw = options.delete(:raw)
-              @adapter.store(#{key}, raw ? value : #{dump}, options)
-              value
-            end
-            def delete(key, options = {})
-              raw = options.delete(:raw)
-              value = @adapter.delete(#{key}, options)
-              begin
-                return #{load} if value && !raw
-              rescue Exception => ex
-                #{options[:quiet] ? '' : 'puts "Tried to delete invalid value: #{ex.message}"'}
-              end
-              value
-            end
-          end_eval
-        end
-        klass
+      def compile_key_value_transformer(klass, key, load, dump)
+        klass.class_eval <<-end_eval, __FILE__, __LINE__
+          def key?(key, options = {})
+            @adapter.key?(#{key}, options)
+          end
+          def increment(key, amount = 1, options = {})
+            @adapter.increment(#{key}, amount, options)
+          end
+          def load(key, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            value = @adapter.load(#{key}, options)
+            value && !raw ? #{load} : value
+          end
+          def store(key, value, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.store(#{key}, raw ? value : #{dump}, options)
+            value
+          end
+          def delete(key, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            value = @adapter.delete(#{key}, options)
+            value && !raw ? #{load} : value
+          end
+        end_eval
       end
 
       # Compile option initializer
@@ -149,8 +174,8 @@ module Moneta
         end
       end
 
-      def class_name(prefix, keys, values)
-        prefix << (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join << 'Key') <<
+      def class_name(keys, values)
+        (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join << 'Key') <<
           (values.empty? ? '' : values.map(&:to_s).map(&:capitalize).join << 'Value')
       end
     end
