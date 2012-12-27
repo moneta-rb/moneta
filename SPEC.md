@@ -1,16 +1,8 @@
 # Moneta Specification
 
-The purpose of the moneta specification is to create a general-purpose API for interacting with key-value stores. In general, libraries that need to interact with key-value stores should be able to specify that they can use any "moneta-compliant store".
-
-# Moneta Executable Specs
-
-Moneta ships with a set of executable specs which you can use to verify spec-compliance with your moneta adapter.
-
-# Requirements for a Moneta Adapter
-
 (See RFC 2119 for use of MUST, SHOULD, MAY, MUST NOT, and SHOULD NOT)
 
-A Moneta adapter must expose a class with the following characteristics:
+The purpose of the moneta specification is to create a general-purpose API for interacting with key-value stores. In general, libraries that need to interact with key-value stores should be able to specify that they can use any "moneta-compliant store". Moneta ships with a set of executable specs which you can use to verify spec-compliance with your moneta adapter.
 
 ## Class Methods
 
@@ -62,7 +54,7 @@ This method MUST accept negative values, but the result MUST be unsigned.
 
 Completely empty all keys and values from the key-value-store. Adapters MAY allow a namespace during initialization, which can scope this operation to a particular subset of keys. After calling <code>clear</code>, a <code>[]</code> operation MUST return nil for every possible key, and a <code>key?</code> query MUST return false for every possible key.
 
-# Additional Options Hashes
+## Additional Options Hashes
 
 The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification). The methods MUST NOT modify the supplied option hash.
 
@@ -76,6 +68,6 @@ The following methods may all take an additional Hash as a final argument. This 
 
 In the case of methods with optional arguments, the Hash MUST be provided as the final argument. Keys in this Hash MUST be Symbols.
 
-# Atomicity
+## Atomicity
 
 The base Moneta specification does not specify any atomicity guarantees. However, extensions to this spec may specify extensions that define additional guarantees for any of the defined operations.

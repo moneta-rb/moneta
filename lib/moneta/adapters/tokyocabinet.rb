@@ -5,8 +5,6 @@ module Moneta
     # TokyoCabinet backend
     # @api public
     class TokyoCabinet < Memory
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)

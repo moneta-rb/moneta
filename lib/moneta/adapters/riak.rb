@@ -10,8 +10,6 @@ module Moneta
     class Riak
       include Defaults
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :bucket ('moneta') Bucket name
       # @option options [String] :content_type ('application/octet-stream') Default content type

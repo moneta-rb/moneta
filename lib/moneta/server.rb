@@ -4,8 +4,6 @@ module Moneta
   # Moneta server
   # @api public
   class Server
-    # Constructor
-    #
     # @param [Hash] options
     # @option options [Integer] :port (9000) TCP port
     # @option options [String] :file Alternative Unix socket file name

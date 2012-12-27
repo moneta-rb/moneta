@@ -1,29 +1,29 @@
 master
 
-  * Renamed WithOptions to OptionSupport
-  * Refactored Base in Defaults mixin
-  * Removed Transformer option :quiet
-  * Transformer might raise an exception if an invalid value is transformed
-  * Expires middleware only wraps Arrays and nils in an Array if
-    no expiration time is given (backward compatible change)
-  * Moneta middlewares are not allowed to transform option hash given to functions
-    like #load and #store
+* Renamed WithOptions to OptionSupport
+* Refactored Base in Defaults mixin
+* Removed Transformer option :quiet
+* Transformer might raise an exception if an invalid value is transformed
+* Expires middleware only wraps Arrays and nils in an Array if
+  no expiration time is given (backward compatible change)
+* Moneta middlewares are not allowed to transform option hash given to functions
+  like #load and #store
 
 0.7.1
 
-  * Memcached: Use binary protocol and no base64 encoding of the keys
-  * Transformer: Remove newlines from base64 encodes values
-  * Server: Add method #run which will block and #running? to allow forking
-  * SDBM: #store might raise errors (Don't use SDBM, it is unstable!)
-  * Add #decrement method
-  * Fix #fetch to handle false correctly
-  * Fix Expires middleware to handle boolean and nil values correctly
-  * Base64 encode Riak keys since Riak needs valid UTF-8 for the REST interface
+* Memcached: Use binary protocol and no base64 encoding of the keys
+* Transformer: Remove newlines from base64 encodes values
+* Server: Add method #run which will block and #running? to allow forking
+* SDBM: #store might raise errors (Don't use SDBM, it is unstable!)
+* Add #decrement method
+* Fix #fetch to handle false correctly
+* Fix Expires middleware to handle boolean and nil values correctly
+* Base64 encode Riak keys since Riak needs valid UTF-8 for the REST interface
 
 0.7.0
 
-  * Major rewrite by Daniel Mendler
+* Major rewrite by Daniel Mendler
 
 0.6.0
 
-  * First public release by Yehuda Katz
+* First public release by Yehuda Katz

@@ -5,8 +5,6 @@ module Moneta
     # SDBM backend
     # @api public
     class SDBM < Memory
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :file Database file
       def initialize(options = {})

@@ -6,8 +6,6 @@ module Moneta
 
     attr_reader :adapter
 
-    # Constructor
-    #
     # @param [Moneta store] adapter underlying adapter
     # @param [Hash] options
     def initialize(adapter, options = {})

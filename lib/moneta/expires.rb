@@ -6,8 +6,6 @@ module Moneta
   #
   # @api public
   class Expires < Proxy
-    # Constructor
-    #
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
     # @option options [String] :expires Default expiration time

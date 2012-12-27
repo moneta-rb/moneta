@@ -7,8 +7,6 @@ module Moneta
     class Mongo
       include Defaults
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
       # @option options [String] :host ('127.0.0.1') MongoDB server host

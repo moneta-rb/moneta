@@ -7,8 +7,6 @@ module Moneta
     class Fog
       include Defaults
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :dir Fog directory
       # @option options Other options passed to `Fog::Storage#new`

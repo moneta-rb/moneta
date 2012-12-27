@@ -10,19 +10,17 @@ module Moneta
   #
   # @example Bypass serialization
   #   store.store('key', 'value', :raw => true)
-  #   store['key'] => Error
-  #   store.load('key', :raw => true) => 'value'
+  #   store['key'] # raises an Exception
+  #   store.load('key', :raw => true) # returns 'value'
   #
   #   store['key'] = 'value'
-  #   store.load('key', :raw => true) => "\x04\bI\"\nvalue\x06:\x06ET"
+  #   store.load('key', :raw => true) # returns "\x04\bI\"\nvalue\x06:\x06ET"
   #
   # @api public
   class Transformer < Proxy
     class << self
       alias_method :original_new, :new
 
-      # Constructor
-      #
       # @param [Moneta store] adapter The underlying store
       # @param [Hash] options
       # @return [Transformer] new Moneta transformer

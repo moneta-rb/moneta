@@ -5,8 +5,6 @@ module Moneta
     # GDBM backend
     # @api public
     class GDBM < Memory
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :file Database file
       def initialize(options = {})

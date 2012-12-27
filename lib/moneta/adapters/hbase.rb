@@ -7,8 +7,6 @@ module Moneta
     class HBase
       include Defaults
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (9090) Server port

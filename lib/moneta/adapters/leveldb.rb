@@ -5,8 +5,6 @@ module Moneta
     # LevelDB backend
     # @api public
     class LevelDB < Memory
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :dir - Database path
       # @option options All other options passed to `LevelDB::DB#new`

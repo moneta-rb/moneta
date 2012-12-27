@@ -4,8 +4,6 @@ module Moneta
   # Locks the underlying stores with a Mutex
   # @api public
   class Lock < Wrapper
-    # Constructor
-    #
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
     # @option options [String] :mutex (Mutex.new) Mutex object

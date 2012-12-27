@@ -8,8 +8,6 @@ module Moneta
       include Defaults
       include HashAdapter
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :file Database file
       def initialize(options = {})

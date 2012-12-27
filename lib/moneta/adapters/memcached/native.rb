@@ -7,12 +7,10 @@ module Moneta
     class MemcachedNative
       include Defaults
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
       # @option options [String] :namespace Key namespace
-      # @option options [String] :expires (604800) Default expiration time
+      # @option options [Integer] :expires (604800) Default expiration time
       # @option options Other options passed to `Memcached#new`
       def initialize(options = {})
         server = options.delete(:server) || '127.0.0.1:11211'

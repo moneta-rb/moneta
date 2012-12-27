@@ -33,8 +33,6 @@ module Moneta
       end
     end
 
-    # Constructor
-    #
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
     # @option options [Object] :logger (Moneta::Logger::Format) Callable logger object

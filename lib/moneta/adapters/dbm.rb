@@ -5,8 +5,6 @@ module Moneta
     # DBM backend (Berkeley DB)
     # @api public
     class DBM < Memory
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :file Database file
       def initialize(options = {})

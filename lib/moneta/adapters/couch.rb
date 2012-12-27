@@ -7,8 +7,6 @@ module Moneta
     class Couch
       include Defaults
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :db ('moneta') Couch database
       def initialize(options = {})

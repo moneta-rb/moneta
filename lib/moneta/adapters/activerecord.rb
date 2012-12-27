@@ -13,8 +13,6 @@ module Moneta
 
       attr_reader :table
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :table ('moneta') Table name
       # @option options [Hash]   :connection ActiveRecord connection configuration

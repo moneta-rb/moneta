@@ -14,8 +14,6 @@ module Moneta
         property :v, Text, :lazy => false
       end
 
-      # Constructor
-      #
       # @param [Hash] options
       # @option options [String] :setup Datamapper setup string
       # @option options [String/Symbol] :repository (:moneta) Repository name
