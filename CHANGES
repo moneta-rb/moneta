@@ -1,3 +1,14 @@
+master
+
+  * Renamed WithOptions to OptionSupport
+  * Refactored Base in Defaults mixin
+  * Removed Transformer option :quiet
+  * Transformer might raise an exception if an invalid value is transformed
+  * Expires middleware only wraps Arrays and nils in an Array if
+    no expiration time is given (backward compatible change)
+  * Moneta middlewares are not allowed to transform option hash given to functions
+    like #load and #store
+
 0.7.1
 
   * Memcached: Use binary protocol and no base64 encoding of the keys
