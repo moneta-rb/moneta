@@ -75,6 +75,8 @@ module Moneta
     def close
     end
 
+    # Fetch a value with a key
+    #
     # @overload fetch(key, options = {}, &block)
     #   retrieve a key. if the key is not available, execute the
     #   block and return its return value.
