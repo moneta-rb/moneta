@@ -75,19 +75,20 @@ module Moneta
     def close
     end
 
-    # Fetch value with key
-    #
-    # This is a overloaded method:
-    #
-    # * fetch(key, options = {}, &block) retrieve a key. if the key is not available, execute the
+    # @overload fetch(key, options = {}, &block)
+    #   retrieve a key. if the key is not available, execute the
     #   block and return its return value.
+    #   @param [Object] key
+    #   @param [Hash] options
+    #   @return [Object] value from store
     #
-    # * fetch(key, value, options = {}) retrieve a key. if the key is not available, return the value.
+    # @overload fetch(key, default, options = {})
+    #   retrieve a key. if the key is not available, return the default value.
+    #   @param [Object] key
+    #   @param [Object] default Default value
+    #   @param [Hash] options
+    #   @return [Object] value from store
     #
-    # @param [Object] key
-    # @param [Object] default Default value
-    # @param [Hash] options
-    # @return [Object] value from store
     # @api public
     def fetch(key, default = nil, options = nil)
       if block_given?
