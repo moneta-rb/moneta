@@ -678,9 +678,49 @@ end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
     :load_value => '::MessagePack.unpack(value)'
   },
+  'transformer_marshal' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => :marshal, :value => :marshal
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS,
+    :load_value => '::Marshal.load(value)'
+  },
+  'transformer_key_marshal' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => :marshal
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS,
+    :load_value => 'value'
+  },
+  'transformer_value_marshal' => {
+    :build => %{Moneta.build do
+  use :Transformer, :value => :marshal
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS,
+    :load_value => '::Marshal.load(value)'
+  },
   'transformer_yaml' => {
     :build => %{Moneta.build do
   use :Transformer, :key => :yaml, :value => :yaml
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS,
+    :load_value => '::YAML.load(value)'
+  },
+  'transformer_key_yaml' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => :yaml
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS,
+    :load_value => 'value'
+  },
+  'transformer_value_yaml' => {
+    :build => %{Moneta.build do
+  use :Transformer, :value => :yaml
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS,
