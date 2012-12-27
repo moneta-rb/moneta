@@ -303,7 +303,7 @@ store['key']    # returns nil
 store['subkey'] # returns 'value'
 
 # Set expiration time for all keys
-short_lived_store = long_lived_store.expires(60)
+short_lived_store = store.expires(60)
 short_lived_store['key'] = 'value'
 ~~~
 
