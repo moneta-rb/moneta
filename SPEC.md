@@ -64,7 +64,7 @@ Completely empty all keys and values from the key-value-store. Adapters MAY allo
 
 # Additional Options Hashes
 
-The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification).
+The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification). The methods MUST NOT modify the supplied option hash.
 
 * fetch
 * load
