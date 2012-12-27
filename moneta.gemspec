@@ -15,5 +15,5 @@ Gem::Specification.new do |s|
   s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.homepage         = 'http://github.com/minad/moneta'
   s.require_paths    = ['lib']
-  s.summary          = %{A unified interface to key/value stores, including MongoDB, Redis, Tokyo, and ActiveRecord}
+  s.summary          = %{A unified interface to key/value stores, including Redis, Memcached, TokyoCabinet, ActiveRecord and many more}
 end
