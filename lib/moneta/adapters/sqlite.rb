@@ -23,42 +23,42 @@ module Moneta
            @clear = @db.prepare("delete from #{table}")]
       end
 
-      # @see Proxy#key?
+      # (see Proxy#key?)
       def key?(key, options = {})
         !@select.execute!(key).empty?
       end
 
-      # @see Proxy#load
+      # (see Proxy#load)
       def load(key, options = {})
         rows = @select.execute!(key)
         rows.empty? ? nil : rows.first.first
       end
 
-      # @see Proxy#store
+      # (see Proxy#store)
       def store(key, value, options = {})
         @replace.execute!(key, value)
         value
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
         @delete.execute!(key)
         value
       end
 
-      # @see Proxy#increment
+      # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @db.transaction(:exclusive) { return super }
       end
 
-      # @see Proxy#clear
+      # (see Proxy#clear)
       def clear(options = {})
         @clear.execute!
         self
       end
 
-      # @see Proxy#close
+      # (see Proxy#close)
       def close
         @stmts.each {|s| s.close }
         @db.close

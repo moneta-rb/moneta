@@ -21,20 +21,20 @@ module Moneta
         @collection = connection.db(db).collection(collection)
       end
 
-      # @see Proxy#load
+      # (see Proxy#load)
       def load(key, options = {})
         value = @collection.find_one('_id' => ::BSON::Binary.new(key))
         value && value['value'].to_s
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
         @collection.remove('_id' => ::BSON::Binary.new(key)) if value
         value
       end
 
-      # @see Proxy#store
+      # (see Proxy#store)
       def store(key, value, options = {})
         key = ::BSON::Binary.new(key)
         @collection.update({ '_id' => key },
@@ -43,7 +43,7 @@ module Moneta
         value
       end
 
-      # @see Proxy#clear
+      # (see Proxy#clear)
       def clear(options = {})
         @collection.remove
         self

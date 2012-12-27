@@ -15,27 +15,27 @@ module Moneta
         @pstore = new_store(options)
       end
 
-      # @see Proxy#key?
+      # (see Proxy#key?)
       def key?(key, options = {})
         @pstore.transaction(true) { @pstore.root?(key) }
       end
 
-      # @see Proxy#load
+      # (see Proxy#load)
       def load(key, options = {})
         @pstore.transaction(true) { @pstore[key] }
       end
 
-      # @see Proxy#store
+      # (see Proxy#store)
       def store(key, value, options = {})
         @pstore.transaction { @pstore[key] = value }
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         @pstore.transaction { @pstore.delete(key) }
       end
 
-      # @see Proxy#increment
+      # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @pstore.transaction do
           value = @pstore[key]
@@ -47,7 +47,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#clear
+      # (see Proxy#clear)
       def clear(options = {})
         @pstore.transaction do
           @pstore.roots.each do |key|

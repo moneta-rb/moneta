@@ -15,7 +15,7 @@ module Moneta
         @redis = ::Redis.new(options)
       end
 
-      # @see Proxy#key?
+      # (see Proxy#key?)
       def key?(key, options = {})
         if @redis.exists(key)
           if expires = options[:expires]
@@ -27,7 +27,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#load
+      # (see Proxy#load)
       def load(key, options = {})
         value = @redis.get(key)
         if value && (expires = options[:expires])
@@ -36,7 +36,7 @@ module Moneta
         value
       end
 
-      # @see Proxy#store
+      # (see Proxy#store)
       def store(key, value, options = {})
         if expires = (options[:expires] || @expires)
           @redis.setex(key, expires, value)
@@ -46,7 +46,7 @@ module Moneta
         value
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         if value = load(key, options)
           @redis.del(key)
@@ -54,7 +54,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#increment
+      # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         value = @redis.incrby(key, amount)
         expires = (options[:expires] || @expires)
@@ -62,7 +62,7 @@ module Moneta
         value
       end
 
-      # @see Proxy#clear
+      # (see Proxy#clear)
       def clear(options = {})
         @redis.flushdb
         self

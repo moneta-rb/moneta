@@ -22,6 +22,7 @@ module Moneta
         @cache = ::Memcached.new(server, options)
       end
 
+      # (see Proxy#load)
       def load(key, options = {})
         value = @cache.get(key, false)
         if value && options.include?(:expires)
@@ -32,12 +33,14 @@ module Moneta
       rescue ::Memcached::NotFound
       end
 
+      # (see Proxy#store)
       def store(key, value, options = {})
         # TTL must be Fixnum
         @cache.set(key, value, options[:expires] || @expires, false)
         value
       end
 
+      # (see Proxy#delete)
       def delete(key, options = {})
         value = @cache.get(key, false)
         @cache.delete(key)
@@ -45,6 +48,7 @@ module Moneta
       rescue ::Memcached::NotFound
       end
 
+      # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         result = if amount >= 0
           @cache.increment(key, amount)
@@ -62,6 +66,7 @@ module Moneta
         amount
       end
 
+      # (see Proxy#clear)
       def clear(options = {})
         @cache.flush
         self

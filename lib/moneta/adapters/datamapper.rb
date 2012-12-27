@@ -26,12 +26,12 @@ module Moneta
         context { Store.auto_upgrade! }
       end
 
-      # @see Proxy#key?
+      # (see Proxy#key?)
       def key?(key, options = {})
         context { Store.get(key) != nil }
       end
 
-      # @see Proxy#load
+      # (see Proxy#load)
       def load(key, options = {})
         context do
           record = Store.get(key)
@@ -39,7 +39,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#store
+      # (see Proxy#store)
       def store(key, value, options = {})
         context do
           if record = Store.get(key)
@@ -51,7 +51,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         context do
           if record = Store.get(key)
@@ -62,7 +62,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#clear
+      # (see Proxy#clear)
       def clear(options = {})
         context { Store.all.destroy! }
         self

@@ -20,7 +20,7 @@ module Moneta
         end or raise @hash.errmsg(@hash.ecode)
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
         if value
@@ -29,7 +29,7 @@ module Moneta
         end
       end
 
-      # @see Proxy#close
+      # (see Proxy#close)
       def close
         @hash.close
         nil

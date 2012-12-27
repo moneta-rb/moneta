@@ -12,7 +12,7 @@ module Moneta
         @hash = ::GDBM.new(options[:file])
       end
 
-      # @see Proxy#close
+      # (see Proxy#close)
       def close
         @hash.close
         nil

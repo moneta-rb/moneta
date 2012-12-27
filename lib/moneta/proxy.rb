@@ -12,14 +12,19 @@ module Moneta
       @adapter = adapter
     end
 
-    # Exists the value with key
-    #
-    # @param [Object] key
-    # @return [Boolean]
-    # @param [Hash] options
-    # @api public
+    # (see Defaults#key?)
     def key?(key, options = {})
       @adapter.key?(key, options)
+    end
+
+    # (see Defaults#increment)
+    def increment(key, amount = 1, options = {})
+      @adapter.increment(key, amount, options)
+    end
+
+    # (see Defaults#close)
+    def close
+      @adapter.close
     end
 
     # Fetch value with key. Return nil if the key doesn't exist
@@ -53,20 +58,6 @@ module Moneta
       @adapter.delete(key, options)
     end
 
-    # Atomically increment integer value with key
-    #
-    # Not every Moneta store implements this method,
-    # a NotImplementedError if it is not supported.
-    #
-    # @param [Object] key
-    # @param [Integer] amount
-    # @param [Hash] options
-    # @return [Object] value from store
-    # @api public
-    def increment(key, amount = 1, options = {})
-      @adapter.increment(key, amount, options)
-    end
-
     # Clear all keys in this store
     #
     # @param [Hash] options
@@ -75,13 +66,6 @@ module Moneta
     def clear(options = {})
       @adapter.clear(options)
       self
-    end
-
-    # Close this store
-    # @return nil
-    # @api public
-    def close
-      @adapter.close
     end
   end
 end

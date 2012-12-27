@@ -16,18 +16,18 @@ module Moneta
         raise "#{@dir} is not a directory" unless ::File.directory?(@dir)
       end
 
-      # @see Proxy#key?
+      # (see Proxy#key?)
       def key?(key, options = {})
         ::File.exist?(store_path(key))
       end
 
-      # @see Proxy#load
+      # (see Proxy#load)
       def load(key, options = {})
         ::File.read(store_path(key))
       rescue Errno::ENOENT
       end
 
-      # @see Proxy#store
+      # (see Proxy#store)
       def store(key, value, options = {})
         path = store_path(key)
         temp_file = ::File.join(@dir, "value-#{$$}-#{Thread.current.object_id}")
@@ -41,7 +41,7 @@ module Moneta
         value
       end
 
-      # @see Proxy#delete
+      # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
         ::File.unlink(store_path(key))
@@ -49,7 +49,7 @@ module Moneta
       rescue Errno::ENOENT
       end
 
-      # @see Proxy#clear
+      # (see Proxy#clear)
       def clear(options = {})
         temp_dir = "#{@dir}-#{$$}-#{Thread.current.object_id}"
         ::File.rename(@dir, temp_dir)
@@ -60,7 +60,7 @@ module Moneta
         self
       end
 
-      # @see Proxy#increment
+      # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         lock(key) { super }
       end

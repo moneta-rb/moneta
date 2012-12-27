@@ -17,6 +17,7 @@ module Moneta
         @cache = ::Dalli::Client.new(server, options)
       end
 
+      # (see Proxy#load)
       def load(key, options = {})
         value = @cache.get(key)
         if value && options.include?(:expires)
@@ -26,17 +27,20 @@ module Moneta
         end
       end
 
+      # (see Proxy#store)
       def store(key, value, options = {})
         @cache.set(key, value, options[:expires], :raw => true)
         value
       end
 
+      # (see Proxy#delete)
       def delete(key, options = {})
         value = @cache.get(key)
         @cache.delete(key)
         value
       end
 
+      # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         # FIXME: There is a Dalli bug, load(key) returns a wrong value after increment
         # therefore we set default = nil and create the counter manually
@@ -53,11 +57,13 @@ module Moneta
         end
       end
 
+      # (see Proxy#clear)
       def clear(options = {})
         @cache.flush_all
         self
       end
 
+      # (see Proxy#close)
       def close
         @cache.close
         nil
