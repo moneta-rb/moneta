@@ -18,7 +18,7 @@ describe_moneta "optionmerger" do
     merger.should be_instance_of(Moneta::OptionMerger)
   end
 
-  it 'should save default options' do
+  it 'saves default options' do
     options = {:optionname => :optionvalue}
     merger = store.with(options)
     Moneta::OptionMerger::METHODS.each do |method|
@@ -28,14 +28,14 @@ describe_moneta "optionmerger" do
 
   PREFIX = [['alpha', nil], ['beta', nil], ['alpha', 'beta']]
 
-  it 'should merge options' do
+  it 'merges options' do
     merger = store.with(:opt1 => :val1, :opt2 => :val2).with(:opt2 => :overwrite, :opt3 => :val3)
     Moneta::OptionMerger::METHODS.each do |method|
       merger.default_options[method].should == {:opt1 => :val1, :opt2 => :overwrite, :opt3 => :val3}
     end
   end
 
-  it 'should merge options only for some methods' do
+  it 'merges options only for some methods' do
     PREFIX.each do |(alpha,beta)|
       options = {:opt1 => :val1, :opt2 => :val2, :prefix => alpha}
       merger = store.with(options).with(:opt2 => :overwrite, :opt3 => :val3, :prefix => beta, :only => :clear)
@@ -53,7 +53,7 @@ describe_moneta "optionmerger" do
     end
   end
 
-  it 'should merge options except for some methods' do
+  it 'merges options except for some methods' do
     PREFIX.each do |(alpha,beta)|
       options = {:opt1 => :val1, :opt2 => :val2, :prefix => alpha}
       merger = store.with(options).with(:opt2 => :overwrite, :opt3 => :val3, :except => :clear, :prefix => beta)
@@ -71,12 +71,12 @@ describe_moneta "optionmerger" do
     end
   end
 
-  it 'should have method #raw' do
+  it 'has method #raw' do
     store.raw.default_options.should == {:store=>{:raw=>true},:load=>{:raw=>true},:delete=>{:raw=>true}}
     store.raw.should equal(store.raw.raw)
   end
 
-  it 'should have method #prefix' do
+  it 'has method #prefix' do
     store.prefix('a').default_options.should == {:store=>{:prefix=>'a'},:load=>{:prefix=>'a'},
                                                  :delete=>{:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}
 

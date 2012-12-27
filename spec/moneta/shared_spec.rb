@@ -20,7 +20,7 @@ describe_moneta "shared" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
-  it 'should share values' do
+  it 'shares values' do
     store['shared_key'] = 'shared_value'
     second = new_store
     second.key?('shared_key').should be_true

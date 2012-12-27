@@ -44,15 +44,15 @@ describe_moneta "expires_file" do
   it_should_behave_like 'store_nilkey_stringvalue'
   it_should_behave_like 'store_integerkey_stringvalue'
   it_should_behave_like 'transform_value_with_expires'
-  it 'should delete expired value in underlying file storage' do
+  it 'deletes expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)
     store['foo'].should == 'bar'
     sleep 1
     store['foo'].should == 'bar'
     sleep 2
-    store['foo'].should == nil
-    store.adapter['foo'].should == nil
-    store.adapter.adapter['foo'].should == nil
+    store['foo'].should be_nil
+    store.adapter['foo'].should be_nil
+    store.adapter.adapter['foo'].should be_nil
   end
 
 end

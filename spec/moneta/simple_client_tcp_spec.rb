@@ -142,7 +142,7 @@ describe_moneta "simple_client_tcp" do
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
   it_should_behave_like 'transform_value'
-  it 'should support multiple clients' do
+  it 'supports multiple clients' do
     client = Moneta.new(:Client)
     client['shared_key'] = 'shared_val'
     (1..100).each do |i|

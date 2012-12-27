@@ -3,24 +3,24 @@ class Specs
 
   def initialize(specs, key = nil, value = nil)
     @specs = specs
-    @key = key     || %w(Object String Hash Boolean Nil Integer)
-    @value = value || %w(Object String Hash Boolean Nil Integer)
+    @key = key     || %w(object string hash boolean nil integer)
+    @value = value || %w(object string hash boolean nil integer)
   end
 
   def stringkeys_only
-    Specs.new(specs, %w(String), value)
+    Specs.new(specs, %w(string), value)
   end
 
   def stringvalues_only
-    Specs.new(specs, key, %w(String))
+    Specs.new(specs, key, %w(string))
   end
 
   def simplekeys_only
-    Specs.new(specs, %w(String Hash Integer), value)
+    Specs.new(specs, %w(string hash integer), value)
   end
 
   def simplevalues_only
-    Specs.new(specs, key, %w(String Hash Integer))
+    Specs.new(specs, key, %w(string hash integer))
   end
 
   def without_increment
@@ -95,7 +95,7 @@ class Specs
   end
 end
 
-ADAPTER_SPECS = Specs.new([:null, :store, :returndifferent, :increment, :persist], %w(String), %w(String))
+ADAPTER_SPECS = Specs.new([:null, :store, :returndifferent, :increment, :persist], %w(string), %w(string))
 STANDARD_SPECS = Specs.new([:null, :store, :returndifferent, :marshallable_key, :marshallable_value, :transform_value, :increment, :persist])
 TRANSFORMER_SPECS = Specs.new([:null, :store, :returndifferent, :transform_value, :increment])
 
@@ -107,7 +107,7 @@ TESTS = {
     :store => :Client,
     :specs => STANDARD_SPECS,
     :tests => %{
-it 'should support multiple clients' do
+it 'supports multiple clients' do
   client = Moneta.new(:Client)
   client['shared_key'] = 'shared_val'
   (1..100).each do |i|
@@ -449,7 +449,7 @@ end
 end},
     :specs => STANDARD_SPECS.without_transform.with_expires.without_persist,
     :tests => %{
-it 'should support default expiration time' do
+it 'supports default expiration time' do
   store = Moneta.new(:Memory, :expires => 2)
   store.store('key1', 'val1')
   store.store('key2', 'val2', :expires => 60)
@@ -457,7 +457,7 @@ it 'should support default expiration time' do
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
   store['key2'].should == 'val2'
 end}
   },
@@ -469,15 +469,15 @@ end}
 end},
     :specs => STANDARD_SPECS.with_expires.stringvalues_only,
     :tests => %{
-it 'should delete expired value in underlying file storage' do
+it 'deletes expired value in underlying file storage' do
   store.store('foo', 'bar', :expires => 2)
   store['foo'].should == 'bar'
   sleep 1
   store['foo'].should == 'bar'
   sleep 2
-  store['foo'].should == nil
-  store.adapter['foo'].should == nil
-  store.adapter.adapter['foo'].should == nil
+  store['foo'].should be_nil
+  store.adapter['foo'].should be_nil
+  store.adapter.adapter['foo'].should be_nil
 end
 }
   },
@@ -507,15 +507,15 @@ end},
 end},
     :specs => ADAPTER_SPECS,
     :tests => %{
-it 'should store loaded values in cache' do
+it 'stores loaded values in cache' do
   store.backend['foo'] = 'bar'
-  store.cache['foo'].should == nil
+  store.cache['foo'].should be_nil
   store['foo'].should == 'bar'
   store.cache['foo'].should == 'bar'
   store.backend.delete('foo')
   store['foo'].should == 'bar'
   store.delete('foo')
-  store['foo'].should == nil
+  store['foo'].should be_nil
 end
 }
   },
@@ -536,7 +536,7 @@ end},
 end},
     :specs => ADAPTER_SPECS.without_persist,
     :tests => %{
-it 'should share values' do
+it 'shares values' do
   store['shared_key'] = 'shared_value'
   second = new_store
   second.key?('shared_key').should be_true
@@ -808,7 +808,7 @@ end
     :build => "Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",
     :specs => ADAPTER_SPECS.without_increment.with_expires,
     :tests => %{
-it 'should support default expiration time' do
+it 'supports default expiration time' do
   store = Moneta::Adapters::Cassandra.new(:expires => 2, :keyspace => 'adapter_cassandra')
   store.store('key1', 'val1')
   store.store('key2', 'val2', :expires => 60)
@@ -816,7 +816,7 @@ it 'should support default expiration time' do
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
   store['key2'].should == 'val2'
 end}
   },
@@ -863,7 +863,7 @@ it 'does not cross contaminate when deleting' do
   second['key'] = 'value2'
 
   first.delete('key').should == 'value'
-  first.key?('key').should == false
+  first.key?('key').should be_false
   second['key'].should == 'value2'
 end
 }
@@ -897,7 +897,7 @@ end
     :build => 'Moneta::Adapters::MemcachedDalli.new(:namespace => "adapter_memcached_dalli")',
     :specs => ADAPTER_SPECS.with_expires,
     :tests => %{
-it 'should support default expiration time' do
+it 'supports default expiration time' do
   store = Moneta::Adapters::MemcachedDalli.new(:expires => 2, :namespace => "adapter_memcached_dalli")
   store.store('key1', 'val1')
   store.store('key2', 'val2', :expires => 60)
@@ -905,7 +905,7 @@ it 'should support default expiration time' do
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
   store['key2'].should == 'val2'
 end}
   },
@@ -913,7 +913,7 @@ end}
     :build => 'Moneta::Adapters::MemcachedNative.new(:namespace => "adapter_memcached_native")',
     :specs => ADAPTER_SPECS.with_expires,
     :tests => %{
-it 'should support default expiration time' do
+it 'supports default expiration time' do
   store = Moneta::Adapters::MemcachedNative.new(:expires => 2, :namespace => "adapter_memcached_native")
   store.store('key1', 'val1')
   store.store('key2', 'val2', :expires => 60)
@@ -921,7 +921,7 @@ it 'should support default expiration time' do
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
   store['key2'].should == 'val2'
 end
 }
@@ -930,7 +930,7 @@ end
     :build => 'Moneta::Adapters::Memcached.new(:namespace => "adapter_memcached")',
     :specs => ADAPTER_SPECS.with_expires,
     :tests => %{
-it 'should support default expiration time' do
+it 'supports default expiration time' do
   store = Moneta::Adapters::Memcached.new(:expires => 2, :namespace => "adapter_memcached")
   store.store('key1', 'val1')
   store.store('key2', 'val2', :expires => 60)
@@ -938,7 +938,7 @@ it 'should support default expiration time' do
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
   store['key2'].should == 'val2'
 end}
   },
@@ -950,7 +950,7 @@ end}
     :build => 'Moneta::Adapters::LRUHash.new',
     :specs => ADAPTER_SPECS.without_persist,
     :tests => %{
-it 'should delete oldest' do
+it 'deletes oldest' do
   store = Moneta::Adapters::LRUHash.new(:max_size => 10)
   store[0]  = 'y'
   (1..1000).each do |i|
@@ -976,7 +976,7 @@ end}
     :build => 'Moneta::Adapters::Redis.new',
     :specs => ADAPTER_SPECS.with_expires,
     :tests => %{
-it 'should support default expiration time' do
+it 'supports default expiration time' do
   store = Moneta::Adapters::Redis.new(:expires => 2)
   store.store('key1', 'val1')
   store.store('key2', 'val2', :expires => 60)
@@ -984,7 +984,7 @@ it 'should support default expiration time' do
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
   store['key2'].should == 'val2'
 end}
   },
@@ -1033,7 +1033,7 @@ it '#with should return OptionMerger' do
   merger.should be_instance_of(Moneta::OptionMerger)
 end
 
-it 'should save default options' do
+it 'saves default options' do
   options = {:optionname => :optionvalue}
   merger = store.with(options)
   Moneta::OptionMerger::METHODS.each do |method|
@@ -1043,14 +1043,14 @@ end
 
 PREFIX = [['alpha', nil], ['beta', nil], ['alpha', 'beta']]
 
-it 'should merge options' do
+it 'merges options' do
   merger = store.with(:opt1 => :val1, :opt2 => :val2).with(:opt2 => :overwrite, :opt3 => :val3)
   Moneta::OptionMerger::METHODS.each do |method|
     merger.default_options[method].should == {:opt1 => :val1, :opt2 => :overwrite, :opt3 => :val3}
   end
 end
 
-it 'should merge options only for some methods' do
+it 'merges options only for some methods' do
   PREFIX.each do |(alpha,beta)|
     options = {:opt1 => :val1, :opt2 => :val2, :prefix => alpha}
     merger = store.with(options).with(:opt2 => :overwrite, :opt3 => :val3, :prefix => beta, :only => :clear)
@@ -1068,7 +1068,7 @@ it 'should merge options only for some methods' do
   end
 end
 
-it 'should merge options except for some methods' do
+it 'merges options except for some methods' do
   PREFIX.each do |(alpha,beta)|
     options = {:opt1 => :val1, :opt2 => :val2, :prefix => alpha}
     merger = store.with(options).with(:opt2 => :overwrite, :opt3 => :val3, :except => :clear, :prefix => beta)
@@ -1086,12 +1086,12 @@ it 'should merge options except for some methods' do
   end
 end
 
-it 'should have method #raw' do
+it 'has method #raw' do
   store.raw.default_options.should == {:store=>{:raw=>true},:load=>{:raw=>true},:delete=>{:raw=>true}}
   store.raw.should equal(store.raw.raw)
 end
 
-it 'should have method #prefix' do
+it 'has method #prefix' do
   store.prefix('a').default_options.should == {:store=>{:prefix=>'a'},:load=>{:prefix=>'a'},
                                                :delete=>{:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}
 
@@ -1110,122 +1110,100 @@ end}
 SPECS = {}
 
 KEYS = {
-  'Nil' => [0, 'nil'],
-  'Integer' => [-10, 42],
-  'Boolean' => [true, false],
-  'String' => ['strkey1', 'strkey2'].map(&:inspect),
-  'Object' => ['Value.new(:objkey1)', 'Value.new(:objkey2)'],
-  'Hash' => [{'hashkey1' => 'hashkey2'}, {'hashkey3' => 'hashkey4'}].map(&:inspect)
+  'nil' => [0, 'nil'],
+  'integer' => [-10, 42],
+  'boolean' => [true, false],
+  'string' => ['strkey1', 'strkey2'].map(&:inspect),
+  'object' => ['Value.new(:objkey1)', 'Value.new(:objkey2)'],
+  'hash' => [{'hashkey1' => 'hashkey2'}, {'hashkey3' => 'hashkey4'}].map(&:inspect)
 }
 
 VALUES = {
-  'Nil' => [0, 'nil'],
-  'Integer' => [41, -12],
-  'Boolean' => [false, true],
-  'String' => ['strval1', 'strval2'].map(&:inspect),
-  'Hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
-  'Object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
+  'nil' => [0, 'nil'],
+  'integer' => [41, -12],
+  'boolean' => [true, false],
+  'string' => ['strval1', 'strval2'].map(&:inspect),
+  'hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
+  'object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
 }
 
-KEYS.each do |key_type, (key1,key2)|
-  VALUES.each do |val_type, (val1,val2)|
+KEYS.each do |key_type, keypair|
+  VALUES.each do |val_type, valpair|
+    4.times do |i|
+      key1, key2 = i % 2 == 0 ? keypair : keypair.reverse
+      val1, val2 = i < 2 ? valpair : valpair.reverse
 
-    code = %{it "reads from keys that are #{key_type}s like a Hash" do
-  store[#{key1}].should == nil
-  store.load(#{key1}).should == nil
-
-  store[#{key2}].should == nil
-  store.load(#{key2}).should == nil
+      code = %{it 'reads from keys like a Hash' do
+  store[#{key1}].should be_nil
+  store.load(#{key1}).should be_nil
 end
 
-it "guarantees that the same #{val_type} value is returned when setting a #{key_type} key" do
+it 'guarantees that the same value is returned when setting a key' do
   value = #{val1}
   (store[#{key1}] = value).should equal(value)
-
-  value = #{val2}
-  (store[#{key2}] = value).should equal(value)
 end
 
-it "returns false from key? if a #{key_type} key is not available" do
-  store.key?(#{key1}).should == false
-  store.key?(#{key2}).should == false
+it 'returns false from key? if a key is not available' do
+  store.key?(#{key1}).should be_false
 end
 
-it "returns nil from delete if an element for a #{key_type} key does not exist" do
-  store.delete(#{key1}).should == nil
-  store.delete(#{key2}).should == nil
+it 'returns nil from delete if a value for a key does not exist' do
+  store.delete(#{key1}).should be_nil
 end
 
-it "removes all #{key_type} keys from the store with clear" do
+it 'removes all keys from the store with clear' do
   store[#{key1}] = #{val1}
   store[#{key2}] = #{val2}
   store.clear.should equal(store)
-  store.key?(#{key1}).should_not ==  true
-  store.key?(#{key2}).should_not == true
+  store.key?(#{key1}).should be_false
+  store.key?(#{key2}).should be_false
 end
 
-it "fetches a #{key_type} key with a default value with fetch, if the key is not available" do
+it 'fetches a key with a default value with fetch, if the key is not available' do
   store.fetch(#{key1}, #{val1}).should == #{val1}
-  store.fetch(#{key2}, #{val2}).should == #{val2}
 end
 
-it "fetches a #{key_type} key with a block with fetch, if the key is not available" do
+it 'fetches a key with a block with fetch, if the key is not available' do
   key = #{key1}
   value = #{val1}
   store.fetch(key) do |k|
     k.should equal(key)
     value
   end.should equal(value)
-
-  key = #{key2}
-  value = #{val2}
-  store.fetch(key) do |k|
-    k.should equal(key)
-    value
-  end.should equal(value)
 end
 
-it 'should accept options' do
-  store.key?(#{key1}, :option1 => 1).should == false
-  store.load(#{key1}, :option2 => 2).should == nil
-  store.fetch(#{key1}, 42, :option3 => 3).should == 42
-  store.fetch(#{key1}, :option3 => 3) { 42 }.should == 42
-  store.delete(#{key1}, :option4 => 4).should == nil
-  store.clear(:option5 => 5).should equal(store)
-  store.store(#{key1}, #{val1}, :option6 => 6).should == #{val1}
+it 'accepts frozen options' do
+  options = {:option1 => 1, :options2 => 2}
+  options.freeze
+  store.key?(#{key1}, options).should be_false
+  store.load(#{key1}, options).should be_nil
+  store.fetch(#{key1}, 42, options).should == 42
+  store.fetch(#{key1}, options) { 42 }.should == 42
+  store.delete(#{key1}, options).should be_nil
+  store.clear(options).should equal(store)
+  store.store(#{key1}, #{val1}, options).should == #{val1}
 end}
-    SPECS["null_#{key_type.downcase}key_#{val_type.downcase}value"] = code
+    (SPECS["null_#{key_type}key_#{val_type}value"] ||= []) << code
 
-    code = %{it "writes #{val_type} values to keys that are #{key_type}s like a Hash" do
+    code = %{it 'writes values to keys that like a Hash' do
   store[#{key1}] = #{val1}
   store[#{key1}].should == #{val1}
   store.load(#{key1}).should == #{val1}
-
-  store[#{key2}] = #{val2}
-  store[#{key2}].should == #{val2}
-  store.load(#{key2}).should == #{val2}
 end
 
-it "returns true from key? if a #{key_type} key is available" do
+it 'returns true from key? if a key is available' do
   store[#{key1}] = #{val1}
-  store.key?(#{key1}).should == true
-  store[#{key2}] = #{val2}
-  store.key?(#{key2}).should == true
+  store.key?(#{key1}).should be_true
 end
 
-it "stores #{val_type} values with #{key_type} keys with #store" do
+it 'stores values with #store' do
   value = #{val1}
   store.store(#{key1}, value).should equal(value)
   store[#{key1}].should == #{val1}
   store.load(#{key1}).should == #{val1}
-
-  value = #{val2}
-  store.store(#{key2}, value).should equal(value)
-  store[#{key2}].should == #{val2}
-  store.load(#{key2}).should == #{val2}
 end
 
-it "stores #{key_type} after clear" do
+it 'stores values after clear' do
   store[#{key1}] = #{val1}
   store[#{key2}] = #{val2}
   store.clear.should equal(store)
@@ -1234,72 +1212,57 @@ it "stores #{key_type} after clear" do
   store[#{key2}].should be_nil
 end
 
-it "removes and returns a #{val_type} element with a #{key_type} key from the backing store via delete if it exists" do
+it 'removes and returns a value from the backing store via delete if it exists' do
   store[#{key1}] = #{val1}
   store.delete(#{key1}).should == #{val1}
-  store.key?(#{key1}).should == false
-
-  store[#{key2}] = #{val2}
-  store.delete(#{key2}).should == #{val2}
-  store.key?(#{key2}).should == false
+  store.key?(#{key1}).should be_false
 end
 
-it "overwrites existing #{val_type} values with #{key_type}" do
+it 'overwrites existing values' do
   store[#{key1}] = #{val1}
   store[#{key1}].should == #{val1}
   store[#{key1}] = #{val2}
   store[#{key1}].should == #{val2}
-end
-
-it "fetches a #{key_type} key with a default value with fetch, if the key is available" do
-  store[#{key1}] = #{val1}
-  store.fetch(#{key1}, #{val2}).should == #{val1}
 end}
 
-    if val_type != 'Nil'
-      code << %{
-it "does not run the block if the #{key_type} key is available" do
+      if val_type != 'nil'
+        code << %{
+it 'fetches a key with a default value with fetch, if the key is available' do
+  store[#{key1}] = #{val1}
+  store.fetch(#{key1}, #{val2}).should == #{val1}
+end
+
+it 'does not run the block in fetch if the key is available' do
   store[#{key1}] = #{val1}
   unaltered = 'unaltered'
   store.fetch(#{key1}) { unaltered = 'altered' }
   unaltered.should == 'unaltered'
-
-  store[#{key2}] = #{val2}
-  unaltered = 'unaltered'
-  store.fetch(#{key2}) { unaltered = 'altered' }
-  unaltered.should == 'unaltered'
 end}
-    end
+      end
 
-    SPECS["store_#{key_type.downcase}key_#{val_type.downcase}value"] = code
+      (SPECS["store_#{key_type}key_#{val_type}value"] ||= []) << code
 
-    code = %{it "guarantees that a different #{val_type} value is retrieved from the #{key_type} key" do
+      code = %{it 'guarantees that a different value is retrieved' do
   value = #{val1}
   store[#{key1}] = #{val1}
   store[#{key1}].should_not be_equal(#{val1})
-
-  value = #{val2}
-  store[#{key2}] = #{val2}
-  store[#{key2}].should_not be_equal(#{val2})
 end}
-    if val_type != 'Boolean' && val_type != 'Nil' && val_type != 'Integer'
-      SPECS["returndifferent_#{key_type.downcase}key_#{val_type.downcase}value"] = code
-    end
+      if val_type != 'boolean' && val_type != 'nil' && val_type != 'integer'
+        (SPECS["returndifferent_#{key_type}key_#{val_type}value"] ||= []) << code
+      end
 
-    code = %{it "persists #{val_type} values with #{key_type} keys" do
+      code = %{it 'persists values' do
   store[#{key1}] = #{val1}
-  store[#{key2}] = #{val2}
   store.close
   @store = nil
-
   store[#{key1}].should == #{val1}
-  store[#{key2}].should == #{val2}
 end}
-    SPECS["persist_#{key_type.downcase}key_#{val_type.downcase}value"] = code
+      (SPECS["persist_#{key_type}key_#{val_type}value"] ||= []) << code
+    end
   end
 end
 
-SPECS['not_persist'] = %{it "does not persist values" do
+SPECS['not_persist'] = %{it 'does not persist values' do
   store['key'] = 'val'
   store.close
   @store = nil
@@ -1307,34 +1270,34 @@ SPECS['not_persist'] = %{it "does not persist values" do
   store['key'].should be_nil
 end}
 
-SPECS['expires'] = %{it 'should support expires on store and #[]' do
+SPECS['expires'] = %{it 'supports expires on store and #[]' do
   store.store('key1', 'val1', :expires => 2)
   store['key1'].should == 'val1'
   sleep 1
   store['key1'].should == 'val1'
   sleep 2
-  store['key1'].should == nil
+  store['key1'].should be_nil
 end
 
-it 'should support expires on store and load' do
+it 'supports expires on store and load' do
   store.store('key1', 'val1', :expires => 2)
   store.load('key1').should == 'val1'
   sleep 1
   store.load('key1').should == 'val1'
   sleep 2
-  store.load('key1').should == nil
+  store.load('key1').should be_nil
 end
 
-it 'should support expires on store and key?' do
+it 'supports expires on store and key?' do
   store.store('key1', 'val1', :expires => 2)
-  store.key?('key1').should == true
+  store.key?('key1').should be_true
   sleep 1
-  store.key?('key1').should == true
+  store.key?('key1').should be_true
   sleep 2
-  store.key?('key1').should == false
+  store.key?('key1').should be_false
 end
 
-it 'should support updating the expiration time in load' do
+it 'supports updating the expiration time in load' do
   store.store('key2', 'val2', :expires => 2)
   store['key2'].should == 'val2'
   sleep 1
@@ -1343,10 +1306,10 @@ it 'should support updating the expiration time in load' do
   sleep 1
   store['key2'].should == 'val2'
   sleep 3
-  store['key2'].should == nil
+  store['key2'].should be_nil
 end
 
-it 'should support updating the expiration time in key?' do
+it 'supports updating the expiration time in key?' do
   store.store('key2', 'val2', :expires => 2)
   store['key2'].should == 'val2'
   sleep 1
@@ -1355,10 +1318,10 @@ it 'should support updating the expiration time in key?' do
   sleep 1
   store['key2'].should == 'val2'
   sleep 3
-  store['key2'].should == nil
+  store['key2'].should be_nil
 end
 
-it 'should support updating the expiration time in fetch' do
+it 'supports updating the expiration time in fetch' do
   store.store('key1', 'val1', :expires => 2)
   store['key1'].should == 'val1'
   sleep 1
@@ -1367,42 +1330,42 @@ it 'should support updating the expiration time in fetch' do
   sleep 1
   store['key1'].should == 'val1'
   sleep 3
-  store['key1'].should == nil
+  store['key1'].should be_nil
 end
 
-it 'should respect expires in delete' do
+it 'respects expires in delete' do
   store.store('key2', 'val2', :expires => 2)
   store['key2'].should == 'val2'
   sleep 1
   store['key2'].should == 'val2'
   sleep 2
-  store.delete('key2').should == nil
+  store.delete('key2').should be_nil
 end
 
-it 'should support the #expires syntactic sugar' do
+it 'supports the #expires syntactic sugar' do
   store['longlive_key'] = 'longlive_value'
   store.expires(2).store('key2', 'val2')
   store['key2'].should == 'val2'
   sleep 1
   store['key2'].should == 'val2'
   sleep 2
-  store.delete('key2').should == nil
+  store.delete('key2').should be_nil
   store['longlive_key'].should == 'longlive_value'
 end}
 
-SPECS['not_increment'] = %{it 'should not support #increment' do
+SPECS['not_increment'] = %{it 'does not support #increment' do
   expect do
     store.increment('inckey')
   end.to raise_error(NotImplementedError)
 end
 
-it 'should not support #decrement' do
+it 'does not support #decrement' do
   expect do
     store.increment('inckey')
   end.to raise_error(NotImplementedError)
 end}
 
-SPECS['increment'] = %{it 'should initialize in #increment with 1' do
+SPECS['increment'] = %{it 'initializes in #increment with 1' do
   store.key?('inckey').should be_false
   store.increment('inckey').should == 1
   store.key?('inckey').should be_true
@@ -1414,37 +1377,37 @@ SPECS['increment'] = %{it 'should initialize in #increment with 1' do
   store.key?('inckey').should be_false
 end
 
-it 'should initialize in #increment with higher value' do
+it 'initializes in #increment with higher value' do
   store.increment('inckey', 42).should == 42
   store.key?('inckey').should be_true
   store.raw['inckey'].should == '42'
   store.delete('inckey', :raw => true).should == '42'
 end
 
-it 'should initialize in #increment with 0' do
+it 'initializes in #increment with 0' do
   store.increment('inckey', 0).should == 0
   store.key?('inckey').should be_true
   store.raw['inckey'].should == '0'
   store.delete('inckey', :raw => true).should == '0'
 end
 
-it 'should initialize in #decrement with 0' do
+it 'initializes in #decrement with 0' do
   store.decrement('inckey', 0).should == 0
   store.raw['inckey'].should == '0'
 end
 
-it 'should initialize in #decrement with negative value' do
+it 'initializes in #decrement with negative value' do
   store.decrement('inckey', -42).should == 42
   store.raw['inckey'].should == '42'
 end
 
-it 'should support incrementing existing value by value' do
+it 'supports incrementing existing value by value' do
   store.increment('inckey').should == 1
   store.increment('inckey', 42).should == 43
   store.raw['inckey'].should == '43'
 end
 
-it 'should support decrementing existing value by value' do
+it 'supports decrementing existing value by value' do
   store.increment('inckey').should == 1
   store.decrement('inckey').should == 0
   store.increment('inckey', 42).should == 42
@@ -1452,13 +1415,13 @@ it 'should support decrementing existing value by value' do
   store.raw['inckey'].should == '40'
 end
 
-it 'should support incrementing existing value by 0' do
+it 'supports incrementing existing value by 0' do
   store.increment('inckey').should == 1
   store.increment('inckey', 0).should == 1
   store.raw['inckey'].should == '1'
 end
 
-it 'should support decrementing existing value' do
+it 'supports decrementing existing value' do
   store.increment('inckey', 10).should == 10
   store.increment('inckey', -5).should == 5
   store.raw['inckey'].should == '5'
@@ -1466,20 +1429,20 @@ it 'should support decrementing existing value' do
   store.raw['inckey'].should == '0'
 end
 
-it 'interpret raw value as integer' do
+it 'interprets raw value as integer' do
   store.store('inckey', '42', :raw => true)
   store.increment('inckey').should == 43
   store.raw['inckey'].should == '43'
 end
 
-it 'should raise error in #increment on non integer value' do
+it 'raises error in #increment on non integer value' do
   store['strkey'] = 'value'
   expect do
     store.increment('strkey')
   end.to raise_error
 end
 
-it 'should raise error in #decrement on non integer value' do
+it 'raises error in #decrement on non integer value' do
   store['strkey'] = 'value'
   expect do
     store.decrement('strkey')
@@ -1556,7 +1519,7 @@ it 'allows to bypass transformer with raw syntactic sugar' do
   store.raw['key'].should == 'value2'
 end
 
-it 'should return unmarshalled value' do
+it 'returns unmarshalled value' do
   store.store('key', 'unmarshalled value', :raw => true)
   store.load('key', :raw => true).should == 'unmarshalled value'
 end
@@ -1585,7 +1548,7 @@ SPECS['transform_value_with_expires']  = %{it 'allows to bypass transformer with
   store['key'] = nil
   load_value(store.load('key', :raw => true)).should == [nil]
   store['key'] = false
-  load_value(store.load('key', :raw => true)).should == false
+  load_value(store.load('key', :raw => true)).should be_false
 
   store.store('key', 'value', :expires => 10)
   load_value(store.load('key', :raw => true)).first.should == 'value'
@@ -1596,7 +1559,7 @@ SPECS['transform_value_with_expires']  = %{it 'allows to bypass transformer with
   store.delete('key', :raw => true).should == 'value'
 end
 
-it 'should return unmarshalled value' do
+it 'returns unmarshalled value' do
   store.store('key', 'unmarshalled value', :raw => true)
   store.load('key', :raw => true).should == 'unmarshalled value'
 end
@@ -1620,7 +1583,7 @@ end}
 specs_code = "#{header}\n"
 SPECS.each do |key, code|
   specs_code << "#################### #{key} ####################\n\n" <<
-    "shared_examples_for '#{key}' do\n  " << code.gsub("\n", "\n  ") << "\nend\n\n"
+    "shared_examples_for '#{key}' do\n  " << [code].flatten.join("\n\n").gsub("\n", "\n  ") << "\nend\n\n"
 end
 specs_code.gsub!(/\n +\n/, "\n\n")
 File.open(File.join(File.dirname(__FILE__), 'monetaspecs.rb'), 'w') {|out| out << specs_code }
@@ -1637,7 +1600,7 @@ TESTS.each do |name, options|
     specs_code << "  it_should_behave_like '#{s}'" if SPECS[s.to_s]
     specs.key.each do |k|
       specs.value.each do |v|
-        x = "#{s}_#{k.downcase}key_#{v.downcase}value"
+        x = "#{s}_#{k}key_#{v}value"
         specs_code << "  it_should_behave_like '#{x}'" if SPECS[x]
       end
     end
