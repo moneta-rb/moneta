@@ -16,15 +16,18 @@ module Moneta
         @directory = storage.directories.create(:key => dir)
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @directory.files.head(key) != nil
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         value = @directory.files.get(key)
         value && value.body
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         if value = @directory.files.get(key)
           body = value.body
@@ -33,11 +36,13 @@ module Moneta
         end
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         @directory.files.create(:key => key, :body => value)
         value
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @directory.files.all.each do |file|
           file.destroy

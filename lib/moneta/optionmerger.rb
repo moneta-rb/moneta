@@ -29,6 +29,8 @@ module Moneta
       end
     end
 
+    protected
+
     def wrap(method, *args)
       options = args.last
       options.merge!(@default_options[method]) if Hash === options && @default_options.include?(method)

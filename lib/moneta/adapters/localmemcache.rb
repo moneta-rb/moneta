@@ -15,6 +15,7 @@ module Moneta
         @hash = ::LocalMemCache.new(:filename => options[:file])
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         value = load(key, options)
         @hash.delete(key)

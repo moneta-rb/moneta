@@ -44,6 +44,7 @@ module Moneta
         @client.keyspace = keyspace
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         if @client.exists?(@cf, key)
           if options.include?(:expires) && (value = load(key))
@@ -55,6 +56,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         value = @client.get(@cf, key)
         if value
@@ -66,11 +68,13 @@ module Moneta
         end
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         @client.insert(@cf, key, {'value' => value}, :ttl => (options[:expires] || @expires))
         value
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         if value = load(key, options)
           @client.remove(@cf, key)
@@ -78,6 +82,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @client.each_key(@cf) do |key|
           delete(key)

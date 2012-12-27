@@ -32,7 +32,7 @@ module Moneta
       end
     end
 
-    private
+    protected
 
     def wrap(*args)
       @adapter ||= Adapters::Client.new(@options)

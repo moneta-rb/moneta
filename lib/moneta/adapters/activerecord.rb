@@ -36,15 +36,18 @@ module Moneta
         end
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         !@table.where(:k => key).empty?
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         record = @table.select(:v).where(:k => key).first
         record && record.v
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         record = @table.select(:k).where(:k => key).first_or_initialize
         record.v = value
@@ -52,6 +55,7 @@ module Moneta
         value
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         if record = @table.where(:k => key).first
           record.destroy
@@ -59,6 +63,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#increment
       def increment(key, amount = 1, options = {})
         record = @table.where(:k => key).lock.first_or_initialize
         value = record.v
@@ -70,6 +75,7 @@ module Moneta
         intvalue
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @table.delete_all
         self

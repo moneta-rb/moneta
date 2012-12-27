@@ -25,20 +25,24 @@ module Moneta
         @column = "#{cf}:#{options[:column]}"
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @table.get(key, @column).first != nil
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         cell = @table.get(key, @column).first
         cell && unpack(cell.value)
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         @table.mutate_row(key, @column => pack(value))
         value
       end
 
+      # @see Proxy#increment
       def increment(key, amount = 1, options = {})
         result = @table.atomic_increment(key, @column, amount)
         # HACK: Throw error if applied to invalid value
@@ -49,6 +53,7 @@ module Moneta
         result
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         if value = load(key, options)
           @table.delete_row(key)
@@ -56,6 +61,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @table.create_scanner do |row|
           @table.delete_row(row.row)
@@ -63,6 +69,7 @@ module Moneta
         self
       end
 
+      # @see Proxy#close
       def close
         @db.close
         nil

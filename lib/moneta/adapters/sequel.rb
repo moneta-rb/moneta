@@ -22,15 +22,18 @@ module Moneta
         @table = @db[table]
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @table[:k => key] != nil
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         record = @table[:k => key]
         record && record[:v]
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         @db.transaction do
           if key?(key, options)
@@ -42,6 +45,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#increment
       def increment(key, amount = 1, options = {})
         @db.transaction do
           locked_table = @table.for_update
@@ -59,6 +63,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         @db.transaction do
           if value = load(key, options)
@@ -68,6 +73,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @table.delete
         self

@@ -13,15 +13,18 @@ module Moneta
         @hash = ::LevelDB::DB.new(options[:dir])
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @hash.includes?(key)
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @hash.each {|k,v| delete(k, options) }
         self
       end
 
+      # @see Proxy#close
       def close
         @hash.close
         nil

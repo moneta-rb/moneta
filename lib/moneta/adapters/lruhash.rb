@@ -16,10 +16,12 @@ module Moneta
         clear
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @entry.key?(key)
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         if entry = @entry[key]
           entry.insert_after(@list)
@@ -27,6 +29,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         if entry = @entry[key]
           @size -= entry.value.bytesize
@@ -41,6 +44,7 @@ module Moneta
         value
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         if entry = @entry.delete(key)
           @size -= entry.value.bytesize
@@ -49,6 +53,7 @@ module Moneta
         end
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @entry, @size = {}, 0
         @list = Entry.new

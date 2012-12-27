@@ -122,6 +122,7 @@ module Moneta
 
   # @api private
   module IncrementSupport
+    # @see Defaults#increment
     def increment(key, amount = 1, options = {})
       value = load(key, options)
       intvalue = value.to_i
@@ -134,22 +135,27 @@ module Moneta
 
   # @api private
   module HashAdapter
+    # @see Proxy#key?
     def key?(key, options = {})
       @hash.has_key?(key)
     end
 
+    # @see Proxy#load
     def load(key, options = {})
       @hash[key]
     end
 
+    # @see Proxy#store
     def store(key, value, options = {})
       @hash[key] = value
     end
 
+    # @see Proxy#delete
     def delete(key, options = {})
       @hash.delete(key)
     end
 
+    # @see Proxy#clear
     def clear(options = {})
       @hash.clear
       self

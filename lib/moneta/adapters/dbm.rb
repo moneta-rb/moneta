@@ -12,6 +12,7 @@ module Moneta
         @hash = ::DBM.new(options[:file])
       end
 
+      # @see Proxy#close
       def close
         @hash.close
         nil

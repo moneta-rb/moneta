@@ -43,10 +43,12 @@ module Moneta
       @cache, @backend = DSL.new(options, &block).result
     end
 
+    # @see Proxy#key?
     def key?(key, options = {})
       @cache.key?(key, options) || @backend.key?(key, options)
     end
 
+    # @see Proxy#load
     def load(key, options = {})
       value = @cache.load(key, options)
       if value == nil
@@ -56,27 +58,32 @@ module Moneta
       value
     end
 
+    # @see Proxy#store
     def store(key, value, options = {})
       @cache.store(key, value, options)
       @backend.store(key, value, options)
     end
 
+    # @see Proxy#increment
     def increment(key, amount = 1, options = {})
       @cache.delete(key, options)
       @backend.increment(key, amount, options)
     end
 
+    # @see Proxy#delete
     def delete(key, options = {})
       @cache.delete(key, options)
       @backend.delete(key, options)
     end
 
+    # @see Proxy#clear
     def clear(options = {})
       @cache.clear(options)
       @backend.clear(options)
       self
     end
 
+    # @see Proxy#close
     def close
       @cache.close
       @backend.close

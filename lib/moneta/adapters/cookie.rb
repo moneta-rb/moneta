@@ -10,6 +10,7 @@ module Moneta
         @options, @cookies = options, {}
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         cookie = @options.merge(options)
         cookie[:value] = value
@@ -18,11 +19,13 @@ module Moneta
         super
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         @cookies[key] = nil
         super
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @hash.each_key { |key| @cookies[key] = nil }
         super

@@ -20,22 +20,26 @@ module Moneta
         @bucket = ::Riak::Client.new(options).bucket(bucket)
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @bucket.exists?(key, options.dup)
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         @bucket.get(key, options.dup).raw_data
       rescue ::Riak::FailedRequest => ex
         nil
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         value = load(key, options)
         @bucket.delete(key, options.dup)
         value
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         obj = ::Riak::RObject.new(@bucket, key)
         obj.content_type = options[:content_type] || @content_type
@@ -44,6 +48,7 @@ module Moneta
         value
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @bucket.keys do |keys|
           keys.each{ |key| @bucket.delete(key) }

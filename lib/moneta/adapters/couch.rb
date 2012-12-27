@@ -14,18 +14,21 @@ module Moneta
         @db = ::CouchRest.database!(options[:db])
       end
 
+      # @see Proxy#key?
       def key?(key, options = {})
         @db.get(key) != nil
       rescue RestClient::ResourceNotFound
         false
       end
 
+      # @see Proxy#load
       def load(key, options = {})
         @db.get(key)['value']
       rescue RestClient::ResourceNotFound
         nil
       end
 
+      # @see Proxy#store
       def store(key, value, options = {})
         doc = {'_id' => key, 'value' => value}
         begin
@@ -38,6 +41,7 @@ module Moneta
         value
       end
 
+      # @see Proxy#delete
       def delete(key, options = {})
         value = @db.get(key)
         @db.delete_doc('_id' => value['_id'], '_rev' => value['_rev'])
@@ -46,6 +50,7 @@ module Moneta
         nil
       end
 
+      # @see Proxy#clear
       def clear(options = {})
         @db.recreate!
         self
