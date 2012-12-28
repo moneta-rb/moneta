@@ -15,7 +15,6 @@ module Moneta
 
     # @api private
     class DSL
-      # @private
       def initialize(options, &block)
         @cache, @backend = options[:cache], options[:backend]
         instance_eval(&block)
@@ -35,7 +34,6 @@ module Moneta
         @cache = store || Moneta.build(&block)
       end
 
-      # @private
       def result
         [@cache, @backend]
       end

@@ -19,7 +19,6 @@ module Moneta
     class DSL
       attr_reader :stack
 
-      # @private
       def initialize(options, &block)
         @stack = options[:stack].to_a
         instance_eval(&block)
