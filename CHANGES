@@ -6,7 +6,7 @@ master
 * Transformer might raise an exception if an invalid value is transformed
 * Expires middleware only wraps Arrays and nils in an Array if
   no expiration time is given (backward compatible change)
-* Moneta middlewares are not allowed to transform option hash given to functions
+* Moneta middlewares are not allowed to modify option hash given to functions
   like #load and #store
 
 0.7.1
