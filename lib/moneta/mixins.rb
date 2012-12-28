@@ -59,11 +59,10 @@ module Moneta
 
     # Atomically increment integer value with key
     #
-    # Not every Moneta store implements this method,
-    # a NotImplementedError if it is not supported.
-    #
     # This method also accepts negative amounts.
     #
+    # @note Not every Moneta store implements this method,
+    #       a NotImplementedError is raised if it is not supported.
     # @param [Object] key
     # @param [Integer] amount
     # @param [Hash] options
