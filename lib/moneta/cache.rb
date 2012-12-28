@@ -15,23 +15,27 @@ module Moneta
 
     # @api private
     class DSL
+      # @private
       def initialize(options, &block)
         @cache, @backend = options[:cache], options[:backend]
         instance_eval(&block)
       end
 
+      # @api public
       def backend(store = nil, &block)
         raise 'Backend already set' if @backend
         raise ArgumentError, 'Only argument or block allowed' if store && block
         @backend = store || Moneta.build(&block)
       end
 
+      # @api public
       def cache(store = nil, &block)
         raise 'Cache already set' if @cache
         raise ArgumentError, 'Only argument or block allowed' if store && block
         @cache = store || Moneta.build(&block)
       end
 
+      # @private
       def result
         [@cache, @backend]
       end

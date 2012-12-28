@@ -1,10 +1,12 @@
 module Moneta
   # @api private
   module OptionSupport
+    # @api public
     def with(options)
       OptionMerger.new(self, options)
     end
 
+    # @api public
     def raw
       @raw_store ||=
         begin
@@ -14,10 +16,12 @@ module Moneta
         end
     end
 
+    # @api public
     def prefix(prefix)
       with(:prefix => prefix, :except => :clear)
     end
 
+    # @api public
     def expires(expires)
       with(:expires => expires, :only => [:store, :increment])
     end
@@ -126,6 +130,7 @@ module Moneta
   # @api private
   module IncrementSupport
     # (see Defaults#increment)
+    # @api public
     def increment(key, amount = 1, options = {})
       value = load(key, options)
       intvalue = value.to_i

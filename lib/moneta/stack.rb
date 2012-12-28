@@ -19,11 +19,13 @@ module Moneta
     class DSL
       attr_reader :stack
 
+      # @private
       def initialize(options, &block)
         @stack = options[:stack].to_a
         instance_eval(&block)
       end
 
+      # @api public
       def add(store = nil, &block)
         raise ArgumentError, 'Only argument or block allowed' if store && block
         @stack << (store || Moneta.build(&block))
