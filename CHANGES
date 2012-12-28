@@ -1,4 +1,4 @@
-master
+0.7.2
 
 * Renamed WithOptions to OptionSupport
 * Refactored Base in Defaults mixin
