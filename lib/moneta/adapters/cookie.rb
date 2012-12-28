@@ -1,6 +1,6 @@
 module Moneta
   module Adapters
-    # Cookie backend used by `Rack::MonetaCookies`
+    # Cookie backend used by the middleware `Rack::MonetaCookies`
     # @api public
     class Cookie < Memory
       attr_reader :cookies
@@ -32,6 +32,8 @@ module Moneta
         self
       end
 
+      # Reset the cookie store
+      # This method is used by the middleware.
       def reset(cookies)
         @cookies, @hash = {}, cookies
       end

@@ -41,6 +41,10 @@ module Moneta
 
     attr_reader :cache, :backend
 
+    # @param [Hash] options Options hash
+    # @option options [Moneta store] :cache Moneta store used as cache
+    # @option options [Moneta store] :backend Moneta store used as backend
+    # @yieldparam Builder block
     def initialize(options = {}, &block)
       @cache, @backend = DSL.new(options, &block).result
     end

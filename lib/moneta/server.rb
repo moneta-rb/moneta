@@ -19,10 +19,16 @@ module Moneta
       @running = false
     end
 
+    # Is the server running
+    #
+    # @return [Boolean] true if the server is running
     def running?
       @running
     end
 
+    # Run the server
+    #
+    # @note This method blocks!
     def run
       raise 'Already running' if @running
       @stop = false
@@ -36,6 +42,7 @@ module Moneta
       end
     end
 
+    # Stop the server
     def stop
       raise 'Not running' unless @running
       @stop = true

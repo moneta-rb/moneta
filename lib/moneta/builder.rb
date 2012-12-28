@@ -2,6 +2,7 @@ module Moneta
   # Builder implements the DSL to build a stack of Moneta store proxies
   # @api private
   class Builder
+    # @yieldparam Builder dsl code block
     def initialize(&block)
       raise ArgumentError, 'No block given' unless block_given?
       @proxies = []
@@ -9,6 +10,7 @@ module Moneta
     end
 
     # Build proxy stack
+    #
     # @return [Object] Generated Moneta proxy stack
     # @api public
     def build

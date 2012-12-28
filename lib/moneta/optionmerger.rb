@@ -5,6 +5,8 @@ module Moneta
 
     attr_reader :default_options
 
+    # @param [Moneta store] adapter underlying adapter
+    # @param [Hash] options
     def initialize(adapter, options = {})
       super(adapter, options)
 

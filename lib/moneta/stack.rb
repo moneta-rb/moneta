@@ -34,6 +34,9 @@ module Moneta
 
     attr_reader :stack
 
+    # @param [Hash] options Options hash
+    # @option options [Array] :stack Array of Moneta stores
+    # @yieldparam Builder block
     def initialize(options = {}, &block)
       @stack = DSL.new(options, &block).stack
     end

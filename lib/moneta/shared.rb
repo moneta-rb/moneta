@@ -20,6 +20,7 @@ module Moneta
       @builder = Builder.new(&block)
     end
 
+    # (see Proxy#close)
     def close
       if @server
         @server.stop

@@ -7,6 +7,7 @@ module Moneta
       include HashAdapter
       include IncrementSupport
 
+      # @param [Hash] options Options hash
       def initialize(options = {})
         @hash = {}
       end

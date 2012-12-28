@@ -5,6 +5,7 @@ module Moneta
     class Null
       include Defaults
 
+      # @param [Hash] options Options hash
       def initialize(options = {})
       end
 

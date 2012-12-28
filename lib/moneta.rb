@@ -125,8 +125,9 @@ module Moneta
     end
   end
 
-  # Configure your own Moneta proxy stack!
+  # Configure your own Moneta proxy stack
   #
+  # @yieldparam Builder block
   # @return [Moneta store] newly created Moneta store
   #
   # @example Moneta builder
