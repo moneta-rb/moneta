@@ -14,6 +14,7 @@ module Moneta
       @expires = options[:expires]
     end
 
+    # (see Proxy#key?)
     def key?(key, options = {})
       # Transformer might raise exception
       load_entry(key, options) != nil
@@ -22,12 +23,14 @@ module Moneta
       super(key, options)
     end
 
+    # (see Proxy#load)
     def load(key, options = {})
       return super if options.include?(:raw)
       value, expires = load_entry(key, options)
       value
     end
 
+    # (see Proxy#store)
     def store(key, value, options = {})
       return super if options.include?(:raw)
       expires = options.include?(:expires) && (options = options.dup; options.delete(:expires))
@@ -41,6 +44,7 @@ module Moneta
       value
     end
 
+    # (see Proxy#delete)
     def delete(key, options = {})
       return super if options.include?(:raw)
       value, expires = super
