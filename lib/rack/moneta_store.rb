@@ -19,7 +19,7 @@ module Rack
     end
 
     def call(env)
-      env['rack.moneta'] = @store
+      env['rack.moneta_store'] = @store
       result = @app.call(env)
       @cache.clear if @cache
       result
