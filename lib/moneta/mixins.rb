@@ -212,4 +212,72 @@ module Moneta
       io.write(pack(o))
     end
   end
+
+  # This mixin handles the calculation of expiration times.
+  #
+  #
+  module DefaultExpires
+
+    attr_reader :default_expires
+
+    # Checks whether a default expiration is set.
+    def default_expires?
+      return default_expires.kind_of?(Numeric) && default_expires >= 0
+    end
+
+  protected
+
+    attr_writer :default_expires
+
+    # Calculates the time when something will expire.
+    #
+    # @param [true,false,nil,Numeric] value a value given by user
+    # @param [Boolean] use_default take the default value if value is nil
+    #
+    # @return [false] if it should not expire
+    # @return [Time] the time when something should expire
+    # @return [nil] if it is not known
+    def expiration_time(value, use_default = true)
+      value = expiration_value(value, use_default)
+      return value unless value.kind_of? Numeric
+      return Time.now + value
+    end
+
+    # Calculates the number of seconds something should last (ttl).
+    #
+    # @param [true,false,nil,Numeric] value a value given by user
+    # @param [Boolean] use_default take the default value if value is nil
+    #
+    # @return [false] if it should not expire
+    # @return [Numeric] seconds until expiration
+    # @return [nil] if it is not known
+    def expiration_value(value, use_default = true)
+      return false if value == false
+      if ( value.nil? && use_default ) || value == true
+        if default_expires?
+          return default_expires.to_i
+        else
+          return false
+        end
+      elsif value.nil?
+        return nil
+      end
+      result = value.to_i
+      if result <= 0
+        raise ArgumentError, "Expected a value bigger than 0 as expiration, but got #{result.inspect}."
+      end
+      return result
+    end
+
+    alias ttl expiration_value
+
+    def expiration_time_without_default(value)
+      expiration_time(value, false)
+    end
+
+    def expiration_value_without_default(value)
+      expiration_value(value, false)
+    end
+
+  end
 end
