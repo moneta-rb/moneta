@@ -14,7 +14,7 @@ module Rack
           raise ArgumentError, 'Use either block or option :store' if options[:store]
           @pool = ::Moneta.build(&block)
         else
-          raise ArgumentError, 'Option :store is required' unless @pool = options[:store]
+          raise ArgumentError, 'Block or option :store is required' unless @pool = options[:store]
           @pool = ::Moneta.new(@pool, :expires => true) if Symbol === @pool
         end
         @mutex = Mutex.new

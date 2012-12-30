@@ -29,10 +29,10 @@ module Rack
       @app = app
       @cache = options.delete(:cache)
       if block
-        raise ArgumentError, 'Use either block or options' unless options.emtpy?
+        raise ArgumentError, 'Use either block or options' unless options.empty?
         @store = ::Moneta.build(&block)
       else
-        raise ArgumentError, 'Option :store is required' unless @store = store
+        raise ArgumentError, 'Block or argument store is required' unless @store = store
         @store = ::Moneta.new(@store, options) if Symbol === @store
       end
     end

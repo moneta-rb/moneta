@@ -13,12 +13,12 @@ describe Rack::MonetaCookies do
   end
 
   def backend
-    Rack::MockRequest.new(Rack::MonetaCookies.new(lambda{|env|
+    Rack::MockRequest.new(Rack::MonetaCookies.new(lambda do |env|
       @store = env['rack.request.cookie_hash']
       expect(@store).to equal(env['rack.moneta_cookies'])
       app.call(env) if app
       [200,{},[]]
-    }, @options || {}, &@block))
+    end, @options || {}, &@block))
   end
 
   def get(cookies = {}, &block)
@@ -26,20 +26,20 @@ describe Rack::MonetaCookies do
     @response = backend.get('/','HTTP_COOKIE' => Rack::Utils.build_query(cookies))
   end
 
-  it 'should be able to read a simple key' do
+  it 'should be able to read a key' do
     get 'key' => 'value' do
       expect( @store['key'] ).to eql('value')
     end
   end
 
-  it 'should be able to set a simple key' do
+  it 'should be able to set a key' do
     get do
       @store['key'] = 'value'
     end
     expect( @response['Set-Cookie'] ).to eql('key=value')
   end
 
-  it 'should be able to remove a simple key' do
+  it 'should be able to remove a key' do
     get 'key' => 'value' do
       @store.delete('key')
     end
