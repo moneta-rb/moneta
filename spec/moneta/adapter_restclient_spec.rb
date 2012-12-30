@@ -4,7 +4,7 @@ require 'helper'
 describe_moneta "adapter_restclient" do
   start_restserver
   def new_store
-    Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/')
+    Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/moneta/')
   end
 
   def load_value(value)

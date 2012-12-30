@@ -132,7 +132,7 @@ end
   'simple_restclient' => {
     :preamble => "start_restserver\n",
     :store => :RestClient,
-    :options => ":url => 'http://localhost:8808/'",
+    :options => ":url => 'http://localhost:8808/moneta/'",
     :specs => STANDARD_SPECS.without_increment
   },
   'simple_memory' => {
@@ -852,7 +852,7 @@ end
   },
   'adapter_restclient' => {
     :preamble => "start_restserver\n",
-    :build => "Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/')",
+    :build => "Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/moneta/')",
     :specs => ADAPTER_SPECS.without_increment
   },
   'adapter_cassandra' => {

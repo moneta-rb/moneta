@@ -1,6 +1,21 @@
 require 'moneta'
 
 module Rack
+  # A Rack application which provides a REST interface to a Moneta store.
+  #
+  # @example config.ru
+  #   map '/moneta' do
+  #     run Rack::MonetaRest.new(:Memory)
+  #   end
+  #
+  # @example config.ru
+  #   # Pass it a block like the one passed to Moneta.build
+  #   run Rack::MonetaRest.new do
+  #     use :Transformer, :value => [:zlib]
+  #     adapter :Memory
+  #   end
+  #
+  # @api public
   class MonetaRest
     def initialize(store = nil, options = {}, &block)
       if block

@@ -47,7 +47,9 @@ def start_restserver
   Thread.start do
     Rack::Server.start(:app => Rack::Builder.app do
                          use Rack::Lint
-                         run Rack::MonetaRest.new(:store => :Memory)
+                         map '/moneta' do
+                           run Rack::MonetaRest.new(:store => :Memory)
+                         end
                        end,
                        :environment => :none,
                        :server => :webrick,
