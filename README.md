@@ -311,7 +311,17 @@ short_lived_store['key'] = 'value'
 
 ## Framework Integration
 
-Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with the [Sinatra](http://sinatrarb.com/) framework.
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
+
+* Rack and Sinatra
+    * `Rack::Session::Moneta` is a Rack middleware to use Moneta for storing sessions
+    * `Rack::MonetaStore` is a Rack middleware which places a Moneta store in the environment and enables per-request caching
+    * `Rack::MonetaCookies` is a Rack middleware which uses Moneta to store cookies
+    * `Rack::MonetaRest` is a Rack application which exposes a Moneta store via REST/HTTP
+    * `Rack::Cache::Moneta` provides meta and entity stores for Rack-Cache
+* Rails
+    * `ActionDispatch::Session::MonetaStore` is a Rails middleware to use Moneta for storing sessions
+    * `ActiveSupport::Cache::MonetaStore` is a Rails cache implementation which uses a Moneta store as backend
 
 ### Rack session store
 
@@ -335,7 +345,7 @@ end
 
 ### Rack Moneta middleware
 
-There is a simple middleware which places a Moneta store in the Rack environment at `env['rack.moneta_store']`. It supports per request
+There is a simple middleware which places a Moneta store in the Rack environment at `env['rack.moneta_store']`. It supports per-request
 caching if you add the option `:cache => true`. Use it in your `config.ru` like this:
 
 ~~~ ruby
@@ -343,7 +353,7 @@ caching if you add the option `:cache => true`. Use it in your `config.ru` like 
 use Rack::MonetaStore, :Memory, :cache => true
 
 run lambda do |env|
-  env['rack.moneta_store'] # is a Moneta store with per request caching
+  env['rack.moneta_store'] # is a Moneta store with per-request caching
 end
 
 # Pass it a block like the one passed to Moneta.build
