@@ -12,7 +12,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
-* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) as cookie and session store and [Rack-Cache](https://github.com/rtomayko/rack-cache)
+* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
@@ -58,6 +58,7 @@ Out of the box, it supports the following backends:
     * MongoDB (`:Mongo`)
 * Other
     * Moneta key/value server client (`:Client` works with `Moneta::Server`)
+    * Moneta REST client (`:RestClient` works with `Rack::MonetaRest`)
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (`:Fog`)
     * Storage which doesn't store anything (`:Null`)
 
@@ -313,7 +314,7 @@ Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist in
 
 ### Rack session store
 
-Use Moneta as a [Rack](http://rack.github.com/) session store:
+You can use Moneta as a [Rack](http://rack.github.com/) session store. Use it in your `config.ru` like this:
 
 ~~~ ruby
 require 'rack/session/moneta'
@@ -331,9 +332,27 @@ use Rack::Session::Moneta do
 end
 ~~~
 
+### Rack REST server
+
+If you want to expose your Moneta key/value store via HTTP, you can use the Rack/Moneta REST service. Use it in your `config.ru` like this:
+
+~~~ ruby
+require 'rack/moneta_rest'
+
+map '/moneta' do
+  run Rack::MonetaRest.new(:Memory)
+end
+
+# Or pass it a block like the one passed to Moneta.build
+run Rack::MonetaRest.new do
+  use :Transformer, :value => [:zlib]
+  adapter :Memory
+end
+~~~
+
 ### Rack cache
 
-Use Moneta as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store:
+You can use Moneta as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store. Use it in your `config.ru` like this:
 
 ~~~ ruby
 require 'rack/cache/moneta'
