@@ -11,7 +11,7 @@ module Rack
   # @example config.ru
   #   # Pass it a block like the one passed to Moneta.build
   #   run Rack::MonetaRest.new do
-  #     use :Transformer, :value => [:zlib]
+  #     use :Transformer, :value => :zlib
   #     adapter :Memory
   #   end
   #

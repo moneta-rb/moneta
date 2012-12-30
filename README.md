@@ -12,7 +12,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
-* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache)
+* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/), [Sinatra](http://sinatrarb.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
@@ -310,7 +310,7 @@ short_lived_store['key'] = 'value'
 
 ## Framework Integration
 
-Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache).
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with the [Sinatra](http://sinatrarb.com/) framework.
 
 ### Rack session store
 
@@ -332,6 +332,29 @@ use Rack::Session::Moneta do
 end
 ~~~
 
+### Rack Moneta middleware
+
+There is a simple middleware which places a Moneta store in the Rack environment at `env['rack.moneta_store']`. It supports per request
+caching if you add the option `:cache => true`. Use it in your `config.ru` like this:
+
+~~~ ruby
+# Add Rack::MonetaStore somewhere in your rack stack
+use Rack::MonetaStore, :Memory, :cache => true
+
+run lambda do |env|
+   env['rack.moneta_store'] # is a Moneta store with per request caching
+end
+
+# Pass it a block like the one passed to Moneta.build
+use Rack::MonetaStore do
+  use :Transformer, :value => :zlib
+  adapter :Cookie
+end
+
+run lambda do |env|
+  env['rack.moneta_store'] # is a Moneta store without caching
+end
+
 ### Rack REST server
 
 If you want to expose your Moneta key/value store via HTTP, you can use the Rack/Moneta REST service. Use it in your `config.ru` like this:
@@ -345,7 +368,7 @@ end
 
 # Or pass it a block like the one passed to Moneta.build
 run Rack::MonetaRest.new do
-  use :Transformer, :value => [:zlib]
+  use :Transformer, :value => :zlib
   adapter :Memory
 end
 ~~~
