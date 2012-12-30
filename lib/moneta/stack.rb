@@ -17,10 +17,8 @@ module Moneta
 
     # @api private
     class DSL
-      attr_reader :stack
-
-      def initialize(options, &block)
-        @stack = options[:stack].to_a
+      def initialize(stack, &block)
+        @stack = stack
         instance_eval(&block)
       end
 
@@ -38,7 +36,8 @@ module Moneta
     # @option options [Array] :stack Array of Moneta stores
     # @yieldparam Builder block
     def initialize(options = {}, &block)
-      @stack = DSL.new(options, &block).stack
+      @stack = options[:stack].to_a
+      DSL.new(@stack, &block) if block_given?
     end
 
     # (see Proxy#key?)

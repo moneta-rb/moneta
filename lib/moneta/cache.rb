@@ -15,38 +15,35 @@ module Moneta
 
     # @api private
     class DSL
-      def initialize(options, &block)
-        @cache, @backend = options[:cache], options[:backend]
+      def initialize(store, &block)
+        @store = store
         instance_eval(&block)
       end
 
       # @api public
       def backend(store = nil, &block)
-        raise 'Backend already set' if @backend
+        raise 'Backend already set' if @store.backend
         raise ArgumentError, 'Only argument or block allowed' if store && block
-        @backend = store || Moneta.build(&block)
+        @store.backend = store || Moneta.build(&block)
       end
 
       # @api public
       def cache(store = nil, &block)
-        raise 'Cache already set' if @cache
+        raise 'Cache already set' if @store.cache
         raise ArgumentError, 'Only argument or block allowed' if store && block
-        @cache = store || Moneta.build(&block)
-      end
-
-      def result
-        [@cache, @backend]
+        @store.cache = store || Moneta.build(&block)
       end
     end
 
-    attr_reader :cache, :backend
+    attr_accessor :cache, :backend
 
     # @param [Hash] options Options hash
     # @option options [Moneta store] :cache Moneta store used as cache
     # @option options [Moneta store] :backend Moneta store used as backend
     # @yieldparam Builder block
     def initialize(options = {}, &block)
-      @cache, @backend = DSL.new(options, &block).result
+      @cache, @backend = options[:cache], options[:backend]
+      DSL.new(self, &block) if block_given?
     end
 
     # (see Proxy#key?)
