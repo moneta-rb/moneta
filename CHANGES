@@ -1,3 +1,9 @@
+master
+
+* Added Adapters::RestClient
+* Added Rack::MonetaRest
+* Added Rack::MonetaStore
+
 0.7.2
 
 * Renamed WithOptions to OptionSupport
