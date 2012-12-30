@@ -343,7 +343,7 @@ caching if you add the option `:cache => true`. Use it in your `config.ru` like 
 use Rack::MonetaStore, :Memory, :cache => true
 
 run lambda do |env|
-   env['rack.moneta_store'] # is a Moneta store with per request caching
+  env['rack.moneta_store'] # is a Moneta store with per request caching
 end
 
 # Pass it a block like the one passed to Moneta.build
@@ -355,6 +355,7 @@ end
 run lambda do |env|
   env['rack.moneta_store'] # is a Moneta store without caching
 end
+~~~
 
 ### Rack REST server
 
