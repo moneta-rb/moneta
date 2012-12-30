@@ -9,19 +9,6 @@ RSpec::Core::Formatters::ProgressFormatter.class_eval do
   end
 end
 
-module Moneta
-  class Transformer < Proxy
-    class << self
-      alias_method :verbose_new, :new
-
-      def new(adapter, options = {})
-        options[:quiet] = true
-        verbose_new(adapter, options)
-      end
-    end
-  end
-end
-
 class Value
   attr_accessor :x
   def initialize(x)
