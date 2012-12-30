@@ -6,6 +6,9 @@ master
 * Adapters::Daybreak added
 * Adapters::Mongo - Expiration and increment support added
 * Pool proxy added
+* Mixin ExpiresSupport added
+  * Expiration value handling unified
+  * 0 and false are interpreted as persist value
 
 0.7.3
 

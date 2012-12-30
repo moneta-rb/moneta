@@ -6,13 +6,14 @@ module Moneta
     # @api public
     class MemcachedDalli
       include Defaults
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
       # @option options [Integer] :expires Default expiration time
       # @option options Other options passed to `Dalli::Client#new`
       def initialize(options = {})
-        options[:expires_in] = options.delete(:expires)
+        self.default_expires = options.delete(:expires)
         server = options.delete(:server) || '127.0.0.1:11211'
         @cache = ::Dalli::Client.new(server, options)
       end
@@ -20,16 +21,16 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         value = @cache.get(key)
-        if value && options.include?(:expires)
-          store(key, value, options)
-        else
+        if value
+          expires = expires_value(options, nil)
+          @cache.set(key, value, expires || nil, :raw => true) if expires != nil
           value
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @cache.set(key, value, options[:expires], :raw => true)
+        @cache.set(key, value, expires_value(options) || nil, :raw => true)
         value
       end
 
@@ -45,9 +46,9 @@ module Moneta
         # FIXME: There is a Dalli bug, load(key) returns a wrong value after increment
         # therefore we set default = nil and create the counter manually
         result = if amount >= 0
-                   @cache.incr(key, amount, options[:expires], nil)
+                   @cache.incr(key, amount, expires_value(options) || nil, nil)
                  else
-                   @cache.decr(key, -amount, options[:expires], nil)
+                   @cache.decr(key, -amount, expires_value(options) || nil, nil)
                  end
         if result
           result

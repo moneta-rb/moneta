@@ -2,6 +2,7 @@ module Moneta
   autoload :Builder,           'moneta/builder'
   autoload :Cache,             'moneta/cache'
   autoload :Defaults,          'moneta/mixins'
+  autoload :ExpiresSupport,    'moneta/mixins'
   autoload :Expires,           'moneta/expires'
   autoload :HashAdapter,       'moneta/mixins'
   autoload :IncrementSupport,  'moneta/mixins'

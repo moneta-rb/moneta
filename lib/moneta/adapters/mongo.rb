@@ -10,6 +10,7 @@ module Moneta
     # @api public
     class Mongo
       include Defaults
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
@@ -18,7 +19,7 @@ module Moneta
       # @option options [String] :db ('moneta') MongoDB database
       # @option options [Integer] :expires Default expiration time
       def initialize(options = {})
-        @expires = options.delete(:expires)
+        self.default_expires = options.delete(:expires)
         collection = options.delete(:collection) || 'moneta'
         host = options.delete(:host) || '127.0.0.1'
         port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
@@ -37,24 +38,23 @@ module Moneta
         key = ::BSON::Binary.new(key)
         doc = @collection.find_one('_id' => key)
         if doc && (!doc['expiresAt'] || doc['expiresAt'] >= Time.now)
-          # expiresAt must be a Time object (BSON date datatype)
+          expires = expires_at(options, nil)
           @collection.update({ '_id' => key },
-                             { '$set' => { 'expiresAt' => Time.now + options[:expires] } }) if options[:expires]
+                             # expiresAt must be a Time object (BSON date datatype)
+                             { '$set' => { 'expiresAt' => expires || nil } }) if expires != nil
           doc['value'].to_s
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        expires = options[:expires] || @expires
-        # expiresAt must be a Time object (BSON date datatype)
-        expiresAt = expires && Time.now + expires
         key = ::BSON::Binary.new(key)
         intvalue = value.to_i
         @collection.update({ '_id' => key },
                            { '_id' => key,
                              'value' => intvalue.to_s == value ? intvalue : ::BSON::Binary.new(value),
-                             'expiresAt' => expiresAt },
+                             # expiresAt must be a Time object (BSON date datatype)
+                             'expiresAt' => expires_at(options) || nil },
                            { :upsert => true })
         value
       end

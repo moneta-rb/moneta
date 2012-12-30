@@ -9,6 +9,7 @@ module Moneta
     # @api public
     class Cassandra
       include Defaults
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :keyspace ('moneta') Cassandra keyspace
@@ -19,7 +20,7 @@ module Moneta
       def initialize(options = {})
         options[:host] ||= '127.0.0.1'
         options[:port] ||=  9160
-        @expires = options[:expires]
+        self.default_expires = options[:expires]
         keyspace = (options[:keyspace] ||= 'moneta')
         @cf = (options[:column_family] || 'moneta').to_sym
         @client = ::Cassandra.new('system', "#{options[:host]}:#{options[:port]}")
@@ -47,9 +48,7 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         if @client.exists?(@cf, key)
-          if options.include?(:expires) && (value = load(key))
-            store(key, value, options)
-          end
+          load(key, options) if options.include?(:expires)
           true
         else
           false
@@ -60,17 +59,15 @@ module Moneta
       def load(key, options = {})
         value = @client.get(@cf, key)
         if value
-          if options.include?(:expires)
-            store(key, value['value'], options)
-          else
-            value['value']
-          end
+          expires = expires_value(options, nil)
+          @client.insert(@cf, key, {'value' => value['value'] }, :ttl => expires || nil) if expires != nil
+          value['value']
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @client.insert(@cf, key, {'value' => value}, :ttl => (options[:expires] || @expires))
+        @client.insert(@cf, key, {'value' => value}, :ttl => expires_value(options) || nil)
         value
       end
 
