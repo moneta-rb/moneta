@@ -129,6 +129,12 @@ end
     :options => ":file => File.join(make_tempdir, 'simple_client_unix')",
     :specs => STANDARD_SPECS
   },
+  'simple_restclient' => {
+    :preamble => "start_restserver\n",
+    :store => :RestClient,
+    :options => ":url => 'http://localhost:8808/'",
+    :specs => STANDARD_SPECS.without_increment
+  },
   'simple_memory' => {
     :store => :Memory,
     :specs => STANDARD_SPECS.without_persist
@@ -843,6 +849,11 @@ end
     :preamble => "start_server(Moneta::Adapters::Memory.new)\n",
     :build => "Moneta::Adapters::Client.new",
     :specs => ADAPTER_SPECS
+  },
+  'adapter_restclient' => {
+    :preamble => "start_restserver\n",
+    :build => "Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/')",
+    :specs => ADAPTER_SPECS.without_increment
   },
   'adapter_cassandra' => {
     :build => "Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')",

@@ -40,6 +40,7 @@ module Moneta
     autoload :Null,            'moneta/adapters/null'
     autoload :PStore,          'moneta/adapters/pstore'
     autoload :Redis,           'moneta/adapters/redis'
+    autoload :RestClient,      'moneta/adapters/restclient'
     autoload :Riak,            'moneta/adapters/riak'
     autoload :SDBM,            'moneta/adapters/sdbm'
     autoload :Sequel,          'moneta/adapters/sequel'
@@ -93,7 +94,7 @@ module Moneta
       # FIXME: Couch should work only with :marshal but this raises an error on 1.9
       transformer[:key] << :base64
       transformer[:value] << :base64
-    when :Riak
+    when :Riak, :RestClient
       # Riak accepts only utf-8 keys over the http interface
       # We use base64 encoding therefore.
       transformer[:key] << :base64

@@ -28,6 +28,34 @@ class Value
   end
 end
 
+def start_restserver
+  require 'rack'
+  require 'webrick'
+  require 'httpi'
+  require 'rack/moneta_rest'
+
+  HTTPI.log = false
+
+  # Keep webrick quiet
+  ::WEBrick::HTTPServer.class_eval do
+    def access_log(config, req, res); end
+  end
+  ::WEBrick::BasicLog.class_eval do
+    def log(level, data); end
+  end
+
+  Thread.start do
+    Rack::Server.start(:app => Rack::Builder.app do
+                         use Rack::Lint
+                         run Rack::MonetaRest.new(:store => :Memory)
+                       end,
+                       :environment => :none,
+                       :server => :webrick,
+                       :Port => 8808)
+  end
+  sleep 1
+end
+
 def start_server(*args)
   server = Moneta::Server.new(*args)
   Thread.new { server.run }

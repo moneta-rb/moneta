@@ -4,7 +4,7 @@ module Rack
   class MonetaRest
     def initialize(store = nil, options = {}, &block)
       if block
-        raise ArgumentError, 'Use either block or options' unless options.emtpy?
+        raise ArgumentError, 'Use either block or options' unless options.empty?
         @store = ::Moneta.build(&block)
       else
         raise ArgumentError, 'Option :store is required' unless @store = store
@@ -16,19 +16,27 @@ module Rack
       key = env['PATH_INFO'][1..-1]
       case env['REQUEST_METHOD']
       when 'HEAD'
-        if @store.key?(key)
-          respond(200)
+        if key.empty?
+          respond(400, 'Empty key')
+        elsif @store.key?(key)
+          empty(200)
         else
           empty(404)
         end
       when 'GET'
-        if value = @store[key]
+        if key.empty?
+          respond(400, 'Empty key')
+        elsif value = @store[key]
           respond(200, value)
         else
           empty(404)
         end
       when 'POST', 'PUT'
-        respond(200, @store[key] = env['rack.input'].read)
+        if key.empty?
+          respond(400, 'Empty key')
+        else
+          respond(200, @store[key] = env['rack.input'].read)
+        end
       when 'DELETE'
         if key.empty?
           @store.clear
@@ -37,10 +45,10 @@ module Rack
           respond(200, @store.delete(key))
         end
       else
-        empty(400)
+        respond(400, 'Bad method')
       end
     rescue => ex
-      respond(500, ex.message)
+      respond(500, "Exception: #{ex.message}")
     end
 
     private
