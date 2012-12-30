@@ -47,7 +47,7 @@ module Rack
 
     def call(env)
       stores = @pool.pop || @builder.build
-      env['rack.request.cookie_hash'] = stores.last
+      env['rack.moneta_cookies'] = env['rack.request.cookie_hash'] = stores.last
       env['rack.request.cookie_string'] = env['HTTP_COOKIE']
       stores.first.reset(Rack::Utils.parse_query(env['HTTP_COOKIE']))
       status, headers, body = @app.call(env)

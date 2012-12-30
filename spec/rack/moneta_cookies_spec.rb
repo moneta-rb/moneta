@@ -15,6 +15,7 @@ describe Rack::MonetaCookies do
   def backend
     Rack::MockRequest.new(Rack::MonetaCookies.new(lambda{|env|
       @store = env['rack.request.cookie_hash']
+      expect(@store).to equal(env['rack.moneta_cookies'])
       app.call(env) if app
       [200,{},[]]
     }, @options || {}, &@block))
