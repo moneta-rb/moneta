@@ -56,9 +56,10 @@ Out of the box, it supports the following backends:
 * Document databases:
     * CouchDB (`:Couch`)
     * MongoDB (`:Mongo`)
+* Moneta network protocols:
+    * Moneta key/value client (`:Client` works with `Moneta::Server`)
+    * Moneta HTTP/REST client (`:RestClient` works with `Rack::MonetaRest`)
 * Other
-    * Moneta key/value server client (`:Client` works with `Moneta::Server`)
-    * Moneta REST client (`:RestClient` works with `Rack::MonetaRest`)
     * Fog cloud storage which supports Amazon S3, Rackspace, etc. (`:Fog`)
     * Storage which doesn't store anything (`:Null`)
 
