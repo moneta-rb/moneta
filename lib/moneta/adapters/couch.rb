@@ -17,14 +17,14 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         @db.get(key) != nil
-      rescue RestClient::ResourceNotFound
+      rescue ::RestClient::ResourceNotFound
         false
       end
 
       # (see Proxy#load)
       def load(key, options = {})
         @db.get(key)['value']
-      rescue RestClient::ResourceNotFound
+      rescue ::RestClient::ResourceNotFound
         nil
       end
 
@@ -33,11 +33,11 @@ module Moneta
         doc = {'_id' => key, 'value' => value}
         begin
           doc['_rev'] = @db.get(key)['_rev']
-        rescue RestClient::ResourceNotFound
+        rescue ::RestClient::ResourceNotFound
         end
         @db.save_doc(doc)
         value
-      rescue RestClient::RequestFailed
+      rescue ::RestClient::RequestFailed
         value
       end
 
@@ -46,7 +46,7 @@ module Moneta
         value = @db.get(key)
         @db.delete_doc('_id' => value['_id'], '_rev' => value['_rev'])
         value['value']
-      rescue RestClient::ResourceNotFound
+      rescue ::RestClient::ResourceNotFound
         nil
       end
 
