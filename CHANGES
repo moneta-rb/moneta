@@ -1,4 +1,4 @@
-master
+0.7.3
 
 * Added Adapters::RestClient
 * Added Rack::MonetaRest
