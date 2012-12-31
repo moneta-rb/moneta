@@ -97,7 +97,8 @@ module Moneta
     when :Riak, :RestClient
       # Riak accepts only utf-8 keys over the http interface
       # We use base64 encoding therefore.
-      transformer[:key] << :base64
+      transformer[:key] << :base64 << :truncate
+      transformer[:maxlen] = 128
     when :Memcached, :MemcachedDalli, :MemcachedNative
       # Memcached supports expires already
       options[:expires] = expires if Integer === expires

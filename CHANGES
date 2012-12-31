@@ -1,3 +1,8 @@
+master
+
+* Transformer: fix truncate
+* Use truncate for Riak and RestClient keys
+
 0.7.3
 
 * Added Adapters::RestClient

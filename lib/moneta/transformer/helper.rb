@@ -24,7 +24,7 @@ module Moneta
       def truncate(value, maxlen)
         if value.size >= maxlen
           digest = Digest::MD5.hexdigest(value)
-          value = value[0, value.size-digest.size] << digest
+          value = value[0, maxlen-digest.size] << digest
         end
         value
       end
