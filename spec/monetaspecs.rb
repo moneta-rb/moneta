@@ -16446,23 +16446,6 @@ shared_examples_for 'expires' do
     store['key1'].should be_nil
   end
 
-  it 'supports removing the expiration time in fetch' do
-    store.store('key1', 'val1', :expires => 2)
-    store.fetch('key1', nil, :expires => false).should == 'val1'
-    store['key1'].should == 'val1'
-    sleep 3
-    store['key1'].should == 'val1'
-  end
-
-  it 'supports reseting the expiration time in fetch' do
-    store2 = store.expires(3)
-    store2.store('key1', 'val1')
-    sleep 2
-    store2.fetch('key1', nil, :expires => true).should == 'val1'
-    sleep 2
-    store2['key1'].should == 'val1'
-  end
-
   it 'respects expires in delete' do
     store.store('key2', 'val2', :expires => 2)
     store['key2'].should == 'val2'
