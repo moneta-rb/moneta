@@ -23,6 +23,7 @@ module Moneta
     autoload :Client,          'moneta/adapters/client'
     autoload :Cookie,          'moneta/adapters/cookie'
     autoload :Couch,           'moneta/adapters/couch'
+    autoload :Daybreak,        'moneta/adapters/daybreak'
     autoload :DBM,             'moneta/adapters/dbm'
     autoload :DataMapper,      'moneta/adapters/datamapper'
     autoload :File,            'moneta/adapters/file'

@@ -5,13 +5,17 @@ require 'benchmark'
 require 'moneta'
 
 STORES = {
+  # SDBM is unstable
+  # :SDBM => { :file => 'bench.sdbm' },
+  # YAML is so fucking slow
+  # :YAML => { :file => 'bench.yaml' },
   :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
   :Cassandra => {},
   :Client => {},
-  :RestClient => { :url => 'http://localhost:8808/' },
   :Couch => {},
   :DBM => { :file => 'bench.dbm' },
   :DataMapper => { :setup => 'sqlite3:bench.datamapper' },
+  :Daybreak => { :file => 'bench.daybreak' },
   :File => { :dir => 'bench.file' },
   :GDBM => { :file => 'bench.gdbm' },
   :HBase => {},
@@ -25,14 +29,11 @@ STORES = {
   :Mongo => {},
   :PStore => { :file => 'bench.pstore' },
   :Redis => {},
+  :RestClient => { :url => 'http://localhost:8808/' },
   :Riak => {},
-  # SDBM is unstable
-  # :SDBM => { :file => 'bench.sdbm' },
   :Sequel => { :db => 'sqlite:/' },
   :Sqlite => { :file => ':memory:' },
   :TDB => { :file => 'bench.tdb' },
-  # YAML is so fucking slow
-  # :YAML => { :file => 'bench.yaml' },
 }
 
 CONFIGS = {

@@ -32,6 +32,7 @@ alternatives :mri => 'snappy'
 # alternatives :mri => 'qlzruby'
 
 # Backends
+gem 'daybreak', :github => 'propublica/daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
 gem 'dm-sqlite-adapter'
