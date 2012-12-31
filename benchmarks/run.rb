@@ -8,6 +8,7 @@ STORES = {
   :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
   :Cassandra => {},
   :Client => {},
+  :RestClient => { :url => 'http://localhost:8808/' },
   :Couch => {},
   :DBM => { :file => 'bench.dbm' },
   :DataMapper => { :setup => 'sqlite3:bench.datamapper' },
@@ -129,7 +130,33 @@ Process.fork do
     puts "\e[31mFailed to start Moneta server - #{ex.message}\e[0m"
   end
 end
-sleep 1 # Wait for server
+
+Process.fork do
+  require 'rack'
+  require 'webrick'
+  require 'httpi'
+  require 'rack/moneta_rest'
+
+  # Keep webrick quiet
+  ::WEBrick::HTTPServer.class_eval do
+    def access_log(config, req, res); end
+  end
+  ::WEBrick::BasicLog.class_eval do
+    def log(level, data); end
+  end
+
+  Rack::Server.start(:app => Rack::Builder.app do
+                       use Rack::Lint
+                       map '/moneta' do
+                         run Rack::MonetaRest.new(:store => :Memory)
+                       end
+                     end,
+                     :environment => :none,
+                     :server => :webrick,
+                     :Port => 8808)
+end
+
+sleep 1 # Wait for servers
 
 STORES.each do |name, options|
   begin
@@ -143,6 +170,9 @@ STORES.each do |name, options|
     elsif name == :Riak
       require 'riak'
       Riak.disable_list_keys_warnings = true
+    elsif name == :RestClient
+      require 'httpi'
+      HTTPI.log = false
     end
 
     cache = Moneta.new(name, options.dup)
