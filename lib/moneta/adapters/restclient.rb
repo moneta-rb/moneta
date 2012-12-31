@@ -27,7 +27,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        HTTPI.post(@url + key, value)
+        raise "HTTP #{response.code}" if HTTPI.post(@url + key, value).error?
         value
       end
 

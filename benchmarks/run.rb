@@ -147,9 +147,7 @@ Process.fork do
 
   Rack::Server.start(:app => Rack::Builder.app do
                        use Rack::Lint
-                       map '/moneta' do
-                         run Rack::MonetaRest.new(:store => :Memory)
-                       end
+                       run Rack::MonetaRest.new(:store => :Memory)
                      end,
                      :environment => :none,
                      :server => :webrick,
