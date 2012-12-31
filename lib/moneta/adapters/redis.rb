@@ -70,11 +70,11 @@ module Moneta
 
     protected
 
-      def update_expires(key, expires, client = @redis)
+      def update_expires(key, expires)
         if expires
-          client.expire(key, expires)
+          @redis.expire(key, expires)
         elsif expires == false
-          client.persist(key)
+          @redis.persist(key)
         end
       end
 
