@@ -1,7 +1,6 @@
 master
 
 * Transformer: fix truncate
-* Use truncate for Riak and RestClient keys
 * RestClient: raise error if store fails
 
 0.7.3
