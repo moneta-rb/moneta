@@ -6,7 +6,7 @@ module Moneta
     # @api public
     class Redis
       include Defaults
-      include DefaultExpires
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [Integer] :expires Default expiration time

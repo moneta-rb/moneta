@@ -216,7 +216,7 @@ module Moneta
   # This mixin handles the calculation of expiration times.
   #
   #
-  module DefaultExpires
+  module ExpiresSupport
 
     attr_reader :default_expires
 

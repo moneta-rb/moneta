@@ -7,7 +7,7 @@ module Moneta
   # @api public
   class Expires < Proxy
 
-    include DefaultExpires
+    include ExpiresSupport
 
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options

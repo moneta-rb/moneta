@@ -9,7 +9,7 @@ module Moneta
     # @api public
     class Cassandra
       include Defaults
-      include DefaultExpires
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :keyspace ('moneta') Cassandra keyspace

@@ -10,7 +10,7 @@ module Moneta
     # @api public
     class Mongo
       include Defaults
-      include DefaultExpires
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
