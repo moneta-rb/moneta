@@ -173,7 +173,7 @@ end
 
 ### Expiration
 
-The Cassandra, Memcached and Redis backends supports expires values directly:
+The Cassandra, Memcached, Redis and Mongo backends supports expires values natively.
 
 ~~~ ruby
 cache = Moneta::Adapters::Memcached.new
@@ -191,7 +191,8 @@ cache.load(key, :expires => 30)
 cache.key?(key, :expires => 30)
 ~~~
 
-You can add the expires feature to other backends using the Expires proxy:
+You can add the expires feature to other backends using the `Moneta::Expires` proxy. But be aware
+that expired values are not deleted automatically if they are not looked up.
 
 ~~~ ruby
 # Using the :expires option

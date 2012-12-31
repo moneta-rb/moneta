@@ -374,12 +374,7 @@ end
   'simple_mongo' => {
     :store => :Mongo,
     :options => ":db => 'simple_mongo'",
-    :specs => STANDARD_SPECS.without_increment
-  },
-  'simple_mongo_with_expires' => {
-    :store => :Mongo,
-    :options => ":db => 'simple_mongo_with_expires', :expires => true",
-    :specs => STANDARD_SPECS.without_increment.with_expires
+    :specs => STANDARD_SPECS.without_increment.with_native_expires
   },
   'simple_null' => {
     :store => :Null,
@@ -1031,7 +1026,19 @@ end}
   },
   'adapter_mongo' => {
     :build => 'Moneta::Adapters::Mongo.new(:db => "adapter_mongo")',
-    :specs => ADAPTER_SPECS.without_increment
+    :specs => ADAPTER_SPECS.without_increment.with_native_expires,
+    :tests => %{
+it 'supports default expiration time' do
+  store = Moneta::Adapters::Mongo.new(:expires => 2)
+  store.store('key1', 'val1')
+  store.store('key2', 'val2', :expires => 60)
+  store.load('key1').should == 'val1'
+  sleep 1
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should be_nil
+  store['key2'].should == 'val2'
+end}
   },
   'adapter_pstore' => {
     :build => 'Moneta::Adapters::PStore.new(:file => File.join(make_tempdir, "adapter_pstore"))',

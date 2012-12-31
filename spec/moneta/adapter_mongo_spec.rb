@@ -11,9 +11,21 @@ describe_moneta "adapter_mongo" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'expires'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it 'supports default expiration time' do
+    store = Moneta::Adapters::Mongo.new(:expires => 2)
+    store.store('key1', 'val1')
+    store.store('key2', 'val2', :expires => 60)
+    store.load('key1').should == 'val1'
+    sleep 1
+    store.load('key1').should == 'val1'
+    sleep 2
+    store.load('key1').should be_nil
+    store['key2'].should == 'val2'
+  end
 end

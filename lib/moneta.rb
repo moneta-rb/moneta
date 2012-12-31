@@ -99,10 +99,6 @@ module Moneta
       # Riak accepts only utf-8 keys over the http interface
       # We use base64 encoding therefore.
       transformer[:key] << :base64
-    when :Memcached, :MemcachedDalli, :MemcachedNative
-      # Memcached supports expires already
-      options[:expires] = expires if Integer === expires
-      expires = false
     when :PStore, :YAML, :Null
       # For PStore and YAML only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]
@@ -113,7 +109,7 @@ module Moneta
     when :File
       # Use escaping
       transformer[:key] << :escape
-    when :Cassandra, :Redis
+    when :Cassandra, :Redis, :Mongo, :Memcached, :MemcachedDalli, :MemcachedNative
       # Expires already supported
       options[:expires] = expires if Integer === expires
       expires = false

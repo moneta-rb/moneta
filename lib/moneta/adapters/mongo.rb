@@ -3,6 +3,10 @@ require 'mongo'
 module Moneta
   module Adapters
     # MongoDB backend
+    #
+    # Supports expiration, documents will be automatically removed starting
+    # with mongodb >= 2.2 (see http://docs.mongodb.org/manual/tutorial/expire-data/).
+    #
     # @api public
     class Mongo
       include Defaults
@@ -12,19 +16,31 @@ module Moneta
       # @option options [String] :host ('127.0.0.1') MongoDB server host
       # @option options [Integer] :port (MongoDB default port) MongoDB server port
       # @option options [String] :db ('moneta') MongoDB database
+      # @option options [Integer] :expires Default expiration time
       def initialize(options = {})
+        @expires = options.delete(:expires)
         collection = options.delete(:collection) || 'moneta'
         host = options.delete(:host) || '127.0.0.1'
         port = options.delete(:port) || ::Mongo::Connection::DEFAULT_PORT
         db = options.delete(:db) || 'moneta'
         connection = ::Mongo::Connection.new(host, port, options)
         @collection = connection.db(db).collection(collection)
+        if connection.server_version >= '2.2'
+          @collection.ensure_index([['expiresAt', ::Mongo::ASCENDING]], :expireAfterSeconds => 0)
+        else
+          warn 'You are using MongoDB version < 2.2, expired documents will not be deleted'
+        end
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        value = @collection.find_one('_id' => ::BSON::Binary.new(key))
-        value && value['value'].to_s
+        key = ::BSON::Binary.new(key)
+        doc = @collection.find_one('_id' => key)
+        if doc && (!doc['expiresAt'] || doc['expiresAt'] >= Time.now.to_i)
+          @collection.update({ '_id' => key },
+                             { '$set' => { 'expiresAt' => Time.now.to_i + options[:expires] } }) if options[:expires]
+          doc['value'].to_s
+        end
       end
 
       # (see Proxy#delete)
@@ -36,9 +52,11 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
+        expires = options[:expires] || @expires
+        expiresAt = expires && Time.now.to_i + expires
         key = ::BSON::Binary.new(key)
         @collection.update({ '_id' => key },
-                           { '_id' => key, 'value' => ::BSON::Binary.new(value) },
+                           { '_id' => key, 'value' => ::BSON::Binary.new(value), 'expiresAt' => expiresAt },
                            { :upsert => true })
         value
       end

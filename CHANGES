@@ -3,6 +3,7 @@ master
 * Transformer: fix truncate
 * RestClient: raise error if store fails
 * Adapters::TDB added
+* Adapters::Mongo - Expiration support added
 
 0.7.3
 
