@@ -45,6 +45,7 @@ module Moneta
     autoload :SDBM,            'moneta/adapters/sdbm'
     autoload :Sequel,          'moneta/adapters/sequel'
     autoload :Sqlite,          'moneta/adapters/sqlite'
+    autoload :TDB,             'moneta/adapters/tdb'
     autoload :TokyoCabinet,    'moneta/adapters/tokyocabinet'
     autoload :YAML,            'moneta/adapters/yaml'
   end

@@ -30,6 +30,7 @@ STORES = {
   # :SDBM => { :file => 'bench.sdbm' },
   :Sequel => { :db => 'sqlite:/' },
   :Sqlite => { :file => ':memory:' },
+  :TDB => { :file => 'bench.tdb' },
   # YAML is so fucking slow
   # :YAML => { :file => 'bench.yaml' },
 }

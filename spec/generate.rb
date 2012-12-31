@@ -232,6 +232,16 @@ end
     :options => ':file => File.join(make_tempdir, "simple_dbm_with_expires"), :expires => true',
     :specs => STANDARD_SPECS.with_expires
   },
+  'simple_tdb' => {
+    :store => :TDB,
+    :options => ':file => File.join(make_tempdir, "simple_tdb")',
+    :specs => STANDARD_SPECS
+  },
+  'simple_tdb_with_expires' => {
+    :store => :TDB,
+    :options => ':file => File.join(make_tempdir, "simple_tdb_with_expires"), :expires => true',
+    :specs => STANDARD_SPECS.with_expires
+  },
   'simple_gdbm' => {
     :store => :GDBM,
     :options => ':file => File.join(make_tempdir, "simple_gdbm")',
@@ -921,6 +931,10 @@ end
   },
   'adapter_dbm' => {
     :build => 'Moneta::Adapters::DBM.new(:file => File.join(make_tempdir, "adapter_dbm"))',
+    :specs => ADAPTER_SPECS
+  },
+  'adapter_tdb' => {
+    :build => 'Moneta::Adapters::TDB.new(:file => File.join(make_tempdir, "adapter_tdb"))',
     :specs => ADAPTER_SPECS
   },
   'adapter_file' => {

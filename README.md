@@ -53,6 +53,7 @@ Out of the box, it supports the following backends:
     * Riak (`:Riak`)
     * SDBM (`:SDBM`)
     * TokyoCabinet (`:TokyoCabinet`)
+    * Simple Samba database TDB (`:TDB`)
 * Document databases:
     * CouchDB (`:Couch`)
     * MongoDB (`:Mongo`)
