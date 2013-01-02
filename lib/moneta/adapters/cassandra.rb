@@ -35,7 +35,7 @@ module Moneta
             begin
               @client.add_keyspace(ks_def)
             rescue Exception => ex
-              puts "Cassandra: #{ex.message}"
+              warn "Cassandra: #{ex.message}"
             end
             break if @client.keyspaces.include?(keyspace)
             sleep 0.1

@@ -39,7 +39,7 @@ module Moneta
       @adapter ||= Adapters::Client.new(@options)
       yield
     rescue Exception => ex
-      puts "Failed to connect: #{ex.message}"
+      warn "Failed to connect: #{ex.message}"
       begin
         # TODO: Implement this using forking (MRI) and threading (JRuby)
         # to get maximal performance
@@ -48,7 +48,7 @@ module Moneta
         @thread = Thread.new { @server.run }
         sleep 0.1 until @server.running?
       rescue Exception => ex
-        puts "Failed to start server: #{ex.message}"
+        warn "Failed to start server: #{ex.message}"
         @adapter.close if @adapter
         @adapter = nil
       end
