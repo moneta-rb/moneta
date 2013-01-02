@@ -16392,6 +16392,20 @@ shared_examples_for 'expires' do
     store['key1'].should be_nil
   end
 
+  it 'supports 0 as no-expires on store and #[]' do
+    store.store('key1', 'val1', :expires => 0)
+    store['key1'].should == 'val1'
+    sleep 2
+    store['key1'].should == 'val1'
+  end
+
+  it 'supports false as no-expires on store and #[]' do
+    store.store('key1', 'val1', :expires => false)
+    store['key1'].should == 'val1'
+    sleep 2
+    store['key1'].should == 'val1'
+  end
+
   it 'supports expires on store and load' do
     store.store('key1', 'val1', :expires => 2)
     store.load('key1').should == 'val1'
@@ -16422,6 +16436,20 @@ shared_examples_for 'expires' do
     store['key2'].should be_nil
   end
 
+  it 'supports 0 as no-expires in load' do
+    store.store('key1', 'val1', :expires => 1)
+    store.load('key1', :expires => 0 ).should == 'val1'
+    sleep 2
+    store.load('key1').should == 'val1'
+  end
+
+  it 'supports false as no-expires in load' do
+    store.store('key1', 'val1', :expires => 1)
+    store.load('key1', :expires => false ).should == 'val1'
+    sleep 2
+    store.load('key1').should == 'val1'
+  end
+
   it 'supports updating the expiration time in key?' do
     store.store('key2', 'val2', :expires => 2)
     store['key2'].should == 'val2'
@@ -16434,6 +16462,20 @@ shared_examples_for 'expires' do
     store['key2'].should be_nil
   end
 
+  it 'supports 0 as no-expires in key?' do
+    store.store('key1', 'val1', :expires => 1)
+    store.key?('key1', :expires => 0 ).should be_true
+    sleep 2
+    store['key1'].should == 'val1'
+  end
+
+  it 'supports false as no-expires in key?' do
+    store.store('key1', 'val1', :expires => 1)
+    store.key?('key1', :expires => false ).should be_true
+    sleep 2
+    store['key1'].should == 'val1'
+  end
+
   it 'supports updating the expiration time in fetch' do
     store.store('key1', 'val1', :expires => 2)
     store['key1'].should == 'val1'
@@ -16444,6 +16486,20 @@ shared_examples_for 'expires' do
     store['key1'].should == 'val1'
     sleep 3
     store['key1'].should be_nil
+  end
+
+  it 'supports 0 as no-expires in fetch' do
+    store.store('key1', 'val1', :expires => 1)
+    store.fetch('key1', nil, :expires => 0 ).should == 'val1'
+    sleep 2
+    store.load('key1').should == 'val1'
+  end
+
+  it 'supports false as no-expires in fetch' do
+    store.store('key1', 'val1', :expires => 1)
+    store.fetch('key1', nil, :expires => false ).should == 'val1'
+    sleep 2
+    store.load('key1').should == 'val1'
   end
 
   it 'respects expires in delete' do
@@ -16464,6 +16520,45 @@ shared_examples_for 'expires' do
     sleep 2
     store.delete('key2').should be_nil
     store['longlive_key'].should == 'longlive_value'
+  end
+end
+
+#################### default_expires ####################
+
+shared_examples_for 'default_expires' do
+  it 'supports 0 as no-expires on store and #[]' do
+    store.store('key1', 'val1', :expires => 0)
+    store['key1'].should == 'val1'
+    sleep 2
+    store['key1'].should == 'val1'
+  end
+
+  it 'supports false as no-expires on store and #[]' do
+    store.store('key1', 'val1', :expires => false)
+    store['key1'].should == 'val1'
+    sleep 2
+    store['key1'].should == 'val1'
+  end
+
+  it 'does not update the expiration time in key? when not asked to do so' do
+    store['key1'] = 'val1'
+    store.key?('key1').should be_true
+    sleep 2
+    store.key?('key1').should be_false
+  end
+
+  it 'does not update the expiration time in fetch when not asked to do so' do
+    store['key1'] = 'val1'
+    store.fetch('key1').should == 'val1'
+    sleep 2
+    store.fetch('key1').should be_nil
+  end
+
+  it 'does not update the expiration time in load when not asked to do so' do
+    store['key1'] = 'val1'
+    store.load('key1').should == 'val1'
+    sleep 2
+    store.load('key1').should be_nil
   end
 end
 
