@@ -4,10 +4,7 @@ module Moneta
   module Adapters
     # Daybreak backend
     # @api public
-    class Daybreak
-      include Defaults
-      include HashAdapter
-
+    class Daybreak < Memory
       # Disable serialization, we have `Moneta::Transformer` for that
       class DB < ::Daybreak::DB
         def serialize(value) value; end

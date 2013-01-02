@@ -82,7 +82,7 @@ to upgrade to a real key/value store.
 <tr><td>Cookie</td><td>-</td><td>✗</td><td>Memory</td><td>✓</td><td>✓</td><td>✗</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td>?</td><td>✓</td><td>✗</td><td>✗</td><td>✓</td><td>CouchDB database</td></tr>
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td>?</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>DataMapper ORM</td></tr>
-<tr><td>Daybreak</td><td>daybreak</td><td>?</td><td>✗</td><td>✗</td><td>✗</td><td>✓</td><td>Daybreak ruby key/value store</td></tr>
+<tr><td>Daybreak</td><td>daybreak</td><td>?</td><td>✗</td><td>✓</td><td>✗</td><td>✓</td><td>Daybreak ruby key/value store</td></tr>
 <tr><td>DBM</td><td>-</td><td>✗</td><td>✗</td><td>✓</td><td>✗</td><td>✓</td><td>Berkeley DB</td></tr>
 <tr><td>File</td><td>-</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>File store</td></tr>
 <tr><td>Fog</td><td>fog</td><td>?</td><td>✓</td><td>✗</td><td>✗</td><td>✓</td><td>Fog cloud store</td></tr>
