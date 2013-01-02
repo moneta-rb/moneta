@@ -94,7 +94,7 @@ to upgrade to a real key/value store.
 <tr><td>Memory</td><td>-</td><td>no</td><td>Memory</td><td>yes</td><td>no</td><td>Memory store</td></tr>
 <tr><td>Mongo</td><td>mongo</td><td>?</td><td>yes</td><td>no</td><td>yes</td><td>MongoDB database</td></tr>
 <tr><td>Null</td><td>-</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>No database</td></tr>
-<tr><td>PStore</td><td>-</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>PStore store</td></tr>
+<tr><td>PStore</td><td>-</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>PStore store</td></tr>
 <tr><td>Redis</td><td>redis</td><td>?</td><td>yes</td><td>yes</td><td>yes</td><td>Redis database</td></tr>
 <tr><td>RestClient</td><td>httpi</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>Moneta REST client adapter</td></tr>
 <tr><td>Riak</td><td>riak-client</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>Riak database</td></tr>
@@ -103,7 +103,7 @@ to upgrade to a real key/value store.
 <tr><td>Sqlite</td><td>sqlite3</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>Sqlite3 database</td></tr>
 <tr><td>TDB</td><td>tdb</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>TDB database</td></tr>
 <tr><td>TokyoCabinet</td><td>tokoycabinet</td><td>no</td><td>no</td><td>yes</td><td>no</td><td>TokyoCabinet database</td></tr>
-<tr><td>YAML</td><td>-</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>YAML store</td></tr>
+<tr><td>YAML</td><td>-</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>YAML store</td></tr>
 </tbody>
 </table>
 
