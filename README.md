@@ -80,12 +80,12 @@ to upgrade to a real key/value store.
 <tr><td>Cookie</td><td>-</td><td>no</td><td>In memory</td><td>yes</td><td>yes</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>CouchDB database</td></tr>
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>DataMapper ORM</td></tr>
-<tr><td>DBM</td><td>-</td><td>?</td><td>Single process</td><td>yes</td><td>no</td><td>Berkeley DB</td></tr>
+<tr><td>DBM</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>Berkeley DB</td></tr>
 <tr><td>File</td><td>-</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>File store</td></tr>
 <tr><td>Fog</td><td>fog</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>Fog cloud store</td></tr>
-<tr><td>GDBM</td><td>-</td><td>?</td><td>Single process</td><td>yes</td><td>no</td><td>GDBM database</td></tr>
+<tr><td>GDBM</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>GDBM database</td></tr>
 <tr><td>HBase</td><td>hbase</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>HBase database</td></tr>
-<tr><td>LevelDB</td><td>leveldb</td><td>?</td><td>Single process</td><td>yes</td><td>no</td><td>LevelDB database</td></tr>
+<tr><td>LevelDB</td><td>leveldb</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>LevelDB database</td></tr>
 <tr><td>LocalMemCache</td><td>localmemcache</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>LocalMemCache database</td></tr>
 <tr><td>LRUHash</td><td>-</td><td>no</td><td>In memory</td><td>yes</td><td>no</td><td>LRU memory store</td></tr>
 <tr><td>Memcached</td><td>dalli or memcached</td><td>?</td><td>yes</td><td>yes</td><td>yes</td><td>Memcached database</td></tr>
@@ -98,11 +98,11 @@ to upgrade to a real key/value store.
 <tr><td>Redis</td><td>redis</td><td>?</td><td>yes</td><td>yes</td><td>yes</td><td>Redis database</td></tr>
 <tr><td>RestClient</td><td>httpi</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>Moneta REST client adapter</td></tr>
 <tr><td>Riak</td><td>riak-client</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>Riak database</td></tr>
-<tr><td>SDBM</td><td>-</td><td>?</td><td>Single process</td><td>yes</td><td>no</td><td>SDBM database</td></tr>
+<tr><td>SDBM</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>SDBM database</td></tr>
 <tr><td>Sequel</td><td>sequel</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>Sequel ORM</td></tr>
 <tr><td>Sqlite</td><td>sqlite3</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>Sqlite3 database</td></tr>
-<tr><td>TDB</td><td>-</td><td>?</td><td>Single process</td><td>yes</td><td>no</td><td>TDB database</td></tr>
-<tr><td>TokyoCabinet</td><td>tokoycabinet</td><td>?</td><td>Single process</td><td>yes</td><td>no</td><td>TokyoCabinet database</td></tr>
+<tr><td>TDB</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>TDB database</td></tr>
+<tr><td>TokyoCabinet</td><td>tokoycabinet</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>TokyoCabinet database</td></tr>
 <tr><td>YAML</td><td>-</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>YAML store</td></tr>
 </tbody>
 </table>
