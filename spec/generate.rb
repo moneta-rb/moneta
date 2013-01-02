@@ -595,6 +595,14 @@ end},
 end},
     :specs => STANDARD_SPECS.without_transform.without_returndifferent.without_persist
   },
+  'pool' => {
+    :build => %{Moneta.build do
+  use :Pool do
+    adapter :File, :dir => File.join(make_tempdir, "pool")
+  end
+end},
+    :specs => ADAPTER_SPECS
+  },
   'transformer_zlib' => {
     :build => %{Moneta.build do
   use :Transformer, :value => :zlib

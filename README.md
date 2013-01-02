@@ -110,7 +110,7 @@ to upgrade to a real key/value store.
 </tbody>
 </table>
 
-* [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `:threadsafe => true` to `Moneta#new`.
+* [1]: Make adapters thread-safe by using `Moneta::Lock`, `Moneta::Pool` or by passing the option `:threadsafe => true` to `Moneta#new`.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 * [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
 
@@ -121,12 +121,13 @@ add additional features to storage backends:
 
 * `Moneta::Proxy` and `Moneta::Wrapper` proxy base classes
 * `Moneta::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
-* `Moneta::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use :Stack`.
+* `Moneta::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use(:Stack) {}`.
 * `Moneta::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.
-* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::Memory`). Add it in the builder using `use :Cache`.
+* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::Memory`). Add it in the builder using `use(:Cache) {}`.
 * `Moneta::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
+* `Moneta::Pool` to create a pool of stores as a means of making the store thread safe. Add it in the builder using `use(:Pool) {}`.
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
-* `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use :Shared`.
+* `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use(:Shared) {}`.
 
 ## Supported serializers and compressors (`Moneta::Transformer`)
 

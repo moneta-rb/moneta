@@ -10,6 +10,7 @@ module Moneta
   autoload :Net,               'moneta/mixins'
   autoload :OptionMerger,      'moneta/optionmerger'
   autoload :OptionSupport,     'moneta/mixins'
+  autoload :Pool,              'moneta/pool'
   autoload :Proxy,             'moneta/proxy'
   autoload :Server,            'moneta/server'
   autoload :Shared,            'moneta/shared'
