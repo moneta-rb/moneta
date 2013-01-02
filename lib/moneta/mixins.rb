@@ -51,6 +51,9 @@ module Moneta
     #
     # @param [Object] key
     # @param [Hash] options
+    # @option options [Integer] :expires Update expiration time (See `Moneta::Expires`)
+    # @option options [String] :prefix Prefix key (See `Moneta::Transformer`)
+    # @option options Other options as defined by the adapters or middleware
     # @return [Boolean]
     # @api public
     def key?(key, options = {})
