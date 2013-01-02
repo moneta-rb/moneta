@@ -81,7 +81,7 @@ to upgrade to a real key/value store.
 <tr><td>Client</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Depends on server</td><td>Depends on server</td><td>Depends on server</td><td>Moneta client adapter</td></tr>
 <tr><td>Cookie</td><td>-</td><td style="color:red">✗</td><td>Memory</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>CouchDB database</td></tr>
-<tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>DataMapper ORM</td></tr>
+<tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>DataMapper ORM</td></tr>
 <tr><td>Daybreak</td><td>daybreak</td><td style="color:blue">?</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Daybreak ruby key/value store</td></tr>
 <tr><td>DBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Berkeley DB</td></tr>
 <tr><td>File</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>File store</td></tr>
