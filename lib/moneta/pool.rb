@@ -1,6 +1,15 @@
 module Moneta
   # Creates a pool of stores.
   # Each thread gets its own store.
+  #
+  # @example Add `Moneta::Pool` to proxy stack
+  #   Moneta.build do
+  #     use(:Pool) do
+  #       # Every thread gets its own instance
+  #       adapter :MemcachedNative
+  #     end
+  #   end
+  #
   # @api public
   class Pool < Wrapper
     # @param [Moneta store] adapter The underlying store
