@@ -374,7 +374,7 @@ end
   'simple_mongo' => {
     :store => :Mongo,
     :options => ":db => 'simple_mongo'",
-    :specs => STANDARD_SPECS.without_increment.with_native_expires
+    :specs => STANDARD_SPECS.with_native_expires
   },
   'simple_null' => {
     :store => :Null,
@@ -1026,7 +1026,7 @@ end}
   },
   'adapter_mongo' => {
     :build => 'Moneta::Adapters::Mongo.new(:db => "adapter_mongo")',
-    :specs => ADAPTER_SPECS.without_increment.with_native_expires,
+    :specs => ADAPTER_SPECS.with_native_expires,
     :tests => %{
 it 'supports default expiration time' do
   store = Moneta::Adapters::Mongo.new(:expires => 2)

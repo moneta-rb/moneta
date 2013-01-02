@@ -50,8 +50,11 @@ module Moneta
         # expiresAt must be a Time object (BSON date datatype)
         expiresAt = expires && Time.now + expires
         key = ::BSON::Binary.new(key)
+        intvalue = value.to_i
         @collection.update({ '_id' => key },
-                           { '_id' => key, 'value' => ::BSON::Binary.new(value), 'expiresAt' => expiresAt },
+                           { '_id' => key,
+                             'value' => intvalue.to_s == value ? intvalue : ::BSON::Binary.new(value),
+                             'expiresAt' => expiresAt },
                            { :upsert => true })
         value
       end
@@ -61,6 +64,14 @@ module Moneta
         value = load(key, options)
         @collection.remove('_id' => ::BSON::Binary.new(key)) if value
         value
+      end
+
+      # (see Proxy#increment)
+      def increment(key, amount = 1, options = {})
+        @collection.find_and_modify(:query => { '_id' => ::BSON::Binary.new(key) },
+                                    :update => { '$inc' => { 'value' => amount } },
+                                    :new => true,
+                                    :upsert => true)['value']
       end
 
       # (see Proxy#clear)
