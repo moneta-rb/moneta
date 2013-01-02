@@ -95,7 +95,7 @@ to upgrade to a real key/value store.
 <tr><td>MemcachedDalli</td><td>dalli</td><td>?</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
 <tr><td>MemcachedNative</td><td>memcached</td><td>?</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
 <tr><td>Memory</td><td>-</td><td>✗</td><td>Memory</td><td>✓</td><td>✗</td><td>✗</td><td>Memory store</td></tr>
-<tr><td>Mongo</td><td>mongo</td><td>?</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>MongoDB database</td></tr>
+<tr><td>Mongo</td><td>mongo</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>MongoDB database</td></tr>
 <tr><td>Null</td><td>-</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td><td>✗</td><td>No database</td></tr>
 <tr><td>PStore</td><td>-</td><td>✗</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>PStore store</td></tr>
 <tr><td>Redis</td><td>redis</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Redis database</td></tr>

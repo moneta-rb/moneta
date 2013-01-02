@@ -21,9 +21,9 @@ module Moneta
         @expires = options.delete(:expires)
         collection = options.delete(:collection) || 'moneta'
         host = options.delete(:host) || '127.0.0.1'
-        port = options.delete(:port) || ::Mongo::Connection::DEFAULT_PORT
+        port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
         db = options.delete(:db) || 'moneta'
-        connection = ::Mongo::Connection.new(host, port, options)
+        connection = ::Mongo::MongoClient.new(host, port, options)
         @collection = connection.db(db).collection(collection)
         if connection.server_version >= '2.2'
           @collection.ensure_index([['expiresAt', ::Mongo::ASCENDING]], :expireAfterSeconds => 0)
