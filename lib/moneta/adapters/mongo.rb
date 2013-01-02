@@ -36,9 +36,10 @@ module Moneta
       def load(key, options = {})
         key = ::BSON::Binary.new(key)
         doc = @collection.find_one('_id' => key)
-        if doc && (!doc['expiresAt'] || doc['expiresAt'] >= Time.now.to_i)
+        if doc && (!doc['expiresAt'] || doc['expiresAt'] >= Time.now)
+          # expiresAt must be a Time object (BSON date datatype)
           @collection.update({ '_id' => key },
-                             { '$set' => { 'expiresAt' => Time.now.to_i + options[:expires] } }) if options[:expires]
+                             { '$set' => { 'expiresAt' => Time.now + options[:expires] } }) if options[:expires]
           doc['value'].to_s
         end
       end
@@ -53,7 +54,8 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         expires = options[:expires] || @expires
-        expiresAt = expires && Time.now.to_i + expires
+        # expiresAt must be a Time object (BSON date datatype)
+        expiresAt = expires && Time.now + expires
         key = ::BSON::Binary.new(key)
         @collection.update({ '_id' => key },
                            { '_id' => key, 'value' => ::BSON::Binary.new(value), 'expiresAt' => expiresAt },
