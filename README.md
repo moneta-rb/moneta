@@ -92,8 +92,8 @@ to upgrade to a real key/value store.
 <tr><td>LocalMemCache</td><td>localmemcache</td><td>?</td><td>✓</td><td>✗</td><td>✗</td><td>✓</td><td>LocalMemCache database</td></tr>
 <tr><td>LRUHash</td><td>-</td><td>✗</td><td>Memory</td><td>✓</td><td>✗</td><td>✗</td><td>LRU memory store</td></tr>
 <tr><td>Memcached</td><td>dalli or memcached</td><td>?</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
-<tr><td>MemcachedDalli</td><td>dalli</td><td>?</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
-<tr><td>MemcachedNative</td><td>memcached</td><td>?</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
+<tr><td>MemcachedDalli</td><td>dalli</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
+<tr><td>MemcachedNative</td><td>memcached</td><td>✗</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>Memcached database</td></tr>
 <tr><td>Memory</td><td>-</td><td>✗</td><td>Memory</td><td>✓</td><td>✗</td><td>✗</td><td>Memory store</td></tr>
 <tr><td>Mongo</td><td>mongo</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>MongoDB database</td></tr>
 <tr><td>Null</td><td>-</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td><td>✗</td><td>No database</td></tr>
