@@ -10,6 +10,7 @@ module Moneta
     # @api public
     class Mongo
       include Defaults
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
@@ -18,7 +19,7 @@ module Moneta
       # @option options [String] :db ('moneta') MongoDB database
       # @option options [Integer] :expires Default expiration time
       def initialize(options = {})
-        @expires = options.delete(:expires)
+        self.default_expires = options.delete(:expires)
         collection = options.delete(:collection) || 'moneta'
         host = options.delete(:host) || '127.0.0.1'
         port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
@@ -38,17 +39,18 @@ module Moneta
         doc = @collection.find_one('_id' => key)
         if doc && (!doc['expiresAt'] || doc['expiresAt'] >= Time.now)
           # expiresAt must be a Time object (BSON date datatype)
-          @collection.update({ '_id' => key },
-                             { '$set' => { 'expiresAt' => Time.now + options[:expires] } }) if options[:expires]
+          if !(expires = expiration_time(options[:expires],false)).nil?
+            @collection.update({ '_id' => key },
+                               { '$set' => {'expiresAt' => expires} })
+          end
           doc['value'].to_s
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        expires = options[:expires] || @expires
         # expiresAt must be a Time object (BSON date datatype)
-        expiresAt = expires && Time.now + expires
+        expiresAt = expiration_time(options[:expires]) || nil
         key = ::BSON::Binary.new(key)
         intvalue = value.to_i
         @collection.update({ '_id' => key },
@@ -79,6 +81,7 @@ module Moneta
         @collection.remove
         self
       end
+
     end
   end
 end

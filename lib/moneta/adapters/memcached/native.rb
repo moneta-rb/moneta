@@ -7,6 +7,7 @@ module Moneta
     class MemcachedNative
       include Defaults
       include IncrementSupport
+      include ExpiresSupport
 
       # @param [Hash] options
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
@@ -15,7 +16,7 @@ module Moneta
       # @option options Other options passed to `Memcached#new`
       def initialize(options = {})
         server = options.delete(:server) || '127.0.0.1:11211'
-        @expires = options.delete(:expires) || 604800
+        self.default_expires = options.delete(:expires) || 604800
         options.merge!(:prefix_key => options.delete(:namespace)) if options[:namespace]
         # We don't want a limitation on the key charset. Therefore we use the binary protocol.
         # It is also faster.
@@ -37,7 +38,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         # TTL must be Fixnum
-        @cache.set(key, value, options[:expires] || @expires, false)
+        @cache.set(key, value, ttl(options[:expires]) || 0, false)
         value
       end
 

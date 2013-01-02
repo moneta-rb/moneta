@@ -212,4 +212,73 @@ module Moneta
       io.write(pack(o))
     end
   end
+
+  # This mixin handles the calculation of expiration times.
+  #
+  #
+  module ExpiresSupport
+
+    attr_reader :default_expires
+
+    # Checks whether a default expiration is set.
+    def default_expires?
+      return default_expires.kind_of?(Numeric) && default_expires >= 0
+    end
+
+  protected
+
+    attr_writer :default_expires
+
+    # Calculates the time when something will expire.
+    #
+    # This method considers false and 0 as "no-expire" and every positive 
+    # number as a time to live in seconds.
+    #
+    # @param [0,false,nil,Numeric] value a value given by user
+    # @param [Boolean] use_default take the default value if value is nil
+    #
+    # @return [false] if it should not expire
+    # @return [Time] the time when something should expire
+    # @return [nil] if it is not known
+    def expiration_time(value, use_default = true)
+      value = expiration_value(value, use_default)
+      return value unless value.kind_of? Numeric
+      return Time.now + value
+    end
+
+    # Calculates the number of seconds something should last (ttl).
+    #
+    # This method considers false and 0 as "no-expire" and every positive 
+    # number as a time to live in seconds.
+    #
+    # @param [0,false,nil,Numeric] value a value given by user
+    # @param [Boolean] use_default take the default value if value is nil
+    #
+    # @return [false] if it should not expire
+    # @return [Numeric] seconds until expiration
+    # @return [nil] if it is not known
+    def expiration_value(value, use_default = true)
+      case(value)
+      when 0, false then return false
+      when nil then return (use_default && default_expires?) ? default_expires.to_i : nil
+      when Numeric then
+        value = value.to_i
+        raise ArgumentError, ":expires must be a positive value, got #{value}" if value <= 0
+        return value
+      else
+        raise ArgumentError, ":expires must be Numeric or false, got #{value.inspect}"
+      end
+    end
+
+    alias ttl expiration_value
+
+    def expiration_time_without_default(value)
+      expiration_time(value, false)
+    end
+
+    def expiration_value_without_default(value)
+      expiration_value(value, false)
+    end
+
+  end
 end

@@ -502,6 +502,30 @@ it 'deletes expired value in underlying file storage' do
 end
 }
   },
+  'default_expires_mongo' => {
+    :build => %{Moneta::Adapters::Mongo.new(:expires => 1)},
+    :specs => Specs.new([:default_expires])
+  },
+  'default_expires_mecached' => {
+    :build => %{Moneta::Adapters::Memcached.new(:expires => 1)},
+    :specs => Specs.new([:default_expires])
+  },
+  'default_expires_memcached_native' => {
+    :build => %{Moneta::Adapters::MemcachedNative.new(:expires => 1)},
+    :specs => Specs.new([:default_expires])
+  },
+  'default_expires_memcached_dalli' => {
+    :build => %{Moneta::Adapters::MemcachedDalli.new(:expires => 1)},
+    :specs => Specs.new([:default_expires])
+  },
+  'default_expires_redis' => {
+    :build => %{Moneta::Adapters::Redis.new(:expires => 1)},
+    :specs => Specs.new([:default_expires])
+  },
+  'default_expires_cassandra' => {
+    :build => %{Moneta::Adapters::Cassandra.new(:expires => 1)},
+    :specs => Specs.new([:default_expires])
+  },
   'proxy_redis' => {
     :build => %{Moneta.build do
   use :Proxy
@@ -1381,6 +1405,20 @@ SPECS['expires'] = %{it 'supports expires on store and #[]' do
   store['key1'].should be_nil
 end
 
+it 'supports 0 as no-expires on store and #[]' do
+  store.store('key1', 'val1', :expires => 0)
+  store['key1'].should == 'val1'
+  sleep 2
+  store['key1'].should == 'val1'
+end
+
+it 'supports false as no-expires on store and #[]' do
+  store.store('key1', 'val1', :expires => false)
+  store['key1'].should == 'val1'
+  sleep 2
+  store['key1'].should == 'val1'
+end
+
 it 'supports expires on store and load' do
   store.store('key1', 'val1', :expires => 2)
   store.load('key1').should == 'val1'
@@ -1411,6 +1449,20 @@ it 'supports updating the expiration time in load' do
   store['key2'].should be_nil
 end
 
+it 'supports 0 as no-expires in load' do
+  store.store('key1', 'val1', :expires => 1)
+  store.load('key1', :expires => 0 ).should == 'val1'
+  sleep 2
+  store.load('key1').should == 'val1'
+end
+
+it 'supports false as no-expires in load' do
+  store.store('key1', 'val1', :expires => 1)
+  store.load('key1', :expires => false ).should == 'val1'
+  sleep 2
+  store.load('key1').should == 'val1'
+end
+
 it 'supports updating the expiration time in key?' do
   store.store('key2', 'val2', :expires => 2)
   store['key2'].should == 'val2'
@@ -1423,6 +1475,20 @@ it 'supports updating the expiration time in key?' do
   store['key2'].should be_nil
 end
 
+it 'supports 0 as no-expires in key?' do
+  store.store('key1', 'val1', :expires => 1)
+  store.key?('key1', :expires => 0 ).should be_true
+  sleep 2
+  store['key1'].should == 'val1'
+end
+
+it 'supports false as no-expires in key?' do
+  store.store('key1', 'val1', :expires => 1)
+  store.key?('key1', :expires => false ).should be_true
+  sleep 2
+  store['key1'].should == 'val1'
+end
+
 it 'supports updating the expiration time in fetch' do
   store.store('key1', 'val1', :expires => 2)
   store['key1'].should == 'val1'
@@ -1433,6 +1499,20 @@ it 'supports updating the expiration time in fetch' do
   store['key1'].should == 'val1'
   sleep 3
   store['key1'].should be_nil
+end
+
+it 'supports 0 as no-expires in fetch' do
+  store.store('key1', 'val1', :expires => 1)
+  store.fetch('key1', nil, :expires => 0 ).should == 'val1'
+  sleep 2
+  store.load('key1').should == 'val1'
+end
+
+it 'supports false as no-expires in fetch' do
+  store.store('key1', 'val1', :expires => 1)
+  store.fetch('key1', nil, :expires => false ).should == 'val1'
+  sleep 2
+  store.load('key1').should == 'val1'
 end
 
 it 'respects expires in delete' do
@@ -1453,6 +1533,41 @@ it 'supports the #expires syntactic sugar' do
   sleep 2
   store.delete('key2').should be_nil
   store['longlive_key'].should == 'longlive_value'
+end}
+
+SPECS['default_expires'] = %{it 'supports 0 as no-expires on store and #[]' do
+  store.store('key1', 'val1', :expires => 0)
+  store['key1'].should == 'val1'
+  sleep 2
+  store['key1'].should == 'val1'
+end
+
+it 'supports false as no-expires on store and #[]' do
+  store.store('key1', 'val1', :expires => false)
+  store['key1'].should == 'val1'
+  sleep 2
+  store['key1'].should == 'val1'
+end
+
+it 'does not update the expiration time in key? when not asked to do so' do
+  store['key1'] = 'val1'
+  store.key?('key1').should be_true
+  sleep 2
+  store.key?('key1').should be_false
+end
+
+it 'does not update the expiration time in fetch when not asked to do so' do
+  store['key1'] = 'val1'
+  store.fetch('key1').should == 'val1'
+  sleep 2
+  store.fetch('key1').should be_nil
+end
+
+it 'does not update the expiration time in load when not asked to do so' do
+  store['key1'] = 'val1'
+  store.load('key1').should == 'val1'
+  sleep 2
+  store.load('key1').should be_nil
 end}
 
 SPECS['not_increment'] = %{it 'does not support #increment' do
