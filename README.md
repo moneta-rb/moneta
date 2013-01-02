@@ -102,7 +102,7 @@ to upgrade to a real key/value store.
 <tr><td>RestClient</td><td>httpi</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td>Depends on server</td><td>Moneta REST client adapter</td></tr>
 <tr><td>Riak</td><td>riak-client</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Riak database</td></tr>
 <tr><td>SDBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>SDBM database</td></tr>
-<tr><td>Sequel</td><td>sequel</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Sequel ORM</td></tr>
+<tr><td>Sequel</td><td>sequel</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Sequel ORM</td></tr>
 <tr><td>Sqlite</td><td>sqlite3</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Sqlite3 database</td></tr>
 <tr><td>TDB</td><td>tdb</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>TDB database</td></tr>
 <tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>TokyoCabinet database</td></tr>
