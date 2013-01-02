@@ -77,7 +77,7 @@ to upgrade to a real key/value store.
 <tr><td>ActiveRecord</td><td>active_record</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>ActiveRecord ORM</td></tr>
 <tr><td>Cassandra</td><td>cassandra</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>Cassandra distributed database</td></tr>
 <tr><td>Client</td><td>-</td><td>no</td><td>yes</td><td>Depends on server</td><td>Depends on server</td><td>Moneta client adapter</td></tr>
-<tr><td>Cookie</td><td>-</td><td>no</td><td>In memory</td><td>yes</td><td>yes</td><td>Cookie in memory store</td></tr>
+<tr><td>Cookie</td><td>-</td><td>no</td><td>Memory</td><td>yes</td><td>yes</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>CouchDB database</td></tr>
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>DataMapper ORM</td></tr>
 <tr><td>DBM</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>Berkeley DB</td></tr>
@@ -87,11 +87,11 @@ to upgrade to a real key/value store.
 <tr><td>HBase</td><td>hbase</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>HBase database</td></tr>
 <tr><td>LevelDB</td><td>leveldb</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>LevelDB database</td></tr>
 <tr><td>LocalMemCache</td><td>localmemcache</td><td>?</td><td>yes</td><td>no</td><td>no</td><td>LocalMemCache database</td></tr>
-<tr><td>LRUHash</td><td>-</td><td>no</td><td>In memory</td><td>yes</td><td>no</td><td>LRU memory store</td></tr>
+<tr><td>LRUHash</td><td>-</td><td>no</td><td>Memory</td><td>yes</td><td>no</td><td>LRU memory store</td></tr>
 <tr><td>Memcached</td><td>dalli or memcached</td><td>?</td><td>yes</td><td>yes</td><td>yes</td><td>Memcached database</td></tr>
 <tr><td>MemcachedDalli</td><td>dalli</td><td>?</td><td>yes</td><td>yes</td><td>yes</td><td>Memcached database</td></tr>
 <tr><td>MemcachedNative</td><td>memcached</td><td>?</td><td>yes</td><td>yes</td><td>yes</td><td>Memcached database</td></tr>
-<tr><td>Memory</td><td>-</td><td>no</td><td>In memory</td><td>yes</td><td>no</td><td>Memory store</td></tr>
+<tr><td>Memory</td><td>-</td><td>no</td><td>Memory</td><td>yes</td><td>no</td><td>Memory store</td></tr>
 <tr><td>Mongo</td><td>mongo</td><td>?</td><td>yes</td><td>no</td><td>yes</td><td>MongoDB database</td></tr>
 <tr><td>Null</td><td>-</td><td>yes</td><td>yes</td><td>no</td><td>no</td><td>No database</td></tr>
 <tr><td>PStore</td><td>-</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>PStore store</td></tr>
