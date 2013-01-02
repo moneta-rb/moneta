@@ -146,11 +146,16 @@ module Moneta
     # (see Defaults#increment)
     # @api public
     def increment(key, amount = 1, options = {})
-      value = load(key, options)
+      value = convert_for_increment(load(key, options)) + amount
+      store(key, value.to_s, options)
+      value
+    end
+
+    protected
+
+    def convert_for_increment(value)
       intvalue = value.to_i
       raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
-      intvalue += amount
-      store(key, intvalue.to_s, options)
       intvalue
     end
   end

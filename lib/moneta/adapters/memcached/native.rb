@@ -6,6 +6,7 @@ module Moneta
     # @api public
     class MemcachedNative
       include Defaults
+      include IncrementSupport
 
       # @param [Hash] options
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
@@ -56,10 +57,7 @@ module Moneta
           @cache.decrement(key, -amount)
         end
         # HACK: Throw error if applied to invalid value
-        if result == 0
-          value = @cache.get(key, false) rescue nil
-          raise 'Tried to increment non integer value' unless value.to_s == value.to_i.to_s
-        end
+        convert_for_increment((@cache.get(key, false) rescue nil)) if result == 0
         result
       rescue ::Memcached::NotFound => ex
         store(key, amount.to_s, options)
