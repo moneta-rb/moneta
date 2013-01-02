@@ -101,7 +101,7 @@ to upgrade to a real key/value store.
 <tr><td>SDBM</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>SDBM database</td></tr>
 <tr><td>Sequel</td><td>sequel</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>Sequel ORM</td></tr>
 <tr><td>Sqlite</td><td>sqlite3</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>Sqlite3 database</td></tr>
-<tr><td>TDB</td><td>-</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>TDB database</td></tr>
+<tr><td>TDB</td><td>tdb</td><td>no</td><td>yes</td><td>yes</td><td>no</td><td>TDB database</td></tr>
 <tr><td>TokyoCabinet</td><td>tokoycabinet</td><td>?</td><td>no</td><td>yes</td><td>no</td><td>TokyoCabinet database</td></tr>
 <tr><td>YAML</td><td>-</td><td>?</td><td>yes</td><td>yes</td><td>no</td><td>YAML store</td></tr>
 </tbody>
