@@ -1,7 +1,7 @@
 module Moneta
   # Adds expiration support to the underlying store
   #
-  # #store and #load support the :expires option to set/update
+  # `#store`, `#load` and `#key?` support the `:expires` option to set/update
   # the expiration time.
   #
   # @api public
