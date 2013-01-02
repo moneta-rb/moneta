@@ -1043,9 +1043,9 @@ end
 it 'automatically deletes expired document' do
   store = Moneta::Adapters::Mongo.new(:expires => 30)
   store.store('key', 'val')
-  store.instance_variable_get(:@collection).find_one('_id' => 'key').should_not be_nil
+  store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should_not be_nil
   sleep 70 # Mongo needs up to 60 seconds
-  store.instance_variable_get(:@collection).find_one('_id' => 'key').should be_nil
+  store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should be_nil
 end}
   },
   'adapter_pstore' => {

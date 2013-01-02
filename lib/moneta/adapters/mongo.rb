@@ -44,13 +44,6 @@ module Moneta
         end
       end
 
-      # (see Proxy#delete)
-      def delete(key, options = {})
-        value = load(key, options)
-        @collection.remove('_id' => ::BSON::Binary.new(key)) if value
-        value
-      end
-
       # (see Proxy#store)
       def store(key, value, options = {})
         expires = options[:expires] || @expires
@@ -60,6 +53,13 @@ module Moneta
         @collection.update({ '_id' => key },
                            { '_id' => key, 'value' => ::BSON::Binary.new(value), 'expiresAt' => expiresAt },
                            { :upsert => true })
+        value
+      end
+
+      # (see Proxy#delete)
+      def delete(key, options = {})
+        value = load(key, options)
+        @collection.remove('_id' => ::BSON::Binary.new(key)) if value
         value
       end
 
