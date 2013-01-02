@@ -72,7 +72,7 @@ to upgrade to a real key/value store.
 ### Backend feature matrix
 
 <table>
-<thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe</th><th>Atomic increment</th><th>Native expires<sup>[2]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
+<thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
 <tbody>
 <tr><td>ActiveRecord</td><td>active_record</td><td>?</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>ActiveRecord ORM</td></tr>
 <tr><td>Cassandra</td><td>cassandra</td><td>?</td><td>✓</td><td>✗</td><td>✗</td><td>✓</td><td>Cassandra distributed database</td></tr>
@@ -107,8 +107,9 @@ to upgrade to a real key/value store.
 </tbody>
 </table>
 
-* [1]: You can make adapters thread-safe by using `Moneta::Lock` or passing the option `:threadsafe => true` to `Moneta#new`
-* [2]: You can add expiration support by using `Moneta::Expires` or passing the option `:expires => true` to `Moneta#new`
+* [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `:threadsafe => true` to `Moneta#new`.
+* [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
+* [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
 
 ## Proxies
 
