@@ -77,7 +77,7 @@ to upgrade to a real key/value store.
 <thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
 <tbody>
 <tr><td>ActiveRecord</td><td>active_record</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>ActiveRecord ORM</td></tr>
-<tr><td>Cassandra</td><td>cassandra</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Cassandra distributed database</td></tr>
+<tr><td>Cassandra</td><td>cassandra</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td>Cassandra distributed database</td></tr>
 <tr><td>Client</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Depends on server</td><td>Depends on server</td><td>Depends on server</td><td>Moneta client adapter</td></tr>
 <tr><td>Cookie</td><td>-</td><td style="color:red">✗</td><td>Memory</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>CouchDB database</td></tr>
