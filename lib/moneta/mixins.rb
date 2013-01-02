@@ -231,7 +231,10 @@ module Moneta
 
     # Calculates the time when something will expire.
     #
-    # @param [true,false,nil,Numeric] value a value given by user
+    # This method considers false and 0 as "no-expire" and every positive 
+    # number as a time to live in seconds.
+    #
+    # @param [0,false,nil,Numeric] value a value given by user
     # @param [Boolean] use_default take the default value if value is nil
     #
     # @return [false] if it should not expire
@@ -245,28 +248,26 @@ module Moneta
 
     # Calculates the number of seconds something should last (ttl).
     #
-    # @param [true,false,nil,Numeric] value a value given by user
+    # This method considers false and 0 as "no-expire" and every positive 
+    # number as a time to live in seconds.
+    #
+    # @param [0,false,nil,Numeric] value a value given by user
     # @param [Boolean] use_default take the default value if value is nil
     #
     # @return [false] if it should not expire
     # @return [Numeric] seconds until expiration
     # @return [nil] if it is not known
     def expiration_value(value, use_default = true)
-      return false if value == false
-      if ( value.nil? && use_default ) || value == true
-        if default_expires?
-          return default_expires.to_i
-        else
-          return false
-        end
-      elsif value.nil?
-        return nil
+      case(value)
+      when 0, false then return false
+      when nil then return (use_default && default_expires?) ? default_expires.to_i : nil
+      when Numeric then
+        value = value.to_i
+        raise ArgumentError, ":expires must be a positive value, got #{value}" if value <= 0
+        return value
+      else
+        raise ArgumentError, ":expires must be Numeric or false, got #{value.inspect}"
       end
-      result = value.to_i
-      if result <= 0
-        raise ArgumentError, "Expected a value bigger than 0 as expiration, but got #{result.inspect}."
-      end
-      return result
     end
 
     alias ttl expiration_value

@@ -231,9 +231,18 @@ end
 # Expires in 60 seconds
 cache.store(key, value, :expires => 60)
 
+# Never expire
+cache.store(key, value, :expires => 0)
+cache.store(key, value, :expires => false)
+
 # Update expires time if value is found
 cache.load(key, :expires => 30)
 cache.key?(key, :expires => 30)
+
+# Or remove the expiration if found
+cache.load(key, :expires => false)
+cache.key?(key, :expires => 0)
+
 ~~~
 
 You can add the expires feature to other backends using the `Moneta::Expires` proxy. But be aware
