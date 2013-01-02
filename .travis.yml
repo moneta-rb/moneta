@@ -13,7 +13,7 @@ services:
   - memcached
   - mongodb
 before_install:
-  - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev
+  - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb libtdb-dev
 env:
   - "TASK=test:parallel"
   - "TASK=test:non_parallel"
