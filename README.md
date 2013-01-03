@@ -14,6 +14,15 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/), [Sinatra](http://sinatrarb.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
+If you are not yet convinced, you might ask why? What are the goals of the project?
+
+* Get people started quickly with key/value stores. Therefore all the adapters are included in the gem and you are ready to go.
+* Make it easy to compare different key/value stores and benchmark them
+* To hide a lot of different and maybe complex APIs behind the well-designed Moneta API
+* Give people a starting point or example code to start working with their favourite key/value store. Feel free to copy code, please mention Moneta then :)
+* Create a reusable piece of code, since similar things are solved over and over again ([Rails](http://rubyonrails.org/ brings its own cache stores,
+[Rack-Cache](https://github.com/rtomayko/rack-cache) brings its own stores, ...)
+
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
 ## Links
