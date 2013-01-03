@@ -28,8 +28,8 @@ alternatives :mri => 'bzip2-ruby'
 alternatives :mri => 'ruby-lzma'
 alternatives :mri => 'lzoruby'
 alternatives :mri => 'snappy'
-# QuickLZ segfaults because of an assertion, fix this before activating it again
-# alternatives :mri => 'qlzruby'
+# WARNING: QuickLZ segfaults because of an assertion
+alternatives :mri => 'qlzruby'
 
 # Backends
 gem 'daybreak', :github => 'propublica/daybreak'

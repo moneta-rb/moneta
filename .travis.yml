@@ -14,15 +14,20 @@ services:
   - mongodb
 before_install:
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev
+  - script/install-bundle.rb
 env:
-  - "TASK=test:parallel"
-  - "TASK=test:non_parallel"
-  - "TASK=benchmarks CONFIG=uniform_small"
-  - "TASK=benchmarks CONFIG=uniform_medium"
-  - "TASK=benchmarks CONFIG=uniform_large"
-  - "TASK=benchmarks CONFIG=normal_small"
-  - "TASK=benchmarks CONFIG=normal_medium"
-  - "TASK=benchmarks CONFIG=normal_large"
+  global:
+    - secure: "bNtinRuxS/FLP1fKj7KtHweIP/fG94CusdYKH/sBL6P0aqL3mr/dkbC34pSk\nNGkLKs/FAzvLkOo7aIOcCLx1WnL9yaZ12tmHgH8Ztf8ci2S52HSfqYwQw/dE\nq7euNMZVjvWfVu+15+Xpn6+t2XSubSO/TELfymDFGbhivmKAo5M="
+    - secure: "Pv/MUnoaZMbPNB3vx4Hw2ASQBsUO7HIjJsfGHAQa5VbWlX3qEfMdezlYzNbf\nDPdpeabQwEwCUcINT7x10XKH5M4nZn6bBGfpvmNMxvZ8De1Et7mrwvb5/o73\n5EkyvYuUu8FB/LQmjB/4zZcjLQWNCtcfPlYPs7YcADBt0gIwn8M="
+  matrix:
+    - "TASK=test:parallel"
+    - "TASK=test:non_parallel"
+    - "TASK=benchmarks CONFIG=uniform_small"
+    - "TASK=benchmarks CONFIG=uniform_medium"
+    - "TASK=benchmarks CONFIG=uniform_large"
+    - "TASK=benchmarks CONFIG=normal_small"
+    - "TASK=benchmarks CONFIG=normal_medium"
+    - "TASK=benchmarks CONFIG=normal_large"
 matrix:
   allow_failures:
 #    - rvm: ruby-head

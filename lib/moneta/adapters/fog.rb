@@ -1,4 +1,4 @@
-require 'fog'
+require 'fog/storage'
 
 module Moneta
   module Adapters
@@ -13,7 +13,7 @@ module Moneta
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
         storage = ::Fog::Storage.new(options)
-        @directory = storage.directories.create(:key => dir)
+        @directory = storage.directories.get(dir) || storage.directories.create(:key => dir)
       end
 
       # (see Proxy#key?)
@@ -38,7 +38,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @directory.files.create(:key => key, :body => value)
+        @directory.files.create(options.merge(:key => key, :body => value))
         value
       end
 

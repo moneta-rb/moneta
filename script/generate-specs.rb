@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 PATH = File.expand_path(File.join(__FILE__, '..', '..', 'spec'))
 
 class Specs
