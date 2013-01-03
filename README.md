@@ -99,7 +99,7 @@ to upgrade to a real key/value store.
 <tr><td>Null</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:red">✗</td><td>No database</td></tr>
 <tr><td>PStore</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>PStore store</td></tr>
 <tr><td>Redis</td><td>redis</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td>Redis database</td></tr>
-<tr><td>RestClient</td><td>httpi</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
+<tr><td>RestClient</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
 <tr><td>Riak</td><td>riak-client</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Riak database</td></tr>
 <tr><td>SDBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>SDBM database</td></tr>
 <tr><td>Sequel</td><td>sequel</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Sequel ORM</td></tr>

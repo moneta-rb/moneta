@@ -1,4 +1,4 @@
-require 'httpi'
+require 'net/http'
 
 module Moneta
   module Adapters
@@ -10,37 +10,46 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :url URL
       def initialize(options = {})
-        raise ArgumentError, 'Option :url is required' unless @url = options[:url]
+        raise ArgumentError, 'Option :url is required' unless url = options[:url]
+        url = URI(url)
+        @path = url.path
+        @client = ::Net::HTTP.start(url.host, url.port)
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        response = HTTPI.head(@url + key)
-        response.code == 200
+        response = @client.request_head(@path + key)
+        response.code == '200'
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        response = HTTPI.get(@url + key)
-        response.code == 200 ? response.body : nil
+        response = @client.request_get(@path + key)
+        response.code == '200' ? response.body : nil
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        raise "HTTP #{response.code}" if HTTPI.post(@url + key, value).error?
+        response = @client.request_post(@path + key, value)
+        raise "HTTP error #{response.code}" unless response.code == '200'
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        response = HTTPI.delete(@url + key)
-        response.code == 200 ? response.body : nil
+        response = @client.request(::Net::HTTP::Delete.new(@path + key))
+        response.code == '200' ? response.body : nil
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        HTTPI.delete(@url)
+        @client.request(::Net::HTTP::Delete.new(@path))
         self
+      end
+
+      def close
+        @client.finish
+        nil
       end
     end
   end
