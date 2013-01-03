@@ -21,8 +21,7 @@ same for template languages.
 * Make it easy to compare different key/value stores and benchmark them
 * To hide a lot of different and maybe complex APIs behind one well-designed and simple Moneta API
 * Give people a starting point or example code to start working with their favourite key/value store. Feel free to copy code, please mention Moneta then :)
-* Create a reusable piece of code, since similar things are solved over and over again ([Rails](http://rubyonrails.org/ brings its own cache stores,
-[Rack-Cache](https://github.com/rtomayko/rack-cache) brings its own stores, ...)
+* Create a reusable piece of code, since similar things are solved over and over again ([Rails](http://rubyonrails.org/ brings its own cache stores, and many frameworks do the same...)
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
