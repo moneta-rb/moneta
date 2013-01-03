@@ -570,6 +570,6 @@ on top of the different stores.
 
 ## Authors
 
-* Daniel Mendler
-* Hannes Georg
-* Originally by Yehuda Katz and contributors
+* Daniel Mendler (@minad)
+* Hannes Georg (@hannesg)
+* Originally by Yehuda Katz (@wycats) and contributors
