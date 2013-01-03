@@ -91,9 +91,9 @@ to upgrade to a real key/value store.
 <tr><td>LevelDB</td><td>leveldb</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>LevelDB database</td></tr>
 <tr><td>LocalMemCache</td><td>localmemcache</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>LocalMemCache database</td></tr>
 <tr><td>LRUHash</td><td>-</td><td style="color:red">✗</td><td>Memory</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td>LRU memory store</td></tr>
-<tr><td>Memcached</td><td>dalli or memcached</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Memcached database</td></tr>
-<tr><td>MemcachedDalli</td><td>dalli</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Memcached database</td></tr>
-<tr><td>MemcachedNative</td><td>memcached</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Memcached database</td></tr>
+<tr><td>Memcached</td><td>dalli or memcached</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td>Memcached database</td></tr>
+<tr><td>MemcachedDalli</td><td>dalli</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td>Memcached database</td></tr>
+<tr><td>MemcachedNative</td><td>memcached</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td>Memcached database</td></tr>
 <tr><td>Memory</td><td>-</td><td style="color:red">✗</td><td>Memory</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td>Memory store</td></tr>
 <tr><td>Mongo</td><td>mongo</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td>MongoDB database</td></tr>
 <tr><td>Null</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:red">✗</td><td>No database</td></tr>
@@ -113,6 +113,7 @@ to upgrade to a real key/value store.
 * [1]: Make adapters thread-safe by using `Moneta::Lock`, `Moneta::Pool` or by passing the option `:threadsafe => true` to `Moneta#new`.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 * [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
+* [4]: There are some servers which use the memcached protocol but which are persistent (e.g. MemcacheDB, Kai, IronCache, ...)
 
 ## Proxies
 
