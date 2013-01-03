@@ -86,7 +86,7 @@ to upgrade to a real key/value store.
 <table>
 <thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>ActiveRecord</td><td>active_record</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>ActiveRecord ORM</td></tr>
+<tr><td>ActiveRecord</td><td>activerecord</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>ActiveRecord ORM</td></tr>
 <tr><td>Cassandra</td><td>cassandra</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td>Cassandra distributed database</td></tr>
 <tr><td>Client</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:blue">?<sup>[5]</sup></td><td style="color:blue">?<sup>[5]</sup></td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
 <tr><td>Cookie</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Cookie in memory store</td></tr>
@@ -570,6 +570,7 @@ on top of the different stores.
 ## Alternatives
 
 * [Horcrux](https://github.com/technoweenie/horcrux): Used at github, supports batch operations but only Memcached backend
+* [ActiveSupport::Cache::Store](http://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html): The Rails cache store abstraction
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
 * [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
 
