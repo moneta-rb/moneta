@@ -9,6 +9,7 @@ master
 * Mixin ExpiresSupport added
   * Expiration value handling unified
   * 0 and false are interpreted as persist value
+* Adapters::RestClient uses net/http now
 
 0.7.3
 
