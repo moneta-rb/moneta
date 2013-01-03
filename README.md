@@ -142,7 +142,7 @@ add additional features to storage backends:
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
 * `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use(:Shared) {}`.
 
-## Serializers and compressors (`Moneta::Transformer`)
+### Serializers and compressors (`Moneta::Transformer`)
 
 Supported serializers:
 
