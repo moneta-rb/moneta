@@ -4,12 +4,33 @@ task :test do
   specs = Dir['spec/*/*_spec.rb']
   parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak/ }
   serial = specs - parallel
+  threads = []
+  failed = false
   parallel.each do |spec|
-    sleep 0.1 while `ps -e -www -o pid,rss,command | grep '[r]spec'`.split("\n").size >= 10
-    sh("rspec #{spec} &")
+    threads << Thread.new do
+      begin
+        sh("rspec #{spec}")
+      rescue Exception => ex
+        failed = true
+      ensure
+        threads.delete Thread.current
+      end
+    end
+    sleep 0.1
+    sleep 0.1 while threads.size >= 10
   end
+  sleep 0.1 until threads.empty?
   serial.each do |spec|
-    sh("rspec #{spec}")
+    begin
+      sh("rspec #{spec}")
+    rescue Exception => ex
+      failed = true
+    end
+  end
+  if failed
+    fail "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
+  else
+    puts "\e[32m########## MONETA TESTSUITE SUCCEDED ##########\e[0m"
   end
 end
 

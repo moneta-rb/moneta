@@ -9,6 +9,12 @@ RSpec::Core::Formatters::ProgressFormatter.class_eval do
   end
 end
 
+RSpec.configure do |config|
+  config.color_enabled = true
+  config.tty = true
+  config.formatter = :progress
+end
+
 class Value
   attr_accessor :x
   def initialize(x)
