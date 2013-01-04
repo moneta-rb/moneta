@@ -18,7 +18,18 @@ end
 task :test do
   # memcached and redis specs cannot be used in parallel
   # because of flushing and namespace lacking in redis
-  specs = Dir['spec/*/*_spec.rb']
+  specs = Dir['spec/*/*_spec.rb'].sort
+  if ENV['TEST_GROUP'] =~ /^(\d+)\/(\d+)$/
+    n = $1.to_i
+    max = $2.to_i
+    size = specs.size / max
+    if n == max
+      specs = specs[(n-1)*size..-1]
+    else
+      specs = specs[(n-1)*size, size]
+    end
+  end
+
   parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak/ }
   serial = specs - parallel
   threads = []
