@@ -2,7 +2,9 @@ source :rubygems
 gemspec
 
 def alternatives(gems)
-  if defined?(JRUBY_VERSION)
+  if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+    [gems[:rbx]].flatten.compact.each {|g| gem g }
+  elsif defined?(JRUBY_VERSION)
     [gems[:jruby]].flatten.compact.each {|g| gem g }
   else
     [gems[:mri]].flatten.compact.each {|g| gem g }
@@ -17,18 +19,18 @@ gem 'rspec'
 gem 'tnetstring'
 gem 'bencode'
 gem 'multi_json'
-alternatives :mri => 'bson_ext', :jruby => 'bson'
-alternatives :mri => 'ox'
-alternatives :mri => 'msgpack', :jruby => 'msgpack-jruby'
-alternatives :mri => 'bert'
+alternatives :mri => 'bson_ext', :rbx => 'bson_ext', :jruby => 'bson'
+alternatives :mri => 'ox', :rbx => 'ox'
+alternatives :mri => 'msgpack', :rbx => 'msgpack', :jruby => 'msgpack-jruby'
+alternatives :mri => 'bert', :rbx => 'bert'
 
 # Compressors used by Transformer
 alternatives :mri => 'bzip2-ruby'
-alternatives :mri => 'ruby-lzma'
-alternatives :mri => 'lzoruby'
-alternatives :mri => 'snappy'
+alternatives :mri => 'ruby-lzma', :rbx => 'ruby-lzma'
+alternatives :mri => 'lzoruby', :rbx => 'lzoruby'
+alternatives :mri => 'snappy', :rbx => 'snappy'
 # WARNING: QuickLZ segfaults because of an assertion
-alternatives :mri => 'qlzruby'
+alternatives :mri => 'qlzruby', :rbx => 'qlzruby'
 
 # Backends
 gem 'daybreak', :github => 'propublica/daybreak'
@@ -46,11 +48,11 @@ gem 'riak-client'
 gem 'cassandra'
 #gem 'hbaserb'
 #gem 'localmemcache'
-alternatives :mri => 'tdb'
-alternatives :mri => 'leveldb-ruby'
-alternatives :mri => 'tokyocabinet'
-alternatives :mri => 'memcached', :jruby => 'jruby-memcached'
-alternatives :mri => 'sqlite3', :jruby => %w(jdbc-sqlite3 activerecord-jdbc-adapter activerecord-jdbcsqlite3-adapter)
+alternatives :mri => 'tdb', :rbx => 'tdb'
+alternatives :mri => 'leveldb-ruby', :rbx => 'leveldb-ruby'
+alternatives :mri => 'tokyocabinet', :rbx => 'tokyocabinet'
+alternatives :mri => 'memcached', :rbx => 'memcached', :jruby => 'jruby-memcached'
+alternatives :mri => 'sqlite3', :rbx => 'sqlite3', :jruby => %w(jdbc-sqlite3 activerecord-jdbc-adapter activerecord-jdbcsqlite3-adapter)
 alternatives :jruby => %w(ffi gdbm) # gdbm for jruby needs ffi
 
 # Rack integration testing
