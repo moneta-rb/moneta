@@ -136,7 +136,6 @@ end
 Process.fork do
   require 'rack'
   require 'webrick'
-  require 'httpi'
   require 'rack/moneta_rest'
 
   # Keep webrick quiet
@@ -170,9 +169,6 @@ STORES.each do |name, options|
     elsif name == :Riak
       require 'riak'
       Riak.disable_list_keys_warnings = true
-    elsif name == :RestClient
-      require 'httpi'
-      HTTPI.log = false
     end
 
     cache = Moneta.new(name, options.dup)
