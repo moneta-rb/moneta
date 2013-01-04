@@ -255,12 +255,12 @@ end
   'simple_daybreak' => {
     :store => :Daybreak,
     :options => ':file => File.join(make_tempdir, "simple_daybreak")',
-    :specs => STANDARD_SPECS.without_increment
+    :specs => STANDARD_SPECS
   },
   'simple_daybreak_with_expires' => {
     :store => :Daybreak,
     :options => ':file => File.join(make_tempdir, "simple_daybreak_with_expires"), :expires => true',
-    :specs => STANDARD_SPECS.with_expires.without_increment
+    :specs => STANDARD_SPECS.with_expires
   },
   'simple_gdbm' => {
     :store => :GDBM,
@@ -949,7 +949,7 @@ end
   },
   'adapter_daybreak' => {
     :build => 'Moneta::Adapters::Daybreak.new(:file => File.join(make_tempdir, "adapter_daybreak"))',
-    :specs => ADAPTER_SPECS.without_increment
+    :specs => ADAPTER_SPECS
   },
   'adapter_file' => {
     :build => 'Moneta::Adapters::File.new(:dir => File.join(make_tempdir, "adapter_file"))',
