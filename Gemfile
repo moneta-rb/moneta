@@ -12,7 +12,6 @@ end
 # Testing
 gem 'rake'
 gem 'rspec'
-gem 'parallel_tests'
 
 # Serializer used by Transformer
 gem 'tnetstring'
