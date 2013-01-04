@@ -1,4 +1,4 @@
-master
+0.7.4
 
 * Transformer: fix truncate
 * Adapters::RestClient: raise error if store fails
