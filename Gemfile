@@ -33,7 +33,7 @@ alternatives :mri => 'snappy', :rbx => 'snappy'
 alternatives :mri => 'qlzruby', :rbx => 'qlzruby'
 
 # Backends
-gem 'daybreak', :github => 'propublica/daybreak'
+gem 'daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
 gem 'dm-sqlite-adapter'

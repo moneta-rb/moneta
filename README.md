@@ -43,7 +43,6 @@ Out of the box, it supports the following backends:
     * LRU hash - prefer this over :Memory! (`:LRUHash`)
     * LocalMemCache (`:LocalMemCache`)
     * Memcached store (`:Memcached`, `:MemcachedNative` and `:MemcachedDalli`)
-    * Daybreak database (`:Daybreak`)
 * Relational Databases:
     * DataMapper (`:DataMapper`)
     * ActiveRecord (`:ActiveRecord`)
