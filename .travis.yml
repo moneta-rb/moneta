@@ -20,25 +20,44 @@ env:
     - secure: "Pv/MUnoaZMbPNB3vx4Hw2ASQBsUO7HIjJsfGHAQa5VbWlX3qEfMdezlYzNbf\nDPdpeabQwEwCUcINT7x10XKH5M4nZn6bBGfpvmNMxvZ8De1Et7mrwvb5/o73\n5EkyvYuUu8FB/LQmjB/4zZcjLQWNCtcfPlYPs7YcADBt0gIwn8M="
   matrix:
     - "TASK=test"
+    - "TASK=benchmarks CONFIG=uniform_small"
+    - "TASK=benchmarks CONFIG=uniform_medium"
+    - "TASK=benchmarks CONFIG=uniform_large"
+    - "TASK=benchmarks CONFIG=normal_small"
+    - "TASK=benchmarks CONFIG=normal_medium"
+    - "TASK=benchmarks CONFIG=normal_large"
 matrix:
   allow_failures:
     - rvm: jruby
     - rvm: rbx-18mode
     - rvm: rbx-19mode
   # Run benchmarks only on 1.9
-  include:
-    - rvm: 1.9.3
+  exclude:
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=uniform_small"
-    - rvm: 1.9.3
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=uniform_medium"
-    - rvm: 1.9.3
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=uniform_large"
-    - rvm: 1.9.3
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=normal_small"
-    - rvm: 1.9.3
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=normal_medium"
-    - rvm: 1.9.3
+    - rvm: jruby
       env: "TASK=benchmarks CONFIG=normal_large"
+    - rvm: rbx-18mode
+      env: "TASK=benchmarks CONFIG=uniform_small"
+    - rvm: rbx-18mode
+      env: "TASK=benchmarks CONFIG=uniform_medium"
+    - rvm: rbx-18mode
+      env: "TASK=benchmarks CONFIG=uniform_large"
+    - rvm: rbx-18mode
+      env: "TASK=benchmarks CONFIG=normal_small"
+    - rvm: rbx-18mode
+      env: "TASK=benchmarks CONFIG=normal_medium"
+    - rvm: rbx-18mode
+      env: "TASK=benchmarks CONFIG=normal_large"
+    - rvm: rbx-19mode
 script: "bundle exec rake $TASK"
 branches:
   only:
