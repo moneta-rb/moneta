@@ -12,7 +12,7 @@ end
 
 BUNDLE_FILE = "bundle-#{RUBY_VERSION}-#{defined?(JRUBY_VERSION) ? 'jruby' : 'mri'}.tar.gz"
 
-if cmd("curl -o #{BUNDLE_FILE} http://s3.amazonaws.com/minad-moneta/#{BUNDLE_FILE}")
+if cmd("wget -O #{BUNDLE_FILE} http://s3.amazonaws.com/minad-moneta/#{BUNDLE_FILE}")
   cmd! 'rm -rf .bundle'
   cmd! "tar -xf #{BUNDLE_FILE}"
   cmd! 'bundle install --path .bundle'

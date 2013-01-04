@@ -31,33 +31,6 @@ matrix:
     - rvm: jruby
     - rvm: rbx-18mode
     - rvm: rbx-19mode
-  # Run benchmarks only on 1.9
-  exclude:
-    - rvm: jruby
-      env: "TASK=benchmarks CONFIG=uniform_small"
-    - rvm: jruby
-      env: "TASK=benchmarks CONFIG=uniform_medium"
-    - rvm: jruby
-      env: "TASK=benchmarks CONFIG=uniform_large"
-    - rvm: jruby
-      env: "TASK=benchmarks CONFIG=normal_small"
-    - rvm: jruby
-      env: "TASK=benchmarks CONFIG=normal_medium"
-    - rvm: jruby
-      env: "TASK=benchmarks CONFIG=normal_large"
-    - rvm: rbx-18mode
-      env: "TASK=benchmarks CONFIG=uniform_small"
-    - rvm: rbx-18mode
-      env: "TASK=benchmarks CONFIG=uniform_medium"
-    - rvm: rbx-18mode
-      env: "TASK=benchmarks CONFIG=uniform_large"
-    - rvm: rbx-18mode
-      env: "TASK=benchmarks CONFIG=normal_small"
-    - rvm: rbx-18mode
-      env: "TASK=benchmarks CONFIG=normal_medium"
-    - rvm: rbx-18mode
-      env: "TASK=benchmarks CONFIG=normal_large"
-    - rvm: rbx-19mode
 script: "bundle exec rake $TASK"
 branches:
   only:
