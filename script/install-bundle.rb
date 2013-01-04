@@ -10,7 +10,15 @@ def cmd!(s)
   cmd(s) || abort("#{s} failed")
 end
 
-BUNDLE_FILE = "bundle-#{RUBY_VERSION}-#{defined?(JRUBY_VERSION) ? 'jruby' : 'mri'}.tar.gz"
+if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+  ruby = 'rbx'
+elsif defined?(JRUBY_VERSION)
+  ruby = 'jruby'
+else
+  ruby = 'mri'
+end
+
+BUNDLE_FILE = "bundle-#{RUBY_VERSION}-#{ruby}.tar.gz"
 
 if cmd("wget -O #{BUNDLE_FILE} http://s3.amazonaws.com/minad-moneta/#{BUNDLE_FILE}")
   cmd! 'rm -rf .bundle'
