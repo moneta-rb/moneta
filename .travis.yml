@@ -13,8 +13,10 @@ services:
   - memcached
   - mongodb
 before_install:
+  - script/kill-travis.sh
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev
   - script/install-bundle.rb
+  - script/upload-bundle.rb
 # install-bundle.rb does everything for us!
 install: 'echo "Bundle installed"'
 env:

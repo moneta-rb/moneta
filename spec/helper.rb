@@ -37,10 +37,7 @@ end
 def start_restserver
   require 'rack'
   require 'webrick'
-  require 'httpi'
   require 'rack/moneta_rest'
-
-  HTTPI.log = false
 
   # Keep webrick quiet
   ::WEBrick::HTTPServer.class_eval do

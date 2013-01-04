@@ -29,7 +29,9 @@ alternatives :mri => 'bzip2-ruby'
 alternatives :mri => 'ruby-lzma', :rbx => 'ruby-lzma'
 alternatives :mri => 'lzoruby', :rbx => 'lzoruby'
 alternatives :mri => 'snappy', :rbx => 'snappy'
-# WARNING: QuickLZ segfaults because of an assertion
+# FIXME: QuickLZ segfaults because of an assertion
+# QuickLZ is also not maintained on Github, but on Bitbucket
+# and I don't know where the issue tracker is.
 alternatives :mri => 'qlzruby', :rbx => 'qlzruby'
 
 # Backends
