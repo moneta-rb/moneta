@@ -10,7 +10,6 @@ master
   * Expiration value handling unified
   * 0 and false are interpreted as persist value
 * Adapters::RestClient uses net/http now
-* Adapters::Couch: option :db renamed to :url
 
 0.7.3
 

@@ -8,10 +8,12 @@ module Moneta
       include Defaults
 
       # @param [Hash] options
-      # @option options [String] :url ('moneta') Couch database url
+      # @option options [String] :host ('http://127.0.0.1:5984') Couch host
+      # @option options [String] :db ('moneta') Couch database
       def initialize(options = {})
-        options[:url] ||= 'moneta'
-        @db = ::CouchRest.database!(options[:url])
+        options[:db] ||= 'moneta'
+        options[:host] ||= '127.0.0.1:5984'
+        @db = CouchRest.new(options[:host]).database!(options[:db])
       end
 
       # (see Proxy#key?)

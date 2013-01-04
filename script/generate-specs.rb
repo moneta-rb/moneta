@@ -381,13 +381,13 @@ end
   },
   'simple_couch' => {
     :store => :Couch,
-    :options => ":url => 'simple_couch'",
+    :options => ":db => 'simple_couch'",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)',
     :specs => STANDARD_SPECS.without_increment
   },
   'simple_couch_with_expires' => {
     :store => :Couch,
-    :options => ":url => 'simple_couch_with_expires', :expires => true",
+    :options => ":db => 'simple_couch_with_expires', :expires => true",
     :specs => STANDARD_SPECS.without_increment.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
@@ -900,7 +900,7 @@ end
     :specs => ADAPTER_SPECS.without_persist
   },
   'adapter_couch' => {
-    :build => "Moneta::Adapters::Couch.new(:url => 'adapter_couch')",
+    :build => "Moneta::Adapters::Couch.new(:db => 'adapter_couch')",
     :specs => ADAPTER_SPECS.without_increment
   },
   'adapter_datamapper' => {
