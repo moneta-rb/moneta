@@ -3,7 +3,7 @@ require 'helper'
 
 describe_moneta "adapter_couch" do
   def new_store
-    Moneta::Adapters::Couch.new(:db => 'adapter_couch')
+    Moneta::Adapters::Couch.new(:url => 'adapter_couch')
   end
 
   def load_value(value)

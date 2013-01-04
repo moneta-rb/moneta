@@ -3,7 +3,7 @@ require 'helper'
 
 describe_moneta "simple_couch" do
   def new_store
-    Moneta.new(:Couch, :db => 'simple_couch', :logger => {:out => File.open(File.join(make_tempdir, 'simple_couch.log'), 'a')})
+    Moneta.new(:Couch, :url => 'simple_couch', :logger => {:out => File.open(File.join(make_tempdir, 'simple_couch.log'), 'a')})
   end
 
   def load_value(value)

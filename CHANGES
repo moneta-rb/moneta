@@ -1,7 +1,7 @@
 master
 
 * Transformer: fix truncate
-* RestClient: raise error if store fails
+* Adapters::RestClient: raise error if store fails
 * Adapters::TDB added
 * Adapters::Daybreak added
 * Adapters::Mongo - Expiration and increment support added
@@ -10,6 +10,7 @@ master
   * Expiration value handling unified
   * 0 and false are interpreted as persist value
 * Adapters::RestClient uses net/http now
+* Adapters::Couch: option :db renamed to :url
 
 0.7.3
 

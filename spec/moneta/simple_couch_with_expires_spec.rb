@@ -3,7 +3,7 @@ require 'helper'
 
 describe_moneta "simple_couch_with_expires" do
   def new_store
-    Moneta.new(:Couch, :db => 'simple_couch_with_expires', :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_couch_with_expires.log'), 'a')})
+    Moneta.new(:Couch, :url => 'simple_couch_with_expires', :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_couch_with_expires.log'), 'a')})
   end
 
   def load_value(value)
