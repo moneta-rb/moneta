@@ -1,3 +1,20 @@
+def rspec(spec)
+  sh("rspec #{spec}")
+  true
+rescue Exception => ex
+  if $?.termsig
+    sig = nil
+    Signal.list.each do |name, id|
+      if id == $?.termsig
+        sig = name
+        break
+      end
+    end
+    puts "\e[31m########## SIG#{sig} rspec #{spec} ##########\e[0m"
+  end
+  false
+end
+
 task :test do
   # memcached and redis specs cannot be used in parallel
   # because of flushing and namespace lacking in redis
@@ -9,9 +26,7 @@ task :test do
   parallel.each do |spec|
     threads << Thread.new do
       begin
-        sh("rspec #{spec}")
-      rescue Exception => ex
-        failed = true
+        failed = true unless rspec(spec)
       ensure
         threads.delete Thread.current
       end
@@ -21,11 +36,7 @@ task :test do
   end
   sleep 0.1 until threads.empty?
   serial.each do |spec|
-    begin
-      sh("rspec #{spec}")
-    rescue Exception => ex
-      failed = true
-    end
+    failed = true unless rspec(spec)
   end
   if failed
     fail "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
