@@ -125,7 +125,15 @@ class Array
   end
 end
 
-Process.fork do
+def parallel(&block)
+  if defined?(JRUBY_VERSION)
+    Thread.new(&block)
+  else
+    Process.fork(&block)
+  end
+end
+
+parallel do
   begin
     Moneta::Server.new(Moneta.new(:Memory)).run
   rescue Exception => ex
@@ -133,7 +141,7 @@ Process.fork do
   end
 end
 
-Process.fork do
+parallel do
   require 'rack'
   require 'webrick'
   require 'rack/moneta_rest'
