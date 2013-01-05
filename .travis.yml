@@ -22,9 +22,11 @@ env:
   global:
     - secure: "B0vx1g1CB1A6mM3B/iy2ATicfS4OXT80bb2RVe8mSRsPzez1B4q4Q4hJcaMI\nrMARONN8Krtnti+IqvmDnB0Z0AKYMEyIc+zT37zJOCjLdkLJl+x/thuU/MbC\nvlLVwjMf6JE2EUzTfORDRFYc5ycCqfsfgNk1Go0D2CPT6P9u9uQ="
   matrix:
-    - "TASK=test TEST_GROUP=1/3"
-    - "TASK=test TEST_GROUP=2/3"
-    - "TASK=test TEST_GROUP=3/3"
+    - "TASK=test TEST_GROUP=1/5"
+    - "TASK=test TEST_GROUP=2/5"
+    - "TASK=test TEST_GROUP=3/5"
+    - "TASK=test TEST_GROUP=4/5"
+    - "TASK=test TEST_GROUP=5/5"
     - "TASK=benchmarks CONFIG=uniform_small"
     - "TASK=benchmarks CONFIG=uniform_medium"
     - "TASK=benchmarks CONFIG=uniform_large"
