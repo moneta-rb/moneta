@@ -3,37 +3,41 @@
 $: << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'benchmark'
 require 'moneta'
+require 'fileutils'
+
+DIR = __FILE__ + '.tmp'
+FileUtils.mkpath(DIR)
 
 STORES = {
   # SDBM is unstable
-  # :SDBM => { :file => 'bench.sdbm' },
+  # :SDBM => { :file => "#{DIR}/sdbm" },
   # YAML is so fucking slow
-  # :YAML => { :file => 'bench.yaml' },
+  # :YAML => { :file => "#{DIR}/yaml" },
   :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
   :Cassandra => {},
   :Client => {},
   :Couch => {},
-  :DBM => { :file => 'bench.dbm' },
-  :DataMapper => { :setup => 'sqlite3:bench.datamapper' },
-  :Daybreak => { :file => 'bench.daybreak' },
-  :File => { :dir => 'bench.file' },
-  :GDBM => { :file => 'bench.gdbm' },
+  :DBM => { :file => "#{DIR}/dbm" },
+  :DataMapper => { :setup => "sqlite3:#{DIR}/datamapper" },
+  :Daybreak => { :file => "#{DIR}/daybreak" },
+  :File => { :dir => "#{DIR}/file" },
+  :GDBM => { :file => "#{DIR}/gdbm" },
   :HBase => {},
-  :HashFile => { :dir => 'bench.hashfile' },
+  :HashFile => { :dir => "#{DIR}/hashfile" },
   :LRUHash => {},
-  :LevelDB => { :dir => 'bench.leveldb' },
-  :LocalMemCache => { :file => 'bench.lmc' },
+  :LevelDB => { :dir => "#{DIR}/leveldb" },
+  :LocalMemCache => { :file => "#{DIR}/lmc" },
   :MemcachedDalli => {},
   :MemcachedNative => {},
   :Memory => {},
   :Mongo => {},
-  :PStore => { :file => 'bench.pstore' },
+  :PStore => { :file => "#{DIR}/pstore" },
   :Redis => {},
   :RestClient => { :url => 'http://localhost:8808/' },
   :Riak => {},
   :Sequel => { :db => 'sqlite:/' },
   :Sqlite => { :file => ':memory:' },
-  :TDB => { :file => 'bench.tdb' },
+  :TDB => { :file => "#{DIR}/tdb" },
 }
 
 CONFIGS = {

@@ -67,8 +67,7 @@ task :test do
 end
 
 task :benchmarks do
-  Dir.chdir('benchmarks')
-  ruby("run.rb #{ENV['CONFIG']}")
+  ruby("script/benchmarks #{ENV['CONFIG']}")
 end
 
 task :default => :test

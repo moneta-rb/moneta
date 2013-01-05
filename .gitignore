@@ -6,6 +6,5 @@ spec/tmp
 *.swp
 *.rdb
 .#*
-benchmarks/*.histogram
-benchmarks/bench.*
+script/benchmarks.tmp
 Gemfile.lock
