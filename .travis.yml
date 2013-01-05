@@ -28,6 +28,7 @@ env:
     - "TASK=test TEST_GROUP=3/5"
     - "TASK=test TEST_GROUP=4/5"
     - "TASK=test TEST_GROUP=5/5"
+    - "TASK=test TEST_GROUP=unstable"
     - "TASK=benchmarks CONFIG=uniform_small"
     - "TASK=benchmarks CONFIG=uniform_medium"
     - "TASK=benchmarks CONFIG=uniform_large"
@@ -40,6 +41,7 @@ matrix:
     - rvm: jruby-19mode
     - rvm: rbx-18mode
     - rvm: rbx-19mode
+    - env: "TASK=test TEST_GROUP=unstable"
 script: "bundle exec rake $TASK"
 branches:
   only:

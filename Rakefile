@@ -16,9 +16,20 @@ rescue Exception => ex
 end
 
 task :test do
-  # memcached and redis specs cannot be used in parallel
-  # because of flushing and namespace lacking in redis
   specs = Dir['spec/*/*_spec.rb'].sort
+
+  # FIXME:
+  #
+  # * QuickLZ segfaults because of an assertion
+  #   QuickLZ is also not maintained on Github, but on Bitbucket
+  #   and I don't know where the issue tracker is.
+  #
+  # * Cassandra show spurious failures
+  unstable = specs.reject {|s| s =~ /quicklz|cassandra/ }
+  specs -= unstable
+
+  # Memcached and Redis specs cannot be used in parallel
+  # because of flushing and lacking namespaces
   parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak/ }
   serial = specs - parallel
 
@@ -32,6 +43,9 @@ task :test do
       parallel = parallel[(n-1)*(parallel.size/max), parallel.size/max]
       serial = serial[(n-1)*(serial.size/max), serial.size/max]
     end
+  elsif ENV['TEST_GROUP'] == 'unstable'
+    parallel.clear
+    serial = unstable
   end
 
   threads = []
