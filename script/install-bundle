@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# Inspired by https://coderwall.com/p/x8exja
+
+def cmd(s)
+  puts s
+  system(s) || abort("#{s} failed")
+end
+
+if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+  ruby = 'rbx'
+elsif defined?(JRUBY_VERSION)
+  ruby = 'jruby'
+else
+  ruby = 'mri'
+end
+
+BUNDLE_FILE = "moneta-bundle-#{RUBY_VERSION}-#{ruby}.tar.gz"
+
+if system("wget --no-check-certificate --quiet -O #{BUNDLE_FILE} https://moneta:#{ENV['DAV_PW']}@mendler.net/dav/#{BUNDLE_FILE}")
+  cmd 'rm -rf .bundle'
+  cmd "tar -xf #{BUNDLE_FILE}"
+  cmd "rm -f #{BUNDLE_FILE}"
+else
+  cmd 'bundle install --path .bundle'
+  cmd "tar -czf #{BUNDLE_FILE} .bundle"
+end

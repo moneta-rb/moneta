@@ -1,0 +1,2 @@
+#!/bin/bash
+curl -u moneta:$DAV_PW -k -T moneta-bundle-*.tar.gz https://mendler.net/dav/ || echo 'Nothing uploaded'
