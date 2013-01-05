@@ -75,7 +75,7 @@ class Specs
     new(:specs => specs.without(:marshallable_value, :marshallable_key, :transform_value))
   end
 
-  def without_returndifferent
+  def returnsame
     new(:specs => specs.without(:returndifferent).with(:returnsame))
   end
 
@@ -513,7 +513,7 @@ end},
   use :Proxy
   adapter :Memory
 end},
-    :specs => STANDARD_SPECS.without_transform.with_expires.without_returndifferent.without_persist
+    :specs => STANDARD_SPECS.without_transform.with_expires.returnsame.without_persist
   },
   'cache_file_memory' => {
     :build => %{Moneta.build do
@@ -589,7 +589,7 @@ end},
   use :Lock
   adapter :Memory
 end},
-    :specs => STANDARD_SPECS.without_transform.without_returndifferent.without_persist
+    :specs => STANDARD_SPECS.without_transform.returnsame.without_persist
   },
   'pool' => {
     :build => %{Moneta.build do
@@ -888,7 +888,7 @@ end
   },
   'adapter_cookie' => {
     :build => 'Moneta::Adapters::Cookie.new',
-    :specs => ADAPTER_SPECS.without_persist
+    :specs => ADAPTER_SPECS.without_persist.returnsame
   },
   'adapter_couch' => {
     :build => "Moneta::Adapters::Couch.new(:db => 'adapter_couch')",
@@ -940,7 +940,7 @@ end
   },
   'adapter_daybreak' => {
     :build => 'Moneta::Adapters::Daybreak.new(:file => File.join(make_tempdir, "adapter_daybreak"))',
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_SPECS.returnsame
   },
   'adapter_file' => {
     :build => 'Moneta::Adapters::File.new(:dir => File.join(make_tempdir, "adapter_file"))',
@@ -953,7 +953,8 @@ end
     :dir                    => 'moneta')",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
-    :specs => ADAPTER_SPECS.without_increment
+    # Fog returns same object in mocking mode (in-memory store)
+    :specs => ADAPTER_SPECS.without_increment.returnsame
   },
   'adapter_gdbm' => {
     :build => 'Moneta::Adapters::GDBM.new(:file => File.join(make_tempdir, "adapter_gdbm"))',
@@ -989,7 +990,7 @@ end
   },
   'adapter_memory' => {
     :build => 'Moneta::Adapters::Memory.new',
-    :specs => STANDARD_SPECS.without_transform.without_returndifferent.without_persist
+    :specs => STANDARD_SPECS.without_transform.returnsame.without_persist
   },
   'adapter_lruhash' => {
     :build => 'Moneta::Adapters::LRUHash.new',
