@@ -1721,26 +1721,54 @@ end
 shared_examples_for 'returndifferent_nilkey_stringvalue' do
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[0] = "strval1"
-    store[0].should_not be_equal("strval1")
+    store[0] = value
+    store[0].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[nil] = "strval1"
-    store[nil].should_not be_equal("strval1")
+    store[nil] = value
+    store[nil].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[0] = "strval2"
-    store[0].should_not be_equal("strval2")
+    store[0] = value
+    store[0].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[nil] = "strval2"
-    store[nil].should_not be_equal("strval2")
+    store[nil] = value
+    store[nil].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_nilkey_stringvalue ####################
+
+shared_examples_for 'returnsame_nilkey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[0] = value
+    store[0].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[nil] = value
+    store[nil].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[0] = value
+    store[0].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[nil] = value
+    store[nil].should be_equal(value)
   end
 end
 
@@ -2197,26 +2225,54 @@ end
 shared_examples_for 'returndifferent_nilkey_hashvalue' do
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[0] = {"hashval1"=>["array1", 1]}
-    store[0].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[0] = value
+    store[0].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[nil] = {"hashval1"=>["array1", 1]}
-    store[nil].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[nil] = value
+    store[nil].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[0].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[0] = value
+    store[0].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[nil].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[nil] = value
+    store[nil].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_nilkey_hashvalue ####################
+
+shared_examples_for 'returnsame_nilkey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[0] = value
+    store[0].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[nil] = value
+    store[nil].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[0] = value
+    store[0].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[nil] = value
+    store[nil].should be_equal(value)
   end
 end
 
@@ -2673,26 +2729,54 @@ end
 shared_examples_for 'returndifferent_nilkey_objectvalue' do
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[0] = Value.new(:objval1)
-    store[0].should_not be_equal(Value.new(:objval1))
+    store[0] = value
+    store[0].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[nil] = Value.new(:objval1)
-    store[nil].should_not be_equal(Value.new(:objval1))
+    store[nil] = value
+    store[nil].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[0] = Value.new(:objval2)
-    store[0].should_not be_equal(Value.new(:objval2))
+    store[0] = value
+    store[0].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[nil] = Value.new(:objval2)
-    store[nil].should_not be_equal(Value.new(:objval2))
+    store[nil] = value
+    store[nil].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_nilkey_objectvalue ####################
+
+shared_examples_for 'returnsame_nilkey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[0] = value
+    store[0].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[nil] = value
+    store[nil].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[0] = value
+    store[0].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[nil] = value
+    store[nil].should be_equal(value)
   end
 end
 
@@ -4449,26 +4533,54 @@ end
 shared_examples_for 'returndifferent_integerkey_stringvalue' do
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[-10] = "strval1"
-    store[-10].should_not be_equal("strval1")
+    store[-10] = value
+    store[-10].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[42] = "strval1"
-    store[42].should_not be_equal("strval1")
+    store[42] = value
+    store[42].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[-10] = "strval2"
-    store[-10].should_not be_equal("strval2")
+    store[-10] = value
+    store[-10].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[42] = "strval2"
-    store[42].should_not be_equal("strval2")
+    store[42] = value
+    store[42].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_integerkey_stringvalue ####################
+
+shared_examples_for 'returnsame_integerkey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[-10] = value
+    store[-10].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[42] = value
+    store[42].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[-10] = value
+    store[-10].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[42] = value
+    store[42].should be_equal(value)
   end
 end
 
@@ -4925,26 +5037,54 @@ end
 shared_examples_for 'returndifferent_integerkey_hashvalue' do
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[-10] = {"hashval1"=>["array1", 1]}
-    store[-10].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[-10] = value
+    store[-10].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[42] = {"hashval1"=>["array1", 1]}
-    store[42].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[42] = value
+    store[42].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[-10].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[-10] = value
+    store[-10].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[42].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[42] = value
+    store[42].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_integerkey_hashvalue ####################
+
+shared_examples_for 'returnsame_integerkey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[-10] = value
+    store[-10].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[42] = value
+    store[42].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-10] = value
+    store[-10].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[42] = value
+    store[42].should be_equal(value)
   end
 end
 
@@ -5401,26 +5541,54 @@ end
 shared_examples_for 'returndifferent_integerkey_objectvalue' do
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[-10] = Value.new(:objval1)
-    store[-10].should_not be_equal(Value.new(:objval1))
+    store[-10] = value
+    store[-10].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[42] = Value.new(:objval1)
-    store[42].should_not be_equal(Value.new(:objval1))
+    store[42] = value
+    store[42].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[-10] = Value.new(:objval2)
-    store[-10].should_not be_equal(Value.new(:objval2))
+    store[-10] = value
+    store[-10].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[42] = Value.new(:objval2)
-    store[42].should_not be_equal(Value.new(:objval2))
+    store[42] = value
+    store[42].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_integerkey_objectvalue ####################
+
+shared_examples_for 'returnsame_integerkey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[-10] = value
+    store[-10].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[42] = value
+    store[42].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[-10] = value
+    store[-10].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[42] = value
+    store[42].should be_equal(value)
   end
 end
 
@@ -7177,26 +7345,54 @@ end
 shared_examples_for 'returndifferent_booleankey_stringvalue' do
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[true] = "strval1"
-    store[true].should_not be_equal("strval1")
+    store[true] = value
+    store[true].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[false] = "strval1"
-    store[false].should_not be_equal("strval1")
+    store[false] = value
+    store[false].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[true] = "strval2"
-    store[true].should_not be_equal("strval2")
+    store[true] = value
+    store[true].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[false] = "strval2"
-    store[false].should_not be_equal("strval2")
+    store[false] = value
+    store[false].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_booleankey_stringvalue ####################
+
+shared_examples_for 'returnsame_booleankey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[true] = value
+    store[true].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[false] = value
+    store[false].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[true] = value
+    store[true].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[false] = value
+    store[false].should be_equal(value)
   end
 end
 
@@ -7653,26 +7849,54 @@ end
 shared_examples_for 'returndifferent_booleankey_hashvalue' do
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[true] = {"hashval1"=>["array1", 1]}
-    store[true].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[true] = value
+    store[true].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[false] = {"hashval1"=>["array1", 1]}
-    store[false].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[false] = value
+    store[false].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[true].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[true] = value
+    store[true].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[false].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[false] = value
+    store[false].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_booleankey_hashvalue ####################
+
+shared_examples_for 'returnsame_booleankey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[true] = value
+    store[true].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[false] = value
+    store[false].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[true] = value
+    store[true].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[false] = value
+    store[false].should be_equal(value)
   end
 end
 
@@ -8129,26 +8353,54 @@ end
 shared_examples_for 'returndifferent_booleankey_objectvalue' do
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[true] = Value.new(:objval1)
-    store[true].should_not be_equal(Value.new(:objval1))
+    store[true] = value
+    store[true].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[false] = Value.new(:objval1)
-    store[false].should_not be_equal(Value.new(:objval1))
+    store[false] = value
+    store[false].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[true] = Value.new(:objval2)
-    store[true].should_not be_equal(Value.new(:objval2))
+    store[true] = value
+    store[true].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[false] = Value.new(:objval2)
-    store[false].should_not be_equal(Value.new(:objval2))
+    store[false] = value
+    store[false].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_booleankey_objectvalue ####################
+
+shared_examples_for 'returnsame_booleankey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[true] = value
+    store[true].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[false] = value
+    store[false].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[true] = value
+    store[true].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[false] = value
+    store[false].should be_equal(value)
   end
 end
 
@@ -9905,26 +10157,54 @@ end
 shared_examples_for 'returndifferent_stringkey_stringvalue' do
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store["strkey1"] = "strval1"
-    store["strkey1"].should_not be_equal("strval1")
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store["strkey2"] = "strval1"
-    store["strkey2"].should_not be_equal("strval1")
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store["strkey1"] = "strval2"
-    store["strkey1"].should_not be_equal("strval2")
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store["strkey2"] = "strval2"
-    store["strkey2"].should_not be_equal("strval2")
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_stringkey_stringvalue ####################
+
+shared_examples_for 'returnsame_stringkey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
   end
 end
 
@@ -10381,26 +10661,54 @@ end
 shared_examples_for 'returndifferent_stringkey_hashvalue' do
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store["strkey1"] = {"hashval1"=>["array1", 1]}
-    store["strkey1"].should_not be_equal({"hashval1"=>["array1", 1]})
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store["strkey2"] = {"hashval1"=>["array1", 1]}
-    store["strkey2"].should_not be_equal({"hashval1"=>["array1", 1]})
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store["strkey1"].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store["strkey2"].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_stringkey_hashvalue ####################
+
+shared_examples_for 'returnsame_stringkey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
   end
 end
 
@@ -10857,26 +11165,54 @@ end
 shared_examples_for 'returndifferent_stringkey_objectvalue' do
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store["strkey1"] = Value.new(:objval1)
-    store["strkey1"].should_not be_equal(Value.new(:objval1))
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store["strkey2"] = Value.new(:objval1)
-    store["strkey2"].should_not be_equal(Value.new(:objval1))
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store["strkey1"] = Value.new(:objval2)
-    store["strkey1"].should_not be_equal(Value.new(:objval2))
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store["strkey2"] = Value.new(:objval2)
-    store["strkey2"].should_not be_equal(Value.new(:objval2))
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_stringkey_objectvalue ####################
+
+shared_examples_for 'returnsame_stringkey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
   end
 end
 
@@ -12633,26 +12969,54 @@ end
 shared_examples_for 'returndifferent_objectkey_stringvalue' do
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[Value.new(:objkey1)] = "strval1"
-    store[Value.new(:objkey1)].should_not be_equal("strval1")
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[Value.new(:objkey2)] = "strval1"
-    store[Value.new(:objkey2)].should_not be_equal("strval1")
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[Value.new(:objkey1)] = "strval2"
-    store[Value.new(:objkey1)].should_not be_equal("strval2")
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[Value.new(:objkey2)] = "strval2"
-    store[Value.new(:objkey2)].should_not be_equal("strval2")
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_objectkey_stringvalue ####################
+
+shared_examples_for 'returnsame_objectkey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should be_equal(value)
   end
 end
 
@@ -13109,26 +13473,54 @@ end
 shared_examples_for 'returndifferent_objectkey_hashvalue' do
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey1)].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
-    store[Value.new(:objkey2)].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[Value.new(:objkey1)].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[Value.new(:objkey2)].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_objectkey_hashvalue ####################
+
+shared_examples_for 'returnsame_objectkey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should be_equal(value)
   end
 end
 
@@ -13585,26 +13977,54 @@ end
 shared_examples_for 'returndifferent_objectkey_objectvalue' do
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[Value.new(:objkey1)] = Value.new(:objval1)
-    store[Value.new(:objkey1)].should_not be_equal(Value.new(:objval1))
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[Value.new(:objkey2)] = Value.new(:objval1)
-    store[Value.new(:objkey2)].should_not be_equal(Value.new(:objval1))
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[Value.new(:objkey1)] = Value.new(:objval2)
-    store[Value.new(:objkey1)].should_not be_equal(Value.new(:objval2))
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[Value.new(:objkey2)] = Value.new(:objval2)
-    store[Value.new(:objkey2)].should_not be_equal(Value.new(:objval2))
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_objectkey_objectvalue ####################
+
+shared_examples_for 'returnsame_objectkey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[Value.new(:objkey1)] = value
+    store[Value.new(:objkey1)].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[Value.new(:objkey2)] = value
+    store[Value.new(:objkey2)].should be_equal(value)
   end
 end
 
@@ -15361,26 +15781,54 @@ end
 shared_examples_for 'returndifferent_hashkey_stringvalue' do
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[{"hashkey1"=>"hashkey2"}] = "strval1"
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal("strval1")
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[{"hashkey3"=>"hashkey4"}] = "strval1"
-    store[{"hashkey3"=>"hashkey4"}].should_not be_equal("strval1")
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[{"hashkey1"=>"hashkey2"}] = "strval2"
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal("strval2")
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[{"hashkey3"=>"hashkey4"}] = "strval2"
-    store[{"hashkey3"=>"hashkey4"}].should_not be_equal("strval2")
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_hashkey_stringvalue ####################
+
+shared_examples_for 'returnsame_hashkey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should be_equal(value)
   end
 end
 
@@ -15837,26 +16285,54 @@ end
 shared_examples_for 'returndifferent_hashkey_hashvalue' do
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
-    store[{"hashkey3"=>"hashkey4"}].should_not be_equal({"hashval1"=>["array1", 1]})
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[{"hashkey3"=>"hashkey4"}].should_not be_equal({"hashval3"=>["array2", {"hashval4"=>42}]})
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_hashkey_hashvalue ####################
+
+shared_examples_for 'returnsame_hashkey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should be_equal(value)
   end
 end
 
@@ -16313,26 +16789,54 @@ end
 shared_examples_for 'returndifferent_hashkey_objectvalue' do
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(Value.new(:objval1))
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
-    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(Value.new(:objval1))
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
-    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(Value.new(:objval2))
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
-    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(Value.new(:objval2))
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_hashkey_objectvalue ####################
+
+shared_examples_for 'returnsame_hashkey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[{"hashkey1"=>"hashkey2"}] = value
+    store[{"hashkey1"=>"hashkey2"}].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store[{"hashkey3"=>"hashkey4"}] = value
+    store[{"hashkey3"=>"hashkey4"}].should be_equal(value)
   end
 end
 
@@ -16482,9 +16986,9 @@ shared_examples_for 'expires' do
     sleep 1
     store.fetch('key1', nil, :expires => 3).should == 'val1'
     store['key1'].should == 'val1'
-    sleep 1
+    sleep 2
     store['key1'].should == 'val1'
-    sleep 3
+    sleep 2
     store['key1'].should be_nil
   end
 
