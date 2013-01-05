@@ -879,7 +879,7 @@ end
     :specs => ADAPTER_SPECS.without_increment.with_native_expires
   },
   'adapter_cassandra_with_default_expires' => {
-    :build => %{Moneta::Adapters::Cassandra.new(:expires => 1)},
+    :build => %{Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra_with_default_expires', :expires => 1)},
     :specs => ADAPTER_SPECS.without_increment.with_native_expires.with_default_expires
   },
   'adapter_hbase' => {
