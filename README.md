@@ -231,7 +231,7 @@ end
 
 ### Expiration
 
-The Cassandra, Memcached, Redis and Mongo backends supports expires values natively.
+The Cassandra, Memcached, Redis and Mongo backends support expiration natively.
 
 ~~~ ruby
 cache = Moneta::Adapters::Memcached.new
@@ -366,9 +366,9 @@ compressed_store['key'] = 'value will be compressed'
 
 ## Framework Integration
 
-Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with Rails and the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
 
-* Rack and Sinatra
+* Rack, Rails and Sinatra
     * `Rack::Session::Moneta` is a Rack middleware to use Moneta for storing sessions
     * `Rack::MonetaStore` is a Rack middleware which places a Moneta store in the environment and enables per-request caching
     * `Rack::MonetaCookies` is a Rack middleware which uses Moneta to store cookies
@@ -378,7 +378,9 @@ Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist in
     * `ActionDispatch::Session::MonetaStore` is a Rails middleware to use Moneta for storing sessions
     * `ActiveSupport::Cache::MonetaStore` is a Rails cache implementation which uses a Moneta store as backend
 
-### Rack session store
+### Rack
+
+#### Session store
 
 You can use Moneta as a [Rack](http://rack.github.com/) session store. Use it in your `config.ru` like this:
 
@@ -398,7 +400,7 @@ use Rack::Session::Moneta do
 end
 ~~~
 
-### Rack Moneta middleware
+#### Moneta middleware
 
 There is a simple middleware which places a Moneta store in the Rack environment at `env['rack.moneta_store']`. It supports per-request
 caching if you add the option `:cache => true`. Use it in your `config.ru` like this:
@@ -422,7 +424,7 @@ run lambda do |env|
 end
 ~~~
 
-### Rack REST server
+#### REST server
 
 If you want to expose your Moneta key/value store via HTTP, you can use the Rack/Moneta REST service. Use it in your `config.ru` like this:
 
@@ -440,7 +442,7 @@ run Rack::MonetaRest.new do
 end
 ~~~
 
-### Rack cache
+#### Rack-Cache
 
 You can use Moneta as a [Rack-Cache](https://github.com/rtomayko/rack-cache) store. Use it in your `config.ru` like this:
 
@@ -461,7 +463,7 @@ use Rack::Cache,
       :entity_store => 'moneta://named_entitystore'
 ~~~
 
-### Rack cookies
+#### Cookies
 
 Use Moneta to store cookies in [Rack](http://rack.github.com/). It uses the `Moneta::Adapters::Cookie`. You might
 wonder what the purpose of this store or Rack middleware is: It makes it possible
@@ -482,7 +484,9 @@ run lambda do |env|
 end
 ~~~
 
-### Rails session store
+### Rails
+
+#### Session store
 
 Add the session store in your application configuration `config/environments/*.rb`.
 
@@ -502,7 +506,7 @@ config.cache_store :moneta_store, :store => Moneta.build do
 end
 ~~~
 
-### Rails cache store
+#### Cache store
 
 Add the cache store in your application configuration `config/environments/*.rb`. Unfortunately the
 Moneta cache store doesn't support matchers. If you need these features use a different server-specific implementation.
