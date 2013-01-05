@@ -522,7 +522,7 @@ end},
     cache { adapter :Memory }
   end
 end},
-    :specs => ADAPTER_SPECS,
+    :specs => ADAPTER_SPECS.returnsame,
     :tests => %{
 it 'stores loaded values in cache' do
   store.backend['foo'] = 'bar'
@@ -543,7 +543,7 @@ end
     cache(Moneta::Adapters::Null.new)
   end
 end},
-    :specs => ADAPTER_SPECS.without_persist
+    :specs => ADAPTER_SPECS.without_persist.returnsame
   },
   'shared' => {
     :build => %{Moneta.build do

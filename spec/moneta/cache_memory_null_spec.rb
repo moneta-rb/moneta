@@ -19,6 +19,6 @@ describe_moneta "cache_memory_null" do
   it_should_behave_like 'increment'
   it_should_behave_like 'not_persist'
   it_should_behave_like 'null_stringkey_stringvalue'
-  it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
 end
