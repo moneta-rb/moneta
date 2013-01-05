@@ -1023,7 +1023,7 @@ end}
     :specs => ADAPTER_SPECS.with_native_expires,
     :tests => %{
 it 'automatically deletes expired document' do
-  store.store('key', 'val', :expires => 30)
+  store.store('key', 'val', :expires => 5)
   store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should_not be_nil
   sleep 70 # Mongo needs up to 60 seconds
   store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should be_nil
@@ -1374,9 +1374,9 @@ it 'supports updating the expiration time in load' do
   sleep 1
   store.load('key2', :expires => 3).should == 'val2'
   store['key2'].should == 'val2'
-  sleep 1
+  sleep 2
   store['key2'].should == 'val2'
-  sleep 3
+  sleep 2
   store['key2'].should be_nil
 end
 
@@ -1400,9 +1400,9 @@ it 'supports updating the expiration time in key?' do
   sleep 1
   store.key?('key2', :expires => 3).should be_true
   store['key2'].should == 'val2'
-  sleep 1
+  sleep 2
   store['key2'].should == 'val2'
-  sleep 3
+  sleep 2
   store['key2'].should be_nil
 end
 
@@ -1426,9 +1426,9 @@ it 'supports updating the expiration time in fetch' do
   sleep 1
   store.fetch('key1', nil, :expires => 3).should == 'val1'
   store['key1'].should == 'val1'
-  sleep 1
+  sleep 2
   store['key1'].should == 'val1'
-  sleep 3
+  sleep 2
   store['key1'].should be_nil
 end
 

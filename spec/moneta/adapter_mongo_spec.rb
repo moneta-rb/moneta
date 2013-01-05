@@ -18,7 +18,7 @@ describe_moneta "adapter_mongo" do
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it 'automatically deletes expired document' do
-    store.store('key', 'val', :expires => 30)
+    store.store('key', 'val', :expires => 5)
     store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should_not be_nil
     sleep 70 # Mongo needs up to 60 seconds
     store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should be_nil

@@ -16430,9 +16430,9 @@ shared_examples_for 'expires' do
     sleep 1
     store.load('key2', :expires => 3).should == 'val2'
     store['key2'].should == 'val2'
-    sleep 1
+    sleep 2
     store['key2'].should == 'val2'
-    sleep 3
+    sleep 2
     store['key2'].should be_nil
   end
 
@@ -16456,9 +16456,9 @@ shared_examples_for 'expires' do
     sleep 1
     store.key?('key2', :expires => 3).should be_true
     store['key2'].should == 'val2'
-    sleep 1
+    sleep 2
     store['key2'].should == 'val2'
-    sleep 3
+    sleep 2
     store['key2'].should be_nil
   end
 
