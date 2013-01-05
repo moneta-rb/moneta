@@ -85,20 +85,20 @@ to upgrade to a real key/value store.
 <table>
 <thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>ActiveRecord</td><td>activerecord</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>ActiveRecord ORM</td></tr>
+<tr><td>ActiveRecord</td><td>activerecord</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>ActiveRecord ORM</td></tr>
 <tr><td>Cassandra</td><td>cassandra</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td>Cassandra distributed database</td></tr>
 <tr><td>Client</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:blue">?<sup>[5]</sup></td><td style="color:blue">?<sup>[5]</sup></td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
 <tr><td>Cookie</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>CouchDB database</td></tr>
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>DataMapper ORM</td></tr>
-<tr><td>Daybreak</td><td>daybreak</td><td style="color:blue">?</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Daybreak ruby key/value store</td></tr>
+<tr><td>Daybreak</td><td>daybreak</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Daybreak ruby key/value store</td></tr>
 <tr><td>DBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Berkeley DB</td></tr>
 <tr><td>File</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>File store</td></tr>
 <tr><td>Fog</td><td>fog</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Fog cloud store</td></tr>
 <tr><td>GDBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>GDBM database</td></tr>
 <tr><td>HBase</td><td>hbase</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>HBase database</td></tr>
 <tr><td>LevelDB</td><td>leveldb</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>LevelDB database</td></tr>
-<tr><td>LocalMemCache</td><td>localmemcache</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>LocalMemCache database</td></tr>
+<tr><td>LocalMemCache</td><td>localmemcache</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>LocalMemCache database</td></tr>
 <tr><td>LRUHash</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td>LRU memory store</td></tr>
 <tr><td>Memcached</td><td>dalli or memcached</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td>Memcached database</td></tr>
 <tr><td>MemcachedDalli</td><td>dalli</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td>Memcached database</td></tr>
@@ -109,7 +109,7 @@ to upgrade to a real key/value store.
 <tr><td>PStore</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>PStore store</td></tr>
 <tr><td>Redis</td><td>redis</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td>Redis database</td></tr>
 <tr><td>RestClient</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
-<tr><td>Riak</td><td>riak-client</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Riak database</td></tr>
+<tr><td>Riak</td><td>riak-client</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Riak database</td></tr>
 <tr><td>SDBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>SDBM database</td></tr>
 <tr><td>Sequel</td><td>sequel</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Sequel ORM</td></tr>
 <tr><td>Sqlite</td><td>sqlite3</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Sqlite3 database</td></tr>
@@ -119,7 +119,7 @@ to upgrade to a real key/value store.
 </tbody>
 </table>
 
-* [1]: Make adapters thread-safe by using `Moneta::Lock`, `Moneta::Pool` or by passing the option `:threadsafe => true` to `Moneta#new`.
+* [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `:threadsafe => true` to `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple threads if the store is multi-process safe.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 * [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
 * [4]: There are some servers which use the memcached protocol but which are persistent (e.g. MemcacheDB, Kai, IronCache, ...)
