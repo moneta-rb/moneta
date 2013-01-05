@@ -35,7 +35,9 @@ matrix:
     - rvm: jruby-19mode
     - rvm: rbx-18mode
     - rvm: rbx-19mode
-    - env: "TASK=test TEST_GROUP=unstable"
+    - env:
+      - "TASK=test TEST_GROUP=unstable"
+      - secure: "B0vx1g1CB1A6mM3B/iy2ATicfS4OXT80bb2RVe8mSRsPzez1B4q4Q4hJcaMI\nrMARONN8Krtnti+IqvmDnB0Z0AKYMEyIc+zT37zJOCjLdkLJl+x/thuU/MbC\nvlLVwjMf6JE2EUzTfORDRFYc5ycCqfsfgNk1Go0D2CPT6P9u9uQ="
 script: "bundle exec rake $TASK"
 branches:
   only:
