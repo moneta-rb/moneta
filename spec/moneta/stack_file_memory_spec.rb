@@ -7,7 +7,7 @@ describe_moneta "stack_file_memory" do
       use(:Stack) do
         add(Moneta.new(:Null))
         add(Moneta::Adapters::Null.new)
-        add { adapter :File, :dir => File.join(make_tempdir, "stack-file1") }
+        add { adapter :File, :dir => File.join(make_tempdir, "stack_file_memory") }
         add { adapter :Memory }
       end
     end

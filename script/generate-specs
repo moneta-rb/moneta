@@ -548,7 +548,7 @@ end},
   'shared' => {
     :build => %{Moneta.build do
   use(:Shared, :port => 9001) do
-    adapter :Memory
+    adapter :PStore, :file => File.join(make_tempdir, 'shared')
   end
 end},
     :specs => ADAPTER_SPECS.without_persist,
@@ -567,7 +567,7 @@ end
   use(:Stack) do
     add(Moneta.new(:Null))
     add(Moneta::Adapters::Null.new)
-    add { adapter :File, :dir => File.join(make_tempdir, "stack-file1") }
+    add { adapter :File, :dir => File.join(make_tempdir, "stack_file_memory") }
     add { adapter :Memory }
   end
 end},
@@ -579,10 +579,10 @@ end},
     add(Moneta.new(:Null))
     add(Moneta::Adapters::Null.new)
     add { adapter :Memory }
-    add { adapter :File, :dir => File.join(make_tempdir, "stack-file2") }
+    add { adapter :File, :dir => File.join(make_tempdir, "stack_memory_file") }
   end
 end},
-    :specs => STANDARD_SPECS.without_increment.without_transform.stringkeys_only.stringvalues_only
+    :specs => STANDARD_SPECS.without_increment.returnsame.without_transform.stringkeys_only.stringvalues_only
   },
   'lock' => {
     :build => %{Moneta.build do
@@ -716,7 +716,7 @@ end},
   use :Transformer, :key => :marshal
   adapter :Memory
 end},
-    :specs => TRANSFORMER_SPECS,
+    :specs => TRANSFORMER_SPECS.returnsame,
     :load_value => 'value'
   },
   'transformer_value_marshal' => {
@@ -740,7 +740,7 @@ end},
   use :Transformer, :key => :yaml
   adapter :Memory
 end},
-    :specs => TRANSFORMER_SPECS,
+    :specs => TRANSFORMER_SPECS.returnsame,
     :load_value => 'value'
   },
   'transformer_value_yaml' => {
@@ -994,7 +994,7 @@ end
   },
   'adapter_lruhash' => {
     :build => 'Moneta::Adapters::LRUHash.new',
-    :specs => ADAPTER_SPECS.without_persist,
+    :specs => ADAPTER_SPECS.without_persist.returnsame,
     :tests => %{
 it 'deletes oldest' do
   store = Moneta::Adapters::LRUHash.new(:max_size => 10)

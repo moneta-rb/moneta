@@ -5,7 +5,7 @@ describe_moneta "shared" do
   def new_store
     Moneta.build do
       use(:Shared, :port => 9001) do
-        adapter :Memory
+        adapter :PStore, :file => File.join(make_tempdir, 'shared')
       end
     end
   end

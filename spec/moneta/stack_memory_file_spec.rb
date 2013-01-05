@@ -8,7 +8,7 @@ describe_moneta "stack_memory_file" do
         add(Moneta.new(:Null))
         add(Moneta::Adapters::Null.new)
         add { adapter :Memory }
-        add { adapter :File, :dir => File.join(make_tempdir, "stack-file2") }
+        add { adapter :File, :dir => File.join(make_tempdir, "stack_memory_file") }
       end
     end
   end
@@ -21,6 +21,6 @@ describe_moneta "stack_memory_file" do
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
-  it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
 end
