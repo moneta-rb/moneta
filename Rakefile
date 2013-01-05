@@ -25,8 +25,10 @@ task :test do
   #   and I don't know where the issue tracker is.
   #
   # * Cassandra show spurious failures
-  unstable = specs.reject {|s| s =~ /quicklz|cassandra/ }
-  specs -= unstable
+  if ENV['TEST_GROUP']
+    unstable = specs.select {|s| s =~ /quicklz|cassandra/ }
+    specs -= unstable
+  end
 
   # Memcached and Redis specs cannot be used in parallel
   # because of flushing and lacking namespaces
