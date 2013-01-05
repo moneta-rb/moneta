@@ -14,8 +14,12 @@ module Moneta
     # @return [Object] Generated Moneta proxy stack
     # @api public
     def build
-      klass, options, block = @proxies.first
-      @proxies[1..-1].inject([klass.new(options, &block)]) do |stores, proxy|
+      adapter = @proxies.first
+      if Array === adapter
+        klass, options, block = adapter
+        adapter = klass.new(options, &block)
+      end
+      @proxies[1..-1].inject([adapter]) do |stores, proxy|
         klass, options, block = proxy
         stores << klass.new(stores.last, options, &block)
       end
@@ -23,7 +27,7 @@ module Moneta
 
     # Add proxy to stack
     #
-    # @param [Symbol or Class] proxy Name of proxy class or proxy class
+    # @param [Symbol/Class] proxy Name of proxy class or proxy class
     # @param [Hash] options Options hash
     # @api public
     def use(proxy, options = {}, &block)
@@ -35,11 +39,21 @@ module Moneta
 
     # Add adapter to stack
     #
-    # @param [Symbol] name Name of adapter class
+    # @param [Symbol/Class/Moneta store] adapter Name of adapter class, adapter class or Moneta store
     # @param [Hash] options Options hash
     # @api public
-    def adapter(name, options = {}, &block)
-      use(Adapters.const_get(name), options, &block)
+    def adapter(adapter, options = {}, &block)
+      case adapter
+      when Symbol
+        use(Adapters.const_get(adapter), options, &block)
+      when Class
+        use(adapter, options, &block)
+      else
+        raise ArgumentError, 'Adapter must be a Moneta store' unless adapter.respond_to?(:load) && adapter.respond_to?(:store)
+        raise ArgumentError, 'No options allowed' unless options.empty?
+        @proxies.unshift adapter
+        nil
+      end
     end
   end
 end

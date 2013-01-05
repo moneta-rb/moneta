@@ -1,13 +1,20 @@
 module Moneta
   # @api private
   module OptionSupport
-    # Return Moneta store with default options
+    # Return Moneta store with default options or additional proxies
     #
     # @param [Hash] options Options to merge
-    # @return [OptionMerger]
+    # @return [Moneta store]
+    #
     # @api public
-    def with(options)
-      OptionMerger.new(self, options)
+    def with(options = nil, &block)
+      adapter = self
+      if block
+        builder = Builder.new(&block)
+        builder.adapter(adapter)
+        adapter = builder.build.last
+      end
+      options ? OptionMerger.new(adapter, options) : adapter
     end
 
     # Return Moneta store with default option :raw => true

@@ -89,4 +89,17 @@ describe_moneta "optionmerger" do
     store.prefix('a').raw.default_options.should == {:store=>{:raw=>true,:prefix=>'a'},:load=>{:raw=>true,:prefix=>'a'},
                                                      :delete=>{:raw=>true,:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}
   end
+
+  it 'supports adding proxis using #with' do
+    compressed_store = store.with(:prefix => 'compressed') do
+      use :Transformer, :value => :zlib
+    end
+    store['key'] = 'uncompressed value'
+    compressed_store['key'] = 'compressed value'
+    store['key'].should == 'uncompressed value'
+    compressed_store['key'].should == 'compressed value'
+    store.key?('compressedkey').should be_true
+    # Check if value is compressed
+    compressed_store['key'].should_not == store['compressedkey']
+  end
 end

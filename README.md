@@ -351,6 +351,19 @@ short_lived_store = store.expires(60)
 short_lived_store['key'] = 'value'
 ~~~
 
+### Add proxies to existing store
+
+You can add proxies to an existing store. This is useful if you want to compress only a few values for example.
+
+~~~ ruby
+compressed_store = store.with(:prefix => 'compressed') do
+  use :Transformer, :value => :zlib
+end
+
+store['key'] = 'this value will not be compressed'
+compressed_store['key'] = 'value will be compressed'
+~~~
+
 ## Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
