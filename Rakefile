@@ -15,18 +15,10 @@ rescue Exception => ex
   false
 end
 
-class Array
-  def randomize
-    rest, result = dup, []
-    result << rest.slice!(rand(rest.size)) until result.size == size
-    result
-  end
-end
-
 task :test do
   # memcached and redis specs cannot be used in parallel
   # because of flushing and namespace lacking in redis
-  specs = Dir['spec/*/*_spec.rb'].randomize
+  specs = Dir['spec/*/*_spec.rb'].sort
   parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak/ }
   serial = specs - parallel
 
