@@ -1,4 +1,4 @@
-master
+0.7.5
 
 * OptionsSupport#with: Add support to insert additional proxies
 * Builder#adapter: Accepts Moneta store instance now
