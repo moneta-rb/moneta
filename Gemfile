@@ -1,16 +1,6 @@
 source :rubygems
 gemspec
 
-def alternatives(gems)
-  if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
-    [gems[:rbx]].flatten.compact.each {|g| gem g }
-  elsif defined?(JRUBY_VERSION)
-    [gems[:jruby]].flatten.compact.each {|g| gem g }
-  else
-    [gems[:mri]].flatten.compact.each {|g| gem g }
-  end
-end
-
 # Testing
 gem 'rake'
 gem 'rspec'
@@ -19,17 +9,19 @@ gem 'rspec'
 gem 'tnetstring'
 gem 'bencode'
 gem 'multi_json'
-alternatives :mri => 'bson_ext', :rbx => 'bson_ext', :jruby => 'bson'
-alternatives :mri => 'ox', :rbx => 'ox'
-alternatives :mri => 'msgpack', :rbx => 'msgpack', :jruby => 'msgpack-jruby'
-alternatives :mri => 'bert', :rbx => 'bert'
+gem 'bson_ext', :platforms => :ruby
+gem 'bson', :platforms => :jruby
+gem 'ox', :platforms => :ruby
+gem 'msgpack', :platforms => :ruby
+gem 'msgpack-jruby', :platforms => :jruby
+gem 'bert', :platforms => :ruby
 
 # Compressors used by Transformer
-alternatives :mri => 'bzip2-ruby'
-alternatives :mri => 'ruby-lzma', :rbx => 'ruby-lzma'
-alternatives :mri => 'lzoruby', :rbx => 'lzoruby'
-alternatives :mri => 'snappy', :rbx => 'snappy'
-alternatives :mri => 'qlzruby', :rbx => 'qlzruby'
+gem 'bzip2-ruby', :platforms => :mri # Only on mri currently
+gem 'ruby-lzma', :platforms => :ruby
+gem 'lzoruby', :platforms => :ruby
+gem 'snappy', :platforms => :ruby
+gem 'qlzruby', :platforms => :ruby
 
 # Backends
 gem 'daybreak'
@@ -47,12 +39,18 @@ gem 'riak-client'
 gem 'cassandra'
 #gem 'hbaserb'
 #gem 'localmemcache'
-alternatives :mri => 'tdb', :rbx => 'tdb'
-alternatives :mri => 'leveldb-ruby', :rbx => 'leveldb-ruby'
-alternatives :mri => 'tokyocabinet', :rbx => 'tokyocabinet'
-alternatives :mri => 'memcached', :rbx => 'memcached', :jruby => 'jruby-memcached'
-alternatives :mri => 'sqlite3', :rbx => 'sqlite3', :jruby => %w(jdbc-sqlite3 activerecord-jdbc-adapter activerecord-jdbcsqlite3-adapter)
-alternatives :jruby => %w(ffi gdbm) # gdbm for jruby needs ffi
+gem 'tdb', :platforms => :ruby
+gem 'leveldb-ruby', :platforms => :ruby
+gem 'tokyocabinet', :platforms => :ruby
+gem 'memcached', :platforms => :ruby
+gem 'jruby-memcached', :platforms => :jruby
+gem 'sqlite3', :platforms => :ruby
+gem 'jdbc-sqlite3', :platforms => :jruby
+gem 'activerecord-jdbc-adapter', :platforms => :jruby
+gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
+# gdbm for jruby needs ffi
+gem 'ffi', :platforms => :jruby
+gem 'gdbm', :platforms => :jruby
 
 # Rack integration testing
 gem 'rack'
