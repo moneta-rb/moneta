@@ -15,6 +15,15 @@ RSpec.configure do |config|
   config.formatter = :progress
 end
 
+# Disable jruby stdout pollution by memcached
+if defined?(JRUBY_VERSION)
+  require 'java'
+  properties = java.lang.System.getProperties();
+  properties.put('net.spy.log.LoggerImpl', 'net.spy.memcached.compat.log.SunLogger');
+  java.lang.System.setProperties(properties);
+  java.util.logging.Logger.getLogger('').setLevel(java.util.logging.Level::OFF)
+end
+
 class Value
   attr_accessor :x
   def initialize(x)
