@@ -592,6 +592,6 @@ on top of the different stores.
 
 ## Authors
 
-* Daniel Mendler (@minad)
-* Hannes Georg (@hannesg)
-* Originally by Yehuda Katz (@wycats) and contributors
+* [Daniel Mendler](https://github.com/minad)
+* [Hannes Georg](https://github.com/hannesg)
+* Originally by [Yehuda Katz](https://github.com/wycats) and contributors
