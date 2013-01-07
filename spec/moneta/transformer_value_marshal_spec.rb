@@ -106,4 +106,8 @@ describe_moneta "transformer_value_marshal" do
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
   it_should_behave_like 'transform_value'
+  it 'compile transformer class' do
+    store.should_not be_nil
+    Moneta::Transformer::MarshalValue.should_not be_nil
+  end
 end

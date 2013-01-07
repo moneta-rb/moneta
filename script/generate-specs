@@ -605,7 +605,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.stringvalues_only,
-    :load_value => '::Zlib::Inflate.inflate(value)'
+    :load_value => '::Zlib::Inflate.inflate(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::ZlibValue.should_not be_nil
+end}
   },
   'transformer_bzip2' => {
     :build => %{Moneta.build do
@@ -613,7 +618,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.stringvalues_only,
-    :load_value => '::Bzip2.uncompress(value)'
+    :load_value => '::Bzip2.uncompress(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::Bzip2Value.should_not be_nil
+end}
   },
   'transformer_lzo' => {
     :build => %{Moneta.build do
@@ -621,7 +631,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.stringvalues_only,
-    :load_value => '::LZO.decompress(value)'
+    :load_value => '::LZO.decompress(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::LzoValue.should_not be_nil
+end}
   },
   'transformer_lzma' => {
     :build => %{Moneta.build do
@@ -629,7 +644,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.stringvalues_only,
-    :load_value => '::LZMA.decompress(value)'
+    :load_value => '::LZMA.decompress(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::LzmaValue.should_not be_nil
+end}
   },
   'transformer_snappy' => {
     :build => %{Moneta.build do
@@ -637,7 +657,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.stringvalues_only,
-    :load_value => '::Snappy.inflate(value)'
+    :load_value => '::Snappy.inflate(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::SnappyValue.should_not be_nil
+end}
   },
   'transformer_quicklz' => {
     :build => %{Moneta.build do
@@ -645,7 +670,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.stringvalues_only,
-    :load_value => '::QuickLZ.decompress(value)'
+    :load_value => '::QuickLZ.decompress(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::QuicklzValue.should_not be_nil
+end}
   },
   'transformer_json' => {
     :build => %{Moneta.build do
@@ -653,7 +683,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => '::MultiJson.load(value).first'
+    :load_value => '::MultiJson.load(value).first',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::JsonKeyJsonValue.should_not be_nil
+end}
   },
   'transformer_bert' => {
     :build => %{Moneta.build do
@@ -661,7 +696,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => '::BERT.decode(value)'
+    :load_value => '::BERT.decode(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::BertKeyBertValue.should_not be_nil
+end}
   },
   'transformer_bencode' => {
     :build => %{Moneta.build do
@@ -669,7 +709,13 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => '::BEncode.load(value)'
+    :load_value => '::BEncode.load(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::BencodeKeyBencodeValue.should_not be_nil
+end}
+
   },
   'transformer_bson' => {
     :build => %{Moneta.build do
@@ -677,7 +723,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => "::BSON.deserialize(value)['v']"
+    :load_value => "::BSON.deserialize(value)['v']",
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::BsonKeyBsonValue.should_not be_nil
+end}
   },
   'transformer_ox' => {
     :build => %{Moneta.build do
@@ -685,7 +736,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS,
-    :load_value => '::Ox.parse_obj(value)'
+    :load_value => '::Ox.parse_obj(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::OxKeyOxValue.should_not be_nil
+end}
   },
   'transformer_tnet' => {
     :build => %{Moneta.build do
@@ -693,7 +749,12 @@ end},
  adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => '::TNetstring.parse(value).first'
+    :load_value => '::TNetstring.parse(value).first',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::TnetKeyTnetValue.should_not be_nil
+end}
   },
   'transformer_msgpack' => {
     :build => %{Moneta.build do
@@ -701,7 +762,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => '::MessagePack.unpack(value)'
+    :load_value => '::MessagePack.unpack(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MsgpackKeyMsgpackValue.should_not be_nil
+end}
   },
   'transformer_marshal' => {
     :build => %{Moneta.build do
@@ -709,7 +775,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS,
-    :load_value => '::Marshal.load(value)'
+    :load_value => '::Marshal.load(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalKeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_key_marshal' => {
     :build => %{Moneta.build do
@@ -717,7 +788,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.returnsame,
-    :load_value => 'value'
+    :load_value => 'value',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalKey.should_not be_nil
+end}
   },
   'transformer_value_marshal' => {
     :build => %{Moneta.build do
@@ -725,7 +801,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS,
-    :load_value => '::Marshal.load(value)'
+    :load_value => '::Marshal.load(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalValue.should_not be_nil
+end}
   },
   'transformer_yaml' => {
     :build => %{Moneta.build do
@@ -733,7 +814,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS,
-    :load_value => '::YAML.load(value)'
+    :load_value => '::YAML.load(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::YamlKeyYamlValue.should_not be_nil
+end}
   },
   'transformer_key_yaml' => {
     :build => %{Moneta.build do
@@ -741,7 +827,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.returnsame,
-    :load_value => 'value'
+    :load_value => 'value',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::YamlKey.should_not be_nil
+end}
   },
   'transformer_value_yaml' => {
     :build => %{Moneta.build do
@@ -749,7 +840,12 @@ end},
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS,
-    :load_value => '::YAML.load(value)'
+    :load_value => '::YAML.load(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::YamlValue.should_not be_nil
+end}
   },
   'transformer_marshal_hmac' => {
     :build => %{Moneta.build do
@@ -757,7 +853,12 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
-    :load_value => '::Marshal.load(::Moneta::Transformer::Helper.hmacverify(value, \'secret\'))'
+    :load_value => '::Marshal.load(::Moneta::Transformer::Helper.hmacverify(value, \'secret\'))',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalKeyMarshalHmacValue.should_not be_nil
+end}
   },
   'transformer_marshal_base64' => {
     :build => %{Moneta.build do
@@ -765,14 +866,24 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
-    :load_value => '::Marshal.load(value.unpack(\'m\').first)'
+    :load_value => '::Marshal.load(value.unpack(\'m\').first)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalBase64KeyMarshalBase64Value.should_not be_nil
+end}
   },
   'transformer_marshal_prefix' => {
     :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :prefix], :value => :marshal, :prefix => 'moneta'
   adapter :Memory
 end},
-    :specs => STANDARD_SPECS.without_persist
+    :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalPrefixKeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_uuencode' => {
     :build => %{Moneta.build do
@@ -780,14 +891,24 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
-    :load_value => '::Marshal.load(value.unpack(\'u\').first)'
+    :load_value => '::Marshal.load(value.unpack(\'u\').first)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalUuencodeKeyMarshalUuencodeValue.should_not be_nil
+end}
   },
   'transformer_marshal_escape' => {
     :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :escape], :value => :marshal
   adapter :Memory
 end},
-    :specs => STANDARD_SPECS.without_persist
+    :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalEscapeKeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_md5' => {
     :build => %{Moneta.build do
@@ -795,6 +916,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalMd5KeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_sha1' => {
     :build => %{Moneta.build do
@@ -802,6 +928,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalSha1KeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_sha256' => {
     :build => %{Moneta.build do
@@ -809,6 +940,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalSha256KeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_sha384' => {
     :build => %{Moneta.build do
@@ -816,6 +952,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalSha384KeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_sha512' => {
     :build => %{Moneta.build do
@@ -823,6 +964,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalSha512KeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_rmd160' => {
     :build => %{Moneta.build do
@@ -830,6 +976,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalRmd160KeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_md5_spread' => {
     :build => %{Moneta.build do
@@ -837,6 +988,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalMd5SpreadKeyMarshalValue.should_not be_nil
+end}
   },
   'transformer_marshal_truncate' => {
     :build => %{Moneta.build do
@@ -844,6 +1000,11 @@ end},
   adapter :Memory
 end},
     :specs => STANDARD_SPECS.without_persist,
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalTruncateKeyMarshalValue.should_not be_nil
+end}
   },
   'adapter_activerecord' => {
     :build => "Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })",

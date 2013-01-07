@@ -153,9 +153,9 @@ module Moneta
 
       # Compile transformer validator regular expression
       def compile_validator(s)
-        Regexp.new(s.gsub(/\w+/) do
+        Regexp.new('\A' + s.gsub(/\w+/) do
                      '(' + TRANSFORMER.select {|k,v| v.first.to_s == $& }.map {|v| ":#{v.first}" }.join('|') + ')'
-                   end.gsub(/\s+/, '').sub(/\A/, '\A').sub(/\Z/, '\Z'))
+                   end.gsub(/\s+/, '') + '\Z')
       end
 
       # Returned compiled transformer code string
@@ -173,8 +173,8 @@ module Moneta
       end
 
       def class_name(keys, values)
-        (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join << 'Key') <<
-          (values.empty? ? '' : values.map(&:to_s).map(&:capitalize).join << 'Value')
+        (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join + 'Key') +
+          (values.empty? ? '' : values.map(&:to_s).map(&:capitalize).join + 'Value')
       end
     end
   end

@@ -34,4 +34,8 @@ describe_moneta "transformer_quicklz" do
   it_should_behave_like 'store_nilkey_stringvalue'
   it_should_behave_like 'store_integerkey_stringvalue'
   it_should_behave_like 'transform_value'
+  it 'compile transformer class' do
+    store.should_not be_nil
+    Moneta::Transformer::QuicklzValue.should_not be_nil
+  end
 end
