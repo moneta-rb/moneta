@@ -18,6 +18,7 @@ describe_moneta "transformer_snappy" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
   it_should_behave_like 'increment'
   it_should_behave_like 'null_objectkey_stringvalue'
   it_should_behave_like 'null_stringkey_stringvalue'

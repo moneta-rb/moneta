@@ -73,6 +73,16 @@ module Moneta
       @backend.increment(key, amount, options)
     end
 
+    # (see Proxy#create)
+    def create(key, value, options = {})
+      if @backend.create(key, value, options)
+        @cache.store(key, value, options)
+        true
+      else
+        false
+      end
+    end
+
     # (see Proxy#delete)
     def delete(key, options = {})
       @cache.delete(key, options)

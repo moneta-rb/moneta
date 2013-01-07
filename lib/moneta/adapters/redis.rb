@@ -17,6 +17,9 @@ module Moneta
       end
 
       # (see Proxy#key?)
+      #
+      # This method considers false and 0 as "no-expire" and every positive
+      # number as a time to live in seconds.
       def key?(key, options = {})
         if @redis.exists(key)
           update_expires(key, options, nil)
@@ -62,6 +65,16 @@ module Moneta
       def clear(options = {})
         @redis.flushdb
         self
+      end
+
+      # (see Defaults#create)
+      def create(key, value, options = {})
+        if @redis.setnx(key, value)
+          update_expires(key, options)
+          true
+        else
+          false
+        end
       end
 
       protected

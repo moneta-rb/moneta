@@ -45,6 +45,18 @@ module Moneta
         end
       end
 
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        @pstore.transaction do
+          if @pstore.root?(key)
+            false
+          else
+            @pstore[key] = value
+            true
+          end
+        end
+      end
+
       # (see Proxy#clear)
       def clear(options = {})
         @pstore.transaction do

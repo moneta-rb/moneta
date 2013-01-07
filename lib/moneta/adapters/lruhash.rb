@@ -8,6 +8,7 @@ module Moneta
     class LRUHash
       include Defaults
       include IncrementSupport
+      include CreateSupport
 
       # @param [Hash] options
       # @option options [Integer] :max_size (1024000) Maximum total byte size of hash values

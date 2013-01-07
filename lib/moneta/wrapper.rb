@@ -27,6 +27,11 @@ module Moneta
       wrap(:increment, key, amount, options) { super }
     end
 
+    # (see Proxy#create)
+    def create(key, value, options = {})
+      wrap(:create, key, value, options) { super }
+    end
+
     # (see Proxy#clear)
     def clear(options = {})
       wrap(:clear, options) { super }

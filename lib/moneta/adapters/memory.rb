@@ -6,6 +6,7 @@ module Moneta
       include Defaults
       include HashAdapter
       include IncrementSupport
+      include CreateSupport
 
       # @param [Hash] options Options hash
       def initialize(options = {})

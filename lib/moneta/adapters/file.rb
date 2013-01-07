@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'fcntl'
 
 module Moneta
   module Adapters
@@ -63,6 +64,15 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         lock(key) { super }
+      end
+
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        fd = ::File.sysopen(store_path(key), Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
+        ::File.open(fd, 'wb') {|file| file.write(value) }
+        true
+      rescue Errno::EEXIST
+        false
       end
 
       protected

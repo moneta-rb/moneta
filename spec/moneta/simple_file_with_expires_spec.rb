@@ -15,6 +15,8 @@ describe_moneta "simple_file_with_expires" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
+  it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
@@ -146,5 +148,5 @@ describe_moneta "simple_file_with_expires" do
   it_should_behave_like 'store_integerkey_booleanvalue'
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
-  it_should_behave_like 'transform_value_with_expires'
+  it_should_behave_like 'transform_value_expires'
 end

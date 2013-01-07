@@ -53,9 +53,10 @@ module Moneta
                  end
         if result
           result
-        else
-          store(key, amount, options)
+        elsif create(key, amount.to_s, options)
           amount
+        else
+          increment(key, amount, options)
         end
       end
 
@@ -63,6 +64,11 @@ module Moneta
       def clear(options = {})
         @cache.flush_all
         self
+      end
+
+      # (see Defaults#create)
+      def create(key, value, options = {})
+        @cache.add(key, value, expires_value(options) || nil, :raw => true)
       end
 
       # (see Proxy#close)

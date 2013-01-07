@@ -149,6 +149,20 @@ module Moneta
     def []=(key, value)
       store(key, value)
     end
+
+
+    # Atomically sets a key to value if it's not set.
+    #
+    # @note Not every Moneta store implements this method,
+    #       a NotImplementedError is raised if it is not supported.
+    # @param [Object] key
+    # @param [Object] value
+    # @param [Hash] options
+    # @return [Boolean] key was set
+    # @api public
+    def create(key, value, options = {})
+      raise NotImplementedError, 'create is not supported'
+    end
   end
 
   # @api private
@@ -167,6 +181,23 @@ module Moneta
       intvalue = value.to_i
       raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
       intvalue
+    end
+  end
+
+  # Implements simple create using key? and store.
+  #
+  # This is sufficient for non-shared stores or if atomicity is not required.
+  # @api private
+  module CreateSupport
+    # (see Default#create)
+    # @api public
+    def create(key, value, options = {})
+      if key? key
+        false
+      else
+        store(key, value, options)
+        true
+      end
     end
   end
 

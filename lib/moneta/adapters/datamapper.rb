@@ -12,6 +12,7 @@ module Moneta
         include ::DataMapper::Resource
         property :k, Text, :key => true
         property :v, Text, :lazy => false
+        self.raise_on_save_failure = true
       end
 
       # @param [Hash] options
@@ -49,6 +50,21 @@ module Moneta
           end
           value
         end
+      rescue
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
+      end
+
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        context do
+          Store.create(:k => key, :v => value)
+          true
+        end
+      rescue
+        # FIXME: This catches too many errors
+        # it should only catch a not-unique-exception
+        false
       end
 
       # (see Proxy#delete)

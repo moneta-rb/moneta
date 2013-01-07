@@ -15,6 +15,7 @@ describe_moneta "null_adapter" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'not_persist'
   it_should_behave_like 'null_objectkey_objectvalue'

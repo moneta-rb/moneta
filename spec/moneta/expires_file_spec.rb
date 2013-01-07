@@ -19,6 +19,8 @@ describe_moneta "expires_file" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
+  it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
@@ -48,7 +50,7 @@ describe_moneta "expires_file" do
   it_should_behave_like 'store_booleankey_stringvalue'
   it_should_behave_like 'store_nilkey_stringvalue'
   it_should_behave_like 'store_integerkey_stringvalue'
-  it_should_behave_like 'transform_value_with_expires'
+  it_should_behave_like 'transform_value_expires'
   it 'deletes expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)
     store['foo'].should == 'bar'

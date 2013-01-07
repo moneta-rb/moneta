@@ -62,8 +62,16 @@ module Moneta
         convert_for_increment((@cache.get(key, false) rescue nil)) if result == 0
         result
       rescue ::Memcached::NotFound => ex
-        store(key, amount.to_s, options)
+        retry unless create(key, amount.to_s, options)
         amount
+      end
+
+      # (see Defaults#create)
+      def create(key, value, options = {})
+        @cache.add(key, value, expires_value(options) || 0, false)
+        true
+      rescue ::Memcached::ConnectionDataExists
+        false
       end
 
       # (see Proxy#clear)

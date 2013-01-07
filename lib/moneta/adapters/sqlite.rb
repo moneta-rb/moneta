@@ -20,7 +20,8 @@ module Moneta
           [@select = @db.prepare("select v from #{table} where k = ?"),
            @replace = @db.prepare("replace into #{table} values (?, ?)"),
            @delete = @db.prepare("delete from #{table} where k = ?"),
-           @clear = @db.prepare("delete from #{table}")]
+           @clear = @db.prepare("delete from #{table}"),
+           @create = @db.prepare("insert into #{table} values (?, ?)")]
       end
 
       # (see Proxy#key?)
@@ -56,6 +57,17 @@ module Moneta
       def clear(options = {})
         @clear.execute!
         self
+      end
+
+      # (see Default#create)
+      def create(key, value, options = {})
+        @create.execute!(key,value)
+        true
+      rescue SQLite3::ConstraintException
+        # If you know a better way to detect whether an insert-ignore
+        # suceeded, please tell me.
+        @create.reset!
+        false
       end
 
       # (see Proxy#close)

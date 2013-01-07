@@ -14,7 +14,12 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @hash.lock { return super }
+        @hash.lock { super }
+      end
+
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        @hash.lock { super }
       end
 
       # (see Proxy#close)

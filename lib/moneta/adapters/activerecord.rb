@@ -26,7 +26,16 @@ module Moneta
             c.primary_key = :k
             c
           end
-        @table.establish_connection(options[:connection]) if options[:connection]
+
+        if options[:connection]
+          begin
+            @table.establish_connection(options[:connection])
+          rescue
+            tries ||= 0
+            (tries += 1) < 3 ? retry : raise
+          end
+        end
+
         unless @table.table_exists?
           @table.connection.create_table(@table.table_name, :id => false) do |t|
             # Do not use binary columns (Issue #17)
@@ -54,6 +63,9 @@ module Moneta
         record.v = value
         record.save
         value
+      rescue
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#delete)
@@ -71,6 +83,19 @@ module Moneta
         record.v = value.to_s
         record.save
         value
+      end
+
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        record = @table.new
+        record.k = key
+        record.v = value
+        record.save
+        true
+      rescue
+        # FIXME: This catches too many errors
+        # it should only catch a not-unique-exception
+        false
       end
 
       # (see Proxy#clear)

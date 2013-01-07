@@ -92,6 +92,10 @@ module Moneta
             options.include?(:raw) && (options = options.dup; options.delete(:raw))
             @adapter.delete(#{key}, options)
           end
+          def create(key, value, options = {})
+            options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.create(#{key}, value, options)
+          end
         end_eval
       end
 
@@ -111,6 +115,10 @@ module Moneta
             raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
             value = @adapter.delete(key, options)
             value && !raw ? #{load} : value
+          end
+          def create(key, value, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.create(key, raw ? value : #{dump}, options)
           end
         end_eval
       end
@@ -137,6 +145,10 @@ module Moneta
             raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
             value = @adapter.delete(#{key}, options)
             value && !raw ? #{load} : value
+          end
+          def create(key, value, options = {})
+            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
+            @adapter.create(#{key}, raw ? value : #{dump}, options)
           end
         end_eval
       end

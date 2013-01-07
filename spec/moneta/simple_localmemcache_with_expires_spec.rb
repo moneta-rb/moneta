@@ -19,6 +19,7 @@ describe_moneta "simple_localmemcache_with_expires" do
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'
+  it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
@@ -146,5 +147,5 @@ describe_moneta "simple_localmemcache_with_expires" do
   it_should_behave_like 'store_integerkey_booleanvalue'
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
-  it_should_behave_like 'transform_value_with_expires'
+  it_should_behave_like 'transform_value_expires'
 end

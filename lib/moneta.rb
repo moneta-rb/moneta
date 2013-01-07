@@ -1,6 +1,7 @@
 module Moneta
   autoload :Builder,           'moneta/builder'
   autoload :Cache,             'moneta/cache'
+  autoload :CreateSupport,     'moneta/mixins'
   autoload :Defaults,          'moneta/mixins'
   autoload :ExpiresSupport,    'moneta/mixins'
   autoload :Expires,           'moneta/expires'
@@ -18,6 +19,11 @@ module Moneta
   autoload :Stack,             'moneta/stack'
   autoload :Transformer,       'moneta/transformer'
   autoload :Wrapper,           'moneta/wrapper'
+
+  module Weak
+    autoload :Create,          'moneta/weak'
+    autoload :Increment,       'moneta/weak'
+  end
 
   module Adapters
     autoload :ActiveRecord,    'moneta/adapters/activerecord'

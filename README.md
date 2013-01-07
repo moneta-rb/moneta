@@ -11,6 +11,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
     * Configurable key transformation via `Moneta::Transformer` proxy
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
 * Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
+* Atomic creation of entries (Method `#create`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/), [Sinatra](http://sinatrarb.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache)
 
@@ -83,39 +84,39 @@ to upgrade to a real key/value store.
 ### Backend feature matrix
 
 <table>
-<thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
+<thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Atomic create</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>ActiveRecord</td><td>activerecord</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="https://rubygems.org/gems/activerecord">ActiveRecord</a> ORM</td></tr>
-<tr><td>Cassandra</td><td>cassandra</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td><a href="http://cassandra.apache.org/">Cassandra</a> distributed database</td></tr>
-<tr><td>Client</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:blue">?<sup>[5]</sup></td><td style="color:blue">?<sup>[5]</sup></td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
-<tr><td>Cookie</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Cookie in memory store</td></tr>
-<tr><td>Couch</td><td>couchrest</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
-<tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://datamapper.org/">DataMapper</a> ORM</td></tr>
-<tr><td>Daybreak</td><td>daybreak</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[7]</sup></td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Incredibly fast pure-ruby key/value store <a href="http://propublica.github.com/daybreak/">Daybreak</a></td></tr>
-<tr><td>DBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB</a></td></tr>
-<tr><td>File</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>File store</td></tr>
-<tr><td>Fog</td><td>fog</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://fog.io/">Fog</a> cloud store</td></tr>
-<tr><td>GDBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html">GDBM</a> database</td></tr>
-<tr><td>HBase</td><td>hbase</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://hbase.apache.org/">HBase</a> database</td></tr>
-<tr><td>LevelDB</td><td>leveldb</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://code.google.com/p/leveldb/">LevelDB</a> database</td></tr>
-<tr><td>LocalMemCache</td><td>localmemcache</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://localmemcache.rubyforge.org/">LocalMemCache</a> database</td></tr>
-<tr><td>LRUHash</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td>LRU memory store</td></tr>
-<tr><td>Memcached</td><td>dalli or memcached</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database</td></tr>
-<tr><td>MemcachedDalli</td><td>dalli</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database with Dalli library</td></tr>
-<tr><td>MemcachedNative</td><td>memcached</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗<sup>[4]</sup></td><td>Memcached database with native library</td></tr>
-<tr><td>Memory</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td>Memory store</td></tr>
-<tr><td>Mongo</td><td>mongo</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
-<tr><td>Null</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:red">✗</td><td>No database</td></tr>
-<tr><td>PStore</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
-<tr><td>Redis</td><td>redis</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td><a href="http://redis.io/">Redis</a> database</td></tr>
-<tr><td>RestClient</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:blue">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
-<tr><td>Riak</td><td>riak-client</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://docs.basho.com/">Riak</a> database</td></tr>
-<tr><td>SDBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html">SDBM</a> database</td></tr>
-<tr><td>Sequel</td><td>sequel</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
-<tr><td>Sqlite</td><td>sqlite3</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
-<tr><td>TDB</td><td>tdb</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://tdb.samba.org/">TDB</a> database</td></tr>
-<tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
-<tr><td>YAML</td><td>-</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
+<tr><td>ActiveRecord</td><td>activerecord</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="https://rubygems.org/gems/activerecord">ActiveRecord</a> ORM</td></tr>
+<tr><td>Cassandra</td><td>cassandra</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td><a href="http://cassandra.apache.org/">Cassandra</a> distributed database</td></tr>
+<tr><td>Client</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:blue">?<sup>[5]</sup></td><td style="text-align:center;color:blue">?<sup>[5]</sup></td><td style="text-align:center;color:blue">?<sup>[5]</sup></td><td style="text-align:center;color:blue">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
+<tr><td>Cookie</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:blue">(✓)<sup>[6]</sup></td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td>Cookie in memory store</td></tr>
+<tr><td>Couch</td><td>couchrest</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
+<tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://datamapper.org/">DataMapper</a> ORM</td></tr>
+<tr><td>Daybreak</td><td>daybreak</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:blue">(✓)<sup>[7]</sup></td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td>Incredibly fast pure-ruby key/value store <a href="http://propublica.github.com/daybreak/">Daybreak</a></td></tr>
+<tr><td>DBM</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB</a></td></tr>
+<tr><td>File</td><td>-</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td>File store</td></tr>
+<tr><td>Fog</td><td>fog</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://fog.io/">Fog</a> cloud store</td></tr>
+<tr><td>GDBM</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html">GDBM</a> database</td></tr>
+<tr><td>HBase</td><td>hbase</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://hbase.apache.org/">HBase</a> database</td></tr>
+<tr><td>LevelDB</td><td>leveldb</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://code.google.com/p/leveldb/">LevelDB</a> database</td></tr>
+<tr><td>LocalMemCache</td><td>localmemcache</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://localmemcache.rubyforge.org/">LocalMemCache</a> database</td></tr>
+<tr><td>LRUHash</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:blue">(✓)<sup>[6]</sup></td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td>LRU memory store</td></tr>
+<tr><td>Memcached</td><td>dalli or memcached</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database</td></tr>
+<tr><td>MemcachedDalli</td><td>dalli</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database with Dalli library</td></tr>
+<tr><td>MemcachedNative</td><td>memcached</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗<sup>[4]</sup></td><td>Memcached database with native library</td></tr>
+<tr><td>Memory</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:blue">(✓)<sup>[6]</sup></td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td>Memory store</td></tr>
+<tr><td>Mongo</td><td>mongo</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
+<tr><td>Null</td><td>-</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td>No database</td></tr>
+<tr><td>PStore</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
+<tr><td>Redis</td><td>redis</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td><a href="http://redis.io/">Redis</a> database</td></tr>
+<tr><td>RestClient</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:blue">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
+<tr><td>Riak</td><td>riak-client</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://docs.basho.com/">Riak</a> database</td></tr>
+<tr><td>SDBM</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html">SDBM</a> database</td></tr>
+<tr><td>Sequel</td><td>sequel</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
+<tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
+<tr><td>TDB</td><td>tdb</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://tdb.samba.org/">TDB</a> database</td></tr>
+<tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
+<tr><td>YAML</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
 </tbody>
 </table>
 
@@ -173,7 +174,7 @@ Special transformers:
 ## Moneta API
 
 The Moneta API is purposely extremely similar to the Hash API with a few minor additions.
-There are the additional methods `#load`, `#increment`, `#decrement` and `#close`. Every method takes also a optional
+There are the additional methods `#load`, `#increment`, `#decrement`, `#create` and `#close`. Every method takes also a optional
 option hash. In order so support an identical API across stores, Moneta does not support iteration or partial matches.
 
 ~~~
@@ -197,12 +198,15 @@ option hash. In order so support an identical API across stores, Moneta does not
 
 #key?(key, options = {})                  true if the key exists, false if it does not.
 
-#increment(key, amount = 1, options = {}) increment numeric value. This is a atomic operation
+#increment(key, amount = 1, options = {}) increment numeric value. This is an atomic operation
                                           which is not supported by all stores. Returns current value.
 
-#decrement(key, amount = 1, options = {}) increment numeric value. This is a atomic operation
+#decrement(key, amount = 1, options = {}) increment numeric value. This is an atomic operation
                                           which is not supported by all stores. Returns current value.
                                           This is just syntactic sugar for incrementing with a negative value.
+
+#create(key, value, options = {})         create entry. This is an atomic operation which is not supported by all stores.
+                                          Returns true if the value was created.
 
 #clear(options = {})                      clear all keys in this store.
 
@@ -275,7 +279,7 @@ cache = Moneta.build do
 end
 ~~~
 
-### Incrementation and raw access
+### Atomic incrementation and raw access
 
 The stores support the `#increment` which allows atomic increments of unsigned integer values. If you increment
 a non existing value, it will be created. If you increment a non integer value an exception will be raised.
@@ -324,6 +328,16 @@ counters.load('counter')      # returns 1
 
 counters['counter'] = '10'
 counters.increment('counter') # returns 11
+~~~
+
+### Atomic create
+
+The stores support the `#create` which allows atomic creation of entries. `#create` returns true
+if the value was created.
+
+~~~ ruby
+store.create('key', 'value') # returns true
+store.create('key', 'other value') # returns false
 ~~~
 
 ### Syntactic sugar and option merger

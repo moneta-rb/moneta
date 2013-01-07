@@ -16,6 +16,7 @@ describe_moneta "adapter_client" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_stringkey_stringvalue'

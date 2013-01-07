@@ -22,6 +22,11 @@ module Moneta
       adapter.increment(key, amount, options)
     end
 
+    # (see Defaults#create)
+    def create(key, value, options = {})
+      adapter.create(key, value, options)
+    end
+
     # (see Defaults#close)
     def close
       adapter.close

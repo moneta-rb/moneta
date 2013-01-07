@@ -53,11 +53,7 @@ module Moneta
         @adapter = nil
       end
       tries ||= 0
-      if (tries += 1) > 2
-        raise
-      else
-        retry
-      end
+      (tries += 1) < 3 ? retry : raise
     end
   end
 end

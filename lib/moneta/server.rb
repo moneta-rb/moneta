@@ -85,7 +85,7 @@ module Moneta
     def handle(client)
       method, *args = read(client)
       case method
-      when :key?, :load, :delete, :increment
+      when :key?, :load, :delete, :increment, :create
         write(client, @store.send(method, *args))
       when :store, :clear
         @store.send(method, *args)

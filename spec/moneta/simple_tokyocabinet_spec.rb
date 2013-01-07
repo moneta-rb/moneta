@@ -15,6 +15,7 @@ describe_moneta "simple_tokyocabinet" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

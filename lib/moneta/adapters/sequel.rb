@@ -37,13 +37,26 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         @db.transaction do
-          if key?(key, options)
-            @table.update(:k => key, :v => value)
-          else
+          if @table.update(:k => key, :v => value) == 0
             @table.insert(:k => key, :v => value)
           end
-          value
         end
+        value
+      rescue ::Sequel::DatabaseError
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
+      end
+
+      # (see Proxy#store)
+      def create(key, value, options = {})
+        @db.transaction do
+          @table.insert(:k => key, :v => value)
+        end
+        true
+      rescue ::Sequel::DatabaseError
+        # FIXME: This catches too many errors
+        # it should only catch a not-unique-exception
+        false
       end
 
       # (see Proxy#increment)

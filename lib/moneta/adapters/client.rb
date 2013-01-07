@@ -48,6 +48,12 @@ module Moneta
         read_result
       end
 
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        write(@socket, [:create, key, value, options])
+        read_result
+      end
+
       # (see Proxy#clear)
       def clear(options = {})
         write(@socket, [:clear, options])

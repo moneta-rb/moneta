@@ -15,6 +15,7 @@ describe_moneta "adapter_tokyocabinet_hdb" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
   it_should_behave_like 'increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
