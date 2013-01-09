@@ -324,12 +324,12 @@ end
   'simple_tokyocabinet' => {
     :store => :TokyoCabinet,
     :options => ':file => File.join(make_tempdir, "simple_tokyocabinet")',
-    :specs => STANDARD_SPECS
+    :specs => STANDARD_SPECS.without_multiprocess
   },
   'simple_tokyocabinet_with_expires' => {
     :store => :TokyoCabinet,
     :options => ':file => File.join(make_tempdir, "simple_tokyocabinet_with_expires"), :expires => true',
-    :specs => STANDARD_SPECS.with_expires
+    :specs => STANDARD_SPECS.without_multiprocess.with_expires
   },
   'simple_sqlite' => {
     :store => :Sqlite,
