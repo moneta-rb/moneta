@@ -1,3 +1,7 @@
+master
+
+* Transformer: add to_s key transformer
+
 0.7.5
 
 * OptionsSupport#with: Add support to insert additional proxies
