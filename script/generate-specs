@@ -1215,7 +1215,7 @@ end}
   },
   'adapter_leveldb' => {
     :build => 'Moneta::Adapters::LevelDB.new(:dir => File.join(make_tempdir, "adapter_leveldb"))',
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_SPECS.without_multiprocess
   },
   'adapter_sequel' => {
     :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))',
