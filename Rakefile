@@ -28,7 +28,7 @@ task :test do
   #
   # * Cassandra and Mongo show spurious failures
   if ENV['TEST_GROUP']
-    unstable = specs.select {|s| s =~ /quicklz|cassandra|mongo/ }
+    unstable = specs.select {|s| s =~ /quicklz|cassandra|mongo|daybreak/ }
     specs -= unstable
   end
 
