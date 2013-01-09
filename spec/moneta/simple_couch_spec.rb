@@ -13,6 +13,7 @@ describe_moneta "simple_couch" do
   include_context 'setup_store'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

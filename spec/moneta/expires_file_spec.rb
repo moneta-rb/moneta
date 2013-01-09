@@ -19,6 +19,7 @@ describe_moneta "expires_file" do
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_objectkey_stringvalue'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'null_hashkey_stringvalue'

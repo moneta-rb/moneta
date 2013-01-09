@@ -18,6 +18,7 @@ describe_moneta "simple_riak_with_expires" do
   it_should_behave_like 'expires'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
+  it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

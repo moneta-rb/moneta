@@ -12,6 +12,7 @@ describe_moneta "adapter_pstore" do
 
   include_context 'setup_store'
   it_should_behave_like 'increment'
+  it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'
   it_should_behave_like 'null_objectkey_hashvalue'

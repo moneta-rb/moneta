@@ -13,6 +13,7 @@ describe_moneta "adapter_cassandra_with_default_expires" do
   include_context 'setup_store'
   it_should_behave_like 'default_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'

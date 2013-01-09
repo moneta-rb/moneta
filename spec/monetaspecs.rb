@@ -16884,6 +16884,17 @@ shared_examples_for 'not_persist' do
   end
 end
 
+#################### multiprocess ####################
+
+shared_examples_for 'multiprocess' do
+  it 'supports access by multiple instances/processes' do
+    store['key'] = 'val'
+    store2 = new_store
+    store2['key'].should == 'val'
+    store2.close
+  end
+end
+
 #################### expires ####################
 
 shared_examples_for 'expires' do
