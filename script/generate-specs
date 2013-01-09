@@ -240,12 +240,12 @@ end
   'simple_tdb' => {
     :store => :TDB,
     :options => ':file => File.join(make_tempdir, "simple_tdb")',
-    :specs => STANDARD_SPECS
+    :specs => STANDARD_SPECS.without_multiprocess
   },
   'simple_tdb_with_expires' => {
     :store => :TDB,
     :options => ':file => File.join(make_tempdir, "simple_tdb_with_expires"), :expires => true',
-    :specs => STANDARD_SPECS.with_expires
+    :specs => STANDARD_SPECS.without_multiprocess.with_expires
   },
   'simple_daybreak' => {
     :store => :Daybreak,
@@ -1101,7 +1101,7 @@ end
   },
   'adapter_tdb' => {
     :build => 'Moneta::Adapters::TDB.new(:file => File.join(make_tempdir, "adapter_tdb"))',
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_SPECS.without_multiprocess
   },
   'adapter_daybreak' => {
     :build => 'Moneta::Adapters::Daybreak.new(:file => File.join(make_tempdir, "adapter_daybreak"))',
