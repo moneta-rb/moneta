@@ -26,7 +26,6 @@ module Moneta
       # (see Proxy#close)
       def close
         @hash.close
-        nil
       end
     end
   end
