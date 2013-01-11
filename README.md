@@ -91,7 +91,7 @@ to upgrade to a real key/value store.
 <tr><td>Cookie</td><td>-</td><td style="color:red">✗</td><td style="color:blue">(✓)<sup>[6]</sup></td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td>Cookie in memory store</td></tr>
 <tr><td>Couch</td><td>couchrest</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>CouchDB database</td></tr>
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>DataMapper ORM</td></tr>
-<tr><td>Daybreak</td><td>daybreak</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Daybreak ruby key/value store</td></tr>
+<tr><td>Daybreak</td><td>daybreak</td><td style="color:green">✓</td><td style="color:blue">(✓)<sup>[7]</sup></td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Daybreak ruby key/value store</td></tr>
 <tr><td>DBM</td><td>-</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Berkeley DB</td></tr>
 <tr><td>File</td><td>-</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:green">✓</td><td>File store</td></tr>
 <tr><td>Fog</td><td>fog</td><td style="color:blue">?</td><td style="color:green">✓</td><td style="color:red">✗</td><td style="color:red">✗</td><td style="color:green">✓</td><td>Fog cloud store</td></tr>
@@ -125,6 +125,7 @@ to upgrade to a real key/value store.
 * [4]: There are some servers which use the memcached protocol but which are persistent (e.g. MemcacheDB, Kai, IronCache, ...)
 * [5]: Depends on server
 * [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
+* [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
 
 ## Proxies
 
