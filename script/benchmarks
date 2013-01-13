@@ -16,6 +16,15 @@ class Array
     inject(0, &:+)
   end
 
+  def mean
+    sum / size
+  end
+
+  def stddev
+    m = mean
+    Math.sqrt(map {|s| (s - m) ** 2 }.mean)
+  end
+
   def randomize
     rest, result = dup, []
     result << rest.slice!(rand(rest.size)) until result.size == size
@@ -72,7 +81,7 @@ class MonetaBenchmarks
     },
     :uniform_medium => {
       :runs => 3,
-      :keys => 100,
+      :keys => 1000,
       :min_key_len => 3,
       :max_key_len => 200,
       :key_dist => :uniform,
@@ -82,7 +91,7 @@ class MonetaBenchmarks
     },
     :uniform_large => {
       :runs => 3,
-      :keys => 100,
+      :keys => 1000,
       :min_key_len => 3,
       :max_key_len => 200,
       :key_dist => :uniform,
@@ -102,7 +111,7 @@ class MonetaBenchmarks
     },
     :normal_medium => {
       :runs => 3,
-      :keys => 100,
+      :keys => 1000,
       :min_key_len => 3,
       :max_key_len => 200,
       :key_dist => :normal,
@@ -112,7 +121,7 @@ class MonetaBenchmarks
     },
     :normal_large => {
       :runs => 3,
-      :keys => 100,
+      :keys => 1000,
       :min_key_len => 3,
       :max_key_len => 200,
       :key_dist => :normal,
@@ -123,8 +132,8 @@ class MonetaBenchmarks
   }
 
   DICT = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'.freeze
-  HEADER = "\n                         Minimum  Maximum    Total  Average    Ops/s"
-  SEPARATOR = '=' * 68
+  HEADER = "\n                         Minimum  Maximum    Total     Mean   Stddev    Ops/s"
+  SEPARATOR = '=' * 77
 
   module Rand
     extend self
@@ -251,9 +260,9 @@ class MonetaBenchmarks
     write_histogram("#{DIR}/value.histogram", val_lens)
 
     puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mComputing keys and values...\n\e[34m#{SEPARATOR}\e[0m"
-    puts %{                         Minimum  Maximum    Total  Average}
-    puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_lens.min, key_lens.max, key_lens.sum, key_lens.sum / @data.size]
-    puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_lens.min, val_lens.max, val_lens.sum, val_lens.sum / @data.size]
+    puts %{                         Minimum  Maximum    Total     Mean   Stddev}
+    puts 'Key Length              % 8d % 8d % 8d % 8d % 8d' % [key_lens.min, key_lens.max, key_lens.sum, key_lens.mean, key_lens.stddev]
+    puts 'Value Length            % 8d % 8d % 8d % 8d % 8d' % [val_lens.min, val_lens.max, val_lens.sum, val_lens.mean, val_lens.stddev]
   end
 
   def print_config
@@ -266,11 +275,10 @@ class MonetaBenchmarks
   def print_store_stats(name)
     puts HEADER
     [:write, :read, :sum].each do |i|
-      total = @stats[name][i].sum
-      ops = (@config[:runs] * @data.size) / total
-      line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d' %
-        [name, i, @stats[name][i].min * 1000, @stats[name][i].max * 1000,
-         total * 1000, total * 1000 / @config[:runs], ops]
+      ops = (1000 * @config[:runs] * @data.size) / @stats[name][i].sum
+      line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d % 8d' %
+        [name, i, @stats[name][i].min, @stats[name][i].max,
+         @stats[name][i].mean, @stats[name][i].stddev, @stats[name][i].mean / @config[:runs], ops]
       @summary << [-ops, line << "\n"] if i == :sum
       puts line
     end
@@ -320,10 +328,10 @@ class MonetaBenchmarks
         end
 
         if type == 'Measure'
-          @stats[name][:write] << m1.real
+          @stats[name][:write] << m1.real * 1000
           @stats[name][:error] << error
-          @stats[name][:read] << m2.real
-          @stats[name][:sum] << (m1.real + m2.real)
+          @stats[name][:read] << m2.real * 1000
+          @stats[name][:sum] << (m1.real + m2.real) * 1000
         end
       end
     end
