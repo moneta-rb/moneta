@@ -277,8 +277,8 @@ class MonetaBenchmarks
     [:write, :read, :sum].each do |i|
       ops = (1000 * @config[:runs] * @data.size) / @stats[name][i].sum
       line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d % 8d' %
-        [name, i, @stats[name][i].min, @stats[name][i].max,
-         @stats[name][i].mean, @stats[name][i].stddev, @stats[name][i].mean / @config[:runs], ops]
+        [name, i, @stats[name][i].min, @stats[name][i].max, @stats[name][i].sum,
+         @stats[name][i].mean, @stats[name][i].stddev, ops]
       @summary << [-ops, line << "\n"] if i == :sum
       puts line
     end
