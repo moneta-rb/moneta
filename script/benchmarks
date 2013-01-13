@@ -91,7 +91,7 @@ class MonetaBenchmarks
     },
     :uniform_large => {
       :runs => 3,
-      :keys => 1000,
+      :keys => 100,
       :min_key_len => 3,
       :max_key_len => 200,
       :key_dist => :uniform,
@@ -121,7 +121,7 @@ class MonetaBenchmarks
     },
     :normal_large => {
       :runs => 3,
-      :keys => 1000,
+      :keys => 100,
       :min_key_len => 3,
       :max_key_len => 200,
       :key_dist => :normal,
