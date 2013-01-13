@@ -63,61 +63,61 @@ class MonetaBenchmarks
     :uniform_small => {
       :runs => 3,
       :keys => 1000,
-      :min_key_length => 1,
-      :max_key_length => 32,
+      :min_key_len => 1,
+      :max_key_len => 32,
       :key_dist => :uniform,
-      :min_val_length => 0,
-      :max_val_length => 256,
+      :min_val_len => 0,
+      :max_val_len => 256,
       :val_dist => :uniform
     },
     :uniform_medium => {
       :runs => 3,
       :keys => 100,
-      :min_key_length => 3,
-      :max_key_length => 200,
+      :min_key_len => 3,
+      :max_key_len => 200,
       :key_dist => :uniform,
-      :min_val_length => 0,
-      :max_val_length => 1024,
+      :min_val_len => 0,
+      :max_val_len => 1024,
       :val_dist => :uniform
     },
     :uniform_large => {
       :runs => 3,
       :keys => 100,
-      :min_key_length => 3,
-      :max_key_length => 200,
+      :min_key_len => 3,
+      :max_key_len => 200,
       :key_dist => :uniform,
-      :min_val_length => 0,
-      :max_val_length => 10240,
+      :min_val_len => 0,
+      :max_val_len => 10240,
       :val_dist => :uniform
     },
     :normal_small => {
       :runs => 3,
       :keys => 1000,
-      :min_key_length => 1,
-      :max_key_length => 32,
+      :min_key_len => 1,
+      :max_key_len => 32,
       :key_dist => :normal,
-      :min_val_length => 0,
-      :max_val_length => 256,
+      :min_val_len => 0,
+      :max_val_len => 256,
       :val_dist => :normal
     },
     :normal_medium => {
       :runs => 3,
       :keys => 100,
-      :min_key_length => 3,
-      :max_key_length => 200,
+      :min_key_len => 3,
+      :max_key_len => 200,
       :key_dist => :normal,
-      :min_val_length => 0,
-      :max_val_length => 1024,
+      :min_val_len => 0,
+      :max_val_len => 1024,
       :val_dist => :normal
     },
     :normal_large => {
       :runs => 3,
       :keys => 100,
-      :min_key_length => 3,
-      :max_key_length => 200,
+      :min_key_len => 3,
+      :max_key_len => 200,
       :key_dist => :normal,
-      :min_val_length => 0,
-      :max_val_length => 10240,
+      :min_val_len => 0,
+      :max_val_len => 10240,
       :val_dist => :normal
     },
   }
@@ -240,20 +240,20 @@ class MonetaBenchmarks
 
   def generate_data
     until @data.size == @config[:keys]
-      key = DICT.random(Rand.send(@config[:key_dist], @config[:min_key_length], @config[:max_key_length]))
-      @data[key] = DICT.random(Rand.send(@config[:val_dist], @config[:min_val_length], @config[:max_val_length]))
+      key = DICT.random(Rand.send(@config[:key_dist], @config[:min_key_len], @config[:max_key_len]))
+      @data[key] = DICT.random(Rand.send(@config[:val_dist], @config[:min_val_len], @config[:max_val_len]))
     end
 
-    key_lengths, val_lengths = @data.keys.map(&:size), @data.values.map(&:size)
+    key_lens, val_lens = @data.keys.map(&:size), @data.values.map(&:size)
     @data = @data.to_a
 
-    write_histogram("#{DIR}/key.histogram", key_lengths)
-    write_histogram("#{DIR}/value.histogram", val_lengths)
+    write_histogram("#{DIR}/key.histogram", key_lens)
+    write_histogram("#{DIR}/value.histogram", val_lens)
 
     puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mComputing keys and values...\n\e[34m#{SEPARATOR}\e[0m"
     puts %{                         Minimum  Maximum    Total  Average}
-    puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_lengths.min, key_lengths.max, key_lengths.sum, key_lengths.sum / @data.size]
-    puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_lengths.min, val_lengths.max, val_lengths.sum, val_lengths.sum / @data.size]
+    puts 'Key Length              % 8d % 8d % 8d % 8d ' % [key_lens.min, key_lens.max, key_lens.sum, key_lens.sum / @data.size]
+    puts 'Value Length            % 8d % 8d % 8d % 8d ' % [val_lens.min, val_lens.max, val_lens.sum, val_lens.sum / @data.size]
   end
 
   def print_config
