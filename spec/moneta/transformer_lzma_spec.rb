@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "transformer_lzma" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'transformer_lzma.log'), 'a')
+  end
+
   def new_store
     Moneta.build do
       use :Transformer, :value => :lzma

@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_localmemcache" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_localmemcache.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::LocalMemCache.new(:file => File.join(make_tempdir, "adapter_localmemcache"))
   end

@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_sequel_with_expires" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_sequel_with_expires.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_sequel_with_expires.log'), 'a')})
+    Moneta.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true, :logger => {:out => log})
   end
 
   def load_value(value)

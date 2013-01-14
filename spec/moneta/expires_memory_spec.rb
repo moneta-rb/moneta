@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "expires_memory" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'expires_memory.log'), 'a')
+  end
+
   def new_store
     Moneta.build do
       use :Expires

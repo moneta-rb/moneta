@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_cassandra" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_cassandra.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:Cassandra, :keyspace => "simple_cassandra", :logger => {:out => File.open(File.join(make_tempdir, 'simple_cassandra.log'), 'a')})
+    Moneta.new(:Cassandra, :keyspace => "simple_cassandra", :logger => {:out => log})
   end
 
   def load_value(value)

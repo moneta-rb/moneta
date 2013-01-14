@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_memcached_with_default_expires" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_memcached_with_default_expires.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::Memcached.new(:expires => 1)
   end

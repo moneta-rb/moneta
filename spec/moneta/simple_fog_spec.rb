@@ -2,13 +2,17 @@
 require 'helper'
 
 describe_moneta "simple_fog" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_fog.log'), 'a')
+  end
+
   require 'fog'
   Fog.mock!
   def new_store
     Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
-        :dir                    => 'moneta', :logger => {:out => File.open(File.join(make_tempdir, 'simple_fog.log'), 'a')})
+        :dir                    => 'moneta', :logger => {:out => log})
   end
 
   def load_value(value)

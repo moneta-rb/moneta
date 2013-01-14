@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "cache_file_memory" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'cache_file_memory.log'), 'a')
+  end
+
   def new_store
     Moneta.build do
       use(:Cache) do

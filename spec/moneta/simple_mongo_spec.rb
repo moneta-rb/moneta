@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_mongo" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_mongo.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:Mongo, :db => 'simple_mongo', :logger => {:out => File.open(File.join(make_tempdir, 'simple_mongo.log'), 'a')})
+    Moneta.new(:Mongo, :db => 'simple_mongo', :logger => {:out => log})
   end
 
   def load_value(value)

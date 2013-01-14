@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_activerecord" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_activerecord.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })
   end

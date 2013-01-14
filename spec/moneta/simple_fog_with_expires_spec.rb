@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "simple_fog_with_expires" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_fog_with_expires.log'), 'a')
+  end
+
   require 'fog'
   Fog.mock!
   def new_store
@@ -9,7 +13,7 @@ describe_moneta "simple_fog_with_expires" do
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
         :dir                    => 'moneta',
-        :expires                => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_fog_with_expires.log'), 'a')})
+        :expires                => true, :logger => {:out => log})
   end
 
   def load_value(value)

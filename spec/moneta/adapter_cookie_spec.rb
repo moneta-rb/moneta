@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_cookie" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_cookie.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::Cookie.new
   end

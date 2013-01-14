@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_sqlite" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_sqlite.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))
   end

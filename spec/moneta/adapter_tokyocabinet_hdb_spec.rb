@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_tokyocabinet_hdb" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_tokyocabinet_hdb.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_hdb"), :type => :hdb)
   end

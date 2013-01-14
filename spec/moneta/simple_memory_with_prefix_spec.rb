@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_memory_with_prefix" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_memory_with_prefix.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:Memory, :prefix => "moneta", :logger => {:out => File.open(File.join(make_tempdir, 'simple_memory_with_prefix.log'), 'a')})
+    Moneta.new(:Memory, :prefix => "moneta", :logger => {:out => log})
   end
 
   def load_value(value)

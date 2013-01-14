@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_sequel" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_sequel.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))
   end

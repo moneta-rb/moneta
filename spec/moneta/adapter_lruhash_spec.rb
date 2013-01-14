@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_lruhash" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_lruhash.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::LRUHash.new
   end

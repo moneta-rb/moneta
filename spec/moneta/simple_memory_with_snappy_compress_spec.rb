@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_memory_with_snappy_compress" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_memory_with_snappy_compress.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:Memory, :compress => :snappy, :logger => {:out => File.open(File.join(make_tempdir, 'simple_memory_with_snappy_compress.log'), 'a')})
+    Moneta.new(:Memory, :compress => :snappy, :logger => {:out => log})
   end
 
   def load_value(value)

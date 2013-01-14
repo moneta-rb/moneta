@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_riak" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_riak.log'), 'a')
+  end
+
   require 'riak'
 
   Riak.disable_list_keys_warnings = true

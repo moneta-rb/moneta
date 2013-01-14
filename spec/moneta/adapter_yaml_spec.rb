@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_yaml" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_yaml.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))
   end

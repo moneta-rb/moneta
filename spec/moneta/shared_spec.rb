@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "shared" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'shared.log'), 'a')
+  end
+
   def new_store
     Moneta.build do
       use(:Shared, :port => 9001) do

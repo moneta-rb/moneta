@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_client" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_client.log'), 'a')
+  end
+
   start_server(Moneta::Adapters::Memory.new)
   def new_store
     Moneta::Adapters::Client.new

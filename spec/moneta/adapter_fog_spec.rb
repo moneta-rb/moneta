@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_fog" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_fog.log'), 'a')
+  end
+
   require 'fog'
   Fog.mock!
   def new_store

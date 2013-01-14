@@ -1959,11 +1959,15 @@ TESTS.each do |name, options|
   opts = options.delete(:options)
   opts = ', ' << opts if opts
 
-  build ||= "Moneta.new(#{store.inspect}#{opts}, :logger => {:out => File.open(File.join(make_tempdir, '#{name}.log'), 'a')})"
+  build ||= "Moneta.new(#{store.inspect}#{opts}, :logger => {:out => log})"
 
   code = %{#{header}require 'helper'
 
 describe_moneta #{name.inspect} do
+  def log
+    @log ||= File.open(File.join(make_tempdir, '#{name}.log'), 'a')
+  end
+
   #{preamble}def new_store
     #{build.gsub("\n", "\n    ")}
   end

@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_gdbm" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_gdbm.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:GDBM, :file => File.join(make_tempdir, "simple_gdbm"), :logger => {:out => File.open(File.join(make_tempdir, 'simple_gdbm.log'), 'a')})
+    Moneta.new(:GDBM, :file => File.join(make_tempdir, "simple_gdbm"), :logger => {:out => log})
   end
 
   def load_value(value)

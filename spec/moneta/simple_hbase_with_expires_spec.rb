@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_hbase_with_expires" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_hbase_with_expires.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:HBase, :table => "simple_hbase", :expires => true, :logger => {:out => File.open(File.join(make_tempdir, 'simple_hbase_with_expires.log'), 'a')})
+    Moneta.new(:HBase, :table => "simple_hbase", :expires => true, :logger => {:out => log})
   end
 
   def load_value(value)

@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_memcached_native" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_memcached_native.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:MemcachedNative, :namespace => "simple_memcached_native", :logger => {:out => File.open(File.join(make_tempdir, 'simple_memcached_native.log'), 'a')})
+    Moneta.new(:MemcachedNative, :namespace => "simple_memcached_native", :logger => {:out => log})
   end
 
   def load_value(value)

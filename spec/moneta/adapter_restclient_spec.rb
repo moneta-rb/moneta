@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_restclient" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_restclient.log'), 'a')
+  end
+
   start_restserver
   def new_store
     Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/moneta/')

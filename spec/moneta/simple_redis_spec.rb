@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_redis" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_redis.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:Redis, :logger => {:out => File.open(File.join(make_tempdir, 'simple_redis.log'), 'a')})
+    Moneta.new(:Redis, :logger => {:out => log})
   end
 
   def load_value(value)

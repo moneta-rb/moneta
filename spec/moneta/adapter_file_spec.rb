@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_file" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_file.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::File.new(:dir => File.join(make_tempdir, "adapter_file"))
   end

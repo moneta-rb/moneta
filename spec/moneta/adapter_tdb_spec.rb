@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_tdb" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_tdb.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::TDB.new(:file => File.join(make_tempdir, "adapter_tdb"))
   end

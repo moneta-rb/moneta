@@ -2,6 +2,10 @@
 require 'helper'
 
 describe_moneta "adapter_hbase" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'adapter_hbase.log'), 'a')
+  end
+
   def new_store
     Moneta::Adapters::HBase.new(:table => 'adapter_hbase')
   end

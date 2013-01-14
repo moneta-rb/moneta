@@ -131,5 +131,9 @@ shared_context 'setup_store' do
 
   after do
     store.close.should == nil if store
+    if @log
+      @log.close
+      @log = nil
+    end
   end
 end

@@ -2,8 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_lruhash" do
+  def log
+    @log ||= File.open(File.join(make_tempdir, 'simple_lruhash.log'), 'a')
+  end
+
   def new_store
-    Moneta.new(:LRUHash, :logger => {:out => File.open(File.join(make_tempdir, 'simple_lruhash.log'), 'a')})
+    Moneta.new(:LRUHash, :logger => {:out => log})
   end
 
   def load_value(value)
