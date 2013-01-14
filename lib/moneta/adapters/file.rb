@@ -72,10 +72,10 @@ module Moneta
         return yield unless ::File.exist?(path)
         ::File.open(path, 'r+') do |f|
           begin
-            f.flock ::File::LOCK_EX
+            Thread.pass until f.flock(::File::LOCK_EX)
             yield
           ensure
-            f.flock ::File::LOCK_UN
+            f.flock(::File::LOCK_UN)
           end
         end
       end
