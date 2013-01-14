@@ -1,5 +1,7 @@
 master
 
+* Adapters::Daybreak: api changed
+* Adapters::File: flock fix for jruby
 * Transformer: add to_s key transformer
 
 0.7.5
