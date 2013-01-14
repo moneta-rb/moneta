@@ -24,7 +24,7 @@ gem 'snappy', :platforms => :ruby
 gem 'qlzruby', :platforms => :ruby
 
 # Backends
-gem 'daybreak'
+gem 'daybreak', :github => 'propublica/daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
 gem 'dm-sqlite-adapter'
