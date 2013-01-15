@@ -1,6 +1,6 @@
 # Moneta: A unified interface for key/value stores
 
-[![Gem Version](https://badge.fury.io/rb/moneta.png)](http://badge.fury.io/rb/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/moneta)
+[![Gem Version](https://badge.fury.io/rb/moneta.png)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/moneta)
 
 Moneta provides a standard interface for interacting with various kinds of key/value stores. A short overview of the features:
 
