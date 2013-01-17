@@ -410,9 +410,9 @@ caching if you add the option `:cache => true`. Use it in your `config.ru` like 
 # Add Rack::MonetaStore somewhere in your rack stack
 use Rack::MonetaStore, :Memory, :cache => true
 
-run lambda do |env|
+run lambda { |env|
   env['rack.moneta_store'] # is a Moneta store with per-request caching
-end
+}
 
 # Pass it a block like the one passed to Moneta.build
 use Rack::MonetaStore do
@@ -420,9 +420,9 @@ use Rack::MonetaStore do
   adapter :Cookie
 end
 
-run lambda do |env|
+run lambda { |env|
   env['rack.moneta_store'] # is a Moneta store without caching
-end
+}
 ~~~
 
 #### REST server
@@ -474,7 +474,7 @@ to use all the transformers on the cookies (e.g. `:prefix`, `:marshal` and `:hma
 require 'rack/moneta_cookies'
 
 use Rack::MonetaCookies, :domain => 'example.com', :path => '/path'
-run lambda do |env|
+run lambda { |env|
   req = Rack::Request.new(env)
   req.cookies #=> is now a Moneta store!
   env['rack.request.cookie_hash'] #=> is now a Moneta store!
@@ -482,7 +482,7 @@ run lambda do |env|
   req.cookies['key'] = 'value' #=> sets 'key'
   req.cookies.delete('key') #=> removes 'key'
   [200, {}, []]
-end
+}
 ~~~
 
 ### Rails
