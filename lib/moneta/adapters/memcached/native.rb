@@ -58,6 +58,7 @@ module Moneta
           @cache.decrement(key, -amount)
         end
         # HACK: Throw error if applied to invalid value
+	# see https://github.com/evan/memcached/issues/110
         convert_for_increment((@cache.get(key, false) rescue nil)) if result == 0
         result
       rescue ::Memcached::NotFound => ex
