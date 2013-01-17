@@ -23,7 +23,7 @@ module Rack
   #     adapter :Cookie
   #   end
   #
-  #   run lambda do |env|
+  #   run lambda { |env|
   #     req = Rack::Request.new(env)
   #     req.cookies #=> is now a Moneta store!
   #     env['rack.request.cookie_hash'] #=> is now a Moneta store!
@@ -31,7 +31,7 @@ module Rack
   #     req.cookies['key'] = 'value' #=> sets 'moneta.key'
   #     req.cookies.delete('key') #=> removes 'moneta.key'
   #     [200, {}, []]
-  #   end
+  #   }
   #
   # @api public
   class MonetaCookies

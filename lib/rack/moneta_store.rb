@@ -8,9 +8,9 @@ module Rack
   #   # Add Rack::MonetaStore somewhere in your rack stack
   #   use Rack::MonetaStore, :Memory, :cache => true
   #
-  #   run lambda do |env|
+  #   run lambda { |env|
   #     env['rack.moneta_store'] # is a Moneta store with per-request caching
-  #   end
+  #   }
   #
   # @example config.ru
   #   # Pass it a block like the one passed to Moneta.build
@@ -19,9 +19,9 @@ module Rack
   #     adapter :Cookie
   #   end
   #
-  #   run lambda do |env|
+  #   run lambda { |env|
   #     env['rack.moneta_store'] # is a Moneta store without caching
-  #   end
+  #   }
   #
   # @api public
   class MonetaStore
