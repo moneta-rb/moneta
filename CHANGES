@@ -1,4 +1,4 @@
-master
+0.7.6
 
 * Adapters::Daybreak: api changed
 * Adapters::File: flock fix for jruby
