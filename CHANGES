@@ -1,3 +1,8 @@
+master
+
+* Memcached: switched to Dalli by default
+* Transformer: add inspect key transformer
+
 0.7.6
 
 * Adapters::Daybreak: api changed
