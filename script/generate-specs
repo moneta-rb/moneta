@@ -812,6 +812,19 @@ it 'compile transformer class' do
   Moneta::Transformer::To_sKey.should_not be_nil
 end}
   },
+  'transformer_key_inspect' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => :inspect
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS.returnsame.simplekeys_only,
+    :load_value => 'value',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::InspectKey.should_not be_nil
+end}
+  },
   'transformer_value_marshal' => {
     :build => %{Moneta.build do
   use :Transformer, :value => :marshal

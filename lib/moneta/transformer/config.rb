@@ -33,13 +33,14 @@ module Moneta
       :sha512   => [ :digest,    nil,                              '::Digest::SHA512.hexdigest(%s)', 'digest/sha2'   ],
       :prefix   => [ :prefix,    nil,                              '(options[:prefix]||@prefix)+%s'                  ],
       :spread   => [ :spread,    nil,                              'Helper.spread(%s)'                               ],
-      :to_s     => [ :to_s,      nil,                              '%s.to_s'                                         ],
+      :to_s     => [ :string,    nil,                              '%s.to_s'                                         ],
+      :inspect  => [ :string,    nil,                              '%s.inspect'                                      ],
     }
 
     # Allowed value transformers (Read it like a regular expression!)
     VALUE_TRANSFORMER = 'serialize? compress? hmac? encode?'
 
     # Allowed key transformers (Read it like a regular expression!)
-    KEY_TRANSFORMER = '(serialize | to_s)? prefix? ((encode? truncate?) | (digest spread?))?'
+    KEY_TRANSFORMER = '(serialize | string)? prefix? ((encode? truncate?) | (digest spread?))?'
   end
 end
