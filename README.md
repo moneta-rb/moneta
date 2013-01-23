@@ -312,7 +312,9 @@ cache = Moneta.build do
 end
 ~~~
 
-### Atomic incrementation and raw access
+### Atomic operations
+
+#### Atomic incrementation and raw access
 
 The stores support the `#increment` which allows atomic increments of unsigned integer values. If you increment
 a non existing value, it will be created. If you increment a non integer value an exception will be raised.
@@ -363,7 +365,7 @@ counters['counter'] = '10'
 counters.increment('counter') # returns 11
 ~~~
 
-### Atomic create
+#### Atomic create
 
 The stores support the `#create` which allows atomic creation of entries. `#create` returns true
 if the value was created.
