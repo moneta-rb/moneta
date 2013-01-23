@@ -17230,10 +17230,11 @@ shared_examples_for 'create_expires' do
   end
 
   it 'does not change expires if the key exists' do
-    store['key'] = 'value'
+    store.store('key', 'value', :expires => false).should == 'value'
     store.create('key','another value', :expires => 1).should be_false
     store['key'].should == 'value'
     sleep 2
+    store['key'].should == 'value'
     store.key?('key').should be_true
   end
 end
