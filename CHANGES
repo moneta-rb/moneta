@@ -4,6 +4,7 @@ master
 * Adapters::Daybreak: add option :sync to load and store
 * Transformer: add inspect key transformer
 * Added #create method to atomically create entries
+* Added WeakCreate and WeakIncrement proxies
 
 0.7.6
 
