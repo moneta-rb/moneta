@@ -2,6 +2,7 @@ master
 
 * Memcached: switched to Dalli by default
 * Transformer: add inspect key transformer
+* Added #create method to atomically create entries
 
 0.7.6
 
