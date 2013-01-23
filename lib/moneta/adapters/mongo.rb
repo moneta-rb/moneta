@@ -15,6 +15,8 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
       # @option options [String] :host ('127.0.0.1') MongoDB server host
+      # @option options [String] :user Username used to authenticate
+      # @option options [String] :password Password used to authenticate
       # @option options [Integer] :port (MongoDB default port) MongoDB server port
       # @option options [String] :db ('moneta') MongoDB database
       # @option options [Integer] :expires Default expiration time
@@ -24,9 +26,13 @@ module Moneta
         host = options.delete(:host) || '127.0.0.1'
         port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
         db = options.delete(:db) || 'moneta'
-        connection = ::Mongo::MongoClient.new(host, port, options)
-        @collection = connection.db(db).collection(collection)
-        if connection.server_version >= '2.2'
+        user = options.delete(:user)
+        password = options.delete(:password)
+        client = ::Mongo::MongoClient.new(host, port, options)
+        db = client.db(db)
+        db.authenticate(user, password, true) if user && password
+        @collection = db.collection(collection)
+        if client.server_version >= '2.2'
           @collection.ensure_index([['expiresAt', ::Mongo::ASCENDING]], :expireAfterSeconds => 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
