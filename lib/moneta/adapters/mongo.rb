@@ -29,7 +29,7 @@ module Moneta
         if connection.server_version >= '2.2'
           @collection.ensure_index([['expiresAt', ::Mongo::ASCENDING]], :expireAfterSeconds => 0)
         else
-          warn 'You are using MongoDB version < 2.2, expired documents will not be deleted'
+          warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
         end
       end
 

@@ -5,6 +5,7 @@ master
 * Transformer: add inspect key transformer
 * Added #create method to atomically create entries
 * Added WeakCreate and WeakIncrement proxies
+* Rename unix socket options from :file to :socket
 
 0.7.6
 

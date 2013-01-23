@@ -6,9 +6,9 @@ describe_moneta "simple_client_unix" do
     @log ||= File.open(File.join(make_tempdir, 'simple_client_unix.log'), 'a')
   end
 
-  start_server(Moneta::Adapters::Memory.new, :file => File.join(make_tempdir, 'simple_client_unix'))
+  start_server(Moneta::Adapters::Memory.new, :socket => File.join(make_tempdir, 'simple_client_unix'))
   def new_store
-    Moneta.new(:Client, :file => File.join(make_tempdir, 'simple_client_unix'), :logger => {:out => log})
+    Moneta.new(:Client, :socket => File.join(make_tempdir, 'simple_client_unix'), :logger => {:out => log})
   end
 
   def load_value(value)

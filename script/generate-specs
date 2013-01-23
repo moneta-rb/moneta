@@ -136,9 +136,9 @@ end
 }
   },
   'simple_client_unix' => {
-    :preamble => "start_server(Moneta::Adapters::Memory.new, :file => File.join(make_tempdir, 'simple_client_unix'))\n",
+    :preamble => "start_server(Moneta::Adapters::Memory.new, :socket => File.join(make_tempdir, 'simple_client_unix'))\n",
     :store => :Client,
-    :options => ":file => File.join(make_tempdir, 'simple_client_unix')",
+    :options => ":socket => File.join(make_tempdir, 'simple_client_unix')",
     :specs => STANDARD_SPECS
   },
   'simple_restclient' => {
@@ -570,10 +570,27 @@ end
 end},
     :specs => ADAPTER_SPECS.without_persist.returnsame
   },
-  'shared' => {
+  'shared_tcp' => {
     :build => %{Moneta.build do
   use(:Shared, :port => 9001) do
-    adapter :PStore, :file => File.join(make_tempdir, 'shared')
+    adapter :PStore, :file => File.join(make_tempdir, 'shared_tcp')
+  end
+end},
+    :specs => ADAPTER_SPECS,
+    :tests => %{
+it 'shares values' do
+  store['shared_key'] = 'shared_value'
+  second = new_store
+  second.key?('shared_key').should be_true
+  second['shared_key'].should == 'shared_value'
+  second.close
+end
+}
+  },
+  'shared_unix' => {
+    :build => %{Moneta.build do
+  use(:Shared, :socket => File.join(make_tempdir, 'shared_unix.socket')) do
+    adapter :PStore, :file => File.join(make_tempdir, 'shared_unix')
   end
 end},
     :specs => ADAPTER_SPECS,
@@ -596,7 +613,7 @@ end
     add { adapter :Memory }
   end
 end},
-    :specs => ADAPTER_SPECS.without_increment
+    :specs => ADAPTER_SPECS.without_increment.without_create
   },
   'stack_memory_file' => {
     :build => %{Moneta.build do
@@ -607,7 +624,7 @@ end},
     add { adapter :File, :dir => File.join(make_tempdir, "stack_memory_file") }
   end
 end},
-    :specs => STANDARD_SPECS.without_increment.returnsame.without_transform.stringkeys_only.stringvalues_only
+    :specs => STANDARD_SPECS.without_increment.without_create.returnsame.without_transform.stringkeys_only.stringvalues_only
   },
   'lock' => {
     :build => %{Moneta.build do

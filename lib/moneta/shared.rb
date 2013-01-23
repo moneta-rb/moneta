@@ -14,7 +14,7 @@ module Moneta
     # @param [Hash] options
     # @option options [Integer] :port (9000) TCP port
     # @option options [String] :host Server hostname
-    # @option options [String] :file Unix socket file name
+    # @option options [String] :socket Unix socket file name
     def initialize(options = {}, &block)
       @options = options
       @builder = Builder.new(&block)
@@ -38,8 +38,9 @@ module Moneta
     def wrap(*args)
       @adapter ||= Adapters::Client.new(@options)
       yield
-    rescue Exception => ex
-      warn "Failed to connect: #{ex.message}"
+    rescue Errno::ECONNREFUSED, Errno::ENOENT
+      tries ||= 0
+      warn "Moneta::Shared - Failed to connect: #{ex.message}" if tries > 0
       begin
         # TODO: Implement this using forking (MRI) and threading (JRuby)
         # to get maximal performance
@@ -48,11 +49,10 @@ module Moneta
         @thread = Thread.new { @server.run }
         sleep 0.1 until @server.running?
       rescue Exception => ex
-        warn "Failed to start server: #{ex.message}"
+        warn "Moneta::Shared - Failed to start server: #{ex.message}"
         @adapter.close if @adapter
         @adapter = nil
       end
-      tries ||= 0
       (tries += 1) < 3 ? retry : raise
     end
   end

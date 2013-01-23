@@ -36,7 +36,7 @@ module Moneta
             begin
               @client.add_keyspace(ks_def)
             rescue Exception => ex
-              warn "Cassandra: #{ex.message}"
+              warn "Moneta::Adapters::Cassandra - #{ex.message}"
             end
             break if @client.keyspaces.include?(keyspace)
             sleep 0.1

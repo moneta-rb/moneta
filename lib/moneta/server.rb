@@ -6,12 +6,12 @@ module Moneta
   class Server
     # @param [Hash] options
     # @option options [Integer] :port (9000) TCP port
-    # @option options [String] :file Alternative Unix socket file name
+    # @option options [String] :socket Alternative Unix socket file name
     def initialize(store, options = {})
       @store = store
       @server =
-        if @file = options[:file]
-          UNIXServer.open(@file)
+        if @socket = options[:socket]
+          UNIXServer.open(@socket)
         else
           TCPServer.open(options[:port] || DEFAULT_PORT)
         end
@@ -38,7 +38,7 @@ module Moneta
           mainloop
         end
       ensure
-        File.unlink(@file) if @file
+        File.unlink(@socket) if @socket
       end
     end
 
@@ -59,7 +59,7 @@ module Moneta
       client = accept
       handle(client) if client
     rescue Exception => ex
-      warn ex.message
+      warn "Moneta::Server - #{ex.message}"
       write(client, Error.new(ex.message)) if client
     end
 
