@@ -68,7 +68,9 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        fd = ::File.sysopen(store_path(key), Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
+        path = store_path(key)
+        FileUtils.mkpath(::File.dirname(path))
+        fd = ::File.sysopen(path, Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
         ::File.open(fd, 'wb') {|file| file.write(value) }
         true
       rescue Errno::EEXIST
