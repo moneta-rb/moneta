@@ -14,7 +14,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
     * Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
     * Atomic creation of entries (Method `#create`)
     * Shared/distributed database-wide synchronization primitives `Moneta::Mutex` and `Moneta::Semaphore`
-* Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
+* Includes a simple pure-ruby key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache), [Sinatra](http://sinatrarb.com/) and [Ramaze](http://ramaze.net/).
 
 If you are not yet convinced, you might ask why? What are the goals of the project?
