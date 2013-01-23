@@ -635,6 +635,7 @@ on top of the different stores.
 
 * [Horcrux](https://github.com/technoweenie/horcrux): Used at github, supports batch operations but only Memcached backend
 * [ActiveSupport::Cache::Store](http://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html): The Rails cache store abstraction
+* [Padrino::Cache::Store](http://www.padrinorb.com/api/Padrino/Cache/Store.html): The Padrino cache store abstraction
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
 * [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
 
