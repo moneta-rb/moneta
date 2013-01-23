@@ -24,12 +24,6 @@ class Array
     m = mean
     Math.sqrt(map {|s| (s - m) ** 2 }.mean)
   end
-
-  def randomize
-    rest, result = dup, []
-    result << rest.slice!(rand(rest.size)) until result.size == size
-    result
-  end
 end
 
 class MonetaBenchmarks
@@ -312,14 +306,14 @@ class MonetaBenchmarks
         store.clear
         print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'W']
 
-        @data = @data.randomize
+        @data.shuffle!
         m1 = Benchmark.measure do
           @data.each {|k,v| store[k] = v }
         end
 
         print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'R']
 
-        @data = @data.randomize
+        @data.shuffle!
         error = 0
         m2 = Benchmark.measure do
           @data.each do |k, v|
