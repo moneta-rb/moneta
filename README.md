@@ -29,6 +29,8 @@ same for template languages.
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
+------
+
 ## Getting started
 
 Install Moneta via Rubygems
@@ -61,6 +63,8 @@ store['key'] # returns 'value'
 store.close
 ~~~
 
+------
+
 ## Links
 
 * Source: <http://github.com/minad/moneta>
@@ -68,6 +72,8 @@ store.close
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
     * GitHub master: <http://rubydoc.info/github/minad/moneta/master/frames>
+
+------
 
 ## Supported backends
 
@@ -164,6 +170,8 @@ to upgrade to a real key/value store.
 * [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` using the `Moneta::WeakIncrement` proxy.
 * [8]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` using the `Moneta::WeakCreate` proxy.
 
+------
+
 ## Proxies
 
 In addition it supports proxies (Similar to [Rack middlewares](http://rack.github.com/)) which
@@ -207,6 +215,8 @@ Special transformers:
 * Digests (MD5, Shas, ...)
 * Add prefix to keys (`:prefix`)
 * HMAC to verify values (`:hmac`, useful for `Rack::MonetaCookies`)
+
+------
 
 ## Moneta API
 
@@ -471,6 +481,8 @@ store['key'] = 'this value will not be compressed'
 compressed_store['key'] = 'value will be compressed'
 ~~~
 
+------
+
 ## Framework Integration
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/) and [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with Rails and the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
@@ -637,6 +649,8 @@ config.cache_store :moneta_store, :store => Moneta.build do
 end
 ~~~
 
+------
+
 ## Advanced
 
 ### Build your own key value server
@@ -684,6 +698,8 @@ add persistence using Moneta as follows:
 Person.adapter :memory, Moneta.new(:Redis)
 ~~~
 
+------
+
 ## Testing and Benchmarks
 
 Testing is done using [Travis-CI](http://travis-ci.org/minad/moneta). Currently we support Ruby 1.8.7 and 1.9.3.
@@ -693,6 +709,8 @@ to compare the speed of the different key value stores for different key/value s
 Feel free to add your own configurations! The impact of Moneta should be minimal since it is only a thin layer
 on top of the different stores.
 
+------
+
 ## Alternatives
 
 * [Horcrux](https://github.com/technoweenie/horcrux): Used at github, supports batch operations but only Memcached backend
@@ -700,6 +718,8 @@ on top of the different stores.
 * [Padrino::Cache::Store](http://www.padrinorb.com/api/Padrino/Cache/Store.html): The Padrino cache store abstraction
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
 * [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
+
+------
 
 ## Authors
 
