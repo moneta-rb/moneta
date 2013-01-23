@@ -77,6 +77,12 @@ module Moneta
         end
       end
 
+      # (see Proxy#close)
+      def close
+        @redis.quit
+        nil
+      end
+
       protected
 
       def update_expires(key, options, default = @default_expires)
