@@ -69,7 +69,7 @@ store.close
 
 ## Supported backends
 
-Out of the box, it supports the following backends:
+Out of the box, it supports the following backends. Use the backend name symbol in the Moneta constructor (e.g. `Moneta.new(:Memory)`).
 
 * Memory:
     * In-memory store (`:Memory`)
