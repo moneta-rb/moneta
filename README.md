@@ -27,6 +27,38 @@ same for template languages.
 
 Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
 
+## Getting started
+
+Install Moneta via Rubygems
+
+~~~
+$ gem install moneta
+~~~
+
+or add it to your Gemfile
+
+~~~
+gem 'moneta'
+~~~
+
+Now you are ready to go:
+
+~~~
+require 'moneta'
+
+# Create a simple file store
+store = Moneta.new(:File, :dir => 'moneta')
+
+# Store some entries
+store['key'] = 'value'
+
+# Read entry
+store.key?('key') # returns true
+store['key'] # returns 'value'
+
+store.close
+~~~
+
 ## Links
 
 * Source: <http://github.com/minad/moneta>
