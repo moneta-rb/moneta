@@ -18,7 +18,7 @@ A short overview of the features:
     * Atomic creation of entries (Method `#create`)
     * Shared/distributed database-wide synchronization primitives `Moneta::Mutex` and `Moneta::Semaphore`
 * Includes a simple pure-ruby key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
-* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache), [Sinatra](http://sinatrarb.com/) and [Ramaze](http://ramaze.net/).
+* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache), [Sinatra](http://sinatrarb.com/), [Padrino](http://padrinorb.com) and [Ramaze](http://ramaze.net/).
 
 If you are not yet convinced, you might ask why? What are the goals of the project?
 
@@ -579,18 +579,19 @@ compressed_store['key'] = 'value will be compressed'
 
 Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/) and [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with Rails and the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
 
-* Rack, Rails and Sinatra
+* [Rack](http://rack.github.com/), [Rails](http://rubyonrails.org/) and [Sinatra](http://sinatrarb.com/)
     * `Rack::Session::Moneta` is a Rack middleware to use Moneta for storing sessions
     * `Rack::MonetaStore` is a Rack middleware which places a Moneta store in the environment and enables per-request caching
     * `Rack::MonetaCookies` is a Rack middleware which uses Moneta to store cookies
     * `Rack::MonetaRest` is a Rack application which exposes a Moneta store via REST/HTTP
     * `Rack::Cache::Moneta` provides meta and entity stores for Rack-Cache
-* Rails
+* [Rails](http://rubyonrails.org/)
     * `ActionDispatch::Session::MonetaStore` is a Rails middleware to use Moneta for storing sessions
     * `ActiveSupport::Cache::MonetaStore` is a Rails cache implementation which uses a Moneta store as backend
-* Ramaze
-    * `Ramaze::Cache::Moneta` is integrated into the [Ramaze](http://ramaze.net/) project and allows Ramaze to use
+* [Ramaze](http://ramaze.net/)
+    * `Ramaze::Cache::Moneta` is integrated into the Ramaze project and allows Ramaze to use
       Moneta as caching store
+* [Padrino](http://padrinorb.com) adopted Moneta to replace their cache stores in padrino-cache.
 
 ### Rack
 
@@ -741,7 +742,19 @@ config.cache_store :moneta_store, :store => Moneta.build do
 end
 ~~~
 
-------
+### Padrino
+
+[Padrino](http://padrinorb.com/) adopted Moneta to replace their cache stores in padrino-cache. You use it like this
+
+~~~ ruby
+# Global Padrino caching
+# Don't forget the :expires => [true, Integer] if you want expiration support!
+Padrino.cache = Moneta.new(:Memory, :expires => true)
+
+# Application caching
+# Don't forget the :expires => [true, Integer] if you want expiration support!
+set :cache, Moneta.new(:Memory, :expires => true)
+~~~
 
 ## Advanced
 
