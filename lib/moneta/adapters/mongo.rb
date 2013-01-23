@@ -100,6 +100,12 @@ module Moneta
         @collection.remove
         self
       end
+
+      # (see Proxy#close)
+      def close
+        @collection.db.connection.close
+        nil
+      end
     end
   end
 end
