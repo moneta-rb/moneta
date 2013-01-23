@@ -80,6 +80,21 @@ module Moneta
                                     :upsert => true)['value']
       end
 
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        key = ::BSON::Binary.new(key)
+        intvalue = value.to_i
+        @collection.insert('_id' => key,
+                           'value' => intvalue.to_s == value ? intvalue : ::BSON::Binary.new(value),
+                           # expiresAt must be a Time object (BSON date datatype)
+                           'expiresAt' => expires_at(options) || nil)
+        true
+      rescue ::Mongo::OperationFailure
+        # FIXME: This catches too many errors
+        # it should only catch a not-unique-exception
+        false
+      end
+
       # (see Proxy#clear)
       def clear(options = {})
         @collection.remove

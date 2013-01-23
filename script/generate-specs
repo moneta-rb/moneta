@@ -396,7 +396,7 @@ end
   'simple_mongo' => {
     :store => :Mongo,
     :options => ":db => 'simple_mongo'",
-    :specs => STANDARD_SPECS.without_create.with_native_expires
+    :specs => STANDARD_SPECS.with_native_expires
   },
   'simple_null' => {
     :store => :Null,
@@ -1241,7 +1241,7 @@ end}
   },
   'adapter_mongo' => {
     :build => 'Moneta::Adapters::Mongo.new(:db => "adapter_mongo")',
-    :specs => ADAPTER_SPECS.without_create.with_native_expires,
+    :specs => ADAPTER_SPECS.with_native_expires,
     :tests => %{
 it 'automatically deletes expired document' do
   store.store('key', 'val', :expires => 5)
@@ -1252,7 +1252,7 @@ end}
   },
   'adapter_mongo_with_default_expires' => {
     :build => %{Moneta::Adapters::Mongo.new(:expires => 1)},
-    :specs => ADAPTER_SPECS.without_create.with_expires.with_default_expires
+    :specs => ADAPTER_SPECS.with_expires.with_default_expires
   },
   'adapter_pstore' => {
     :build => 'Moneta::Adapters::PStore.new(:file => File.join(make_tempdir, "adapter_pstore"))',
