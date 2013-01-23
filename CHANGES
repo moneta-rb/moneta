@@ -1,4 +1,4 @@
-master
+0.7.7
 
 * Adapters::Memcached: switched to Dalli by default
 * Adapters::Daybreak: add option :sync to load and store
