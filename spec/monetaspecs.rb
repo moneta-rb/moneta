@@ -17194,7 +17194,6 @@ shared_examples_for 'create' do
   it 'creates the given key' do
     store.create('key','value').should be_true
     store['key'].should == 'value'
-    load_value(store.raw['key']).should == 'value'
   end
 
   it 'creates raw value with the given key' do
