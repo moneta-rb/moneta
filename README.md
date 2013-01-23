@@ -118,7 +118,7 @@ to upgrade to a real key/value store.
 ### Backend feature matrix
 
 <table>
-<thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment</th><th>Atomic create</th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
+<thead style="font-weight:bold"><tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment<sup>8</sup></th><th>Atomic create<sup>9</sup></th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr></thead>
 <tbody>
 <tr><td>ActiveRecord</td><td>activerecord</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="https://rubygems.org/gems/activerecord">ActiveRecord</a> ORM</td></tr>
 <tr><td>Cassandra</td><td>cassandra</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td><a href="http://cassandra.apache.org/">Cassandra</a> distributed database</td></tr>
@@ -161,6 +161,8 @@ to upgrade to a real key/value store.
 * [5]: Depends on server
 * [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
 * [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
+* [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` using the `Moneta::WeakIncrement` proxy.
+* [8]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` using the `Moneta::WeakCreate` proxy.
 
 ## Proxies
 
