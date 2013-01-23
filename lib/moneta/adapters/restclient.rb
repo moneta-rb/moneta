@@ -2,7 +2,7 @@ require 'net/http'
 
 module Moneta
   module Adapters
-    # Moneta rest client backend which works together with `Rack::MonetaRest`
+    # Moneta rest client backend which works together with {Rack::MonetaRest}
     # @api public
     class RestClient
       include Defaults

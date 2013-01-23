@@ -36,9 +36,9 @@ module Moneta
     #
     # @param [Object] key
     # @param [Hash] options
-    # @option options [Integer] :expires Update expiration time (See `Moneta::Expires`)
-    # @option options [Boolean] :raw Raw access without value transformation (See `Moneta::Transformer`)
-    # @option options [String] :prefix Prefix key (See `Moneta::Transformer`)
+    # @option options [Integer] :expires Update expiration time (See {Expires})
+    # @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
+    # @option options [String] :prefix Prefix key (See {Transformer})
     # @option options Other options as defined by the adapters or middleware
     # @return [Object] value
     # @api public
@@ -51,9 +51,9 @@ module Moneta
     # @param [Object] key
     # @param [Object] value
     # @param [Hash] options
-    # @option options [Integer] :expires Set expiration time (See `Moneta::Expires`)
-    # @option options [Boolean] :raw Raw access without value transformation (See `Moneta::Transformer`)
-    # @option options [String] :prefix Prefix key (See `Moneta::Transformer`)
+    # @option options [Integer] :expires Set expiration time (See {Expires})
+    # @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
+    # @option options [String] :prefix Prefix key (See {Transformer})
     # @option options Other options as defined by the adapters or middleware
     # @return value
     # @api public
@@ -66,8 +66,8 @@ module Moneta
     # @param [Object] key
     # @return [Object] current value
     # @param [Hash] options
-    # @option options [Boolean] :raw Raw access without value transformation (See `Moneta::Transformer`)
-    # @option options [String] :prefix Prefix key (See `Moneta::Transformer`)
+    # @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
+    # @option options [String] :prefix Prefix key (See {Transformer})
     # @option options Other options as defined by the adapters or middleware
     # @api public
     def delete(key, options = {})

@@ -69,7 +69,7 @@ module Moneta
   # @param [Hash] options
   # @return [Moneta store] newly created Moneta store
   # @option options [Boolean/Integer] :expires Ensure that store supports expiration by inserting
-  #                                            `Moneta::Expires` if the underlying adapter doesn't support it natively
+  #                                            {Expires} if the underlying adapter doesn't support it natively
   #                                            and set default expiration time
   # @option options [Boolean] :threadsafe (false) Ensure that the store is thread safe by inserting Moneta::Lock
   # @option options [Boolean/Hash] :logger (false) Add logger to proxy stack (Hash is passed to logger as options)

@@ -1,6 +1,11 @@
 module Moneta
+  # Base class for {Mutex} and {Semaphore}
   # @api private
   class SynchronizePrimitive
+    # Synchronize block
+    #
+    # @yieldparam Synchronized block
+    # @return [Object] result of block
     def synchronize
       enter
       yield
@@ -8,12 +13,20 @@ module Moneta
       leave
     end
 
+    # Try to enter critical section (nonblocking)
+    #
+    # @return [Boolean] true if the lock was acquired
     def try_enter
       raise 'Already locked' if @locked
       enter_primitive ? @locked = true : false
     end
     alias_method :try_lock, :try_enter
 
+    # Enter critical section (blocking)
+    #
+    # @param [Number] timeout Maximum time to wait
+    # @param [Number] wait Sleep time between tries to acquire lock
+    # @return [Boolean] true if the lock was aquired
     def enter(timeout = nil, wait = 0.01)
       total = 0
       while !timeout || total < timeout
@@ -25,6 +38,7 @@ module Moneta
     end
     alias_method :lock, :enter
 
+    # Leave critical section
     def leave
       raise 'Not locked' unless @locked
       leave_primitive
@@ -33,6 +47,7 @@ module Moneta
     end
     alias_method :unlock, :leave
 
+    # Is the lock acquired?
     def locked?
       @locked
     end
@@ -41,6 +56,8 @@ module Moneta
   # Distributed/shared store-wide mutex
   # @api public
   class Mutex < SynchronizePrimitive
+    # @param [Moneta store] store The store we want to lock
+    # @param [Object] lock Key of the lock entry
     def initialize(store, lock)
       @store, @lock = store, lock
     end
@@ -59,6 +76,9 @@ module Moneta
   # Distributed/shared store-wide semaphore
   # @api public
   class Semaphore < SynchronizePrimitive
+    # @param [Moneta store] store The store we want to lock
+    # @param [Object] counter Key of the counter entry
+    # @param [Fixnum] max Maximum number of threads which are allowed to enter the critical section
     def initialize(store, counter, max = 1)
       @store, @counter, @max = store, counter, max
       @store.increment(@counter, 0, :expires => false) # Ensure that counter exists

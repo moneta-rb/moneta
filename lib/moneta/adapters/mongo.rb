@@ -5,7 +5,7 @@ module Moneta
     # MongoDB backend
     #
     # Supports expiration, documents will be automatically removed starting
-    # with mongodb >= 2.2 (see http://docs.mongodb.org/manual/tutorial/expire-data/).
+    # with mongodb >= 2.2 (see {http://docs.mongodb.org/manual/tutorial/expire-data/}).
     #
     # @api public
     class Mongo

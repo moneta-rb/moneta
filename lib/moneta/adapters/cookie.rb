@@ -1,6 +1,6 @@
 module Moneta
   module Adapters
-    # Cookie backend used by the middleware `Rack::MonetaCookies`
+    # Cookie backend used by the middleware {Rack::MonetaCookies}
     # @api public
     class Cookie < Memory
       attr_reader :cookies
