@@ -10,8 +10,10 @@ Moneta provides a standard interface for interacting with various kinds of key/v
     * Configurable value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
     * Configurable key transformation via `Moneta::Transformer` proxy
 * Expiration for all stores (Added via proxy `Moneta::Expires` if not supported natively)
-* Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
-* Atomic creation of entries (Method `#create`)
+* Atomic operations
+    * Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
+    * Atomic creation of entries (Method `#create`)
+    * Shared/distributed database-wide synchronization primitives `Moneta::Mutex` and `Moneta::Semaphore`
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
 * Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache), [Sinatra](http://sinatrarb.com/) and [Ramaze](http://ramaze.net/).
 
@@ -374,6 +376,57 @@ if the value was created.
 store.create('key', 'value') # returns true
 store.create('key', 'other value') # returns false
 ~~~
+
+#### Shared/distributed synchronization primitives
+
+Moneta provides shared/distributed synchronization primitives which are shared database-wide between
+all clients.
+
+* `Moneta::Mutex`
+
+~~~ ruby
+mutex = Moneta::Mutex.new(store, 'mutex_key')
+
+mutex.synchronize do
+   mutex.locked? # returns true
+   ...
+end
+
+begin
+  mutex.lock
+  mutex.locked? # returns true
+  ...
+ensure
+  mutex.unlock
+end
+~~~
+
+* `Moneta::Semaphore`
+
+~~~ ruby
+semaphore = Moneta::Semaphore.new(store, 'semaphore_counter', max_concurrent)
+
+semaphore.synchronize do
+   semaphore.locked? # returns true
+   ...
+end
+
+begin
+  semaphore.enter
+  semaphore.locked? # returns true
+  ...
+ensure
+  semaphore.leave
+end
+~~~
+
+#### Weak atomic operations
+
+If an underlying adapter doesn't provide atomic `#create` or `#increment` and `#decrement` you can
+use the proxies `Moneta::WeakIncrement` and `Moneta::WeakCreate` to add support without atomicity.
+
+But then you have to ensure that the store is not shared by multiple processes and thread-safety is
+provided by `Moneta::Lock`.
 
 ### Syntactic sugar and option merger
 
