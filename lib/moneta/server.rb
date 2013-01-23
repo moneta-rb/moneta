@@ -78,9 +78,13 @@ module Moneta
         @clients.delete(io)
       end
       ios[0].each do |io|
-        return io if io != @server
-        client = @server.accept
-        @clients << client if client
+        if io == @server
+          client = @server.accept
+          @clients << client if client
+        else
+          return io unless io.eof?
+          @clients.delete(io)
+        end
       end
       nil
     end
