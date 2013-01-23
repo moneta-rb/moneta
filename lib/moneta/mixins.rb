@@ -24,7 +24,7 @@ module Moneta
     def raw
       @raw_store ||=
         begin
-          store = with(:raw => true, :only => [:load, :store, :delete])
+          store = with(:raw => true, :only => [:load, :store, :create, :delete])
           store.instance_variable_set(:@raw_store, store)
           store
         end
@@ -45,7 +45,7 @@ module Moneta
     # @return [OptionMerger]
     # @api public
     def expires(expires)
-      with(:expires => expires, :only => [:store, :increment])
+      with(:expires => expires, :only => [:store, :create, :increment])
     end
   end
 

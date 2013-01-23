@@ -17192,14 +17192,20 @@ end
 
 shared_examples_for 'create' do
   it 'creates the given key' do
-    expect( store.create('key','value') ).to be_true
-    expect( store['key'] ).to be_eql('value')
+    store.create('key','value').should be_true
+    store['key'].should == 'value'
+    load_value(store.raw['key']).should == 'value'
+  end
+
+  it 'creates raw value with the given key' do
+    store.raw.create('key','value').should be_true
+    store.raw['key'].should == 'value'
   end
 
   it 'does not create a key if it exists' do
     store['key'] = 'value'
-    expect( store.create('key','another value') ).to be_false
-    expect( store['key'] ).to be_eql('value')
+    store.create('key','another value').should be_false
+    store['key'].should == 'value'
   end
 
 end
@@ -17218,18 +17224,18 @@ end
 
 shared_examples_for 'create_expires' do
   it 'creates the given key and expires it' do
-    expect( store.create('key','value', :expires => 1) ).to be_true
-    expect( store['key'] ).to be_eql('value')
+    store.create('key','value', :expires => 1).should be_true
+    store['key'].should == 'value'
     sleep 2
-    expect( store.key? 'key' ).to be_false
+    store.key?('key').should be_false
   end
 
   it 'does not change expires if the key exists' do
     store['key'] = 'value'
-    expect( store.create('key','another value', :expires => 1) ).to be_false
-    expect( store['key'] ).to be_eql('value')
+    store.create('key','another value', :expires => 1).should be_false
+    store['key'].should == 'value'
     sleep 2
-    expect( store.key? 'key' ).to be_true
+    store.key?('key').should be_true
   end
 end
 
