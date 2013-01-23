@@ -4,7 +4,7 @@
 
 Moneta provides a standard interface for interacting with various kinds of key/value stores. A short overview of the features:
 
-* Supports a lot of backends (See below)
+* Supports a lot of backends with consistent behaviour (See below)
 * Allows a full configuration of the serialization -> compression -> adapter stack using proxies (Similar to [Rack middlewares](http://rack.github.com/))
     * Configurable serialization via `Moneta::Transformer` proxy (Marshal/JSON/YAML and many more)
     * Configurable value compression via `Moneta::Transformer` proxy (Zlib, Snappy, LZMA, ...)
