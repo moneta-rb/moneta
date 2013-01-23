@@ -123,7 +123,7 @@ to upgrade to a real key/value store.
 * [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `:threadsafe => true` to `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple threads if the store is multi-process safe. I recommend to add the option `:threadsafe` to ensure thread-safety since for example under JRuby and Rubinius even the basic datastructures are not thread safe due to the lack of a global interpreter lock (GIL). This differs from MRI where some adapters might appear thread safe already but only due to the GIL.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 * [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
-* [4]: There are some servers which use the memcached protocol but which are persistent (e.g. MemcacheDB, Kai, IronCache, ...)
+* [4]: There are some servers which use the memcached protocol but which are persistent (e.g. [MemcacheDB](http://memcachedb.org/), [Kai](http://sourceforge.net/apps/mediawiki/kai), [IronCache](http://dev.iron.io/cache/reference/memcache/))
 * [5]: Depends on server
 * [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
 * [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
