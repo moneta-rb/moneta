@@ -13,7 +13,7 @@ Moneta provides a standard interface for interacting with various kinds of key/v
 * Atomic incrementation and decrementation for most stores (Method `#increment` and `#decrement`)
 * Atomic creation of entries (Method `#create`)
 * Includes a very simple key/value server (`Moneta::Server`) and client (`Moneta::Adapters::Client`)
-* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/), [Sinatra](http://sinatrarb.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache)
+* Integration with [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache), [Sinatra](http://sinatrarb.com/) and [Ramaze](http://ramaze.net/).
 
 If you are not yet convinced, you might ask why? What are the goals of the project?
 
@@ -414,7 +414,7 @@ compressed_store['key'] = 'value will be compressed'
 
 ## Framework Integration
 
-Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/), [Rack](http://rack.github.com/) and [Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with Rails and the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
+Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist integration classes for [Rails](http://rubyonrails.org/) and [Rack](http://rack.github.com/)/[Rack-Cache](https://github.com/rtomayko/rack-cache). You can also use all the Rack middlewares together with Rails and the [Sinatra](http://sinatrarb.com/) framework. There exist the following integration classes:
 
 * Rack, Rails and Sinatra
     * `Rack::Session::Moneta` is a Rack middleware to use Moneta for storing sessions
@@ -425,6 +425,9 @@ Inspired by [redis-store](https://github.com/jodosha/redis-store) there exist in
 * Rails
     * `ActionDispatch::Session::MonetaStore` is a Rails middleware to use Moneta for storing sessions
     * `ActiveSupport::Cache::MonetaStore` is a Rails cache implementation which uses a Moneta store as backend
+* Ramaze
+    * `Ramaze::Cache::Moneta` is integrated into the [Ramaze](http://ramaze.net/) project and allows Ramaze to use
+      Moneta as caching store
 
 ### Rack
 
