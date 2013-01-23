@@ -6,7 +6,6 @@ module Moneta
     # @api public
     class HBase
       include Defaults
-      include IncrementSupport
 
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
@@ -47,7 +46,7 @@ module Moneta
       def increment(key, amount = 1, options = {})
         result = @table.atomic_increment(key, @column, amount)
         # HACK: Throw error if applied to invalid value
-        convert_for_increment(load(key)) if result == 0
+        Utils.to_int(load(key)) if result == 0
         result
       end
 

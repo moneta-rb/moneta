@@ -6,7 +6,6 @@ module Moneta
     # @api public
     class ActiveRecord
       include Defaults
-      include IncrementSupport
 
       def self.tables
         @tables ||= {}
@@ -79,7 +78,7 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         record = @table.where(:k => key).lock.first_or_initialize
-        value = convert_for_increment(record.v) + amount
+        value = Utils.to_int(record.v) + amount
         record.v = value.to_s
         record.save
         value

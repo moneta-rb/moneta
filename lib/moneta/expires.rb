@@ -21,8 +21,7 @@ module Moneta
       # Transformer might raise exception
       load_entry(key, options) != nil
     rescue Exception
-      options.include?(:expires) && (options = options.dup; options.delete(:expires))
-      super(key, options)
+      super(key, Utils.without(options, :expires))
     end
 
     # (see Proxy#load)
@@ -36,11 +35,7 @@ module Moneta
     def store(key, value, options = {})
       return super if options.include?(:raw)
       expires = expires_at(options)
-      if options.include?(:expires)
-        options = options.dup
-        options.delete(:expires)
-      end
-      super(key, new_entry(value, expires), options)
+      super(key, new_entry(value, expires), Utils.without(options, :expires))
       value
     end
 
@@ -55,21 +50,14 @@ module Moneta
     def create(key, value, options = {})
       return super if options.include?(:raw)
       expires = expires_at(options)
-      if options.include?(:expires)
-        options = options.dup
-        options.delete(:expires)
-      end
-      @adapter.create(key, new_entry(value, expires), options)
+      @adapter.create(key, new_entry(value, expires), Utils.without(options, :expires))
     end
 
     private
 
     def load_entry(key, options)
       new_expires = expires_at(options, nil)
-      if options.include?(:expires)
-        options = options.dup
-        options.delete(:expires)
-      end
+      options = Utils.without(options, :expires)
       entry = @adapter.load(key, options)
       if entry != nil
         value, expires = entry

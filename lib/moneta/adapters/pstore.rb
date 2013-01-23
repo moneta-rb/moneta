@@ -6,7 +6,6 @@ module Moneta
     # @api public
     class PStore
       include Defaults
-      include IncrementSupport
 
       # @param [Hash] options
       # @option options [String] :file PStore file
@@ -39,7 +38,7 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @pstore.transaction do
-          value = convert_for_increment(@pstore[key]) + amount
+          value = Utils.to_int(@pstore[key]) + amount
           @pstore[key] = value.to_s
           value
         end

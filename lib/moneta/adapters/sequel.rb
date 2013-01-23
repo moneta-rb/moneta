@@ -6,7 +6,6 @@ module Moneta
     # @api public
     class Sequel
       include Defaults
-      include IncrementSupport
 
       # @param [Hash] options
       # @option options [String] :db Sequel database
@@ -64,7 +63,7 @@ module Moneta
         @db.transaction do
           locked_table = @table.for_update
           if record = locked_table[:k => key]
-            value = convert_for_increment(record[:v]) + amount
+            value = Utils.to_int(record[:v]) + amount
             locked_table.update(:k => key, :v => value.to_s)
             value
           else

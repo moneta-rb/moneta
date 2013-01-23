@@ -150,7 +150,6 @@ module Moneta
       store(key, value)
     end
 
-
     # Atomically sets a key to value if it's not set.
     #
     # @note Not every Moneta store implements this method,
@@ -170,17 +169,9 @@ module Moneta
     # (see Defaults#increment)
     # @api public
     def increment(key, amount = 1, options = {})
-      value = convert_for_increment(load(key, options)) + amount
+      value = Utils.to_int(load(key, options)) + amount
       store(key, value.to_s, options)
       value
-    end
-
-    protected
-
-    def convert_for_increment(value)
-      intvalue = value.to_i
-      raise 'Tried to increment non integer value' unless value == nil || intvalue.to_s == value.to_s
-      intvalue
     end
   end
 
