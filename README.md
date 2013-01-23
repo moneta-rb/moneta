@@ -148,7 +148,7 @@ to upgrade to a real key/value store.
 <tr><td>SDBM</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html">SDBM</a> database</td></tr>
 <tr><td>Sequel</td><td>sequel</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
 <tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;color:blue">?</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
-<tr><td>TDB</td><td>tdb</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://tdb.samba.org/">TDB</a> database</td></tr>
+<tr><td>TDB</td><td>tdb</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://tdb.samba.org/">TDB</a> database</td></tr>
 <tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
 <tr><td>YAML</td><td>-</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:green">✓</td><td style="text-align:center;color:red">✗</td><td style="text-align:center;color:green">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
 </tbody>
@@ -384,7 +384,7 @@ store.create('key', 'other value') # returns false
 Moneta provides shared/distributed synchronization primitives which are shared database-wide between
 all clients.
 
-* `Moneta::Mutex`
+`Moneta::Mutex` allows a single thread to enter a critical section.
 
 ~~~ ruby
 mutex = Moneta::Mutex.new(store, 'mutex_key')
@@ -405,7 +405,7 @@ ensure
 end
 ~~~
 
-* `Moneta::Semaphore`
+`Moneta::Semaphore` allows `max_concurrent` threads to enter a critical section.
 
 ~~~ ruby
 semaphore = Moneta::Semaphore.new(store, 'semaphore_counter', max_concurrent)
