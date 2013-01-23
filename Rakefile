@@ -28,6 +28,13 @@ task :test do
   #
   # * action_dispatch cannot be required for an unknown reason
   if ENV['TEST_GROUP']
+    # Shuffle specs to ensure equal distribution over the test groups
+    # We have to shuffle with the same seed every time because rake is started
+    # multiple times!
+    old_seed = srand(42)
+    specs.shuffle!
+    srand(old_seed)
+
     unstable = specs.select {|s| s =~ /quicklz|cassandra|action_dispatch/ }
     specs -= unstable
   end
