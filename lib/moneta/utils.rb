@@ -13,7 +13,7 @@ module Moneta
 
     def to_int(value)
       intvalue = value.to_i
-      raise "'#{value.inspect}' is not an integer value" unless value == nil || intvalue.to_s == value.to_s
+      raise "#{value.inspect} is not an integer value" unless value == nil || intvalue.to_s == value.to_s
       intvalue
     end
   end
