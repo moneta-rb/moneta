@@ -76,22 +76,20 @@ describe_moneta "optionmerger" do
   end
 
   it 'has method #raw' do
-    store.raw.default_options.should == {:store=>{:raw=>true},:load=>{:raw=>true},:delete=>{:raw=>true}}
+    store.raw.default_options.should == {:store=>{:raw=>true},:create=>{:raw=>true},:load=>{:raw=>true},:delete=>{:raw=>true}}
     store.raw.should equal(store.raw.raw)
   end
 
   it 'has method #prefix' do
-    store.prefix('a').default_options.should == {:store=>{:prefix=>'a'},:load=>{:prefix=>'a'},
+    store.prefix('a').default_options.should == {:store=>{:prefix=>'a'},:load=>{:prefix=>'a'},:create=>{:prefix=>'a'},
                                                  :delete=>{:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}
 
-    store.prefix('a').prefix('b').default_options.should == {:store=>{:prefix=>'ab'},:load=>{:prefix=>'ab'},
+    store.prefix('a').prefix('b').default_options.should == {:store=>{:prefix=>'ab'},:load=>{:prefix=>'ab'},:create=>{:prefix=>'ab'},
                                                              :delete=>{:prefix=>'ab'},:key? => {:prefix=>'ab'},:increment=>{:prefix=>'ab'}}
 
-    store.raw.prefix('b').default_options.should == {:store=>{:raw=>true,:prefix=>'b'},:load=>{:raw=>true,:prefix=>'b'},
-                                                     :delete=>{:raw=>true,:prefix=>'b'},:key? => {:prefix=>'b'},:increment=>{:prefix=>'b'}}
+    store.raw.prefix('b').default_options.should == {:store=>{:raw=>true,:prefix=>'b'},:load=>{:raw=>true,:prefix=>'b'},:create=>{:raw=>true,:prefix=>'b'},:delete=>{:raw=>true,:prefix=>'b'},:key? => {:prefix=>'b'},:increment=>{:prefix=>'b'}}
 
-    store.prefix('a').raw.default_options.should == {:store=>{:raw=>true,:prefix=>'a'},:load=>{:raw=>true,:prefix=>'a'},
-                                                     :delete=>{:raw=>true,:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}
+    store.prefix('a').raw.default_options.should == {:store=>{:raw=>true,:prefix=>'a'},:load=>{:raw=>true,:prefix=>'a'},:create=>{:raw=>true,:prefix=>'a'},:delete=>{:raw=>true,:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}
   end
 
   it 'supports adding proxis using #with' do
