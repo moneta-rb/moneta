@@ -52,6 +52,14 @@ describe_moneta "semaphore" do
     a.unlock.should be_nil
   end
 
+  it 'should have lock timeout' do
+    a = Moneta::Semaphore.new(store, 'semaphore')
+    b = Moneta::Semaphore.new(store, 'semaphore')
+    a.lock.should be_true
+    b.lock(1).should be_false
+    a.unlock.should be_nil
+  end
+
   it 'should count concurrent accesses' do
     a = Moneta::Semaphore.new(store, 'semaphore', 2)
     b = Moneta::Semaphore.new(store, 'semaphore', 2)
@@ -66,11 +74,11 @@ describe_moneta "semaphore" do
   end
 
   it 'should have #synchronize' do
-    mutex = Moneta::Semaphore.new(store, 'semaphore')
-    mutex.synchronize do
-      mutex.locked?.should be_true
+    semaphore = Moneta::Semaphore.new(store, 'semaphore')
+    semaphore.synchronize do
+      semaphore.locked?.should be_true
     end
-    mutex.locked?.should be_false
+    semaphore.locked?.should be_false
   end
 
 end

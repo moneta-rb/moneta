@@ -17186,6 +17186,20 @@ shared_examples_for 'increment' do
       store.decrement('strkey')
     end.to raise_error
   end
+
+  it 'supports Semaphore' do
+    a = Moneta::Semaphore.new(store, 'semaphore', 2)
+    b = Moneta::Semaphore.new(store, 'semaphore', 2)
+    c = Moneta::Semaphore.new(store, 'semaphore', 2)
+    a.synchronize do
+      a.locked?.should be_true
+      b.synchronize do
+        b.locked?.should be_true
+        c.try_lock.should be_false
+      end
+    end
+  end
+
 end
 
 #################### create ####################
@@ -17205,6 +17219,14 @@ shared_examples_for 'create' do
     store['key'] = 'value'
     store.create('key','another value').should be_false
     store['key'].should == 'value'
+  end
+
+  it 'supports Mutex' do
+    a = Moneta::Mutex.new(store, 'mutex')
+    b = Moneta::Mutex.new(store, 'mutex')
+    a.lock.should be_true
+    b.try_lock.should be_false
+    a.unlock.should be_nil
   end
 
 end
