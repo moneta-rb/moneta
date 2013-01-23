@@ -38,7 +38,7 @@ module Moneta
     def wrap(*args)
       @adapter ||= Adapters::Client.new(@options)
       yield
-    rescue Errno::ECONNREFUSED, Errno::ENOENT
+    rescue Errno::ECONNREFUSED, Errno::ENOENT => ex
       tries ||= 0
       warn "Moneta::Shared - Failed to connect: #{ex.message}" if tries > 0
       begin
