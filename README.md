@@ -142,6 +142,7 @@ add additional features to storage backends:
 * `Moneta::Pool` to create a pool of stores as a means of making the store thread safe. Add it in the builder using `use(:Pool) {}`.
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
 * `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use(:Shared) {}`.
+* `Moneta::WeakIncrement` and `Moneta::WeakCreate` to add `#create` and `#increment` support without atomicity (weak) to stores which don't support it.
 
 ### Serializers and compressors (`Moneta::Transformer`)
 
