@@ -36,8 +36,10 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         @db.transaction do
-          if @table.update(:k => key, :v => value) == 0
+          begin
             @table.insert(:k => key, :v => value)
+          rescue ::Sequel::DatabaseError
+            @table.update(:k => key, :v => value)
           end
         end
         value
