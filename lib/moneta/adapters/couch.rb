@@ -40,7 +40,8 @@ module Moneta
         @db.save_doc(doc)
         value
       rescue ::RestClient::RequestFailed
-        value
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#delete)
