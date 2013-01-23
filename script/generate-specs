@@ -475,6 +475,20 @@ end
     :preamble               => "require 'fog'\nFog.mock!\n",
     :specs => STANDARD_SPECS.without_increment.without_create.with_expires
   },
+  'weak_create' => {
+    :build => %{Moneta.build do
+  use :WeakCreate
+  adapter :Memory
+end},
+    :specs => STANDARD_SPECS.without_transform.without_persist.returnsame
+  },
+  'weak_increment' => {
+    :build => %{Moneta.build do
+  use :WeakIncrement
+  adapter :Memory
+end},
+    :specs => STANDARD_SPECS.without_transform.without_persist.returnsame
+  },
   'expires_memory' => {
     :build => %{Moneta.build do
   use :Expires

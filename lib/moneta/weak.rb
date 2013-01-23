@@ -1,11 +1,9 @@
 module Moneta
-  module Weak
-    class Create < Proxy
-      include CreateSupport
-    end
+  class WeakCreate < Proxy
+    include CreateSupport
+  end
 
-    class Increment < Proxy
-      include IncrementSupport
-    end
+  class WeakIncrement < Proxy
+    include IncrementSupport
   end
 end
