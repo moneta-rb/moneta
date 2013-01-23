@@ -61,6 +61,10 @@ module Moneta
     rescue SignalException => ex
       warn "Moneta::Server - #{ex.message}"
       raise if ex.signo == 15 # SIGTERM
+    rescue IOError => ex
+      warn "Moneta::Server - #{ex.message}" unless ex.message =~ /closed/
+      @clients.delete(client) if client
+      @clients.reject!(&:closed?)
     rescue Exception => ex
       warn "Moneta::Server - #{ex.message}"
       write(client, Error.new(ex.message)) if client
@@ -74,13 +78,9 @@ module Moneta
         @clients.delete(io)
       end
       ios[0].each do |io|
-        if io == @server
-          client = @server.accept
-          @clients << client if client
-        else
-          return io unless io.eof?
-          @clients.delete(io)
-        end
+        return io if io != @server
+        client = @server.accept
+        @clients << client if client
       end
       nil
     end
