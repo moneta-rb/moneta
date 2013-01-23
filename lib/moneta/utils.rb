@@ -1,4 +1,5 @@
 module Moneta
+  # @api private
   module Utils
     extend self
 

@@ -57,98 +57,91 @@ module Moneta
           end
         end_eval
 
-        key = compile_transformer(keys, 'key')
-        dump = compile_transformer(values, 'value')
-        load = compile_transformer(values.reverse, 'value', 1)
+        key, key_opts = compile_transformer(keys, 'key')
+        dump, dump_opts = compile_transformer(values, 'value')
+        load, load_opts = compile_transformer(values.reverse, 'value', 1)
 
         if values.empty?
-          compile_key_transformer(klass, key)
+          compile_key_transformer(klass, key, key_opts)
         elsif keys.empty?
-          compile_value_transformer(klass, load, dump)
+          compile_value_transformer(klass, load, load_opts, dump, dump_opts)
         else
-          compile_key_value_transformer(klass, key, load, dump)
+          compile_key_value_transformer(klass, key, key_opts, load, load_opts, dump, dump_opts)
         end
 
         klass
       end
 
-      def compile_key_transformer(klass, key)
+      def without(*options)
+        options = options.flatten.uniq
+        options.empty? ? 'options' : "Utils.without(options, #{options.map(&:to_sym).map(&:inspect).join(', ')})"
+      end
+
+      def compile_key_transformer(klass, key, key_opts)
         klass.class_eval <<-end_eval, __FILE__, __LINE__
           def key?(key, options = {})
-            @adapter.key?(#{key}, options)
+            @adapter.key?(#{key}, #{without key_opts})
           end
           def increment(key, amount = 1, options = {})
-            @adapter.increment(#{key}, amount, options)
+            @adapter.increment(#{key}, amount, #{without key_opts})
           end
           def load(key, options = {})
-            options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.load(#{key}, options)
+            @adapter.load(#{key}, #{without :raw, key_opts})
           end
           def store(key, value, options = {})
-            options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.store(#{key}, value, options)
+            @adapter.store(#{key}, value, #{without :raw, key_opts})
           end
           def delete(key, options = {})
-            options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.delete(#{key}, options)
+            @adapter.delete(#{key}, #{without :raw, key_opts})
           end
           def create(key, value, options = {})
-            options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.create(#{key}, value, options)
+            @adapter.create(#{key}, value, #{without :raw, key_opts})
           end
         end_eval
       end
 
-      def compile_value_transformer(klass, load, dump)
+      def compile_value_transformer(klass, load, load_opts, dump, dump_opts)
         klass.class_eval <<-end_eval, __FILE__, __LINE__
           def load(key, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            value = @adapter.load(key, options)
-            value && !raw ? #{load} : value
+            value = @adapter.load(key, #{without :raw, load_opts})
+            value && !options[:raw] ? #{load} : value
           end
           def store(key, value, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.store(key, raw ? value : #{dump}, options)
+            @adapter.store(key, options[:raw] ? value : #{dump}, #{without :raw, dump_opts})
             value
           end
           def delete(key, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            value = @adapter.delete(key, options)
-            value && !raw ? #{load} : value
+            value = @adapter.delete(key, #{without :raw, load_opts})
+            value && !options[:raw] ? #{load} : value
           end
           def create(key, value, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.create(key, raw ? value : #{dump}, options)
+            @adapter.create(key, options[:raw] ? value : #{dump}, #{without :raw, dump_opts})
           end
         end_eval
       end
 
-      def compile_key_value_transformer(klass, key, load, dump)
+      def compile_key_value_transformer(klass, key, key_opts, load, load_opts, dump, dump_opts)
         klass.class_eval <<-end_eval, __FILE__, __LINE__
           def key?(key, options = {})
-            @adapter.key?(#{key}, options)
+            @adapter.key?(#{key}, #{without key_opts})
           end
           def increment(key, amount = 1, options = {})
-            @adapter.increment(#{key}, amount, options)
+            @adapter.increment(#{key}, amount, #{without key_opts})
           end
           def load(key, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            value = @adapter.load(#{key}, options)
-            value && !raw ? #{load} : value
+            value = @adapter.load(#{key}, #{without :raw, key_opts, load_opts})
+            value && !options[:raw] ? #{load} : value
           end
           def store(key, value, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.store(#{key}, raw ? value : #{dump}, options)
+            @adapter.store(#{key}, options[:raw] ? value : #{dump}, #{without :raw, key_opts, dump_opts})
             value
           end
           def delete(key, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            value = @adapter.delete(#{key}, options)
-            value && !raw ? #{load} : value
+            value = @adapter.delete(#{key}, #{without :raw, key_opts, load_opts})
+            value && !options[:raw] ? #{load} : value
           end
           def create(key, value, options = {})
-            raw = options.include?(:raw) && (options = options.dup; options.delete(:raw))
-            @adapter.create(#{key}, raw ? value : #{dump}, options)
+            @adapter.create(#{key}, options[:raw] ? value : #{dump}, #{without :raw, key_opts, dump_opts})
           end
         end_eval
       end
@@ -163,7 +156,6 @@ module Moneta
         end.join("\n")
       end
 
-      # Compile transformer validator regular expression
       def compile_validator(s)
         Regexp.new('\A' + s.gsub(/\w+/) do
                      '(' + TRANSFORMER.select {|k,v| v.first.to_s == $& }.map {|v| ":#{v.first}" }.join('|') + ')'
@@ -172,16 +164,20 @@ module Moneta
 
       # Returned compiled transformer code string
       def compile_transformer(transformer, var, i = 2)
-        transformer.inject(var) do |value, name|
+        value, options = var, []
+        transformer.each do |name|
           raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
           require t[3] if t[3]
           code = t[i]
-          if t[0] == :serialize && var == 'key'
-            "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
-          else
-            code % value
-          end
+          options += code.scan(/options\[:(\w+)\]/).flatten
+          value =
+            if t[0] == :serialize && var == 'key'
+              "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
+            else
+              code % value
+            end
         end
+        return value, options
       end
 
       def class_name(keys, values)

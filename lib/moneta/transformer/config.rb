@@ -23,7 +23,8 @@ module Moneta
                    [ :encode,    "%s.unpack('m0').first",          "[%s].pack('m0')"                                 ] :
                    [ :encode,    "%s.unpack('m').first",           "[%s].pack('m').gsub(\"\n\", '')"                 ],
       :escape   => [ :encode,    'Helper.unescape(%s)',            'Helper.escape(%s)'                               ],
-      :hmac     => [ :hmac,      'Helper.hmacverify(%s, @secret)', 'Helper.hmacsign(%s, @secret)',   'openssl'       ],
+      :hmac     => [ :hmac,      'Helper.hmacverify(%s, options[:secret] || @secret)',
+                                 'Helper.hmacsign(%s, options[:secret] || @secret)',                 'openssl'       ],
       :truncate => [ :truncate,  nil,                              'Helper.truncate(%s, @maxlen)',   'digest/md5'    ],
       :md5      => [ :digest,    nil,                              '::Digest::MD5.hexdigest(%s)',    'digest/md5'    ],
       :rmd160   => [ :digest,    nil,                              '::Digest::RMD160.hexdigest(%s)', 'digest/rmd160' ],
@@ -31,7 +32,7 @@ module Moneta
       :sha256   => [ :digest,    nil,                              '::Digest::SHA256.hexdigest(%s)', 'digest/sha2'   ],
       :sha384   => [ :digest,    nil,                              '::Digest::SHA384.hexdigest(%s)', 'digest/sha2'   ],
       :sha512   => [ :digest,    nil,                              '::Digest::SHA512.hexdigest(%s)', 'digest/sha2'   ],
-      :prefix   => [ :prefix,    nil,                              '(options[:prefix]||@prefix)+%s'                  ],
+      :prefix   => [ :prefix,    nil,                              '(options[:prefix] || @prefix)+%s'                ],
       :spread   => [ :spread,    nil,                              'Helper.spread(%s)'                               ],
       :to_s     => [ :string,    nil,                              '%s.to_s'                                         ],
       :inspect  => [ :string,    nil,                              '%s.inspect'                                      ],
