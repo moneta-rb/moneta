@@ -37,13 +37,13 @@ $ gem install moneta
 
 or add it to your Gemfile
 
-~~~
+~~~ ruby
 gem 'moneta'
 ~~~
 
 Now you are ready to go:
 
-~~~
+~~~ ruby
 require 'moneta'
 
 # Create a simple file store
