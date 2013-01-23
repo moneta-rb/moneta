@@ -40,7 +40,7 @@ module Moneta
         options = options.dup
         options.delete(:expires)
       end
-      store_entry(key, value, expires, options)
+      super(key, new_entry(value, expires), options)
       value
     end
 
@@ -49,6 +49,17 @@ module Moneta
       return super if options.include?(:raw)
       value, expires = super
       value if !expires || Time.now.to_i <= expires
+    end
+
+    # (see Proxy#store)
+    def create(key, value, options = {})
+      return super if options.include?(:raw)
+      expires = expires_at(options)
+      if options.include?(:expires)
+        options = options.dup
+        options.delete(:expires)
+      end
+      @adapter.create(key, new_entry(value, expires), options)
     end
 
     private
@@ -66,7 +77,7 @@ module Moneta
           delete(key)
           nil
         elsif new_expires != nil
-          store_entry(key, value, new_expires, options)
+          @adapter.store(key, new_entry(value, new_expires), options)
           entry
         else
           entry
@@ -74,16 +85,14 @@ module Moneta
       end
     end
 
-    def store_entry(key, value, expires, options)
-      entry =
-        if expires
-          [value, expires.to_i]
-        elsif Array === value || value == nil
-          [value]
-        else
-          value
-        end
-      @adapter.store(key, entry, options)
+    def new_entry(value, expires)
+      if expires
+        [value, expires.to_i]
+      elsif Array === value || value == nil
+        [value]
+      else
+        value
+      end
     end
   end
 end
