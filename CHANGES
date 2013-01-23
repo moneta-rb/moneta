@@ -2,6 +2,7 @@ master
 
 * Adapters::Memcached: switched to Dalli by default
 * Adapters::Daybreak: add option :sync to load and store
+* Adapters::LRUHash: add option :max_count
 * Transformer: add inspect key transformer
 * Added #create method to atomically create entries
 * Added WeakCreate and WeakIncrement proxies

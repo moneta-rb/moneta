@@ -12,8 +12,10 @@ module Moneta
 
       # @param [Hash] options
       # @option options [Integer] :max_size (1024000) Maximum total byte size of hash values
+      # @option options [Integer] :max_count (10240) Maximum number of hash values
       def initialize(options = {})
         @max_size = options[:max_size] || 1024000
+        @max_count = options[:max_count] || 10240
         clear
       end
 
@@ -41,7 +43,7 @@ module Moneta
         entry.value = value
         @size += entry.value.bytesize
         entry.insert_after(@list)
-        delete(@list.prev.key) while @list.next != @list.prev && @size > @max_size
+        delete(@list.prev.key) while @list.next != @list.prev && (@size > @max_size || @entry.size > @max_count)
         value
       end
 
