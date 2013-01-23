@@ -18,9 +18,9 @@ BUNDLE_FILE = "moneta-bundle-#{RUBY_VERSION}-#{ruby}.tar.gz"
 
 if system("wget --no-check-certificate --quiet -O #{BUNDLE_FILE} https://moneta:#{ENV['DAV_PW']}@mendler.net/dav/#{BUNDLE_FILE}")
   cmd 'rm -rf .bundle'
-  cmd "tar -xf #{BUNDLE_FILE}"
+  cmd "tar -xpf #{BUNDLE_FILE}"
   cmd "rm -f #{BUNDLE_FILE}"
 else
   cmd 'bundle install --path .bundle'
-  cmd "tar -czf #{BUNDLE_FILE} .bundle"
+  cmd "tar -cpzf #{BUNDLE_FILE} .bundle"
 end
