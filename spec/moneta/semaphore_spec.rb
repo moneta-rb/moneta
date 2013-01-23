@@ -17,7 +17,7 @@ describe_moneta "semaphore" do
   include_context 'setup_store'
 
   it 'should have #lock' do
-    mutex = Moneta::Semaphore.new(store, 'mutex')
+    mutex = Moneta::Semaphore.new(store, 'semaphore')
     mutex.lock.should be_true
     mutex.locked?.should be_true
     expect do
@@ -31,7 +31,7 @@ describe_moneta "semaphore" do
   end
 
   it 'should have #enter' do
-    mutex = Moneta::Semaphore.new(store, 'mutex')
+    mutex = Moneta::Semaphore.new(store, 'semaphore')
     mutex.enter.should be_true
     mutex.locked?.should be_true
     expect do
@@ -41,6 +41,35 @@ describe_moneta "semaphore" do
      mutex.try_enter
     end.to raise_error(RuntimeError)
     mutex.leave.should be_nil
+    mutex.locked?.should be_false
+  end
+
+  it 'should lock with #lock' do
+    a = Moneta::Semaphore.new(store, 'semaphore')
+    b = Moneta::Semaphore.new(store, 'semaphore')
+    a.lock.should be_true
+    b.try_lock.should be_false
+    a.unlock.should be_nil
+  end
+
+  it 'should count concurrent accesses' do
+    a = Moneta::Semaphore.new(store, 'semaphore', 2)
+    b = Moneta::Semaphore.new(store, 'semaphore', 2)
+    c = Moneta::Semaphore.new(store, 'semaphore', 2)
+    a.synchronize do
+      a.locked?.should be_true
+      b.synchronize do
+        b.locked?.should be_true
+        c.try_lock.should be_false
+      end
+    end
+  end
+
+  it 'should have #synchronize' do
+    mutex = Moneta::Semaphore.new(store, 'semaphore')
+    mutex.synchronize do
+      mutex.locked?.should be_true
+    end
     mutex.locked?.should be_false
   end
 

@@ -44,4 +44,20 @@ describe_moneta "mutex" do
     mutex.locked?.should be_false
   end
 
+  it 'should lock with #lock' do
+    a = Moneta::Mutex.new(store, 'mutex')
+    b = Moneta::Mutex.new(store, 'mutex')
+    a.lock.should be_true
+    b.try_lock.should be_false
+    a.unlock.should be_nil
+  end
+
+  it 'should have #synchronize' do
+    mutex = Moneta::Mutex.new(store, 'mutex')
+    mutex.synchronize do
+      mutex.locked?.should be_true
+    end
+    mutex.locked?.should be_false
+  end
+
 end
