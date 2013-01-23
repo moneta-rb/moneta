@@ -1301,6 +1301,72 @@ end}
     :build => 'Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',
     :specs => STANDARD_SPECS.simplevalues_only.simplekeys_only.without_transform
   },
+  'mutex' => {
+    :store => :Memory,
+    :specs => Specs.new,
+    :tests => %{
+it 'should have #lock' do
+  mutex = Moneta::Mutex.new(store, 'mutex')
+  mutex.lock.should be_true
+  mutex.locked?.should be_true
+  expect do
+   mutex.lock
+  end.to raise_error(RuntimeError)
+  expect do
+   mutex.try_lock
+  end.to raise_error(RuntimeError)
+  mutex.unlock.should be_nil
+  mutex.locked?.should be_false
+end
+
+it 'should have #enter' do
+  mutex = Moneta::Mutex.new(store, 'mutex')
+  mutex.enter.should be_true
+  mutex.locked?.should be_true
+  expect do
+   mutex.enter
+  end.to raise_error(RuntimeError)
+  expect do
+   mutex.try_enter
+  end.to raise_error(RuntimeError)
+  mutex.leave.should be_nil
+  mutex.locked?.should be_false
+end
+  }
+  },
+  'semaphore' => {
+    :store => :Memory,
+    :specs => Specs.new,
+    :tests => %{
+it 'should have #lock' do
+  mutex = Moneta::Semaphore.new(store, 'mutex')
+  mutex.lock.should be_true
+  mutex.locked?.should be_true
+  expect do
+   mutex.lock
+  end.to raise_error(RuntimeError)
+  expect do
+   mutex.try_lock
+  end.to raise_error(RuntimeError)
+  mutex.unlock.should be_nil
+  mutex.locked?.should be_false
+end
+
+it 'should have #enter' do
+  mutex = Moneta::Semaphore.new(store, 'mutex')
+  mutex.enter.should be_true
+  mutex.locked?.should be_true
+  expect do
+   mutex.enter
+  end.to raise_error(RuntimeError)
+  expect do
+   mutex.try_enter
+  end.to raise_error(RuntimeError)
+  mutex.leave.should be_nil
+  mutex.locked?.should be_false
+end
+  }
+  },
   'optionmerger' => {
     :store => :Memory,
     :specs => Specs.new,

@@ -6,10 +6,10 @@ module Moneta
   class Lock < Wrapper
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
-    # @option options [String] :mutex (Mutex.new) Mutex object
+    # @option options [String] :mutex (::Mutex.new) Mutex object
     def initialize(adapter, options = {})
       super
-      @lock = options[:mutex] || Mutex.new
+      @lock = options[:mutex] || ::Mutex.new
     end
 
     protected
