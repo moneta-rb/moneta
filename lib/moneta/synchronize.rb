@@ -4,6 +4,7 @@ module Moneta
   class SynchronizePrimitive
     # Synchronize block
     #
+    # @api public
     # @yieldparam Synchronized block
     # @return [Object] result of block
     def synchronize
@@ -15,6 +16,7 @@ module Moneta
 
     # Try to enter critical section (nonblocking)
     #
+    # @api public
     # @return [Boolean] true if the lock was acquired
     def try_enter
       raise 'Already locked' if @locked
@@ -24,6 +26,7 @@ module Moneta
 
     # Enter critical section (blocking)
     #
+    # @api public
     # @param [Number] timeout Maximum time to wait
     # @param [Number] wait Sleep time between tries to acquire lock
     # @return [Boolean] true if the lock was aquired
@@ -39,6 +42,8 @@ module Moneta
     alias_method :lock, :enter
 
     # Leave critical section
+    #
+    # @api public
     def leave
       raise 'Not locked' unless @locked
       leave_primitive
@@ -48,12 +53,22 @@ module Moneta
     alias_method :unlock, :leave
 
     # Is the lock acquired?
+    #
+    # @api public
     def locked?
       @locked
     end
   end
 
   # Distributed/shared store-wide mutex
+  #
+  # @example Use `Moneta::Mutex`
+  #     mutex = Moneta::Mutex.new(store, 'mutex')
+  #     mutex.synchronize do
+  #       # Synchronized access
+  #       store['counter'] += 1
+  #     end
+  #
   # @api public
   class Mutex < SynchronizePrimitive
     # @param [Moneta store] store The store we want to lock
@@ -74,6 +89,14 @@ module Moneta
   end
 
   # Distributed/shared store-wide semaphore
+  #
+  # @example Use `Moneta::Semaphore`
+  #     semaphore = Moneta::Semaphore.new(store, 'semaphore', 2)
+  #     semaphore.synchronize do
+  #       # Synchronized access
+  #       ...
+  #     end
+  #
   # @api public
   class Semaphore < SynchronizePrimitive
     # @param [Moneta store] store The store we want to lock

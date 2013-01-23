@@ -391,7 +391,9 @@ mutex = Moneta::Mutex.new(store, 'mutex_key')
 
 mutex.synchronize do
    mutex.locked? # returns true
-   ...
+
+   # Synchronized access to counter
+   store['counter'] += 1
 end
 
 begin
