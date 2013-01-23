@@ -58,6 +58,9 @@ module Moneta
     def mainloop
       client = accept
       handle(client) if client
+    rescue SignalException => ex
+      warn "Moneta::Server - #{ex.message}"
+      raise if ex.signo == 15 # SIGTERM
     rescue Exception => ex
       warn "Moneta::Server - #{ex.message}"
       write(client, Error.new(ex.message)) if client

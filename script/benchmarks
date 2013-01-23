@@ -236,7 +236,7 @@ class MonetaBenchmarks
         puts "\e[31m#{name} not benchmarked - #{ex.message}\e[0m"
         STORES.delete(name)
       ensure
-        cache.close if cache
+        (cache.close rescue nil) if cache
       end
     end
   end
