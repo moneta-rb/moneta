@@ -76,6 +76,8 @@ module Moneta
     # @param [Object] key
     # @param [Integer] amount
     # @param [Hash] options
+    # @option options [String] :prefix Prefix key (See {Transformer})
+    # @option options Other options as defined by the adapters or middleware
     # @return [Object] value from store
     # @api public
     def increment(key, amount = 1, options = {})
@@ -91,6 +93,8 @@ module Moneta
     # @param [Object] key
     # @param [Integer] amount
     # @param [Hash] options
+    # @option options [String] :prefix Prefix key (See {Transformer})
+    # @option options Other options as defined by the adapters or middleware
     # @return [Object] value from store
     # @api public
     def decrement(key, amount = 1, options = {})
@@ -110,6 +114,9 @@ module Moneta
     #   block and return its return value.
     #   @param [Object] key
     #   @param [Hash] options
+    #   @option options [Integer] :expires Update expiration time (See {Expires})
+    #   @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
+    #   @option options [String] :prefix Prefix key (See {Transformer})
     #   @return [Object] value from store
     #
     # @overload fetch(key, default, options = {})
@@ -117,6 +124,9 @@ module Moneta
     #   @param [Object] key
     #   @param [Object] default Default value
     #   @param [Hash] options
+    #   @option options [Integer] :expires Update expiration time (See {Expires})
+    #   @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
+    #   @option options [String] :prefix Prefix key (See {Transformer})
     #   @return [Object] value from store
     #
     # @api public
@@ -157,6 +167,9 @@ module Moneta
     # @param [Object] key
     # @param [Object] value
     # @param [Hash] options
+    # @option options [Integer] :expires Update expiration time (See {Expires})
+    # @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
+    # @option options [String] :prefix Prefix key (See {Transformer})
     # @return [Boolean] key was set
     # @api public
     def create(key, value, options = {})
