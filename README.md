@@ -756,6 +756,7 @@ on top of the different stores.
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
 * [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
 * [Cache](https://github.com/seamusabshere/cache): Rubygem cache wraps Memcached and Redis
+* [Ramaze::Cache](http://ramaze.net/documentation/Innate/Cache.html): Cache stores of the Ramaze framework with support for LocalMemCache, Memcached, Sequel, Redis, ...
 
 ------
 
