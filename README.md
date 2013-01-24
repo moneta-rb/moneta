@@ -127,7 +127,7 @@ to upgrade to a real key/value store.
 
 <tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment<sup>[8]</sup></th><th>Atomic create<sup>[9]</sup></th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr>
 
-<tr><th colspan="2">Persistent stores</th><th colspan="6"></th></tr>
+<tr><th colspan="2">Persistent stores</th><th colspan="7"></th></tr>
 
 <tr><td>Mongo</td><td>mongo</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
 
@@ -173,7 +173,7 @@ to upgrade to a real key/value store.
 
 <tr><td>Riak</td><td>riak-client</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://docs.basho.com/">Riak</a> database</td></tr>
 
-<tr><th colspan="2">Non persistent stores</th><th colspan="6"></th></tr>
+<tr><th colspan="2">Non persistent stores</th><th colspan="7"></th></tr>
 
 <tr><td>MemcachedDalli</td><td>dalli</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database with Dalli library</td></tr>
 
