@@ -2,7 +2,7 @@ module Moneta
   module Adapters
     # LRUHash backend
     #
-    # Based on Hashery::LRUHash but simpler and measures memory usage instead of hash size.
+    # Based on Hashery::LRUHash but simpler and measures both memory usage and hash size.
     #
     # @api public
     class LRUHash
