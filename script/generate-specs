@@ -1510,6 +1510,10 @@ it 'has method #raw' do
   store.raw.should equal(store.raw.raw)
 end
 
+it 'has method #expires' do
+  store.expires(10).default_options.should == {:store=>{:expires=>10},:create=>{:expires=>10}}
+end
+
 it 'has method #prefix' do
   store.prefix('a').default_options.should == {:store=>{:prefix=>'a'},:load=>{:prefix=>'a'},:create=>{:prefix=>'a'},
                                                :delete=>{:prefix=>'a'},:key? => {:prefix=>'a'},:increment=>{:prefix=>'a'}}

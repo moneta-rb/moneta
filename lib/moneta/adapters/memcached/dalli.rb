@@ -46,11 +46,7 @@ module Moneta
         # FIXME: There is a Dalli bug, load(key) returns a wrong value after increment
         # therefore we set default = nil and create the counter manually
 	# See https://github.com/mperham/dalli/issues/309
-        result = if amount >= 0
-                   @cache.incr(key, amount, expires_value(options) || nil, nil)
-                 else
-                   @cache.decr(key, -amount, expires_value(options) || nil, nil)
-                 end
+        result = amount >= 0 ? @cache.incr(key, amount, nil, nil) : @cache.decr(key, -amount, nil, nil)
         if result
           result
         elsif create(key, amount.to_s, options)

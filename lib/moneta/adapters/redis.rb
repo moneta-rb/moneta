@@ -56,9 +56,7 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        value = @redis.incrby(key, amount)
-        update_expires(key, options)
-        value
+        @redis.incrby(key, amount)
       end
 
       # (see Proxy#clear)
