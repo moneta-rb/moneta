@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if `wget --no-check-certificate --quiet -O kyotocabinet.tar.gz https://moneta:$DAV_PW@mendler.net/dav/kyotocabinet.tar.gz`; then
+  tar -xf kyotocabinet.tar.gz
+else
+  wget http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.76.tar.gz
+  tar -xzf kyotocabinet-*.tar.gz
+  rm kyotocabinet-*.tar.gz
+  cd kyotocabinet-*
+  ./configure --prefix=/usr
+  make
+  cd ..
+  tar -czf kyotocabinet.tar.gz kyotocabinet-*
+  curl -u moneta:$DAV_PW -k -T kyotocabinet.tar.gz https://mendler.net/dav/ || echo 'Nothing uploaded'
+fi
+cd kyotocabinet-*
+sudo make install

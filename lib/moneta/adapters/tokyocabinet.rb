@@ -9,14 +9,13 @@ module Moneta
       # @option options [String] :file Database file
       # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)
       def initialize(options = {})
-        file = options[:file]
         raise ArgumentError, 'Option :file is required' unless options[:file]
         if options[:type] == :bdb
           @hash = ::TokyoCabinet::BDB.new
-          @hash.open(file, ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
+          @hash.open(options[:file], ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
         else
           @hash = ::TokyoCabinet::HDB.new
-          @hash.open(file, ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
+          @hash.open(options[:file], ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
         end or raise @hash.errmsg(@hash.ecode)
       end
 

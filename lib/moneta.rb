@@ -39,6 +39,7 @@ module Moneta
     autoload :GDBM,            'moneta/adapters/gdbm'
     autoload :HBase,           'moneta/adapters/hbase'
     autoload :LRUHash,         'moneta/adapters/lruhash'
+    autoload :KyotoCabinet,    'moneta/adapters/kyotocabinet'
     autoload :LevelDB,         'moneta/adapters/leveldb'
     autoload :LocalMemCache,   'moneta/adapters/localmemcache'
     autoload :Memcached,       'moneta/adapters/memcached'

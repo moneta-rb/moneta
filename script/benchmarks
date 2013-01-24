@@ -46,6 +46,7 @@ class MonetaBenchmarks
     :GDBM => { :file => "#{DIR}/gdbm" },
     :HBase => {},
     :HashFile => { :dir => "#{DIR}/hashfile" },
+    :KyotoCabinet => { :file => 'kyotocabinet.kch' },
     :LRUHash => {},
     :LevelDB => { :dir => "#{DIR}/leveldb" },
     :LocalMemCache => { :file => "#{DIR}/lmc" },
@@ -60,6 +61,7 @@ class MonetaBenchmarks
     :Sequel => { :db => 'sqlite:/' },
     :Sqlite => { :file => ':memory:' },
     :TDB => { :file => "#{DIR}/tdb" },
+    :TokyoCabinet => { :file => 'tokyocabinet' },
   }
 
   CONFIGS = {

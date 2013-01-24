@@ -42,6 +42,7 @@ gem 'cassandra'
 gem 'tdb', :platforms => :ruby
 gem 'leveldb-ruby', :platforms => :ruby
 gem 'tokyocabinet', :platforms => :ruby
+gem 'kyotocabinet-ruby', :platforms => :ruby, :github => 'minad/kyotocabinet-ruby'
 gem 'memcached', :platforms => :ruby
 gem 'jruby-memcached', :platforms => :jruby
 gem 'sqlite3', :platforms => :ruby

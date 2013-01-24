@@ -104,6 +104,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * [Redis](http://redis.io/) (`:Redis`)
     * [Riak](http://docs.basho.com/) (`:Riak`)
     * [SDBM](http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html) (`:SDBM`)
+    * [KyotoCabinet](http://fallabs.com/kyotocabinet/) (`:KyotoCabinet`)
     * [TokyoCabinet](http://fallabs.com/tokyocabinet/) (`:TokyoCabinet`)
     * [Simple Samba database TDB](http://tdb.samba.org/) (`:TDB`)
 * Document databases:
@@ -158,6 +159,8 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 <tr><td>SDBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html">SDBM</a> database</td></tr>
 
 <tr><td>TDB</td><td>tdb</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://tdb.samba.org/">TDB</a> database</td></tr>
+
+<tr><td>KyotoCabinet</td><td>tokoycabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/kyotocabinet/">KyotoCabinet</a> database</td></tr>
 
 <tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
 
