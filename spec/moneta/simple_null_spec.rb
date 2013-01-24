@@ -6,6 +6,10 @@ describe_moneta "simple_null" do
     @log ||= File.open(File.join(make_tempdir, 'simple_null.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   def new_store
     Moneta.new(:Null, :logger => {:out => log})
   end
@@ -15,6 +19,7 @@ describe_moneta "simple_null" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'

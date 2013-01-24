@@ -6,6 +6,10 @@ describe_moneta "adapter_tokyocabinet_hdb" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_tokyocabinet_hdb.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_hdb"), :type => :hdb)
   end
@@ -16,6 +20,7 @@ describe_moneta "adapter_tokyocabinet_hdb" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'

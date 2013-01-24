@@ -6,6 +6,10 @@ describe_moneta "semaphore" do
     @log ||= File.open(File.join(make_tempdir, 'semaphore.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   def new_store
     Moneta.new(:Memory, :logger => {:out => log})
   end

@@ -6,6 +6,10 @@ describe_moneta "adapter_cookie" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_cookie.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta::Adapters::Cookie.new
   end
@@ -16,6 +20,7 @@ describe_moneta "adapter_cookie" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'not_persist'
   it_should_behave_like 'null_stringkey_stringvalue'

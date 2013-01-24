@@ -101,5 +101,10 @@ module Moneta
       @cache.close
       @backend.close
     end
+
+    # (see Proxy#features)
+    def features
+      @features ||= ((@cache.features + [:create, :increment]) & @backend.features).freeze
+    end
   end
 end

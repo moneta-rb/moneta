@@ -6,6 +6,10 @@ describe_moneta "adapter_cassandra_with_default_expires" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_cassandra_with_default_expires.log'), 'a')
   end
 
+  def features
+    [:expires]
+  end
+
   def new_store
     Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra_with_default_expires', :expires => 1)
   end
@@ -17,6 +21,7 @@ describe_moneta "adapter_cassandra_with_default_expires" do
   include_context 'setup_store'
   it_should_behave_like 'default_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'

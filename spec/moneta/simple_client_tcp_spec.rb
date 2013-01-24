@@ -6,6 +6,10 @@ describe_moneta "simple_client_tcp" do
     @log ||= File.open(File.join(make_tempdir, 'simple_client_tcp.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   start_server(Moneta::Adapters::Memory.new)
   def new_store
     Moneta.new(:Client, :logger => {:out => log})
@@ -17,6 +21,7 @@ describe_moneta "simple_client_tcp" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

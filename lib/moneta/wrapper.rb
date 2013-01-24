@@ -41,5 +41,10 @@ module Moneta
     def close
       wrap(:close) { super }
     end
+
+    # (see Proxy#features)
+    def features
+      wrap(:features) { super }
+    end
   end
 end

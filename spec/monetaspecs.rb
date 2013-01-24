@@ -17408,3 +17408,22 @@ shared_examples_for 'transform_value_expires' do
   end
 end
 
+#################### features ####################
+
+shared_examples_for 'features' do
+  it 'should report correct features' do
+    store.features.sort_by(&:to_s).should == features
+  end
+
+  it 'should have frozen features' do
+    store.features.frozen?.should be_true
+  end
+
+  it 'should have #supports?' do
+    features.each do |f|
+      store.supports?(f).should be_true
+    end
+    store.supports?(:unknown).should be_false
+  end
+end
+

@@ -6,6 +6,10 @@ describe_moneta "simple_memory_with_json_key_serializer" do
     @log ||= File.open(File.join(make_tempdir, 'simple_memory_with_json_key_serializer.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.new(:Memory, :key_serializer => :json, :logger => {:out => log})
   end
@@ -16,6 +20,7 @@ describe_moneta "simple_memory_with_json_key_serializer" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'not_persist'

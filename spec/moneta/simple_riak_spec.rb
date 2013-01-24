@@ -6,6 +6,10 @@ describe_moneta "simple_riak" do
     @log ||= File.open(File.join(make_tempdir, 'simple_riak.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   require 'riak'
 
   Riak.disable_list_keys_warnings = true
@@ -19,6 +23,7 @@ describe_moneta "simple_riak" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'

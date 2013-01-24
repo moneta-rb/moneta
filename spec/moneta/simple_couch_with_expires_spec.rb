@@ -6,6 +6,10 @@ describe_moneta "simple_couch_with_expires" do
     @log ||= File.open(File.join(make_tempdir, 'simple_couch_with_expires.log'), 'a')
   end
 
+  def features
+    [:expires]
+  end
+
   def new_store
     Moneta.new(:Couch, :db => 'simple_couch_with_expires', :expires => true, :logger => {:out => log})
   end
@@ -16,6 +20,7 @@ describe_moneta "simple_couch_with_expires" do
 
   include_context 'setup_store'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'

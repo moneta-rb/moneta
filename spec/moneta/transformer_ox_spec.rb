@@ -6,6 +6,10 @@ describe_moneta "transformer_ox" do
     @log ||= File.open(File.join(make_tempdir, 'transformer_ox.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.build do
       use :Transformer, :key => :ox, :value => :ox
@@ -19,6 +23,7 @@ describe_moneta "transformer_ox" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

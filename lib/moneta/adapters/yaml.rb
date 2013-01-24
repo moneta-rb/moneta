@@ -4,7 +4,7 @@ module Moneta
   module Adapters
     # YAML::Store backend
     # @api public
-    class YAML < Moneta::Adapters::PStore
+    class YAML < PStore
       protected
 
       def new_store(options)

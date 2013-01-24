@@ -67,6 +67,13 @@ module Moneta
       last
     end
 
+    # (see Proxy#create)
+    def create(key, value, options = {})
+      last = false
+      @stack.each {|s| last = s.create(key, value, options) }
+      last
+    end
+
     # (see Proxy#delete)
     def delete(key, options = {})
       @stack.inject(nil) do |value, s|
@@ -85,6 +92,15 @@ module Moneta
     def close
       @stack.each {|s| s.close }
       nil
+    end
+
+    # (see Proxy#features)
+    def features
+      @features ||=
+        begin
+          features = @stack.map(&:features)
+          features.inject(features.first, &:&).freeze
+        end
     end
   end
 end

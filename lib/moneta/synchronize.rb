@@ -74,6 +74,7 @@ module Moneta
     # @param [Moneta store] store The store we want to lock
     # @param [Object] lock Key of the lock entry
     def initialize(store, lock)
+      raise 'Store must support feature :create' unless store.supports?(:create)
       @store, @lock = store, lock
     end
 
@@ -103,6 +104,7 @@ module Moneta
     # @param [Object] counter Key of the counter entry
     # @param [Fixnum] max Maximum number of threads which are allowed to enter the critical section
     def initialize(store, counter, max = 1)
+      raise 'Store must support feature :increment' unless store.supports?(:increment)
       @store, @counter, @max = store, counter, max
       @store.increment(@counter, 0, :expires => false) # Ensure that counter exists
     end

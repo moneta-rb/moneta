@@ -6,6 +6,10 @@ describe_moneta "expires_memory_with_default_expires" do
     @log ||= File.open(File.join(make_tempdir, 'expires_memory_with_default_expires.log'), 'a')
   end
 
+  def features
+    [:create, :expires, :increment]
+  end
+
   def new_store
     Moneta.build do
       use :Expires, :expires => 1
@@ -22,6 +26,7 @@ describe_moneta "expires_memory_with_default_expires" do
   it_should_behave_like 'create_expires'
   it_should_behave_like 'default_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'not_persist'
   it_should_behave_like 'null_objectkey_objectvalue'

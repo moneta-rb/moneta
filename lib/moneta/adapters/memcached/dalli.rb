@@ -8,6 +8,8 @@ module Moneta
       include Defaults
       include ExpiresSupport
 
+      supports :create, :increment
+
       # @param [Hash] options
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
       # @option options [Integer] :expires Default expiration time

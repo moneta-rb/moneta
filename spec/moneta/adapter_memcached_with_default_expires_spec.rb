@@ -6,6 +6,10 @@ describe_moneta "adapter_memcached_with_default_expires" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_memcached_with_default_expires.log'), 'a')
   end
 
+  def features
+    [:create, :expires, :increment]
+  end
+
   def new_store
     Moneta::Adapters::Memcached.new(:expires => 1)
   end
@@ -19,6 +23,7 @@ describe_moneta "adapter_memcached_with_default_expires" do
   it_should_behave_like 'create_expires'
   it_should_behave_like 'default_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_stringkey_stringvalue'

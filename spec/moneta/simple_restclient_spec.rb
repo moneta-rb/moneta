@@ -6,6 +6,10 @@ describe_moneta "simple_restclient" do
     @log ||= File.open(File.join(make_tempdir, 'simple_restclient.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   start_restserver
   def new_store
     Moneta.new(:RestClient, :url => 'http://localhost:8808/moneta/', :logger => {:out => log})
@@ -16,6 +20,7 @@ describe_moneta "simple_restclient" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'

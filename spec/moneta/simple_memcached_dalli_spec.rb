@@ -6,6 +6,10 @@ describe_moneta "simple_memcached_dalli" do
     @log ||= File.open(File.join(make_tempdir, 'simple_memcached_dalli.log'), 'a')
   end
 
+  def features
+    [:create, :expires, :increment]
+  end
+
   def new_store
     Moneta.new(:MemcachedDalli, :namespace => "simple_memcached_dalli", :logger => {:out => log})
   end
@@ -18,6 +22,7 @@ describe_moneta "simple_memcached_dalli" do
   it_should_behave_like 'create'
   it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

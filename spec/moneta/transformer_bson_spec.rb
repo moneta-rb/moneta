@@ -6,6 +6,10 @@ describe_moneta "transformer_bson" do
     @log ||= File.open(File.join(make_tempdir, 'transformer_bson.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.build do
       use :Transformer, :key => :bson, :value => :bson
@@ -19,6 +23,7 @@ describe_moneta "transformer_bson" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'null_stringkey_hashvalue'

@@ -12,6 +12,7 @@ module Moneta
     # @param [Hash] options
     # @option options [String] :expires Default expiration time
     def initialize(adapter, options = {})
+      raise 'Store already supports feature :expires' if adapter.supports?(:expires)
       super
       self.default_expires = options[:expires]
     end

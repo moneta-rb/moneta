@@ -6,6 +6,10 @@ describe_moneta "transformer_marshal_sha1" do
     @log ||= File.open(File.join(make_tempdir, 'transformer_marshal_sha1.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.build do
       use :Transformer, :key => [:marshal, :sha1], :value => :marshal
@@ -19,6 +23,7 @@ describe_moneta "transformer_marshal_sha1" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

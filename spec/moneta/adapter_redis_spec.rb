@@ -6,6 +6,10 @@ describe_moneta "adapter_redis" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_redis.log'), 'a')
   end
 
+  def features
+    [:create, :expires, :increment]
+  end
+
   def new_store
     Moneta::Adapters::Redis.new
   end
@@ -18,6 +22,7 @@ describe_moneta "adapter_redis" do
   it_should_behave_like 'create'
   it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_stringkey_stringvalue'

@@ -7,6 +7,8 @@ module Moneta
     class Sequel
       include Defaults
 
+      supports :create, :increment
+
       # @param [Hash] options
       # @option options [String] :db Sequel database
       # @option options [String/Symbol] :table (:moneta) Table name

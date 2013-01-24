@@ -67,6 +67,12 @@ module Moneta
         nil
       end
 
+      # (see Default#features)
+      def features
+        write(@socket, [:features])
+        read_result.freeze
+      end
+
       private
 
       def read_result

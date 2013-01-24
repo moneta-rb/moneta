@@ -83,5 +83,10 @@ module Moneta
       adapter.clear(options)
       self
     end
+
+    # (see Default#features)
+    def features
+      @features ||= (self.class.features + adapter.features).uniq.freeze
+    end
   end
 end

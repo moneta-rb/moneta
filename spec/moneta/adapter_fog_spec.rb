@@ -6,6 +6,10 @@ describe_moneta "adapter_fog" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_fog.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   require 'fog'
   Fog.mock!
   def new_store
@@ -20,6 +24,7 @@ describe_moneta "adapter_fog" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'

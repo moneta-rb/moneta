@@ -6,6 +6,10 @@ describe_moneta "null_adapter" do
     @log ||= File.open(File.join(make_tempdir, 'null_adapter.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   def new_store
     Moneta::Adapters::Null.new
   end

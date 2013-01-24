@@ -8,6 +8,8 @@ module Moneta
       include Defaults
       include IncrementSupport
 
+      supports :create
+
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [String] :table ('moneta') Table name

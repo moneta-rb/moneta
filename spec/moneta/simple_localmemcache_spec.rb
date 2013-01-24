@@ -6,6 +6,10 @@ describe_moneta "simple_localmemcache" do
     @log ||= File.open(File.join(make_tempdir, 'simple_localmemcache.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   def new_store
     Moneta.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache"), :logger => {:out => log})
   end
@@ -15,6 +19,7 @@ describe_moneta "simple_localmemcache" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'

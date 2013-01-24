@@ -6,6 +6,10 @@ describe_moneta "proxy_expires_memory" do
     @log ||= File.open(File.join(make_tempdir, 'proxy_expires_memory.log'), 'a')
   end
 
+  def features
+    [:create, :expires, :increment]
+  end
+
   def new_store
     Moneta.build do
       use :Proxy
@@ -23,6 +27,7 @@ describe_moneta "proxy_expires_memory" do
   it_should_behave_like 'create'
   it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'not_persist'
   it_should_behave_like 'null_objectkey_objectvalue'

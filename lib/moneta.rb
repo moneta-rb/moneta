@@ -89,7 +89,8 @@ module Moneta
   #
   # @api public
   def self.new(name, options = {})
-    expires = options.delete(:expires)
+    expires = options[:expires]
+    options.delete(:expires) unless Integer === expires
     logger = options.delete(:logger)
     threadsafe = options.delete(:threadsafe)
     compress = options.delete(:compress)
@@ -119,17 +120,14 @@ module Moneta
     when :File
       # Use escaping
       transformer[:key] << :escape
-    when :Cassandra, :Redis, :Mongo, :Memcached, :MemcachedDalli, :MemcachedNative
-      # Expires already supported
-      options[:expires] = expires if Integer === expires
-      expires = false
     end
+    a = Adapters.const_get(name).new(options)
     build do
       use :Logger, Hash === logger ? logger : {} if logger
-      use :Expires, :expires => (Integer === expires ? expires : nil) if expires
+      use :Expires, :expires => options[:expires] if !a.supports?(:expires) && expires
       use :Transformer, transformer
       use :Lock if threadsafe
-      adapter name, options
+      adapter a
     end
   end
 

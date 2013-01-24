@@ -6,6 +6,10 @@ describe_moneta "pool" do
     @log ||= File.open(File.join(make_tempdir, 'pool.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.build do
       use :Pool do
@@ -20,6 +24,7 @@ describe_moneta "pool" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_stringkey_stringvalue'

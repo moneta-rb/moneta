@@ -8,6 +8,8 @@ module Moneta
     class DataMapper
       include Defaults
 
+      supports :create
+
       class Store
         include ::DataMapper::Resource
         property :k, Text, :key => true

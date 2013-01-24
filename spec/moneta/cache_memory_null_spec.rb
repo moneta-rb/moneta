@@ -6,6 +6,10 @@ describe_moneta "cache_memory_null" do
     @log ||= File.open(File.join(make_tempdir, 'cache_memory_null.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.build do
       use(:Cache) do
@@ -21,6 +25,7 @@ describe_moneta "cache_memory_null" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'not_persist'
   it_should_behave_like 'null_stringkey_stringvalue'

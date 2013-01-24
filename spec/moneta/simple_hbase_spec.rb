@@ -6,6 +6,10 @@ describe_moneta "simple_hbase" do
     @log ||= File.open(File.join(make_tempdir, 'simple_hbase.log'), 'a')
   end
 
+  def features
+    [:increment]
+  end
+
   def new_store
     Moneta.new(:HBase, :table => "simple_hbase", :logger => {:out => log})
   end
@@ -15,6 +19,7 @@ describe_moneta "simple_hbase" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

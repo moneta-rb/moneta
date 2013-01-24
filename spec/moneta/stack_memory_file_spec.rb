@@ -6,11 +6,13 @@ describe_moneta "stack_memory_file" do
     @log ||= File.open(File.join(make_tempdir, 'stack_memory_file.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.build do
       use(:Stack) do
-        add(Moneta.new(:Null))
-        add(Moneta::Adapters::Null.new)
         add { adapter :Memory }
         add { adapter :File, :dir => File.join(make_tempdir, "stack_memory_file") }
       end
@@ -22,9 +24,10 @@ describe_moneta "stack_memory_file" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'create'
+  it_should_behave_like 'features'
+  it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
-  it_should_behave_like 'not_create'
-  it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'

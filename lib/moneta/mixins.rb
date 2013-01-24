@@ -54,6 +54,34 @@ module Moneta
   module Defaults
     include OptionSupport
 
+    # @api private
+    module ClassMethods
+      # Returns features list
+      #
+      # @return [Array<Symbol>] list of features
+      def features
+        @features ||= superclass.respond_to?(:features) ? superclass.features : [].freeze
+      end
+
+      # Declares that this adapter supports the given feature.
+      #
+      # @example
+      #   class MyAdapter
+      #     include Moneta::Defaults
+      #     supports :create
+      #     def create(key, value, options = {})
+      #       # implement create!
+      #     end
+      #   end
+      def supports(*features)
+        @features = (self.features + features).uniq.freeze
+      end
+    end
+
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
     # Exists the value with key
     #
     # @param [Object] key
@@ -175,6 +203,20 @@ module Moneta
     def create(key, value, options = {})
       raise NotImplementedError, 'create is not supported'
     end
+
+    # Returns features list
+    #
+    # @return [Array<Symbol>] list of features
+    def features
+      self.class.features
+    end
+
+    # Return true if adapter supports the given feature.
+    #
+    # @return [Boolean]
+    def supports?(feature)
+      features.include?(feature)
+    end
   end
 
   # @api private
@@ -185,6 +227,10 @@ module Moneta
       value = Utils.to_int(load(key, options)) + amount
       store(key, value.to_s, options)
       value
+    end
+
+    def self.included(base)
+      base.supports(:increment) if base.respond_to?(:supports)
     end
   end
 
@@ -202,6 +248,10 @@ module Moneta
         store(key, value, options)
         true
       end
+    end
+
+    def self.included(base)
+      base.supports(:create) if base.respond_to?(:supports)
     end
   end
 
@@ -305,6 +355,10 @@ module Moneta
       else
         raise ArgumentError, ":expires must be Numeric or false, got #{value.inspect}"
       end
+    end
+
+    def self.included(base)
+      base.supports(:expires) if base.respond_to?(:supports)
     end
   end
 end

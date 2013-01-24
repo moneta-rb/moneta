@@ -6,6 +6,10 @@ describe_moneta "adapter_localmemcache" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_localmemcache.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   def new_store
     Moneta::Adapters::LocalMemCache.new(:file => File.join(make_tempdir, "adapter_localmemcache"))
   end
@@ -15,6 +19,7 @@ describe_moneta "adapter_localmemcache" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'

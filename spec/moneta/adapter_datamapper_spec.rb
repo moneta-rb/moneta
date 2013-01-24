@@ -6,6 +6,10 @@ describe_moneta "adapter_datamapper" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_datamapper.log'), 'a')
   end
 
+  def features
+    [:create]
+  end
+
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
@@ -18,6 +22,7 @@ describe_moneta "adapter_datamapper" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'

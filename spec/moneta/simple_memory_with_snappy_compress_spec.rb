@@ -6,6 +6,10 @@ describe_moneta "simple_memory_with_snappy_compress" do
     @log ||= File.open(File.join(make_tempdir, 'simple_memory_with_snappy_compress.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.new(:Memory, :compress => :snappy, :logger => {:out => log})
   end
@@ -16,6 +20,7 @@ describe_moneta "simple_memory_with_snappy_compress" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

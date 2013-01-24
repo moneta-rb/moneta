@@ -6,6 +6,10 @@ describe_moneta "simple_gdbm" do
     @log ||= File.open(File.join(make_tempdir, 'simple_gdbm.log'), 'a')
   end
 
+  def features
+    [:create, :increment]
+  end
+
   def new_store
     Moneta.new(:GDBM, :file => File.join(make_tempdir, "simple_gdbm"), :logger => {:out => log})
   end
@@ -16,6 +20,7 @@ describe_moneta "simple_gdbm" do
 
   include_context 'setup_store'
   it_should_behave_like 'create'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'

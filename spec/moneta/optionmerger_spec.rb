@@ -6,6 +6,10 @@ describe_moneta "optionmerger" do
     @log ||= File.open(File.join(make_tempdir, 'optionmerger.log'), 'a')
   end
 
+  def features
+    []
+  end
+
   def new_store
     Moneta.new(:Memory, :logger => {:out => log})
   end

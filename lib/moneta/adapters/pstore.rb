@@ -7,6 +7,8 @@ module Moneta
     class PStore
       include Defaults
 
+      supports :create, :increment
+
       # @param [Hash] options
       # @option options [String] :file PStore file
       def initialize(options = {})

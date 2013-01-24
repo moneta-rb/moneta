@@ -7,6 +7,8 @@ module Moneta
     class ActiveRecord
       include Defaults
 
+      supports :create, :increment
+
       def self.tables
         @tables ||= {}
       end

@@ -6,6 +6,10 @@ describe_moneta "adapter_hbase" do
     @log ||= File.open(File.join(make_tempdir, 'adapter_hbase.log'), 'a')
   end
 
+  def features
+    [:increment]
+  end
+
   def new_store
     Moneta::Adapters::HBase.new(:table => 'adapter_hbase')
   end
@@ -15,6 +19,7 @@ describe_moneta "adapter_hbase" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_create'

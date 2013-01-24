@@ -9,6 +9,8 @@ module Moneta
       include Defaults
       include IncrementSupport
 
+      supports :create
+
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
       def initialize(options = {})

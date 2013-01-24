@@ -6,6 +6,10 @@ describe_moneta "simple_datamapper_with_expires" do
     @log ||= File.open(File.join(make_tempdir, 'simple_datamapper_with_expires.log'), 'a')
   end
 
+  def features
+    [:create, :expires]
+  end
+
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
@@ -20,6 +24,7 @@ describe_moneta "simple_datamapper_with_expires" do
   it_should_behave_like 'create'
   it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
+  it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'

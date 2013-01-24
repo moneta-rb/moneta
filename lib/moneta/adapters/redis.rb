@@ -8,6 +8,8 @@ module Moneta
       include Defaults
       include ExpiresSupport
 
+      supports :create, :increment
+
       # @param [Hash] options
       # @option options [Integer] :expires Default expiration time
       # @option options Other options passed to `Redis#new`
