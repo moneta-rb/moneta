@@ -755,6 +755,7 @@ on top of the different stores.
 * [Padrino::Cache::Store](http://www.padrinorb.com/api/Padrino/Cache/Store.html): The Padrino cache store abstraction
 * [ToyStore](https://github.com/jnunemaker/toystore): ORM mapper for key/value stores
 * [ToyStore Adapter](https://github.com/jnunemaker/adapter): Adapter to key/value stores used by ToyStore, Moneta can be used directly with the ToyStore Memory adapter
+* [Cache](https://github.com/seamusabshere/cache): Rubygem cache wraps Memcached and Redis
 
 ------
 
