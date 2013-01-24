@@ -123,6 +123,8 @@ to upgrade to a real key/value store.
 
 ### Backend feature matrix
 
+__NOTE:__ The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/minad/moneta/master/file/README.md#Backend_feature_matrix)
+
 <table>
 
 <tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment<sup>[8]</sup></th><th>Atomic create<sup>[9]</sup></th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr>
