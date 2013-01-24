@@ -21,6 +21,6 @@ if system("wget --no-check-certificate --quiet -O #{BUNDLE_FILE} https://moneta:
   cmd "tar -xpf #{BUNDLE_FILE}"
   cmd "rm -f #{BUNDLE_FILE}"
 else
-  cmd 'bundle install --path .bundle'
+  cmd 'bundle install --deployment --path .bundle'
   cmd "tar -cpzf #{BUNDLE_FILE} .bundle"
 end
