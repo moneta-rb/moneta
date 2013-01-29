@@ -95,7 +95,7 @@ module Moneta
   #     semaphore = Moneta::Semaphore.new(store, 'semaphore', 2)
   #     semaphore.synchronize do
   #       # Synchronized access
-  #       ...
+  #       # ...
   #     end
   #
   # @api public
