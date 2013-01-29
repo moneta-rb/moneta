@@ -1,4 +1,4 @@
-master
+0.7.9
 
 * Adapters::KyotoCabinet added
 * Feature detection methods #features and #supports? added
