@@ -69,6 +69,7 @@ store.close
 
 * Source: <http://github.com/minad/moneta>
 * Bugs:   <http://github.com/minad/moneta/issues>
+* Tests and benchmarks: <http://travis-ci.org/minad/moneta>
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
     * GitHub master: <http://rubydoc.info/github/minad/moneta/master/frames>
