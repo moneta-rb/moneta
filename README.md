@@ -261,8 +261,8 @@ Special transformers:
 ## Moneta API
 
 The Moneta API is purposely extremely similar to the Hash API with a few minor additions.
-There are the additional methods `#load`, `#increment`, `#decrement`, `#create` and `#close`. Every method takes also a optional
-option hash. In order so support an identical API across stores, Moneta does not support iteration or partial matches.
+Every method takes also a optional option hash. In order so support an identical API across stores,
+Moneta does not support iteration or partial matches.
 
 ~~~
 #initialize(options)                      options differs per-store, and is used to set up the store.
@@ -298,6 +298,10 @@ option hash. In order so support an identical API across stores, Moneta does not
 #clear(options = {})                      clear all keys in this store.
 
 #close                                    close database connection.
+
+#features                                 return array of features, e.g. [:create, :expires, :increment]
+
+#supports?(feature)                       returns true if store supports a given feature
 ~~~
 
 ### Creating a Store
