@@ -69,8 +69,11 @@ module Moneta
 
       # (see Default#features)
       def features
-        write(@socket, [:features])
-        read_result.freeze
+        @features ||=
+          begin
+            write(@socket, [:features])
+            read_result.freeze
+          end
       end
 
       private
