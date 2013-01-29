@@ -1,6 +1,8 @@
 master
 
 * Adapters::KyotoCabinet added
+* Feature detection methods #features and #supports? added
+* Validity checks added which check features
 
 0.7.8
 
