@@ -454,7 +454,7 @@ end
 begin
   mutex.lock
   mutex.locked? # returns true
-  ...
+  # ...
 ensure
   mutex.unlock
 end
@@ -467,13 +467,13 @@ semaphore = Moneta::Semaphore.new(store, 'semaphore_counter', max_concurrent)
 
 semaphore.synchronize do
    semaphore.locked? # returns true
-   ...
+   # ...
 end
 
 begin
   semaphore.enter
   semaphore.locked? # returns true
-  ...
+  # ...
 ensure
   semaphore.leave
 end
