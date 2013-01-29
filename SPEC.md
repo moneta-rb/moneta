@@ -59,6 +59,14 @@ It MUST return true if the value was created.
 
 Completely empty all keys and values from the key-value-store. Adapters MAY allow a namespace during initialization, which can scope this operation to a particular subset of keys. After calling <code>clear</code>, a <code>[]</code> operation MUST return nil for every possible key, and a <code>key?</code> query MUST return false for every possible key.
 
+### <code>close</code>
+
+Closes the store
+
+### <code>features => Array&lt;Symbol&gt;</code> and <code>supports?(Symbol) => [TrueClass, FalseClass]</code>
+
+Feature detection. Adapters MUST return <code>:create</code> and <code>:increment</code> if these methods are supported. 
+
 ## Additional Options Hashes
 
 The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification). The methods MUST NOT modify the supplied option hash.
