@@ -31,10 +31,10 @@ class MonetaBenchmarks
   FileUtils.mkpath(DIR)
 
   STORES = {
-    # SDBM is unstable
+    # SDBM is unstable, the rest is too slow
     # :SDBM => { :file => "#{DIR}/sdbm" },
-    # YAML is so fucking slow
     # :YAML => { :file => "#{DIR}/yaml" },
+    # :RestClient => { :url => 'http://localhost:8808/' },
     :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
     :Cassandra => {},
     :Client => {},
@@ -56,7 +56,6 @@ class MonetaBenchmarks
     :Mongo => {},
     :PStore => { :file => "#{DIR}/pstore" },
     :Redis => {},
-    :RestClient => { :url => 'http://localhost:8808/' },
     :Riak => {},
     :Sequel => { :db => 'sqlite:/' },
     :Sqlite => { :file => ':memory:' },
@@ -188,31 +187,31 @@ class MonetaBenchmarks
       end
     end
 
-    parallel do
-      begin
-        require 'rack'
-        require 'webrick'
-        require 'rack/moneta_rest'
+    # parallel do
+    #   begin
+    #     require 'rack'
+    #     require 'webrick'
+    #     require 'rack/moneta_rest'
 
-        # Keep webrick quiet
-        ::WEBrick::HTTPServer.class_eval do
-          def access_log(config, req, res); end
-        end
-        ::WEBrick::BasicLog.class_eval do
-          def log(level, data); end
-        end
+    #     # Keep webrick quiet
+    #     ::WEBrick::HTTPServer.class_eval do
+    #       def access_log(config, req, res); end
+    #     end
+    #     ::WEBrick::BasicLog.class_eval do
+    #       def log(level, data); end
+    #     end
 
-        Rack::Server.start(:app => Rack::Builder.app do
-                             use Rack::Lint
-                             run Rack::MonetaRest.new(:store => :Memory)
-                           end,
-                           :environment => :none,
-                           :server => :webrick,
-                           :Port => 8808)
-      rescue Exception => ex
-        puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
-      end
-    end
+    #     Rack::Server.start(:app => Rack::Builder.app do
+    #                          use Rack::Lint
+    #                          run Rack::MonetaRest.new(:store => :Memory)
+    #                        end,
+    #                        :environment => :none,
+    #                        :server => :webrick,
+    #                        :Port => 8808)
+    #   rescue Exception => ex
+    #     puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
+    #   end
+    # end
 
     sleep 1 # Wait for servers
   end
