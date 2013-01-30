@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+$: << File.join(File.dirname(__FILE__), '..', 'lib')
+
+def memusage
+  `pmap #{$$} | tail -1`[10..-1].strip.to_i
+end
+
+def shrink
+  last = memusage
+  loop do
+    GC.start
+    sleep 1
+    m = memusage
+    break if m == last
+    last = m
+  end
+end
+
+$last_memusage = 0
+
+def stats
+  shrink
+  m = memusage
+  delta = m - $last_memusage
+  $last_memusage = m
+  puts "#{m}K #{delta >= 0 ? '+' : ''}#{delta}K"
+end
+
+stats
+
+%q{require 'moneta'
+Moneta.new(:Memory)
+Moneta.new(:File, :dir => 'filestore')
+Moneta.new(:MemcachedNative)
+Moneta.new(:MemcachedDalli)}.each_line do |line|
+  puts line
+  eval(line)
+  stats
+end
