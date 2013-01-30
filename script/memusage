@@ -24,7 +24,7 @@ def stats
   m = memusage
   delta = m - $last_memusage
   $last_memusage = m
-  puts "#{m}K #{delta >= 0 ? '+' : ''}#{delta}K"
+  puts "# #{m}K #{delta >= 0 ? '+' : ''}#{delta}K"
 end
 
 stats
