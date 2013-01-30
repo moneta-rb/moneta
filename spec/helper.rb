@@ -1,7 +1,9 @@
+require 'rspec'
+require 'rspec/core/formatters/progress_formatter'
+require 'rspec/retry'
 require 'moneta'
 require 'fileutils'
 require 'monetaspecs'
-require 'rspec/core/formatters/progress_formatter'
 
 RSpec::Core::Formatters::ProgressFormatter.class_eval do
   def example_passed(example)
@@ -10,6 +12,7 @@ RSpec::Core::Formatters::ProgressFormatter.class_eval do
 end
 
 RSpec.configure do |config|
+  config.verbose_retry = true
   config.color_enabled = true
   config.tty = true
   config.formatter = :progress

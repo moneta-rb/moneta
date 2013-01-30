@@ -4,6 +4,7 @@ gemspec
 # Testing
 gem 'rake'
 gem 'rspec'
+gem 'rspec-retry'
 
 # Serializer used by Transformer
 gem 'tnetstring'
