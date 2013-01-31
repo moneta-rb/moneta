@@ -57,6 +57,7 @@ module Moneta
     autoload :Sqlite,          'moneta/adapters/sqlite'
     autoload :TDB,             'moneta/adapters/tdb'
     autoload :TokyoCabinet,    'moneta/adapters/tokyocabinet'
+    autoload :TokyoTyrant,     'moneta/adapters/tokyotyrant'
     autoload :YAML,            'moneta/adapters/yaml'
   end
 

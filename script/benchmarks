@@ -61,6 +61,7 @@ class MonetaBenchmarks
     :Sqlite => { :file => ':memory:' },
     :TDB => { :file => "#{DIR}/tdb" },
     :TokyoCabinet => { :file => 'tokyocabinet' },
+    :TokyoTyrant => {},
   }
 
   CONFIGS = {

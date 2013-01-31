@@ -41,7 +41,7 @@ task :test do
 
   # Memcached and Redis specs cannot be used in parallel
   # because of flushing and lacking namespaces
-  parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak/ }
+  parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak|tokyotyrant/ }
   serial = specs - parallel
 
   if ENV['TEST_GROUP'] =~ /^(\d+)\/(\d+)$/

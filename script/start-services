@@ -5,4 +5,5 @@ sudo service redis-server start
 sudo service cassandra start
 sudo service memcached start
 sudo service mongodb start
+ttserver -dmn
 sleep 3

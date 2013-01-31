@@ -330,6 +330,15 @@ end
     :options => ':file => File.join(make_tempdir, "simple_tokyocabinet_with_expires"), :expires => true',
     :specs => STANDARD_SPECS.without_multiprocess.with_expires
   },
+  'simple_tokyotyrant' => {
+    :store => :TokyoTyrant,
+    :specs => STANDARD_SPECS
+  },
+  'simple_tokyotyrant_with_expires' => {
+    :store => :TokyoTyrant,
+    :options => ':expires => true',
+    :specs => STANDARD_SPECS.with_expires
+  },
   'simple_kyotocabinet' => {
     :store => :KyotoCabinet,
     :options => ':file => File.join(make_tempdir, "simple_kyotocabinet.kch")',
@@ -1300,6 +1309,10 @@ end}
   'adapter_tokyocabinet_hdb' => {
     :build => 'Moneta::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_hdb"), :type => :hdb)',
     :specs => ADAPTER_SPECS.without_multiprocess
+  },
+  'adapter_tokyotyrant' => {
+    :build => 'Moneta::Adapters::TokyoTyrant.new',
+    :specs => ADAPTER_SPECS
   },
   'adapter_yaml' => {
     :build => 'Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',

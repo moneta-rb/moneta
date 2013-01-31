@@ -107,6 +107,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * [SDBM](http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html) (`:SDBM`)
     * [KyotoCabinet](http://fallabs.com/kyotocabinet/) (`:KyotoCabinet`)
     * [TokyoCabinet](http://fallabs.com/tokyocabinet/) (`:TokyoCabinet`)
+    * [TokyoTyrant](http://fallabs.com/tokyotyrant/) (`:TokyoTyrant`)
     * [Simple Samba database TDB](http://tdb.samba.org/) (`:TDB`)
 * Document databases:
     * [CouchDB](http://couchdb.apache.org/) (`:Couch`)
@@ -164,6 +165,8 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 <tr><td>KyotoCabinet</td><td>tokoycabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/kyotocabinet/">KyotoCabinet</a> database</td></tr>
 
 <tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
+
+<tr><td>TokyoTyrant</td><td>tokoytyrant</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyotyrant/">TokyoTyrant</a> database</td></tr>
 
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://datamapper.org/">DataMapper</a> ORM</td></tr>
 
