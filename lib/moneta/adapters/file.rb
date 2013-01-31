@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'fcntl'
 
 module Moneta
   module Adapters
@@ -72,8 +71,10 @@ module Moneta
       def create(key, value, options = {})
         path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
-        fd = ::File.sysopen(path, Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
-        ::File.open(fd, 'wb') {|file| file.write(value) }
+        ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |file|
+          file.binmode
+          file.write(value)
+        end
         true
       rescue Errno::EEXIST
         false
