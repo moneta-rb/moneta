@@ -81,7 +81,7 @@ module Moneta
           [intvalue].pack('Q>')
         elsif value.bytesize >= 8
           # Add nul character to make value distinguishable from integer
-          value << "\0"
+          value + "\0"
         else
           value
         end
