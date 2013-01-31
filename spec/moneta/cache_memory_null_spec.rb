@@ -13,7 +13,7 @@ describe_moneta "cache_memory_null" do
   def new_store
     Moneta.build do
       use(:Cache) do
-        backend(Moneta::Adapters::Memory.new)
+        adapter(Moneta::Adapters::Memory.new)
         cache(Moneta::Adapters::Null.new)
       end
     end

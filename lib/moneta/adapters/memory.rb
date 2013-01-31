@@ -10,7 +10,7 @@ module Moneta
 
       # @param [Hash] options Options hash
       def initialize(options = {})
-        @hash = {}
+        @backend = options[:backend] || {}
       end
     end
   end

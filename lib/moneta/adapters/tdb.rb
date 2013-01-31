@@ -7,14 +7,17 @@ module Moneta
     class TDB < Memory
       # @param [Hash] options
       # @option options [String] :file Database file
-      def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless file = options.delete(:file)
-        @hash = ::TDB.new(file, options)
+      def initialize(options)
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless file = options.delete(:file)
+            ::TDB.new(file, options)
+          end
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

@@ -7,13 +7,14 @@ module Moneta
     class Couch
       include Defaults
 
+      attr_reader :backend
+
       # @param [Hash] options
       # @option options [String] :host ('http://127.0.0.1:5984') Couch host
       # @option options [String] :db ('moneta') Couch database
       def initialize(options = {})
-        options[:db] ||= 'moneta'
-        options[:host] ||= '127.0.0.1:5984'
-        @db = CouchRest.new(options[:host]).database!(options[:db])
+        @backend = options[:backend] || CouchRest.new(options[:host] || '127.0.0.1:5984')
+        @db = @backend.database!(options[:db] || 'moneta')
       end
 
       # (see Proxy#key?)

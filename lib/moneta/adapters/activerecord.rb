@@ -8,12 +8,11 @@ module Moneta
       include Defaults
 
       supports :create, :increment
+      attr_reader :table
 
       def self.tables
         @tables ||= {}
       end
-
-      attr_reader :table
 
       # @param [Hash] options
       # @option options [String] :table ('moneta') Table name

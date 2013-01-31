@@ -9,24 +9,27 @@ module Moneta
       # @option options [String] :dir - Database path
       # @option options All other options passed to `LevelDB::DB#new`
       def initialize(options = {})
-        raise ArgumentError, 'Option :dir is required' unless options[:dir]
-        @hash = ::LevelDB::DB.new(options[:dir])
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :dir is required' unless options[:dir]
+            ::LevelDB::DB.new(options[:dir])
+          end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @hash.includes?(key)
+        @backend.includes?(key)
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @hash.each {|k,v| delete(k, options) }
+        @backend.each {|k,v| delete(k, options) }
         self
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

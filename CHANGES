@@ -1,6 +1,8 @@
 master
 
 * Adapters::TokyoTyrant added
+* Add attr_reader :backend and option :backend to some adapters
+* Cache rename #backend to #adapter
 
 0.7.9
 

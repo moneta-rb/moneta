@@ -7,13 +7,15 @@ module Moneta
     class Fog
       include Defaults
 
+      attr_reader :backend
+
       # @param [Hash] options
       # @option options [String] :dir Fog directory
       # @option options Other options passed to `Fog::Storage#new`
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
-        storage = ::Fog::Storage.new(options)
-        @directory = storage.directories.get(dir) || storage.directories.create(:key => dir)
+        @backend = options[:backend] || ::Fog::Storage.new(options)
+        @directory = @backend.directories.get(dir) || @backend.directories.create(:key => dir)
       end
 
       # (see Proxy#key?)

@@ -13,7 +13,7 @@ describe_moneta "cache_file_memory" do
   def new_store
     Moneta.build do
       use(:Cache) do
-        backend { adapter :File, :dir => File.join(make_tempdir, "cache_file_memory") }
+        adapter { adapter :File, :dir => File.join(make_tempdir, "cache_file_memory") }
         cache { adapter :Memory }
       end
     end
@@ -33,11 +33,11 @@ describe_moneta "cache_file_memory" do
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it 'stores loaded values in cache' do
-    store.backend['foo'] = 'bar'
+    store.adapter['foo'] = 'bar'
     store.cache['foo'].should be_nil
     store['foo'].should == 'bar'
     store.cache['foo'].should == 'bar'
-    store.backend.delete('foo')
+    store.adapter.delete('foo')
     store['foo'].should == 'bar'
     store.delete('foo')
     store['foo'].should be_nil

@@ -8,20 +8,24 @@ module Moneta
       include Defaults
 
       supports :create, :increment
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :db Sequel database
       # @option options [String/Symbol] :table (:moneta) Table name
       # @option options All other options passed to `Sequel#connect`
       def initialize(options = {})
-        raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
         table = options.delete(:table) || :moneta
-        @db = ::Sequel.connect(db, options)
-        @db.create_table?(table) do
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
+            ::Sequel.connect(db, options)
+          end
+        @backend.create_table?(table) do
           String :k, :null => false, :primary_key => true
           String :v
         end
-        @table = @db[table]
+        @table = @backend[table]
       end
 
       # (see Proxy#key?)
@@ -37,7 +41,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @db.transaction do
+        @backend.transaction do
           begin
             @table.insert(:k => key, :v => value)
           rescue ::Sequel::DatabaseError
@@ -52,7 +56,7 @@ module Moneta
 
       # (see Proxy#store)
       def create(key, value, options = {})
-        @db.transaction do
+        @backend.transaction do
           @table.insert(:k => key, :v => value)
         end
         true
@@ -64,7 +68,7 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @db.transaction do
+        @backend.transaction do
           locked_table = @table.for_update
           if record = locked_table[:k => key]
             value = Utils.to_int(record[:v]) + amount
@@ -79,7 +83,7 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @db.transaction do
+        @backend.transaction do
           if value = load(key, options)
             @table.filter(:k => key).delete
             value

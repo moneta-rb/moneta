@@ -8,30 +8,34 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :file Database file
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        @hash = ::KyotoCabinet::DB.new
-        raise @hash.error.to_s unless @hash.open(options[:file],
-                                                 ::KyotoCabinet::DB::OWRITER | ::KyotoCabinet::DB::OCREATE)
+        if options[:backend]
+          @backend = options[:backend]
+        else
+          raise ArgumentError, 'Option :file is required' unless options[:file]
+          @backend = ::KyotoCabinet::DB.new
+          raise @backend.error.to_s unless @backend.open(options[:file],
+                                                         ::KyotoCabinet::DB::OWRITER | ::KyotoCabinet::DB::OCREATE)
+        end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @hash.check(key) >= 0
+        @backend.check(key) >= 0
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @hash.seize(key)
+        @backend.seize(key)
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @hash.add(key, value)
+        @backend.add(key, value)
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

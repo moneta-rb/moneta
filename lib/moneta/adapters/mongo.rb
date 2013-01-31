@@ -13,6 +13,7 @@ module Moneta
       include ExpiresSupport
 
       supports :create, :increment
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
@@ -25,16 +26,19 @@ module Moneta
       def initialize(options = {})
         self.default_expires = options.delete(:expires)
         collection = options.delete(:collection) || 'moneta'
-        host = options.delete(:host) || '127.0.0.1'
-        port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
         db = options.delete(:db) || 'moneta'
-        user = options.delete(:user)
-        password = options.delete(:password)
-        client = ::Mongo::MongoClient.new(host, port, options)
-        db = client.db(db)
+        @backend = options[:backend] ||
+          begin
+            host = options.delete(:host) || '127.0.0.1'
+            port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
+            user = options.delete(:user)
+            password = options.delete(:password)
+            ::Mongo::MongoClient.new(host, port, options)
+          end
+        db = @backend.db(db)
         db.authenticate(user, password, true) if user && password
         @collection = db.collection(collection)
-        if client.server_version >= '2.2'
+        if @backend.server_version >= '2.2'
           @collection.ensure_index([['expiresAt', ::Mongo::ASCENDING]], :expireAfterSeconds => 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
@@ -105,7 +109,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @collection.db.connection.close
+        @backend.close
         nil
       end
     end

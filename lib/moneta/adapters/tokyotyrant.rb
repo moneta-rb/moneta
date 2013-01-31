@@ -8,31 +8,35 @@ module Moneta
       include Defaults
 
       supports :create, :increment
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (1978) Server port
       def initialize(options = {})
-        options[:host] ||= '127.0.0.1'
-        options[:port] ||=  1978
-        @db = ::TokyoTyrant::RDB.new
-        @db.open(options[:host], options[:port]) or raise @db.errmsg(@db.ecode)
+        if options[:backend]
+          @backend = options[:backend]
+        else
+          @backend = ::TokyoTyrant::RDB.new
+          @backend.open(options[:host] || '127.0.0.1',
+                        options[:port] || 1978) or raise @backend.errmsg(@backend.ecode)
+        end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @db.has_key?(key)
+        @backend.has_key?(key)
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        value = @db[key]
+        value = @backend[key]
         value && unpack(value)
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @db[key] = pack(value)
+        @backend[key] = pack(value)
         value
       end
 
@@ -40,30 +44,30 @@ module Moneta
       def delete(key, options = {})
         value = load(key, options)
         if value
-          @db.delete(key)
+          @backend.delete(key)
           unpack(value)
         end
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @db.addint(key, amount) || raise('Tried to increment non integer value')
+        @backend.addint(key, amount) || raise('Tried to increment non integer value')
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @db.putkeep(key, pack(value))
+        @backend.putkeep(key, pack(value))
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @db.clear
+        @backend.clear
         self
       end
 
       # (see Proxy#close)
       def close
-        @db.close
+        @backend.close
         nil
       end
 

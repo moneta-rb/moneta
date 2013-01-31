@@ -10,6 +10,8 @@ module Moneta
     class Riak
       include Defaults
 
+      attr_reader :backend
+
       # @param [Hash] options
       # @option options [String] :bucket ('moneta') Bucket name
       # @option options [String] :content_type ('application/octet-stream') Default content type
@@ -17,7 +19,8 @@ module Moneta
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'moneta'
         @content_type = options.delete(:content_type) || 'application/octet-stream'
-        @bucket = ::Riak::Client.new(options).bucket(bucket)
+        @backend = options[:backend] || ::Riak::Client.new(options)
+        @bucket = @backend.bucket(bucket)
       end
 
       # (see Proxy#key?)

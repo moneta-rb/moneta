@@ -8,51 +8,55 @@ module Moneta
       include Defaults
 
       supports :create, :increment
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :file PStore file
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        FileUtils.mkpath(::File.dirname(options[:file]))
-        @pstore = new_store(options)
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            FileUtils.mkpath(::File.dirname(options[:file]))
+            new_store(options)
+          end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @pstore.transaction(true) { @pstore.root?(key) }
+        @backend.transaction(true) { @backend.root?(key) }
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        @pstore.transaction(true) { @pstore[key] }
+        @backend.transaction(true) { @backend[key] }
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @pstore.transaction { @pstore[key] = value }
+        @backend.transaction { @backend[key] = value }
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @pstore.transaction { @pstore.delete(key) }
+        @backend.transaction { @backend.delete(key) }
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @pstore.transaction do
-          value = Utils.to_int(@pstore[key]) + amount
-          @pstore[key] = value.to_s
+        @backend.transaction do
+          value = Utils.to_int(@backend[key]) + amount
+          @backend[key] = value.to_s
           value
         end
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @pstore.transaction do
-          if @pstore.root?(key)
+        @backend.transaction do
+          if @backend.root?(key)
             false
           else
-            @pstore[key] = value
+            @backend[key] = value
             true
           end
         end
@@ -60,9 +64,9 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @pstore.transaction do
-          @pstore.roots.each do |key|
-            @pstore.delete(key)
+        @backend.transaction do
+          @backend.roots.each do |key|
+            @backend.delete(key)
           end
         end
         self
@@ -70,12 +74,10 @@ module Moneta
 
       protected
 
-      if RUBY_VERSION > '1.9'
-        def new_store(options)
+      def new_store(options)
+        if RUBY_VERSION > '1.9'
           ::PStore.new(options[:file], options[:threadsafe])
-        end
-      else
-        def new_store(options)
+        else
           ::PStore.new(options[:file])
         end
       end

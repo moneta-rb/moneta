@@ -9,13 +9,14 @@ module Moneta
       include ExpiresSupport
 
       supports :create, :increment
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [Integer] :expires Default expiration time
       # @option options Other options passed to `Redis#new`
       def initialize(options = {})
         self.default_expires = options.delete(:expires)
-        @redis = ::Redis.new(options)
+        @backend = options[:backend] || ::Redis.new(options)
       end
 
       # (see Proxy#key?)
@@ -23,7 +24,7 @@ module Moneta
       # This method considers false and 0 as "no-expire" and every positive
       # number as a time to live in seconds.
       def key?(key, options = {})
-        if @redis.exists(key)
+        if @backend.exists(key)
           update_expires(key, options, nil)
           true
         else
@@ -33,7 +34,7 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        value = @redis.get(key)
+        value = @backend.get(key)
         update_expires(key, options, nil)
         value
       end
@@ -41,9 +42,9 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         if expires = expires_value(options)
-          @redis.setex(key, expires, value)
+          @backend.setex(key, expires, value)
         else
-          @redis.set(key, value)
+          @backend.set(key, value)
         end
         value
       end
@@ -51,25 +52,25 @@ module Moneta
       # (see Proxy#delete)
       def delete(key, options = {})
         if value = load(key, options)
-          @redis.del(key)
+          @backend.del(key)
           value
         end
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @redis.incrby(key, amount)
+        @backend.incrby(key, amount)
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @redis.flushdb
+        @backend.flushdb
         self
       end
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        if @redis.setnx(key, value)
+        if @backend.setnx(key, value)
           update_expires(key, options)
           true
         else
@@ -79,7 +80,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @redis.quit
+        @backend.quit
         nil
       end
 
@@ -88,9 +89,9 @@ module Moneta
       def update_expires(key, options, default = @default_expires)
         case expires = expires_value(options, default)
         when false
-          @redis.persist(key)
+          @backend.persist(key)
         when Numeric
-          @redis.expire(key, expires)
+          @backend.expire(key, expires)
         end
       end
     end

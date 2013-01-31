@@ -257,29 +257,31 @@ module Moneta
 
   # @api private
   module HashAdapter
+    attr_reader :backend
+
     # (see Proxy#key?)
     def key?(key, options = {})
-      @hash.has_key?(key)
+      @backend.has_key?(key)
     end
 
     # (see Proxy#load)
     def load(key, options = {})
-      @hash[key]
+      @backend[key]
     end
 
     # (see Proxy#store)
     def store(key, value, options = {})
-      @hash[key] = value
+      @backend[key] = value
     end
 
     # (see Proxy#delete)
     def delete(key, options = {})
-      @hash.delete(key)
+      @backend.delete(key)
     end
 
     # (see Proxy#clear)
     def clear(options = {})
-      @hash.clear
+      @backend.clear
       self
     end
   end

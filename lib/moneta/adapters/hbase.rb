@@ -7,6 +7,8 @@ module Moneta
     class HBase
       include Defaults
 
+      attr_reader :backend
+
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (9090) Server port
@@ -14,15 +16,14 @@ module Moneta
       # @option options [String] :column_family ('moneta') Column family
       # @option options [String] :column ('value') Column
       def initialize(options = {})
-        options[:host] ||= '127.0.0.1'
-        options[:port] ||= '9090'
-        options[:table] ||= 'moneta'
         options[:column] ||= 'value'
+        options[:table] ||= 'moneta'
         cf = (options[:column_family] || 'moneta')
-        @db = HBaseRb::Client.new(options[:host], options[:port])
-        @db.create_table(options[:table], cf) unless @db.has_table?(options[:table])
-        @table = @db.get_table(options[:table])
         @column = "#{cf}:#{options[:column]}"
+        @backend = options[:backend] ||
+          HBaseRb::Client.new(options[:host] || '127.0.0.1', options[:port] || '9090')
+        @backend.create_table(options[:table], cf) unless @backend.has_table?(options[:table])
+        @table = @backend.get_table(options[:table])
       end
 
       # (see Proxy#key?)
@@ -68,7 +69,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @db.close
+        @backend.close
         nil
       end
 

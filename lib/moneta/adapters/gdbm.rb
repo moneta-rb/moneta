@@ -8,13 +8,16 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :file Database file
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        @hash = ::GDBM.new(options[:file])
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            ::GDBM.new(options[:file])
+          end
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

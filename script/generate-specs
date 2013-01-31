@@ -554,18 +554,18 @@ end},
   'cache_file_memory' => {
     :build => %{Moneta.build do
   use(:Cache) do
-    backend { adapter :File, :dir => File.join(make_tempdir, "cache_file_memory") }
+    adapter { adapter :File, :dir => File.join(make_tempdir, "cache_file_memory") }
     cache { adapter :Memory }
   end
 end},
     :specs => ADAPTER_SPECS.returnsame,
     :tests => %{
 it 'stores loaded values in cache' do
-  store.backend['foo'] = 'bar'
+  store.adapter['foo'] = 'bar'
   store.cache['foo'].should be_nil
   store['foo'].should == 'bar'
   store.cache['foo'].should == 'bar'
-  store.backend.delete('foo')
+  store.adapter.delete('foo')
   store['foo'].should == 'bar'
   store.delete('foo')
   store['foo'].should be_nil
@@ -575,7 +575,7 @@ end
   'cache_memory_null' => {
     :build => %{Moneta.build do
   use(:Cache) do
-    backend(Moneta::Adapters::Memory.new)
+    adapter(Moneta::Adapters::Memory.new)
     cache(Moneta::Adapters::Null.new)
   end
 end},

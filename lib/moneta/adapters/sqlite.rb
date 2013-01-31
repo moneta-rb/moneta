@@ -9,21 +9,25 @@ module Moneta
       include IncrementSupport
 
       supports :create
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [String] :table ('moneta') Table name
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
         table = options[:table] || 'moneta'
-        @db = ::SQLite3::Database.new(options[:file])
-        @db.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            ::SQLite3::Database.new(options[:file])
+          end
+        @backend.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
         @stmts =
-          [@select = @db.prepare("select v from #{table} where k = ?"),
-           @replace = @db.prepare("replace into #{table} values (?, ?)"),
-           @delete = @db.prepare("delete from #{table} where k = ?"),
-           @clear = @db.prepare("delete from #{table}"),
-           @create = @db.prepare("insert into #{table} values (?, ?)")]
+          [@select = @backend.prepare("select v from #{table} where k = ?"),
+           @replace = @backend.prepare("replace into #{table} values (?, ?)"),
+           @delete = @backend.prepare("delete from #{table} where k = ?"),
+           @clear = @backend.prepare("delete from #{table}"),
+           @create = @backend.prepare("insert into #{table} values (?, ?)")]
       end
 
       # (see Proxy#key?)
@@ -52,7 +56,7 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @db.transaction(:exclusive) { return super }
+        @backend.transaction(:exclusive) { return super }
       end
 
       # (see Proxy#clear)
@@ -75,7 +79,7 @@ module Moneta
       # (see Proxy#close)
       def close
         @stmts.each {|s| s.close }
-        @db.close
+        @backend.close
         nil
       end
     end
