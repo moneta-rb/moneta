@@ -27,7 +27,7 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @hash.each_key { |key| @cookies[key] = nil }
+        @backend.each_key { |key| @cookies[key] = nil }
         super
         self
       end
@@ -35,7 +35,7 @@ module Moneta
       # Reset the cookie store
       # This method is used by the middleware.
       def reset(cookies)
-        @cookies, @hash = {}, cookies
+        @cookies, @backend = {}, cookies
       end
     end
   end
