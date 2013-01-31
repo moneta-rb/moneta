@@ -4,7 +4,12 @@ module Moneta
   module Adapters
     # TokyoTyrant backend
     # @api public
-    class TokyoTyrant < Memory
+    class TokyoTyrant
+      include Defaults
+      include HashAdapter
+
+      supports :create
+
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (1978) Server port
