@@ -47,7 +47,7 @@ describe Rack::MonetaStore do
     uncached_store['key'] = 'value'
     get do
       expect(@store['key']).to eql('value')
-      expect(@store.backend).to equal(uncached_store)
+      expect(@store.adapter).to equal(uncached_store)
       expect(@store.cache['key']).to eql('value')
     end
   end

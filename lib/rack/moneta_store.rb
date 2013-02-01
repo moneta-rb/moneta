@@ -38,7 +38,7 @@ module Rack
     end
 
     def call(env)
-      env['rack.moneta_store'] = @cache ? ::Moneta::Cache.new(:cache => ::Moneta::Adapters::Memory.new, :backend => @store) : @store
+      env['rack.moneta_store'] = @cache ? ::Moneta::Cache.new(:cache => ::Moneta::Adapters::Memory.new, :adapter => @store) : @store
       @app.call(env)
     end
   end
