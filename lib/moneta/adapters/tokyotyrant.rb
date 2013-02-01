@@ -21,6 +21,10 @@ module Moneta
           @backend.open(options[:host] || '127.0.0.1',
                         options[:port] || 1978) or raise @backend.errmsg(@backend.ecode)
         end
+        probe = '__tokyotyrant_endianness_probe'
+        @backend.delete(probe)
+        @backend.addint(probe, 1)
+        @pack = @backend.delete(probe) == [1].pack('l>') ? 'l>' : 'l<'
       end
 
       # (see Proxy#key?)
@@ -45,7 +49,7 @@ module Moneta
         value = load(key, options)
         if value
           @backend.delete(key)
-          unpack(value)
+          value
         end
       end
 
@@ -77,7 +81,7 @@ module Moneta
         intvalue = value.to_i
         if intvalue >= 0 && intvalue <= 0xFFFFFFFF && intvalue.to_s == value
           # Pack as 4 byte integer
-          [intvalue].pack('i')
+          [intvalue].pack(@pack)
         elsif value.bytesize >= 4
           # Add nul character to make value distinguishable from integer
           value + "\0"
@@ -89,7 +93,7 @@ module Moneta
       def unpack(value)
         if value.bytesize == 4
           # Unpack 4 byte integer
-          value.unpack('i').first.to_s
+          value.unpack(@pack).first.to_s
         elsif value.bytesize >= 5 && value[-1] == ?\0
           # Remove nul character
           value[0..-2]

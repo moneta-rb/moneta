@@ -55,7 +55,7 @@ module Moneta
       def delete(key, options = {})
         if value = load(key, options)
           @table.delete_row(key)
-          unpack(value)
+          value
         end
       end
 
