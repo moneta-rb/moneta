@@ -8,6 +8,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :dir - Database path
       # @option options All other options passed to `LevelDB::DB#new`
+      # @option options [::LevelDB::DB] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] ||
           begin

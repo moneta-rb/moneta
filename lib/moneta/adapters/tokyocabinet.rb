@@ -8,6 +8,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)
+      # @option options [::TokyoCabinet::*DB] :backend Use existing backend instance
       def initialize(options = {})
         if options[:backend]
           @backend = options[:backend]

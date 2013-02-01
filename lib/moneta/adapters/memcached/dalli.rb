@@ -14,6 +14,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
       # @option options [Integer] :expires Default expiration time
+      # @option options [::Dalli::Client] :backend Use existing backend instance
       # @option options Other options passed to `Dalli::Client#new`
       def initialize(options = {})
         self.default_expires = options.delete(:expires)

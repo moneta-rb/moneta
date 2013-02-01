@@ -13,6 +13,7 @@ module Moneta
 
       # @param [Hash] options
       # @option options [Integer] :expires Default expiration time
+      # @option options [::Redis] :backend Use existing backend instance
       # @option options Other options passed to `Redis#new`
       def initialize(options = {})
         self.default_expires = options.delete(:expires)

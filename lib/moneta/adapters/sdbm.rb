@@ -7,6 +7,7 @@ module Moneta
     class SDBM < Memory
       # @param [Hash] options
       # @option options [String] :file Database file
+      # @option options [::SDBM] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] ||
           begin

@@ -10,6 +10,7 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :file Database file
+      # @option options [::LocalMemCache] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] ||
           begin

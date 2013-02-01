@@ -15,6 +15,7 @@ module Moneta
       # @option options [String] :server ('127.0.0.1:11211') Memcached server
       # @option options [String] :namespace Key namespace
       # @option options [Integer] :expires (604800) Default expiration time
+      # @option options [::Memcached] :backend Use existing backend instance
       # @option options Other options passed to `Memcached#new`
       def initialize(options = {})
         server = options.delete(:server) || '127.0.0.1:11211'

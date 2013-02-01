@@ -11,6 +11,7 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :url URL
+      # @option options [::Net::HTTP] :backend Use existing backend instance
       def initialize(options = {})
         raise ArgumentError, 'Option :url is required' unless url = options[:url]
         url = URI(url)

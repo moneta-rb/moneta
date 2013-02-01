@@ -11,6 +11,7 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :dir Fog directory
+      # @option options [::Fog::Storage] :backend Use existing backend instance
       # @option options Other options passed to `Fog::Storage#new`
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)

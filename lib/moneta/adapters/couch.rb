@@ -12,6 +12,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :host ('http://127.0.0.1:5984') Couch host
       # @option options [String] :db ('moneta') Couch database
+      # @option options [::CouchRest] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] || CouchRest.new(options[:host] || '127.0.0.1:5984')
         @db = @backend.database!(options[:db] || 'moneta')

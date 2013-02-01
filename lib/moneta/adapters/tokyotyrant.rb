@@ -13,6 +13,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (1978) Server port
+      # @option options [::TokyoTyrant::RDB] :backend Use existing backend instance
       def initialize(options = {})
         if options[:backend]
           @backend = options[:backend]

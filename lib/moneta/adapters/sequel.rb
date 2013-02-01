@@ -14,6 +14,7 @@ module Moneta
       # @option options [String] :db Sequel database
       # @option options [String/Symbol] :table (:moneta) Table name
       # @option options All other options passed to `Sequel#connect`
+      # @option options [Sequel connection] :backend Use existing backend instance
       def initialize(options = {})
         table = options.delete(:table) || :moneta
         @backend = options[:backend] ||

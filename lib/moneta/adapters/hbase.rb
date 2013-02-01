@@ -15,6 +15,7 @@ module Moneta
       # @option options [String] :table ('moneta') Table name
       # @option options [String] :column_family ('moneta') Column family
       # @option options [String] :column ('value') Column
+      # @option options [::HBaseRb::Client] :backend Use existing backend instance
       def initialize(options = {})
         options[:column] ||= 'value'
         options[:table] ||= 'moneta'

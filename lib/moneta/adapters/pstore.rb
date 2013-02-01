@@ -12,6 +12,7 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :file PStore file
+      # @option options [::PStore] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] ||
           begin

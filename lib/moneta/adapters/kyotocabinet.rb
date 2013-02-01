@@ -7,6 +7,7 @@ module Moneta
     class KyotoCabinet < Memory
       # @param [Hash] options
       # @option options [String] :file Database file
+      # @option options [::KyotoCabinet::DB] :backend Use existing backend instance
       def initialize(options = {})
         if options[:backend]
           @backend = options[:backend]

@@ -14,6 +14,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [String] :table ('moneta') Table name
+      # @option options [::Sqlite3::Database] :backend Use existing backend instance
       def initialize(options = {})
         table = options[:table] || 'moneta'
         @backend = options[:backend] ||

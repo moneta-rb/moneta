@@ -23,6 +23,7 @@ module Moneta
       # @option options [Integer] :port (MongoDB default port) MongoDB server port
       # @option options [String] :db ('moneta') MongoDB database
       # @option options [Integer] :expires Default expiration time
+      # @option options [::Mongo::MongoClient] :backend Use existing backend instance
       def initialize(options = {})
         self.default_expires = options.delete(:expires)
         collection = options.delete(:collection) || 'moneta'
