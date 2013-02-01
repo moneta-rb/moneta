@@ -35,7 +35,7 @@ task :test do
     specs.shuffle!
     srand(old_seed)
 
-    unstable = specs.select {|s| s =~ /quicklz|cassandra|action_dispatch/ }
+    unstable = specs.select {|s| s =~ /quicklz|action_dispatch/ }
     specs -= unstable
   end
 
