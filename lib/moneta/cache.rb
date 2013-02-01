@@ -1,10 +1,10 @@
 module Moneta
-  # Combines two stores. One is used as cache, the other as backend.
+  # Combines two stores. One is used as cache, the other as backend adapter.
   #
   # @example Add `Moneta::Cache` to proxy stack
   #   Moneta.build do
   #     use(:Cache) do
-  #      backend { adapter :File, :dir => 'data' }
+  #      adapter { adapter :File, :dir => 'data' }
   #      cache { adapter :Memory }
   #     end
   #   end
