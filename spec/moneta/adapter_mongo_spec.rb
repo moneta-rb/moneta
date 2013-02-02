@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_mongo" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_mongo.log'), 'a')
-  end
-
   def features
     [:create, :expires, :increment]
   end

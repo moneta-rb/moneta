@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "stack_file_memory" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'stack_file_memory.log'), 'a')
-  end
-
   def features
     []
   end

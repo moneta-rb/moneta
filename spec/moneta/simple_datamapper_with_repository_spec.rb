@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "simple_datamapper_with_repository" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_datamapper_with_repository.log'), 'a')
-  end
-
   def features
     [:create]
   end
@@ -13,7 +9,7 @@ describe_moneta "simple_datamapper_with_repository" do
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Moneta.new(:DataMapper, :repository => :repo, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_repository", :logger => {:out => log})
+    Moneta.new(:DataMapper, :repository => :repo, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_repository", :logger => {:file => File.join(make_tempdir, 'simple_datamapper_with_repository.log')})
   end
 
   def load_value(value)

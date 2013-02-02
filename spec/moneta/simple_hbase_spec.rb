@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_hbase" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_hbase.log'), 'a')
-  end
-
   def features
     [:increment]
   end
 
   def new_store
-    Moneta.new(:HBase, :table => "simple_hbase", :logger => {:out => log})
+    Moneta.new(:HBase, :table => "simple_hbase", :logger => {:file => File.join(make_tempdir, 'simple_hbase.log')})
   end
 
   def load_value(value)

@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_activerecord" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_activerecord.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord') }, :logger => {:out => log})
+    Moneta.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord') }, :logger => {:file => File.join(make_tempdir, 'simple_activerecord.log')})
   end
 
   def load_value(value)

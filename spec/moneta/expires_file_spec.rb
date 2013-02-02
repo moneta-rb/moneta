@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "expires_file" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'expires_file.log'), 'a')
-  end
-
   def features
     [:create, :expires, :increment]
   end

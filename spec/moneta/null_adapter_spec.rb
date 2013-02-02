@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "null_adapter" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'null_adapter.log'), 'a')
-  end
-
   def features
     []
   end

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "simple_riak_with_expires" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_riak_with_expires.log'), 'a')
-  end
-
   def features
     [:expires]
   end
@@ -15,7 +11,7 @@ describe_moneta "simple_riak_with_expires" do
   Riak.disable_list_keys_warnings = true
 
   def new_store
-    Moneta.new(:Riak, :bucket => 'simple_riak_with_expires', :expires => true, :logger => {:out => log})
+    Moneta.new(:Riak, :bucket => 'simple_riak_with_expires', :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_riak_with_expires.log')})
   end
 
   def load_value(value)

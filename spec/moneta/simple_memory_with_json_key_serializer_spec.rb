@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_memory_with_json_key_serializer" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_memory_with_json_key_serializer.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:Memory, :key_serializer => :json, :logger => {:out => log})
+    Moneta.new(:Memory, :key_serializer => :json, :logger => {:file => File.join(make_tempdir, 'simple_memory_with_json_key_serializer.log')})
   end
 
   def load_value(value)

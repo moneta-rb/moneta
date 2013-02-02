@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_sqlite" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_sqlite.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:Sqlite, :file => File.join(make_tempdir, "simple_sqlite"), :logger => {:out => log})
+    Moneta.new(:Sqlite, :file => File.join(make_tempdir, "simple_sqlite"), :logger => {:file => File.join(make_tempdir, 'simple_sqlite.log')})
   end
 
   def load_value(value)

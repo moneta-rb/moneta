@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_localmemcache_with_expires" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_localmemcache_with_expires.log'), 'a')
-  end
-
   def features
     [:expires]
   end
 
   def new_store
-    Moneta.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache_with_expires"), :expires => true, :logger => {:out => log})
+    Moneta.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache_with_expires"), :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_localmemcache_with_expires.log')})
   end
 
   def load_value(value)

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "transformer_marshal_hmac" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'transformer_marshal_hmac.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_fog" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_fog.log'), 'a')
-  end
-
   def features
     []
   end

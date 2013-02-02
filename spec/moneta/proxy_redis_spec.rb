@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "proxy_redis" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'proxy_redis.log'), 'a')
-  end
-
   def features
     [:create, :expires, :increment]
   end

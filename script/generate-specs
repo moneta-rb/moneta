@@ -2274,15 +2274,11 @@ TESTS.each do |name, options|
   opts = options.delete(:options)
   opts = ', ' << opts if opts
 
-  build ||= "Moneta.new(#{store.inspect}#{opts}, :logger => {:out => log})"
+  build ||= "Moneta.new(#{store.inspect}#{opts}, :logger => {:file => File.join(make_tempdir, '#{name}.log')})"
 
   code = %{#{header}require 'helper'
 
 describe_moneta #{name.inspect} do
-  def log
-    @log ||= File.open(File.join(make_tempdir, '#{name}.log'), 'a')
-  end
-
   def features
     #{specs.features.to_a.inspect}
   end

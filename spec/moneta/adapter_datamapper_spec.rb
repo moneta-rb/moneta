@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_datamapper" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_datamapper.log'), 'a')
-  end
-
   def features
     [:create]
   end

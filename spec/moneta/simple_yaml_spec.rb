@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_yaml" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_yaml.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :logger => {:out => log})
+    Moneta.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :logger => {:file => File.join(make_tempdir, 'simple_yaml.log')})
   end
 
   def load_value(value)

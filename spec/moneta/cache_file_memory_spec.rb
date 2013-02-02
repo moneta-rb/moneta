@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "cache_file_memory" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'cache_file_memory.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end

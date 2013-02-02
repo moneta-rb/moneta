@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_sqlite" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_sqlite.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end

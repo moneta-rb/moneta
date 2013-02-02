@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_couch" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_couch.log'), 'a')
-  end
-
   def features
     []
   end

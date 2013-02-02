@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_dbm" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_dbm.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "weak_increment" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'weak_increment.log'), 'a')
-  end
-
   def features
     [:increment]
   end

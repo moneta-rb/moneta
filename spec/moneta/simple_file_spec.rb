@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_file" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_file.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:File, :dir => File.join(make_tempdir, "simple_file"), :logger => {:out => log})
+    Moneta.new(:File, :dir => File.join(make_tempdir, "simple_file"), :logger => {:file => File.join(make_tempdir, 'simple_file.log')})
   end
 
   def load_value(value)

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "shared_tcp" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'shared_tcp.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end

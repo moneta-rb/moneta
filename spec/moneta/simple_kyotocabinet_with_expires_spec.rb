@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_kyotocabinet_with_expires" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_kyotocabinet_with_expires.log'), 'a')
-  end
-
   def features
     [:create, :expires, :increment]
   end
 
   def new_store
-    Moneta.new(:KyotoCabinet, :file => File.join(make_tempdir, "simple_kyotocabinet_with_expires.kch"), :expires => true, :logger => {:out => log})
+    Moneta.new(:KyotoCabinet, :file => File.join(make_tempdir, "simple_kyotocabinet_with_expires.kch"), :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_kyotocabinet_with_expires.log')})
   end
 
   def load_value(value)

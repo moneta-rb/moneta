@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_memcached_native" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_memcached_native.log'), 'a')
-  end
-
   def features
     [:create, :expires, :increment]
   end

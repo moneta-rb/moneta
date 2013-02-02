@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_tokyocabinet_bdb" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_tokyocabinet_bdb.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end

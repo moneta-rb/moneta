@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "simple_fog" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_fog.log'), 'a')
-  end
-
   def features
     []
   end
@@ -16,7 +12,7 @@ describe_moneta "simple_fog" do
     Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
-        :dir                    => 'moneta', :logger => {:out => log})
+        :dir                    => 'moneta', :logger => {:file => File.join(make_tempdir, 'simple_fog.log')})
   end
 
   def load_value(value)

@@ -2,17 +2,13 @@
 require 'helper'
 
 describe_moneta "simple_client_tcp" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_client_tcp.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   start_server(Moneta::Adapters::Memory.new)
   def new_store
-    Moneta.new(:Client, :logger => {:out => log})
+    Moneta.new(:Client, :logger => {:file => File.join(make_tempdir, 'simple_client_tcp.log')})
   end
 
   def load_value(value)

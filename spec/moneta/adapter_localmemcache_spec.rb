@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_localmemcache" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_localmemcache.log'), 'a')
-  end
-
   def features
     []
   end

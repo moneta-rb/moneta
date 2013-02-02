@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "simple_riak" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_riak.log'), 'a')
-  end
-
   def features
     []
   end
@@ -15,7 +11,7 @@ describe_moneta "simple_riak" do
   Riak.disable_list_keys_warnings = true
 
   def new_store
-    Moneta.new(:Riak, :bucket => 'simple_riak', :logger => {:out => log})
+    Moneta.new(:Riak, :bucket => 'simple_riak', :logger => {:file => File.join(make_tempdir, 'simple_riak.log')})
   end
 
   def load_value(value)

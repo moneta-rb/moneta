@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "transformer_key_inspect" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'transformer_key_inspect.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
