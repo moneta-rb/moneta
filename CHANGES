@@ -1,4 +1,4 @@
-master
+0.7.10
 
 * Adapters::TokyoTyrant added
 * Add attr_reader :backend and option :backend to some adapters
