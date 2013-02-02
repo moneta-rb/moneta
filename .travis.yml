@@ -8,9 +8,9 @@ rvm:
   - rbx-19mode
 before_install:
   - script/kill-travis
-  - script/start-services
   - script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev tokyotyrant
+  - script/start-services
   - script/install-bundle
   - script/upload-bundle
 install: 'echo "Bundle installed"'
