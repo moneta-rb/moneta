@@ -35,13 +35,13 @@ task :test do
     specs.shuffle!
     srand(old_seed)
 
-    unstable = specs.select {|s| s =~ /quicklz|action_dispatch|couch|cassandra/ }
+    unstable = specs.select {|s| s =~ /quicklz|action_dispatch/ }
     specs -= unstable
   end
 
   # Memcached and Redis specs cannot be used in parallel
   # because of flushing and lacking namespaces
-  parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak|tokyotyrant/ }
+  parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak|tokyotyrant|couch|cassandra/ }
   serial = specs - parallel
 
   if ENV['TEST_GROUP'] =~ /^(\d+)\/(\d+)$/
