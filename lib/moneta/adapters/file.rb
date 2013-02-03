@@ -6,9 +6,7 @@ module Moneta
     # @api public
     class File
       include Defaults
-      include IncrementSupport
-
-      supports :create
+      supports :create, :increment
 
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
@@ -64,7 +62,19 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        lock(key) { super }
+        path = store_path(key)
+        if create(key, amount.to_s, options)
+          amount
+        else
+          FileUtils.mkpath(::File.dirname(path))
+          x = ::File.open(path, 'ab+') do |f|
+            Thread.pass until f.flock(::File::LOCK_EX)
+            value = Utils.to_int(f.read) + amount
+            f.truncate(0)
+            f.write(value.to_s)
+            value
+          end
+        end
       end
 
       # (see Proxy#create)
@@ -81,19 +91,6 @@ module Moneta
       end
 
       protected
-
-      def lock(key, &block)
-        path = store_path(key)
-        return yield unless ::File.exist?(path)
-        ::File.open(path, 'r+') do |f|
-          begin
-            Thread.pass until f.flock(::File::LOCK_EX)
-            yield
-          ensure
-            f.flock(::File::LOCK_UN)
-          end
-        end
-      end
 
       def store_path(key)
         ::File.join(@dir, key)
