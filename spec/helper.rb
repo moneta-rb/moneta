@@ -5,9 +5,11 @@ require 'moneta'
 require 'fileutils'
 require 'monetaspecs'
 
-RSpec::Core::Formatters::ProgressFormatter.class_eval do
-  def example_passed(example)
-    # do nothing
+if ENV['TRAVIS']
+  RSpec::Core::Formatters::ProgressFormatter.class_eval do
+    def example_passed(example)
+      # do nothing
+    end
   end
 end
 
