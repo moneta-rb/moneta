@@ -45,7 +45,11 @@ gem 'ruby-tokyotyrant', :platforms => :ruby
 gem 'tdb', :platforms => :ruby
 gem 'leveldb-ruby', :platforms => :ruby
 gem 'tokyocabinet', :platforms => :ruby
-gem 'kyotocabinet-ruby', :platforms => :ruby, :github => 'minad/kyotocabinet-ruby'
+unless defined?(JRUBY_VERSION)
+  # FIXME: We have to check manually for jruby
+  # otherwise bundle install --deployment doesn't work
+  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
+end
 gem 'memcached', :platforms => :ruby
 gem 'jruby-memcached', :platforms => :jruby
 gem 'sqlite3', :platforms => :ruby
