@@ -18,7 +18,6 @@ describe_moneta "weak_increment" do
   end
 
   include_context 'setup_store'
-  it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'features'
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'

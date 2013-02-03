@@ -41,6 +41,10 @@ class Specs
     new(:specs => specs - [:increment, :concurrent_increment] + [:not_increment])
   end
 
+  def without_concurrent_increment
+    new(:specs => specs - [:concurrent_increment])
+  end
+
   def without_persist
     new(:specs => specs - [:persist, :multiprocess, :concurrent_increment] + [:not_persist])
   end
@@ -498,7 +502,7 @@ end},
   use :WeakIncrement
   adapter :Couch, :db => 'weak_increment'
 end},
-    :specs => ADAPTER_SPECS.without_create
+    :specs => ADAPTER_SPECS.without_create.without_concurrent_increment
   },
   'expires_memory' => {
     :build => %{Moneta.build do
