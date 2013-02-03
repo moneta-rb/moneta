@@ -17175,6 +17175,31 @@ shared_examples_for 'concurrent_increment' do
 
 end
 
+#################### concurrent_create ####################
+
+shared_examples_for 'concurrent_create' do
+  it 'have atomic create across multiple processes' do
+    a = Thread.new do
+      s = new_store
+      1000.times do |i|
+        s[i.to_s].should == 'a' if s.create(i.to_s, 'a')
+        sleep 0.01 if i % 100 == 0
+      end
+      s.close
+    end
+    b = Thread.new do
+      s = new_store
+      1000.times do |i|
+        s[i.to_s].should == 'b' if s.create(i.to_s, 'b')
+      end
+      s.close
+    end
+    a.join
+    b.join
+  end
+
+end
+
 #################### increment ####################
 
 shared_examples_for 'increment' do

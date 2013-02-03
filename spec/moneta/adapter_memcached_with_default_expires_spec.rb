@@ -15,6 +15,7 @@ describe_moneta "adapter_memcached_with_default_expires" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
   it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'create'
   it_should_behave_like 'create_expires'

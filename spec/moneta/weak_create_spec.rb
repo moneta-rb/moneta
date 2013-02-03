@@ -18,6 +18,7 @@ describe_moneta "weak_create" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
   it_should_behave_like 'create'
   it_should_behave_like 'features'
   it_should_behave_like 'multiprocess'
