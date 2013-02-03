@@ -17070,7 +17070,7 @@ shared_examples_for 'expires' do
     store.delete('key2').should be_nil
   end
 
-  it 'supports the #expires syntactic sugar' do
+  it 'supports the #expires syntactic sugar', :retry => 3 do
     store.store('persistent_key', 'persistent_value', :expires => 0)
     store.expires(1).store('key2', 'val2')
     store['key2'].should == 'val2'
@@ -17086,7 +17086,7 @@ shared_examples_for 'expires' do
     store['key1'].should == 'val1'
   end
 
-  it 'does not update the expiration time in key? when not asked to do so' do
+  it 'does not update the expiration time in key? when not asked to do so', :retry => 3 do
     store.store('key1', 'val1', :expires => 1)
     store.key?('key1').should be_true
     store.key?('key1', :expires => nil).should be_true
@@ -17094,7 +17094,7 @@ shared_examples_for 'expires' do
     store.key?('key1').should be_false
   end
 
-  it 'does not update the expiration time in fetch when not asked to do so' do
+  it 'does not update the expiration time in fetch when not asked to do so', :retry => 3 do
     store.store('key1', 'val1', :expires => 1)
     store.fetch('key1').should == 'val1'
     store.fetch('key1', :expires => nil).should == 'val1'
@@ -17102,7 +17102,7 @@ shared_examples_for 'expires' do
     store.fetch('key1').should be_nil
   end
 
-  it 'does not update the expiration time in load when not asked to do so' do
+  it 'does not update the expiration time in load when not asked to do so', :retry => 3 do
     store.store('key1', 'val1', :expires => 1)
     store.load('key1').should == 'val1'
     store.load('key1', :expires => nil).should == 'val1'

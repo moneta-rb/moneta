@@ -5,5 +5,5 @@ sudo service redis-server start
 sudo service cassandra start
 sudo service memcached start
 sudo service mongodb start
-/usr/sbin/ttserver -dmn
+/usr/sbin/ttserver -dmn -pid /tmp/ttserver.pid
 sleep 3
