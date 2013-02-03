@@ -50,6 +50,7 @@ module Moneta
         self
       end
 
+      # (see Proxy#close)
       def close
         @backend.finish
         nil
