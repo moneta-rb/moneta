@@ -5,5 +5,13 @@ sudo service redis-server start
 sudo service cassandra start
 sudo service memcached start
 sudo service mongodb start
-/usr/sbin/ttserver -dmn -pid /tmp/ttserver.pid
+
+echo 'Starting TokyoTyrant'
+/usr/sbin/ttserver -dmn -pid /tmp/ttserver.pid -log /tmp/ttserver.log
+
+# Waiting for servers to start
 sleep 3
+
+echo 'TokyoTyrant status'
+ps aux | grep ttserver
+cat /tmp/ttserver.log
