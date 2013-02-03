@@ -9,6 +9,11 @@ module Moneta
 
       attr_reader :backend
 
+      # TODO: Add create support using checkAndPut if added to thrift api
+      # https://issues.apache.org/jira/browse/HBASE-3307
+      # https://github.com/bmuller/hbaserb/issues/2
+      supports :increment
+
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (9090) Server port
