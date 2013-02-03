@@ -14,7 +14,7 @@ module Moneta
       # @option options [String] :host ('127.0.0.1') Couch host
       # @option options [String] :port (5984) Couch port
       # @option options [String] :db ('moneta') Couch database
-      # @option options [::CouchRest] :backend Use existing backend instance
+      # @option options [::Net::HTTP] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] || ::Net::HTTP.start(options[:host] || '127.0.0.1',
                                                           options[:port] || 5984)
