@@ -28,7 +28,7 @@ module Rack
     end
 
     def call(env)
-      key = env['PATH_INFO'][1..-1]
+      key = env['PATH_INFO'][1..-1].to_s
       case env['REQUEST_METHOD']
       when 'HEAD'
         if key.empty?

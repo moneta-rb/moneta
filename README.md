@@ -176,7 +176,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>LocalMemCache</td><td>localmemcache</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://localmemcache.rubyforge.org/">LocalMemCache</a> database</td></tr>
 
-<tr><td>Couch</td><td>multi_json</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
+<tr><td>Couch</td><td>faraday, multi_json</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
 
 <tr><td>Fog</td><td>fog</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fog.io/">Fog</a> cloud store</td></tr>
 
@@ -200,7 +200,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>Client</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
 
-<tr><td>RestClient</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
+<tr><td>RestClient</td><td>faraday</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
 
 </table>
 

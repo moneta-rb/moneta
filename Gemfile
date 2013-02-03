@@ -25,6 +25,7 @@ gem 'snappy', :platforms => :ruby
 gem 'qlzruby', :platforms => :ruby
 
 # Backends
+gem 'faraday'
 gem 'daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
