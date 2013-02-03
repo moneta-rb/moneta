@@ -7,7 +7,7 @@ describe_moneta "simple_activerecord_with_expires" do
   end
 
   def new_store
-    Moneta.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'simple_activerecord_with_expires') }, :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_activerecord_with_expires.log')})
+    Moneta.new(:ActiveRecord, :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'simple_activerecord_with_expires' }, :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_activerecord_with_expires.log')})
   end
 
   def load_value(value)

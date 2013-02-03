@@ -7,7 +7,7 @@ describe_moneta "adapter_activerecord" do
   end
 
   def new_store
-    Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })
+    Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'adapter_activerecord' })
   end
 
   def load_value(value)
@@ -33,7 +33,7 @@ describe_moneta "adapter_activerecord" do
   end
 
   it 'uses an existing connection' do
-    ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'activerecord-existing')
+    ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'activerecord-existing'
 
     store = Moneta::Adapters::ActiveRecord.new
     store.table.should be_table_exists

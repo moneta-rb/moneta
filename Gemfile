@@ -48,14 +48,14 @@ gem 'tokyocabinet', :platforms => :ruby
 unless defined?(JRUBY_VERSION)
   # FIXME: We have to check manually for jruby
   # otherwise bundle install --deployment doesn't work
-  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
+#  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
 end
 gem 'memcached', :platforms => :ruby
 gem 'jruby-memcached', :platforms => :jruby
 gem 'sqlite3', :platforms => :ruby
-gem 'jdbc-sqlite3', :platforms => :jruby
 gem 'activerecord-jdbc-adapter', :platforms => :jruby
-gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
+gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
+gem 'activerecord-mysql2-adapter', :platforms => :ruby
 # gdbm for jruby needs ffi
 gem 'ffi', :platforms => :jruby
 gem 'gdbm', :platforms => :jruby
