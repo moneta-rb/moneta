@@ -17142,6 +17142,39 @@ shared_examples_for 'not_increment' do
   end
 end
 
+#################### concurrent_increment ####################
+
+shared_examples_for 'concurrent_increment' do
+  it 'have atomic increment across multiple processes' do
+    a = Thread.new do
+      s = new_store
+      1000.times do |i|
+        s.increment('counter')
+        s["a#{i}"] = i.to_s
+        sleep 0.01 if i % 100 == 0
+      end
+      s.close
+    end
+    b = Thread.new do
+      s = new_store
+      1000.times do |i|
+        s.increment('counter')
+        s["b#{i}"] = i.to_s
+        sleep 0.01 if i % 100 == 0
+      end
+      s.close
+    end
+    a.join
+    b.join
+    1000.times do |i|
+      store["a#{i}"].should == i.to_s
+      store["b#{i}"].should == i.to_s
+    end
+    store.raw['counter'].should == 2000.to_s
+  end
+
+end
+
 #################### increment ####################
 
 shared_examples_for 'increment' do
