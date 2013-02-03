@@ -18,6 +18,7 @@ module Moneta
       :snappy   => [ :compress,  '::Snappy.inflate(%s)',         '::Snappy.deflate(%s)',           'snappy'        ],
       :quicklz  => [ :compress,  '::QuickLZ.decompress(%s)',     '::QuickLZ.compress(%s)',         'qlzruby'       ],
       :zlib     => [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',    'zlib'          ],
+      :qp       => [ :encode,    "%s.unpack('M').first",         "[%s].pack('M').strip"                            ],
       :uuencode => [ :encode,    "%s.unpack('u').first",         "[%s].pack('u').strip"                            ],
       :base64   => RUBY_VERSION > '1.9' ?
                    [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                 ] :

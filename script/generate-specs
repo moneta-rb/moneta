@@ -975,6 +975,19 @@ it 'compile transformer class' do
   Moneta::Transformer::MarshalUuencodeKeyMarshalUuencodeValue.should_not be_nil
 end}
   },
+  'transformer_marshal_qp' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => [:marshal, :qp], :value => [:marshal, :qp]
+  adapter :Memory
+end},
+    :specs => STANDARD_SPECS.without_persist,
+    :load_value => '::Marshal.load(value.unpack(\'M\').first)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalQpKeyMarshalQpValue.should_not be_nil
+end}
+  },
   'transformer_marshal_escape' => {
     :build => %{Moneta.build do
   use :Transformer, :key => [:marshal, :escape], :value => :marshal

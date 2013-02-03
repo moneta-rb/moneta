@@ -4,6 +4,7 @@ master
 * Adapters::TokyoTyrant supports both native (ruby-tokyotyrant) and pure-ruby tokyotyrant gems
 * Adapters::Couch use Faraday directly instead of buggy CouchRest
 * Adapters::RestClient use Faraday
+* Transformer: add quoted printable encoding (:qp)
 
 0.7.10
 
