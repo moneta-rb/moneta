@@ -1,4 +1,10 @@
-require 'tokyotyrant'
+begin
+  # Native client
+  require 'tokyo_tyrant'
+rescue LoadError
+  # Ruby client
+  require 'tokyotyrant'
+end
 
 module Moneta
   module Adapters
@@ -6,6 +12,7 @@ module Moneta
     # @api public
     class TokyoTyrant
       include Defaults
+      include HashAdapter
 
       supports :create, :increment
       attr_reader :backend
@@ -15,22 +22,23 @@ module Moneta
       # @option options [Integer] :port (1978) Server port
       # @option options [::TokyoTyrant::RDB] :backend Use existing backend instance
       def initialize(options = {})
+        options[:host] ||= '127.0.0.1'
+        options[:port] ||= 1978
         if options[:backend]
           @backend = options[:backend]
-        else
+        elsif defined?(::TokyoTyrant::RDB)
+          # Use ruby client
           @backend = ::TokyoTyrant::RDB.new
-          @backend.open(options[:host] || '127.0.0.1',
-                        options[:port] || 1978) or raise @backend.errmsg(@backend.ecode)
+          @backend.open(options[:host], options[:port]) or raise @backend.errmsg(@backend.ecode)
+        else
+          # Use native client
+          @backend = ::TokyoTyrant::DB.new(options[:host], options[:port])
         end
+        @native = @backend.class.name != 'TokyoTyrant::RDB'
         probe = '__tokyotyrant_endianness_probe'
         @backend.delete(probe)
         @backend.addint(probe, 1)
         @pack = @backend.delete(probe) == [1].pack('l>') ? 'l>' : 'l<'
-      end
-
-      # (see Proxy#key?)
-      def key?(key, options = {})
-        @backend.has_key?(key)
       end
 
       # (see Proxy#load)
@@ -61,13 +69,16 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @backend.putkeep(key, pack(value))
-      end
-
-      # (see Proxy#clear)
-      def clear(options = {})
-        @backend.clear
-        self
+        if @native
+          begin
+            # Native client throws an exception
+            @backend.putkeep(key, pack(value))
+          rescue TokyoTyrantError
+            false
+          end
+        else
+          @backend.putkeep(key, pack(value))
+        end
       end
 
       # (see Proxy#close)

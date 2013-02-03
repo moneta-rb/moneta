@@ -38,7 +38,8 @@ gem 'sequel'
 gem 'dalli'
 gem 'riak-client'
 gem 'cassandra'
-gem 'tokyotyrant'
+gem 'tokyotyrant', :platforms => :jruby
+gem 'ruby-tokyotyrant', :platforms => :ruby
 #gem 'hbaserb'
 #gem 'localmemcache'
 gem 'tdb', :platforms => :ruby
