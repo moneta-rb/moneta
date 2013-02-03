@@ -74,6 +74,10 @@ module Moneta
       def store(key, value, options = {})
         @backend.insert(@cf, key, {'value' => value}, :ttl => expires_value(options) || nil)
         value
+      rescue
+        # FIXME: We get spurious cassandra transport exceptions
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#delete)
