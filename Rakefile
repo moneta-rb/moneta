@@ -18,53 +18,60 @@ end
 task :test do
   specs = Dir['spec/*/*_spec.rb'].sort
 
+  # Shuffle specs to ensure equal distribution over the test groups
+  # We have to shuffle with the same seed every time because rake is started
+  # multiple times!
+  old_seed = srand(42)
+  specs.shuffle!
+  srand(old_seed)
+
+  group = ENV['TEST_GROUP'] || '1/1'
+
   # FIXME:
   #
   # * QuickLZ segfaults because of an assertion
   #   QuickLZ is also not maintained on Github, but on Bitbucket
   #   and I don't know where the issue tracker is.
   #
-  # * Cassandra show spurious failures
-  #
   # * action_dispatch cannot be required for an unknown reason
-  if ENV['TEST_GROUP']
-    # Shuffle specs to ensure equal distribution over the test groups
-    # We have to shuffle with the same seed every time because rake is started
-    # multiple times!
-    old_seed = srand(42)
-    specs.shuffle!
-    srand(old_seed)
+  unstable = specs.select {|s| s =~ /quicklz|action_dispatch/ }
+  specs -= unstable
 
-    unstable = specs.select {|s| s =~ /quicklz|action_dispatch/ }
-    specs -= unstable
+  if group =~ /^(\d+)\/(\d+)$/
+    n = $1.to_i
+    max = $2.to_i
+    if n == max
+      specs = specs[(n-1)*(specs.size/max)..-1]
+    else
+      specs = specs[(n-1)*(specs.size/max), specs.size/max]
+    end
+  elsif group == 'unstable'
+    specs = unstable
+  else
+    puts "Invalid test group #{group}"
+    exit 1
   end
 
   # Memcached and Redis specs cannot be used in parallel
   # because of flushing and lacking namespaces
-  parallel = specs.reject {|s| s =~ /memcached|redis|client|shared|riak|tokyotyrant|couch|cassandra/ }
-  serial = specs - parallel
-
-  if ENV['TEST_GROUP'] =~ /^(\d+)\/(\d+)$/
-    n = $1.to_i
-    max = $2.to_i
-    if n == max
-      parallel = parallel[(n-1)*(parallel.size/max)..-1]
-      serial = serial[(n-1)*(serial.size/max)..-1]
-    else
-      parallel = parallel[(n-1)*(parallel.size/max), parallel.size/max]
-      serial = serial[(n-1)*(serial.size/max), serial.size/max]
+  parallel = []
+  %w(memcached redis client shared riak tokyotyrant couch cassandra).each do |name|
+    serial = specs.select { |s| s.include?(name) }
+    unless serial.empty?
+      specs -= serial
+      parallel << serial
     end
-  elsif ENV['TEST_GROUP'] == 'unstable'
-    parallel.clear
-    serial = unstable
   end
+  parallel += specs.map {|s| [s] }
 
   threads = []
   failed = false
-  parallel.each do |spec|
+  parallel.each do |serial|
     threads << Thread.new do
       begin
-        failed = true unless rspec(spec)
+        serial.each do |spec|
+          failed = true unless rspec(spec)
+        end
       ensure
         threads.delete Thread.current
       end
@@ -73,9 +80,6 @@ task :test do
     sleep 0.1 while threads.size >= 10
   end
   sleep 0.1 until threads.empty?
-  serial.each do |spec|
-    failed = true unless rspec(spec)
-  end
   if failed
     fail "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
   else
