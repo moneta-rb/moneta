@@ -22,6 +22,7 @@ module Moneta
             raise ArgumentError, 'Option :file is required' unless options[:file]
             ::SQLite3::Database.new(options[:file])
           end
+        @backend.busy_timeout(1000)
         @backend.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
         @stmts =
           [@select = @backend.prepare("select v from #{table} where k = ?"),
