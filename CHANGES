@@ -1,4 +1,4 @@
-master
+0.7.11
 
 * Logger: Add option :file
 * Adapters::TokyoTyrant supports both native (ruby-tokyotyrant) and pure-ruby tokyotyrant gems
