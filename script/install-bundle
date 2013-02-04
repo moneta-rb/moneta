@@ -22,6 +22,7 @@ if system("wget --no-check-certificate --quiet -O #{BUNDLE_FILE} https://moneta:
   cmd "rm -f #{BUNDLE_FILE}"
 else
   cmd 'bundle install --path .bundle'
+  cmd 'bundle update'
   cmd 'bundle install --deployment --path .bundle'
   cmd "tar -cpzf #{BUNDLE_FILE} Gemfile.lock .bundle"
 end
