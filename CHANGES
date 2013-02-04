@@ -1,7 +1,7 @@
 master
 
 * Concurrency tests added
-* Bugfixes for File, Sqlite, Sequel and Datamapper
+* Bugfixes for File, Sqlite, Sequel and Datamapper, ActiveRecord
 
 0.7.11
 
