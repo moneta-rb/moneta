@@ -41,8 +41,8 @@ class Specs
     new(:specs => specs - [:increment, :concurrent_increment] + [:not_increment])
   end
 
-  def without_concurrent_increment
-    new(:specs => specs - [:concurrent_increment])
+  def without_concurrent
+    new(:specs => specs - [:concurrent_increment, :concurrent_create])
   end
 
   def without_persist
@@ -356,12 +356,12 @@ end
   'simple_sqlite' => {
     :store => :Sqlite,
     :options => ':file => File.join(make_tempdir, "simple_sqlite")',
-    :specs => STANDARD_SPECS
+    :specs => STANDARD_SPECS.without_concurrent
   },
   'simple_sqlite_with_expires' => {
     :store => :Sqlite,
     :options => ':file => File.join(make_tempdir, "simple_sqlite_with_expires"), :expires => true',
-    :specs => STANDARD_SPECS.with_expires
+    :specs => STANDARD_SPECS.with_expires.without_concurrent
   },
   'simple_redis' => {
     :store => :Redis,
@@ -502,7 +502,7 @@ end},
   use :WeakIncrement
   adapter :Couch, :db => 'weak_increment'
 end},
-    :specs => ADAPTER_SPECS.without_create.without_concurrent_increment
+    :specs => ADAPTER_SPECS.without_create.without_concurrent
   },
   'expires_memory' => {
     :build => %{Moneta.build do
@@ -1313,7 +1313,7 @@ end}
   },
   'adapter_sqlite' => {
     :build => 'Moneta::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
-    :specs => ADAPTER_SPECS
+    :specs => ADAPTER_SPECS.without_concurrent
   },
   'adapter_kyotocabinet' => {
     :build => 'Moneta::Adapters::KyotoCabinet.new(:file => File.join(make_tempdir, "adapter_kyotocabinet.kch"))',
