@@ -9,7 +9,7 @@ describe_moneta "simple_datamapper_with_repository" do
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Moneta.new(:DataMapper, :repository => :repo, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_repository", :logger => {:file => File.join(make_tempdir, 'simple_datamapper_with_repository.log')})
+    Moneta.new(:DataMapper, :repository => :repo, :setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper_with_repository", :logger => {:file => File.join(make_tempdir, 'simple_datamapper_with_repository.log')})
   end
 
   def load_value(value)

@@ -12,7 +12,7 @@ module Moneta
 
       class Store
         include ::DataMapper::Resource
-        property :k, Text, :key => true
+        property :k, String, :key => true, :length => 255
         property :v, Text, :lazy => false
         self.raise_on_save_failure = true
       end

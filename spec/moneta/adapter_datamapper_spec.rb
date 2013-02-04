@@ -9,7 +9,7 @@ describe_moneta "adapter_datamapper" do
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")
+    Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "adapter_datamapper")
   end
 
   def load_value(value)
@@ -27,10 +27,10 @@ describe_moneta "adapter_datamapper" do
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it 'does not cross contaminate when storing' do
-    first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
     second.clear
 
     first['key'] = 'value'
@@ -41,10 +41,10 @@ describe_moneta "adapter_datamapper" do
   end
 
   it 'does not cross contaminate when deleting' do
-    first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
     second.clear
 
     first['key'] = 'value'

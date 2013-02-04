@@ -7,7 +7,7 @@ describe_moneta "simple_sequel" do
   end
 
   def new_store
-    Moneta.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel"), :logger => {:file => File.join(make_tempdir, 'simple_sequel.log')})
+    Moneta.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "simple_sequel"), :logger => {:file => File.join(make_tempdir, 'simple_sequel.log')})
   end
 
   def load_value(value)

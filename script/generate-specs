@@ -423,27 +423,27 @@ end
   },
   'simple_sequel' => {
     :store => :Sequel,
-    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel")',
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "simple_sequel")',
     :load_value => '::Marshal.load(value.unpack(\'m\').first)',
     :specs => STANDARD_SPECS
   },
   'simple_sequel_with_expires' => {
     :store => :Sequel,
-    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "simple_sequel_with_expires"), :expires => true',
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "simple_sequel_with_expires"), :expires => true',
     :specs => STANDARD_SPECS.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_datamapper' => {
     :store => :DataMapper,
     :specs => STANDARD_SPECS.without_increment,
-    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper"',
+    :options => ':setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_datamapper_with_expires' => {
     :store => :DataMapper,
-    :options => ':setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_expires", :expires => true',
+    :options => ':setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper_with_expires", :expires => true',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :specs => STANDARD_SPECS.without_increment.with_expires,
@@ -452,7 +452,7 @@ end
   'simple_datamapper_with_repository' => {
     :store => :DataMapper,
     :specs => STANDARD_SPECS.without_increment,
-    :options => ':repository => :repo, :setup => "sqlite3://#{make_tempdir}/simple_datamapper_with_repository"',
+    :options => ':repository => :repo, :setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper_with_repository"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
@@ -460,12 +460,12 @@ end
   'simple_activerecord' => {
     :store => :ActiveRecord,
     :specs => STANDARD_SPECS,
-    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'simple_activerecord' }",
+    :options => ":table => 'simple_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' }",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_activerecord_with_expires' => {
     :store => :ActiveRecord,
-    :options => ":connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'simple_activerecord_with_expires' }, :expires => true",
+    :options => ":table => 'simple_activerecord_with_expires', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' }, :expires => true",
     :specs => STANDARD_SPECS.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
@@ -1101,7 +1101,7 @@ it 'compile transformer class' do
 end}
   },
   'adapter_activerecord' => {
-    :build => "Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'adapter_activerecord' })",
+    :build => "Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' })",
     :specs => ADAPTER_SPECS,
     :tests => %{
 it 'updates an existing key/value' do
@@ -1112,9 +1112,9 @@ it 'updates an existing key/value' do
 end
 
 it 'uses an existing connection' do
-  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'activerecord-existing'
+  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta'
 
-  store = Moneta::Adapters::ActiveRecord.new
+  store = Moneta::Adapters::ActiveRecord.new(:table => 'activerecord_existing')
   store.table.should be_table_exists
 end
 }
@@ -1150,16 +1150,16 @@ end
     :specs => ADAPTER_SPECS.without_increment.without_create
   },
   'adapter_datamapper' => {
-    :build => 'Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")',
+    :build => 'Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "adapter_datamapper")',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :specs => ADAPTER_SPECS.without_increment,
     :tests => %q{
 it 'does not cross contaminate when storing' do
-  first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+  first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
   first.clear
 
-  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
   second.clear
 
   first['key'] = 'value'
@@ -1170,10 +1170,10 @@ it 'does not cross contaminate when storing' do
 end
 
 it 'does not cross contaminate when deleting' do
-  first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+  first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
   first.clear
 
-  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
   second.clear
 
   first['key'] = 'value'
@@ -1308,7 +1308,7 @@ end}
     :specs => ADAPTER_SPECS.without_multiprocess
   },
   'adapter_sequel' => {
-    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:sqlite:" : "sqlite:") + File.join(make_tempdir, "adapter_sequel"))',
+    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "adapter_sequel")',
     :specs => ADAPTER_SPECS
   },
   'adapter_sqlite' => {

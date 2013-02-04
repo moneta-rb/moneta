@@ -16,7 +16,7 @@ module Moneta
       # @option options All other options passed to `Sequel#connect`
       # @option options [Sequel connection] :backend Use existing backend instance
       def initialize(options = {})
-        table = options.delete(:table) || :moneta
+        table = (options.delete(:table) || :moneta).to_sym
         @backend = options[:backend] ||
           begin
             raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
@@ -42,12 +42,10 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.transaction do
-          begin
-            @table.insert(:k => key, :v => value)
-          rescue ::Sequel::DatabaseError
-            @table.update(:k => key, :v => value)
-          end
+        begin
+          @table.insert(:k => key, :v => value)
+        rescue ::Sequel::DatabaseError
+          @table.update(:k => key, :v => value)
         end
         value
       rescue ::Sequel::DatabaseError
@@ -57,9 +55,7 @@ module Moneta
 
       # (see Proxy#store)
       def create(key, value, options = {})
-        @backend.transaction do
-          @table.insert(:k => key, :v => value)
-        end
+        @table.insert(:k => key, :v => value)
         true
       rescue ::Sequel::DatabaseError
         # FIXME: This catches too many errors

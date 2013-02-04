@@ -29,7 +29,7 @@ gem 'faraday'
 gem 'daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
-gem 'dm-sqlite-adapter'
+gem 'dm-mysql-adapter'
 gem 'fog'
 gem 'activerecord', '>= 3.2.9'
 gem 'redis'
@@ -48,7 +48,7 @@ gem 'tokyocabinet', :platforms => :ruby
 unless defined?(JRUBY_VERSION)
   # FIXME: We have to check manually for jruby
   # otherwise bundle install --deployment doesn't work
-#  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
+  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
 end
 gem 'memcached', :platforms => :ruby
 gem 'jruby-memcached', :platforms => :jruby
