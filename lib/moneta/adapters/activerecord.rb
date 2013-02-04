@@ -78,11 +78,15 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        record = @table.where(:k => key).lock.first_or_initialize
-        value = Utils.to_int(record.v) + amount
-        record.v = value.to_s
-        record.save
-        value
+        if create(key, amount.to_s, options)
+          amount
+        else
+          record = @table.where(:k => key).lock.first
+          value = Utils.to_int(record.v) + amount
+          record.v = value.to_s
+          record.save
+          value
+        end
       end
 
       # (see Proxy#create)
