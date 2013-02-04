@@ -17145,25 +17145,22 @@ end
 #################### concurrent_increment ####################
 
 shared_examples_for 'concurrent_increment' do
+
+  def increment_thread(name)
+    Thread.new do
+      s = new_store
+      1000.times do |i|
+        s.increment('counter')
+        s["#{name}#{i}"] = i.to_s
+        sleep 0.01 if i % 100 == 0
+      end
+      s.close
+    end
+  end
+
   it 'have atomic increment across multiple processes' do
-    a = Thread.new do
-      s = new_store
-      1000.times do |i|
-        s.increment('counter')
-        s["a#{i}"] = i.to_s
-        sleep 0.01 if i % 100 == 0
-      end
-      s.close
-    end
-    b = Thread.new do
-      s = new_store
-      1000.times do |i|
-        s.increment('counter')
-        s["b#{i}"] = i.to_s
-        sleep 0.01 if i % 100 == 0
-      end
-      s.close
-    end
+    a = increment_thread('a')
+    b = increment_thread('b')
     a.join
     b.join
     1000.times do |i|
@@ -17178,22 +17175,21 @@ end
 #################### concurrent_create ####################
 
 shared_examples_for 'concurrent_create' do
-  it 'have atomic create across multiple processes' do
+
+  def create_thread(name)
     a = Thread.new do
       s = new_store
       1000.times do |i|
-        s[i.to_s].should == 'a' if s.create(i.to_s, 'a')
+        s[i.to_s].should == name if s.create(i.to_s, name)
         sleep 0.01 if i % 100 == 0
       end
       s.close
     end
-    b = Thread.new do
-      s = new_store
-      1000.times do |i|
-        s[i.to_s].should == 'b' if s.create(i.to_s, 'b')
-      end
-      s.close
-    end
+  end
+
+  it 'have atomic create across multiple processes' do
+    a = create_thread('a')
+    b = create_thread('b')
     a.join
     b.join
   end
