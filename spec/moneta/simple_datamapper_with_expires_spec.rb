@@ -9,7 +9,7 @@ describe_moneta "simple_datamapper_with_expires" do
   require 'dm-core'
   DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Moneta.new(:DataMapper, :setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper_with_expires", :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_datamapper_with_expires.log')})
+    Moneta.new(:DataMapper, :setup => "mysql://root:@localhost/moneta", :table => "simple_datamapper_with_expires", :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_datamapper_with_expires.log')})
   end
 
   def load_value(value)

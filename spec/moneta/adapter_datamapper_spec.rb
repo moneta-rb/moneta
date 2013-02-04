@@ -27,10 +27,10 @@ describe_moneta "adapter_datamapper" do
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it 'does not cross contaminate when storing' do
-    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
+    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
+    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table => "datamapper_second")
     second.clear
 
     first['key'] = 'value'
@@ -38,13 +38,16 @@ describe_moneta "adapter_datamapper" do
 
     first['key'].should == 'value'
     second['key'].should == 'value2'
+
+    first.clear
+    second.clear
   end
 
   it 'does not cross contaminate when deleting' do
-    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
+    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
+    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table => "datamapper_second")
     second.clear
 
     first['key'] = 'value'
@@ -53,6 +56,9 @@ describe_moneta "adapter_datamapper" do
     first.delete('key').should == 'value'
     first.key?('key').should be_false
     second['key'].should == 'value2'
+
+    first.clear
+    second.clear
   end
 
 end

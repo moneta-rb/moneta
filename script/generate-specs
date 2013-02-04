@@ -436,14 +436,14 @@ end
   'simple_datamapper' => {
     :store => :DataMapper,
     :specs => STANDARD_SPECS.without_increment,
-    :options => ':setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper"',
+    :options => ':setup => "mysql://root:@localhost/moneta", :table => "simple_datamapper"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_datamapper_with_expires' => {
     :store => :DataMapper,
-    :options => ':setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper_with_expires", :expires => true',
+    :options => ':setup => "mysql://root:@localhost/moneta", :table => "simple_datamapper_with_expires", :expires => true',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :specs => STANDARD_SPECS.without_increment.with_expires,
@@ -452,7 +452,7 @@ end
   'simple_datamapper_with_repository' => {
     :store => :DataMapper,
     :specs => STANDARD_SPECS.without_increment,
-    :options => ':repository => :repo, :setup => "mysql://root:@localhost/moneta", :table=>"simple_datamapper_with_repository"',
+    :options => ':repository => :repo, :setup => "mysql://root:@localhost/moneta", :table => "simple_datamapper_with_repository"',
     # DataMapper needs default repository to be setup
     :preamble => "require 'dm-core'\nDataMapper.setup(:default, :adapter => :in_memory)\n",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
@@ -1156,10 +1156,10 @@ end
     :specs => ADAPTER_SPECS.without_increment,
     :tests => %q{
 it 'does not cross contaminate when storing' do
-  first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
+  first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
   first.clear
 
-  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
+  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table => "datamapper_second")
   second.clear
 
   first['key'] = 'value'
@@ -1170,10 +1170,10 @@ it 'does not cross contaminate when storing' do
 end
 
 it 'does not cross contaminate when deleting' do
-  first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table=>"datamapper_first")
+  first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
   first.clear
 
-  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table=>"datamapper_second")
+  second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table => "datamapper_second")
   second.clear
 
   first['key'] = 'value'
@@ -1970,8 +1970,7 @@ it 'does not support #decrement' do
   end.to raise_error(NotImplementedError)
 end}
 
-SPECS['concurrent_increment'] = %{
-def increment_thread(name)
+SPECS['concurrent_increment'] = %{def increment_thread(name)
   Thread.new do
     s = new_store
     1000.times do |i|
@@ -1993,11 +1992,9 @@ it 'have atomic increment across multiple processes' do
     store["b\#{i}"].should == i.to_s
   end
   store.raw['counter'].should == 2000.to_s
-end
-}
+end}
 
-SPECS['concurrent_create'] = %{
-def create_thread(name)
+SPECS['concurrent_create'] = %{def create_thread(name)
   a = Thread.new do
     s = new_store
     1000.times do |i|
@@ -2013,8 +2010,7 @@ it 'have atomic create across multiple processes' do
   b = create_thread('b')
   a.join
   b.join
-end
-}
+end}
 
 SPECS['increment'] = %{it 'initializes in #increment with 1' do
   store.key?('inckey').should be_false

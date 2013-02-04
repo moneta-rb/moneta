@@ -78,15 +78,19 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        if create(key, amount.to_s, options)
-          amount
-        else
-          record = @table.where(:k => key).lock.first
+        if record = @table.where(:k => key).lock.first
           value = Utils.to_int(record.v) + amount
           record.v = value.to_s
           record.save
           value
+        elsif create(key, amount.to_s, options)
+          amount
+        else
+          raise 'Concurrent modification'
         end
+      rescue
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#create)

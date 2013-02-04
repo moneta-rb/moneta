@@ -17145,7 +17145,6 @@ end
 #################### concurrent_increment ####################
 
 shared_examples_for 'concurrent_increment' do
-
   def increment_thread(name)
     Thread.new do
       s = new_store
@@ -17169,13 +17168,11 @@ shared_examples_for 'concurrent_increment' do
     end
     store.raw['counter'].should == 2000.to_s
   end
-
 end
 
 #################### concurrent_create ####################
 
 shared_examples_for 'concurrent_create' do
-
   def create_thread(name)
     a = Thread.new do
       s = new_store
@@ -17193,7 +17190,6 @@ shared_examples_for 'concurrent_create' do
     a.join
     b.join
   end
-
 end
 
 #################### increment ####################

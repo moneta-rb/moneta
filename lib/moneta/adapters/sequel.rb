@@ -45,7 +45,7 @@ module Moneta
         begin
           @table.insert(:k => key, :v => value)
         rescue ::Sequel::DatabaseError
-          @table.update(:k => key, :v => value)
+          @table.where(:k => key).update(:v => value)
         end
         value
       rescue ::Sequel::DatabaseError
@@ -69,22 +69,25 @@ module Moneta
           locked_table = @table.for_update
           if record = locked_table[:k => key]
             value = Utils.to_int(record[:v]) + amount
-            locked_table.update(:k => key, :v => value.to_s)
+            locked_table.where(:k => key).update(:v => value.to_s)
             value
           else
             locked_table.insert(:k => key, :v => amount.to_s)
             amount
           end
         end
+      rescue ::Sequel::DatabaseError
+        # FIXME: This catches too many errors
+        # it should only catch a not-unique-exception
+        tries ||= 0
+        (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @backend.transaction do
-          if value = load(key, options)
-            @table.filter(:k => key).delete
-            value
-          end
+        if value = load(key, options)
+          @table.filter(:k => key).delete
+          value
         end
       end
 
