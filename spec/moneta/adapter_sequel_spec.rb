@@ -7,7 +7,7 @@ describe_moneta "adapter_sequel" do
   end
 
   def new_store
-    Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "adapter_sequel")
+    Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "adapter_sequel")
   end
 
   def load_value(value)

@@ -423,13 +423,13 @@ end
   },
   'simple_sequel' => {
     :store => :Sequel,
-    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "simple_sequel"',
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "simple_sequel"',
     :load_value => '::Marshal.load(value.unpack(\'m\').first)',
     :specs => STANDARD_SPECS
   },
   'simple_sequel_with_expires' => {
     :store => :Sequel,
-    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "simple_sequel_with_expires", :expires => true',
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "simple_sequel_with_expires", :expires => true',
     :specs => STANDARD_SPECS.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
@@ -1308,7 +1308,7 @@ end}
     :specs => ADAPTER_SPECS.without_multiprocess
   },
   'adapter_sequel' => {
-    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:" : "") + "mysql://root:@localhost/moneta", :table => "adapter_sequel")',
+    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "adapter_sequel")',
     :specs => ADAPTER_SPECS
   },
   'adapter_sqlite' => {
