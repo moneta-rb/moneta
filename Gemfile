@@ -55,7 +55,7 @@ gem 'jruby-memcached', :platforms => :jruby
 gem 'sqlite3', :platforms => :ruby
 gem 'activerecord-jdbc-adapter', :platforms => :jruby
 gem 'activerecord-jdbcmysql-adapter', :platforms => :jruby
-gem 'activerecord-mysql2-adapter', :platforms => :ruby
+gem 'mysql2', :platforms => :ruby
 # gdbm for jruby needs ffi
 gem 'ffi', :platforms => :jruby
 gem 'gdbm', :platforms => :jruby
