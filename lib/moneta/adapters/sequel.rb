@@ -96,6 +96,12 @@ module Moneta
         @table.delete
         self
       end
+
+      # (see Proxy#close)
+      def close
+        @backend.disconnect
+        self
+      end
     end
   end
 end
