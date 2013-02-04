@@ -1,4 +1,4 @@
-master
+0.7.12
 
 * Concurrency tests added
 * Bugfixes for File, Sqlite, Sequel and Datamapper, ActiveRecord
