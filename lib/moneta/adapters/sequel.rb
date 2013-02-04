@@ -100,7 +100,7 @@ module Moneta
       # (see Proxy#close)
       def close
         @backend.disconnect
-        self
+        nil
       end
     end
   end
