@@ -495,7 +495,7 @@ end
   use :WeakCreate
   adapter :Couch, :db => 'weak_create'
 end},
-    :specs => ADAPTER_SPECS.without_increment
+    :specs => ADAPTER_SPECS.without_increment.without_concurrent
   },
   'weak_increment' => {
     :build => %{Moneta.build do
