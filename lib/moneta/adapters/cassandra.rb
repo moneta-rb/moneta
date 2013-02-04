@@ -62,8 +62,7 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        value = @backend.get(@cf, key)
-        if value
+        if value = @backend.get(@cf, key)
           expires = expires_value(options, nil)
           @backend.insert(@cf, key, {'value' => value['value'] }, :ttl => expires || nil) if expires != nil
           value['value']

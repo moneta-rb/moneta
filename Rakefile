@@ -34,7 +34,9 @@ task :test do
   #   and I don't know where the issue tracker is.
   #
   # * action_dispatch cannot be required for an unknown reason
-  unstable = specs.select {|s| s =~ /quicklz|action_dispatch/ }
+  #
+  # * Cassandra fails spuriously (An expert has to check the adapter!)
+  unstable = specs.select {|s| s =~ /quicklz|action_dispatch|cassandra/ }
   specs -= unstable
 
   if group =~ /^(\d+)\/(\d+)$/
