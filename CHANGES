@@ -1,3 +1,8 @@
+master
+
+* Concurrency tests added
+* Bugfixes for File, Sqlite, Sequel and Datamapper
+
 0.7.11
 
 * Logger: Add option :file
