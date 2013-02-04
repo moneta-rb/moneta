@@ -33,10 +33,8 @@ task :test do
   #   QuickLZ is also not maintained on Github, but on Bitbucket
   #   and I don't know where the issue tracker is.
   #
-  # * action_dispatch cannot be required for an unknown reason
-  #
   # * Cassandra fails spuriously (An expert has to check the adapter!)
-  unstable = specs.select {|s| s =~ /quicklz|action_dispatch|cassandra/ }
+  unstable = specs.select {|s| s =~ /quicklz|cassandra/ }
   specs -= unstable
 
   if group =~ /^(\d+)\/(\d+)$/
