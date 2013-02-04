@@ -38,9 +38,6 @@ describe_moneta "adapter_datamapper" do
 
     first['key'].should == 'value'
     second['key'].should == 'value2'
-
-    first.clear
-    second.clear
   end
 
   it 'does not cross contaminate when deleting' do
@@ -56,9 +53,6 @@ describe_moneta "adapter_datamapper" do
     first.delete('key').should == 'value'
     first.key?('key').should be_false
     second['key'].should == 'value2'
-
-    first.clear
-    second.clear
   end
 
 end
