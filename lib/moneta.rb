@@ -102,8 +102,12 @@ module Moneta
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise ArgumentError, 'Name must be Symbol' unless Symbol === name
     case name
-    when :Sequel, :ActiveRecord, :Couch, :DataMapper
-      # Sequel accept only base64 keys and values
+    when :DataMapper
+      transformer[:maxlen] = 255
+      transformer[:key] << :base64 << :truncate
+      transformer[:value] << :base64
+    when :Sequel, :ActiveRecord, :Couch
+      # Sequel and AR accept only base64 keys and values
       # FIXME: Couch should work only with :marshal but this raises an error on 1.9
       transformer[:key] << :base64
       transformer[:value] << :base64

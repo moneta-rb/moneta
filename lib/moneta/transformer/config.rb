@@ -25,7 +25,7 @@ module Moneta
                    [ :encode,    "%s.unpack('m').first",         "[%s].pack('m').gsub(\"\n\", '')"                 ],
       :escape   => [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                               ],
       :hmac     => [ :hmac,      'Helper.hmacverify(%s, options[:secret] || @secret)',
-                                 'Helper.hmacsign(%s, options[:secret] || @secret)',                 'openssl'       ],
+                                 'Helper.hmacsign(%s, options[:secret] || @secret)',               'openssl'       ],
       :truncate => [ :truncate,  nil,                            'Helper.truncate(%s, @maxlen)',   'digest/md5'    ],
       :md5      => [ :digest,    nil,                            '::Digest::MD5.hexdigest(%s)',    'digest/md5'    ],
       :rmd160   => [ :digest,    nil,                            '::Digest::RMD160.hexdigest(%s)', 'digest/rmd160' ],
