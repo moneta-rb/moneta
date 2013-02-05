@@ -12,6 +12,6 @@ echo 'Starting TokyoTyrant'
 # Waiting for servers to start
 sleep 3
 
-echo 'TokyoTyrant status'
-ps aux | grep ttserver
-cat /tmp/ttserver.log
+#echo 'TokyoTyrant status'
+#ps aux | grep ttserver
+#cat /tmp/ttserver.log
