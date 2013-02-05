@@ -305,13 +305,13 @@ end
   'simple_yaml' => {
     :store => :YAML,
     :options => ':file => File.join(make_tempdir, "simple_yaml")',
-    :specs => STANDARD_SPECS.without_marshallable_value,
+    :specs => STANDARD_SPECS.without_marshallable_value.without_concurrent,
     :load_value => 'value'
   },
   'simple_yaml_with_expires' => {
     :store => :YAML,
     :options => ':file => File.join(make_tempdir, "simple_yaml_with_expires"), :expires => true',
-    :specs => STANDARD_SPECS.without_marshallable_value.with_expires,
+    :specs => STANDARD_SPECS.without_marshallable_value.with_expires.without_concurrent,
     :load_value => 'value'
   },
   'simple_localmemcache' => {
@@ -1333,7 +1333,7 @@ end}
   },
   'adapter_yaml' => {
     :build => 'Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',
-    :specs => STANDARD_SPECS.simplevalues_only.simplekeys_only.without_transform
+    :specs => STANDARD_SPECS.simplevalues_only.simplekeys_only.without_transform.without_concurrent
   },
   'mutex' => {
     :store => :Memory,
