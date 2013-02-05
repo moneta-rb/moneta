@@ -214,6 +214,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 * [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
 * [9]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
 * [10]: Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
+
 ------
 
 ## Proxies
