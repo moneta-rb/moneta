@@ -1,3 +1,7 @@
+master
+
+* ActiveRecord: Use connection_pool
+
 0.7.12
 
 * Concurrency tests added

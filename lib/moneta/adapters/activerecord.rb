@@ -36,33 +36,41 @@ module Moneta
           end
         end
 
-        unless @table.table_exists?
-          @table.connection.create_table(table, :id => false) do |t|
-            # Do not use binary columns (Issue #17)
-            t.string :k, :null => false
-            t.string :v
+        @table.connection_pool.with_connection do |conn|
+          unless @table.table_exists?
+            conn.create_table(table, :id => false) do |t|
+              # Do not use binary columns (Issue #17)
+              t.string :k, :null => false
+              t.string :v
+            end
+            conn.add_index(table, :k, :unique => true)
           end
-          @table.connection.add_index(table, :k, :unique => true)
         end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@table.where(:k => key).empty?
+        @table.connection_pool.with_connection do
+          !@table.where(:k => key).empty?
+        end
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        record = @table.select(:v).where(:k => key).first
-        record && record.v
+        @table.connection_pool.with_connection do
+          record = @table.select(:v).where(:k => key).first
+          record && record.v
+        end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        record = @table.select(:k).where(:k => key).first_or_initialize
-        record.v = value
-        record.save
-        value
+        @table.connection_pool.with_connection do
+          record = @table.select(:k).where(:k => key).first_or_initialize
+          record.v = value
+          record.save
+          value
+        end
       rescue
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
@@ -70,24 +78,28 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        if record = @table.where(:k => key).first
-          record.destroy
-          record.v
+        @table.connection_pool.with_connection do
+          if record = @table.where(:k => key).first
+            record.destroy
+            record.v
+          end
         end
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @table.transaction do
-          if record = @table.where(:k => key).lock.first
-            value = Utils.to_int(record.v) + amount
-            record.v = value.to_s
-            record.save
-            value
-          elsif create(key, amount.to_s, options)
-            amount
-          else
-            raise 'Concurrent modification'
+        @table.connection_pool.with_connection do
+          @table.transaction do
+            if record = @table.where(:k => key).lock.first
+              value = Utils.to_int(record.v) + amount
+              record.v = value.to_s
+              record.save
+              value
+            elsif create(key, amount.to_s, options)
+              amount
+            else
+              raise 'Concurrent modification'
+            end
           end
         end
       rescue
@@ -97,11 +109,13 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        record = @table.new
-        record.k = key
-        record.v = value
-        record.save
-        true
+        @table.connection_pool.with_connection do
+          record = @table.new
+          record.k = key
+          record.v = value
+          record.save
+          true
+        end
       rescue
         # FIXME: This catches too many errors
         # it should only catch a not-unique-exception
@@ -110,7 +124,9 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @table.delete_all
+        @table.connection_pool.with_connection do
+          @table.delete_all
+        end
         self
       end
     end
