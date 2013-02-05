@@ -423,13 +423,13 @@ end
   },
   'simple_sequel' => {
     :store => :Sequel,
-    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "simple_sequel"',
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "simple_sequel"',
     :load_value => '::Marshal.load(value.unpack(\'m\').first)',
     :specs => STANDARD_SPECS
   },
   'simple_sequel_with_expires' => {
     :store => :Sequel,
-    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "simple_sequel_with_expires", :expires => true',
+    :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "simple_sequel_with_expires", :expires => true',
     :specs => STANDARD_SPECS.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
@@ -460,12 +460,12 @@ end
   'simple_activerecord' => {
     :store => :ActiveRecord,
     :specs => STANDARD_SPECS,
-    :options => ":table => 'simple_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' }",
+    :options => ":table => 'simple_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root' }",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_activerecord_with_expires' => {
     :store => :ActiveRecord,
-    :options => ":table => 'simple_activerecord_with_expires', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' }, :expires => true",
+    :options => ":table => 'simple_activerecord_with_expires', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root' }, :expires => true",
     :specs => STANDARD_SPECS.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
@@ -1101,7 +1101,7 @@ it 'compile transformer class' do
 end}
   },
   'adapter_activerecord' => {
-    :build => "Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' })",
+    :build => "Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root' })",
     :specs => ADAPTER_SPECS,
     :tests => %{
 it 'updates an existing key/value' do
@@ -1112,7 +1112,7 @@ it 'updates an existing key/value' do
 end
 
 it 'uses an existing connection' do
-  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta'
+  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root'
 
   store = Moneta::Adapters::ActiveRecord.new(:table => 'activerecord_existing')
   store.table.should be_table_exists
@@ -1308,7 +1308,7 @@ end}
     :specs => ADAPTER_SPECS.without_multiprocess
   },
   'adapter_sequel' => {
-    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:mysql" : "mysql2") + "://root:@localhost/moneta", :table => "adapter_sequel")',
+    :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "adapter_sequel")',
     :specs => ADAPTER_SPECS
   },
   'adapter_sqlite' => {

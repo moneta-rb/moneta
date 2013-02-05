@@ -34,7 +34,7 @@ class MonetaBenchmarks
     # SDBM is unstable, YAML is too slow
     # :SDBM => { :file => "#{DIR}/sdbm" },
     # :YAML => { :file => "#{DIR}/yaml" },
-    :ActiveRecord => { :table => 'activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta' } },
+    :ActiveRecord => { :table => 'activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :username => 'root', :database => 'moneta' } },
     :Cassandra => {},
     :Client => {},
     :Couch => {},
@@ -57,7 +57,10 @@ class MonetaBenchmarks
     :Redis => {},
     :RestClient => { :url => 'http://localhost:8808/' },
     :Riak => {},
-    :Sequel => { :db => (defined?(JRUBY_VERSION) ? 'jdbc:mysql' : 'mysql2') + '://root:@localhost/moneta', :table => 'sequel' },
+    :Sequel => { :table => 'sequel',
+      :db => (defined?(JRUBY_VERSION) ?
+              'jdbc:mysql://localhost/moneta?user=root' :
+              'mysql2://root:@localhost/moneta') },
     :Sqlite => { :file => ':memory:' },
     :TDB => { :file => "#{DIR}/tdb" },
     :TokyoCabinet => { :file => "#{DIR}/tokyocabinet" },
