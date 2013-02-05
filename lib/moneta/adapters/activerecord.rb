@@ -37,12 +37,12 @@ module Moneta
         end
 
         unless @table.table_exists?
-          @table.connection.create_table(@table.table_name, :id => false) do |t|
+          @table.connection.create_table(table, :id => false) do |t|
             # Do not use binary columns (Issue #17)
             t.string :k, :null => false
             t.string :v
           end
-          @table.connection.add_index(@table.table_name, :k, :unique => true)
+          @table.connection.add_index(table, :k, :unique => true)
         end
       end
 
