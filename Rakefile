@@ -21,7 +21,7 @@ task :test do
   # Shuffle specs to ensure equal distribution over the test groups
   # We have to shuffle with the same seed every time because rake is started
   # multiple times!
-  old_seed = srand(42)
+  old_seed = srand(43)
   specs.shuffle!
   srand(old_seed)
 
