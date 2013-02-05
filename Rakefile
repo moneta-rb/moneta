@@ -33,8 +33,8 @@ task :test do
   #   QuickLZ is also not maintained on Github, but on Bitbucket
   #   and I don't know where the issue tracker is.
   #
-  # * Cassandra fails spuriously (An expert has to check the adapter!)
-  unstable = specs.select {|s| s =~ /quicklz|cassandra/ }
+  # * Cassandra and Riak fail spuriously (An expert has to check the adapters!)
+  unstable = specs.select {|s| s =~ /quicklz|cassandra|riak/ }
   specs -= unstable
 
   if group =~ /^(\d+)\/(\d+)$/
