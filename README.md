@@ -144,11 +144,11 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>Sequel</td><td>sequel</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
 
-<tr><td>PStore</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
-
 <tr><td>TokyoTyrant</td><td>tokyotyrant or ruby-tokyotyrant</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyotyrant/">TokyoTyrant</a> database</td></tr>
 
-<tr><td>YAML</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
+<tr><td>PStore</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
+
+<tr><td>YAML</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
 
 <tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
 
@@ -213,7 +213,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 * [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
 * [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
 * [9]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
-* [11]: Sqlite is multiprocess safe, but the performance suffers badly since Sqlite has to lock the whole database file for writing. Use a real SQL server if you want multiprocess concurrency!
+* [10]: Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
 ------
 
 ## Proxies
