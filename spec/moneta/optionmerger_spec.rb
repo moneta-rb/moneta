@@ -81,7 +81,7 @@ describe_moneta "optionmerger" do
   end
 
   it 'has method #expires' do
-    store.expires(10).default_options.should == {:store=>{:expires=>10},:create=>{:expires=>10}}
+    store.expires(10).default_options.should == {:store=>{:expires=>10},:create=>{:expires=>10},:increment=>{:expires=>10}}
   end
 
   it 'has method #prefix' do

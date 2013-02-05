@@ -60,7 +60,9 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.incrby(key, amount)
+        value = @backend.incrby(key, amount)
+        update_expires(key, options)
+        value
       end
 
       # (see Proxy#clear)

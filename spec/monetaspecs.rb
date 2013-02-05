@@ -17149,7 +17149,7 @@ shared_examples_for 'concurrent_increment' do
     Thread.new do
       s = new_store
       1000.times do |i|
-        s.increment('counter')
+        s.increment('counter', 1, :expires => false)
         s.store("#{name}#{i}", i.to_s, :expires => false)
         sleep 0.01 if i % 100 == 0
       end

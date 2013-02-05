@@ -1531,7 +1531,7 @@ it 'has method #raw' do
 end
 
 it 'has method #expires' do
-  store.expires(10).default_options.should == {:store=>{:expires=>10},:create=>{:expires=>10}}
+  store.expires(10).default_options.should == {:store=>{:expires=>10},:create=>{:expires=>10},:increment=>{:expires=>10}}
 end
 
 it 'has method #prefix' do
@@ -1974,7 +1974,7 @@ SPECS['concurrent_increment'] = %{def increment_thread(name)
   Thread.new do
     s = new_store
     1000.times do |i|
-      s.increment('counter')
+      s.increment('counter', 1, :expires => false)
       s.store("\#{name}\#{i}", i.to_s, :expires => false)
       sleep 0.01 if i % 100 == 0
     end

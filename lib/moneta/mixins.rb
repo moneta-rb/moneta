@@ -45,7 +45,7 @@ module Moneta
     # @return [OptionMerger]
     # @api public
     def expires(expires)
-      with(:expires => expires, :only => [:store, :create])
+      with(:expires => expires, :only => [:store, :create, :increment])
     end
   end
 
