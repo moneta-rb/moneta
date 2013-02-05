@@ -304,7 +304,7 @@ describe Rack::Session::Moneta do
   end
 
   it "does not suffer a race-condition in get_session" do
-    # By lying about existence of a key this proxy tricks the session 
+    # By lying about existence of a key this proxy tricks the session
     # to overwrite values when it wouldn't normally.
     broken_key = Class.new(::Moneta::Proxy) do
       def key?(key, *args)
@@ -318,15 +318,14 @@ describe Rack::Session::Moneta do
     end
 
     # Override the SID generator with one that returns predefined values.
-    gen = ["deadbeef", "deadbeef", "caffee"]
-    def gen.hex(_)
-      shift || raise("Empty!")
+    def pool.generate_sid(*)
+      @fake_sid ||= %w(deadbeef deadbeef caffee)
+      @fake_sid.shift || raise('Empty!')
     end
-    pool.instance_variable_set(:@sid_secure, gen)
+
     req = Rack::MockRequest.new(pool)
     req.get('/')
     res = req.get('/')
     res['Set-Cookie'].should =~ /\Arack.session=caffee; /
   end
-
 end
