@@ -34,6 +34,8 @@ task :test do
   #   and I don't know where the issue tracker is.
   #
   # * Cassandra and Riak fail spuriously (An expert has to check the adapters!)
+  #
+  # * ActiveRecord has some connection problems (An expert has to check the adapter!)
   unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord/ }
   specs -= unstable
 
