@@ -34,7 +34,7 @@ task :test do
   #   and I don't know where the issue tracker is.
   #
   # * Cassandra and Riak fail spuriously (An expert has to check the adapters!)
-  unstable = specs.select {|s| s =~ /quicklz|cassandra|riak/ }
+  unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord/ }
   specs -= unstable
 
   if group =~ /^(\d+)\/(\d+)$/
