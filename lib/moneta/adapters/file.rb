@@ -63,20 +63,16 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         path = store_path(key)
-        ::File.open(path, 'rb+') do |f|
-          Thread.pass until f.flock(::File::LOCK_EX)
-          value = Utils.to_int(f.read) + amount
-          f.truncate(0)
-          f.pos = 0
-          f.write(value.to_s)
-          value
-        end
-      rescue Errno::ENOENT
         if create(key, amount.to_s, options)
           amount
         else
-          # Concurrent modification
-          retry
+          ::File.open(path, 'ab+') do |f|
+            Thread.pass until f.flock(::File::LOCK_EX)
+            value = Utils.to_int(f.read) + amount
+            f.truncate(0)
+            f.write(value.to_s)
+            value
+          end
         end
       end
 
