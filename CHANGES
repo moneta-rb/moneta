@@ -1,6 +1,7 @@
-master
+0.7.13
 
-* ActiveRecord: Use connection_pool
+* Adapters::ActiveRecord: Use connection_pool
+* Adapters::File: Race condition in #increment fixed
 
 0.7.12
 
