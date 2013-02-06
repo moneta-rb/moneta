@@ -33,11 +33,7 @@ module Moneta
         temp_file = ::File.join(@dir, "value-#{$$}-#{Thread.current.object_id}")
         FileUtils.mkpath(::File.dirname(path))
         ::File.open(temp_file, 'wb') {|file| file.write(value) }
-        ::File.unlink(path) if ::File.exist?(path)
         ::File.rename(temp_file, path)
-        value
-      rescue Errno::ENOENT
-        ::File.unlink(temp_file) rescue nil
         value
       end
 
@@ -63,16 +59,15 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         path = store_path(key)
-        if create(key, amount.to_s, options)
+        FileUtils.mkpath(::File.dirname(path))
+        existed = ::File.exists?(path)
+        ::File.open(path, 'ab+') do |f|
+          Thread.pass until f.flock(::File::LOCK_EX)
+          content = f.read
+          f.truncate(0)
+          amount += Utils.to_int(content) if existed || !content.empty?
+          f.write(amount.to_s)
           amount
-        else
-          ::File.open(path, 'ab+') do |f|
-            Thread.pass until f.flock(::File::LOCK_EX)
-            value = Utils.to_int(f.read) + amount
-            f.truncate(0)
-            f.write(value.to_s)
-            value
-          end
         end
       end
 
