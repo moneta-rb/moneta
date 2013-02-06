@@ -26,6 +26,7 @@ describe_moneta "adapter_datamapper" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'does not cross contaminate when storing' do
     first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
     first.clear

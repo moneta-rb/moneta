@@ -116,4 +116,5 @@ describe_moneta "proxy_expires_memory" do
   it_should_behave_like 'store_integerkey_booleanvalue'
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_large'
 end

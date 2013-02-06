@@ -53,6 +53,7 @@ describe_moneta "expires_file" do
   it_should_behave_like 'store_booleankey_stringvalue'
   it_should_behave_like 'store_nilkey_stringvalue'
   it_should_behave_like 'store_integerkey_stringvalue'
+  it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value_expires'
   it 'deletes expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)

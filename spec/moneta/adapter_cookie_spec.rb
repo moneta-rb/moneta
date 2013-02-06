@@ -22,4 +22,5 @@ describe_moneta "adapter_cookie" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

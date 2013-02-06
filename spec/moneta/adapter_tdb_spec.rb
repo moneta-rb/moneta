@@ -22,4 +22,5 @@ describe_moneta "adapter_tdb" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

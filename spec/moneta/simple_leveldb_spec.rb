@@ -146,5 +146,6 @@ describe_moneta "simple_leveldb" do
   it_should_behave_like 'store_integerkey_booleanvalue'
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value'
 end

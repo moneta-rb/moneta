@@ -68,5 +68,6 @@ describe_moneta "simple_memory_with_json_value_serializer" do
   it_should_behave_like 'store_integerkey_stringvalue'
   it_should_behave_like 'store_integerkey_hashvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value'
 end

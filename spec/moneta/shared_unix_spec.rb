@@ -29,6 +29,7 @@ describe_moneta "shared_unix" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'shares values' do
     store['shared_key'] = 'shared_value'
     second = new_store

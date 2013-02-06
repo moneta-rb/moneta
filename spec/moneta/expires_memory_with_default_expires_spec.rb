@@ -115,4 +115,5 @@ describe_moneta "expires_memory_with_default_expires" do
   it_should_behave_like 'store_integerkey_booleanvalue'
   it_should_behave_like 'store_integerkey_nilvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_large'
 end

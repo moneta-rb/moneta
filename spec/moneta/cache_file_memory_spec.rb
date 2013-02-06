@@ -30,6 +30,7 @@ describe_moneta "cache_file_memory" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'stores loaded values in cache' do
     store.adapter['foo'] = 'bar'
     store.cache['foo'].should be_nil

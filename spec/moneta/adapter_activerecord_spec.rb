@@ -25,6 +25,7 @@ describe_moneta "adapter_activerecord" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'updates an existing key/value' do
     store['foo/bar'] = '1'
     store['foo/bar'] = '2'

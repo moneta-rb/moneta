@@ -45,6 +45,7 @@ describe_moneta "transformer_bencode" do
   it_should_behave_like 'store_integerkey_stringvalue'
   it_should_behave_like 'store_integerkey_hashvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value'
   it 'compile transformer class' do
     store.should_not be_nil
