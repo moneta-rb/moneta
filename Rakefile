@@ -41,11 +41,11 @@ task :test do
   #
   # * PStore and File increment/locking doesn't work correctly on JRuby
   #
-  if defined?(JRUBY_VERSION)
-    unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord|uuencode|file|pstore/ }
-  else
-    unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord/ }
-  end
+  unstable = %w(quicklz cassandra riak activerecord)
+  unstable += %w(uuencode file pstore) if defined?(JRUBY_VERSION)
+
+  unstable_re = /#{unstable.join('|')}/
+  unstable = specs.select {|s| s =~ unstable_re }
   specs -= unstable
 
   if group =~ /^(\d+)\/(\d+)$/
