@@ -39,9 +39,9 @@ module Moneta
         @table.connection_pool.with_connection do |conn|
           unless @table.table_exists?
             conn.create_table(table, :id => false) do |t|
-              # Do not use binary columns (Issue #17)
+              # Do not use binary key (Issue #17)
               t.string :k, :null => false
-              t.string :v
+              t.binary :v
             end
             conn.add_index(table, :k, :unique => true)
           end

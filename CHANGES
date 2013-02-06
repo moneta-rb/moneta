@@ -1,3 +1,7 @@
+master
+
+* Adapters::ActiveRecord, Adapters::Sequel: store values as blobs
+
 0.7.13
 
 * Adapters::ActiveRecord: Use connection_pool

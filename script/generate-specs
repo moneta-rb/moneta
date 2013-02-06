@@ -1720,6 +1720,18 @@ end}
   end
 end
 
+SPECS["store_stringkey_stringvalue"] << %{it 'should store values up to 32k' do
+  value = 'x' * (32 * 1024)
+  store['large'] = value
+  store['large'].should == value
+end
+
+it 'should store keys up to 255 bytes' do
+  key = 'x' * 255
+  store[key] = 'value'
+  store[key].should == 'value'
+end}
+
 SPECS['not_persist'] = %{it 'does not persist values' do
   store['key'] = 'val'
   store.close

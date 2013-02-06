@@ -10150,6 +10150,18 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
+
+  it 'should store values up to 32k' do
+    value = 'x' * (32 * 1024)
+    store['large'] = value
+    store['large'].should == value
+  end
+
+  it 'should store keys up to 255 bytes' do
+    key = 'x' * 255
+    store[key] = 'value'
+    store[key].should == 'value'
+  end
 end
 
 #################### returndifferent_stringkey_stringvalue ####################
