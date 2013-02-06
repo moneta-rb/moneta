@@ -1985,17 +1985,20 @@ end
 it 'have atomic increment across multiple processes' do
   a = increment_thread('a')
   b = increment_thread('b')
+  c = increment_thread('c')
   a.join
   b.join
+  c.join
   1000.times do |i|
     store["a\#{i}"].should == i.to_s
     store["b\#{i}"].should == i.to_s
+    store["c\#{i}"].should == i.to_s
   end
-  store.raw['counter'].should == 2000.to_s
+  store.raw['counter'].should == 3000.to_s
 end}
 
 SPECS['concurrent_create'] = %{def create_thread(name)
-  a = Thread.new do
+  Thread.new do
     s = new_store
     1000.times do |i|
       s[i.to_s].should == name if s.create(i.to_s, name, :expires => false)
@@ -2008,8 +2011,10 @@ end
 it 'have atomic create across multiple processes' do
   a = create_thread('a')
   b = create_thread('b')
+  c = create_thread('c')
   a.join
   b.join
+  c.join
 end}
 
 SPECS['increment'] = %{it 'initializes in #increment with 1' do

@@ -32,7 +32,7 @@ module Moneta
         path = store_path(key)
         temp_file = ::File.join(@dir, "value-#{$$}-#{Thread.current.object_id}")
         FileUtils.mkpath(::File.dirname(path))
-        ::File.open(temp_file, 'wb') {|file| file.write(value) }
+        ::File.open(temp_file, 'wb') {|f| f.write(value) }
         ::File.rename(temp_file, path)
         value
       end
@@ -63,9 +63,11 @@ module Moneta
         existed = ::File.exists?(path)
         ::File.open(path, 'ab+') do |f|
           Thread.pass until f.flock(::File::LOCK_EX)
+          # FIXME: JRuby needs synchronous mode, otherwise f.read might return wrong value
+          f.sync = true if defined?(JRUBY_VERSION)
           content = f.read
-          f.truncate(0)
           amount += Utils.to_int(content) if existed || !content.empty?
+          f.truncate(0)
           f.write(amount.to_s)
           amount
         end
@@ -75,9 +77,9 @@ module Moneta
       def create(key, value, options = {})
         path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
-        ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |file|
-          file.binmode
-          file.write(value)
+        ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |f|
+          f.binmode
+          f.write(value)
         end
         true
       rescue Errno::EEXIST
