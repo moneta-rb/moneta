@@ -36,7 +36,16 @@ task :test do
   # * Cassandra and Riak fail spuriously (An expert has to check the adapters!)
   #
   # * ActiveRecord has some connection problems (An expert has to check the adapter!)
-  unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord/ }
+  #
+  # * Transformer with uuencode fails under JRuby
+  #
+  # * PStore and File increment/locking doesn't work correctly on JRuby
+  #
+  if defined?(JRUBY_VERSION)
+    unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord|uuencode|file|pstore/ }
+  else
+    unstable = specs.select {|s| s =~ /quicklz|cassandra|riak|activerecord/ }
+  end
   specs -= unstable
 
   if group =~ /^(\d+)\/(\d+)$/
