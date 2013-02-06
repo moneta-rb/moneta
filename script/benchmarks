@@ -31,8 +31,9 @@ class MonetaBenchmarks
   FileUtils.mkpath(DIR)
 
   STORES = {
-    # SDBM is unstable, YAML is too slow
+    # SDBM accepts only very short key/value pairs (1k for both)
     # :SDBM => { :file => "#{DIR}/sdbm" },
+    # YAML is too slow
     # :YAML => { :file => "#{DIR}/yaml" },
     :ActiveRecord => { :table => 'activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :username => 'root', :database => 'moneta' } },
     :Cassandra => {},
