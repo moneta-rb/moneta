@@ -12,7 +12,6 @@ module Moneta
       attr_reader :table
 
       @tables = {}
-      @tables_reverse = {}
       @tables_count = {}
       @tables_mutex = ::Mutex.new
 
@@ -44,21 +43,18 @@ module Moneta
             end
 
             @tables[options] = table
-            @tables_reverse[table] = options
           end
-          @tables_count[options] ||= 0
-          @tables_count[options] += 1
+          @tables_count[table] ||= 0
+          @tables_count[table] += 1
           table
         end
       end
 
       def self.delete_table(table)
         @tables_mutex.synchronize do
-          options = @tables_reverse[table]
-          if (@tables_count[options] -= 1) == 0
-            @tables_reverse.delete(table)
-            @tables_count.delete(options)
-            @tables.delete(options)
+          if (@tables_count[table] -= 1) == 0
+            @tables_count.delete(table)
+            @tables.delete_if {|k,v| v == table }
           end
         end
       end
