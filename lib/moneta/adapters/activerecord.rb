@@ -11,14 +11,44 @@ module Moneta
       supports :create, :increment
       attr_reader :table
 
-      @tables = {}
-      @tables_count = {}
-      @tables_mutex = ::Mutex.new
+      class Table < ::ActiveRecord::Base
+        self.abstract_class = true
 
-      def self.create_table(options)
-        @tables_mutex.synchronize do
-          unless table = @tables[options]
-            table = Class.new(::ActiveRecord::Base)
+        @table_mutex = ::Mutex.new
+
+        class << self
+          def refcount(n)
+            @refcount ||= 0
+            @refcount += n
+          end
+
+          def release(table)
+            @table_mutex.synchronize do
+              remove_const(table.name.sub(/^.*::/, '')) if table.refcount(-1) <= 0
+            end
+          end
+
+          def get(options)
+            name = 'Table_' << options.inspect.gsub(/[^\w]+/) do
+              $&.unpack('H2' * $&.bytesize).join.upcase
+            end
+            @table_mutex.synchronize do
+              table =
+                if const_defined?(name)
+                  const_get(name)
+                else
+                  create(name, options)
+                end
+              table.refcount(1)
+              table
+            end
+          end
+
+          private
+
+          def create(name, options)
+            table = Class.new(Table)
+            Table.const_set(name, table)
             table.table_name = options[:table] || 'moneta'
             table.primary_key = :k
 
@@ -42,19 +72,10 @@ module Moneta
               end
             end
 
-            @tables[options] = table
-          end
-          @tables_count[table] ||= 0
-          @tables_count[table] += 1
-          table
-        end
-      end
-
-      def self.delete_table(table)
-        @tables_mutex.synchronize do
-          if (@tables_count[table] -= 1) == 0
-            @tables_count.delete(table)
-            @tables.delete_if {|k,v| v == table }
+            table
+          rescue
+            remove_const(name)
+            raise
           end
         end
       end
@@ -63,7 +84,7 @@ module Moneta
       # @option options [String] :table ('moneta') Table name
       # @option options [Hash]   :connection ActiveRecord connection configuration
       def initialize(options = {})
-        @table = self.class.create_table(options)
+        @table = Table.get(options)
       end
 
       # (see Proxy#key?)
@@ -150,7 +171,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        self.class.delete_table(@table)
+        Table.release(@table)
         @table = nil
       end
     end
