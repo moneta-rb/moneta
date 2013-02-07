@@ -74,5 +74,4 @@ describe_moneta "simple_null" do
   it_should_behave_like 'returndifferent_integerkey_objectvalue'
   it_should_behave_like 'returndifferent_integerkey_stringvalue'
   it_should_behave_like 'returndifferent_integerkey_hashvalue'
-  it_should_behave_like 'store_large'
 end

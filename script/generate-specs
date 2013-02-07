@@ -95,7 +95,7 @@ class Specs
   end
 
   def without_store
-    new(:specs => specs - [:store, :transform_value, :marshallable_value])
+    new(:specs => specs - [:store, :store_large, :transform_value, :marshallable_value])
   end
 
   def with_default_expires
