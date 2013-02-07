@@ -2,12 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_fog" do
+  require 'fog'
+  Fog.mock!
   def features
     []
   end
 
-  require 'fog'
-  Fog.mock!
   def new_store
     Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',

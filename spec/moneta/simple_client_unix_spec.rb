@@ -2,11 +2,11 @@
 require 'helper'
 
 describe_moneta "simple_client_unix" do
+  start_server(Moneta::Adapters::Memory.new, :socket => File.join(make_tempdir, 'simple_client_unix'))
   def features
     [:create, :increment]
   end
 
-  start_server(Moneta::Adapters::Memory.new, :socket => File.join(make_tempdir, 'simple_client_unix'))
   def new_store
     Moneta.new(:Client, :socket => File.join(make_tempdir, 'simple_client_unix'), :logger => {:file => File.join(make_tempdir, 'simple_client_unix.log')})
   end

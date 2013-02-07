@@ -2,11 +2,11 @@
 require 'helper'
 
 describe_moneta "simple_restclient" do
+  start_restserver
   def features
     []
   end
 
-  start_restserver
   def new_store
     Moneta.new(:RestClient, :url => 'http://localhost:8808/moneta/', :logger => {:file => File.join(make_tempdir, 'simple_restclient.log')})
   end

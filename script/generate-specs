@@ -1113,20 +1113,12 @@ it 'updates an existing key/value' do
   store['foo/bar'] = '2'
   records = store.table.find :all, :conditions => { :k => 'foo/bar' }
   records.count.should == 1
-end
-
-it 'uses an existing connection' do
-  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root'
-
-  store = Moneta::Adapters::ActiveRecord.new(:table => 'activerecord_existing')
-  store.table.connection_pool.with_connection do
-    store.table.should be_table_exists
-  end
-
-  store['key'] = 'value'
-  store['key'].should == 'value'
-end
-}
+end}
+  },
+  'adapter_activerecord_exisiting_connection' => {
+    :preamble => "require 'active_record'\nActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root'\n",
+    :build => "Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord_existing_connection')",
+    :specs => ADAPTER_SPECS
   },
   'adapter_client' => {
     :preamble => "start_server(Moneta::Adapters::Memory.new)\n",
@@ -2364,11 +2356,11 @@ TESTS.each do |name, options|
   code = %{#{header}require 'helper'
 
 describe_moneta #{name.inspect} do
-  def features
+  #{preamble}def features
     #{specs.features.to_a.inspect}
   end
 
-  #{preamble}def new_store
+  def new_store
     #{build.gsub("\n", "\n    ")}
   end
 

@@ -2,13 +2,13 @@
 require 'helper'
 
 describe_moneta "simple_riak" do
-  def features
-    []
-  end
-
   require 'riak'
 
   Riak.disable_list_keys_warnings = true
+
+  def features
+    []
+  end
 
   def new_store
     Moneta.new(:Riak, :bucket => 'simple_riak', :logger => {:file => File.join(make_tempdir, 'simple_riak.log')})

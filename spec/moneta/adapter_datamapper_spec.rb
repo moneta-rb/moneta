@@ -2,12 +2,12 @@
 require 'helper'
 
 describe_moneta "adapter_datamapper" do
+  require 'dm-core'
+  DataMapper.setup(:default, :adapter => :in_memory)
   def features
     [:create]
   end
 
-  require 'dm-core'
-  DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
     Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "adapter_datamapper")
   end
