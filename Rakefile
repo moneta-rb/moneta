@@ -35,13 +35,9 @@ task :test do
   #
   # * Cassandra and Riak fail spuriously (An expert has to check the adapters!)
   #
-  # * ActiveRecord has some connection problems (An expert has to check the adapter!)
-  #
-  # * Transformer with uuencode fails under JRuby
-  #
   # * PStore and File increment/locking doesn't work correctly on JRuby
   #
-  unstable = %w(quicklz cassandra riak activerecord)
+  unstable = %w(quicklz cassandra riak)
   unstable += %w(file pstore) if defined?(JRUBY_VERSION)
 
   unstable_re = /#{unstable.join('|')}/
