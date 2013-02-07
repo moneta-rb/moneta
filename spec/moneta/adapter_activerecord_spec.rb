@@ -37,7 +37,12 @@ describe_moneta "adapter_activerecord" do
     ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root'
 
     store = Moneta::Adapters::ActiveRecord.new(:table => 'activerecord_existing')
-    store.table.should be_table_exists
+    store.table.connection_pool.with_connection do
+      store.table.should be_table_exists
+    end
+
+    store['key'] = 'value'
+    store['key'].should == 'value'
   end
 
 end

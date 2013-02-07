@@ -1,4 +1,5 @@
 require 'active_record'
+require 'thread'
 
 module Moneta
   module Adapters
@@ -10,42 +11,63 @@ module Moneta
       supports :create, :increment
       attr_reader :table
 
-      def self.tables
-        @tables ||= {}
+      @tables = {}
+      @tables_reverse = {}
+      @tables_count = {}
+      @tables_mutex = ::Mutex.new
+
+      def self.create_table(options)
+        @tables_mutex.synchronize do
+          unless table = @tables[options]
+            table = Class.new(::ActiveRecord::Base)
+            table.table_name = options[:table] || 'moneta'
+            table.primary_key = :k
+
+            if options[:connection]
+              begin
+                table.establish_connection(options[:connection])
+              rescue
+                tries ||= 0
+                (tries += 1) < 3 ? retry : raise
+              end
+            end
+
+            table.connection_pool.with_connection do |conn|
+              unless table.table_exists?
+                conn.create_table(table.table_name, :id => false) do |t|
+                  # Do not use binary key (Issue #17)
+                  t.string :k, :null => false
+                  t.binary :v
+                end
+                conn.add_index(table.table_name, :k, :unique => true)
+              end
+            end
+
+            @tables[options] = table
+            @tables_reverse[table] = options
+          end
+          @tables_count[options] ||= 0
+          @tables_count[options] += 1
+          table
+        end
+      end
+
+      def self.delete_table(table)
+        @tables_mutex.synchronize do
+          options = @tables_reverse[table]
+          if (@tables_count[options] -= 1) == 0
+            @tables_reverse.delete(table)
+            @tables_count.delete(options)
+            @tables.delete(options)
+          end
+        end
       end
 
       # @param [Hash] options
       # @option options [String] :table ('moneta') Table name
       # @option options [Hash]   :connection ActiveRecord connection configuration
       def initialize(options = {})
-        table = options[:table] || 'moneta'
-        @table = self.class.tables[table] ||=
-          begin
-            c = Class.new(::ActiveRecord::Base)
-            c.table_name = table
-            c.primary_key = :k
-            c
-          end
-
-        if options[:connection]
-          begin
-            @table.establish_connection(options[:connection])
-          rescue
-            tries ||= 0
-            (tries += 1) < 3 ? retry : raise
-          end
-        end
-
-        @table.connection_pool.with_connection do |conn|
-          unless @table.table_exists?
-            conn.create_table(table, :id => false) do |t|
-              # Do not use binary key (Issue #17)
-              t.string :k, :null => false
-              t.binary :v
-            end
-            conn.add_index(table, :k, :unique => true)
-          end
-        end
+        @table = self.class.create_table(options)
       end
 
       # (see Proxy#key?)
@@ -128,6 +150,12 @@ module Moneta
           @table.delete_all
         end
         self
+      end
+
+      # (see Proxy#close)
+      def close
+        self.class.delete_table(@table)
+        @table = nil
       end
     end
   end
