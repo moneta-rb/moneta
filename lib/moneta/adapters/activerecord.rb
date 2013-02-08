@@ -11,72 +11,68 @@ module Moneta
       supports :create, :increment
       attr_reader :table
 
-      class Table < ::ActiveRecord::Base
-        self.abstract_class = true
+      @table_mutex = ::Mutex.new
+      @table_refcount = {}
 
-        @table_mutex = ::Mutex.new
-
-        class << self
-          def refcount(n)
-            @refcount ||= 0
-            @refcount += n
-          end
-
-          def release(table)
-            @table_mutex.synchronize do
-              remove_const(table.name.sub(/^.*::/, '')) if table.refcount(-1) <= 0
+      class << self
+        def release(table)
+          @table_mutex.synchronize do
+            if (@table_refcount[table] -= 1) <= 0
+              remove_const(table.name.sub(/^.*::/, ''))
+              @table_refcount.delete(table)
             end
           end
+        end
 
-          def get(options)
-            name = 'Table_' << options.inspect.gsub(/[^\w]+/) do
-              $&.unpack('H2' * $&.bytesize).join.upcase
-            end
-            @table_mutex.synchronize do
-              table =
-                if const_defined?(name)
-                  const_get(name)
-                else
-                  create(name, options)
-                end
-              table.refcount(1)
-              table
-            end
+        def get(options)
+          name = 'Table_' << options.inspect.gsub(/[^\w]+/) do
+            $&.unpack('H2' * $&.bytesize).join.upcase
           end
-
-          private
-
-          def create(name, options)
-            table = Class.new(Table)
-            Table.const_set(name, table)
-            table.table_name = options[:table] || 'moneta'
-            table.primary_key = :k
-
-            if options[:connection]
-              begin
-                table.establish_connection(options[:connection])
-              rescue
-                tries ||= 0
-                (tries += 1) < 3 ? retry : raise
+          @table_mutex.synchronize do
+            table =
+              if const_defined?(name)
+                const_get(name)
+              else
+                create(name, options)
               end
-            end
-
-            table.connection_pool.with_connection do |conn|
-              unless table.table_exists?
-                conn.create_table(table.table_name, :id => false) do |t|
-                  # Do not use binary key (Issue #17)
-                  t.string :k, :null => false
-                  t.binary :v
-                end
-                conn.add_index(table.table_name, :k, :unique => true)
-              end
-            end
-
+            @table_refcount[table] ||= 0
+            @table_refcount[table] += 1
             table
-          rescue
-            remove_const(name)
-            raise
           end
+        end
+
+        private
+
+        def create(name, options)
+          table = Class.new(::ActiveRecord::Base)
+          const_set(name, table)
+          table.table_name = options[:table] || 'moneta'
+          table.primary_key = :k
+
+          if options[:connection]
+            begin
+              table.establish_connection(options[:connection])
+            rescue
+              tries ||= 0
+              (tries += 1) < 3 ? retry : raise
+            end
+          end
+
+          table.connection_pool.with_connection do |conn|
+            unless table.table_exists?
+              conn.create_table(table.table_name, :id => false) do |t|
+                # Do not use binary key (Issue #17)
+                t.string :k, :null => false
+                t.binary :v
+              end
+              conn.add_index(table.table_name, :k, :unique => true)
+            end
+          end
+
+          table
+        rescue
+          remove_const(name)
+          raise
         end
       end
 
@@ -84,7 +80,7 @@ module Moneta
       # @option options [String] :table ('moneta') Table name
       # @option options [Hash]   :connection ActiveRecord connection configuration
       def initialize(options = {})
-        @table = Table.get(options)
+        @table = self.class.get(options)
       end
 
       # (see Proxy#key?)
@@ -171,7 +167,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        Table.release(@table)
+        self.class.release(@table)
         @table = nil
       end
     end
