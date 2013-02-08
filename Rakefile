@@ -33,11 +33,9 @@ task :test do
   #   QuickLZ is also not maintained on Github, but on Bitbucket
   #   and I don't know where the issue tracker is.
   #
-  # * Cassandra and Riak fail spuriously (An expert has to check the adapters!)
-  #
   # * PStore and File increment/locking doesn't work correctly on JRuby
   #
-  unstable = %w(quicklz cassandra riak)
+  unstable = %w(quicklz)
   unstable += %w(file pstore) if defined?(JRUBY_VERSION)
 
   unstable_re = /#{unstable.join('|')}/
