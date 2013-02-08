@@ -1,4 +1,4 @@
-master
+0.7.14
 
 * Adapters::ActiveRecord, Adapters::Sequel: store values as blobs
 * Adapters::ActiveRecord fixed and improved
