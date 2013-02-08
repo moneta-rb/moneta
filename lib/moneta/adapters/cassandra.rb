@@ -94,6 +94,12 @@ module Moneta
         end
         self
       end
+
+      # (see Proxy#close)
+      def close
+        @backend.disconnect!
+        nil
+      end
     end
   end
 end
