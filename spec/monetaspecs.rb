@@ -17167,7 +17167,7 @@ shared_examples_for 'concurrent_increment' do
       1000.times do |i|
         s.increment('counter', 1, :expires => false)
         s.store("#{name}#{i}", i.to_s, :expires => false)
-        sleep 0.01 if i % 100 == 0
+        Thread.pass if i % 100 == 0
       end
       s.close
     end
@@ -17197,7 +17197,7 @@ shared_examples_for 'concurrent_create' do
       s = new_store
       1000.times do |i|
         s[i.to_s].should == name if s.create(i.to_s, name, :expires => false)
-        sleep 0.01 if i % 100 == 0
+        Thread.pass if i % 100 == 0
       end
       s.close
     end
