@@ -42,6 +42,7 @@ module Moneta
     autoload :KyotoCabinet,    'moneta/adapters/kyotocabinet'
     autoload :LevelDB,         'moneta/adapters/leveldb'
     autoload :LocalMemCache,   'moneta/adapters/localmemcache'
+    autoload :MDB,             'moneta/adapters/mdb'
     autoload :Memcached,       'moneta/adapters/memcached'
     autoload :MemcachedDalli,  'moneta/adapters/memcached/dalli'
     autoload :MemcachedNative, 'moneta/adapters/memcached/native'

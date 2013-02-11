@@ -244,6 +244,16 @@ end
     :options => ':file => File.join(make_tempdir, "simple_dbm_with_expires"), :expires => true',
     :specs => STANDARD_SPECS.without_multiprocess.with_expires
   },
+  'simple_mdb' => {
+    :store => :MDB,
+    :options => ':env => File.join(make_tempdir, "mdb"), :db => "simple_mdb"',
+    :specs => STANDARD_SPECS.without_multiprocess
+  },
+  'simple_mdb_with_expires' => {
+    :store => :MDB,
+    :options => ':env => File.join(make_tempdir, "mdb"), :db => "simple_mdb_with_expires", :expires => true',
+    :specs => STANDARD_SPECS.without_multiprocess.with_expires
+  },
   'simple_tdb' => {
     :store => :TDB,
     :options => ':file => File.join(make_tempdir, "simple_tdb")',
@@ -1214,6 +1224,10 @@ end
   },
   'adapter_dbm' => {
     :build => 'Moneta::Adapters::DBM.new(:file => File.join(make_tempdir, "adapter_dbm"))',
+    :specs => ADAPTER_SPECS.without_multiprocess
+  },
+  'adapter_mdb' => {
+    :build => 'Moneta::Adapters::MDB.new(:env => File.join(make_tempdir, "mdb"), :db => "adapter_mdb")',
     :specs => ADAPTER_SPECS.without_multiprocess
   },
   'adapter_tdb' => {
