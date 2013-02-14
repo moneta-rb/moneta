@@ -96,7 +96,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * Filesystem directory store (`:File`)
     * Filesystem directory store which spreads files in subdirectories using md5 hash (`:HashFile`)
 * Key/value databases:
-    * [Berkeley DB using history DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html) (`:DBM`)
+    * [Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html) (`:DBM`)
     * [Cassandra](http://cassandra.apache.org/) (`:Cassandra`)
     * [Daybreak](http://propublica.github.com/daybreak/) (`:Daybreak`)
     * [GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) (`:GDBM`)
@@ -154,7 +154,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>Daybreak</td><td>daybreak</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">(✓)<sup>[7]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td>Incredibly fast pure-ruby key/value store <a href="http://propublica.github.com/daybreak/">Daybreak</a></td></tr>
 
-<tr><td>DBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB using history DBM interface or NDBM (Depends on Ruby environment)</a></td></tr>
+<tr><td>DBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)</a></td></tr>
 
 <tr><td>GDBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html">GDBM</a> database</td></tr>
 
