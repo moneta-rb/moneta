@@ -29,30 +29,28 @@ module Moneta
           @env = @db.environment
         end
 
-        @read_txn = @env.transaction(true)
-        @db = @env.open(@read_txn, @db, ::MDB::CREATE) if String === @db
-        @read_txn.reset
+        @env.transaction(true) do |txn|
+          @db = @env.open(txn, @db, ::MDB::CREATE)
+        end if String === @db
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @read_txn.renew
-        @db.get(@read_txn, key).nil?
+        @env.transaction(true) do |txn|
+          @db.get(txn, key).nil?
+        end
         true
       rescue ::MDB::Error::NOTFOUND
         false
-      ensure
-        @read_txn.reset
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        @read_txn.renew
-        @db.get(@read_txn, key)
+        @env.transaction(true) do |txn|
+          @db.get(txn, key)
+        end
       rescue ::MDB::Error::NOTFOUND
         nil
-      ensure
-        @read_txn.reset
       end
 
       # (see Proxy#store)
@@ -107,7 +105,6 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @read_txn.abort
         @db.close
         @env.close
         nil
