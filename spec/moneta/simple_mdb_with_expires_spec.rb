@@ -7,7 +7,7 @@ describe_moneta "simple_mdb_with_expires" do
   end
 
   def new_store
-    Moneta.new(:MDB, :env => File.join(make_tempdir, "mdb"), :db => "simple_mdb_with_expires", :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_mdb_with_expires.log')})
+    Moneta.new(:MDB, :env => File.join(make_tempdir, "simple_mdb_with_expires"), :expires => true, :logger => {:file => File.join(make_tempdir, 'simple_mdb_with_expires.log')})
   end
 
   def load_value(value)

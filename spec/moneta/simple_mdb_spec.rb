@@ -7,7 +7,7 @@ describe_moneta "simple_mdb" do
   end
 
   def new_store
-    Moneta.new(:MDB, :env => File.join(make_tempdir, "mdb"), :db => "simple_mdb", :logger => {:file => File.join(make_tempdir, 'simple_mdb.log')})
+    Moneta.new(:MDB, :env => File.join(make_tempdir, "simple_mdb"), :logger => {:file => File.join(make_tempdir, 'simple_mdb.log')})
   end
 
   def load_value(value)
