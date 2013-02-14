@@ -15,45 +15,44 @@ module Moneta
       # @option options [String or ::MDB::Environment] :env Environment directory
       # @option options [String or ::MDB::Database] :db Database name
       def initialize(options)
-        @db = options.delete(:db)
+        @db = options.delete(:db) || 'moneta'
         @env = options.delete(:env)
 
-        if !(String === @db)
-          raise ArgumentError, 'Option :env is not allowed' if @env
-          @env = @db.environment
-        elsif !(String === @env)
-          raise ArgumentError, 'Option :db is required' unless @db
-          @env.transaction do |txn|
-            @db = @env.open(txn, @db, ::MDB::CREATE)
+        if String === @db
+          raise ArgumentError, 'Option :env is required' unless @env
+          if String === @env
+            FileUtils.mkpath(@env)
+            @env = ::MDB.open(@env, options)
           end
         else
-          raise ArgumentError, 'Option :env is required' unless @env
-          raise ArgumentError, 'Option :db is required' unless @db
-          FileUtils.mkpath(@env)
-          @env = ::MDB.open(@env, options)
-          @env.transaction do |txn|
-            @db = @env.open(txn, @db, ::MDB::CREATE)
-          end
+          raise ArgumentError, 'Option :env is not allowed' if @env
+          @env = @db.environment
         end
+
+        @read_txn = @env.transaction(true)
+        @db = @env.open(@read_txn, @db, ::MDB::CREATE) if String === @db
+        @read_txn.reset
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @env.transaction(true) do |txn|
-          @db.get(txn, key).nil?
-        end
+        @read_txn.renew
+        @db.get(@read_txn, key).nil?
         true
       rescue ::MDB::Error::NOTFOUND
         false
+      ensure
+        @read_txn.reset
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        @env.transaction(true) do |txn|
-          @db.get(txn, key)
-        end
+        @read_txn.renew
+        @db.get(@read_txn, key)
       rescue ::MDB::Error::NOTFOUND
         nil
+      ensure
+        @read_txn.reset
       end
 
       # (see Proxy#store)
@@ -108,6 +107,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
+        @read_txn.abort
         @db.close
         @env.close
         nil
