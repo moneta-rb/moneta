@@ -17164,10 +17164,12 @@ shared_examples_for 'concurrent_increment' do
   def increment_thread(name)
     Thread.new do
       s = new_store
-      1000.times do |i|
-        s.increment('counter', 1, :expires => false)
+      100.times do |i|
+        100.times do |j|
+          s.increment("counter#{j}", 1, :expires => false)
+          Thread.pass if rand(1000) >= 995
+        end
         s.store("#{name}#{i}", i.to_s, :expires => false)
-        Thread.pass if i % 100 == 0
       end
       s.close
     end
@@ -17180,12 +17182,14 @@ shared_examples_for 'concurrent_increment' do
     a.join
     b.join
     c.join
-    1000.times do |i|
+    100.times do |i|
       store["a#{i}"].should == i.to_s
       store["b#{i}"].should == i.to_s
       store["c#{i}"].should == i.to_s
     end
-    store.raw['counter'].should == 3000.to_s
+    100.times do |j|
+      store.raw["counter#{j}"].should == 300.to_s
+    end
   end
 end
 
@@ -17197,7 +17201,7 @@ shared_examples_for 'concurrent_create' do
       s = new_store
       1000.times do |i|
         s[i.to_s].should == name if s.create(i.to_s, name, :expires => false)
-        Thread.pass if i % 100 == 0
+        Thread.pass if rand(100) >= 99
       end
       s.close
     end
