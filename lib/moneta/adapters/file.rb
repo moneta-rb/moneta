@@ -63,7 +63,8 @@ module Moneta
         existed = ::File.exists?(path)
         ::File.open(path, 'ab+') do |f|
           Thread.pass until f.flock(::File::LOCK_EX)
-          f.sync = true
+          # FIXME: JRuby needs synchronous mode, otherwise f.read might return wrong value
+          f.sync = true if defined?(JRUBY_VERSION)
           content = f.read
           amount += Utils.to_int(content) if existed || !content.empty?
           f.truncate(0)
