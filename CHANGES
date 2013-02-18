@@ -1,3 +1,7 @@
+master
+
+* Adapters::File#increment fixed
+
 0.7.14
 
 * Adapters::ActiveRecord, Adapters::Sequel: store values as blobs

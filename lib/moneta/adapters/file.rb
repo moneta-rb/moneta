@@ -29,12 +29,15 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        path = store_path(key)
         temp_file = ::File.join(@dir, "value-#{$$}-#{Thread.current.object_id}")
+        path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
         ::File.open(temp_file, 'wb') {|f| f.write(value) }
         ::File.rename(temp_file, path)
         value
+      rescue Exception
+        File.unlink(temp_file) rescue nil
+        raise
       end
 
       # (see Proxy#delete)
@@ -50,25 +53,22 @@ module Moneta
         temp_dir = "#{@dir}-#{$$}-#{Thread.current.object_id}"
         ::File.rename(@dir, temp_dir)
         FileUtils.mkpath(@dir)
-        FileUtils.rm_rf(temp_dir)
         self
       rescue Errno::ENOENT
         self
+      ensure
+        FileUtils.rm_rf(temp_dir)
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
-        existed = ::File.exists?(path)
-        ::File.open(path, 'ab+') do |f|
+        ::File.open(path, ::File::RDWR | ::File::CREAT) do |f|
           Thread.pass until f.flock(::File::LOCK_EX)
-          # FIXME: JRuby needs synchronous mode, otherwise f.read might return wrong value
-          f.sync = true if defined?(JRUBY_VERSION)
-          content = f.read
-          amount += Utils.to_int(content) if existed || !content.empty?
-          f.truncate(0)
-          f.write(amount.to_s)
+          content = ::File.read(path)
+          amount += Utils.to_int(content) unless content.empty?
+          ::File.open(path, 'wb') {|o| o.write(amount.to_s) }
           amount
         end
       end
