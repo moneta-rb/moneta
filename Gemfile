@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 gemspec
 
 # Testing
@@ -18,7 +18,9 @@ gem 'msgpack-jruby', :platforms => :jruby
 gem 'bert', :platforms => :ruby
 
 # Compressors used by Transformer
-gem 'bzip2-ruby', :platforms => :mri # Only on mri currently
+if RUBY_VERSION < '2.0'
+  gem 'bzip2-ruby', :platforms => :mri # Only on mri currently
+end
 gem 'ruby-lzma', :platforms => :ruby
 gem 'lzoruby', :platforms => :ruby
 gem 'snappy', :platforms => :ruby
@@ -45,8 +47,10 @@ gem 'tokyotyrant'
 #gem 'localmemcache'
 gem 'tdb', :platforms => :ruby
 gem 'leveldb-ruby', :platforms => :ruby
-gem 'tokyocabinet', :platforms => :ruby
-unless defined?(JRUBY_VERSION)
+if RUBY_VERSION < '2.0'
+  gem 'tokyocabinet', :platforms => :ruby
+end
+if RUBY_VERSION < '2.0' && !defined?(JRUBY_VERSION)
   # FIXME: We have to check manually for jruby
   # otherwise bundle install --deployment doesn't work
   gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
