@@ -17,9 +17,17 @@ module Moneta
       # @option options [String] :pool ('default') Couchbase cluster
       # @option options [String] :bucket ('default') Couchbase database
       # @option options [Couchbase::Bucket] :backend Use existing backend instance
+      # @option options [String] :url ("http://localhost:8091/pools/default/buckets/default") Couchbase connection string
+      # @option options [String] :username (nil) Couchbase bucket username
+      # @option options [String] :password (nil) Couchbase bucket password
       def initialize(options = {})
       	self.default_expires = options.delete(:expires)
-        @backend = options[:backend] || Couchbase.connect(options[:url] || options)
+        @backend = options[:backend] || Couchbase.connect(options[:url] || {
+        	:hostname => 'localhost',
+        	:port => 8091,
+        	:pool => 'default',
+        	:bucket => 'default'
+        }.merge!(options))
       end
 
       # (see Proxy#load)
@@ -48,8 +56,8 @@ module Moneta
       
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        value = @backend.incr(key, amount)
-        update_expires(key, options)
+      	expires = expires_value(options)
+        value = @backend.incr(key, amount, :create => true, :ttl => expires)
         value
       end
       
