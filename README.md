@@ -758,6 +758,33 @@ to compare the speed of the different key value stores for different key/value s
 Feel free to add your own configurations! The impact of Moneta should be minimal since it is only a thin layer
 on top of the different stores.
 
+
+------
+
+## How to contribute?
+
+Always feel free to open an issue on
+https://github.com/minad/moneta/issues if something doesn't work
+as you expect it to work. Feedback is also very welcome!
+
+My only request about patches is that you please try
+to test them before submitting.
+
+### Contribute an adapter
+
+If you want support for another adapter you can at first at it to the list of
+missing adapters at https://github.com/minad/moneta/issues/16
+
+If you choose to implement an adapter please also add tests. Usually you
+only have to add a few lines to `script/generate-specs` to generate appropriate
+tests for your adapter. Please check also if travis.yml needs changes, for example
+if you need to start additional services.
+
+Check if the default settings in Moneta#new are appropriate for your adapter. If
+not specify a better one.
+
+Don't forget to edit the README.md and the CHANGES.
+
 ------
 
 ## Alternatives
