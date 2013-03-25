@@ -1,12 +1,10 @@
-# Copyright: 2011 TMX Credit
-# Author: Potapov Sergey (aka Blake)
-
 require 'riak'
 
 module Moneta
   module Adapters
     # Riak backend
     # @api public
+    # @author Potapov Sergey (aka Blake)
     class Riak
       include Defaults
 

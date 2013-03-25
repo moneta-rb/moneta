@@ -1,12 +1,10 @@
-# Copyright: 2011 TMX Credit
-# Author: Potapov Sergey (aka Blake)
-
 require 'cassandra'
 
 module Moneta
   module Adapters
     # Cassandra backend
     # @api public
+    # @author Potapov Sergey (aka Blake)
     class Cassandra
       include Defaults
       include ExpiresSupport
