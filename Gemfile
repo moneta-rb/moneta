@@ -36,6 +36,7 @@ gem 'fog'
 gem 'activerecord', '>= 3.2.11'
 gem 'redis'
 gem 'mongo'
+gem 'couchbase'
 # Use sequel master because of deprecation warnings
 gem 'sequel', :github => 'jeremyevans/sequel'
 gem 'dalli'
