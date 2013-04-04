@@ -1,5 +1,6 @@
-master
+0.7.15
 
+* CONTRIBUTORS file added
 * Adapters::File#increment fixed
 
 0.7.14
