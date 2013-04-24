@@ -323,8 +323,12 @@ If you want to have control over the proxies, you have to use `Moneta.build`:
 store = Moneta.build do
   # Adds expires proxy
   use :Expires
+
   # Transform key using Marshal and Base64 and value using Marshal
   use :Transformer, :key => [:marshal, :base64], :value => :marshal
+
+  # IMPORTANT: adapter must be defined last for the builder to function properly. 
+  
   # Memory backend
   adapter :Memory
 end
