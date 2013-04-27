@@ -5,6 +5,7 @@ module Moneta
     # @yieldparam Builder dsl code block
     def initialize(&block)
       raise ArgumentError, 'No block given' unless block_given?
+      @adapter_set = false
       @proxies = []
       instance_eval(&block)
     end
@@ -31,6 +32,7 @@ module Moneta
     # @param [Hash] options Options hash
     # @api public
     def use(proxy, options = {}, &block)
+      raise "Cannot add another proxy because the adapter is already specified." if @adapter_set
       proxy = Moneta.const_get(proxy) if Symbol === proxy
       raise ArgumentError, 'You must give a Class or a Symbol' unless Class === proxy
       @proxies.unshift [proxy, options, block]
@@ -43,6 +45,7 @@ module Moneta
     # @param [Hash] options Options hash
     # @api public
     def adapter(adapter, options = {}, &block)
+      raise "Cannot set the adapter because the adapter is already specified." if @adapter_set
       case adapter
       when Symbol
         use(Adapters.const_get(adapter), options, &block)
@@ -54,6 +57,7 @@ module Moneta
         @proxies.unshift adapter
         nil
       end
+      @adapter_set = true
     end
   end
 end
