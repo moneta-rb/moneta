@@ -5,7 +5,6 @@ module Moneta
     # @yieldparam Builder dsl code block
     def initialize(&block)
       raise ArgumentError, 'No block given' unless block_given?
-      @adapter_set = false
       @proxies = []
       instance_eval(&block)
     end
@@ -18,11 +17,13 @@ module Moneta
       adapter = @proxies.first
       if Array === adapter
         klass, options, block = adapter
-        adapter = klass.new(options, &block)
+        adapter = new_proxy(klass, options, &block)
+        check_arity(klass, adapter, 1)
       end
       @proxies[1..-1].inject([adapter]) do |stores, proxy|
         klass, options, block = proxy
-        stores << klass.new(stores.last, options, &block)
+        stores << new_proxy(klass, stores.last, options, &block)
+        check_arity(klass, stores.last, 1)
       end
     end
 
@@ -32,7 +33,6 @@ module Moneta
     # @param [Hash] options Options hash
     # @api public
     def use(proxy, options = {}, &block)
-      raise "Cannot add another proxy because the adapter is already specified." if @adapter_set
       proxy = Moneta.const_get(proxy) if Symbol === proxy
       raise ArgumentError, 'You must give a Class or a Symbol' unless Class === proxy
       @proxies.unshift [proxy, options, block]
@@ -45,7 +45,6 @@ module Moneta
     # @param [Hash] options Options hash
     # @api public
     def adapter(adapter, options = {}, &block)
-      raise "Cannot set the adapter because the adapter is already specified." if @adapter_set
       case adapter
       when Symbol
         use(Adapters.const_get(adapter), options, &block)
@@ -57,7 +56,26 @@ module Moneta
         @proxies.unshift adapter
         nil
       end
-      @adapter_set = true
+    end
+
+    protected
+
+    def new_proxy(klass, *args, &block)
+      klass.new(*args, &block)
+    rescue ArgumentError => ex
+      check_arity(klass, klass.allocate, args.size)
+      raise
+    end
+
+    def check_arity(klass, proxy, expected)
+      raise ArgumentError, %{#{klass.name}#new got wrong number of arguments (#{expected} expected)
+
+Please check your Moneta builder block:
+  * Proxies must be used before the adapter
+  * Only one adapter is allowed
+  * The adapter must be used last
+} if proxy.method(:initialize).arity != expected
     end
   end
+
 end
