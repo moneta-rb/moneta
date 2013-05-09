@@ -7,6 +7,10 @@ module Moneta
     class Sequel
       include Defaults
 
+      # Sequel::UniqueConstraintViolation is defined since sequel 3.44.0
+      # older versions raise a Sequel::DatabaseError.
+      UniqueConstraintViolation = defined?(::Sequel::UniqueConstraintViolation) ? ::Sequel::UniqueConstraintViolation : ::Sequel::DatabaseError
+
       supports :create, :increment
       attr_reader :backend
 
@@ -44,7 +48,7 @@ module Moneta
       def store(key, value, options = {})
         begin
           @table.insert(:k => key, :v => value)
-        rescue ::Sequel::DatabaseError
+        rescue UniqueConstraintViolation
           @table.where(:k => key).update(:v => value)
         end
         value
@@ -57,9 +61,7 @@ module Moneta
       def create(key, value, options = {})
         @table.insert(:k => key, :v => value)
         true
-      rescue ::Sequel::DatabaseError
-        # FIXME: This catches too many errors
-        # it should only catch a not-unique-exception
+      rescue UniqueConstraintViolation
         false
       end
 
@@ -76,9 +78,7 @@ module Moneta
             amount
           end
         end
-      rescue ::Sequel::DatabaseError
-        # FIXME: This catches too many errors
-        # it should only catch a not-unique-exception
+      rescue UniqueConstraintViolation
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
       end
