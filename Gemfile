@@ -50,11 +50,11 @@ gem 'leveldb-ruby', :platforms => :ruby
 if RUBY_VERSION < '2.0'
   gem 'tokyocabinet', :platforms => :ruby
 end
-if RUBY_VERSION < '2.0' && !defined?(JRUBY_VERSION)
+#if RUBY_VERSION < '2.0' && !defined?(JRUBY_VERSION)
   # FIXME: We have to check manually for jruby
   # otherwise bundle install --deployment doesn't work
-  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
-end
+#  gem 'kyotocabinet-ruby', :github => 'minad/kyotocabinet-ruby'
+#end
 gem 'memcached', :platforms => :ruby
 gem 'jruby-memcached', :platforms => :jruby
 gem 'sqlite3', :platforms => :ruby

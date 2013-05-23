@@ -78,7 +78,8 @@ module Moneta
             amount
           end
         end
-      rescue UniqueConstraintViolation
+      rescue ::Sequel::DatabaseError
+        # Concurrent modification might throw a bunch of different errors
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
       end
