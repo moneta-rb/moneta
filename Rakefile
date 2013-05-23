@@ -35,7 +35,7 @@ task :test do
   #
   # * PStore and File increment/locking doesn't work correctly on JRuby
   #
-  unstable = %w(quicklz)
+  unstable = %w(quicklz riak)
   unstable += %w(file pstore) if defined?(JRUBY_VERSION)
 
   unstable_re = /#{unstable.join('|')}/
