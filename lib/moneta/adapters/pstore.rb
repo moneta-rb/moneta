@@ -1,4 +1,5 @@
 require 'pstore'
+require 'fileutils'
 
 module Moneta
   module Adapters
