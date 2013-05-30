@@ -1,3 +1,8 @@
+0.7.16
+
+* Better builder validation
+* Adapters::Sequel: check for correct exceptions
+
 0.7.15
 
 * CONTRIBUTORS file added
