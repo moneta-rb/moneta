@@ -71,4 +71,4 @@ gem 'rack-cache'
 
 # Rails integration testing
 gem 'actionpack', '>= 3.2.11'
-gem 'minitest'
+gem 'minitest', '~> 4.7.4'
