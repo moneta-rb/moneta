@@ -1,0 +1,13 @@
+#! /usr/bin/env ruby
+require 'travis'
+require 'cgi'
+require 'fileutils'
+FileUtils.mkpath('logs')
+`git remote -v | grep origin | head -n1` =~ /github\.com:(.*?)\.git/
+repo = Travis::Repository.find($1)
+repo.last_build.jobs.each do |j|
+  c = j.config
+  id = "logs/#{j.allow_failures? ? 'allowed-' : ''}#{j.state}-#{c['rvm']}-#{CGI.escape c['env']}"
+  puts "Downloading #{j.id}"
+  File.open(id, 'w') {|f| f.write(j.log.body) }
+end
