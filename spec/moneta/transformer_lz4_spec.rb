@@ -43,6 +43,6 @@ describe_moneta "transformer_lz4" do
   it_should_behave_like 'transform_value'
   it 'compile transformer class' do
     store.should_not be_nil
-    Moneta::Transformer::LZ4Value.should_not be_nil
+    Moneta::Transformer::Lz4Value.should_not be_nil
   end
 end
