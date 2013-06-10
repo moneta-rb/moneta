@@ -14,7 +14,7 @@ describe_moneta "transformer_lz4" do
   end
 
   def load_value(value)
-    ::LZ4::uncompress(value)
+    ::LZ4.uncompress(value)
   end
 
   include_context 'setup_store'

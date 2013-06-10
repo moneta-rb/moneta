@@ -249,6 +249,7 @@ Supported serializers:
 
 Supported value compressors:
 
+* LZ4 (`:lz4`)
 * LZMA (`:lzma`)
 * LZO (`:lzo`)
 * Snappy (`:snappy`)

@@ -13,7 +13,7 @@ module Moneta
       :tnet     => [ :serialize, '::TNetstring.parse(%s).first', '::TNetstring.dump(%s)',          'tnetstring'    ],
       :yaml     => [ :serialize, '::YAML.load(%s)',              '::YAML.dump(%s)',                'yaml'          ],
       :bzip2    => [ :compress,  '::Bzip2.uncompress(%s)',       '::Bzip2.compress(%s)',           'bzip2'         ],
-      :lz4      => [ :compress,  '::LZ4::uncompress(%s)',        '::LZ4::compress(%s)',            'lz4-ruby'      ],
+      :lz4      => [ :compress,  '::LZ4.uncompress(%s)',         '::LZ4.compress(%s)',             'lz4-ruby'      ],
       :lzma     => [ :compress,  '::LZMA.decompress(%s)',        '::LZMA.compress(%s)',            'lzma'          ],
       :lzo      => [ :compress,  '::LZO.decompress(%s)',         '::LZO.compress(%s)',             'lzoruby'       ],
       :snappy   => [ :compress,  '::Snappy.inflate(%s)',         '::Snappy.deflate(%s)',           'snappy'        ],
