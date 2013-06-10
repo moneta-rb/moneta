@@ -21,6 +21,7 @@ gem 'bert', :platforms => :ruby
 if RUBY_VERSION < '2.0'
   gem 'bzip2-ruby', :platforms => :mri # Only on mri currently
 end
+gem 'lz4-ruby', :platforms => :ruby
 gem 'ruby-lzma', :platforms => :ruby
 gem 'lzoruby', :platforms => :ruby
 gem 'snappy', :platforms => :ruby
