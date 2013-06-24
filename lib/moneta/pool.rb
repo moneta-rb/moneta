@@ -20,6 +20,7 @@ module Moneta
     def initialize(options = {}, &block)
       super(nil)
       @mutex = options[:mutex] || ::Mutex.new
+      @id = "Moneta::Pool(#{object_id})"
       @builder = Builder.new(&block)
       @pool, @all = [], []
     end
@@ -35,18 +36,14 @@ module Moneta
     protected
 
     def adapter
-      Thread.current[thread_id]
-    end
-
-    def thread_id
-      "Moneta::Pool(#{object_id})"
+      Thread.current[@id]
     end
 
     def wrap(*args)
-      store = Thread.current[thread_id] = pop
+      store = Thread.current[@id] = pop
       yield
     ensure
-      Thread.current[thread_id] = nil
+      Thread.current[@id] = nil
       @mutex.synchronize { @pool << store }
     end
 
