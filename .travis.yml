@@ -5,8 +5,8 @@ rvm:
   - 1.8.7
   - jruby-19mode
   - jruby-18mode
-#  - rbx-19mode
-#  - rbx-18mode
+  - rbx-19mode
+  - rbx-18mode
 before_install:
   - script/kill-travis
   #- script/install-kyotocabinet
@@ -23,11 +23,14 @@ env:
   global:
     - secure: "B0vx1g1CB1A6mM3B/iy2ATicfS4OXT80bb2RVe8mSRsPzez1B4q4Q4hJcaMI\nrMARONN8Krtnti+IqvmDnB0Z0AKYMEyIc+zT37zJOCjLdkLJl+x/thuU/MbC\nvlLVwjMf6JE2EUzTfORDRFYc5ycCqfsfgNk1Go0D2CPT6P9u9uQ="
   matrix:
-    - "TASK=test TEST_GROUP=1/5"
-    - "TASK=test TEST_GROUP=2/5"
-    - "TASK=test TEST_GROUP=3/5"
-    - "TASK=test TEST_GROUP=4/5"
-    - "TASK=test TEST_GROUP=5/5"
+    - "TASK=test TEST_GROUP=1/8"
+    - "TASK=test TEST_GROUP=2/8"
+    - "TASK=test TEST_GROUP=3/8"
+    - "TASK=test TEST_GROUP=4/8"
+    - "TASK=test TEST_GROUP=5/8"
+    - "TASK=test TEST_GROUP=6/8"
+    - "TASK=test TEST_GROUP=7/8"
+    - "TASK=test TEST_GROUP=8/8"
     - "TASK=test TEST_GROUP=unstable"
     - "TASK=benchmarks CONFIG=uniform_small"
     - "TASK=benchmarks CONFIG=uniform_medium"

@@ -82,7 +82,7 @@ task :test do
       end
     end
     sleep 0.1
-    sleep 0.1 while threads.size >= 10
+    sleep 0.1 while threads.size >= 5
   end
   sleep 0.1 until threads.empty?
   if failed
