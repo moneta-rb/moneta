@@ -66,9 +66,12 @@ module Moneta
         FileUtils.mkpath(::File.dirname(path))
         ::File.open(path, ::File::RDWR | ::File::CREAT) do |f|
           Thread.pass until f.flock(::File::LOCK_EX)
-          content = ::File.read(path)
+          content = f.read
           amount += Utils.to_int(content) unless content.empty?
-          ::File.open(path, 'wb') {|o| o.write(amount.to_s) }
+          f.pos = 0
+          content = amount.to_s
+          f.write(content)
+          f.truncate(content.bytesize)
           amount
         end
       end
