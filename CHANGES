@@ -1,5 +1,7 @@
 master
 
+* Adapters::File#increment and #create fixed on JRuby
+
 0.7.16
 
 * Better builder validation

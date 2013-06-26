@@ -68,25 +68,39 @@ module Moneta
           Thread.pass until f.flock(::File::LOCK_EX)
           content = f.read
           amount += Utils.to_int(content) unless content.empty?
-          f.pos = 0
           content = amount.to_s
+          f.pos = 0
           f.write(content)
           f.truncate(content.bytesize)
           amount
         end
       end
 
-      # (see Proxy#create)
-      def create(key, value, options = {})
-        path = store_path(key)
-        FileUtils.mkpath(::File.dirname(path))
-        ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |f|
-          f.binmode
-          f.write(value)
+      # HACK: The implementation using File::EXCL is not atomic under JRuby 1.7.4
+      # See https://github.com/jruby/jruby/issues/827
+      if defined?(JRUBY_VERSION)
+        # (see Proxy#create)
+        def create(key, value, options = {})
+          path = store_path(key)
+          FileUtils.mkpath(::File.dirname(path))
+          # Call native java.io.File#createNewFile
+          return false unless ::Java::JavaIo::File.new(path).createNewFile
+          ::File.open(path, 'wb+') {|f| f.write(value) }
+          true
         end
-        true
-      rescue Errno::EEXIST
-        false
+      else
+        # (see Proxy#create)
+        def create(key, value, options = {})
+          path = store_path(key)
+          FileUtils.mkpath(::File.dirname(path))
+          ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |f|
+            f.binmode
+            f.write(value)
+          end
+          true
+        rescue Errno::EEXIST
+          false
+        end
       end
 
       protected
