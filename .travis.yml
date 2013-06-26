@@ -14,6 +14,7 @@ before_install:
   - script/start-services
   - script/install-bundle
   - script/upload-bundle
+  - script/wait-services
 install: 'echo "Bundle installed"'
 before_script:
   - mysql -e 'create database moneta;'
