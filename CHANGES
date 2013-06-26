@@ -1,6 +1,7 @@
 master
 
 * Adapters::File#increment and #create fixed on JRuby
+* Pool thread safety improved
 
 0.7.16
 
