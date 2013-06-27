@@ -1607,7 +1607,7 @@ KEYS = {
   'nil' => [0, 'nil'],
   'integer' => [-10, 42],
   'boolean' => [true, false],
-  'string' => ['strkey1', 'strkey2'].map(&:inspect),
+  'string' => %w(strkey1 strkey2 foo/bar bar/foo/baz).map(&:inspect),
   'object' => ['Value.new(:objkey1)', 'Value.new(:objkey2)'],
   'hash' => [{'hashkey1' => 'hashkey2'}, {'hashkey3' => 'hashkey4'}].map(&:inspect)
 }
@@ -1616,7 +1616,7 @@ VALUES = {
   'nil' => [0, 'nil'],
   'integer' => [41, -12],
   'boolean' => [true, false],
-  'string' => ['strval1', 'strval2'].map(&:inspect),
+  'string' => %w(strval1 strval2).map(&:inspect),
   'hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
   'object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
 }
@@ -1624,7 +1624,11 @@ VALUES = {
 KEYS.each do |key_type, keypair|
   VALUES.each do |val_type, valpair|
     4.times do |i|
-      key1, key2 = i % 2 == 0 ? keypair : keypair.reverse
+      if keypair.size == 4
+        key1, key2 = i % 2 == 0 ? keypair[0..1] : keypair[2..3]
+      else
+        key1, key2 = i % 2 == 0 ? keypair : keypair.reverse
+      end
       val1, val2 = i < 2 ? valpair : valpair.reverse
 
       code = %{it 'reads from keys like a Hash' do
