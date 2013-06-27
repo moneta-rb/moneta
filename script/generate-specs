@@ -21,8 +21,8 @@ class Specs
     Specs.new({:specs => specs, :key => key, :value => value}.merge(options))
   end
 
-  def stringkeys_only
-    new(:key => %w(string))
+  def simplestringkeys_only
+    new(:key => %w(simplestring))
   end
 
   def stringvalues_only
@@ -404,12 +404,12 @@ end
     :store => :Couch,
     :options => ":db => 'simple_couch'",
     :load_value => '::Marshal.load(value.unpack(\'m\').first)',
-    :specs => STANDARD_SPECS.without_increment.without_create
+    :specs => STANDARD_SPECS.without_increment
   },
   'simple_couch_with_expires' => {
     :store => :Couch,
     :options => ":db => 'simple_couch_with_expires', :expires => true",
-    :specs => STANDARD_SPECS.without_increment.without_create.with_expires,
+    :specs => STANDARD_SPECS.without_increment.with_expires,
     :load_value => '::Marshal.load(value.unpack(\'m\').first)'
   },
   'simple_mongo' => {
@@ -495,16 +495,18 @@ end
     :specs => STANDARD_SPECS.without_increment.without_create.with_expires
   },
   'weak_create' => {
+    :preamble => "start_restserver\n",
     :build => %{Moneta.build do
   use :WeakCreate
-  adapter :Couch, :db => 'weak_create'
+  adapter :RestClient, :url => 'http://localhost:8808/moneta/'
 end},
     :specs => ADAPTER_SPECS.without_increment.without_concurrent
   },
   'weak_increment' => {
+    :preamble => "start_restserver\n",
     :build => %{Moneta.build do
   use :WeakIncrement
-  adapter :Couch, :db => 'weak_increment'
+  adapter :RestClient, :url => 'http://localhost:8808/moneta/'
 end},
     :specs => ADAPTER_SPECS.without_create.without_concurrent
   },
@@ -1187,7 +1189,7 @@ end}
   },
   'adapter_couch' => {
     :build => "Moneta::Adapters::Couch.new(:db => 'adapter_couch')",
-    :specs => ADAPTER_SPECS.without_increment.without_create
+    :specs => ADAPTER_SPECS.without_increment.simplevalues_only.simplestringkeys_only
   },
   'adapter_datamapper' => {
     :build => 'Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "adapter_datamapper")',
@@ -1609,6 +1611,7 @@ KEYS = {
   'number' => [0.5, Math::PI, 1<<127, 99],
   'boolean' => [true, false],
   'string' => %w(strkey1 strkey2 foo/bar bar/foo/baz).map(&:inspect),
+  'simplestring' => %w(strkey1 strkey2).map(&:inspect),
   'object' => ['Value.new(:objkey1)', 'Value.new(:objkey2)'],
   'hash' => [{'hashkey1' => 'hashkey2'}, {'hashkey3' => 'hashkey4'}].map(&:inspect)
 }

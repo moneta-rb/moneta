@@ -7,7 +7,7 @@ module Moneta
     # Supports expiration, documents will be automatically removed starting
     # with mongodb >= 2.2 (see {http://docs.mongodb.org/manual/tutorial/expire-data/}).
     #
-    # You can also store hashes directly using this adapter:
+    # You can store hashes directly using this adapter.
     #
     # @example Store hashes
     #     db = Moneta::Adapters::Mongo.new

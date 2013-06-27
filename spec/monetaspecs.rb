@@ -29056,6 +29056,4190 @@ shared_examples_for 'persist_stringkey_objectvalue' do
   end
 end
 
+#################### null_simplestringkey_nilvalue ####################
+
+shared_examples_for 'null_simplestringkey_nilvalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 0
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = 0
+    store["strkey2"] = nil
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", 0).should == 0
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = 0
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", 0, options).should == 0
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 0
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = 0
+    store["strkey1"] = nil
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", 0).should == 0
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = 0
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", 0, options).should == 0
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = nil
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = nil
+    store["strkey2"] = 0
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", nil).should == nil
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = nil
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", nil, options).should == nil
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = nil
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = nil
+    store["strkey1"] = 0
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", nil).should == nil
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = nil
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", nil, options).should == nil
+  end
+end
+
+#################### store_simplestringkey_nilvalue ####################
+
+shared_examples_for 'store_simplestringkey_nilvalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = 0
+    store["strkey1"].should == 0
+    store.load("strkey1").should == 0
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = 0
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 0
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == 0
+    store.load("strkey1").should == 0
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = 0
+    store["strkey2"] = nil
+    store.clear.should equal(store)
+    store["strkey1"] = 0
+    store["strkey1"].should == 0
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = 0
+    store.delete("strkey1").should == 0
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = 0
+    store["strkey1"].should == 0
+    store["strkey1"] = nil
+    store["strkey1"].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 0
+    store["strkey1"].should == 0
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = 0
+    store["strkey2"].should == 0
+    store.load("strkey2").should == 0
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = 0
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 0
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == 0
+    store.load("strkey2").should == 0
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = 0
+    store["strkey1"] = nil
+    store.clear.should equal(store)
+    store["strkey2"] = 0
+    store["strkey2"].should == 0
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = 0
+    store.delete("strkey2").should == 0
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = 0
+    store["strkey2"].should == 0
+    store["strkey2"] = nil
+    store["strkey2"].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = 0
+    store["strkey2"].should == 0
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = nil
+    store["strkey1"].should == nil
+    store.load("strkey1").should == nil
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = nil
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = nil
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == nil
+    store.load("strkey1").should == nil
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = nil
+    store["strkey2"] = 0
+    store.clear.should equal(store)
+    store["strkey1"] = nil
+    store["strkey1"].should == nil
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = nil
+    store.delete("strkey1").should == nil
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = nil
+    store["strkey1"].should == nil
+    store["strkey1"] = 0
+    store["strkey1"].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = nil
+    store["strkey1"].should == nil
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = nil
+    store["strkey2"].should == nil
+    store.load("strkey2").should == nil
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = nil
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = nil
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == nil
+    store.load("strkey2").should == nil
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = nil
+    store["strkey1"] = 0
+    store.clear.should equal(store)
+    store["strkey2"] = nil
+    store["strkey2"].should == nil
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = nil
+    store.delete("strkey2").should == nil
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = nil
+    store["strkey2"].should == nil
+    store["strkey2"] = 0
+    store["strkey2"].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = nil
+    store["strkey2"].should == nil
+  end
+end
+
+#################### persist_simplestringkey_nilvalue ####################
+
+shared_examples_for 'persist_simplestringkey_nilvalue' do
+  it 'persists values' do
+    store["strkey1"] = 0
+    store.close
+    @store = nil
+    store["strkey1"].should == 0
+  end
+
+  it 'persists values' do
+    store["strkey2"] = 0
+    store.close
+    @store = nil
+    store["strkey2"].should == 0
+  end
+
+  it 'persists values' do
+    store["strkey1"] = nil
+    store.close
+    @store = nil
+    store["strkey1"].should == nil
+  end
+
+  it 'persists values' do
+    store["strkey2"] = nil
+    store.close
+    @store = nil
+    store["strkey2"].should == nil
+  end
+end
+
+#################### null_simplestringkey_integervalue ####################
+
+shared_examples_for 'null_simplestringkey_integervalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 41
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = 41
+    store["strkey2"] = -12
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", 41).should == 41
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = 41
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", 41, options).should == 41
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 41
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = 41
+    store["strkey1"] = -12
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", 41).should == 41
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = 41
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", 41, options).should == 41
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = -12
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = -12
+    store["strkey2"] = 41
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", -12).should == -12
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = -12
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", -12, options).should == -12
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = -12
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = -12
+    store["strkey1"] = 41
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", -12).should == -12
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = -12
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", -12, options).should == -12
+  end
+end
+
+#################### store_simplestringkey_integervalue ####################
+
+shared_examples_for 'store_simplestringkey_integervalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
+    store.load("strkey1").should == 41
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = 41
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 41
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == 41
+    store.load("strkey1").should == 41
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = 41
+    store["strkey2"] = -12
+    store.clear.should equal(store)
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = 41
+    store.delete("strkey1").should == 41
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
+    store["strkey1"] = -12
+    store["strkey1"].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 41
+    store["strkey1"].should == 41
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = 41
+    store.fetch("strkey1", -12).should == 41
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = 41
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = 41
+    store["strkey2"].should == 41
+    store.load("strkey2").should == 41
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = 41
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 41
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == 41
+    store.load("strkey2").should == 41
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = 41
+    store["strkey1"] = -12
+    store.clear.should equal(store)
+    store["strkey2"] = 41
+    store["strkey2"].should == 41
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = 41
+    store.delete("strkey2").should == 41
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = 41
+    store["strkey2"].should == 41
+    store["strkey2"] = -12
+    store["strkey2"].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = 41
+    store["strkey2"].should == 41
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = 41
+    store.fetch("strkey2", -12).should == 41
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = 41
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = -12
+    store["strkey1"].should == -12
+    store.load("strkey1").should == -12
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = -12
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = -12
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == -12
+    store.load("strkey1").should == -12
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = -12
+    store["strkey2"] = 41
+    store.clear.should equal(store)
+    store["strkey1"] = -12
+    store["strkey1"].should == -12
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = -12
+    store.delete("strkey1").should == -12
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = -12
+    store["strkey1"].should == -12
+    store["strkey1"] = 41
+    store["strkey1"].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = -12
+    store["strkey1"].should == -12
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = -12
+    store.fetch("strkey1", 41).should == -12
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = -12
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = -12
+    store["strkey2"].should == -12
+    store.load("strkey2").should == -12
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = -12
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = -12
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == -12
+    store.load("strkey2").should == -12
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = -12
+    store["strkey1"] = 41
+    store.clear.should equal(store)
+    store["strkey2"] = -12
+    store["strkey2"].should == -12
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = -12
+    store.delete("strkey2").should == -12
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = -12
+    store["strkey2"].should == -12
+    store["strkey2"] = 41
+    store["strkey2"].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = -12
+    store["strkey2"].should == -12
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = -12
+    store.fetch("strkey2", 41).should == -12
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = -12
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+end
+
+#################### persist_simplestringkey_integervalue ####################
+
+shared_examples_for 'persist_simplestringkey_integervalue' do
+  it 'persists values' do
+    store["strkey1"] = 41
+    store.close
+    @store = nil
+    store["strkey1"].should == 41
+  end
+
+  it 'persists values' do
+    store["strkey2"] = 41
+    store.close
+    @store = nil
+    store["strkey2"].should == 41
+  end
+
+  it 'persists values' do
+    store["strkey1"] = -12
+    store.close
+    @store = nil
+    store["strkey1"].should == -12
+  end
+
+  it 'persists values' do
+    store["strkey2"] = -12
+    store.close
+    @store = nil
+    store["strkey2"].should == -12
+  end
+end
+
+#################### null_simplestringkey_numbervalue ####################
+
+shared_examples_for 'null_simplestringkey_numbervalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 2.718281828459045
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = 2.718281828459045
+    store["strkey2"] = 1.4142135623730951
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", 2.718281828459045).should == 2.718281828459045
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = 2.718281828459045
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", 2.718281828459045, options).should == 2.718281828459045
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 2.718281828459045
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = 2.718281828459045
+    store["strkey1"] = 1.4142135623730951
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", 2.718281828459045).should == 2.718281828459045
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = 2.718281828459045
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", 2.718281828459045, options).should == 2.718281828459045
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 1.4142135623730951
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = 1.4142135623730951
+    store["strkey2"] = 2.718281828459045
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", 1.4142135623730951).should == 1.4142135623730951
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = 1.4142135623730951
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", 1.4142135623730951, options).should == 1.4142135623730951
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 1.4142135623730951
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = 1.4142135623730951
+    store["strkey1"] = 2.718281828459045
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", 1.4142135623730951).should == 1.4142135623730951
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = 1.4142135623730951
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", 1.4142135623730951, options).should == 1.4142135623730951
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 340282366920938463463374607431768211456
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store["strkey2"] = 33
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", 340282366920938463463374607431768211456).should == 340282366920938463463374607431768211456
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = 340282366920938463463374607431768211456
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", 340282366920938463463374607431768211456, options).should == 340282366920938463463374607431768211456
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 340282366920938463463374607431768211456
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store["strkey1"] = 33
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", 340282366920938463463374607431768211456).should == 340282366920938463463374607431768211456
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = 340282366920938463463374607431768211456
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", 340282366920938463463374607431768211456, options).should == 340282366920938463463374607431768211456
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 33
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = 33
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", 33).should == 33
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = 33
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", 33, options).should == 33
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = 33
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = 33
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", 33).should == 33
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = 33
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", 33, options).should == 33
+  end
+end
+
+#################### store_simplestringkey_numbervalue ####################
+
+shared_examples_for 'store_simplestringkey_numbervalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = 2.718281828459045
+    store["strkey1"].should == 2.718281828459045
+    store.load("strkey1").should == 2.718281828459045
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = 2.718281828459045
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 2.718281828459045
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == 2.718281828459045
+    store.load("strkey1").should == 2.718281828459045
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = 2.718281828459045
+    store["strkey2"] = 1.4142135623730951
+    store.clear.should equal(store)
+    store["strkey1"] = 2.718281828459045
+    store["strkey1"].should == 2.718281828459045
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = 2.718281828459045
+    store.delete("strkey1").should == 2.718281828459045
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = 2.718281828459045
+    store["strkey1"].should == 2.718281828459045
+    store["strkey1"] = 1.4142135623730951
+    store["strkey1"].should == 1.4142135623730951
+  end
+
+  it 'stores frozen values' do
+    value = 2.718281828459045.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 2.718281828459045
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 2.718281828459045
+    store["strkey1"].should == 2.718281828459045
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = 2.718281828459045
+    store.fetch("strkey1", 1.4142135623730951).should == 2.718281828459045
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = 2.718281828459045
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = 2.718281828459045
+    store["strkey2"].should == 2.718281828459045
+    store.load("strkey2").should == 2.718281828459045
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = 2.718281828459045
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 2.718281828459045
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == 2.718281828459045
+    store.load("strkey2").should == 2.718281828459045
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = 2.718281828459045
+    store["strkey1"] = 1.4142135623730951
+    store.clear.should equal(store)
+    store["strkey2"] = 2.718281828459045
+    store["strkey2"].should == 2.718281828459045
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = 2.718281828459045
+    store.delete("strkey2").should == 2.718281828459045
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = 2.718281828459045
+    store["strkey2"].should == 2.718281828459045
+    store["strkey2"] = 1.4142135623730951
+    store["strkey2"].should == 1.4142135623730951
+  end
+
+  it 'stores frozen values' do
+    value = 2.718281828459045.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == 2.718281828459045
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = 2.718281828459045
+    store["strkey2"].should == 2.718281828459045
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = 2.718281828459045
+    store.fetch("strkey2", 1.4142135623730951).should == 2.718281828459045
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = 2.718281828459045
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = 1.4142135623730951
+    store["strkey1"].should == 1.4142135623730951
+    store.load("strkey1").should == 1.4142135623730951
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = 1.4142135623730951
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 1.4142135623730951
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == 1.4142135623730951
+    store.load("strkey1").should == 1.4142135623730951
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = 1.4142135623730951
+    store["strkey2"] = 2.718281828459045
+    store.clear.should equal(store)
+    store["strkey1"] = 1.4142135623730951
+    store["strkey1"].should == 1.4142135623730951
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = 1.4142135623730951
+    store.delete("strkey1").should == 1.4142135623730951
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = 1.4142135623730951
+    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"] = 2.718281828459045
+    store["strkey1"].should == 2.718281828459045
+  end
+
+  it 'stores frozen values' do
+    value = 1.4142135623730951.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 1.4142135623730951
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 1.4142135623730951
+    store["strkey1"].should == 1.4142135623730951
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = 1.4142135623730951
+    store.fetch("strkey1", 2.718281828459045).should == 1.4142135623730951
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = 1.4142135623730951
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = 1.4142135623730951
+    store["strkey2"].should == 1.4142135623730951
+    store.load("strkey2").should == 1.4142135623730951
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = 1.4142135623730951
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 1.4142135623730951
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == 1.4142135623730951
+    store.load("strkey2").should == 1.4142135623730951
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = 1.4142135623730951
+    store["strkey1"] = 2.718281828459045
+    store.clear.should equal(store)
+    store["strkey2"] = 1.4142135623730951
+    store["strkey2"].should == 1.4142135623730951
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = 1.4142135623730951
+    store.delete("strkey2").should == 1.4142135623730951
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = 1.4142135623730951
+    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"] = 2.718281828459045
+    store["strkey2"].should == 2.718281828459045
+  end
+
+  it 'stores frozen values' do
+    value = 1.4142135623730951.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == 1.4142135623730951
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = 1.4142135623730951
+    store["strkey2"].should == 1.4142135623730951
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = 1.4142135623730951
+    store.fetch("strkey2", 2.718281828459045).should == 1.4142135623730951
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = 1.4142135623730951
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store["strkey1"].should == 340282366920938463463374607431768211456
+    store.load("strkey1").should == 340282366920938463463374607431768211456
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 340282366920938463463374607431768211456
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == 340282366920938463463374607431768211456
+    store.load("strkey1").should == 340282366920938463463374607431768211456
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store["strkey2"] = 33
+    store.clear.should equal(store)
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store["strkey1"].should == 340282366920938463463374607431768211456
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store.delete("strkey1").should == 340282366920938463463374607431768211456
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store["strkey1"].should == 340282366920938463463374607431768211456
+    store["strkey1"] = 33
+    store["strkey1"].should == 33
+  end
+
+  it 'stores frozen values' do
+    value = 340282366920938463463374607431768211456.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 340282366920938463463374607431768211456
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 340282366920938463463374607431768211456
+    store["strkey1"].should == 340282366920938463463374607431768211456
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store.fetch("strkey1", 33).should == 340282366920938463463374607431768211456
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store["strkey2"].should == 340282366920938463463374607431768211456
+    store.load("strkey2").should == 340282366920938463463374607431768211456
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 340282366920938463463374607431768211456
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == 340282366920938463463374607431768211456
+    store.load("strkey2").should == 340282366920938463463374607431768211456
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store["strkey1"] = 33
+    store.clear.should equal(store)
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store["strkey2"].should == 340282366920938463463374607431768211456
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store.delete("strkey2").should == 340282366920938463463374607431768211456
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store["strkey2"].should == 340282366920938463463374607431768211456
+    store["strkey2"] = 33
+    store["strkey2"].should == 33
+  end
+
+  it 'stores frozen values' do
+    value = 340282366920938463463374607431768211456.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == 340282366920938463463374607431768211456
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = 340282366920938463463374607431768211456
+    store["strkey2"].should == 340282366920938463463374607431768211456
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store.fetch("strkey2", 33).should == 340282366920938463463374607431768211456
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = 33
+    store["strkey1"].should == 33
+    store.load("strkey1").should == 33
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = 33
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 33
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == 33
+    store.load("strkey1").should == 33
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = 33
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store.clear.should equal(store)
+    store["strkey1"] = 33
+    store["strkey1"].should == 33
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = 33
+    store.delete("strkey1").should == 33
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = 33
+    store["strkey1"].should == 33
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store["strkey1"].should == 340282366920938463463374607431768211456
+  end
+
+  it 'stores frozen values' do
+    value = 33.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 33
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 33
+    store["strkey1"].should == 33
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = 33
+    store.fetch("strkey1", 340282366920938463463374607431768211456).should == 33
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = 33
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = 33
+    store["strkey2"].should == 33
+    store.load("strkey2").should == 33
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = 33
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = 33
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == 33
+    store.load("strkey2").should == 33
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = 33
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store.clear.should equal(store)
+    store["strkey2"] = 33
+    store["strkey2"].should == 33
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = 33
+    store.delete("strkey2").should == 33
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = 33
+    store["strkey2"].should == 33
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store["strkey2"].should == 340282366920938463463374607431768211456
+  end
+
+  it 'stores frozen values' do
+    value = 33.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == 33
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = 33
+    store["strkey2"].should == 33
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = 33
+    store.fetch("strkey2", 340282366920938463463374607431768211456).should == 33
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = 33
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+end
+
+#################### returndifferent_simplestringkey_numbervalue ####################
+
+shared_examples_for 'returndifferent_simplestringkey_numbervalue' do
+  it 'guarantees that a different value is retrieved' do
+    value = 2.718281828459045
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 2.718281828459045
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 1.4142135623730951
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 1.4142135623730951
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 340282366920938463463374607431768211456
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 340282366920938463463374607431768211456
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 33
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = 33
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_simplestringkey_numbervalue ####################
+
+shared_examples_for 'returnsame_simplestringkey_numbervalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = 2.718281828459045
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 2.718281828459045
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 1.4142135623730951
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 1.4142135623730951
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 340282366920938463463374607431768211456
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 340282366920938463463374607431768211456
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 33
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = 33
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+end
+
+#################### persist_simplestringkey_numbervalue ####################
+
+shared_examples_for 'persist_simplestringkey_numbervalue' do
+  it 'persists values' do
+    store["strkey1"] = 2.718281828459045
+    store.close
+    @store = nil
+    store["strkey1"].should == 2.718281828459045
+  end
+
+  it 'persists values' do
+    store["strkey2"] = 2.718281828459045
+    store.close
+    @store = nil
+    store["strkey2"].should == 2.718281828459045
+  end
+
+  it 'persists values' do
+    store["strkey1"] = 1.4142135623730951
+    store.close
+    @store = nil
+    store["strkey1"].should == 1.4142135623730951
+  end
+
+  it 'persists values' do
+    store["strkey2"] = 1.4142135623730951
+    store.close
+    @store = nil
+    store["strkey2"].should == 1.4142135623730951
+  end
+
+  it 'persists values' do
+    store["strkey1"] = 340282366920938463463374607431768211456
+    store.close
+    @store = nil
+    store["strkey1"].should == 340282366920938463463374607431768211456
+  end
+
+  it 'persists values' do
+    store["strkey2"] = 340282366920938463463374607431768211456
+    store.close
+    @store = nil
+    store["strkey2"].should == 340282366920938463463374607431768211456
+  end
+
+  it 'persists values' do
+    store["strkey1"] = 33
+    store.close
+    @store = nil
+    store["strkey1"].should == 33
+  end
+
+  it 'persists values' do
+    store["strkey2"] = 33
+    store.close
+    @store = nil
+    store["strkey2"].should == 33
+  end
+end
+
+#################### null_simplestringkey_booleanvalue ####################
+
+shared_examples_for 'null_simplestringkey_booleanvalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = true
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = true
+    store["strkey2"] = false
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", true).should == true
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = true
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", true, options).should == true
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = true
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = true
+    store["strkey1"] = false
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", true).should == true
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = true
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", true, options).should == true
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = false
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = false
+    store["strkey2"] = true
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", false).should == false
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = false
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", false, options).should == false
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = false
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = false
+    store["strkey1"] = true
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", false).should == false
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = false
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", false, options).should == false
+  end
+end
+
+#################### store_simplestringkey_booleanvalue ####################
+
+shared_examples_for 'store_simplestringkey_booleanvalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = true
+    store["strkey1"].should == true
+    store.load("strkey1").should == true
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = true
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = true
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == true
+    store.load("strkey1").should == true
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = true
+    store["strkey2"] = false
+    store.clear.should equal(store)
+    store["strkey1"] = true
+    store["strkey1"].should == true
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = true
+    store.delete("strkey1").should == true
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = true
+    store["strkey1"].should == true
+    store["strkey1"] = false
+    store["strkey1"].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = true
+    store["strkey1"].should == true
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = true
+    store.fetch("strkey1", false).should == true
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = true
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = true
+    store["strkey2"].should == true
+    store.load("strkey2").should == true
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = true
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = true
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == true
+    store.load("strkey2").should == true
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = true
+    store["strkey1"] = false
+    store.clear.should equal(store)
+    store["strkey2"] = true
+    store["strkey2"].should == true
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = true
+    store.delete("strkey2").should == true
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = true
+    store["strkey2"].should == true
+    store["strkey2"] = false
+    store["strkey2"].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = true
+    store["strkey2"].should == true
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = true
+    store.fetch("strkey2", false).should == true
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = true
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = false
+    store["strkey1"].should == false
+    store.load("strkey1").should == false
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = false
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = false
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == false
+    store.load("strkey1").should == false
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = false
+    store["strkey2"] = true
+    store.clear.should equal(store)
+    store["strkey1"] = false
+    store["strkey1"].should == false
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = false
+    store.delete("strkey1").should == false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = false
+    store["strkey1"].should == false
+    store["strkey1"] = true
+    store["strkey1"].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = false
+    store["strkey1"].should == false
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = false
+    store.fetch("strkey1", true).should == false
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = false
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = false
+    store["strkey2"].should == false
+    store.load("strkey2").should == false
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = false
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = false
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == false
+    store.load("strkey2").should == false
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = false
+    store["strkey1"] = true
+    store.clear.should equal(store)
+    store["strkey2"] = false
+    store["strkey2"].should == false
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = false
+    store.delete("strkey2").should == false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = false
+    store["strkey2"].should == false
+    store["strkey2"] = true
+    store["strkey2"].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = false
+    store["strkey2"].should == false
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = false
+    store.fetch("strkey2", true).should == false
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = false
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+end
+
+#################### persist_simplestringkey_booleanvalue ####################
+
+shared_examples_for 'persist_simplestringkey_booleanvalue' do
+  it 'persists values' do
+    store["strkey1"] = true
+    store.close
+    @store = nil
+    store["strkey1"].should == true
+  end
+
+  it 'persists values' do
+    store["strkey2"] = true
+    store.close
+    @store = nil
+    store["strkey2"].should == true
+  end
+
+  it 'persists values' do
+    store["strkey1"] = false
+    store.close
+    @store = nil
+    store["strkey1"].should == false
+  end
+
+  it 'persists values' do
+    store["strkey2"] = false
+    store.close
+    @store = nil
+    store["strkey2"].should == false
+  end
+end
+
+#################### null_simplestringkey_stringvalue ####################
+
+shared_examples_for 'null_simplestringkey_stringvalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = "strval1"
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = "strval1"
+    store["strkey2"] = "strval2"
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", "strval1").should == "strval1"
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = "strval1"
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", "strval1", options).should == "strval1"
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = "strval1"
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = "strval1"
+    store["strkey1"] = "strval2"
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", "strval1").should == "strval1"
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = "strval1"
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", "strval1", options).should == "strval1"
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = "strval2"
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = "strval2"
+    store["strkey2"] = "strval1"
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", "strval2").should == "strval2"
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = "strval2"
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", "strval2", options).should == "strval2"
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = "strval2"
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = "strval2"
+    store["strkey1"] = "strval1"
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", "strval2").should == "strval2"
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = "strval2"
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", "strval2", options).should == "strval2"
+  end
+end
+
+#################### store_simplestringkey_stringvalue ####################
+
+shared_examples_for 'store_simplestringkey_stringvalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = "strval1"
+    store["strkey1"].should == "strval1"
+    store.load("strkey1").should == "strval1"
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = "strval1"
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = "strval1"
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == "strval1"
+    store.load("strkey1").should == "strval1"
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = "strval1"
+    store["strkey2"] = "strval2"
+    store.clear.should equal(store)
+    store["strkey1"] = "strval1"
+    store["strkey1"].should == "strval1"
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = "strval1"
+    store.delete("strkey1").should == "strval1"
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = "strval1"
+    store["strkey1"].should == "strval1"
+    store["strkey1"] = "strval2"
+    store["strkey1"].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = "strval1"
+    store["strkey1"].should == "strval1"
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = "strval1"
+    store.fetch("strkey1", "strval2").should == "strval1"
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = "strval1"
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = "strval1"
+    store["strkey2"].should == "strval1"
+    store.load("strkey2").should == "strval1"
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = "strval1"
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = "strval1"
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == "strval1"
+    store.load("strkey2").should == "strval1"
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = "strval1"
+    store["strkey1"] = "strval2"
+    store.clear.should equal(store)
+    store["strkey2"] = "strval1"
+    store["strkey2"].should == "strval1"
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = "strval1"
+    store.delete("strkey2").should == "strval1"
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = "strval1"
+    store["strkey2"].should == "strval1"
+    store["strkey2"] = "strval2"
+    store["strkey2"].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = "strval1"
+    store["strkey2"].should == "strval1"
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = "strval1"
+    store.fetch("strkey2", "strval2").should == "strval1"
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = "strval1"
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = "strval2"
+    store["strkey1"].should == "strval2"
+    store.load("strkey1").should == "strval2"
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = "strval2"
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = "strval2"
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == "strval2"
+    store.load("strkey1").should == "strval2"
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = "strval2"
+    store["strkey2"] = "strval1"
+    store.clear.should equal(store)
+    store["strkey1"] = "strval2"
+    store["strkey1"].should == "strval2"
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = "strval2"
+    store.delete("strkey1").should == "strval2"
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = "strval2"
+    store["strkey1"].should == "strval2"
+    store["strkey1"] = "strval1"
+    store["strkey1"].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = "strval2"
+    store["strkey1"].should == "strval2"
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = "strval2"
+    store.fetch("strkey1", "strval1").should == "strval2"
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = "strval2"
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = "strval2"
+    store["strkey2"].should == "strval2"
+    store.load("strkey2").should == "strval2"
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = "strval2"
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = "strval2"
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == "strval2"
+    store.load("strkey2").should == "strval2"
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = "strval2"
+    store["strkey1"] = "strval1"
+    store.clear.should equal(store)
+    store["strkey2"] = "strval2"
+    store["strkey2"].should == "strval2"
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = "strval2"
+    store.delete("strkey2").should == "strval2"
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = "strval2"
+    store["strkey2"].should == "strval2"
+    store["strkey2"] = "strval1"
+    store["strkey2"].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = "strval2"
+    store["strkey2"].should == "strval2"
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = "strval2"
+    store.fetch("strkey2", "strval1").should == "strval2"
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = "strval2"
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+end
+
+#################### returndifferent_simplestringkey_stringvalue ####################
+
+shared_examples_for 'returndifferent_simplestringkey_stringvalue' do
+  it 'guarantees that a different value is retrieved' do
+    value = "strval1"
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = "strval1"
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = "strval2"
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = "strval2"
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_simplestringkey_stringvalue ####################
+
+shared_examples_for 'returnsame_simplestringkey_stringvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval1"
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = "strval2"
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+end
+
+#################### persist_simplestringkey_stringvalue ####################
+
+shared_examples_for 'persist_simplestringkey_stringvalue' do
+  it 'persists values' do
+    store["strkey1"] = "strval1"
+    store.close
+    @store = nil
+    store["strkey1"].should == "strval1"
+  end
+
+  it 'persists values' do
+    store["strkey2"] = "strval1"
+    store.close
+    @store = nil
+    store["strkey2"].should == "strval1"
+  end
+
+  it 'persists values' do
+    store["strkey1"] = "strval2"
+    store.close
+    @store = nil
+    store["strkey1"].should == "strval2"
+  end
+
+  it 'persists values' do
+    store["strkey2"] = "strval2"
+    store.close
+    @store = nil
+    store["strkey2"].should == "strval2"
+  end
+end
+
+#################### null_simplestringkey_hashvalue ####################
+
+shared_examples_for 'null_simplestringkey_hashvalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = {"hashval1"=>["array1", 1]}
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = {"hashval1"=>["array1", 1]}
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", {"hashval1"=>["array1", 1]}, options).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = {"hashval1"=>["array1", 1]}
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = {"hashval1"=>["array1", 1]}
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", {"hashval1"=>["array1", 1]}, options).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", {"hashval3"=>["array2", {"hashval4"=>42}]}, options).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", {"hashval3"=>["array2", {"hashval4"=>42}]}, options).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+end
+
+#################### store_simplestringkey_hashvalue ####################
+
+shared_examples_for 'store_simplestringkey_hashvalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+    store.load("strkey1").should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = {"hashval1"=>["array1", 1]}
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+    store.load("strkey1").should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store.delete("strkey1").should == {"hashval1"=>["array1", 1]}
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store.fetch("strkey1", {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+    store.load("strkey2").should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = {"hashval1"=>["array1", 1]}
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+    store.load("strkey2").should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.clear.should equal(store)
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store.delete("strkey2").should == {"hashval1"=>["array1", 1]}
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store.fetch("strkey2", {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.load("strkey1").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.load("strkey1").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store.clear.should equal(store)
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.delete("strkey1").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.fetch("strkey1", {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.load("strkey2").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.load("strkey2").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store.clear.should equal(store)
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.delete("strkey2").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.fetch("strkey2", {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+end
+
+#################### returndifferent_simplestringkey_hashvalue ####################
+
+shared_examples_for 'returndifferent_simplestringkey_hashvalue' do
+  it 'guarantees that a different value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_simplestringkey_hashvalue ####################
+
+shared_examples_for 'returnsame_simplestringkey_hashvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval1"=>["array1", 1]}
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+end
+
+#################### persist_simplestringkey_hashvalue ####################
+
+shared_examples_for 'persist_simplestringkey_hashvalue' do
+  it 'persists values' do
+    store["strkey1"] = {"hashval1"=>["array1", 1]}
+    store.close
+    @store = nil
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'persists values' do
+    store["strkey2"] = {"hashval1"=>["array1", 1]}
+    store.close
+    @store = nil
+    store["strkey2"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'persists values' do
+    store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.close
+    @store = nil
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'persists values' do
+    store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.close
+    @store = nil
+    store["strkey2"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+end
+
+#################### null_simplestringkey_objectvalue ####################
+
+shared_examples_for 'null_simplestringkey_objectvalue' do
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = Value.new(:objval1)
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey2"] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", Value.new(:objval1)).should == Value.new(:objval1)
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = Value.new(:objval1)
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", Value.new(:objval1), options).should == Value.new(:objval1)
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = Value.new(:objval1)
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = Value.new(:objval1)
+    store["strkey1"] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", Value.new(:objval1)).should == Value.new(:objval1)
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = Value.new(:objval1)
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", Value.new(:objval1), options).should == Value.new(:objval1)
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey1"].should be_nil
+    store.load("strkey1").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = Value.new(:objval2)
+    (store["strkey1"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey1").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey1").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey1"] = Value.new(:objval2)
+    store["strkey2"] = Value.new(:objval1)
+    store.clear.should equal(store)
+    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey1", Value.new(:objval2)).should == Value.new(:objval2)
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey1"
+    value = Value.new(:objval2)
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey1", options).should be_false
+    store.load("strkey1", options).should be_nil
+    store.fetch("strkey1", 42, options).should == 42
+    store.fetch("strkey1", options) { 42 }.should == 42
+    store.delete("strkey1", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey1", Value.new(:objval2), options).should == Value.new(:objval2)
+  end
+
+  it 'reads from keys like a Hash' do
+    store["strkey2"].should be_nil
+    store.load("strkey2").should be_nil
+  end
+
+  it 'guarantees that the same value is returned when setting a key' do
+    value = Value.new(:objval2)
+    (store["strkey2"] = value).should equal(value)
+  end
+
+  it 'returns false from key? if a key is not available' do
+    store.key?("strkey2").should be_false
+  end
+
+  it 'returns nil from delete if a value for a key does not exist' do
+    store.delete("strkey2").should be_nil
+  end
+
+  it 'removes all keys from the store with clear' do
+    store["strkey2"] = Value.new(:objval2)
+    store["strkey1"] = Value.new(:objval1)
+    store.clear.should equal(store)
+    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be_false
+  end
+
+  it 'fetches a key with a default value with fetch, if the key is not available' do
+    store.fetch("strkey2", Value.new(:objval2)).should == Value.new(:objval2)
+  end
+
+  it 'fetches a key with a block with fetch, if the key is not available' do
+    key = "strkey2"
+    value = Value.new(:objval2)
+    store.fetch(key) do |k|
+      k.should equal(key)
+      value
+    end.should equal(value)
+  end
+
+  it 'accepts frozen options' do
+    options = {:option1 => 1, :options2 => 2}
+    options.freeze
+    store.key?("strkey2", options).should be_false
+    store.load("strkey2", options).should be_nil
+    store.fetch("strkey2", 42, options).should == 42
+    store.fetch("strkey2", options) { 42 }.should == 42
+    store.delete("strkey2", options).should be_nil
+    store.clear(options).should equal(store)
+    store.store("strkey2", Value.new(:objval2), options).should == Value.new(:objval2)
+  end
+end
+
+#################### store_simplestringkey_objectvalue ####################
+
+shared_examples_for 'store_simplestringkey_objectvalue' do
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+    store.load("strkey1").should == Value.new(:objval1)
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = Value.new(:objval1)
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = Value.new(:objval1)
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == Value.new(:objval1)
+    store.load("strkey1").should == Value.new(:objval1)
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey2"] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = Value.new(:objval1)
+    store.delete("strkey1").should == Value.new(:objval1)
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+    store["strkey1"] = Value.new(:objval2)
+    store["strkey1"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = Value.new(:objval1)
+    store.fetch("strkey1", Value.new(:objval2)).should == Value.new(:objval1)
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = Value.new(:objval1)
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = Value.new(:objval1)
+    store["strkey2"].should == Value.new(:objval1)
+    store.load("strkey2").should == Value.new(:objval1)
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = Value.new(:objval1)
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = Value.new(:objval1)
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == Value.new(:objval1)
+    store.load("strkey2").should == Value.new(:objval1)
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = Value.new(:objval1)
+    store["strkey1"] = Value.new(:objval2)
+    store.clear.should equal(store)
+    store["strkey2"] = Value.new(:objval1)
+    store["strkey2"].should == Value.new(:objval1)
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = Value.new(:objval1)
+    store.delete("strkey2").should == Value.new(:objval1)
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = Value.new(:objval1)
+    store["strkey2"].should == Value.new(:objval1)
+    store["strkey2"] = Value.new(:objval2)
+    store["strkey2"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = Value.new(:objval1)
+    store["strkey2"].should == Value.new(:objval1)
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = Value.new(:objval1)
+    store.fetch("strkey2", Value.new(:objval2)).should == Value.new(:objval1)
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = Value.new(:objval1)
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey1"] = Value.new(:objval2)
+    store["strkey1"].should == Value.new(:objval2)
+    store.load("strkey1").should == Value.new(:objval2)
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey1"] = Value.new(:objval2)
+    store.key?("strkey1").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = Value.new(:objval2)
+    store.store("strkey1", value).should equal(value)
+    store["strkey1"].should == Value.new(:objval2)
+    store.load("strkey1").should == Value.new(:objval2)
+  end
+
+  it 'stores values after clear' do
+    store["strkey1"] = Value.new(:objval2)
+    store["strkey2"] = Value.new(:objval1)
+    store.clear.should equal(store)
+    store["strkey1"] = Value.new(:objval2)
+    store["strkey1"].should == Value.new(:objval2)
+    store["strkey2"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey1"] = Value.new(:objval2)
+    store.delete("strkey1").should == Value.new(:objval2)
+    store.key?("strkey1").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey1"] = Value.new(:objval2)
+    store["strkey1"].should == Value.new(:objval2)
+    store["strkey1"] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = Value.new(:objval2)
+    store["strkey1"].should == Value.new(:objval2)
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey1"] = Value.new(:objval2)
+    store.fetch("strkey1", Value.new(:objval1)).should == Value.new(:objval2)
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey1"] = Value.new(:objval2)
+    unaltered = 'unaltered'
+    store.fetch("strkey1") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+
+  it 'writes values to keys that like a Hash' do
+    store["strkey2"] = Value.new(:objval2)
+    store["strkey2"].should == Value.new(:objval2)
+    store.load("strkey2").should == Value.new(:objval2)
+  end
+
+  it 'returns true from key? if a key is available' do
+    store["strkey2"] = Value.new(:objval2)
+    store.key?("strkey2").should be_true
+  end
+
+  it 'stores values with #store' do
+    value = Value.new(:objval2)
+    store.store("strkey2", value).should equal(value)
+    store["strkey2"].should == Value.new(:objval2)
+    store.load("strkey2").should == Value.new(:objval2)
+  end
+
+  it 'stores values after clear' do
+    store["strkey2"] = Value.new(:objval2)
+    store["strkey1"] = Value.new(:objval1)
+    store.clear.should equal(store)
+    store["strkey2"] = Value.new(:objval2)
+    store["strkey2"].should == Value.new(:objval2)
+    store["strkey1"].should be_nil
+  end
+
+  it 'removes and returns a value from the backing store via delete if it exists' do
+    store["strkey2"] = Value.new(:objval2)
+    store.delete("strkey2").should == Value.new(:objval2)
+    store.key?("strkey2").should be_false
+  end
+
+  it 'overwrites existing values' do
+    store["strkey2"] = Value.new(:objval2)
+    store["strkey2"].should == Value.new(:objval2)
+    store["strkey2"] = Value.new(:objval1)
+    store["strkey2"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store["strkey2"] = value).should equal(value)
+    store["strkey2"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey2".freeze
+    store[key] = Value.new(:objval2)
+    store["strkey2"].should == Value.new(:objval2)
+  end
+  it 'fetches a key with a default value with fetch, if the key is available' do
+    store["strkey2"] = Value.new(:objval2)
+    store.fetch("strkey2", Value.new(:objval1)).should == Value.new(:objval2)
+  end
+
+  it 'does not run the block in fetch if the key is available' do
+    store["strkey2"] = Value.new(:objval2)
+    unaltered = 'unaltered'
+    store.fetch("strkey2") { unaltered = 'altered' }
+    unaltered.should == 'unaltered'
+  end
+end
+
+#################### returndifferent_simplestringkey_objectvalue ####################
+
+shared_examples_for 'returndifferent_simplestringkey_objectvalue' do
+  it 'guarantees that a different value is retrieved' do
+    value = Value.new(:objval1)
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = Value.new(:objval1)
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = Value.new(:objval2)
+    store["strkey1"] = value
+    store["strkey1"].should_not be_equal(value)
+  end
+
+  it 'guarantees that a different value is retrieved' do
+    value = Value.new(:objval2)
+    store["strkey2"] = value
+    store["strkey2"].should_not be_equal(value)
+  end
+end
+
+#################### returnsame_simplestringkey_objectvalue ####################
+
+shared_examples_for 'returnsame_simplestringkey_objectvalue' do
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval1)
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store["strkey1"] = value
+    store["strkey1"].should be_equal(value)
+  end
+
+  it 'guarantees that the same value is retrieved' do
+    value = Value.new(:objval2)
+    store["strkey2"] = value
+    store["strkey2"].should be_equal(value)
+  end
+end
+
+#################### persist_simplestringkey_objectvalue ####################
+
+shared_examples_for 'persist_simplestringkey_objectvalue' do
+  it 'persists values' do
+    store["strkey1"] = Value.new(:objval1)
+    store.close
+    @store = nil
+    store["strkey1"].should == Value.new(:objval1)
+  end
+
+  it 'persists values' do
+    store["strkey2"] = Value.new(:objval1)
+    store.close
+    @store = nil
+    store["strkey2"].should == Value.new(:objval1)
+  end
+
+  it 'persists values' do
+    store["strkey1"] = Value.new(:objval2)
+    store.close
+    @store = nil
+    store["strkey1"].should == Value.new(:objval2)
+  end
+
+  it 'persists values' do
+    store["strkey2"] = Value.new(:objval2)
+    store.close
+    @store = nil
+    store["strkey2"].should == Value.new(:objval2)
+  end
+end
+
 #################### null_objectkey_nilvalue ####################
 
 shared_examples_for 'null_objectkey_nilvalue' do

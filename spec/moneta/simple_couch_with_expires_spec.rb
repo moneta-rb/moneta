@@ -3,7 +3,7 @@ require 'helper'
 
 describe_moneta "simple_couch_with_expires" do
   def features
-    [:expires]
+    [:create, :expires]
   end
 
   def new_store
@@ -15,12 +15,14 @@ describe_moneta "simple_couch_with_expires" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
+  it_should_behave_like 'create'
+  it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
   it_should_behave_like 'features'
   it_should_behave_like 'marshallable_key'
   it_should_behave_like 'marshallable_value'
   it_should_behave_like 'multiprocess'
-  it_should_behave_like 'not_create'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_objectkey_objectvalue'
   it_should_behave_like 'null_objectkey_stringvalue'

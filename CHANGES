@@ -1,7 +1,9 @@
 master
 
 * Adapters::File#increment and #create fixed on JRuby
-* Adapters::Mongo can store hashes directly as Mongo documents
+* Adapters::Couch and Adapters::Mongo can store hashes directly as documents.
+  It is not necessary to serialize values as strings anymore.
+* Adapters::Couch#create added
 * Pool thread safety improved
 
 0.7.16

@@ -2,6 +2,7 @@
 require 'helper'
 
 describe_moneta "weak_create" do
+  start_restserver
   def features
     [:create]
   end
@@ -9,7 +10,7 @@ describe_moneta "weak_create" do
   def new_store
     Moneta.build do
       use :WeakCreate
-      adapter :Couch, :db => 'weak_create'
+      adapter :RestClient, :url => 'http://localhost:8808/moneta/'
     end
   end
 

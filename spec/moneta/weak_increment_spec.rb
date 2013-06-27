@@ -2,6 +2,7 @@
 require 'helper'
 
 describe_moneta "weak_increment" do
+  start_restserver
   def features
     [:increment]
   end
@@ -9,7 +10,7 @@ describe_moneta "weak_increment" do
   def new_store
     Moneta.build do
       use :WeakIncrement
-      adapter :Couch, :db => 'weak_increment'
+      adapter :RestClient, :url => 'http://localhost:8808/moneta/'
     end
   end
 
