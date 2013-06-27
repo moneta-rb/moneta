@@ -7,6 +7,12 @@ module Moneta
     # Supports expiration, documents will be automatically removed starting
     # with mongodb >= 2.2 (see {http://docs.mongodb.org/manual/tutorial/expire-data/}).
     #
+    # You can also store hashes directly using this adapter:
+    #
+    # @example Store hashes
+    #     db = Moneta::Adapters::Mongo.new
+    #     db['key'] = {a: 1, b: 2}
+    #
     # @api public
     class Mongo
       include Defaults
@@ -48,26 +54,22 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        key = ::BSON::Binary.new(key)
+        key = to_binary(key)
         doc = @collection.find_one('_id' => key)
         if doc && (!doc['expiresAt'] || doc['expiresAt'] >= Time.now)
           expires = expires_at(options, nil)
           @collection.update({ '_id' => key },
                              # expiresAt must be a Time object (BSON date datatype)
                              { '$set' => { 'expiresAt' => expires || nil } }) if expires != nil
-          doc['value'].to_s
+          doc_to_value(doc)
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        key = ::BSON::Binary.new(key)
-        intvalue = value.to_i
+        key = to_binary(key)
         @collection.update({ '_id' => key },
-                           { '_id' => key,
-                             'value' => intvalue.to_s == value ? intvalue : ::BSON::Binary.new(value),
-                             # expiresAt must be a Time object (BSON date datatype)
-                             'expiresAt' => expires_at(options) || nil },
+                           value_to_doc(key, value, options),
                            { :upsert => true })
         value
       end
@@ -75,13 +77,13 @@ module Moneta
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
-        @collection.remove('_id' => ::BSON::Binary.new(key)) if value
+        @collection.remove('_id' => to_binary(key)) if value
         value
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @collection.find_and_modify(:query => { '_id' => ::BSON::Binary.new(key) },
+        @collection.find_and_modify(:query => { '_id' => to_binary(key) },
                                     :update => { '$inc' => { 'value' => amount } },
                                     :new => true,
                                     :upsert => true)['value']
@@ -89,12 +91,8 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        key = ::BSON::Binary.new(key)
-        intvalue = value.to_i
-        @collection.insert('_id' => key,
-                           'value' => intvalue.to_s == value ? intvalue : ::BSON::Binary.new(value),
-                           # expiresAt must be a Time object (BSON date datatype)
-                           'expiresAt' => expires_at(options) || nil)
+        key = to_binary(key)
+        @collection.insert(value_to_doc(key, value, options))
         true
       rescue ::Mongo::OperationFailure
         # FIXME: This catches too many errors
@@ -112,6 +110,52 @@ module Moneta
       def close
         @backend.close
         nil
+      end
+
+      protected
+
+      def doc_to_value(doc)
+        case doc['type']
+        when 'Hash'
+          doc = doc.dup
+          doc.delete('_id')
+          doc.delete('type')
+          doc.delete('expiresAt')
+          doc
+        when 'Number'
+          doc['value']
+        else
+          doc['value'].to_s
+        end
+      end
+
+      def value_to_doc(key, value, options)
+        case value
+        when Hash
+          value.merge('_id' => key,
+                      'type' => 'Hash',
+                      # expiresAt must be a Time object (BSON date datatype)
+                      'expiresAt' => expires_at(options) || nil)
+        when Float, Fixnum
+          { '_id' => key,
+            'type' => 'Number',
+            'value' => value,
+            # expiresAt must be a Time object (BSON date datatype)
+            'expiresAt' => expires_at(options) || nil }
+        when String
+          intvalue = value.to_i
+          { '_id' => key,
+            'value' => intvalue.to_s == value ? intvalue : to_binary(value),
+            # expiresAt must be a Time object (BSON date datatype)
+            'expiresAt' => expires_at(options) || nil }
+        else
+          raise ArgumentError, "Invalid value type: #{value.class}"
+        end
+      end
+
+      def to_binary(s)
+        s = s.dup if s.frozen?
+        ::BSON::Binary.new(s)
       end
     end
   end

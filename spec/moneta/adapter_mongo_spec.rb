@@ -24,9 +24,16 @@ describe_moneta "adapter_mongo" do
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_stringkey_stringvalue'
+  it_should_behave_like 'null_stringkey_hashvalue'
+  it_should_behave_like 'null_stringkey_integervalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
+  it_should_behave_like 'persist_stringkey_hashvalue'
+  it_should_behave_like 'persist_stringkey_integervalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'returndifferent_stringkey_hashvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_stringkey_hashvalue'
+  it_should_behave_like 'store_stringkey_integervalue'
   it_should_behave_like 'store_large'
   it 'automatically deletes expired document' do
     store.store('key', 'val', :expires => 5)
