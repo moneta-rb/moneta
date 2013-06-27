@@ -312,10 +312,16 @@ Moneta does not support iteration or partial matches.
 
 ### Creating a Store
 
-There is a simple interface to create a store using `Moneta.new`:
+There is a simple interface to create a store using `Moneta.new`. You will
+get automatic key and value serialization which is provided by `Moneta::Transformer`.
+This allows you to store arbitrary Ruby objects. You can tune some options
+when you call `Moneta.new`. However for very fine tuning use `Moneta.build`.
 
 ~~~ ruby
 store = Moneta.new(:Memcached, :server => 'localhost:11211')
+store['key'] = 'value'
+store['hash_key'] = {:a => 1, :b => 2}
+store['object_key'] = MarshallableRubyObject.new
 ~~~
 
 If you want to have control over the proxies, you have to use `Moneta.build`:
@@ -333,6 +339,22 @@ store = Moneta.build do
   # Memory backend
   adapter :Memory
 end
+~~~
+
+You can also directly access the underlying adapters if you don't want
+to use the Moneta stack.
+
+~~~ ruby
+db = Moneta::Adapters::File.new(:dir => 'directory')
+db['key'] = {:a => 1, :b => 2} # This will fail since you can only store Strings
+
+# However for Mongo and Couch this works
+# The hash will be mapped directly to a Mongo/Couch document.
+db = Moneta::Adapters::Couch.new
+db['key'] = {:a => 1, :b => 2}
+
+db = Moneta::Adapters::Mongo.new
+db['key'] = {:a => 1, :b => 2}
 ~~~
 
 ### Expiration
