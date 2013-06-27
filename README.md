@@ -170,13 +170,13 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://datamapper.org/">DataMapper</a> ORM</td></tr>
 
+<tr><td>Couch</td><td>faraday, multi_json</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
+
 <tr><td>HBase</td><td>hbaserb</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://hbase.apache.org/">HBase</a> database</td></tr>
 
 <tr><td>Cassandra</td><td>cassandra</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://cassandra.apache.org/">Cassandra</a> distributed database</td></tr>
 
 <tr><td>LocalMemCache</td><td>localmemcache</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://localmemcache.rubyforge.org/">LocalMemCache</a> database</td></tr>
-
-<tr><td>Couch</td><td>faraday, multi_json</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
 
 <tr><td>Fog</td><td>fog</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fog.io/">Fog</a> cloud store</td></tr>
 
