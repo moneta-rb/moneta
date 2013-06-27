@@ -251,6 +251,18 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store[0].should == nil
   end
 
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = 0
+    store[0].should == 0
+  end
+
   it 'writes values to keys that like a Hash' do
     store[nil] = 0
     store[nil].should == 0
@@ -289,6 +301,18 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store[nil].should == 0
     store[nil] = nil
     store[nil].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = 0
+    store[nil].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -331,6 +355,18 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store[0].should == 0
   end
 
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = nil
+    store[0].should == nil
+  end
+
   it 'writes values to keys that like a Hash' do
     store[nil] = nil
     store[nil].should == nil
@@ -369,6 +405,18 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store[nil].should == nil
     store[nil] = 0
     store[nil].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = nil
+    store[nil].should == nil
   end
 end
 
@@ -654,6 +702,18 @@ shared_examples_for 'store_nilkey_integervalue' do
     store[0] = -12
     store[0].should == -12
   end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = 41
+    store[0].should == 41
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = 41
     store.fetch(0, -12).should == 41
@@ -704,6 +764,18 @@ shared_examples_for 'store_nilkey_integervalue' do
     store[nil].should == 41
     store[nil] = -12
     store[nil].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = 41
+    store[nil].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = 41
@@ -756,6 +828,18 @@ shared_examples_for 'store_nilkey_integervalue' do
     store[0] = 41
     store[0].should == 41
   end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = -12
+    store[0].should == -12
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = -12
     store.fetch(0, 41).should == -12
@@ -806,6 +890,18 @@ shared_examples_for 'store_nilkey_integervalue' do
     store[nil].should == -12
     store[nil] = 41
     store[nil].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = -12
+    store[nil].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = -12
@@ -1102,6 +1198,18 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store[0] = false
     store[0].should == false
   end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = true
+    store[0].should == true
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = true
     store.fetch(0, false).should == true
@@ -1152,6 +1260,18 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store[nil].should == true
     store[nil] = false
     store[nil].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = true
+    store[nil].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = true
@@ -1204,6 +1324,18 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store[0] = true
     store[0].should == true
   end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = false
+    store[0].should == false
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = false
     store.fetch(0, true).should == false
@@ -1254,6 +1386,18 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store[nil].should == false
     store[nil] = true
     store[nil].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = false
+    store[nil].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = false
@@ -1550,6 +1694,18 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store[0] = "strval2"
     store[0].should == "strval2"
   end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[0] = value).should equal(value)
+    store[0].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = "strval1"
+    store[0].should == "strval1"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = "strval1"
     store.fetch(0, "strval2").should == "strval1"
@@ -1600,6 +1756,18 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store[nil].should == "strval1"
     store[nil] = "strval2"
     store[nil].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = "strval1"
+    store[nil].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = "strval1"
@@ -1652,6 +1820,18 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store[0] = "strval1"
     store[0].should == "strval1"
   end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[0] = value).should equal(value)
+    store[0].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = "strval2"
+    store[0].should == "strval2"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = "strval2"
     store.fetch(0, "strval1").should == "strval2"
@@ -1702,6 +1882,18 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store[nil].should == "strval2"
     store[nil] = "strval1"
     store[nil].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = "strval2"
+    store[nil].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = "strval2"
@@ -2054,6 +2246,18 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[0].should == {"hashval1"=>["array1", 1]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = {"hashval1"=>["array1", 1]}
     store.fetch(0, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
@@ -2104,6 +2308,18 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store[nil].should == {"hashval1"=>["array1", 1]}
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[nil].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[nil].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = {"hashval1"=>["array1", 1]}
@@ -2156,6 +2372,18 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store[0] = {"hashval1"=>["array1", 1]}
     store[0].should == {"hashval1"=>["array1", 1]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[0] = value).should equal(value)
+    store[0].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[0].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch(0, {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -2206,6 +2434,18 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store[nil].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[nil] = {"hashval1"=>["array1", 1]}
     store[nil].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[nil].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -2558,6 +2798,18 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store[0] = Value.new(:objval2)
     store[0].should == Value.new(:objval2)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[0] = value).should equal(value)
+    store[0].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = Value.new(:objval1)
+    store[0].should == Value.new(:objval1)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = Value.new(:objval1)
     store.fetch(0, Value.new(:objval2)).should == Value.new(:objval1)
@@ -2608,6 +2860,18 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store[nil].should == Value.new(:objval1)
     store[nil] = Value.new(:objval2)
     store[nil].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = Value.new(:objval1)
+    store[nil].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = Value.new(:objval1)
@@ -2660,6 +2924,18 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store[0] = Value.new(:objval1)
     store[0].should == Value.new(:objval1)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[0] = value).should equal(value)
+    store[0].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = 0.freeze
+    store[key] = Value.new(:objval2)
+    store[0].should == Value.new(:objval2)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[0] = Value.new(:objval2)
     store.fetch(0, Value.new(:objval1)).should == Value.new(:objval2)
@@ -2710,6 +2986,18 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store[nil].should == Value.new(:objval2)
     store[nil] = Value.new(:objval1)
     store[nil].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[nil] = value).should equal(value)
+    store[nil].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = nil.freeze
+    store[key] = Value.new(:objval2)
+    store[nil].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[nil] = Value.new(:objval2)
@@ -3063,6 +3351,18 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store[-10].should == nil
   end
 
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = 0
+    store[-10].should == 0
+  end
+
   it 'writes values to keys that like a Hash' do
     store[42] = 0
     store[42].should == 0
@@ -3101,6 +3401,18 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store[42].should == 0
     store[42] = nil
     store[42].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = 0
+    store[42].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -3143,6 +3455,18 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store[-10].should == 0
   end
 
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = nil
+    store[-10].should == nil
+  end
+
   it 'writes values to keys that like a Hash' do
     store[42] = nil
     store[42].should == nil
@@ -3181,6 +3505,18 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store[42].should == nil
     store[42] = 0
     store[42].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = nil
+    store[42].should == nil
   end
 end
 
@@ -3466,6 +3802,18 @@ shared_examples_for 'store_integerkey_integervalue' do
     store[-10] = -12
     store[-10].should == -12
   end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = 41
+    store[-10].should == 41
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = 41
     store.fetch(-10, -12).should == 41
@@ -3516,6 +3864,18 @@ shared_examples_for 'store_integerkey_integervalue' do
     store[42].should == 41
     store[42] = -12
     store[42].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = 41
+    store[42].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = 41
@@ -3568,6 +3928,18 @@ shared_examples_for 'store_integerkey_integervalue' do
     store[-10] = 41
     store[-10].should == 41
   end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = -12
+    store[-10].should == -12
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = -12
     store.fetch(-10, 41).should == -12
@@ -3618,6 +3990,18 @@ shared_examples_for 'store_integerkey_integervalue' do
     store[42].should == -12
     store[42] = 41
     store[42].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = -12
+    store[42].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = -12
@@ -3914,6 +4298,18 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store[-10] = false
     store[-10].should == false
   end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = true
+    store[-10].should == true
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = true
     store.fetch(-10, false).should == true
@@ -3964,6 +4360,18 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store[42].should == true
     store[42] = false
     store[42].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = true
+    store[42].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = true
@@ -4016,6 +4424,18 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store[-10] = true
     store[-10].should == true
   end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = false
+    store[-10].should == false
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = false
     store.fetch(-10, true).should == false
@@ -4066,6 +4486,18 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store[42].should == false
     store[42] = true
     store[42].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = false
+    store[42].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = false
@@ -4362,6 +4794,18 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store[-10] = "strval2"
     store[-10].should == "strval2"
   end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = "strval1"
+    store[-10].should == "strval1"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = "strval1"
     store.fetch(-10, "strval2").should == "strval1"
@@ -4412,6 +4856,18 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store[42].should == "strval1"
     store[42] = "strval2"
     store[42].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[42] = value).should equal(value)
+    store[42].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = "strval1"
+    store[42].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = "strval1"
@@ -4464,6 +4920,18 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store[-10] = "strval1"
     store[-10].should == "strval1"
   end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = "strval2"
+    store[-10].should == "strval2"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = "strval2"
     store.fetch(-10, "strval1").should == "strval2"
@@ -4514,6 +4982,18 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store[42].should == "strval2"
     store[42] = "strval1"
     store[42].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[42] = value).should equal(value)
+    store[42].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = "strval2"
+    store[42].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = "strval2"
@@ -4866,6 +5346,18 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[-10].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[-10].should == {"hashval1"=>["array1", 1]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = {"hashval1"=>["array1", 1]}
     store.fetch(-10, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
@@ -4916,6 +5408,18 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store[42].should == {"hashval1"=>["array1", 1]}
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[42].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[42].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = {"hashval1"=>["array1", 1]}
@@ -4968,6 +5472,18 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store[-10] = {"hashval1"=>["array1", 1]}
     store[-10].should == {"hashval1"=>["array1", 1]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-10].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch(-10, {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -5018,6 +5534,18 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store[42].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[42] = {"hashval1"=>["array1", 1]}
     store[42].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[42] = value).should equal(value)
+    store[42].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[42].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -5370,6 +5898,18 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store[-10] = Value.new(:objval2)
     store[-10].should == Value.new(:objval2)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = Value.new(:objval1)
+    store[-10].should == Value.new(:objval1)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = Value.new(:objval1)
     store.fetch(-10, Value.new(:objval2)).should == Value.new(:objval1)
@@ -5420,6 +5960,18 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store[42].should == Value.new(:objval1)
     store[42] = Value.new(:objval2)
     store[42].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[42] = value).should equal(value)
+    store[42].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = Value.new(:objval1)
+    store[42].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = Value.new(:objval1)
@@ -5472,6 +6024,18 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store[-10] = Value.new(:objval1)
     store[-10].should == Value.new(:objval1)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[-10] = value).should equal(value)
+    store[-10].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = -10.freeze
+    store[key] = Value.new(:objval2)
+    store[-10].should == Value.new(:objval2)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[-10] = Value.new(:objval2)
     store.fetch(-10, Value.new(:objval1)).should == Value.new(:objval2)
@@ -5522,6 +6086,18 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store[42].should == Value.new(:objval2)
     store[42] = Value.new(:objval1)
     store[42].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[42] = value).should equal(value)
+    store[42].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = 42.freeze
+    store[key] = Value.new(:objval2)
+    store[42].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[42] = Value.new(:objval2)
@@ -5875,6 +6451,18 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store[true].should == nil
   end
 
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = 0
+    store[true].should == 0
+  end
+
   it 'writes values to keys that like a Hash' do
     store[false] = 0
     store[false].should == 0
@@ -5913,6 +6501,18 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store[false].should == 0
     store[false] = nil
     store[false].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = 0
+    store[false].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -5955,6 +6555,18 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store[true].should == 0
   end
 
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = nil
+    store[true].should == nil
+  end
+
   it 'writes values to keys that like a Hash' do
     store[false] = nil
     store[false].should == nil
@@ -5993,6 +6605,18 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store[false].should == nil
     store[false] = 0
     store[false].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = nil
+    store[false].should == nil
   end
 end
 
@@ -6278,6 +6902,18 @@ shared_examples_for 'store_booleankey_integervalue' do
     store[true] = -12
     store[true].should == -12
   end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = 41
+    store[true].should == 41
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = 41
     store.fetch(true, -12).should == 41
@@ -6328,6 +6964,18 @@ shared_examples_for 'store_booleankey_integervalue' do
     store[false].should == 41
     store[false] = -12
     store[false].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = 41
+    store[false].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = 41
@@ -6380,6 +7028,18 @@ shared_examples_for 'store_booleankey_integervalue' do
     store[true] = 41
     store[true].should == 41
   end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = -12
+    store[true].should == -12
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = -12
     store.fetch(true, 41).should == -12
@@ -6430,6 +7090,18 @@ shared_examples_for 'store_booleankey_integervalue' do
     store[false].should == -12
     store[false] = 41
     store[false].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = -12
+    store[false].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = -12
@@ -6726,6 +7398,18 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store[true] = false
     store[true].should == false
   end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = true
+    store[true].should == true
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = true
     store.fetch(true, false).should == true
@@ -6776,6 +7460,18 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store[false].should == true
     store[false] = false
     store[false].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = true
+    store[false].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = true
@@ -6828,6 +7524,18 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store[true] = true
     store[true].should == true
   end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = false
+    store[true].should == false
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = false
     store.fetch(true, true).should == false
@@ -6878,6 +7586,18 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store[false].should == false
     store[false] = true
     store[false].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = false
+    store[false].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = false
@@ -7174,6 +7894,18 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store[true] = "strval2"
     store[true].should == "strval2"
   end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[true] = value).should equal(value)
+    store[true].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = "strval1"
+    store[true].should == "strval1"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = "strval1"
     store.fetch(true, "strval2").should == "strval1"
@@ -7224,6 +7956,18 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store[false].should == "strval1"
     store[false] = "strval2"
     store[false].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[false] = value).should equal(value)
+    store[false].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = "strval1"
+    store[false].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = "strval1"
@@ -7276,6 +8020,18 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store[true] = "strval1"
     store[true].should == "strval1"
   end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[true] = value).should equal(value)
+    store[true].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = "strval2"
+    store[true].should == "strval2"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = "strval2"
     store.fetch(true, "strval1").should == "strval2"
@@ -7326,6 +8082,18 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store[false].should == "strval2"
     store[false] = "strval1"
     store[false].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[false] = value).should equal(value)
+    store[false].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = "strval2"
+    store[false].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = "strval2"
@@ -7678,6 +8446,18 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[true].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[true].should == {"hashval1"=>["array1", 1]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = {"hashval1"=>["array1", 1]}
     store.fetch(true, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
@@ -7728,6 +8508,18 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store[false].should == {"hashval1"=>["array1", 1]}
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[false].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[false].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = {"hashval1"=>["array1", 1]}
@@ -7780,6 +8572,18 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store[true] = {"hashval1"=>["array1", 1]}
     store[true].should == {"hashval1"=>["array1", 1]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[true] = value).should equal(value)
+    store[true].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[true].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch(true, {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -7830,6 +8634,18 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store[false].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[false] = {"hashval1"=>["array1", 1]}
     store[false].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[false] = value).should equal(value)
+    store[false].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[false].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -8182,6 +8998,18 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store[true] = Value.new(:objval2)
     store[true].should == Value.new(:objval2)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[true] = value).should equal(value)
+    store[true].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = Value.new(:objval1)
+    store[true].should == Value.new(:objval1)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = Value.new(:objval1)
     store.fetch(true, Value.new(:objval2)).should == Value.new(:objval1)
@@ -8232,6 +9060,18 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store[false].should == Value.new(:objval1)
     store[false] = Value.new(:objval2)
     store[false].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[false] = value).should equal(value)
+    store[false].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = Value.new(:objval1)
+    store[false].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = Value.new(:objval1)
@@ -8284,6 +9124,18 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store[true] = Value.new(:objval1)
     store[true].should == Value.new(:objval1)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[true] = value).should equal(value)
+    store[true].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = true.freeze
+    store[key] = Value.new(:objval2)
+    store[true].should == Value.new(:objval2)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[true] = Value.new(:objval2)
     store.fetch(true, Value.new(:objval1)).should == Value.new(:objval2)
@@ -8334,6 +9186,18 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store[false].should == Value.new(:objval2)
     store[false] = Value.new(:objval1)
     store[false].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[false] = value).should equal(value)
+    store[false].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = false.freeze
+    store[key] = Value.new(:objval2)
+    store[false].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[false] = Value.new(:objval2)
@@ -8687,6 +9551,18 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store["strkey1"].should == nil
   end
 
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 0
+    store["strkey1"].should == 0
+  end
+
   it 'writes values to keys that like a Hash' do
     store["foo/bar"] = 0
     store["foo/bar"].should == 0
@@ -8725,6 +9601,18 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store["foo/bar"].should == 0
     store["foo/bar"] = nil
     store["foo/bar"].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = 0
+    store["foo/bar"].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -8767,6 +9655,18 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store["strkey1"].should == 0
   end
 
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = nil
+    store["strkey1"].should == nil
+  end
+
   it 'writes values to keys that like a Hash' do
     store["foo/bar"] = nil
     store["foo/bar"].should == nil
@@ -8805,6 +9705,18 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store["foo/bar"].should == nil
     store["foo/bar"] = 0
     store["foo/bar"].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = nil
+    store["foo/bar"].should == nil
   end
 end
 
@@ -9090,6 +10002,18 @@ shared_examples_for 'store_stringkey_integervalue' do
     store["strkey1"] = -12
     store["strkey1"].should == -12
   end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = 41
+    store["strkey1"].should == 41
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = 41
     store.fetch("strkey1", -12).should == 41
@@ -9140,6 +10064,18 @@ shared_examples_for 'store_stringkey_integervalue' do
     store["foo/bar"].should == 41
     store["foo/bar"] = -12
     store["foo/bar"].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = 41
+    store["foo/bar"].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = 41
@@ -9192,6 +10128,18 @@ shared_examples_for 'store_stringkey_integervalue' do
     store["strkey1"] = 41
     store["strkey1"].should == 41
   end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = -12
+    store["strkey1"].should == -12
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = -12
     store.fetch("strkey1", 41).should == -12
@@ -9242,6 +10190,18 @@ shared_examples_for 'store_stringkey_integervalue' do
     store["foo/bar"].should == -12
     store["foo/bar"] = 41
     store["foo/bar"].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = -12
+    store["foo/bar"].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = -12
@@ -9538,6 +10498,18 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store["strkey1"] = false
     store["strkey1"].should == false
   end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = true
+    store["strkey1"].should == true
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = true
     store.fetch("strkey1", false).should == true
@@ -9588,6 +10560,18 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store["foo/bar"].should == true
     store["foo/bar"] = false
     store["foo/bar"].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = true
+    store["foo/bar"].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = true
@@ -9640,6 +10624,18 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store["strkey1"] = true
     store["strkey1"].should == true
   end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = false
+    store["strkey1"].should == false
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = false
     store.fetch("strkey1", true).should == false
@@ -9690,6 +10686,18 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store["foo/bar"].should == false
     store["foo/bar"] = true
     store["foo/bar"].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = false
+    store["foo/bar"].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = false
@@ -9986,6 +10994,18 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store["strkey1"] = "strval2"
     store["strkey1"].should == "strval2"
   end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = "strval1"
+    store["strkey1"].should == "strval1"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = "strval1"
     store.fetch("strkey1", "strval2").should == "strval1"
@@ -10036,6 +11056,18 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store["foo/bar"].should == "strval1"
     store["foo/bar"] = "strval2"
     store["foo/bar"].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = "strval1"
+    store["foo/bar"].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = "strval1"
@@ -10088,6 +11120,18 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store["strkey1"] = "strval1"
     store["strkey1"].should == "strval1"
   end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = "strval2"
+    store["strkey1"].should == "strval2"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = "strval2"
     store.fetch("strkey1", "strval1").should == "strval2"
@@ -10138,6 +11182,18 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store["foo/bar"].should == "strval2"
     store["foo/bar"] = "strval1"
     store["foo/bar"].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = "strval2"
+    store["foo/bar"].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = "strval2"
@@ -10490,6 +11546,18 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store["strkey1"].should == {"hashval1"=>["array1", 1]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store.fetch("strkey1", {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
@@ -10540,6 +11608,18 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store["foo/bar"].should == {"hashval1"=>["array1", 1]}
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["foo/bar"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store["foo/bar"].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
@@ -10592,6 +11672,18 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store["strkey1"].should == {"hashval1"=>["array1", 1]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["strkey1"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch("strkey1", {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -10642,6 +11734,18 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store["foo/bar"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
     store["foo/bar"].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store["foo/bar"].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -10994,6 +12098,18 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store["strkey1"] = Value.new(:objval2)
     store["strkey1"].should == Value.new(:objval2)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = Value.new(:objval1)
+    store["strkey1"].should == Value.new(:objval1)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = Value.new(:objval1)
     store.fetch("strkey1", Value.new(:objval2)).should == Value.new(:objval1)
@@ -11044,6 +12160,18 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store["foo/bar"].should == Value.new(:objval1)
     store["foo/bar"] = Value.new(:objval2)
     store["foo/bar"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = Value.new(:objval1)
+    store["foo/bar"].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = Value.new(:objval1)
@@ -11096,6 +12224,18 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store["strkey1"] = Value.new(:objval1)
     store["strkey1"].should == Value.new(:objval1)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store["strkey1"] = value).should equal(value)
+    store["strkey1"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = "strkey1".freeze
+    store[key] = Value.new(:objval2)
+    store["strkey1"].should == Value.new(:objval2)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["strkey1"] = Value.new(:objval2)
     store.fetch("strkey1", Value.new(:objval1)).should == Value.new(:objval2)
@@ -11146,6 +12286,18 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store["foo/bar"].should == Value.new(:objval2)
     store["foo/bar"] = Value.new(:objval1)
     store["foo/bar"].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store["foo/bar"] = value).should equal(value)
+    store["foo/bar"].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = "foo/bar".freeze
+    store[key] = Value.new(:objval2)
+    store["foo/bar"].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store["foo/bar"] = Value.new(:objval2)
@@ -11499,6 +12651,18 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store[Value.new(:objkey1)].should == nil
   end
 
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = 0
+    store[Value.new(:objkey1)].should == 0
+  end
+
   it 'writes values to keys that like a Hash' do
     store[Value.new(:objkey2)] = 0
     store[Value.new(:objkey2)].should == 0
@@ -11537,6 +12701,18 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store[Value.new(:objkey2)].should == 0
     store[Value.new(:objkey2)] = nil
     store[Value.new(:objkey2)].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = 0
+    store[Value.new(:objkey2)].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -11579,6 +12755,18 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store[Value.new(:objkey1)].should == 0
   end
 
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = nil
+    store[Value.new(:objkey1)].should == nil
+  end
+
   it 'writes values to keys that like a Hash' do
     store[Value.new(:objkey2)] = nil
     store[Value.new(:objkey2)].should == nil
@@ -11617,6 +12805,18 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store[Value.new(:objkey2)].should == nil
     store[Value.new(:objkey2)] = 0
     store[Value.new(:objkey2)].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = nil
+    store[Value.new(:objkey2)].should == nil
   end
 end
 
@@ -11902,6 +13102,18 @@ shared_examples_for 'store_objectkey_integervalue' do
     store[Value.new(:objkey1)] = -12
     store[Value.new(:objkey1)].should == -12
   end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = 41
+    store[Value.new(:objkey1)].should == 41
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = 41
     store.fetch(Value.new(:objkey1), -12).should == 41
@@ -11952,6 +13164,18 @@ shared_examples_for 'store_objectkey_integervalue' do
     store[Value.new(:objkey2)].should == 41
     store[Value.new(:objkey2)] = -12
     store[Value.new(:objkey2)].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = 41
+    store[Value.new(:objkey2)].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = 41
@@ -12004,6 +13228,18 @@ shared_examples_for 'store_objectkey_integervalue' do
     store[Value.new(:objkey1)] = 41
     store[Value.new(:objkey1)].should == 41
   end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = -12
+    store[Value.new(:objkey1)].should == -12
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = -12
     store.fetch(Value.new(:objkey1), 41).should == -12
@@ -12054,6 +13290,18 @@ shared_examples_for 'store_objectkey_integervalue' do
     store[Value.new(:objkey2)].should == -12
     store[Value.new(:objkey2)] = 41
     store[Value.new(:objkey2)].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = -12
+    store[Value.new(:objkey2)].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = -12
@@ -12350,6 +13598,18 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store[Value.new(:objkey1)] = false
     store[Value.new(:objkey1)].should == false
   end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = true
+    store[Value.new(:objkey1)].should == true
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = true
     store.fetch(Value.new(:objkey1), false).should == true
@@ -12400,6 +13660,18 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store[Value.new(:objkey2)].should == true
     store[Value.new(:objkey2)] = false
     store[Value.new(:objkey2)].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = true
+    store[Value.new(:objkey2)].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = true
@@ -12452,6 +13724,18 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store[Value.new(:objkey1)] = true
     store[Value.new(:objkey1)].should == true
   end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = false
+    store[Value.new(:objkey1)].should == false
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = false
     store.fetch(Value.new(:objkey1), true).should == false
@@ -12502,6 +13786,18 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store[Value.new(:objkey2)].should == false
     store[Value.new(:objkey2)] = true
     store[Value.new(:objkey2)].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = false
+    store[Value.new(:objkey2)].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = false
@@ -12798,6 +14094,18 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store[Value.new(:objkey1)] = "strval2"
     store[Value.new(:objkey1)].should == "strval2"
   end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = "strval1"
+    store[Value.new(:objkey1)].should == "strval1"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = "strval1"
     store.fetch(Value.new(:objkey1), "strval2").should == "strval1"
@@ -12848,6 +14156,18 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store[Value.new(:objkey2)].should == "strval1"
     store[Value.new(:objkey2)] = "strval2"
     store[Value.new(:objkey2)].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = "strval1"
+    store[Value.new(:objkey2)].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = "strval1"
@@ -12900,6 +14220,18 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store[Value.new(:objkey1)] = "strval1"
     store[Value.new(:objkey1)].should == "strval1"
   end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = "strval2"
+    store[Value.new(:objkey1)].should == "strval2"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = "strval2"
     store.fetch(Value.new(:objkey1), "strval1").should == "strval2"
@@ -12950,6 +14282,18 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store[Value.new(:objkey2)].should == "strval2"
     store[Value.new(:objkey2)] = "strval1"
     store[Value.new(:objkey2)].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = "strval2"
+    store[Value.new(:objkey2)].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = "strval2"
@@ -13302,6 +14646,18 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[Value.new(:objkey1)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store.fetch(Value.new(:objkey1), {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
@@ -13352,6 +14708,18 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store[Value.new(:objkey2)].should == {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[Value.new(:objkey2)].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
@@ -13404,6 +14772,18 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey1)].should == {"hashval1"=>["array1", 1]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[Value.new(:objkey1)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch(Value.new(:objkey1), {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -13454,6 +14834,18 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey2)].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[Value.new(:objkey2)].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -13806,6 +15198,18 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store[Value.new(:objkey1)] = Value.new(:objval2)
     store[Value.new(:objkey1)].should == Value.new(:objval2)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = Value.new(:objval1)
+    store[Value.new(:objkey1)].should == Value.new(:objval1)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store.fetch(Value.new(:objkey1), Value.new(:objval2)).should == Value.new(:objval1)
@@ -13856,6 +15260,18 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store[Value.new(:objkey2)].should == Value.new(:objval1)
     store[Value.new(:objkey2)] = Value.new(:objval2)
     store[Value.new(:objkey2)].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = Value.new(:objval1)
+    store[Value.new(:objkey2)].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = Value.new(:objval1)
@@ -13908,6 +15324,18 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store[Value.new(:objkey1)].should == Value.new(:objval1)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[Value.new(:objkey1)] = value).should equal(value)
+    store[Value.new(:objkey1)].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey1).freeze
+    store[key] = Value.new(:objval2)
+    store[Value.new(:objkey1)].should == Value.new(:objval2)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey1)] = Value.new(:objval2)
     store.fetch(Value.new(:objkey1), Value.new(:objval1)).should == Value.new(:objval2)
@@ -13958,6 +15386,18 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store[Value.new(:objkey2)].should == Value.new(:objval2)
     store[Value.new(:objkey2)] = Value.new(:objval1)
     store[Value.new(:objkey2)].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[Value.new(:objkey2)] = value).should equal(value)
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = Value.new(:objkey2).freeze
+    store[key] = Value.new(:objval2)
+    store[Value.new(:objkey2)].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[Value.new(:objkey2)] = Value.new(:objval2)
@@ -14311,6 +15751,18 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}].should == nil
   end
 
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = 0
+    store[{"hashkey1"=>"hashkey2"}].should == 0
+  end
+
   it 'writes values to keys that like a Hash' do
     store[{"hashkey3"=>"hashkey4"}] = 0
     store[{"hashkey3"=>"hashkey4"}].should == 0
@@ -14349,6 +15801,18 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == 0
     store[{"hashkey3"=>"hashkey4"}] = nil
     store[{"hashkey3"=>"hashkey4"}].should == nil
+  end
+
+  it 'stores frozen values' do
+    value = 0.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == 0
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = 0
+    store[{"hashkey3"=>"hashkey4"}].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -14391,6 +15855,18 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}].should == 0
   end
 
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = nil
+    store[{"hashkey1"=>"hashkey2"}].should == nil
+  end
+
   it 'writes values to keys that like a Hash' do
     store[{"hashkey3"=>"hashkey4"}] = nil
     store[{"hashkey3"=>"hashkey4"}].should == nil
@@ -14429,6 +15905,18 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == nil
     store[{"hashkey3"=>"hashkey4"}] = 0
     store[{"hashkey3"=>"hashkey4"}].should == 0
+  end
+
+  it 'stores frozen values' do
+    value = nil.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == nil
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = nil
+    store[{"hashkey3"=>"hashkey4"}].should == nil
   end
 end
 
@@ -14714,6 +16202,18 @@ shared_examples_for 'store_hashkey_integervalue' do
     store[{"hashkey1"=>"hashkey2"}] = -12
     store[{"hashkey1"=>"hashkey2"}].should == -12
   end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = 41
+    store[{"hashkey1"=>"hashkey2"}].should == 41
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 41
     store.fetch({"hashkey1"=>"hashkey2"}, -12).should == 41
@@ -14764,6 +16264,18 @@ shared_examples_for 'store_hashkey_integervalue' do
     store[{"hashkey3"=>"hashkey4"}].should == 41
     store[{"hashkey3"=>"hashkey4"}] = -12
     store[{"hashkey3"=>"hashkey4"}].should == -12
+  end
+
+  it 'stores frozen values' do
+    value = 41.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == 41
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = 41
+    store[{"hashkey3"=>"hashkey4"}].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 41
@@ -14816,6 +16328,18 @@ shared_examples_for 'store_hashkey_integervalue' do
     store[{"hashkey1"=>"hashkey2"}] = 41
     store[{"hashkey1"=>"hashkey2"}].should == 41
   end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = -12
+    store[{"hashkey1"=>"hashkey2"}].should == -12
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = -12
     store.fetch({"hashkey1"=>"hashkey2"}, 41).should == -12
@@ -14866,6 +16390,18 @@ shared_examples_for 'store_hashkey_integervalue' do
     store[{"hashkey3"=>"hashkey4"}].should == -12
     store[{"hashkey3"=>"hashkey4"}] = 41
     store[{"hashkey3"=>"hashkey4"}].should == 41
+  end
+
+  it 'stores frozen values' do
+    value = -12.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == -12
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = -12
+    store[{"hashkey3"=>"hashkey4"}].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = -12
@@ -15162,6 +16698,18 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store[{"hashkey1"=>"hashkey2"}].should == false
   end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = true
+    store[{"hashkey1"=>"hashkey2"}].should == true
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = true
     store.fetch({"hashkey1"=>"hashkey2"}, false).should == true
@@ -15212,6 +16760,18 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == true
     store[{"hashkey3"=>"hashkey4"}] = false
     store[{"hashkey3"=>"hashkey4"}].should == false
+  end
+
+  it 'stores frozen values' do
+    value = true.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == true
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = true
+    store[{"hashkey3"=>"hashkey4"}].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = true
@@ -15264,6 +16824,18 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store[{"hashkey1"=>"hashkey2"}] = true
     store[{"hashkey1"=>"hashkey2"}].should == true
   end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = false
+    store[{"hashkey1"=>"hashkey2"}].should == false
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store.fetch({"hashkey1"=>"hashkey2"}, true).should == false
@@ -15314,6 +16886,18 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == false
     store[{"hashkey3"=>"hashkey4"}] = true
     store[{"hashkey3"=>"hashkey4"}].should == true
+  end
+
+  it 'stores frozen values' do
+    value = false.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == false
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = false
+    store[{"hashkey3"=>"hashkey4"}].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = false
@@ -15610,6 +17194,18 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
     store[{"hashkey1"=>"hashkey2"}].should == "strval2"
   end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = "strval1"
+    store[{"hashkey1"=>"hashkey2"}].should == "strval1"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store.fetch({"hashkey1"=>"hashkey2"}, "strval2").should == "strval1"
@@ -15660,6 +17256,18 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == "strval1"
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
     store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+  end
+
+  it 'stores frozen values' do
+    value = "strval1".freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == "strval1"
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = "strval1"
+    store[{"hashkey3"=>"hashkey4"}].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
@@ -15712,6 +17320,18 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store[{"hashkey1"=>"hashkey2"}].should == "strval1"
   end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = "strval2"
+    store[{"hashkey1"=>"hashkey2"}].should == "strval2"
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
     store.fetch({"hashkey1"=>"hashkey2"}, "strval1").should == "strval2"
@@ -15762,6 +17382,18 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == "strval2"
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
     store[{"hashkey3"=>"hashkey4"}].should == "strval1"
+  end
+
+  it 'stores frozen values' do
+    value = "strval2".freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = "strval2"
+    store[{"hashkey3"=>"hashkey4"}].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
@@ -16114,6 +17746,18 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[{"hashkey1"=>"hashkey2"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store.fetch({"hashkey1"=>"hashkey2"}, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
@@ -16164,6 +17808,18 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval1"=>["array1", 1]}
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval1"=>["array1", 1]}.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = {"hashval1"=>["array1", 1]}
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
@@ -16216,6 +17872,18 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store[{"hashkey1"=>"hashkey2"}].should == {"hashval1"=>["array1", 1]}
   end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[{"hashkey1"=>"hashkey2"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch({"hashkey1"=>"hashkey2"}, {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -16266,6 +17934,18 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
     store[{"hashkey3"=>"hashkey4"}].should == {"hashval1"=>["array1", 1]}
+  end
+
+  it 'stores frozen values' do
+    value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[{"hashkey3"=>"hashkey4"}].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
@@ -16618,6 +18298,18 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
     store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval2)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = Value.new(:objval1)
+    store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store.fetch({"hashkey1"=>"hashkey2"}, Value.new(:objval2)).should == Value.new(:objval1)
@@ -16668,6 +18360,18 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval1)
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
     store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval1).freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = Value.new(:objval1)
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
@@ -16720,6 +18424,18 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval1)
   end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
+    store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey1"=>"hashkey2"}.freeze
+    store[key] = Value.new(:objval2)
+    store[{"hashkey1"=>"hashkey2"}].should == Value.new(:objval2)
+  end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
     store.fetch({"hashkey1"=>"hashkey2"}, Value.new(:objval1)).should == Value.new(:objval2)
@@ -16770,6 +18486,18 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
     store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval1)
+  end
+
+  it 'stores frozen values' do
+    value = Value.new(:objval2).freeze
+    (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
+  end
+
+  it 'stores frozen keys' do
+    key = {"hashkey3"=>"hashkey4"}.freeze
+    store[key] = Value.new(:objval2)
+    store[{"hashkey3"=>"hashkey4"}].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)

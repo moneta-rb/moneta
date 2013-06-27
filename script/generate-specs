@@ -1721,6 +1721,18 @@ it 'overwrites existing values' do
   store[#{key1}].should == #{val1}
   store[#{key1}] = #{val2}
   store[#{key1}].should == #{val2}
+end
+
+it 'stores frozen values' do
+  value = #{val1}.freeze
+  (store[#{key1}] = value).should equal(value)
+  store[#{key1}].should == #{val1}
+end
+
+it 'stores frozen keys' do
+  key = #{key1}.freeze
+  store[key] = #{val1}
+  store[#{key1}].should == #{val1}
 end}
 
       if val_type != 'nil'
