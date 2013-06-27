@@ -26,16 +26,17 @@ module Moneta
         @backend.busy_timeout(options[:busy_timeout] || 1000)
         @backend.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
         @stmts =
-          [@select = @backend.prepare("select v from #{table} where k = ?"),
+          [@exists  = @backend.prepare("select exists(select 1 from #{table} where k = ?)"),
+           @select  = @backend.prepare("select v from #{table} where k = ?"),
            @replace = @backend.prepare("replace into #{table} values (?, ?)"),
-           @delete = @backend.prepare("delete from #{table} where k = ?"),
-           @clear = @backend.prepare("delete from #{table}"),
-           @create = @backend.prepare("insert into #{table} values (?, ?)")]
+           @delete  = @backend.prepare("delete from #{table} where k = ?"),
+           @clear   = @backend.prepare("delete from #{table}"),
+           @create  = @backend.prepare("insert into #{table} values (?, ?)")]
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@select.execute!(key).empty?
+        @exists.execute!(key).first.first.to_i == 1
       end
 
       # (see Proxy#load)
