@@ -7,8 +7,8 @@ class Specs
 
   def initialize(options = {})
     @specs = options.delete(:specs).to_a
-    @key = options.delete(:key)     || %w(object string hash boolean nil integer)
-    @value = options.delete(:value) || %w(object string hash boolean nil integer)
+    @key = options.delete(:key)     || %w(object string hash boolean nil integer number)
+    @value = options.delete(:value) || %w(object string hash boolean nil integer number)
     @features = []
     [:expires, :expires_native, :increment, :create].each do |feature|
       @features << feature if @specs.include?(feature)
@@ -30,11 +30,11 @@ class Specs
   end
 
   def simplekeys_only
-    new(:key => %w(string hash integer))
+    new(:key => %w(string hash integer float))
   end
 
   def simplevalues_only
-    new(:value => %w(string hash integer))
+    new(:value => %w(string hash integer float))
   end
 
   def without_increment
@@ -1606,6 +1606,7 @@ SPECS = {}
 KEYS = {
   'nil' => [0, 'nil'],
   'integer' => [-10, 42],
+  'number' => [0.5, Math::PI, 1<<127, 99],
   'boolean' => [true, false],
   'string' => %w(strkey1 strkey2 foo/bar bar/foo/baz).map(&:inspect),
   'object' => ['Value.new(:objkey1)', 'Value.new(:objkey2)'],
@@ -1615,23 +1616,24 @@ KEYS = {
 VALUES = {
   'nil' => [0, 'nil'],
   'integer' => [41, -12],
+  'number' => [Math::E, Math.sqrt(2), 1<<128, 33],
   'boolean' => [true, false],
   'string' => %w(strval1 strval2).map(&:inspect),
   'hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
   'object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
 }
 
-KEYS.each do |key_type, keypair|
-  VALUES.each do |val_type, valpair|
-    4.times do |i|
-      if keypair.size == 4
-        key1, key2 = i % 2 == 0 ? keypair[0..1] : keypair[2..3]
-      else
-        key1, key2 = i % 2 == 0 ? keypair : keypair.reverse
-      end
-      val1, val2 = i < 2 ? valpair : valpair.reverse
+KEYS.each do |key_type, keys|
+  VALUES.each do |val_type, vals|
+    (keys.size/2).times do |k|
+      keypair = keys[2*k,2]
+      (vals.size/2).times do |v|
+        valpair = vals[2*v,2]
+        4.times do |i|
+          key1, key2 = i % 2 == 0 ? keypair : keypair.reverse
+          val1, val2 = i < 2 ? valpair : valpair.reverse
 
-      code = %{it 'reads from keys like a Hash' do
+          code = %{it 'reads from keys like a Hash' do
   store[#{key1}].should be_nil
   store.load(#{key1}).should be_nil
 end
@@ -1681,9 +1683,9 @@ it 'accepts frozen options' do
   store.clear(options).should equal(store)
   store.store(#{key1}, #{val1}, options).should == #{val1}
 end}
-    (SPECS["null_#{key_type}key_#{val_type}value"] ||= []) << code
+          (SPECS["null_#{key_type}key_#{val_type}value"] ||= []) << code
 
-    code = %{it 'writes values to keys that like a Hash' do
+          code = %{it 'writes values to keys that like a Hash' do
   store[#{key1}] = #{val1}
   store[#{key1}].should == #{val1}
   store.load(#{key1}).should == #{val1}
@@ -1735,8 +1737,8 @@ it 'stores frozen keys' do
   store[#{key1}].should == #{val1}
 end}
 
-      if val_type != 'nil'
-        code << %{
+          if val_type != 'nil'
+            code << %{
 it 'fetches a key with a default value with fetch, if the key is available' do
   store[#{key1}] = #{val1}
   store.fetch(#{key1}, #{val2}).should == #{val1}
@@ -1748,11 +1750,11 @@ it 'does not run the block in fetch if the key is available' do
   store.fetch(#{key1}) { unaltered = 'altered' }
   unaltered.should == 'unaltered'
 end}
-      end
+          end
 
-      (SPECS["store_#{key_type}key_#{val_type}value"] ||= []) << code
+          (SPECS["store_#{key_type}key_#{val_type}value"] ||= []) << code
 
-      if val_type != 'boolean' && val_type != 'nil' && val_type != 'integer'
+          if val_type != 'boolean' && val_type != 'nil' && val_type != 'integer'
         (SPECS["returndifferent_#{key_type}key_#{val_type}value"] ||= []) << %{it 'guarantees that a different value is retrieved' do
   value = #{val1}
   store[#{key1}] = value
@@ -1763,15 +1765,17 @@ end}
   store[#{key1}] = value
   store[#{key1}].should be_equal(value)
 end}
-      end
+          end
 
-      code = %{it 'persists values' do
+          code = %{it 'persists values' do
   store[#{key1}] = #{val1}
   store.close
   @store = nil
   store[#{key1}].should == #{val1}
 end}
-      (SPECS["persist_#{key_type}key_#{val_type}value"] ||= []) << code
+          (SPECS["persist_#{key_type}key_#{val_type}value"] ||= []) << code
+        end
+      end
     end
   end
 end
