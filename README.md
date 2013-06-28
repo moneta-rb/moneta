@@ -261,7 +261,7 @@ Supported value compressors:
 
 Special transformers:
 
-* Digests (MD5, Shas, ...)
+* Digests (MD5, Shas, CityHash, ...)
 * Add prefix to keys (`:prefix`)
 * HMAC to verify values (`:hmac`, useful for `Rack::MonetaCookies`)
 

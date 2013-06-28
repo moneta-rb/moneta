@@ -27,6 +27,9 @@ gem 'lzoruby', :platforms => :ruby
 gem 'snappy', :platforms => :ruby
 gem 'qlzruby', :platforms => :ruby
 
+# Hash transformer library
+gem 'cityhash', :platforms => :ruby
+
 # Backends
 gem 'faraday'
 gem 'daybreak'

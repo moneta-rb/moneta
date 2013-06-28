@@ -5,6 +5,7 @@ master
   It is not necessary to serialize values as strings anymore.
 * Adapters::Couch#create added
 * Pool thread safety improved
+* Transformer: Add CityHash
 
 0.7.16
 
