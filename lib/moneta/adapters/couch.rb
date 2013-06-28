@@ -23,8 +23,12 @@ module Moneta
       # @option options [String] :host ('127.0.0.1') Couch host
       # @option options [String] :port (5984) Couch port
       # @option options [String] :db ('moneta') Couch database
+      # @option options [String] :value_field ('value') Document field to store value
+      # @option options [String] :type_field ('type') Document field to store value type
       # @option options [Faraday connection] :backend Use existing backend instance
       def initialize(options = {})
+        @value_field = options[:value_field] || 'value'
+        @type_field = options[:type_field] || 'type'
         url = "http://#{options[:host] || '127.0.0.1'}:#{options[:port] || 5984}/#{options[:db] || 'moneta'}"
         @backend = options[:backend] || ::Faraday.new(:url => url)
         create_db
@@ -95,24 +99,26 @@ module Moneta
 
       def body_to_value(body)
         doc = MultiJson.load(body)
-        case doc['type']
+        case doc[@type_field]
         when 'Hash'
           doc = doc.dup
           doc.delete('_id')
           doc.delete('_rev')
-          doc.delete('type')
+          doc.delete(@type_field)
           doc
         else
-          doc['value']
+          doc[@value_field]
         end
       end
 
       def value_to_body(value, rev)
         case value
         when Hash
-          doc = value.merge('type' => 'Hash')
-        when String, Float, Fixnum
-          doc = { 'value' => value }
+          doc = value.merge(@type_field => 'Hash')
+        when String
+          doc = { @value_field => value, @type_field => 'String' }
+        when Float, Fixnum
+          doc = { @value_field => value, @type_field => 'Number' }
         else
           raise ArgumentError, "Invalid value type: #{value.class}"
         end
