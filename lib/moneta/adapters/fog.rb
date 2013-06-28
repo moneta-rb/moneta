@@ -41,6 +41,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
+        value = value.dup if value.frozen? # HACK: Fog needs unfrozen string
         @directory.files.create(options.merge(:key => key, :body => value))
         value
       end

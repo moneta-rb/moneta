@@ -162,7 +162,7 @@ module Moneta
       end
 
       def to_binary(s)
-        s = s.dup if s.frozen?
+        s = s.dup if s.frozen? # HACK: BSON::Binary needs unfrozen string
         ::BSON::Binary.new(s)
       end
     end

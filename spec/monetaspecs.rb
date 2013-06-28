@@ -957,7 +957,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[0] = value).should equal(value)
   end
 
@@ -970,20 +970,20 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[0] = 2.718281828459045
-    store[nil] = 1.4142135623730951
+    store[0] = 123.456
+    store[nil] = -98.7
     store.clear.should equal(store)
     store.key?(0).should be_false
     store.key?(nil).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(0, 2.718281828459045).should == 2.718281828459045
+    store.fetch(0, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 0
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -999,7 +999,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store.fetch(0, options) { 42 }.should == 42
     store.delete(0, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(0, 2.718281828459045, options).should == 2.718281828459045
+    store.store(0, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -1008,7 +1008,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[nil] = value).should equal(value)
   end
 
@@ -1021,20 +1021,20 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[nil] = 2.718281828459045
-    store[0] = 1.4142135623730951
+    store[nil] = 123.456
+    store[0] = -98.7
     store.clear.should equal(store)
     store.key?(nil).should be_false
     store.key?(0).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(nil, 2.718281828459045).should == 2.718281828459045
+    store.fetch(nil, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = nil
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -1050,7 +1050,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store.fetch(nil, options) { 42 }.should == 42
     store.delete(nil, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(nil, 2.718281828459045, options).should == 2.718281828459045
+    store.store(nil, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -1059,7 +1059,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[0] = value).should equal(value)
   end
 
@@ -1072,20 +1072,20 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[0] = 1.4142135623730951
-    store[nil] = 2.718281828459045
+    store[0] = -98.7
+    store[nil] = 123.456
     store.clear.should equal(store)
     store.key?(0).should be_false
     store.key?(nil).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(0, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(0, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 0
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -1101,7 +1101,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store.fetch(0, options) { 42 }.should == 42
     store.delete(0, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(0, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(0, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -1110,7 +1110,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[nil] = value).should equal(value)
   end
 
@@ -1123,20 +1123,20 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[nil] = 1.4142135623730951
-    store[0] = 2.718281828459045
+    store[nil] = -98.7
+    store[0] = 123.456
     store.clear.should equal(store)
     store.key?(nil).should be_false
     store.key?(0).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(nil, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(nil, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = nil
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -1152,7 +1152,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store.fetch(nil, options) { 42 }.should == 42
     store.delete(nil, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(nil, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(nil, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -1364,252 +1364,252 @@ end
 
 shared_examples_for 'store_nilkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store[0] = 2.718281828459045
-    store[0].should == 2.718281828459045
-    store.load(0).should == 2.718281828459045
+    store[0] = 123.456
+    store[0].should == 123.456
+    store.load(0).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[0] = 2.718281828459045
+    store[0] = 123.456
     store.key?(0).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(0, value).should equal(value)
-    store[0].should == 2.718281828459045
-    store.load(0).should == 2.718281828459045
+    store[0].should == 123.456
+    store.load(0).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[0] = 2.718281828459045
-    store[nil] = 1.4142135623730951
+    store[0] = 123.456
+    store[nil] = -98.7
     store.clear.should equal(store)
-    store[0] = 2.718281828459045
-    store[0].should == 2.718281828459045
+    store[0] = 123.456
+    store[0].should == 123.456
     store[nil].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[0] = 2.718281828459045
-    store.delete(0).should == 2.718281828459045
+    store[0] = 123.456
+    store.delete(0).should == 123.456
     store.key?(0).should be_false
   end
 
   it 'overwrites existing values' do
-    store[0] = 2.718281828459045
-    store[0].should == 2.718281828459045
-    store[0] = 1.4142135623730951
-    store[0].should == 1.4142135623730951
+    store[0] = 123.456
+    store[0].should == 123.456
+    store[0] = -98.7
+    store[0].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[0] = value).should equal(value)
-    store[0].should == 2.718281828459045
+    store[0].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = 0.freeze
-    store[key] = 2.718281828459045
-    store[0].should == 2.718281828459045
+    store[key] = 123.456
+    store[0].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[0] = 2.718281828459045
-    store.fetch(0, 1.4142135623730951).should == 2.718281828459045
+    store[0] = 123.456
+    store.fetch(0, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[0] = 2.718281828459045
+    store[0] = 123.456
     unaltered = 'unaltered'
     store.fetch(0) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[nil] = 2.718281828459045
-    store[nil].should == 2.718281828459045
-    store.load(nil).should == 2.718281828459045
+    store[nil] = 123.456
+    store[nil].should == 123.456
+    store.load(nil).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[nil] = 2.718281828459045
+    store[nil] = 123.456
     store.key?(nil).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(nil, value).should equal(value)
-    store[nil].should == 2.718281828459045
-    store.load(nil).should == 2.718281828459045
+    store[nil].should == 123.456
+    store.load(nil).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[nil] = 2.718281828459045
-    store[0] = 1.4142135623730951
+    store[nil] = 123.456
+    store[0] = -98.7
     store.clear.should equal(store)
-    store[nil] = 2.718281828459045
-    store[nil].should == 2.718281828459045
+    store[nil] = 123.456
+    store[nil].should == 123.456
     store[0].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[nil] = 2.718281828459045
-    store.delete(nil).should == 2.718281828459045
+    store[nil] = 123.456
+    store.delete(nil).should == 123.456
     store.key?(nil).should be_false
   end
 
   it 'overwrites existing values' do
-    store[nil] = 2.718281828459045
-    store[nil].should == 2.718281828459045
-    store[nil] = 1.4142135623730951
-    store[nil].should == 1.4142135623730951
+    store[nil] = 123.456
+    store[nil].should == 123.456
+    store[nil] = -98.7
+    store[nil].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[nil] = value).should equal(value)
-    store[nil].should == 2.718281828459045
+    store[nil].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = nil.freeze
-    store[key] = 2.718281828459045
-    store[nil].should == 2.718281828459045
+    store[key] = 123.456
+    store[nil].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[nil] = 2.718281828459045
-    store.fetch(nil, 1.4142135623730951).should == 2.718281828459045
+    store[nil] = 123.456
+    store.fetch(nil, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[nil] = 2.718281828459045
+    store[nil] = 123.456
     unaltered = 'unaltered'
     store.fetch(nil) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[0] = 1.4142135623730951
-    store[0].should == 1.4142135623730951
-    store.load(0).should == 1.4142135623730951
+    store[0] = -98.7
+    store[0].should == -98.7
+    store.load(0).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[0] = 1.4142135623730951
+    store[0] = -98.7
     store.key?(0).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(0, value).should equal(value)
-    store[0].should == 1.4142135623730951
-    store.load(0).should == 1.4142135623730951
+    store[0].should == -98.7
+    store.load(0).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[0] = 1.4142135623730951
-    store[nil] = 2.718281828459045
+    store[0] = -98.7
+    store[nil] = 123.456
     store.clear.should equal(store)
-    store[0] = 1.4142135623730951
-    store[0].should == 1.4142135623730951
+    store[0] = -98.7
+    store[0].should == -98.7
     store[nil].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[0] = 1.4142135623730951
-    store.delete(0).should == 1.4142135623730951
+    store[0] = -98.7
+    store.delete(0).should == -98.7
     store.key?(0).should be_false
   end
 
   it 'overwrites existing values' do
-    store[0] = 1.4142135623730951
-    store[0].should == 1.4142135623730951
-    store[0] = 2.718281828459045
-    store[0].should == 2.718281828459045
+    store[0] = -98.7
+    store[0].should == -98.7
+    store[0] = 123.456
+    store[0].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[0] = value).should equal(value)
-    store[0].should == 1.4142135623730951
+    store[0].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = 0.freeze
-    store[key] = 1.4142135623730951
-    store[0].should == 1.4142135623730951
+    store[key] = -98.7
+    store[0].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[0] = 1.4142135623730951
-    store.fetch(0, 2.718281828459045).should == 1.4142135623730951
+    store[0] = -98.7
+    store.fetch(0, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[0] = 1.4142135623730951
+    store[0] = -98.7
     unaltered = 'unaltered'
     store.fetch(0) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[nil] = 1.4142135623730951
-    store[nil].should == 1.4142135623730951
-    store.load(nil).should == 1.4142135623730951
+    store[nil] = -98.7
+    store[nil].should == -98.7
+    store.load(nil).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[nil] = 1.4142135623730951
+    store[nil] = -98.7
     store.key?(nil).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(nil, value).should equal(value)
-    store[nil].should == 1.4142135623730951
-    store.load(nil).should == 1.4142135623730951
+    store[nil].should == -98.7
+    store.load(nil).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[nil] = 1.4142135623730951
-    store[0] = 2.718281828459045
+    store[nil] = -98.7
+    store[0] = 123.456
     store.clear.should equal(store)
-    store[nil] = 1.4142135623730951
-    store[nil].should == 1.4142135623730951
+    store[nil] = -98.7
+    store[nil].should == -98.7
     store[0].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[nil] = 1.4142135623730951
-    store.delete(nil).should == 1.4142135623730951
+    store[nil] = -98.7
+    store.delete(nil).should == -98.7
     store.key?(nil).should be_false
   end
 
   it 'overwrites existing values' do
-    store[nil] = 1.4142135623730951
-    store[nil].should == 1.4142135623730951
-    store[nil] = 2.718281828459045
-    store[nil].should == 2.718281828459045
+    store[nil] = -98.7
+    store[nil].should == -98.7
+    store[nil] = 123.456
+    store[nil].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[nil] = value).should equal(value)
-    store[nil].should == 1.4142135623730951
+    store[nil].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = nil.freeze
-    store[key] = 1.4142135623730951
-    store[nil].should == 1.4142135623730951
+    store[key] = -98.7
+    store[nil].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[nil] = 1.4142135623730951
-    store.fetch(nil, 2.718281828459045).should == 1.4142135623730951
+    store[nil] = -98.7
+    store.fetch(nil, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[nil] = 1.4142135623730951
+    store[nil] = -98.7
     unaltered = 'unaltered'
     store.fetch(nil) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -1872,31 +1872,31 @@ end
 
 shared_examples_for 'persist_nilkey_numbervalue' do
   it 'persists values' do
-    store[0] = 2.718281828459045
+    store[0] = 123.456
     store.close
     @store = nil
-    store[0].should == 2.718281828459045
+    store[0].should == 123.456
   end
 
   it 'persists values' do
-    store[nil] = 2.718281828459045
+    store[nil] = 123.456
     store.close
     @store = nil
-    store[nil].should == 2.718281828459045
+    store[nil].should == 123.456
   end
 
   it 'persists values' do
-    store[0] = 1.4142135623730951
+    store[0] = -98.7
     store.close
     @store = nil
-    store[0].should == 1.4142135623730951
+    store[0].should == -98.7
   end
 
   it 'persists values' do
-    store[nil] = 1.4142135623730951
+    store[nil] = -98.7
     store.close
     @store = nil
-    store[nil].should == 1.4142135623730951
+    store[nil].should == -98.7
   end
 
   it 'persists values' do
@@ -5037,7 +5037,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[-10] = value).should equal(value)
   end
 
@@ -5050,20 +5050,20 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[-10] = 2.718281828459045
-    store[42] = 1.4142135623730951
+    store[-10] = 123.456
+    store[42] = -98.7
     store.clear.should equal(store)
     store.key?(-10).should be_false
     store.key?(42).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(-10, 2.718281828459045).should == 2.718281828459045
+    store.fetch(-10, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = -10
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -5079,7 +5079,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store.fetch(-10, options) { 42 }.should == 42
     store.delete(-10, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(-10, 2.718281828459045, options).should == 2.718281828459045
+    store.store(-10, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -5088,7 +5088,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[42] = value).should equal(value)
   end
 
@@ -5101,20 +5101,20 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[42] = 2.718281828459045
-    store[-10] = 1.4142135623730951
+    store[42] = 123.456
+    store[-10] = -98.7
     store.clear.should equal(store)
     store.key?(42).should be_false
     store.key?(-10).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(42, 2.718281828459045).should == 2.718281828459045
+    store.fetch(42, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 42
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -5130,7 +5130,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store.fetch(42, options) { 42 }.should == 42
     store.delete(42, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(42, 2.718281828459045, options).should == 2.718281828459045
+    store.store(42, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -5139,7 +5139,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[-10] = value).should equal(value)
   end
 
@@ -5152,20 +5152,20 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[-10] = 1.4142135623730951
-    store[42] = 2.718281828459045
+    store[-10] = -98.7
+    store[42] = 123.456
     store.clear.should equal(store)
     store.key?(-10).should be_false
     store.key?(42).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(-10, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(-10, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = -10
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -5181,7 +5181,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store.fetch(-10, options) { 42 }.should == 42
     store.delete(-10, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(-10, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(-10, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -5190,7 +5190,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[42] = value).should equal(value)
   end
 
@@ -5203,20 +5203,20 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[42] = 1.4142135623730951
-    store[-10] = 2.718281828459045
+    store[42] = -98.7
+    store[-10] = 123.456
     store.clear.should equal(store)
     store.key?(42).should be_false
     store.key?(-10).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(42, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(42, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 42
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -5232,7 +5232,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store.fetch(42, options) { 42 }.should == 42
     store.delete(42, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(42, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(42, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -5444,252 +5444,252 @@ end
 
 shared_examples_for 'store_integerkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store[-10] = 2.718281828459045
-    store[-10].should == 2.718281828459045
-    store.load(-10).should == 2.718281828459045
+    store[-10] = 123.456
+    store[-10].should == 123.456
+    store.load(-10).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[-10] = 2.718281828459045
+    store[-10] = 123.456
     store.key?(-10).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(-10, value).should equal(value)
-    store[-10].should == 2.718281828459045
-    store.load(-10).should == 2.718281828459045
+    store[-10].should == 123.456
+    store.load(-10).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[-10] = 2.718281828459045
-    store[42] = 1.4142135623730951
+    store[-10] = 123.456
+    store[42] = -98.7
     store.clear.should equal(store)
-    store[-10] = 2.718281828459045
-    store[-10].should == 2.718281828459045
+    store[-10] = 123.456
+    store[-10].should == 123.456
     store[42].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[-10] = 2.718281828459045
-    store.delete(-10).should == 2.718281828459045
+    store[-10] = 123.456
+    store.delete(-10).should == 123.456
     store.key?(-10).should be_false
   end
 
   it 'overwrites existing values' do
-    store[-10] = 2.718281828459045
-    store[-10].should == 2.718281828459045
-    store[-10] = 1.4142135623730951
-    store[-10].should == 1.4142135623730951
+    store[-10] = 123.456
+    store[-10].should == 123.456
+    store[-10] = -98.7
+    store[-10].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[-10] = value).should equal(value)
-    store[-10].should == 2.718281828459045
+    store[-10].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = -10.freeze
-    store[key] = 2.718281828459045
-    store[-10].should == 2.718281828459045
+    store[key] = 123.456
+    store[-10].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[-10] = 2.718281828459045
-    store.fetch(-10, 1.4142135623730951).should == 2.718281828459045
+    store[-10] = 123.456
+    store.fetch(-10, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[-10] = 2.718281828459045
+    store[-10] = 123.456
     unaltered = 'unaltered'
     store.fetch(-10) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[42] = 2.718281828459045
-    store[42].should == 2.718281828459045
-    store.load(42).should == 2.718281828459045
+    store[42] = 123.456
+    store[42].should == 123.456
+    store.load(42).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[42] = 2.718281828459045
+    store[42] = 123.456
     store.key?(42).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(42, value).should equal(value)
-    store[42].should == 2.718281828459045
-    store.load(42).should == 2.718281828459045
+    store[42].should == 123.456
+    store.load(42).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[42] = 2.718281828459045
-    store[-10] = 1.4142135623730951
+    store[42] = 123.456
+    store[-10] = -98.7
     store.clear.should equal(store)
-    store[42] = 2.718281828459045
-    store[42].should == 2.718281828459045
+    store[42] = 123.456
+    store[42].should == 123.456
     store[-10].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[42] = 2.718281828459045
-    store.delete(42).should == 2.718281828459045
+    store[42] = 123.456
+    store.delete(42).should == 123.456
     store.key?(42).should be_false
   end
 
   it 'overwrites existing values' do
-    store[42] = 2.718281828459045
-    store[42].should == 2.718281828459045
-    store[42] = 1.4142135623730951
-    store[42].should == 1.4142135623730951
+    store[42] = 123.456
+    store[42].should == 123.456
+    store[42] = -98.7
+    store[42].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[42] = value).should equal(value)
-    store[42].should == 2.718281828459045
+    store[42].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = 42.freeze
-    store[key] = 2.718281828459045
-    store[42].should == 2.718281828459045
+    store[key] = 123.456
+    store[42].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[42] = 2.718281828459045
-    store.fetch(42, 1.4142135623730951).should == 2.718281828459045
+    store[42] = 123.456
+    store.fetch(42, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[42] = 2.718281828459045
+    store[42] = 123.456
     unaltered = 'unaltered'
     store.fetch(42) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[-10] = 1.4142135623730951
-    store[-10].should == 1.4142135623730951
-    store.load(-10).should == 1.4142135623730951
+    store[-10] = -98.7
+    store[-10].should == -98.7
+    store.load(-10).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[-10] = 1.4142135623730951
+    store[-10] = -98.7
     store.key?(-10).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(-10, value).should equal(value)
-    store[-10].should == 1.4142135623730951
-    store.load(-10).should == 1.4142135623730951
+    store[-10].should == -98.7
+    store.load(-10).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[-10] = 1.4142135623730951
-    store[42] = 2.718281828459045
+    store[-10] = -98.7
+    store[42] = 123.456
     store.clear.should equal(store)
-    store[-10] = 1.4142135623730951
-    store[-10].should == 1.4142135623730951
+    store[-10] = -98.7
+    store[-10].should == -98.7
     store[42].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[-10] = 1.4142135623730951
-    store.delete(-10).should == 1.4142135623730951
+    store[-10] = -98.7
+    store.delete(-10).should == -98.7
     store.key?(-10).should be_false
   end
 
   it 'overwrites existing values' do
-    store[-10] = 1.4142135623730951
-    store[-10].should == 1.4142135623730951
-    store[-10] = 2.718281828459045
-    store[-10].should == 2.718281828459045
+    store[-10] = -98.7
+    store[-10].should == -98.7
+    store[-10] = 123.456
+    store[-10].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[-10] = value).should equal(value)
-    store[-10].should == 1.4142135623730951
+    store[-10].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = -10.freeze
-    store[key] = 1.4142135623730951
-    store[-10].should == 1.4142135623730951
+    store[key] = -98.7
+    store[-10].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[-10] = 1.4142135623730951
-    store.fetch(-10, 2.718281828459045).should == 1.4142135623730951
+    store[-10] = -98.7
+    store.fetch(-10, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[-10] = 1.4142135623730951
+    store[-10] = -98.7
     unaltered = 'unaltered'
     store.fetch(-10) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[42] = 1.4142135623730951
-    store[42].should == 1.4142135623730951
-    store.load(42).should == 1.4142135623730951
+    store[42] = -98.7
+    store[42].should == -98.7
+    store.load(42).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[42] = 1.4142135623730951
+    store[42] = -98.7
     store.key?(42).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(42, value).should equal(value)
-    store[42].should == 1.4142135623730951
-    store.load(42).should == 1.4142135623730951
+    store[42].should == -98.7
+    store.load(42).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[42] = 1.4142135623730951
-    store[-10] = 2.718281828459045
+    store[42] = -98.7
+    store[-10] = 123.456
     store.clear.should equal(store)
-    store[42] = 1.4142135623730951
-    store[42].should == 1.4142135623730951
+    store[42] = -98.7
+    store[42].should == -98.7
     store[-10].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[42] = 1.4142135623730951
-    store.delete(42).should == 1.4142135623730951
+    store[42] = -98.7
+    store.delete(42).should == -98.7
     store.key?(42).should be_false
   end
 
   it 'overwrites existing values' do
-    store[42] = 1.4142135623730951
-    store[42].should == 1.4142135623730951
-    store[42] = 2.718281828459045
-    store[42].should == 2.718281828459045
+    store[42] = -98.7
+    store[42].should == -98.7
+    store[42] = 123.456
+    store[42].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[42] = value).should equal(value)
-    store[42].should == 1.4142135623730951
+    store[42].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = 42.freeze
-    store[key] = 1.4142135623730951
-    store[42].should == 1.4142135623730951
+    store[key] = -98.7
+    store[42].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[42] = 1.4142135623730951
-    store.fetch(42, 2.718281828459045).should == 1.4142135623730951
+    store[42] = -98.7
+    store.fetch(42, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[42] = 1.4142135623730951
+    store[42] = -98.7
     unaltered = 'unaltered'
     store.fetch(42) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -5952,31 +5952,31 @@ end
 
 shared_examples_for 'persist_integerkey_numbervalue' do
   it 'persists values' do
-    store[-10] = 2.718281828459045
+    store[-10] = 123.456
     store.close
     @store = nil
-    store[-10].should == 2.718281828459045
+    store[-10].should == 123.456
   end
 
   it 'persists values' do
-    store[42] = 2.718281828459045
+    store[42] = 123.456
     store.close
     @store = nil
-    store[42].should == 2.718281828459045
+    store[42].should == 123.456
   end
 
   it 'persists values' do
-    store[-10] = 1.4142135623730951
+    store[-10] = -98.7
     store.close
     @store = nil
-    store[-10].should == 1.4142135623730951
+    store[-10].should == -98.7
   end
 
   it 'persists values' do
-    store[42] = 1.4142135623730951
+    store[42] = -98.7
     store.close
     @store = nil
-    store[42].should == 1.4142135623730951
+    store[42].should == -98.7
   end
 
   it 'persists values' do
@@ -8183,10 +8183,10 @@ shared_examples_for 'null_numberkey_nilvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = 0
-    store[3.141592653589793] = nil
+    store[-0.3] = nil
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8215,37 +8215,37 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = 0
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = 0
+    store[-0.3] = 0
     store[0.5] = nil
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, 0).should == 0
+    store.fetch(-0.3, 0).should == 0
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = 0
     store.fetch(key) do |k|
       k.should equal(key)
@@ -8256,13 +8256,13 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, 0, options).should == 0
+    store.store(-0.3, 0, options).should == 0
   end
 
   it 'reads from keys like a Hash' do
@@ -8285,10 +8285,10 @@ shared_examples_for 'null_numberkey_nilvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = nil
-    store[3.141592653589793] = 0
+    store[-0.3] = 0
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8317,37 +8317,37 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = nil
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = nil
+    store[-0.3] = nil
     store[0.5] = 0
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, nil).should == nil
+    store.fetch(-0.3, nil).should == nil
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = nil
     store.fetch(key) do |k|
       k.should equal(key)
@@ -8358,13 +8358,13 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, nil, options).should == nil
+    store.store(-0.3, nil, options).should == nil
   end
 
   it 'reads from keys like a Hash' do
@@ -8595,11 +8595,11 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'stores values after clear' do
     store[0.5] = 0
-    store[3.141592653589793] = nil
+    store[-0.3] = nil
     store.clear.should equal(store)
     store[0.5] = 0
     store[0.5].should == 0
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -8628,55 +8628,55 @@ shared_examples_for 'store_numberkey_nilvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = 0
-    store[3.141592653589793].should == 0
-    store.load(3.141592653589793).should == 0
+    store[-0.3] = 0
+    store[-0.3].should == 0
+    store.load(-0.3).should == 0
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = 0
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = 0
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = 0
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == 0
-    store.load(3.141592653589793).should == 0
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == 0
+    store.load(-0.3).should == 0
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = 0
+    store[-0.3] = 0
     store[0.5] = nil
     store.clear.should equal(store)
-    store[3.141592653589793] = 0
-    store[3.141592653589793].should == 0
+    store[-0.3] = 0
+    store[-0.3].should == 0
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = 0
-    store.delete(3.141592653589793).should == 0
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = 0
+    store.delete(-0.3).should == 0
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = 0
-    store[3.141592653589793].should == 0
-    store[3.141592653589793] = nil
-    store[3.141592653589793].should == nil
+    store[-0.3] = 0
+    store[-0.3].should == 0
+    store[-0.3] = nil
+    store[-0.3].should == nil
   end
 
   it 'stores frozen values' do
     value = 0.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == 0
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == 0
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = 0
-    store[3.141592653589793].should == 0
+    store[-0.3].should == 0
   end
 
   it 'writes values to keys that like a Hash' do
@@ -8699,11 +8699,11 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'stores values after clear' do
     store[0.5] = nil
-    store[3.141592653589793] = 0
+    store[-0.3] = 0
     store.clear.should equal(store)
     store[0.5] = nil
     store[0.5].should == nil
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -8732,55 +8732,55 @@ shared_examples_for 'store_numberkey_nilvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = nil
-    store[3.141592653589793].should == nil
-    store.load(3.141592653589793).should == nil
+    store[-0.3] = nil
+    store[-0.3].should == nil
+    store.load(-0.3).should == nil
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = nil
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = nil
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = nil
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == nil
-    store.load(3.141592653589793).should == nil
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == nil
+    store.load(-0.3).should == nil
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = nil
+    store[-0.3] = nil
     store[0.5] = 0
     store.clear.should equal(store)
-    store[3.141592653589793] = nil
-    store[3.141592653589793].should == nil
+    store[-0.3] = nil
+    store[-0.3].should == nil
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = nil
-    store.delete(3.141592653589793).should == nil
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = nil
+    store.delete(-0.3).should == nil
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = nil
-    store[3.141592653589793].should == nil
-    store[3.141592653589793] = 0
-    store[3.141592653589793].should == 0
+    store[-0.3] = nil
+    store[-0.3].should == nil
+    store[-0.3] = 0
+    store[-0.3].should == 0
   end
 
   it 'stores frozen values' do
     value = nil.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == nil
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == nil
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = nil
-    store[3.141592653589793].should == nil
+    store[-0.3].should == nil
   end
 
   it 'writes values to keys that like a Hash' do
@@ -9003,10 +9003,10 @@ shared_examples_for 'persist_numberkey_nilvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = 0
+    store[-0.3] = 0
     store.close
     @store = nil
-    store[3.141592653589793].should == 0
+    store[-0.3].should == 0
   end
 
   it 'persists values' do
@@ -9017,10 +9017,10 @@ shared_examples_for 'persist_numberkey_nilvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = nil
+    store[-0.3] = nil
     store.close
     @store = nil
-    store[3.141592653589793].should == nil
+    store[-0.3].should == nil
   end
 
   it 'persists values' do
@@ -9075,10 +9075,10 @@ shared_examples_for 'null_numberkey_integervalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = 41
-    store[3.141592653589793] = -12
+    store[-0.3] = -12
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9107,37 +9107,37 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = 41
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = 41
+    store[-0.3] = 41
     store[0.5] = -12
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, 41).should == 41
+    store.fetch(-0.3, 41).should == 41
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = 41
     store.fetch(key) do |k|
       k.should equal(key)
@@ -9148,13 +9148,13 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, 41, options).should == 41
+    store.store(-0.3, 41, options).should == 41
   end
 
   it 'reads from keys like a Hash' do
@@ -9177,10 +9177,10 @@ shared_examples_for 'null_numberkey_integervalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = -12
-    store[3.141592653589793] = 41
+    store[-0.3] = 41
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9209,37 +9209,37 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = -12
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = -12
+    store[-0.3] = -12
     store[0.5] = 41
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, -12).should == -12
+    store.fetch(-0.3, -12).should == -12
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = -12
     store.fetch(key) do |k|
       k.should equal(key)
@@ -9250,13 +9250,13 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, -12, options).should == -12
+    store.store(-0.3, -12, options).should == -12
   end
 
   it 'reads from keys like a Hash' do
@@ -9487,11 +9487,11 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'stores values after clear' do
     store[0.5] = 41
-    store[3.141592653589793] = -12
+    store[-0.3] = -12
     store.clear.should equal(store)
     store[0.5] = 41
     store[0.5].should == 41
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -9531,65 +9531,65 @@ shared_examples_for 'store_numberkey_integervalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = 41
-    store[3.141592653589793].should == 41
-    store.load(3.141592653589793).should == 41
+    store[-0.3] = 41
+    store[-0.3].should == 41
+    store.load(-0.3).should == 41
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = 41
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = 41
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = 41
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == 41
-    store.load(3.141592653589793).should == 41
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == 41
+    store.load(-0.3).should == 41
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = 41
+    store[-0.3] = 41
     store[0.5] = -12
     store.clear.should equal(store)
-    store[3.141592653589793] = 41
-    store[3.141592653589793].should == 41
+    store[-0.3] = 41
+    store[-0.3].should == 41
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = 41
-    store.delete(3.141592653589793).should == 41
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = 41
+    store.delete(-0.3).should == 41
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = 41
-    store[3.141592653589793].should == 41
-    store[3.141592653589793] = -12
-    store[3.141592653589793].should == -12
+    store[-0.3] = 41
+    store[-0.3].should == 41
+    store[-0.3] = -12
+    store[-0.3].should == -12
   end
 
   it 'stores frozen values' do
     value = 41.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == 41
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == 41
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = 41
-    store[3.141592653589793].should == 41
+    store[-0.3].should == 41
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = 41
-    store.fetch(3.141592653589793, -12).should == 41
+    store[-0.3] = 41
+    store.fetch(-0.3, -12).should == 41
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = 41
+    store[-0.3] = 41
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -9613,11 +9613,11 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'stores values after clear' do
     store[0.5] = -12
-    store[3.141592653589793] = 41
+    store[-0.3] = 41
     store.clear.should equal(store)
     store[0.5] = -12
     store[0.5].should == -12
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -9657,65 +9657,65 @@ shared_examples_for 'store_numberkey_integervalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = -12
-    store[3.141592653589793].should == -12
-    store.load(3.141592653589793).should == -12
+    store[-0.3] = -12
+    store[-0.3].should == -12
+    store.load(-0.3).should == -12
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = -12
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = -12
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = -12
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == -12
-    store.load(3.141592653589793).should == -12
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == -12
+    store.load(-0.3).should == -12
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = -12
+    store[-0.3] = -12
     store[0.5] = 41
     store.clear.should equal(store)
-    store[3.141592653589793] = -12
-    store[3.141592653589793].should == -12
+    store[-0.3] = -12
+    store[-0.3].should == -12
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = -12
-    store.delete(3.141592653589793).should == -12
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = -12
+    store.delete(-0.3).should == -12
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = -12
-    store[3.141592653589793].should == -12
-    store[3.141592653589793] = 41
-    store[3.141592653589793].should == 41
+    store[-0.3] = -12
+    store[-0.3].should == -12
+    store[-0.3] = 41
+    store[-0.3].should == 41
   end
 
   it 'stores frozen values' do
     value = -12.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == -12
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == -12
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = -12
-    store[3.141592653589793].should == -12
+    store[-0.3].should == -12
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = -12
-    store.fetch(3.141592653589793, 41).should == -12
+    store[-0.3] = -12
+    store.fetch(-0.3, 41).should == -12
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = -12
+    store[-0.3] = -12
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -9983,10 +9983,10 @@ shared_examples_for 'persist_numberkey_integervalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = 41
+    store[-0.3] = 41
     store.close
     @store = nil
-    store[3.141592653589793].should == 41
+    store[-0.3].should == 41
   end
 
   it 'persists values' do
@@ -9997,10 +9997,10 @@ shared_examples_for 'persist_numberkey_integervalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = -12
+    store[-0.3] = -12
     store.close
     @store = nil
-    store[3.141592653589793].should == -12
+    store[-0.3].should == -12
   end
 
   it 'persists values' do
@@ -10041,7 +10041,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[0.5] = value).should equal(value)
   end
 
@@ -10054,20 +10054,20 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[0.5] = 2.718281828459045
-    store[3.141592653589793] = 1.4142135623730951
+    store[0.5] = 123.456
+    store[-0.3] = -98.7
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(0.5, 2.718281828459045).should == 2.718281828459045
+    store.fetch(0.5, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 0.5
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10083,42 +10083,42 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store.fetch(0.5, options) { 42 }.should == 42
     store.delete(0.5, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(0.5, 2.718281828459045, options).should == 2.718281828459045
+    store.store(0.5, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
-    (store[3.141592653589793] = value).should equal(value)
+    value = 123.456
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = 2.718281828459045
-    store[0.5] = 1.4142135623730951
+    store[-0.3] = 123.456
+    store[0.5] = -98.7
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, 2.718281828459045).should == 2.718281828459045
+    store.fetch(-0.3, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
-    value = 2.718281828459045
+    key = -0.3
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10128,13 +10128,13 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, 2.718281828459045, options).should == 2.718281828459045
+    store.store(-0.3, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -10143,7 +10143,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[0.5] = value).should equal(value)
   end
 
@@ -10156,20 +10156,20 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[0.5] = 1.4142135623730951
-    store[3.141592653589793] = 2.718281828459045
+    store[0.5] = -98.7
+    store[-0.3] = 123.456
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(0.5, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(0.5, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 0.5
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10185,42 +10185,42 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store.fetch(0.5, options) { 42 }.should == 42
     store.delete(0.5, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(0.5, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(0.5, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
-    (store[3.141592653589793] = value).should equal(value)
+    value = -98.7
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = 1.4142135623730951
-    store[0.5] = 2.718281828459045
+    store[-0.3] = -98.7
+    store[0.5] = 123.456
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(-0.3, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
-    value = 1.4142135623730951
+    key = -0.3
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10230,13 +10230,13 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(-0.3, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -10259,10 +10259,10 @@ shared_examples_for 'null_numberkey_numbervalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = 340282366920938463463374607431768211456
-    store[3.141592653589793] = 33
+    store[-0.3] = 33
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10291,37 +10291,37 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = 340282366920938463463374607431768211456
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
     store[0.5] = 33
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, 340282366920938463463374607431768211456).should == 340282366920938463463374607431768211456
+    store.fetch(-0.3, 340282366920938463463374607431768211456).should == 340282366920938463463374607431768211456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = 340282366920938463463374607431768211456
     store.fetch(key) do |k|
       k.should equal(key)
@@ -10332,13 +10332,13 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, 340282366920938463463374607431768211456, options).should == 340282366920938463463374607431768211456
+    store.store(-0.3, 340282366920938463463374607431768211456, options).should == 340282366920938463463374607431768211456
   end
 
   it 'reads from keys like a Hash' do
@@ -10361,10 +10361,10 @@ shared_examples_for 'null_numberkey_numbervalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = 33
-    store[3.141592653589793] = 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10393,37 +10393,37 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = 33
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = 33
+    store[-0.3] = 33
     store[0.5] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, 33).should == 33
+    store.fetch(-0.3, 33).should == 33
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = 33
     store.fetch(key) do |k|
       k.should equal(key)
@@ -10434,13 +10434,13 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, 33, options).should == 33
+    store.store(-0.3, 33, options).should == 33
   end
 
   it 'reads from keys like a Hash' do
@@ -10449,7 +10449,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
@@ -10462,20 +10462,20 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store[99] = 1.4142135623730951
+    store[170141183460469231731687303715884105728] = 123.456
+    store[99] = -98.7
     store.clear.should equal(store)
     store.key?(170141183460469231731687303715884105728).should be_false
     store.key?(99).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(170141183460469231731687303715884105728, 2.718281828459045).should == 2.718281828459045
+    store.fetch(170141183460469231731687303715884105728, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 170141183460469231731687303715884105728
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10491,7 +10491,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
     store.delete(170141183460469231731687303715884105728, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(170141183460469231731687303715884105728, 2.718281828459045, options).should == 2.718281828459045
+    store.store(170141183460469231731687303715884105728, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -10500,7 +10500,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[99] = value).should equal(value)
   end
 
@@ -10513,20 +10513,20 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[99] = 2.718281828459045
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
+    store[99] = 123.456
+    store[170141183460469231731687303715884105728] = -98.7
     store.clear.should equal(store)
     store.key?(99).should be_false
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(99, 2.718281828459045).should == 2.718281828459045
+    store.fetch(99, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 99
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10542,7 +10542,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store.fetch(99, options) { 42 }.should == 42
     store.delete(99, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(99, 2.718281828459045, options).should == 2.718281828459045
+    store.store(99, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -10551,7 +10551,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
@@ -10564,20 +10564,20 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store[99] = 2.718281828459045
+    store[170141183460469231731687303715884105728] = -98.7
+    store[99] = 123.456
     store.clear.should equal(store)
     store.key?(170141183460469231731687303715884105728).should be_false
     store.key?(99).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(170141183460469231731687303715884105728, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(170141183460469231731687303715884105728, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 170141183460469231731687303715884105728
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10593,7 +10593,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
     store.delete(170141183460469231731687303715884105728, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(170141183460469231731687303715884105728, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(170141183460469231731687303715884105728, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -10602,7 +10602,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[99] = value).should equal(value)
   end
 
@@ -10615,20 +10615,20 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[99] = 1.4142135623730951
-    store[170141183460469231731687303715884105728] = 2.718281828459045
+    store[99] = -98.7
+    store[170141183460469231731687303715884105728] = 123.456
     store.clear.should equal(store)
     store.key?(99).should be_false
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(99, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(99, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = 99
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -10644,7 +10644,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store.fetch(99, options) { 42 }.should == 42
     store.delete(99, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(99, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(99, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -10856,254 +10856,254 @@ end
 
 shared_examples_for 'store_numberkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store[0.5] = 2.718281828459045
-    store[0.5].should == 2.718281828459045
-    store.load(0.5).should == 2.718281828459045
+    store[0.5] = 123.456
+    store[0.5].should == 123.456
+    store.load(0.5).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[0.5] = 2.718281828459045
+    store[0.5] = 123.456
     store.key?(0.5).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(0.5, value).should equal(value)
-    store[0.5].should == 2.718281828459045
-    store.load(0.5).should == 2.718281828459045
+    store[0.5].should == 123.456
+    store.load(0.5).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[0.5] = 2.718281828459045
-    store[3.141592653589793] = 1.4142135623730951
+    store[0.5] = 123.456
+    store[-0.3] = -98.7
     store.clear.should equal(store)
-    store[0.5] = 2.718281828459045
-    store[0.5].should == 2.718281828459045
-    store[3.141592653589793].should be_nil
+    store[0.5] = 123.456
+    store[0.5].should == 123.456
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[0.5] = 2.718281828459045
-    store.delete(0.5).should == 2.718281828459045
+    store[0.5] = 123.456
+    store.delete(0.5).should == 123.456
     store.key?(0.5).should be_false
   end
 
   it 'overwrites existing values' do
-    store[0.5] = 2.718281828459045
-    store[0.5].should == 2.718281828459045
-    store[0.5] = 1.4142135623730951
-    store[0.5].should == 1.4142135623730951
+    store[0.5] = 123.456
+    store[0.5].should == 123.456
+    store[0.5] = -98.7
+    store[0.5].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[0.5] = value).should equal(value)
-    store[0.5].should == 2.718281828459045
+    store[0.5].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = 0.5.freeze
-    store[key] = 2.718281828459045
-    store[0.5].should == 2.718281828459045
+    store[key] = 123.456
+    store[0.5].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[0.5] = 2.718281828459045
-    store.fetch(0.5, 1.4142135623730951).should == 2.718281828459045
+    store[0.5] = 123.456
+    store.fetch(0.5, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[0.5] = 2.718281828459045
+    store[0.5] = 123.456
     unaltered = 'unaltered'
     store.fetch(0.5) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = 2.718281828459045
-    store[3.141592653589793].should == 2.718281828459045
-    store.load(3.141592653589793).should == 2.718281828459045
+    store[-0.3] = 123.456
+    store[-0.3].should == 123.456
+    store.load(-0.3).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = 2.718281828459045
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = 123.456
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == 2.718281828459045
-    store.load(3.141592653589793).should == 2.718281828459045
+    value = 123.456
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == 123.456
+    store.load(-0.3).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = 2.718281828459045
-    store[0.5] = 1.4142135623730951
+    store[-0.3] = 123.456
+    store[0.5] = -98.7
     store.clear.should equal(store)
-    store[3.141592653589793] = 2.718281828459045
-    store[3.141592653589793].should == 2.718281828459045
+    store[-0.3] = 123.456
+    store[-0.3].should == 123.456
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = 2.718281828459045
-    store.delete(3.141592653589793).should == 2.718281828459045
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = 123.456
+    store.delete(-0.3).should == 123.456
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = 2.718281828459045
-    store[3.141592653589793].should == 2.718281828459045
-    store[3.141592653589793] = 1.4142135623730951
-    store[3.141592653589793].should == 1.4142135623730951
+    store[-0.3] = 123.456
+    store[-0.3].should == 123.456
+    store[-0.3] = -98.7
+    store[-0.3].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == 2.718281828459045
+    value = 123.456.freeze
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == 123.456
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
-    store[key] = 2.718281828459045
-    store[3.141592653589793].should == 2.718281828459045
+    key = -0.3.freeze
+    store[key] = 123.456
+    store[-0.3].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = 2.718281828459045
-    store.fetch(3.141592653589793, 1.4142135623730951).should == 2.718281828459045
+    store[-0.3] = 123.456
+    store.fetch(-0.3, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = 2.718281828459045
+    store[-0.3] = 123.456
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[0.5] = 1.4142135623730951
-    store[0.5].should == 1.4142135623730951
-    store.load(0.5).should == 1.4142135623730951
+    store[0.5] = -98.7
+    store[0.5].should == -98.7
+    store.load(0.5).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[0.5] = 1.4142135623730951
+    store[0.5] = -98.7
     store.key?(0.5).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(0.5, value).should equal(value)
-    store[0.5].should == 1.4142135623730951
-    store.load(0.5).should == 1.4142135623730951
+    store[0.5].should == -98.7
+    store.load(0.5).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[0.5] = 1.4142135623730951
-    store[3.141592653589793] = 2.718281828459045
+    store[0.5] = -98.7
+    store[-0.3] = 123.456
     store.clear.should equal(store)
-    store[0.5] = 1.4142135623730951
-    store[0.5].should == 1.4142135623730951
-    store[3.141592653589793].should be_nil
+    store[0.5] = -98.7
+    store[0.5].should == -98.7
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[0.5] = 1.4142135623730951
-    store.delete(0.5).should == 1.4142135623730951
+    store[0.5] = -98.7
+    store.delete(0.5).should == -98.7
     store.key?(0.5).should be_false
   end
 
   it 'overwrites existing values' do
-    store[0.5] = 1.4142135623730951
-    store[0.5].should == 1.4142135623730951
-    store[0.5] = 2.718281828459045
-    store[0.5].should == 2.718281828459045
+    store[0.5] = -98.7
+    store[0.5].should == -98.7
+    store[0.5] = 123.456
+    store[0.5].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[0.5] = value).should equal(value)
-    store[0.5].should == 1.4142135623730951
+    store[0.5].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = 0.5.freeze
-    store[key] = 1.4142135623730951
-    store[0.5].should == 1.4142135623730951
+    store[key] = -98.7
+    store[0.5].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[0.5] = 1.4142135623730951
-    store.fetch(0.5, 2.718281828459045).should == 1.4142135623730951
+    store[0.5] = -98.7
+    store.fetch(0.5, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[0.5] = 1.4142135623730951
+    store[0.5] = -98.7
     unaltered = 'unaltered'
     store.fetch(0.5) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = 1.4142135623730951
-    store[3.141592653589793].should == 1.4142135623730951
-    store.load(3.141592653589793).should == 1.4142135623730951
+    store[-0.3] = -98.7
+    store[-0.3].should == -98.7
+    store.load(-0.3).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = 1.4142135623730951
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = -98.7
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == 1.4142135623730951
-    store.load(3.141592653589793).should == 1.4142135623730951
+    value = -98.7
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == -98.7
+    store.load(-0.3).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = 1.4142135623730951
-    store[0.5] = 2.718281828459045
+    store[-0.3] = -98.7
+    store[0.5] = 123.456
     store.clear.should equal(store)
-    store[3.141592653589793] = 1.4142135623730951
-    store[3.141592653589793].should == 1.4142135623730951
+    store[-0.3] = -98.7
+    store[-0.3].should == -98.7
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = 1.4142135623730951
-    store.delete(3.141592653589793).should == 1.4142135623730951
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = -98.7
+    store.delete(-0.3).should == -98.7
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = 1.4142135623730951
-    store[3.141592653589793].should == 1.4142135623730951
-    store[3.141592653589793] = 2.718281828459045
-    store[3.141592653589793].should == 2.718281828459045
+    store[-0.3] = -98.7
+    store[-0.3].should == -98.7
+    store[-0.3] = 123.456
+    store[-0.3].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == 1.4142135623730951
+    value = -98.7.freeze
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == -98.7
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
-    store[key] = 1.4142135623730951
-    store[3.141592653589793].should == 1.4142135623730951
+    key = -0.3.freeze
+    store[key] = -98.7
+    store[-0.3].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = 1.4142135623730951
-    store.fetch(3.141592653589793, 2.718281828459045).should == 1.4142135623730951
+    store[-0.3] = -98.7
+    store.fetch(-0.3, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = 1.4142135623730951
+    store[-0.3] = -98.7
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -11127,11 +11127,11 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'stores values after clear' do
     store[0.5] = 340282366920938463463374607431768211456
-    store[3.141592653589793] = 33
+    store[-0.3] = 33
     store.clear.should equal(store)
     store[0.5] = 340282366920938463463374607431768211456
     store[0.5].should == 340282366920938463463374607431768211456
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -11171,65 +11171,65 @@ shared_examples_for 'store_numberkey_numbervalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
-    store.load(3.141592653589793).should == 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
+    store[-0.3].should == 340282366920938463463374607431768211456
+    store.load(-0.3).should == 340282366920938463463374607431768211456
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = 340282366920938463463374607431768211456
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = 340282366920938463463374607431768211456
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
-    store.load(3.141592653589793).should == 340282366920938463463374607431768211456
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == 340282366920938463463374607431768211456
+    store.load(-0.3).should == 340282366920938463463374607431768211456
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
     store[0.5] = 33
     store.clear.should equal(store)
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
+    store[-0.3].should == 340282366920938463463374607431768211456
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store.delete(3.141592653589793).should == 340282366920938463463374607431768211456
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = 340282366920938463463374607431768211456
+    store.delete(-0.3).should == 340282366920938463463374607431768211456
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
-    store[3.141592653589793] = 33
-    store[3.141592653589793].should == 33
+    store[-0.3] = 340282366920938463463374607431768211456
+    store[-0.3].should == 340282366920938463463374607431768211456
+    store[-0.3] = 33
+    store[-0.3].should == 33
   end
 
   it 'stores frozen values' do
     value = 340282366920938463463374607431768211456.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == 340282366920938463463374607431768211456
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = 340282366920938463463374607431768211456
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
+    store[-0.3].should == 340282366920938463463374607431768211456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store.fetch(3.141592653589793, 33).should == 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
+    store.fetch(-0.3, 33).should == 340282366920938463463374607431768211456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -11253,11 +11253,11 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'stores values after clear' do
     store[0.5] = 33
-    store[3.141592653589793] = 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
     store[0.5] = 33
     store[0.5].should == 33
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -11297,315 +11297,315 @@ shared_examples_for 'store_numberkey_numbervalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = 33
-    store[3.141592653589793].should == 33
-    store.load(3.141592653589793).should == 33
+    store[-0.3] = 33
+    store[-0.3].should == 33
+    store.load(-0.3).should == 33
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = 33
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = 33
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = 33
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == 33
-    store.load(3.141592653589793).should == 33
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == 33
+    store.load(-0.3).should == 33
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = 33
+    store[-0.3] = 33
     store[0.5] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store[3.141592653589793] = 33
-    store[3.141592653589793].should == 33
+    store[-0.3] = 33
+    store[-0.3].should == 33
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = 33
-    store.delete(3.141592653589793).should == 33
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = 33
+    store.delete(-0.3).should == 33
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = 33
-    store[3.141592653589793].should == 33
-    store[3.141592653589793] = 340282366920938463463374607431768211456
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
+    store[-0.3] = 33
+    store[-0.3].should == 33
+    store[-0.3] = 340282366920938463463374607431768211456
+    store[-0.3].should == 340282366920938463463374607431768211456
   end
 
   it 'stores frozen values' do
     value = 33.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == 33
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == 33
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = 33
-    store[3.141592653589793].should == 33
+    store[-0.3].should == 33
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = 33
-    store.fetch(3.141592653589793, 340282366920938463463374607431768211456).should == 33
+    store[-0.3] = 33
+    store.fetch(-0.3, 340282366920938463463374607431768211456).should == 33
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = 33
+    store[-0.3] = 33
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
-    store.load(170141183460469231731687303715884105728).should == 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
+    store[170141183460469231731687303715884105728].should == 123.456
+    store.load(170141183460469231731687303715884105728).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
     store.key?(170141183460469231731687303715884105728).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(170141183460469231731687303715884105728, value).should equal(value)
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
-    store.load(170141183460469231731687303715884105728).should == 2.718281828459045
+    store[170141183460469231731687303715884105728].should == 123.456
+    store.load(170141183460469231731687303715884105728).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store[99] = 1.4142135623730951
+    store[170141183460469231731687303715884105728] = 123.456
+    store[99] = -98.7
     store.clear.should equal(store)
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
+    store[170141183460469231731687303715884105728].should == 123.456
     store[99].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store.delete(170141183460469231731687303715884105728).should == 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
+    store.delete(170141183460469231731687303715884105728).should == 123.456
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
   it 'overwrites existing values' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
+    store[170141183460469231731687303715884105728] = 123.456
+    store[170141183460469231731687303715884105728].should == 123.456
+    store[170141183460469231731687303715884105728] = -98.7
+    store[170141183460469231731687303715884105728].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[170141183460469231731687303715884105728] = value).should equal(value)
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
+    store[170141183460469231731687303715884105728].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = 170141183460469231731687303715884105728.freeze
-    store[key] = 2.718281828459045
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
+    store[key] = 123.456
+    store[170141183460469231731687303715884105728].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store.fetch(170141183460469231731687303715884105728, 1.4142135623730951).should == 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
+    store.fetch(170141183460469231731687303715884105728, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
     unaltered = 'unaltered'
     store.fetch(170141183460469231731687303715884105728) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[99] = 2.718281828459045
-    store[99].should == 2.718281828459045
-    store.load(99).should == 2.718281828459045
+    store[99] = 123.456
+    store[99].should == 123.456
+    store.load(99).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[99] = 2.718281828459045
+    store[99] = 123.456
     store.key?(99).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(99, value).should equal(value)
-    store[99].should == 2.718281828459045
-    store.load(99).should == 2.718281828459045
+    store[99].should == 123.456
+    store.load(99).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[99] = 2.718281828459045
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
+    store[99] = 123.456
+    store[170141183460469231731687303715884105728] = -98.7
     store.clear.should equal(store)
-    store[99] = 2.718281828459045
-    store[99].should == 2.718281828459045
+    store[99] = 123.456
+    store[99].should == 123.456
     store[170141183460469231731687303715884105728].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[99] = 2.718281828459045
-    store.delete(99).should == 2.718281828459045
+    store[99] = 123.456
+    store.delete(99).should == 123.456
     store.key?(99).should be_false
   end
 
   it 'overwrites existing values' do
-    store[99] = 2.718281828459045
-    store[99].should == 2.718281828459045
-    store[99] = 1.4142135623730951
-    store[99].should == 1.4142135623730951
+    store[99] = 123.456
+    store[99].should == 123.456
+    store[99] = -98.7
+    store[99].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[99] = value).should equal(value)
-    store[99].should == 2.718281828459045
+    store[99].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = 99.freeze
-    store[key] = 2.718281828459045
-    store[99].should == 2.718281828459045
+    store[key] = 123.456
+    store[99].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[99] = 2.718281828459045
-    store.fetch(99, 1.4142135623730951).should == 2.718281828459045
+    store[99] = 123.456
+    store.fetch(99, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[99] = 2.718281828459045
+    store[99] = 123.456
     unaltered = 'unaltered'
     store.fetch(99) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
-    store.load(170141183460469231731687303715884105728).should == 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
+    store[170141183460469231731687303715884105728].should == -98.7
+    store.load(170141183460469231731687303715884105728).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
     store.key?(170141183460469231731687303715884105728).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(170141183460469231731687303715884105728, value).should equal(value)
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
-    store.load(170141183460469231731687303715884105728).should == 1.4142135623730951
+    store[170141183460469231731687303715884105728].should == -98.7
+    store.load(170141183460469231731687303715884105728).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store[99] = 2.718281828459045
+    store[170141183460469231731687303715884105728] = -98.7
+    store[99] = 123.456
     store.clear.should equal(store)
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
+    store[170141183460469231731687303715884105728].should == -98.7
     store[99].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store.delete(170141183460469231731687303715884105728).should == 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
+    store.delete(170141183460469231731687303715884105728).should == -98.7
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
   it 'overwrites existing values' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
-    store[170141183460469231731687303715884105728] = 2.718281828459045
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
+    store[170141183460469231731687303715884105728] = -98.7
+    store[170141183460469231731687303715884105728].should == -98.7
+    store[170141183460469231731687303715884105728] = 123.456
+    store[170141183460469231731687303715884105728].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[170141183460469231731687303715884105728] = value).should equal(value)
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
+    store[170141183460469231731687303715884105728].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = 170141183460469231731687303715884105728.freeze
-    store[key] = 1.4142135623730951
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
+    store[key] = -98.7
+    store[170141183460469231731687303715884105728].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
-    store.fetch(170141183460469231731687303715884105728, 2.718281828459045).should == 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
+    store.fetch(170141183460469231731687303715884105728, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
     unaltered = 'unaltered'
     store.fetch(170141183460469231731687303715884105728) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[99] = 1.4142135623730951
-    store[99].should == 1.4142135623730951
-    store.load(99).should == 1.4142135623730951
+    store[99] = -98.7
+    store[99].should == -98.7
+    store.load(99).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[99] = 1.4142135623730951
+    store[99] = -98.7
     store.key?(99).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(99, value).should equal(value)
-    store[99].should == 1.4142135623730951
-    store.load(99).should == 1.4142135623730951
+    store[99].should == -98.7
+    store.load(99).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[99] = 1.4142135623730951
-    store[170141183460469231731687303715884105728] = 2.718281828459045
+    store[99] = -98.7
+    store[170141183460469231731687303715884105728] = 123.456
     store.clear.should equal(store)
-    store[99] = 1.4142135623730951
-    store[99].should == 1.4142135623730951
+    store[99] = -98.7
+    store[99].should == -98.7
     store[170141183460469231731687303715884105728].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[99] = 1.4142135623730951
-    store.delete(99).should == 1.4142135623730951
+    store[99] = -98.7
+    store.delete(99).should == -98.7
     store.key?(99).should be_false
   end
 
   it 'overwrites existing values' do
-    store[99] = 1.4142135623730951
-    store[99].should == 1.4142135623730951
-    store[99] = 2.718281828459045
-    store[99].should == 2.718281828459045
+    store[99] = -98.7
+    store[99].should == -98.7
+    store[99] = 123.456
+    store[99].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[99] = value).should equal(value)
-    store[99].should == 1.4142135623730951
+    store[99].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = 99.freeze
-    store[key] = 1.4142135623730951
-    store[99].should == 1.4142135623730951
+    store[key] = -98.7
+    store[99].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[99] = 1.4142135623730951
-    store.fetch(99, 2.718281828459045).should == 1.4142135623730951
+    store[99] = -98.7
+    store.fetch(99, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[99] = 1.4142135623730951
+    store[99] = -98.7
     unaltered = 'unaltered'
     store.fetch(99) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -11868,31 +11868,31 @@ end
 
 shared_examples_for 'persist_numberkey_numbervalue' do
   it 'persists values' do
-    store[0.5] = 2.718281828459045
+    store[0.5] = 123.456
     store.close
     @store = nil
-    store[0.5].should == 2.718281828459045
+    store[0.5].should == 123.456
   end
 
   it 'persists values' do
-    store[3.141592653589793] = 2.718281828459045
+    store[-0.3] = 123.456
     store.close
     @store = nil
-    store[3.141592653589793].should == 2.718281828459045
+    store[-0.3].should == 123.456
   end
 
   it 'persists values' do
-    store[0.5] = 1.4142135623730951
+    store[0.5] = -98.7
     store.close
     @store = nil
-    store[0.5].should == 1.4142135623730951
+    store[0.5].should == -98.7
   end
 
   it 'persists values' do
-    store[3.141592653589793] = 1.4142135623730951
+    store[-0.3] = -98.7
     store.close
     @store = nil
-    store[3.141592653589793].should == 1.4142135623730951
+    store[-0.3].should == -98.7
   end
 
   it 'persists values' do
@@ -11903,10 +11903,10 @@ shared_examples_for 'persist_numberkey_numbervalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = 340282366920938463463374607431768211456
+    store[-0.3] = 340282366920938463463374607431768211456
     store.close
     @store = nil
-    store[3.141592653589793].should == 340282366920938463463374607431768211456
+    store[-0.3].should == 340282366920938463463374607431768211456
   end
 
   it 'persists values' do
@@ -11917,38 +11917,38 @@ shared_examples_for 'persist_numberkey_numbervalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = 33
+    store[-0.3] = 33
     store.close
     @store = nil
-    store[3.141592653589793].should == 33
+    store[-0.3].should == 33
   end
 
   it 'persists values' do
-    store[170141183460469231731687303715884105728] = 2.718281828459045
+    store[170141183460469231731687303715884105728] = 123.456
     store.close
     @store = nil
-    store[170141183460469231731687303715884105728].should == 2.718281828459045
+    store[170141183460469231731687303715884105728].should == 123.456
   end
 
   it 'persists values' do
-    store[99] = 2.718281828459045
+    store[99] = 123.456
     store.close
     @store = nil
-    store[99].should == 2.718281828459045
+    store[99].should == 123.456
   end
 
   it 'persists values' do
-    store[170141183460469231731687303715884105728] = 1.4142135623730951
+    store[170141183460469231731687303715884105728] = -98.7
     store.close
     @store = nil
-    store[170141183460469231731687303715884105728].should == 1.4142135623730951
+    store[170141183460469231731687303715884105728].should == -98.7
   end
 
   it 'persists values' do
-    store[99] = 1.4142135623730951
+    store[99] = -98.7
     store.close
     @store = nil
-    store[99].should == 1.4142135623730951
+    store[99].should == -98.7
   end
 
   it 'persists values' do
@@ -12003,10 +12003,10 @@ shared_examples_for 'null_numberkey_booleanvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = true
-    store[3.141592653589793] = false
+    store[-0.3] = false
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12035,37 +12035,37 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = true
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = true
+    store[-0.3] = true
     store[0.5] = false
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, true).should == true
+    store.fetch(-0.3, true).should == true
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = true
     store.fetch(key) do |k|
       k.should equal(key)
@@ -12076,13 +12076,13 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, true, options).should == true
+    store.store(-0.3, true, options).should == true
   end
 
   it 'reads from keys like a Hash' do
@@ -12105,10 +12105,10 @@ shared_examples_for 'null_numberkey_booleanvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = false
-    store[3.141592653589793] = true
+    store[-0.3] = true
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12137,37 +12137,37 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = false
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = false
+    store[-0.3] = false
     store[0.5] = true
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, false).should == false
+    store.fetch(-0.3, false).should == false
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = false
     store.fetch(key) do |k|
       k.should equal(key)
@@ -12178,13 +12178,13 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, false, options).should == false
+    store.store(-0.3, false, options).should == false
   end
 
   it 'reads from keys like a Hash' do
@@ -12415,11 +12415,11 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'stores values after clear' do
     store[0.5] = true
-    store[3.141592653589793] = false
+    store[-0.3] = false
     store.clear.should equal(store)
     store[0.5] = true
     store[0.5].should == true
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -12459,65 +12459,65 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = true
-    store[3.141592653589793].should == true
-    store.load(3.141592653589793).should == true
+    store[-0.3] = true
+    store[-0.3].should == true
+    store.load(-0.3).should == true
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = true
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = true
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = true
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == true
-    store.load(3.141592653589793).should == true
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == true
+    store.load(-0.3).should == true
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = true
+    store[-0.3] = true
     store[0.5] = false
     store.clear.should equal(store)
-    store[3.141592653589793] = true
-    store[3.141592653589793].should == true
+    store[-0.3] = true
+    store[-0.3].should == true
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = true
-    store.delete(3.141592653589793).should == true
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = true
+    store.delete(-0.3).should == true
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = true
-    store[3.141592653589793].should == true
-    store[3.141592653589793] = false
-    store[3.141592653589793].should == false
+    store[-0.3] = true
+    store[-0.3].should == true
+    store[-0.3] = false
+    store[-0.3].should == false
   end
 
   it 'stores frozen values' do
     value = true.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == true
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == true
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = true
-    store[3.141592653589793].should == true
+    store[-0.3].should == true
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = true
-    store.fetch(3.141592653589793, false).should == true
+    store[-0.3] = true
+    store.fetch(-0.3, false).should == true
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = true
+    store[-0.3] = true
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -12541,11 +12541,11 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'stores values after clear' do
     store[0.5] = false
-    store[3.141592653589793] = true
+    store[-0.3] = true
     store.clear.should equal(store)
     store[0.5] = false
     store[0.5].should == false
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -12585,65 +12585,65 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = false
-    store[3.141592653589793].should == false
-    store.load(3.141592653589793).should == false
+    store[-0.3] = false
+    store[-0.3].should == false
+    store.load(-0.3).should == false
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = false
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = false
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = false
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == false
-    store.load(3.141592653589793).should == false
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == false
+    store.load(-0.3).should == false
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = false
+    store[-0.3] = false
     store[0.5] = true
     store.clear.should equal(store)
-    store[3.141592653589793] = false
-    store[3.141592653589793].should == false
+    store[-0.3] = false
+    store[-0.3].should == false
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = false
-    store.delete(3.141592653589793).should == false
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = false
+    store.delete(-0.3).should == false
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = false
-    store[3.141592653589793].should == false
-    store[3.141592653589793] = true
-    store[3.141592653589793].should == true
+    store[-0.3] = false
+    store[-0.3].should == false
+    store[-0.3] = true
+    store[-0.3].should == true
   end
 
   it 'stores frozen values' do
     value = false.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == false
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == false
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = false
-    store[3.141592653589793].should == false
+    store[-0.3].should == false
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = false
-    store.fetch(3.141592653589793, true).should == false
+    store[-0.3] = false
+    store.fetch(-0.3, true).should == false
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = false
+    store[-0.3] = false
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -12911,10 +12911,10 @@ shared_examples_for 'persist_numberkey_booleanvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = true
+    store[-0.3] = true
     store.close
     @store = nil
-    store[3.141592653589793].should == true
+    store[-0.3].should == true
   end
 
   it 'persists values' do
@@ -12925,10 +12925,10 @@ shared_examples_for 'persist_numberkey_booleanvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = false
+    store[-0.3] = false
     store.close
     @store = nil
-    store[3.141592653589793].should == false
+    store[-0.3].should == false
   end
 
   it 'persists values' do
@@ -12983,10 +12983,10 @@ shared_examples_for 'null_numberkey_stringvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = "strval1"
-    store[3.141592653589793] = "strval2"
+    store[-0.3] = "strval2"
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13015,37 +13015,37 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = "strval1"
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = "strval1"
+    store[-0.3] = "strval1"
     store[0.5] = "strval2"
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, "strval1").should == "strval1"
+    store.fetch(-0.3, "strval1").should == "strval1"
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = "strval1"
     store.fetch(key) do |k|
       k.should equal(key)
@@ -13056,13 +13056,13 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, "strval1", options).should == "strval1"
+    store.store(-0.3, "strval1", options).should == "strval1"
   end
 
   it 'reads from keys like a Hash' do
@@ -13085,10 +13085,10 @@ shared_examples_for 'null_numberkey_stringvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = "strval2"
-    store[3.141592653589793] = "strval1"
+    store[-0.3] = "strval1"
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13117,37 +13117,37 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = "strval2"
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = "strval2"
+    store[-0.3] = "strval2"
     store[0.5] = "strval1"
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, "strval2").should == "strval2"
+    store.fetch(-0.3, "strval2").should == "strval2"
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = "strval2"
     store.fetch(key) do |k|
       k.should equal(key)
@@ -13158,13 +13158,13 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, "strval2", options).should == "strval2"
+    store.store(-0.3, "strval2", options).should == "strval2"
   end
 
   it 'reads from keys like a Hash' do
@@ -13395,11 +13395,11 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'stores values after clear' do
     store[0.5] = "strval1"
-    store[3.141592653589793] = "strval2"
+    store[-0.3] = "strval2"
     store.clear.should equal(store)
     store[0.5] = "strval1"
     store[0.5].should == "strval1"
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -13439,65 +13439,65 @@ shared_examples_for 'store_numberkey_stringvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = "strval1"
-    store[3.141592653589793].should == "strval1"
-    store.load(3.141592653589793).should == "strval1"
+    store[-0.3] = "strval1"
+    store[-0.3].should == "strval1"
+    store.load(-0.3).should == "strval1"
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = "strval1"
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = "strval1"
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = "strval1"
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == "strval1"
-    store.load(3.141592653589793).should == "strval1"
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == "strval1"
+    store.load(-0.3).should == "strval1"
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = "strval1"
+    store[-0.3] = "strval1"
     store[0.5] = "strval2"
     store.clear.should equal(store)
-    store[3.141592653589793] = "strval1"
-    store[3.141592653589793].should == "strval1"
+    store[-0.3] = "strval1"
+    store[-0.3].should == "strval1"
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = "strval1"
-    store.delete(3.141592653589793).should == "strval1"
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = "strval1"
+    store.delete(-0.3).should == "strval1"
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = "strval1"
-    store[3.141592653589793].should == "strval1"
-    store[3.141592653589793] = "strval2"
-    store[3.141592653589793].should == "strval2"
+    store[-0.3] = "strval1"
+    store[-0.3].should == "strval1"
+    store[-0.3] = "strval2"
+    store[-0.3].should == "strval2"
   end
 
   it 'stores frozen values' do
     value = "strval1".freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == "strval1"
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == "strval1"
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = "strval1"
-    store[3.141592653589793].should == "strval1"
+    store[-0.3].should == "strval1"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = "strval1"
-    store.fetch(3.141592653589793, "strval2").should == "strval1"
+    store[-0.3] = "strval1"
+    store.fetch(-0.3, "strval2").should == "strval1"
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = "strval1"
+    store[-0.3] = "strval1"
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -13521,11 +13521,11 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'stores values after clear' do
     store[0.5] = "strval2"
-    store[3.141592653589793] = "strval1"
+    store[-0.3] = "strval1"
     store.clear.should equal(store)
     store[0.5] = "strval2"
     store[0.5].should == "strval2"
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -13565,65 +13565,65 @@ shared_examples_for 'store_numberkey_stringvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = "strval2"
-    store[3.141592653589793].should == "strval2"
-    store.load(3.141592653589793).should == "strval2"
+    store[-0.3] = "strval2"
+    store[-0.3].should == "strval2"
+    store.load(-0.3).should == "strval2"
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = "strval2"
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = "strval2"
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = "strval2"
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == "strval2"
-    store.load(3.141592653589793).should == "strval2"
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == "strval2"
+    store.load(-0.3).should == "strval2"
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = "strval2"
+    store[-0.3] = "strval2"
     store[0.5] = "strval1"
     store.clear.should equal(store)
-    store[3.141592653589793] = "strval2"
-    store[3.141592653589793].should == "strval2"
+    store[-0.3] = "strval2"
+    store[-0.3].should == "strval2"
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = "strval2"
-    store.delete(3.141592653589793).should == "strval2"
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = "strval2"
+    store.delete(-0.3).should == "strval2"
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = "strval2"
-    store[3.141592653589793].should == "strval2"
-    store[3.141592653589793] = "strval1"
-    store[3.141592653589793].should == "strval1"
+    store[-0.3] = "strval2"
+    store[-0.3].should == "strval2"
+    store[-0.3] = "strval1"
+    store[-0.3].should == "strval1"
   end
 
   it 'stores frozen values' do
     value = "strval2".freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == "strval2"
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == "strval2"
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = "strval2"
-    store[3.141592653589793].should == "strval2"
+    store[-0.3].should == "strval2"
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = "strval2"
-    store.fetch(3.141592653589793, "strval1").should == "strval2"
+    store[-0.3] = "strval2"
+    store.fetch(-0.3, "strval1").should == "strval2"
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = "strval2"
+    store[-0.3] = "strval2"
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -13891,8 +13891,8 @@ shared_examples_for 'returndifferent_numberkey_stringvalue' do
 
   it 'guarantees that a different value is retrieved' do
     value = "strval1"
-    store[3.141592653589793] = value
-    store[3.141592653589793].should_not be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
@@ -13903,8 +13903,8 @@ shared_examples_for 'returndifferent_numberkey_stringvalue' do
 
   it 'guarantees that a different value is retrieved' do
     value = "strval2"
-    store[3.141592653589793] = value
-    store[3.141592653589793].should_not be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
@@ -13943,8 +13943,8 @@ shared_examples_for 'returnsame_numberkey_stringvalue' do
 
   it 'guarantees that the same value is retrieved' do
     value = "strval1"
-    store[3.141592653589793] = value
-    store[3.141592653589793].should be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should be_equal(value)
   end
 
   it 'guarantees that the same value is retrieved' do
@@ -13955,8 +13955,8 @@ shared_examples_for 'returnsame_numberkey_stringvalue' do
 
   it 'guarantees that the same value is retrieved' do
     value = "strval2"
-    store[3.141592653589793] = value
-    store[3.141592653589793].should be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should be_equal(value)
   end
 
   it 'guarantees that the same value is retrieved' do
@@ -13995,10 +13995,10 @@ shared_examples_for 'persist_numberkey_stringvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = "strval1"
+    store[-0.3] = "strval1"
     store.close
     @store = nil
-    store[3.141592653589793].should == "strval1"
+    store[-0.3].should == "strval1"
   end
 
   it 'persists values' do
@@ -14009,10 +14009,10 @@ shared_examples_for 'persist_numberkey_stringvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = "strval2"
+    store[-0.3] = "strval2"
     store.close
     @store = nil
-    store[3.141592653589793].should == "strval2"
+    store[-0.3].should == "strval2"
   end
 
   it 'persists values' do
@@ -14067,10 +14067,10 @@ shared_examples_for 'null_numberkey_hashvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -14099,37 +14099,37 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = {"hashval1"=>["array1", 1]}
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
+    store.fetch(-0.3, {"hashval1"=>["array1", 1]}).should == {"hashval1"=>["array1", 1]}
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = {"hashval1"=>["array1", 1]}
     store.fetch(key) do |k|
       k.should equal(key)
@@ -14140,13 +14140,13 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, {"hashval1"=>["array1", 1]}, options).should == {"hashval1"=>["array1", 1]}
+    store.store(-0.3, {"hashval1"=>["array1", 1]}, options).should == {"hashval1"=>["array1", 1]}
   end
 
   it 'reads from keys like a Hash' do
@@ -14169,10 +14169,10 @@ shared_examples_for 'null_numberkey_hashvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -14201,37 +14201,37 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0.5] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.fetch(-0.3, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.fetch(key) do |k|
       k.should equal(key)
@@ -14242,13 +14242,13 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, {"hashval3"=>["array2", {"hashval4"=>42}]}, options).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.store(-0.3, {"hashval3"=>["array2", {"hashval4"=>42}]}, options).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'reads from keys like a Hash' do
@@ -14479,11 +14479,11 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'stores values after clear' do
     store[0.5] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
     store[0.5] = {"hashval1"=>["array1", 1]}
     store[0.5].should == {"hashval1"=>["array1", 1]}
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -14523,65 +14523,65 @@ shared_examples_for 'store_numberkey_hashvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
-    store.load(3.141592653589793).should == {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
+    store.load(-0.3).should == {"hashval1"=>["array1", 1]}
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = {"hashval1"=>["array1", 1]}
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
-    store.load(3.141592653589793).should == {"hashval1"=>["array1", 1]}
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
+    store.load(-0.3).should == {"hashval1"=>["array1", 1]}
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store.delete(3.141592653589793).should == {"hashval1"=>["array1", 1]}
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store.delete(-0.3).should == {"hashval1"=>["array1", 1]}
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'stores frozen values' do
     value = {"hashval1"=>["array1", 1]}.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store.fetch(3.141592653589793, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store.fetch(-0.3, {"hashval3"=>["array2", {"hashval4"=>42}]}).should == {"hashval1"=>["array1", 1]}
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -14605,11 +14605,11 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'stores values after clear' do
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0.5].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -14649,65 +14649,65 @@ shared_examples_for 'store_numberkey_hashvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.load(3.141592653589793).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.load(-0.3).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.load(3.141592653589793).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.load(-0.3).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0.5] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.delete(3.141592653589793).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.delete(-0.3).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
   end
 
   it 'stores frozen values' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}.freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.fetch(3.141592653589793, {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store.fetch(-0.3, {"hashval1"=>["array1", 1]}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -14975,8 +14975,8 @@ shared_examples_for 'returndifferent_numberkey_hashvalue' do
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793] = value
-    store[3.141592653589793].should_not be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
@@ -14987,8 +14987,8 @@ shared_examples_for 'returndifferent_numberkey_hashvalue' do
 
   it 'guarantees that a different value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793] = value
-    store[3.141592653589793].should_not be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
@@ -15027,8 +15027,8 @@ shared_examples_for 'returnsame_numberkey_hashvalue' do
 
   it 'guarantees that the same value is retrieved' do
     value = {"hashval1"=>["array1", 1]}
-    store[3.141592653589793] = value
-    store[3.141592653589793].should be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should be_equal(value)
   end
 
   it 'guarantees that the same value is retrieved' do
@@ -15039,8 +15039,8 @@ shared_examples_for 'returnsame_numberkey_hashvalue' do
 
   it 'guarantees that the same value is retrieved' do
     value = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store[3.141592653589793] = value
-    store[3.141592653589793].should be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should be_equal(value)
   end
 
   it 'guarantees that the same value is retrieved' do
@@ -15079,10 +15079,10 @@ shared_examples_for 'persist_numberkey_hashvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = {"hashval1"=>["array1", 1]}
+    store[-0.3] = {"hashval1"=>["array1", 1]}
     store.close
     @store = nil
-    store[3.141592653589793].should == {"hashval1"=>["array1", 1]}
+    store[-0.3].should == {"hashval1"=>["array1", 1]}
   end
 
   it 'persists values' do
@@ -15093,10 +15093,10 @@ shared_examples_for 'persist_numberkey_hashvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.close
     @store = nil
-    store[3.141592653589793].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
+    store[-0.3].should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
   it 'persists values' do
@@ -15151,10 +15151,10 @@ shared_examples_for 'null_numberkey_objectvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = Value.new(:objval1)
-    store[3.141592653589793] = Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15183,37 +15183,37 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = Value.new(:objval1)
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
     store[0.5] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, Value.new(:objval1)).should == Value.new(:objval1)
+    store.fetch(-0.3, Value.new(:objval1)).should == Value.new(:objval1)
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = Value.new(:objval1)
     store.fetch(key) do |k|
       k.should equal(key)
@@ -15224,13 +15224,13 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, Value.new(:objval1), options).should == Value.new(:objval1)
+    store.store(-0.3, Value.new(:objval1), options).should == Value.new(:objval1)
   end
 
   it 'reads from keys like a Hash' do
@@ -15253,10 +15253,10 @@ shared_examples_for 'null_numberkey_objectvalue' do
 
   it 'removes all keys from the store with clear' do
     store[0.5] = Value.new(:objval2)
-    store[3.141592653589793] = Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
     store.clear.should equal(store)
     store.key?(0.5).should be_false
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15285,37 +15285,37 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'reads from keys like a Hash' do
-    store[3.141592653589793].should be_nil
-    store.load(3.141592653589793).should be_nil
+    store[-0.3].should be_nil
+    store.load(-0.3).should be_nil
   end
 
   it 'guarantees that the same value is returned when setting a key' do
     value = Value.new(:objval2)
-    (store[3.141592653589793] = value).should equal(value)
+    (store[-0.3] = value).should equal(value)
   end
 
   it 'returns false from key? if a key is not available' do
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
-    store.delete(3.141592653589793).should be_nil
+    store.delete(-0.3).should be_nil
   end
 
   it 'removes all keys from the store with clear' do
-    store[3.141592653589793] = Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
     store[0.5] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(3.141592653589793).should be_false
+    store.key?(-0.3).should be_false
     store.key?(0.5).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(3.141592653589793, Value.new(:objval2)).should == Value.new(:objval2)
+    store.fetch(-0.3, Value.new(:objval2)).should == Value.new(:objval2)
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
-    key = 3.141592653589793
+    key = -0.3
     value = Value.new(:objval2)
     store.fetch(key) do |k|
       k.should equal(key)
@@ -15326,13 +15326,13 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {:option1 => 1, :options2 => 2}
     options.freeze
-    store.key?(3.141592653589793, options).should be_false
-    store.load(3.141592653589793, options).should be_nil
-    store.fetch(3.141592653589793, 42, options).should == 42
-    store.fetch(3.141592653589793, options) { 42 }.should == 42
-    store.delete(3.141592653589793, options).should be_nil
+    store.key?(-0.3, options).should be_false
+    store.load(-0.3, options).should be_nil
+    store.fetch(-0.3, 42, options).should == 42
+    store.fetch(-0.3, options) { 42 }.should == 42
+    store.delete(-0.3, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(3.141592653589793, Value.new(:objval2), options).should == Value.new(:objval2)
+    store.store(-0.3, Value.new(:objval2), options).should == Value.new(:objval2)
   end
 
   it 'reads from keys like a Hash' do
@@ -15563,11 +15563,11 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'stores values after clear' do
     store[0.5] = Value.new(:objval1)
-    store[3.141592653589793] = Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
     store.clear.should equal(store)
     store[0.5] = Value.new(:objval1)
     store[0.5].should == Value.new(:objval1)
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -15607,65 +15607,65 @@ shared_examples_for 'store_numberkey_objectvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = Value.new(:objval1)
-    store[3.141592653589793].should == Value.new(:objval1)
-    store.load(3.141592653589793).should == Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
+    store[-0.3].should == Value.new(:objval1)
+    store.load(-0.3).should == Value.new(:objval1)
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = Value.new(:objval1)
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = Value.new(:objval1)
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = Value.new(:objval1)
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == Value.new(:objval1)
-    store.load(3.141592653589793).should == Value.new(:objval1)
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == Value.new(:objval1)
+    store.load(-0.3).should == Value.new(:objval1)
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
     store[0.5] = Value.new(:objval2)
     store.clear.should equal(store)
-    store[3.141592653589793] = Value.new(:objval1)
-    store[3.141592653589793].should == Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
+    store[-0.3].should == Value.new(:objval1)
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = Value.new(:objval1)
-    store.delete(3.141592653589793).should == Value.new(:objval1)
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = Value.new(:objval1)
+    store.delete(-0.3).should == Value.new(:objval1)
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = Value.new(:objval1)
-    store[3.141592653589793].should == Value.new(:objval1)
-    store[3.141592653589793] = Value.new(:objval2)
-    store[3.141592653589793].should == Value.new(:objval2)
+    store[-0.3] = Value.new(:objval1)
+    store[-0.3].should == Value.new(:objval1)
+    store[-0.3] = Value.new(:objval2)
+    store[-0.3].should == Value.new(:objval2)
   end
 
   it 'stores frozen values' do
     value = Value.new(:objval1).freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == Value.new(:objval1)
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == Value.new(:objval1)
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = Value.new(:objval1)
-    store[3.141592653589793].should == Value.new(:objval1)
+    store[-0.3].should == Value.new(:objval1)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = Value.new(:objval1)
-    store.fetch(3.141592653589793, Value.new(:objval2)).should == Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
+    store.fetch(-0.3, Value.new(:objval2)).should == Value.new(:objval1)
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -15689,11 +15689,11 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'stores values after clear' do
     store[0.5] = Value.new(:objval2)
-    store[3.141592653589793] = Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
     store.clear.should equal(store)
     store[0.5] = Value.new(:objval2)
     store[0.5].should == Value.new(:objval2)
-    store[3.141592653589793].should be_nil
+    store[-0.3].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
@@ -15733,65 +15733,65 @@ shared_examples_for 'store_numberkey_objectvalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store[3.141592653589793] = Value.new(:objval2)
-    store[3.141592653589793].should == Value.new(:objval2)
-    store.load(3.141592653589793).should == Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
+    store[-0.3].should == Value.new(:objval2)
+    store.load(-0.3).should == Value.new(:objval2)
   end
 
   it 'returns true from key? if a key is available' do
-    store[3.141592653589793] = Value.new(:objval2)
-    store.key?(3.141592653589793).should be_true
+    store[-0.3] = Value.new(:objval2)
+    store.key?(-0.3).should be_true
   end
 
   it 'stores values with #store' do
     value = Value.new(:objval2)
-    store.store(3.141592653589793, value).should equal(value)
-    store[3.141592653589793].should == Value.new(:objval2)
-    store.load(3.141592653589793).should == Value.new(:objval2)
+    store.store(-0.3, value).should equal(value)
+    store[-0.3].should == Value.new(:objval2)
+    store.load(-0.3).should == Value.new(:objval2)
   end
 
   it 'stores values after clear' do
-    store[3.141592653589793] = Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
     store[0.5] = Value.new(:objval1)
     store.clear.should equal(store)
-    store[3.141592653589793] = Value.new(:objval2)
-    store[3.141592653589793].should == Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
+    store[-0.3].should == Value.new(:objval2)
     store[0.5].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[3.141592653589793] = Value.new(:objval2)
-    store.delete(3.141592653589793).should == Value.new(:objval2)
-    store.key?(3.141592653589793).should be_false
+    store[-0.3] = Value.new(:objval2)
+    store.delete(-0.3).should == Value.new(:objval2)
+    store.key?(-0.3).should be_false
   end
 
   it 'overwrites existing values' do
-    store[3.141592653589793] = Value.new(:objval2)
-    store[3.141592653589793].should == Value.new(:objval2)
-    store[3.141592653589793] = Value.new(:objval1)
-    store[3.141592653589793].should == Value.new(:objval1)
+    store[-0.3] = Value.new(:objval2)
+    store[-0.3].should == Value.new(:objval2)
+    store[-0.3] = Value.new(:objval1)
+    store[-0.3].should == Value.new(:objval1)
   end
 
   it 'stores frozen values' do
     value = Value.new(:objval2).freeze
-    (store[3.141592653589793] = value).should equal(value)
-    store[3.141592653589793].should == Value.new(:objval2)
+    (store[-0.3] = value).should equal(value)
+    store[-0.3].should == Value.new(:objval2)
   end
 
   it 'stores frozen keys' do
-    key = 3.141592653589793.freeze
+    key = -0.3.freeze
     store[key] = Value.new(:objval2)
-    store[3.141592653589793].should == Value.new(:objval2)
+    store[-0.3].should == Value.new(:objval2)
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[3.141592653589793] = Value.new(:objval2)
-    store.fetch(3.141592653589793, Value.new(:objval1)).should == Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
+    store.fetch(-0.3, Value.new(:objval1)).should == Value.new(:objval2)
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[3.141592653589793] = Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
     unaltered = 'unaltered'
-    store.fetch(3.141592653589793) { unaltered = 'altered' }
+    store.fetch(-0.3) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
@@ -16059,8 +16059,8 @@ shared_examples_for 'returndifferent_numberkey_objectvalue' do
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval1)
-    store[3.141592653589793] = value
-    store[3.141592653589793].should_not be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
@@ -16071,8 +16071,8 @@ shared_examples_for 'returndifferent_numberkey_objectvalue' do
 
   it 'guarantees that a different value is retrieved' do
     value = Value.new(:objval2)
-    store[3.141592653589793] = value
-    store[3.141592653589793].should_not be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should_not be_equal(value)
   end
 
   it 'guarantees that a different value is retrieved' do
@@ -16111,8 +16111,8 @@ shared_examples_for 'returnsame_numberkey_objectvalue' do
 
   it 'guarantees that the same value is retrieved' do
     value = Value.new(:objval1)
-    store[3.141592653589793] = value
-    store[3.141592653589793].should be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should be_equal(value)
   end
 
   it 'guarantees that the same value is retrieved' do
@@ -16123,8 +16123,8 @@ shared_examples_for 'returnsame_numberkey_objectvalue' do
 
   it 'guarantees that the same value is retrieved' do
     value = Value.new(:objval2)
-    store[3.141592653589793] = value
-    store[3.141592653589793].should be_equal(value)
+    store[-0.3] = value
+    store[-0.3].should be_equal(value)
   end
 
   it 'guarantees that the same value is retrieved' do
@@ -16163,10 +16163,10 @@ shared_examples_for 'persist_numberkey_objectvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = Value.new(:objval1)
+    store[-0.3] = Value.new(:objval1)
     store.close
     @store = nil
-    store[3.141592653589793].should == Value.new(:objval1)
+    store[-0.3].should == Value.new(:objval1)
   end
 
   it 'persists values' do
@@ -16177,10 +16177,10 @@ shared_examples_for 'persist_numberkey_objectvalue' do
   end
 
   it 'persists values' do
-    store[3.141592653589793] = Value.new(:objval2)
+    store[-0.3] = Value.new(:objval2)
     store.close
     @store = nil
-    store[3.141592653589793].should == Value.new(:objval2)
+    store[-0.3].should == Value.new(:objval2)
   end
 
   it 'persists values' do
@@ -17169,7 +17169,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[true] = value).should equal(value)
   end
 
@@ -17182,20 +17182,20 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[true] = 2.718281828459045
-    store[false] = 1.4142135623730951
+    store[true] = 123.456
+    store[false] = -98.7
     store.clear.should equal(store)
     store.key?(true).should be_false
     store.key?(false).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(true, 2.718281828459045).should == 2.718281828459045
+    store.fetch(true, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = true
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -17211,7 +17211,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store.fetch(true, options) { 42 }.should == 42
     store.delete(true, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(true, 2.718281828459045, options).should == 2.718281828459045
+    store.store(true, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -17220,7 +17220,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[false] = value).should equal(value)
   end
 
@@ -17233,20 +17233,20 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[false] = 2.718281828459045
-    store[true] = 1.4142135623730951
+    store[false] = 123.456
+    store[true] = -98.7
     store.clear.should equal(store)
     store.key?(false).should be_false
     store.key?(true).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(false, 2.718281828459045).should == 2.718281828459045
+    store.fetch(false, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = false
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -17262,7 +17262,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store.fetch(false, options) { 42 }.should == 42
     store.delete(false, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(false, 2.718281828459045, options).should == 2.718281828459045
+    store.store(false, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -17271,7 +17271,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[true] = value).should equal(value)
   end
 
@@ -17284,20 +17284,20 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[true] = 1.4142135623730951
-    store[false] = 2.718281828459045
+    store[true] = -98.7
+    store[false] = 123.456
     store.clear.should equal(store)
     store.key?(true).should be_false
     store.key?(false).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(true, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(true, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = true
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -17313,7 +17313,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store.fetch(true, options) { 42 }.should == 42
     store.delete(true, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(true, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(true, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -17322,7 +17322,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[false] = value).should equal(value)
   end
 
@@ -17335,20 +17335,20 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[false] = 1.4142135623730951
-    store[true] = 2.718281828459045
+    store[false] = -98.7
+    store[true] = 123.456
     store.clear.should equal(store)
     store.key?(false).should be_false
     store.key?(true).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(false, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(false, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = false
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -17364,7 +17364,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store.fetch(false, options) { 42 }.should == 42
     store.delete(false, options).should be_nil
     store.clear(options).should equal(store)
-    store.store(false, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(false, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -17576,252 +17576,252 @@ end
 
 shared_examples_for 'store_booleankey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store[true] = 2.718281828459045
-    store[true].should == 2.718281828459045
-    store.load(true).should == 2.718281828459045
+    store[true] = 123.456
+    store[true].should == 123.456
+    store.load(true).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[true] = 2.718281828459045
+    store[true] = 123.456
     store.key?(true).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(true, value).should equal(value)
-    store[true].should == 2.718281828459045
-    store.load(true).should == 2.718281828459045
+    store[true].should == 123.456
+    store.load(true).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[true] = 2.718281828459045
-    store[false] = 1.4142135623730951
+    store[true] = 123.456
+    store[false] = -98.7
     store.clear.should equal(store)
-    store[true] = 2.718281828459045
-    store[true].should == 2.718281828459045
+    store[true] = 123.456
+    store[true].should == 123.456
     store[false].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[true] = 2.718281828459045
-    store.delete(true).should == 2.718281828459045
+    store[true] = 123.456
+    store.delete(true).should == 123.456
     store.key?(true).should be_false
   end
 
   it 'overwrites existing values' do
-    store[true] = 2.718281828459045
-    store[true].should == 2.718281828459045
-    store[true] = 1.4142135623730951
-    store[true].should == 1.4142135623730951
+    store[true] = 123.456
+    store[true].should == 123.456
+    store[true] = -98.7
+    store[true].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[true] = value).should equal(value)
-    store[true].should == 2.718281828459045
+    store[true].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = true.freeze
-    store[key] = 2.718281828459045
-    store[true].should == 2.718281828459045
+    store[key] = 123.456
+    store[true].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[true] = 2.718281828459045
-    store.fetch(true, 1.4142135623730951).should == 2.718281828459045
+    store[true] = 123.456
+    store.fetch(true, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[true] = 2.718281828459045
+    store[true] = 123.456
     unaltered = 'unaltered'
     store.fetch(true) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[false] = 2.718281828459045
-    store[false].should == 2.718281828459045
-    store.load(false).should == 2.718281828459045
+    store[false] = 123.456
+    store[false].should == 123.456
+    store.load(false).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[false] = 2.718281828459045
+    store[false] = 123.456
     store.key?(false).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(false, value).should equal(value)
-    store[false].should == 2.718281828459045
-    store.load(false).should == 2.718281828459045
+    store[false].should == 123.456
+    store.load(false).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[false] = 2.718281828459045
-    store[true] = 1.4142135623730951
+    store[false] = 123.456
+    store[true] = -98.7
     store.clear.should equal(store)
-    store[false] = 2.718281828459045
-    store[false].should == 2.718281828459045
+    store[false] = 123.456
+    store[false].should == 123.456
     store[true].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[false] = 2.718281828459045
-    store.delete(false).should == 2.718281828459045
+    store[false] = 123.456
+    store.delete(false).should == 123.456
     store.key?(false).should be_false
   end
 
   it 'overwrites existing values' do
-    store[false] = 2.718281828459045
-    store[false].should == 2.718281828459045
-    store[false] = 1.4142135623730951
-    store[false].should == 1.4142135623730951
+    store[false] = 123.456
+    store[false].should == 123.456
+    store[false] = -98.7
+    store[false].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[false] = value).should equal(value)
-    store[false].should == 2.718281828459045
+    store[false].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = false.freeze
-    store[key] = 2.718281828459045
-    store[false].should == 2.718281828459045
+    store[key] = 123.456
+    store[false].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[false] = 2.718281828459045
-    store.fetch(false, 1.4142135623730951).should == 2.718281828459045
+    store[false] = 123.456
+    store.fetch(false, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[false] = 2.718281828459045
+    store[false] = 123.456
     unaltered = 'unaltered'
     store.fetch(false) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[true] = 1.4142135623730951
-    store[true].should == 1.4142135623730951
-    store.load(true).should == 1.4142135623730951
+    store[true] = -98.7
+    store[true].should == -98.7
+    store.load(true).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[true] = 1.4142135623730951
+    store[true] = -98.7
     store.key?(true).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(true, value).should equal(value)
-    store[true].should == 1.4142135623730951
-    store.load(true).should == 1.4142135623730951
+    store[true].should == -98.7
+    store.load(true).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[true] = 1.4142135623730951
-    store[false] = 2.718281828459045
+    store[true] = -98.7
+    store[false] = 123.456
     store.clear.should equal(store)
-    store[true] = 1.4142135623730951
-    store[true].should == 1.4142135623730951
+    store[true] = -98.7
+    store[true].should == -98.7
     store[false].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[true] = 1.4142135623730951
-    store.delete(true).should == 1.4142135623730951
+    store[true] = -98.7
+    store.delete(true).should == -98.7
     store.key?(true).should be_false
   end
 
   it 'overwrites existing values' do
-    store[true] = 1.4142135623730951
-    store[true].should == 1.4142135623730951
-    store[true] = 2.718281828459045
-    store[true].should == 2.718281828459045
+    store[true] = -98.7
+    store[true].should == -98.7
+    store[true] = 123.456
+    store[true].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[true] = value).should equal(value)
-    store[true].should == 1.4142135623730951
+    store[true].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = true.freeze
-    store[key] = 1.4142135623730951
-    store[true].should == 1.4142135623730951
+    store[key] = -98.7
+    store[true].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[true] = 1.4142135623730951
-    store.fetch(true, 2.718281828459045).should == 1.4142135623730951
+    store[true] = -98.7
+    store.fetch(true, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[true] = 1.4142135623730951
+    store[true] = -98.7
     unaltered = 'unaltered'
     store.fetch(true) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[false] = 1.4142135623730951
-    store[false].should == 1.4142135623730951
-    store.load(false).should == 1.4142135623730951
+    store[false] = -98.7
+    store[false].should == -98.7
+    store.load(false).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[false] = 1.4142135623730951
+    store[false] = -98.7
     store.key?(false).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(false, value).should equal(value)
-    store[false].should == 1.4142135623730951
-    store.load(false).should == 1.4142135623730951
+    store[false].should == -98.7
+    store.load(false).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[false] = 1.4142135623730951
-    store[true] = 2.718281828459045
+    store[false] = -98.7
+    store[true] = 123.456
     store.clear.should equal(store)
-    store[false] = 1.4142135623730951
-    store[false].should == 1.4142135623730951
+    store[false] = -98.7
+    store[false].should == -98.7
     store[true].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[false] = 1.4142135623730951
-    store.delete(false).should == 1.4142135623730951
+    store[false] = -98.7
+    store.delete(false).should == -98.7
     store.key?(false).should be_false
   end
 
   it 'overwrites existing values' do
-    store[false] = 1.4142135623730951
-    store[false].should == 1.4142135623730951
-    store[false] = 2.718281828459045
-    store[false].should == 2.718281828459045
+    store[false] = -98.7
+    store[false].should == -98.7
+    store[false] = 123.456
+    store[false].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[false] = value).should equal(value)
-    store[false].should == 1.4142135623730951
+    store[false].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = false.freeze
-    store[key] = 1.4142135623730951
-    store[false].should == 1.4142135623730951
+    store[key] = -98.7
+    store[false].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[false] = 1.4142135623730951
-    store.fetch(false, 2.718281828459045).should == 1.4142135623730951
+    store[false] = -98.7
+    store.fetch(false, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[false] = 1.4142135623730951
+    store[false] = -98.7
     unaltered = 'unaltered'
     store.fetch(false) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -18084,31 +18084,31 @@ end
 
 shared_examples_for 'persist_booleankey_numbervalue' do
   it 'persists values' do
-    store[true] = 2.718281828459045
+    store[true] = 123.456
     store.close
     @store = nil
-    store[true].should == 2.718281828459045
+    store[true].should == 123.456
   end
 
   it 'persists values' do
-    store[false] = 2.718281828459045
+    store[false] = 123.456
     store.close
     @store = nil
-    store[false].should == 2.718281828459045
+    store[false].should == 123.456
   end
 
   it 'persists values' do
-    store[true] = 1.4142135623730951
+    store[true] = -98.7
     store.close
     @store = nil
-    store[true].should == 1.4142135623730951
+    store[true].should == -98.7
   end
 
   it 'persists values' do
-    store[false] = 1.4142135623730951
+    store[false] = -98.7
     store.close
     @store = nil
-    store[false].should == 1.4142135623730951
+    store[false].should == -98.7
   end
 
   it 'persists values' do
@@ -22173,7 +22173,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store["strkey1"] = value).should equal(value)
   end
 
@@ -22186,20 +22186,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey2"] = 1.4142135623730951
+    store["strkey1"] = 123.456
+    store["strkey2"] = -98.7
     store.clear.should equal(store)
     store.key?("strkey1").should be_false
     store.key?("strkey2").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey1", 2.718281828459045).should == 2.718281828459045
+    store.fetch("strkey1", 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey1"
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22215,7 +22215,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("strkey1", options) { 42 }.should == 42
     store.delete("strkey1", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey1", 2.718281828459045, options).should == 2.718281828459045
+    store.store("strkey1", 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -22224,7 +22224,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store["strkey2"] = value).should equal(value)
   end
 
@@ -22237,20 +22237,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey1"] = 1.4142135623730951
+    store["strkey2"] = 123.456
+    store["strkey1"] = -98.7
     store.clear.should equal(store)
     store.key?("strkey2").should be_false
     store.key?("strkey1").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey2", 2.718281828459045).should == 2.718281828459045
+    store.fetch("strkey2", 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey2"
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22266,7 +22266,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("strkey2", options) { 42 }.should == 42
     store.delete("strkey2", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey2", 2.718281828459045, options).should == 2.718281828459045
+    store.store("strkey2", 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -22275,7 +22275,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store["strkey1"] = value).should equal(value)
   end
 
@@ -22288,20 +22288,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey2"] = 2.718281828459045
+    store["strkey1"] = -98.7
+    store["strkey2"] = 123.456
     store.clear.should equal(store)
     store.key?("strkey1").should be_false
     store.key?("strkey2").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey1", 1.4142135623730951).should == 1.4142135623730951
+    store.fetch("strkey1", -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey1"
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22317,7 +22317,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("strkey1", options) { 42 }.should == 42
     store.delete("strkey1", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey1", 1.4142135623730951, options).should == 1.4142135623730951
+    store.store("strkey1", -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -22326,7 +22326,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store["strkey2"] = value).should equal(value)
   end
 
@@ -22339,20 +22339,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey1"] = 2.718281828459045
+    store["strkey2"] = -98.7
+    store["strkey1"] = 123.456
     store.clear.should equal(store)
     store.key?("strkey2").should be_false
     store.key?("strkey1").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey2", 1.4142135623730951).should == 1.4142135623730951
+    store.fetch("strkey2", -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey2"
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22368,7 +22368,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("strkey2", options) { 42 }.should == 42
     store.delete("strkey2", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey2", 1.4142135623730951, options).should == 1.4142135623730951
+    store.store("strkey2", -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -22581,7 +22581,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store["foo/bar"] = value).should equal(value)
   end
 
@@ -22594,20 +22594,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["foo/bar"] = 2.718281828459045
-    store["bar/foo/baz"] = 1.4142135623730951
+    store["foo/bar"] = 123.456
+    store["bar/foo/baz"] = -98.7
     store.clear.should equal(store)
     store.key?("foo/bar").should be_false
     store.key?("bar/foo/baz").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("foo/bar", 2.718281828459045).should == 2.718281828459045
+    store.fetch("foo/bar", 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "foo/bar"
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22623,7 +22623,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("foo/bar", options) { 42 }.should == 42
     store.delete("foo/bar", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("foo/bar", 2.718281828459045, options).should == 2.718281828459045
+    store.store("foo/bar", 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -22632,7 +22632,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
@@ -22645,20 +22645,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["bar/foo/baz"] = 2.718281828459045
-    store["foo/bar"] = 1.4142135623730951
+    store["bar/foo/baz"] = 123.456
+    store["foo/bar"] = -98.7
     store.clear.should equal(store)
     store.key?("bar/foo/baz").should be_false
     store.key?("foo/bar").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("bar/foo/baz", 2.718281828459045).should == 2.718281828459045
+    store.fetch("bar/foo/baz", 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "bar/foo/baz"
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22674,7 +22674,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
     store.delete("bar/foo/baz", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("bar/foo/baz", 2.718281828459045, options).should == 2.718281828459045
+    store.store("bar/foo/baz", 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -22683,7 +22683,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store["foo/bar"] = value).should equal(value)
   end
 
@@ -22696,20 +22696,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["foo/bar"] = 1.4142135623730951
-    store["bar/foo/baz"] = 2.718281828459045
+    store["foo/bar"] = -98.7
+    store["bar/foo/baz"] = 123.456
     store.clear.should equal(store)
     store.key?("foo/bar").should be_false
     store.key?("bar/foo/baz").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("foo/bar", 1.4142135623730951).should == 1.4142135623730951
+    store.fetch("foo/bar", -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "foo/bar"
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22725,7 +22725,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("foo/bar", options) { 42 }.should == 42
     store.delete("foo/bar", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("foo/bar", 1.4142135623730951, options).should == 1.4142135623730951
+    store.store("foo/bar", -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -22734,7 +22734,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
@@ -22747,20 +22747,20 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["bar/foo/baz"] = 1.4142135623730951
-    store["foo/bar"] = 2.718281828459045
+    store["bar/foo/baz"] = -98.7
+    store["foo/bar"] = 123.456
     store.clear.should equal(store)
     store.key?("bar/foo/baz").should be_false
     store.key?("foo/bar").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("bar/foo/baz", 1.4142135623730951).should == 1.4142135623730951
+    store.fetch("bar/foo/baz", -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "bar/foo/baz"
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -22776,7 +22776,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
     store.delete("bar/foo/baz", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("bar/foo/baz", 1.4142135623730951, options).should == 1.4142135623730951
+    store.store("bar/foo/baz", -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -22988,252 +22988,252 @@ end
 
 shared_examples_for 'store_stringkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
-    store.load("strkey1").should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
+    store.load("strkey1").should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey1"] = 2.718281828459045
+    store["strkey1"] = 123.456
     store.key?("strkey1").should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store("strkey1", value).should equal(value)
-    store["strkey1"].should == 2.718281828459045
-    store.load("strkey1").should == 2.718281828459045
+    store["strkey1"].should == 123.456
+    store.load("strkey1").should == 123.456
   end
 
   it 'stores values after clear' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey2"] = 1.4142135623730951
+    store["strkey1"] = 123.456
+    store["strkey2"] = -98.7
     store.clear.should equal(store)
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
     store["strkey2"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey1"] = 2.718281828459045
-    store.delete("strkey1").should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store.delete("strkey1").should == 123.456
     store.key?("strkey1").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store["strkey1"] = value).should equal(value)
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = "strkey1".freeze
-    store[key] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
+    store[key] = 123.456
+    store["strkey1"].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey1"] = 2.718281828459045
-    store.fetch("strkey1", 1.4142135623730951).should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store.fetch("strkey1", -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey1"] = 2.718281828459045
+    store["strkey1"] = 123.456
     unaltered = 'unaltered'
     store.fetch("strkey1") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
-    store.load("strkey2").should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
+    store.load("strkey2").should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey2"] = 2.718281828459045
+    store["strkey2"] = 123.456
     store.key?("strkey2").should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store("strkey2", value).should equal(value)
-    store["strkey2"].should == 2.718281828459045
-    store.load("strkey2").should == 2.718281828459045
+    store["strkey2"].should == 123.456
+    store.load("strkey2").should == 123.456
   end
 
   it 'stores values after clear' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey1"] = 1.4142135623730951
+    store["strkey2"] = 123.456
+    store["strkey1"] = -98.7
     store.clear.should equal(store)
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
     store["strkey1"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey2"] = 2.718281828459045
-    store.delete("strkey2").should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store.delete("strkey2").should == 123.456
     store.key?("strkey2").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store["strkey2"] = value).should equal(value)
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = "strkey2".freeze
-    store[key] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
+    store[key] = 123.456
+    store["strkey2"].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey2"] = 2.718281828459045
-    store.fetch("strkey2", 1.4142135623730951).should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store.fetch("strkey2", -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey2"] = 2.718281828459045
+    store["strkey2"] = 123.456
     unaltered = 'unaltered'
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
-    store.load("strkey1").should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
+    store.load("strkey1").should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey1"] = 1.4142135623730951
+    store["strkey1"] = -98.7
     store.key?("strkey1").should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store("strkey1", value).should equal(value)
-    store["strkey1"].should == 1.4142135623730951
-    store.load("strkey1").should == 1.4142135623730951
+    store["strkey1"].should == -98.7
+    store.load("strkey1").should == -98.7
   end
 
   it 'stores values after clear' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey2"] = 2.718281828459045
+    store["strkey1"] = -98.7
+    store["strkey2"] = 123.456
     store.clear.should equal(store)
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
     store["strkey2"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey1"] = 1.4142135623730951
-    store.delete("strkey1").should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store.delete("strkey1").should == -98.7
     store.key?("strkey1").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store["strkey1"] = value).should equal(value)
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = "strkey1".freeze
-    store[key] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
+    store[key] = -98.7
+    store["strkey1"].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey1"] = 1.4142135623730951
-    store.fetch("strkey1", 2.718281828459045).should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store.fetch("strkey1", 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey1"] = 1.4142135623730951
+    store["strkey1"] = -98.7
     unaltered = 'unaltered'
     store.fetch("strkey1") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
-    store.load("strkey2").should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
+    store.load("strkey2").should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey2"] = 1.4142135623730951
+    store["strkey2"] = -98.7
     store.key?("strkey2").should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store("strkey2", value).should equal(value)
-    store["strkey2"].should == 1.4142135623730951
-    store.load("strkey2").should == 1.4142135623730951
+    store["strkey2"].should == -98.7
+    store.load("strkey2").should == -98.7
   end
 
   it 'stores values after clear' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey1"] = 2.718281828459045
+    store["strkey2"] = -98.7
+    store["strkey1"] = 123.456
     store.clear.should equal(store)
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
     store["strkey1"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey2"] = 1.4142135623730951
-    store.delete("strkey2").should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store.delete("strkey2").should == -98.7
     store.key?("strkey2").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store["strkey2"] = value).should equal(value)
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = "strkey2".freeze
-    store[key] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
+    store[key] = -98.7
+    store["strkey2"].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey2"] = 1.4142135623730951
-    store.fetch("strkey2", 2.718281828459045).should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store.fetch("strkey2", 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey2"] = 1.4142135623730951
+    store["strkey2"] = -98.7
     unaltered = 'unaltered'
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -23492,252 +23492,252 @@ shared_examples_for 'store_stringkey_numbervalue' do
   end
 
   it 'writes values to keys that like a Hash' do
-    store["foo/bar"] = 2.718281828459045
-    store["foo/bar"].should == 2.718281828459045
-    store.load("foo/bar").should == 2.718281828459045
+    store["foo/bar"] = 123.456
+    store["foo/bar"].should == 123.456
+    store.load("foo/bar").should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store["foo/bar"] = 2.718281828459045
+    store["foo/bar"] = 123.456
     store.key?("foo/bar").should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store("foo/bar", value).should equal(value)
-    store["foo/bar"].should == 2.718281828459045
-    store.load("foo/bar").should == 2.718281828459045
+    store["foo/bar"].should == 123.456
+    store.load("foo/bar").should == 123.456
   end
 
   it 'stores values after clear' do
-    store["foo/bar"] = 2.718281828459045
-    store["bar/foo/baz"] = 1.4142135623730951
+    store["foo/bar"] = 123.456
+    store["bar/foo/baz"] = -98.7
     store.clear.should equal(store)
-    store["foo/bar"] = 2.718281828459045
-    store["foo/bar"].should == 2.718281828459045
+    store["foo/bar"] = 123.456
+    store["foo/bar"].should == 123.456
     store["bar/foo/baz"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["foo/bar"] = 2.718281828459045
-    store.delete("foo/bar").should == 2.718281828459045
+    store["foo/bar"] = 123.456
+    store.delete("foo/bar").should == 123.456
     store.key?("foo/bar").should be_false
   end
 
   it 'overwrites existing values' do
-    store["foo/bar"] = 2.718281828459045
-    store["foo/bar"].should == 2.718281828459045
-    store["foo/bar"] = 1.4142135623730951
-    store["foo/bar"].should == 1.4142135623730951
+    store["foo/bar"] = 123.456
+    store["foo/bar"].should == 123.456
+    store["foo/bar"] = -98.7
+    store["foo/bar"].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store["foo/bar"] = value).should equal(value)
-    store["foo/bar"].should == 2.718281828459045
+    store["foo/bar"].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = "foo/bar".freeze
-    store[key] = 2.718281828459045
-    store["foo/bar"].should == 2.718281828459045
+    store[key] = 123.456
+    store["foo/bar"].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["foo/bar"] = 2.718281828459045
-    store.fetch("foo/bar", 1.4142135623730951).should == 2.718281828459045
+    store["foo/bar"] = 123.456
+    store.fetch("foo/bar", -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["foo/bar"] = 2.718281828459045
+    store["foo/bar"] = 123.456
     unaltered = 'unaltered'
     store.fetch("foo/bar") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["bar/foo/baz"] = 2.718281828459045
-    store["bar/foo/baz"].should == 2.718281828459045
-    store.load("bar/foo/baz").should == 2.718281828459045
+    store["bar/foo/baz"] = 123.456
+    store["bar/foo/baz"].should == 123.456
+    store.load("bar/foo/baz").should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store["bar/foo/baz"] = 2.718281828459045
+    store["bar/foo/baz"] = 123.456
     store.key?("bar/foo/baz").should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store("bar/foo/baz", value).should equal(value)
-    store["bar/foo/baz"].should == 2.718281828459045
-    store.load("bar/foo/baz").should == 2.718281828459045
+    store["bar/foo/baz"].should == 123.456
+    store.load("bar/foo/baz").should == 123.456
   end
 
   it 'stores values after clear' do
-    store["bar/foo/baz"] = 2.718281828459045
-    store["foo/bar"] = 1.4142135623730951
+    store["bar/foo/baz"] = 123.456
+    store["foo/bar"] = -98.7
     store.clear.should equal(store)
-    store["bar/foo/baz"] = 2.718281828459045
-    store["bar/foo/baz"].should == 2.718281828459045
+    store["bar/foo/baz"] = 123.456
+    store["bar/foo/baz"].should == 123.456
     store["foo/bar"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["bar/foo/baz"] = 2.718281828459045
-    store.delete("bar/foo/baz").should == 2.718281828459045
+    store["bar/foo/baz"] = 123.456
+    store.delete("bar/foo/baz").should == 123.456
     store.key?("bar/foo/baz").should be_false
   end
 
   it 'overwrites existing values' do
-    store["bar/foo/baz"] = 2.718281828459045
-    store["bar/foo/baz"].should == 2.718281828459045
-    store["bar/foo/baz"] = 1.4142135623730951
-    store["bar/foo/baz"].should == 1.4142135623730951
+    store["bar/foo/baz"] = 123.456
+    store["bar/foo/baz"].should == 123.456
+    store["bar/foo/baz"] = -98.7
+    store["bar/foo/baz"].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store["bar/foo/baz"] = value).should equal(value)
-    store["bar/foo/baz"].should == 2.718281828459045
+    store["bar/foo/baz"].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = "bar/foo/baz".freeze
-    store[key] = 2.718281828459045
-    store["bar/foo/baz"].should == 2.718281828459045
+    store[key] = 123.456
+    store["bar/foo/baz"].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["bar/foo/baz"] = 2.718281828459045
-    store.fetch("bar/foo/baz", 1.4142135623730951).should == 2.718281828459045
+    store["bar/foo/baz"] = 123.456
+    store.fetch("bar/foo/baz", -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["bar/foo/baz"] = 2.718281828459045
+    store["bar/foo/baz"] = 123.456
     unaltered = 'unaltered'
     store.fetch("bar/foo/baz") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["foo/bar"] = 1.4142135623730951
-    store["foo/bar"].should == 1.4142135623730951
-    store.load("foo/bar").should == 1.4142135623730951
+    store["foo/bar"] = -98.7
+    store["foo/bar"].should == -98.7
+    store.load("foo/bar").should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store["foo/bar"] = 1.4142135623730951
+    store["foo/bar"] = -98.7
     store.key?("foo/bar").should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store("foo/bar", value).should equal(value)
-    store["foo/bar"].should == 1.4142135623730951
-    store.load("foo/bar").should == 1.4142135623730951
+    store["foo/bar"].should == -98.7
+    store.load("foo/bar").should == -98.7
   end
 
   it 'stores values after clear' do
-    store["foo/bar"] = 1.4142135623730951
-    store["bar/foo/baz"] = 2.718281828459045
+    store["foo/bar"] = -98.7
+    store["bar/foo/baz"] = 123.456
     store.clear.should equal(store)
-    store["foo/bar"] = 1.4142135623730951
-    store["foo/bar"].should == 1.4142135623730951
+    store["foo/bar"] = -98.7
+    store["foo/bar"].should == -98.7
     store["bar/foo/baz"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["foo/bar"] = 1.4142135623730951
-    store.delete("foo/bar").should == 1.4142135623730951
+    store["foo/bar"] = -98.7
+    store.delete("foo/bar").should == -98.7
     store.key?("foo/bar").should be_false
   end
 
   it 'overwrites existing values' do
-    store["foo/bar"] = 1.4142135623730951
-    store["foo/bar"].should == 1.4142135623730951
-    store["foo/bar"] = 2.718281828459045
-    store["foo/bar"].should == 2.718281828459045
+    store["foo/bar"] = -98.7
+    store["foo/bar"].should == -98.7
+    store["foo/bar"] = 123.456
+    store["foo/bar"].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store["foo/bar"] = value).should equal(value)
-    store["foo/bar"].should == 1.4142135623730951
+    store["foo/bar"].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = "foo/bar".freeze
-    store[key] = 1.4142135623730951
-    store["foo/bar"].should == 1.4142135623730951
+    store[key] = -98.7
+    store["foo/bar"].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["foo/bar"] = 1.4142135623730951
-    store.fetch("foo/bar", 2.718281828459045).should == 1.4142135623730951
+    store["foo/bar"] = -98.7
+    store.fetch("foo/bar", 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["foo/bar"] = 1.4142135623730951
+    store["foo/bar"] = -98.7
     unaltered = 'unaltered'
     store.fetch("foo/bar") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["bar/foo/baz"] = 1.4142135623730951
-    store["bar/foo/baz"].should == 1.4142135623730951
-    store.load("bar/foo/baz").should == 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
+    store["bar/foo/baz"].should == -98.7
+    store.load("bar/foo/baz").should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store["bar/foo/baz"] = 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
     store.key?("bar/foo/baz").should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store("bar/foo/baz", value).should equal(value)
-    store["bar/foo/baz"].should == 1.4142135623730951
-    store.load("bar/foo/baz").should == 1.4142135623730951
+    store["bar/foo/baz"].should == -98.7
+    store.load("bar/foo/baz").should == -98.7
   end
 
   it 'stores values after clear' do
-    store["bar/foo/baz"] = 1.4142135623730951
-    store["foo/bar"] = 2.718281828459045
+    store["bar/foo/baz"] = -98.7
+    store["foo/bar"] = 123.456
     store.clear.should equal(store)
-    store["bar/foo/baz"] = 1.4142135623730951
-    store["bar/foo/baz"].should == 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
+    store["bar/foo/baz"].should == -98.7
     store["foo/bar"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["bar/foo/baz"] = 1.4142135623730951
-    store.delete("bar/foo/baz").should == 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
+    store.delete("bar/foo/baz").should == -98.7
     store.key?("bar/foo/baz").should be_false
   end
 
   it 'overwrites existing values' do
-    store["bar/foo/baz"] = 1.4142135623730951
-    store["bar/foo/baz"].should == 1.4142135623730951
-    store["bar/foo/baz"] = 2.718281828459045
-    store["bar/foo/baz"].should == 2.718281828459045
+    store["bar/foo/baz"] = -98.7
+    store["bar/foo/baz"].should == -98.7
+    store["bar/foo/baz"] = 123.456
+    store["bar/foo/baz"].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store["bar/foo/baz"] = value).should equal(value)
-    store["bar/foo/baz"].should == 1.4142135623730951
+    store["bar/foo/baz"].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = "bar/foo/baz".freeze
-    store[key] = 1.4142135623730951
-    store["bar/foo/baz"].should == 1.4142135623730951
+    store[key] = -98.7
+    store["bar/foo/baz"].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["bar/foo/baz"] = 1.4142135623730951
-    store.fetch("bar/foo/baz", 2.718281828459045).should == 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
+    store.fetch("bar/foo/baz", 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["bar/foo/baz"] = 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
     unaltered = 'unaltered'
     store.fetch("bar/foo/baz") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -24000,31 +24000,31 @@ end
 
 shared_examples_for 'persist_stringkey_numbervalue' do
   it 'persists values' do
-    store["strkey1"] = 2.718281828459045
+    store["strkey1"] = 123.456
     store.close
     @store = nil
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"].should == 123.456
   end
 
   it 'persists values' do
-    store["strkey2"] = 2.718281828459045
+    store["strkey2"] = 123.456
     store.close
     @store = nil
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"].should == 123.456
   end
 
   it 'persists values' do
-    store["strkey1"] = 1.4142135623730951
+    store["strkey1"] = -98.7
     store.close
     @store = nil
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"].should == -98.7
   end
 
   it 'persists values' do
-    store["strkey2"] = 1.4142135623730951
+    store["strkey2"] = -98.7
     store.close
     @store = nil
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"].should == -98.7
   end
 
   it 'persists values' do
@@ -24056,31 +24056,31 @@ shared_examples_for 'persist_stringkey_numbervalue' do
   end
 
   it 'persists values' do
-    store["foo/bar"] = 2.718281828459045
+    store["foo/bar"] = 123.456
     store.close
     @store = nil
-    store["foo/bar"].should == 2.718281828459045
+    store["foo/bar"].should == 123.456
   end
 
   it 'persists values' do
-    store["bar/foo/baz"] = 2.718281828459045
+    store["bar/foo/baz"] = 123.456
     store.close
     @store = nil
-    store["bar/foo/baz"].should == 2.718281828459045
+    store["bar/foo/baz"].should == 123.456
   end
 
   it 'persists values' do
-    store["foo/bar"] = 1.4142135623730951
+    store["foo/bar"] = -98.7
     store.close
     @store = nil
-    store["foo/bar"].should == 1.4142135623730951
+    store["foo/bar"].should == -98.7
   end
 
   it 'persists values' do
-    store["bar/foo/baz"] = 1.4142135623730951
+    store["bar/foo/baz"] = -98.7
     store.close
     @store = nil
-    store["bar/foo/baz"].should == 1.4142135623730951
+    store["bar/foo/baz"].should == -98.7
   end
 
   it 'persists values' do
@@ -29301,7 +29301,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store["strkey1"] = value).should equal(value)
   end
 
@@ -29314,20 +29314,20 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey2"] = 1.4142135623730951
+    store["strkey1"] = 123.456
+    store["strkey2"] = -98.7
     store.clear.should equal(store)
     store.key?("strkey1").should be_false
     store.key?("strkey2").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey1", 2.718281828459045).should == 2.718281828459045
+    store.fetch("strkey1", 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey1"
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -29343,7 +29343,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     store.fetch("strkey1", options) { 42 }.should == 42
     store.delete("strkey1", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey1", 2.718281828459045, options).should == 2.718281828459045
+    store.store("strkey1", 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -29352,7 +29352,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store["strkey2"] = value).should equal(value)
   end
 
@@ -29365,20 +29365,20 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey1"] = 1.4142135623730951
+    store["strkey2"] = 123.456
+    store["strkey1"] = -98.7
     store.clear.should equal(store)
     store.key?("strkey2").should be_false
     store.key?("strkey1").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey2", 2.718281828459045).should == 2.718281828459045
+    store.fetch("strkey2", 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey2"
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -29394,7 +29394,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     store.fetch("strkey2", options) { 42 }.should == 42
     store.delete("strkey2", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey2", 2.718281828459045, options).should == 2.718281828459045
+    store.store("strkey2", 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -29403,7 +29403,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store["strkey1"] = value).should equal(value)
   end
 
@@ -29416,20 +29416,20 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey2"] = 2.718281828459045
+    store["strkey1"] = -98.7
+    store["strkey2"] = 123.456
     store.clear.should equal(store)
     store.key?("strkey1").should be_false
     store.key?("strkey2").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey1", 1.4142135623730951).should == 1.4142135623730951
+    store.fetch("strkey1", -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey1"
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -29445,7 +29445,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     store.fetch("strkey1", options) { 42 }.should == 42
     store.delete("strkey1", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey1", 1.4142135623730951, options).should == 1.4142135623730951
+    store.store("strkey1", -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -29454,7 +29454,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store["strkey2"] = value).should equal(value)
   end
 
@@ -29467,20 +29467,20 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey1"] = 2.718281828459045
+    store["strkey2"] = -98.7
+    store["strkey1"] = 123.456
     store.clear.should equal(store)
     store.key?("strkey2").should be_false
     store.key?("strkey1").should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch("strkey2", 1.4142135623730951).should == 1.4142135623730951
+    store.fetch("strkey2", -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = "strkey2"
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -29496,7 +29496,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     store.fetch("strkey2", options) { 42 }.should == 42
     store.delete("strkey2", options).should be_nil
     store.clear(options).should equal(store)
-    store.store("strkey2", 1.4142135623730951, options).should == 1.4142135623730951
+    store.store("strkey2", -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -29708,252 +29708,252 @@ end
 
 shared_examples_for 'store_simplestringkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
-    store.load("strkey1").should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
+    store.load("strkey1").should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey1"] = 2.718281828459045
+    store["strkey1"] = 123.456
     store.key?("strkey1").should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store("strkey1", value).should equal(value)
-    store["strkey1"].should == 2.718281828459045
-    store.load("strkey1").should == 2.718281828459045
+    store["strkey1"].should == 123.456
+    store.load("strkey1").should == 123.456
   end
 
   it 'stores values after clear' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey2"] = 1.4142135623730951
+    store["strkey1"] = 123.456
+    store["strkey2"] = -98.7
     store.clear.should equal(store)
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
     store["strkey2"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey1"] = 2.718281828459045
-    store.delete("strkey1").should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store.delete("strkey1").should == 123.456
     store.key?("strkey1").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store["strkey1"] = value).should equal(value)
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = "strkey1".freeze
-    store[key] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
+    store[key] = 123.456
+    store["strkey1"].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey1"] = 2.718281828459045
-    store.fetch("strkey1", 1.4142135623730951).should == 2.718281828459045
+    store["strkey1"] = 123.456
+    store.fetch("strkey1", -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey1"] = 2.718281828459045
+    store["strkey1"] = 123.456
     unaltered = 'unaltered'
     store.fetch("strkey1") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
-    store.load("strkey2").should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
+    store.load("strkey2").should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey2"] = 2.718281828459045
+    store["strkey2"] = 123.456
     store.key?("strkey2").should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store("strkey2", value).should equal(value)
-    store["strkey2"].should == 2.718281828459045
-    store.load("strkey2").should == 2.718281828459045
+    store["strkey2"].should == 123.456
+    store.load("strkey2").should == 123.456
   end
 
   it 'stores values after clear' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey1"] = 1.4142135623730951
+    store["strkey2"] = 123.456
+    store["strkey1"] = -98.7
     store.clear.should equal(store)
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
     store["strkey1"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey2"] = 2.718281828459045
-    store.delete("strkey2").should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store.delete("strkey2").should == 123.456
     store.key?("strkey2").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store["strkey2"] = value).should equal(value)
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = "strkey2".freeze
-    store[key] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
+    store[key] = 123.456
+    store["strkey2"].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey2"] = 2.718281828459045
-    store.fetch("strkey2", 1.4142135623730951).should == 2.718281828459045
+    store["strkey2"] = 123.456
+    store.fetch("strkey2", -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey2"] = 2.718281828459045
+    store["strkey2"] = 123.456
     unaltered = 'unaltered'
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
-    store.load("strkey1").should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
+    store.load("strkey1").should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey1"] = 1.4142135623730951
+    store["strkey1"] = -98.7
     store.key?("strkey1").should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store("strkey1", value).should equal(value)
-    store["strkey1"].should == 1.4142135623730951
-    store.load("strkey1").should == 1.4142135623730951
+    store["strkey1"].should == -98.7
+    store.load("strkey1").should == -98.7
   end
 
   it 'stores values after clear' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey2"] = 2.718281828459045
+    store["strkey1"] = -98.7
+    store["strkey2"] = 123.456
     store.clear.should equal(store)
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
     store["strkey2"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey1"] = 1.4142135623730951
-    store.delete("strkey1").should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store.delete("strkey1").should == -98.7
     store.key?("strkey1").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey1"] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
-    store["strkey1"] = 2.718281828459045
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"] = -98.7
+    store["strkey1"].should == -98.7
+    store["strkey1"] = 123.456
+    store["strkey1"].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store["strkey1"] = value).should equal(value)
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = "strkey1".freeze
-    store[key] = 1.4142135623730951
-    store["strkey1"].should == 1.4142135623730951
+    store[key] = -98.7
+    store["strkey1"].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey1"] = 1.4142135623730951
-    store.fetch("strkey1", 2.718281828459045).should == 1.4142135623730951
+    store["strkey1"] = -98.7
+    store.fetch("strkey1", 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey1"] = 1.4142135623730951
+    store["strkey1"] = -98.7
     unaltered = 'unaltered'
     store.fetch("strkey1") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
-    store.load("strkey2").should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
+    store.load("strkey2").should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store["strkey2"] = 1.4142135623730951
+    store["strkey2"] = -98.7
     store.key?("strkey2").should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store("strkey2", value).should equal(value)
-    store["strkey2"].should == 1.4142135623730951
-    store.load("strkey2").should == 1.4142135623730951
+    store["strkey2"].should == -98.7
+    store.load("strkey2").should == -98.7
   end
 
   it 'stores values after clear' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey1"] = 2.718281828459045
+    store["strkey2"] = -98.7
+    store["strkey1"] = 123.456
     store.clear.should equal(store)
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
     store["strkey1"].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store["strkey2"] = 1.4142135623730951
-    store.delete("strkey2").should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store.delete("strkey2").should == -98.7
     store.key?("strkey2").should be_false
   end
 
   it 'overwrites existing values' do
-    store["strkey2"] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
-    store["strkey2"] = 2.718281828459045
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"] = -98.7
+    store["strkey2"].should == -98.7
+    store["strkey2"] = 123.456
+    store["strkey2"].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store["strkey2"] = value).should equal(value)
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = "strkey2".freeze
-    store[key] = 1.4142135623730951
-    store["strkey2"].should == 1.4142135623730951
+    store[key] = -98.7
+    store["strkey2"].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store["strkey2"] = 1.4142135623730951
-    store.fetch("strkey2", 2.718281828459045).should == 1.4142135623730951
+    store["strkey2"] = -98.7
+    store.fetch("strkey2", 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store["strkey2"] = 1.4142135623730951
+    store["strkey2"] = -98.7
     unaltered = 'unaltered'
     store.fetch("strkey2") { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -30216,31 +30216,31 @@ end
 
 shared_examples_for 'persist_simplestringkey_numbervalue' do
   it 'persists values' do
-    store["strkey1"] = 2.718281828459045
+    store["strkey1"] = 123.456
     store.close
     @store = nil
-    store["strkey1"].should == 2.718281828459045
+    store["strkey1"].should == 123.456
   end
 
   it 'persists values' do
-    store["strkey2"] = 2.718281828459045
+    store["strkey2"] = 123.456
     store.close
     @store = nil
-    store["strkey2"].should == 2.718281828459045
+    store["strkey2"].should == 123.456
   end
 
   it 'persists values' do
-    store["strkey1"] = 1.4142135623730951
+    store["strkey1"] = -98.7
     store.close
     @store = nil
-    store["strkey1"].should == 1.4142135623730951
+    store["strkey1"].should == -98.7
   end
 
   it 'persists values' do
-    store["strkey2"] = 1.4142135623730951
+    store["strkey2"] = -98.7
     store.close
     @store = nil
-    store["strkey2"].should == 1.4142135623730951
+    store["strkey2"].should == -98.7
   end
 
   it 'persists values' do
@@ -33381,7 +33381,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
@@ -33394,20 +33394,20 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store[Value.new(:objkey2)] = 1.4142135623730951
+    store[Value.new(:objkey1)] = 123.456
+    store[Value.new(:objkey2)] = -98.7
     store.clear.should equal(store)
     store.key?(Value.new(:objkey1)).should be_false
     store.key?(Value.new(:objkey2)).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(Value.new(:objkey1), 2.718281828459045).should == 2.718281828459045
+    store.fetch(Value.new(:objkey1), 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = Value.new(:objkey1)
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -33423,7 +33423,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
     store.delete(Value.new(:objkey1), options).should be_nil
     store.clear(options).should equal(store)
-    store.store(Value.new(:objkey1), 2.718281828459045, options).should == 2.718281828459045
+    store.store(Value.new(:objkey1), 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -33432,7 +33432,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
@@ -33445,20 +33445,20 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store[Value.new(:objkey1)] = 1.4142135623730951
+    store[Value.new(:objkey2)] = 123.456
+    store[Value.new(:objkey1)] = -98.7
     store.clear.should equal(store)
     store.key?(Value.new(:objkey2)).should be_false
     store.key?(Value.new(:objkey1)).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(Value.new(:objkey2), 2.718281828459045).should == 2.718281828459045
+    store.fetch(Value.new(:objkey2), 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = Value.new(:objkey2)
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -33474,7 +33474,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
     store.delete(Value.new(:objkey2), options).should be_nil
     store.clear(options).should equal(store)
-    store.store(Value.new(:objkey2), 2.718281828459045, options).should == 2.718281828459045
+    store.store(Value.new(:objkey2), 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -33483,7 +33483,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
@@ -33496,20 +33496,20 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store[Value.new(:objkey2)] = 2.718281828459045
+    store[Value.new(:objkey1)] = -98.7
+    store[Value.new(:objkey2)] = 123.456
     store.clear.should equal(store)
     store.key?(Value.new(:objkey1)).should be_false
     store.key?(Value.new(:objkey2)).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(Value.new(:objkey1), 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(Value.new(:objkey1), -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = Value.new(:objkey1)
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -33525,7 +33525,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
     store.delete(Value.new(:objkey1), options).should be_nil
     store.clear(options).should equal(store)
-    store.store(Value.new(:objkey1), 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(Value.new(:objkey1), -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -33534,7 +33534,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
@@ -33547,20 +33547,20 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store[Value.new(:objkey1)] = 2.718281828459045
+    store[Value.new(:objkey2)] = -98.7
+    store[Value.new(:objkey1)] = 123.456
     store.clear.should equal(store)
     store.key?(Value.new(:objkey2)).should be_false
     store.key?(Value.new(:objkey1)).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch(Value.new(:objkey2), 1.4142135623730951).should == 1.4142135623730951
+    store.fetch(Value.new(:objkey2), -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = Value.new(:objkey2)
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -33576,7 +33576,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
     store.delete(Value.new(:objkey2), options).should be_nil
     store.clear(options).should equal(store)
-    store.store(Value.new(:objkey2), 1.4142135623730951, options).should == 1.4142135623730951
+    store.store(Value.new(:objkey2), -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -33788,252 +33788,252 @@ end
 
 shared_examples_for 'store_objectkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store[Value.new(:objkey1)].should == 2.718281828459045
-    store.load(Value.new(:objkey1)).should == 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
+    store[Value.new(:objkey1)].should == 123.456
+    store.load(Value.new(:objkey1)).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[Value.new(:objkey1)] = 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
     store.key?(Value.new(:objkey1)).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(Value.new(:objkey1), value).should equal(value)
-    store[Value.new(:objkey1)].should == 2.718281828459045
-    store.load(Value.new(:objkey1)).should == 2.718281828459045
+    store[Value.new(:objkey1)].should == 123.456
+    store.load(Value.new(:objkey1)).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store[Value.new(:objkey2)] = 1.4142135623730951
+    store[Value.new(:objkey1)] = 123.456
+    store[Value.new(:objkey2)] = -98.7
     store.clear.should equal(store)
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store[Value.new(:objkey1)].should == 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
+    store[Value.new(:objkey1)].should == 123.456
     store[Value.new(:objkey2)].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store.delete(Value.new(:objkey1)).should == 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
+    store.delete(Value.new(:objkey1)).should == 123.456
     store.key?(Value.new(:objkey1)).should be_false
   end
 
   it 'overwrites existing values' do
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store[Value.new(:objkey1)].should == 2.718281828459045
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store[Value.new(:objkey1)].should == 1.4142135623730951
+    store[Value.new(:objkey1)] = 123.456
+    store[Value.new(:objkey1)].should == 123.456
+    store[Value.new(:objkey1)] = -98.7
+    store[Value.new(:objkey1)].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[Value.new(:objkey1)] = value).should equal(value)
-    store[Value.new(:objkey1)].should == 2.718281828459045
+    store[Value.new(:objkey1)].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = Value.new(:objkey1).freeze
-    store[key] = 2.718281828459045
-    store[Value.new(:objkey1)].should == 2.718281828459045
+    store[key] = 123.456
+    store[Value.new(:objkey1)].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store.fetch(Value.new(:objkey1), 1.4142135623730951).should == 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
+    store.fetch(Value.new(:objkey1), -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[Value.new(:objkey1)] = 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey1)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store[Value.new(:objkey2)].should == 2.718281828459045
-    store.load(Value.new(:objkey2)).should == 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
+    store[Value.new(:objkey2)].should == 123.456
+    store.load(Value.new(:objkey2)).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[Value.new(:objkey2)] = 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
     store.key?(Value.new(:objkey2)).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store(Value.new(:objkey2), value).should equal(value)
-    store[Value.new(:objkey2)].should == 2.718281828459045
-    store.load(Value.new(:objkey2)).should == 2.718281828459045
+    store[Value.new(:objkey2)].should == 123.456
+    store.load(Value.new(:objkey2)).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store[Value.new(:objkey1)] = 1.4142135623730951
+    store[Value.new(:objkey2)] = 123.456
+    store[Value.new(:objkey1)] = -98.7
     store.clear.should equal(store)
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store[Value.new(:objkey2)].should == 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
+    store[Value.new(:objkey2)].should == 123.456
     store[Value.new(:objkey1)].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store.delete(Value.new(:objkey2)).should == 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
+    store.delete(Value.new(:objkey2)).should == 123.456
     store.key?(Value.new(:objkey2)).should be_false
   end
 
   it 'overwrites existing values' do
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store[Value.new(:objkey2)].should == 2.718281828459045
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store[Value.new(:objkey2)].should == 1.4142135623730951
+    store[Value.new(:objkey2)] = 123.456
+    store[Value.new(:objkey2)].should == 123.456
+    store[Value.new(:objkey2)] = -98.7
+    store[Value.new(:objkey2)].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[Value.new(:objkey2)] = value).should equal(value)
-    store[Value.new(:objkey2)].should == 2.718281828459045
+    store[Value.new(:objkey2)].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = Value.new(:objkey2).freeze
-    store[key] = 2.718281828459045
-    store[Value.new(:objkey2)].should == 2.718281828459045
+    store[key] = 123.456
+    store[Value.new(:objkey2)].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store.fetch(Value.new(:objkey2), 1.4142135623730951).should == 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
+    store.fetch(Value.new(:objkey2), -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[Value.new(:objkey2)] = 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey2)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store[Value.new(:objkey1)].should == 1.4142135623730951
-    store.load(Value.new(:objkey1)).should == 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
+    store[Value.new(:objkey1)].should == -98.7
+    store.load(Value.new(:objkey1)).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
     store.key?(Value.new(:objkey1)).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(Value.new(:objkey1), value).should equal(value)
-    store[Value.new(:objkey1)].should == 1.4142135623730951
-    store.load(Value.new(:objkey1)).should == 1.4142135623730951
+    store[Value.new(:objkey1)].should == -98.7
+    store.load(Value.new(:objkey1)).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store[Value.new(:objkey2)] = 2.718281828459045
+    store[Value.new(:objkey1)] = -98.7
+    store[Value.new(:objkey2)] = 123.456
     store.clear.should equal(store)
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store[Value.new(:objkey1)].should == 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
+    store[Value.new(:objkey1)].should == -98.7
     store[Value.new(:objkey2)].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store.delete(Value.new(:objkey1)).should == 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
+    store.delete(Value.new(:objkey1)).should == -98.7
     store.key?(Value.new(:objkey1)).should be_false
   end
 
   it 'overwrites existing values' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store[Value.new(:objkey1)].should == 1.4142135623730951
-    store[Value.new(:objkey1)] = 2.718281828459045
-    store[Value.new(:objkey1)].should == 2.718281828459045
+    store[Value.new(:objkey1)] = -98.7
+    store[Value.new(:objkey1)].should == -98.7
+    store[Value.new(:objkey1)] = 123.456
+    store[Value.new(:objkey1)].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[Value.new(:objkey1)] = value).should equal(value)
-    store[Value.new(:objkey1)].should == 1.4142135623730951
+    store[Value.new(:objkey1)].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = Value.new(:objkey1).freeze
-    store[key] = 1.4142135623730951
-    store[Value.new(:objkey1)].should == 1.4142135623730951
+    store[key] = -98.7
+    store[Value.new(:objkey1)].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
-    store.fetch(Value.new(:objkey1), 2.718281828459045).should == 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
+    store.fetch(Value.new(:objkey1), 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey1)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store[Value.new(:objkey2)].should == 1.4142135623730951
-    store.load(Value.new(:objkey2)).should == 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
+    store[Value.new(:objkey2)].should == -98.7
+    store.load(Value.new(:objkey2)).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
     store.key?(Value.new(:objkey2)).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store(Value.new(:objkey2), value).should equal(value)
-    store[Value.new(:objkey2)].should == 1.4142135623730951
-    store.load(Value.new(:objkey2)).should == 1.4142135623730951
+    store[Value.new(:objkey2)].should == -98.7
+    store.load(Value.new(:objkey2)).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store[Value.new(:objkey1)] = 2.718281828459045
+    store[Value.new(:objkey2)] = -98.7
+    store[Value.new(:objkey1)] = 123.456
     store.clear.should equal(store)
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store[Value.new(:objkey2)].should == 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
+    store[Value.new(:objkey2)].should == -98.7
     store[Value.new(:objkey1)].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store.delete(Value.new(:objkey2)).should == 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
+    store.delete(Value.new(:objkey2)).should == -98.7
     store.key?(Value.new(:objkey2)).should be_false
   end
 
   it 'overwrites existing values' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store[Value.new(:objkey2)].should == 1.4142135623730951
-    store[Value.new(:objkey2)] = 2.718281828459045
-    store[Value.new(:objkey2)].should == 2.718281828459045
+    store[Value.new(:objkey2)] = -98.7
+    store[Value.new(:objkey2)].should == -98.7
+    store[Value.new(:objkey2)] = 123.456
+    store[Value.new(:objkey2)].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[Value.new(:objkey2)] = value).should equal(value)
-    store[Value.new(:objkey2)].should == 1.4142135623730951
+    store[Value.new(:objkey2)].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = Value.new(:objkey2).freeze
-    store[key] = 1.4142135623730951
-    store[Value.new(:objkey2)].should == 1.4142135623730951
+    store[key] = -98.7
+    store[Value.new(:objkey2)].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
-    store.fetch(Value.new(:objkey2), 2.718281828459045).should == 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
+    store.fetch(Value.new(:objkey2), 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
     unaltered = 'unaltered'
     store.fetch(Value.new(:objkey2)) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -34296,31 +34296,31 @@ end
 
 shared_examples_for 'persist_objectkey_numbervalue' do
   it 'persists values' do
-    store[Value.new(:objkey1)] = 2.718281828459045
+    store[Value.new(:objkey1)] = 123.456
     store.close
     @store = nil
-    store[Value.new(:objkey1)].should == 2.718281828459045
+    store[Value.new(:objkey1)].should == 123.456
   end
 
   it 'persists values' do
-    store[Value.new(:objkey2)] = 2.718281828459045
+    store[Value.new(:objkey2)] = 123.456
     store.close
     @store = nil
-    store[Value.new(:objkey2)].should == 2.718281828459045
+    store[Value.new(:objkey2)].should == 123.456
   end
 
   it 'persists values' do
-    store[Value.new(:objkey1)] = 1.4142135623730951
+    store[Value.new(:objkey1)] = -98.7
     store.close
     @store = nil
-    store[Value.new(:objkey1)].should == 1.4142135623730951
+    store[Value.new(:objkey1)].should == -98.7
   end
 
   it 'persists values' do
-    store[Value.new(:objkey2)] = 1.4142135623730951
+    store[Value.new(:objkey2)] = -98.7
     store.close
     @store = nil
-    store[Value.new(:objkey2)].should == 1.4142135623730951
+    store[Value.new(:objkey2)].should == -98.7
   end
 
   it 'persists values' do
@@ -37461,7 +37461,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
@@ -37474,20 +37474,20 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.clear.should equal(store)
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch({"hashkey1"=>"hashkey2"}, 2.718281828459045).should == 2.718281828459045
+    store.fetch({"hashkey1"=>"hashkey2"}, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = {"hashkey1"=>"hashkey2"}
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -37503,7 +37503,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.clear(options).should equal(store)
-    store.store({"hashkey1"=>"hashkey2"}, 2.718281828459045, options).should == 2.718281828459045
+    store.store({"hashkey1"=>"hashkey2"}, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -37512,7 +37512,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 2.718281828459045
+    value = 123.456
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
@@ -37525,20 +37525,20 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.clear.should equal(store)
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch({"hashkey3"=>"hashkey4"}, 2.718281828459045).should == 2.718281828459045
+    store.fetch({"hashkey3"=>"hashkey4"}, 123.456).should == 123.456
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = {"hashkey3"=>"hashkey4"}
-    value = 2.718281828459045
+    value = 123.456
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -37554,7 +37554,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
     store.delete({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.clear(options).should equal(store)
-    store.store({"hashkey3"=>"hashkey4"}, 2.718281828459045, options).should == 2.718281828459045
+    store.store({"hashkey3"=>"hashkey4"}, 123.456, options).should == 123.456
   end
 
   it 'reads from keys like a Hash' do
@@ -37563,7 +37563,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
@@ -37576,20 +37576,20 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.clear.should equal(store)
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch({"hashkey1"=>"hashkey2"}, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch({"hashkey1"=>"hashkey2"}, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = {"hashkey1"=>"hashkey2"}
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -37605,7 +37605,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
     store.delete({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.clear(options).should equal(store)
-    store.store({"hashkey1"=>"hashkey2"}, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store({"hashkey1"=>"hashkey2"}, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -37614,7 +37614,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'guarantees that the same value is returned when setting a key' do
-    value = 1.4142135623730951
+    value = -98.7
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
@@ -37627,20 +37627,20 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'removes all keys from the store with clear' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.clear.should equal(store)
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
-    store.fetch({"hashkey3"=>"hashkey4"}, 1.4142135623730951).should == 1.4142135623730951
+    store.fetch({"hashkey3"=>"hashkey4"}, -98.7).should == -98.7
   end
 
   it 'fetches a key with a block with fetch, if the key is not available' do
     key = {"hashkey3"=>"hashkey4"}
-    value = 1.4142135623730951
+    value = -98.7
     store.fetch(key) do |k|
       k.should equal(key)
       value
@@ -37656,7 +37656,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
     store.delete({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.clear(options).should equal(store)
-    store.store({"hashkey3"=>"hashkey4"}, 1.4142135623730951, options).should == 1.4142135623730951
+    store.store({"hashkey3"=>"hashkey4"}, -98.7, options).should == -98.7
   end
 
   it 'reads from keys like a Hash' do
@@ -37868,252 +37868,252 @@ end
 
 shared_examples_for 'store_hashkey_numbervalue' do
   it 'writes values to keys that like a Hash' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
-    store.load({"hashkey1"=>"hashkey2"}).should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
+    store.load({"hashkey1"=>"hashkey2"}).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
-    store.load({"hashkey1"=>"hashkey2"}).should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
+    store.load({"hashkey1"=>"hashkey2"}).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
     store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store.delete({"hashkey1"=>"hashkey2"}).should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store.delete({"hashkey1"=>"hashkey2"}).should == 123.456
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
   it 'overwrites existing values' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = {"hashkey1"=>"hashkey2"}.freeze
-    store[key] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
+    store[key] = 123.456
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store.fetch({"hashkey1"=>"hashkey2"}, 1.4142135623730951).should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store.fetch({"hashkey1"=>"hashkey2"}, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
     unaltered = 'unaltered'
     store.fetch({"hashkey1"=>"hashkey2"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
-    store.load({"hashkey3"=>"hashkey4"}).should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
+    store.load({"hashkey3"=>"hashkey4"}).should == 123.456
   end
 
   it 'returns true from key? if a key is available' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
 
   it 'stores values with #store' do
-    value = 2.718281828459045
+    value = 123.456
     store.store({"hashkey3"=>"hashkey4"}, value).should equal(value)
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
-    store.load({"hashkey3"=>"hashkey4"}).should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
+    store.load({"hashkey3"=>"hashkey4"}).should == 123.456
   end
 
   it 'stores values after clear' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.clear.should equal(store)
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
     store[{"hashkey1"=>"hashkey2"}].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store.delete({"hashkey3"=>"hashkey4"}).should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store.delete({"hashkey3"=>"hashkey4"}).should == 123.456
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
   it 'overwrites existing values' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
   end
 
   it 'stores frozen values' do
-    value = 2.718281828459045.freeze
+    value = 123.456.freeze
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
   end
 
   it 'stores frozen keys' do
     key = {"hashkey3"=>"hashkey4"}.freeze
-    store[key] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
+    store[key] = 123.456
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store.fetch({"hashkey3"=>"hashkey4"}, 1.4142135623730951).should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store.fetch({"hashkey3"=>"hashkey4"}, -98.7).should == 123.456
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
     unaltered = 'unaltered'
     store.fetch({"hashkey3"=>"hashkey4"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
-    store.load({"hashkey1"=>"hashkey2"}).should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
+    store.load({"hashkey1"=>"hashkey2"}).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store({"hashkey1"=>"hashkey2"}, value).should equal(value)
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
-    store.load({"hashkey1"=>"hashkey2"}).should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
+    store.load({"hashkey1"=>"hashkey2"}).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.clear.should equal(store)
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
     store[{"hashkey3"=>"hashkey4"}].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store.delete({"hashkey1"=>"hashkey2"}).should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store.delete({"hashkey1"=>"hashkey2"}).should == -98.7
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
   it 'overwrites existing values' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = {"hashkey1"=>"hashkey2"}.freeze
-    store[key] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
+    store[key] = -98.7
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
-    store.fetch({"hashkey1"=>"hashkey2"}, 2.718281828459045).should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
+    store.fetch({"hashkey1"=>"hashkey2"}, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
     unaltered = 'unaltered'
     store.fetch({"hashkey1"=>"hashkey2"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
   end
 
   it 'writes values to keys that like a Hash' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
-    store.load({"hashkey3"=>"hashkey4"}).should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
+    store.load({"hashkey3"=>"hashkey4"}).should == -98.7
   end
 
   it 'returns true from key? if a key is available' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
 
   it 'stores values with #store' do
-    value = 1.4142135623730951
+    value = -98.7
     store.store({"hashkey3"=>"hashkey4"}, value).should equal(value)
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
-    store.load({"hashkey3"=>"hashkey4"}).should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
+    store.load({"hashkey3"=>"hashkey4"}).should == -98.7
   end
 
   it 'stores values after clear' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.clear.should equal(store)
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
     store[{"hashkey1"=>"hashkey2"}].should be_nil
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store.delete({"hashkey3"=>"hashkey4"}).should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store.delete({"hashkey3"=>"hashkey4"}).should == -98.7
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
   it 'overwrites existing values' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
   end
 
   it 'stores frozen values' do
-    value = 1.4142135623730951.freeze
+    value = -98.7.freeze
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
   end
 
   it 'stores frozen keys' do
     key = {"hashkey3"=>"hashkey4"}.freeze
-    store[key] = 1.4142135623730951
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
+    store[key] = -98.7
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
   end
   it 'fetches a key with a default value with fetch, if the key is available' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
-    store.fetch({"hashkey3"=>"hashkey4"}, 2.718281828459045).should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
+    store.fetch({"hashkey3"=>"hashkey4"}, 123.456).should == -98.7
   end
 
   it 'does not run the block in fetch if the key is available' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
     unaltered = 'unaltered'
     store.fetch({"hashkey3"=>"hashkey4"}) { unaltered = 'altered' }
     unaltered.should == 'unaltered'
@@ -38376,31 +38376,31 @@ end
 
 shared_examples_for 'persist_hashkey_numbervalue' do
   it 'persists values' do
-    store[{"hashkey1"=>"hashkey2"}] = 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.close
     @store = nil
-    store[{"hashkey1"=>"hashkey2"}].should == 2.718281828459045
+    store[{"hashkey1"=>"hashkey2"}].should == 123.456
   end
 
   it 'persists values' do
-    store[{"hashkey3"=>"hashkey4"}] = 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.close
     @store = nil
-    store[{"hashkey3"=>"hashkey4"}].should == 2.718281828459045
+    store[{"hashkey3"=>"hashkey4"}].should == 123.456
   end
 
   it 'persists values' do
-    store[{"hashkey1"=>"hashkey2"}] = 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.close
     @store = nil
-    store[{"hashkey1"=>"hashkey2"}].should == 1.4142135623730951
+    store[{"hashkey1"=>"hashkey2"}].should == -98.7
   end
 
   it 'persists values' do
-    store[{"hashkey3"=>"hashkey4"}] = 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.close
     @store = nil
-    store[{"hashkey3"=>"hashkey4"}].should == 1.4142135623730951
+    store[{"hashkey3"=>"hashkey4"}].should == -98.7
   end
 
   it 'persists values' do

@@ -1644,7 +1644,7 @@ SPECS = {}
 KEYS = {
   'nil' => [0, 'nil'],
   'integer' => [-10, 42],
-  'number' => [0.5, Math::PI, 1<<127, 99],
+  'number' => [0.5, -0.3, 1<<127, 99],
   'boolean' => [true, false],
   'string' => %w(strkey1 strkey2 foo/bar bar/foo/baz).map(&:inspect),
   'simplestring' => %w(strkey1 strkey2).map(&:inspect),
@@ -1655,7 +1655,7 @@ KEYS = {
 VALUES = {
   'nil' => [0, 'nil'],
   'integer' => [41, -12],
-  'number' => [Math::E, Math.sqrt(2), 1<<128, 33],
+  'number' => [123.456, -98.7, 1<<128, 33],
   'boolean' => [true, false],
   'string' => %w(strval1 strval2).map(&:inspect),
   'hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
