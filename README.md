@@ -2,7 +2,10 @@
 
 [![Gem Version](https://badge.fury.io/rb/moneta.png)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.png)](https://codeclimate.com/github/minad/moneta)
 
-Moneta provides a standard interface for interacting with various kinds of key/value stores. A short overview of the features:
+Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta supports the well-known
+NoSQL and document based stores.
+
+A short overview of the features:
 
 * Supports a lot of backends with consistent behaviour (See below)
 * Allows a full configuration of the serialization -> compression -> adapter stack using proxies (Similar to [Rack middlewares](http://rack.github.com/))
