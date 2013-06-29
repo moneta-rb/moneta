@@ -1,3 +1,10 @@
+# Rails 4 requires Ruby >= 1.9
+def rails_version
+  v = ['>= 3.2.11']
+  v << '< 4.0.0' unless RUBY_VERSION >= '1.9'
+  v
+end
+
 source 'https://rubygems.org'
 gemspec
 
@@ -37,7 +44,7 @@ gem 'dm-migrations'
 gem 'dm-mysql-adapter'
 # FIXME: Use fog master because of failing tests, fixed after 1.11.1
 gem 'fog', :github => 'fog/fog'
-gem 'activerecord', '>= 3.2.11'
+gem 'activerecord', *rails_version
 gem 'redis'
 gem 'mongo'
 gem 'sequel'
@@ -73,5 +80,5 @@ gem 'rack'
 gem 'rack-cache'
 
 # Rails integration testing
-gem 'actionpack', '>= 3.2.11'
+gem 'actionpack', *rails_version
 gem 'minitest', '~> 4.7.4'
