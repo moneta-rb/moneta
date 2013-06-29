@@ -20,6 +20,16 @@ if system("curl -u moneta:#{ENV['DAV_PW']} -k -o #{BUNDLE_FILE} https://mendler.
   cmd 'rm -rf .bundle'
   cmd "tar -xpf #{BUNDLE_FILE}"
   cmd "rm -f #{BUNDLE_FILE}"
+
+  # Write newest moneta version in Gemfile.lock
+  require './lib/moneta/version'
+  File.open('Gemfile.lock', 'r+') do |fp|
+    content = fp.read
+    content.gsub!(/moneta\s*\(.*?\)/, "moneta (#{Moneta::VERSION})")
+    fp.truncate(0)
+    fp.pos = 0
+    fp.write(content)
+  end
 else
   cmd 'bundle install --path .bundle'
   cmd 'bundle update'
