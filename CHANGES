@@ -1,3 +1,8 @@
+master
+
+* ActionDispatch::Session::MonetaStore fixed for Rails 4
+* Moneta::Server: Tries now to remove stale unix socket
+
 0.7.18
 
 * Adapters::File#increment and #create fixed on JRuby
