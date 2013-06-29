@@ -2,15 +2,9 @@ def rspec(spec)
   sh("rspec #{spec}")
   true
 rescue Exception => ex
-  if $?.termsig
-    sig = nil
-    Signal.list.each do |name, id|
-      if id == $?.termsig
-        sig = name
-        break
-      end
-    end
-    puts "\e[31m########## SIG#{sig} rspec #{spec} ##########\e[0m"
+  if sig = $?.termsig
+    found = Signal.list.to_a.select {|name, id| id == sig }.first
+    puts "\e[31m########## SIG#{found ? found.first : sig} rspec #{spec} ##########\e[0m"
   end
   false
 end
@@ -42,7 +36,8 @@ task :test do
   unstable = specs.select {|s| s =~ unstable_re }
   specs -= unstable
 
-  if group =~ /^(\d+)\/(\d+)$/
+  case group
+  when /^(\d+)\/(\d+)$/
     n = $1.to_i
     max = $2.to_i
     if n == max
@@ -50,7 +45,7 @@ task :test do
     else
       specs = specs[(n-1)*(specs.size/max), specs.size/max]
     end
-  elsif group == 'unstable'
+  when 'unstable'
     specs = unstable
   else
     puts "Invalid test group #{group}"
