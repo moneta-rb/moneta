@@ -48,7 +48,7 @@ matrix:
     - rvm: rbx-18mode
     - rvm: rbx-19mode
     - env: "SCRIPT='test unstable'"
-script: "bundle exec script/$SCRIPT"
+script: "args=($(echo $SCRIPT)); bundle exec script/$args"
 branches:
   only:
     - master
