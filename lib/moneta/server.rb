@@ -9,12 +9,7 @@ module Moneta
     # @option options [String] :socket Alternative Unix socket file name
     def initialize(store, options = {})
       @store = store
-      @server =
-        if @socket = options[:socket]
-          UNIXServer.open(@socket)
-        else
-          TCPServer.open(options[:port] || DEFAULT_PORT)
-        end
+      @server = start(options)
       @clients = [@server]
       @running = false
     end
@@ -99,6 +94,24 @@ module Moneta
         client.write(@nil ||= pack(nil))
       else
         raise 'Invalid method call'
+      end
+    end
+
+    def start(options)
+      if @socket = options[:socket]
+        begin
+          UNIXServer.open(@socket)
+        rescue Errno::EADDRINUSE
+          if client = (UNIXSocket.open(@socket) rescue nil)
+            client.close
+            raise
+          end
+          File.unlink(@socket)
+          tries ||= 0
+          (tries += 1) < 3 ? retry : raise
+        end
+      else
+        TCPServer.open(options[:port] || DEFAULT_PORT)
       end
     end
   end
