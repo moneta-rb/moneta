@@ -28,7 +28,6 @@ end
 
 class MonetaBenchmarks
   DIR = __FILE__ + '.tmp'
-  FileUtils.mkpath(DIR)
 
   STORES = {
     # SDBM accepts only very short key/value pairs (1k for both)
@@ -378,12 +377,15 @@ class MonetaBenchmarks
   end
 
   def run
+    FileUtils.rm_rf(DIR)
+    FileUtils.mkpath(DIR)
     start_servers
     test_stores
     print_config
     generate_data
     run_benchmarks
     print_summary
+    FileUtils.rm_rf(DIR)
   end
 end
 

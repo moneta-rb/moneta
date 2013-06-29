@@ -24,31 +24,31 @@ env:
   global:
     - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="
   matrix:
-    - "TASK=test TEST_GROUP=1/10"
-    - "TASK=test TEST_GROUP=2/10"
-    - "TASK=test TEST_GROUP=3/10"
-    - "TASK=test TEST_GROUP=4/10"
-    - "TASK=test TEST_GROUP=5/10"
-    - "TASK=test TEST_GROUP=6/10"
-    - "TASK=test TEST_GROUP=7/10"
-    - "TASK=test TEST_GROUP=8/10"
-    - "TASK=test TEST_GROUP=9/10"
-    - "TASK=test TEST_GROUP=10/10"
-    - "TASK=test TEST_GROUP=unstable"
-    - "TASK=benchmarks CONFIG=uniform_small"
-    - "TASK=benchmarks CONFIG=uniform_medium"
-    - "TASK=benchmarks CONFIG=uniform_large"
-    - "TASK=benchmarks CONFIG=normal_small"
-    - "TASK=benchmarks CONFIG=normal_medium"
-    - "TASK=benchmarks CONFIG=normal_large"
+    - "SCRIPT='test 1/10'"
+    - "SCRIPT='test 2/10'"
+    - "SCRIPT='test 3/10'"
+    - "SCRIPT='test 4/10'"
+    - "SCRIPT='test 5/10'"
+    - "SCRIPT='test 6/10'"
+    - "SCRIPT='test 7/10'"
+    - "SCRIPT='test 8/10'"
+    - "SCRIPT='test 9/10'"
+    - "SCRIPT='test 10/10'"
+    - "SCRIPT='test unstable'"
+    - "SCRIPT='benchmarks uniform_small'"
+    - "SCRIPT='benchmarks uniform_medium'"
+    - "SCRIPT='benchmarks uniform_large'"
+    - "SCRIPT='benchmarks normal_small'"
+    - "SCRIPT='benchmarks normal_medium'"
+    - "SCRIPT='benchmarks normal_large'"
 matrix:
   allow_failures:
     - rvm: jruby-18mode
     - rvm: jruby-19mode
     - rvm: rbx-18mode
     - rvm: rbx-19mode
-    - env: "TASK=test TEST_GROUP=unstable"
-script: "bundle exec rake $TASK"
+    - env: "SCRIPT='test unstable'"
+script: "bundle exec script/$SCRIPT"
 branches:
   only:
     - master

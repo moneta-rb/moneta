@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 gemspec
 
 # Testing
-gem 'rake'
 gem 'rspec'
 gem 'rspec-retry'
 
