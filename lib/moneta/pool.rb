@@ -27,7 +27,7 @@ module Moneta
 
     def close
       @mutex.synchronize do
-        raise '#close can only when no thread is using the pool' if @all.size != @pool.size
+        raise '#close can only be called when no thread is using the pool' if @all.size != @pool.size
         @all.each(&:close)
         @all = @pool = nil
       end
