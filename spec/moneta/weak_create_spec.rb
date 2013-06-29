@@ -2,7 +2,8 @@
 require 'helper'
 
 describe_moneta "weak_create" do
-  start_restserver
+  require 'fog'
+  Fog.mock!
   def features
     [:create]
   end
@@ -10,7 +11,11 @@ describe_moneta "weak_create" do
   def new_store
     Moneta.build do
       use :WeakCreate
-      adapter :RestClient, :url => 'http://localhost:8808/moneta/'
+      adapter :Fog,
+        :aws_access_key_id => 'fake_access_key_id',
+        :aws_secret_access_key  => 'fake_secret_access_key',
+        :provider               => 'AWS',
+        :dir                    => 'weak_create'
     end
   end
 
@@ -25,7 +30,7 @@ describe_moneta "weak_create" do
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
-  it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it_should_behave_like 'store_large'
 end

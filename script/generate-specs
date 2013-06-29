@@ -479,7 +479,7 @@ end
     :options => ":aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'moneta'",
+    :dir                    => 'simple_fog'",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n"
   },
@@ -488,27 +488,37 @@ end
     :options => ":aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'moneta',
+    :dir                    => 'simple_fog_with_expires',
     :expires                => true",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
     :specs => STANDARD_SPECS.without_increment.without_create.with_expires
   },
   'weak_create' => {
-    :preamble => "start_restserver\n",
+    # Put Fog into testing mode
+    :preamble               => "require 'fog'\nFog.mock!\n",
     :build => %{Moneta.build do
   use :WeakCreate
-  adapter :RestClient, :url => 'http://localhost:8808/moneta/'
+  adapter :Fog,
+    :aws_access_key_id => 'fake_access_key_id',
+    :aws_secret_access_key  => 'fake_secret_access_key',
+    :provider               => 'AWS',
+    :dir                    => 'weak_create'
 end},
-    :specs => ADAPTER_SPECS.without_increment.without_concurrent
+    :specs => ADAPTER_SPECS.without_increment.without_concurrent.returnsame
   },
   'weak_increment' => {
-    :preamble => "start_restserver\n",
+    # Put Fog into testing mode
+    :preamble               => "require 'fog'\nFog.mock!\n",
     :build => %{Moneta.build do
   use :WeakIncrement
-  adapter :RestClient, :url => 'http://localhost:8808/moneta/'
+  adapter :Fog,
+    :aws_access_key_id => 'fake_access_key_id',
+    :aws_secret_access_key  => 'fake_secret_access_key',
+    :provider               => 'AWS',
+    :dir                    => 'weak_increment'
 end},
-    :specs => ADAPTER_SPECS.without_create.without_concurrent
+    :specs => ADAPTER_SPECS.without_create.without_concurrent.returnsame
   },
   'expires_memory' => {
     :build => %{Moneta.build do
@@ -1283,7 +1293,7 @@ end
     :build => "Moneta::Adapters::Fog.new(:aws_access_key_id => 'fake_access_key_id',
     :aws_secret_access_key  => 'fake_secret_access_key',
     :provider               => 'AWS',
-    :dir                    => 'moneta')",
+    :dir                    => 'adapter_fog')",
     # Put Fog into testing mode
     :preamble               => "require 'fog'\nFog.mock!\n",
     # Fog returns same object in mocking mode (in-memory store)

@@ -33,10 +33,10 @@ task :test do
   #   QuickLZ is also not maintained on Github, but on Bitbucket
   #   and I don't know where the issue tracker is.
   #
-  # * PStore and File increment/locking doesn't work correctly on JRuby
+  # * PStore increment/locking doesn't work correctly on JRuby
   #
   unstable = %w(quicklz riak)
-  unstable += %w(file pstore) if defined?(JRUBY_VERSION)
+  unstable += %w(pstore) if defined?(JRUBY_VERSION)
 
   unstable_re = /#{unstable.join('|')}/
   unstable = specs.select {|s| s =~ unstable_re }

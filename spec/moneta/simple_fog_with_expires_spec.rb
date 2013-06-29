@@ -12,7 +12,7 @@ describe_moneta "simple_fog_with_expires" do
     Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
-        :dir                    => 'moneta',
+        :dir                    => 'simple_fog_with_expires',
         :expires                => true, :logger => {:file => File.join(make_tempdir, 'simple_fog_with_expires.log')})
   end
 

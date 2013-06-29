@@ -12,7 +12,7 @@ describe_moneta "adapter_fog" do
     Moneta::Adapters::Fog.new(:aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
-        :dir                    => 'moneta')
+        :dir                    => 'adapter_fog')
   end
 
   def load_value(value)
