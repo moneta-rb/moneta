@@ -18,7 +18,7 @@ module Rack
           @pool = ::Moneta.new(@pool, :expires => true) if Symbol === @pool
         end
         @pool = ::Moneta::WeakCreate.new(@pool) unless @pool.supports?(:create)
-        @mutex = Mutex.new
+        @mutex = ::Mutex.new
       end
 
       def generate_sid
