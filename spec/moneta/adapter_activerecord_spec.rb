@@ -29,8 +29,7 @@ describe_moneta "adapter_activerecord" do
   it 'updates an existing key/value' do
     store['foo/bar'] = '1'
     store['foo/bar'] = '2'
-    records = store.table.find :all, :conditions => { :k => 'foo/bar' }
-    records.count.should == 1
+    store.table.where(:k => 'foo/bar').count.should == 1
   end
 
   it 'supports different tables same database' do
