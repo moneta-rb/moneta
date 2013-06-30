@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
 def rspec(spec)
-  sh("rspec #{spec}")
+  puts "rspec #{spec}"
+  system "rspec #{spec}"
   true
 rescue Exception => ex
   if sig = $?.termsig
@@ -51,6 +52,8 @@ else
   puts "Invalid test group #{group}"
   exit 1
 end
+
+puts "The following specs will be executed:\n#{specs.join "\n"}\n\n"
 
 # Memcached and Redis specs cannot be used in parallel
 # because of flushing and lacking namespaces
