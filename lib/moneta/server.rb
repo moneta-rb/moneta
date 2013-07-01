@@ -1,7 +1,7 @@
 require 'socket'
 
 module Moneta
-  # Moneta server
+  # Moneta server to be used together with Moneta::Adapters::Client
   # @api public
   class Server
     # @param [Hash] options
