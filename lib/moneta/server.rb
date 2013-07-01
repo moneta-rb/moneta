@@ -55,7 +55,7 @@ module Moneta
       handle(client) if client
     rescue SignalException => ex
       warn "Moneta::Server - #{ex.message}"
-      raise if ex.signo == 15 # SIGTERM
+      raise if ex.signo == 15 || ex.signo == 2 # SIGTERM or SIGINT
     rescue IOError => ex
       warn "Moneta::Server - #{ex.message}" unless ex.message =~ /closed/
       @clients.delete(client) if client
