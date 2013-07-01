@@ -2,14 +2,16 @@
 
 def rspec(spec)
   puts "rspec #{spec}"
-  system "rspec #{spec}"
-  true
-rescue Exception => ex
-  if sig = $?.termsig
+  if system("rspec #{spec}")
+    true
+  elsif sig = $?.termsig
     found = Signal.list.to_a.select {|name, id| id == sig }.first
     puts "\e[31m########## SIG#{found ? found.first : sig} rspec #{spec} ##########\e[0m"
+    false
+  else
+    puts "rspec terminated with #{$?.exitstatus}"
+    false
   end
-  false
 end
 
 specs = Dir['spec/*/*_spec.rb'].sort
@@ -29,7 +31,7 @@ srand(old_seed)
 #
 # * PStore increment/locking doesn't work correctly on JRuby
 #
-unstable = %w(quicklz riak)
+unstable = %w(quicklz riak cassandra)
 unstable += %w(pstore) if defined?(JRUBY_VERSION)
 
 unstable_re = /#{unstable.join('|')}/
@@ -83,8 +85,10 @@ parallel.each do |serial|
   sleep 0.1 while threads.size >= 5
 end
 sleep 0.1 until threads.empty?
+
 if failed
-  fail "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
-else
-  puts "\e[32m########## MONETA TESTSUITE SUCCEDED ##########\e[0m"
+  puts "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
+  exit 1
 end
+
+puts "\e[32m########## MONETA TESTSUITE SUCCEDED ##########\e[0m"
