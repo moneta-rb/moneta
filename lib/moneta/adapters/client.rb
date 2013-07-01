@@ -5,7 +5,6 @@ module Moneta
     # Moneta client backend
     # @api public
     class Client
-      include Net
       include Defaults
 
       # @param [Hash] options
@@ -14,50 +13,50 @@ module Moneta
       # @option options [String] :socket Unix socket file name as alternative to `:port` and `:host`
       def initialize(options = {})
         @socket = options[:socket] ? UNIXSocket.open(options[:socket]) :
-          TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || DEFAULT_PORT)
+          TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || 9000)
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        write(@socket, [:key?, key, options])
-        read_result
+        write(:key?, key, options)
+        read
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        write(@socket, [:load, key, options])
-        read_result
+        write(:load, key, options)
+        read
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        write(@socket, [:store, key, value, options])
-        read_result
+        write(:store, key, value, options)
+        read
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        write(@socket, [:delete, key, options])
-        read_result
+        write(:delete, key, options)
+        read
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        write(@socket, [:increment, key, amount, options])
-        read_result
+        write(:increment, key, amount, options)
+        read
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        write(@socket, [:create, key, value, options])
-        read_result
+        write(:create, key, value, options)
+        read
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        write(@socket, [:clear, options])
-        read_result
+        write(:clear, options)
+        read
         self
       end
 
@@ -71,16 +70,22 @@ module Moneta
       def features
         @features ||=
           begin
-            write(@socket, [:features])
-            read_result.freeze
+            write(:features)
+            read.freeze
           end
       end
 
       private
 
-      def read_result
-        result = read(@socket)
-        raise result if Error === result
+      def write(*args)
+        s = Marshal.dump(args)
+        @socket.write([s.bytesize].pack('N') << s)
+      end
+
+      def read
+        size = @socket.read(4).unpack('N').first
+        result = Marshal.load(@socket.read(size))
+        raise result if Exception === result
         result
       end
     end

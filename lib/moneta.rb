@@ -10,7 +10,6 @@ module Moneta
   autoload :Lock,              'moneta/lock'
   autoload :Logger,            'moneta/logger'
   autoload :Mutex,             'moneta/synchronize'
-  autoload :Net,               'moneta/mixins'
   autoload :OptionMerger,      'moneta/optionmerger'
   autoload :OptionSupport,     'moneta/mixins'
   autoload :Pool,              'moneta/pool'
