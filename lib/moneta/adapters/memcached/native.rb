@@ -64,7 +64,7 @@ module Moneta
           @backend.decrement(key, -amount)
         end
         # HACK: Throw error if applied to invalid value
-	# see https://github.com/evan/memcached/issues/110
+        # see https://github.com/evan/memcached/issues/110
         Utils.to_int((@backend.get(key, false) rescue nil)) if result == 0
         result
       rescue ::Memcached::NotFound => ex
