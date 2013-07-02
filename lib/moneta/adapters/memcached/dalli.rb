@@ -52,7 +52,7 @@ module Moneta
       def increment(key, amount = 1, options = {})
         # FIXME: There is a Dalli bug, load(key) returns a wrong value after increment
         # therefore we set default = nil and create the counter manually
-	# See https://github.com/mperham/dalli/issues/309
+        # See https://github.com/mperham/dalli/issues/309
         result =
           if amount >= 0
             @backend.incr(key, amount, expires_value(options) || nil, nil)
