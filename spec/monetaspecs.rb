@@ -13,7 +13,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -64,7 +64,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -115,7 +115,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -166,7 +166,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -217,7 +217,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store.load(0).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = 0
     store.key?(0).should be_true
   end
@@ -269,7 +269,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store.load(nil).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = 0
     store.key?(nil).should be_true
   end
@@ -321,7 +321,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store.load(0).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = nil
     store.key?(0).should be_true
   end
@@ -373,7 +373,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
     store.load(nil).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = nil
     store.key?(nil).should be_true
   end
@@ -465,7 +465,7 @@ shared_examples_for 'null_nilkey_integervalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -516,7 +516,7 @@ shared_examples_for 'null_nilkey_integervalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -567,7 +567,7 @@ shared_examples_for 'null_nilkey_integervalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -618,7 +618,7 @@ shared_examples_for 'null_nilkey_integervalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -669,7 +669,7 @@ shared_examples_for 'store_nilkey_integervalue' do
     store.load(0).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = 41
     store.key?(0).should be_true
   end
@@ -732,7 +732,7 @@ shared_examples_for 'store_nilkey_integervalue' do
     store.load(nil).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = 41
     store.key?(nil).should be_true
   end
@@ -795,7 +795,7 @@ shared_examples_for 'store_nilkey_integervalue' do
     store.load(0).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = -12
     store.key?(0).should be_true
   end
@@ -858,7 +858,7 @@ shared_examples_for 'store_nilkey_integervalue' do
     store.load(nil).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = -12
     store.key?(nil).should be_true
   end
@@ -961,7 +961,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -1012,7 +1012,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -1063,7 +1063,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -1114,7 +1114,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -1165,7 +1165,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -1216,7 +1216,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -1267,7 +1267,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -1318,7 +1318,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -1369,7 +1369,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(0).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = 123.456
     store.key?(0).should be_true
   end
@@ -1432,7 +1432,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(nil).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = 123.456
     store.key?(nil).should be_true
   end
@@ -1495,7 +1495,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(0).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = -98.7
     store.key?(0).should be_true
   end
@@ -1558,7 +1558,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(nil).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = -98.7
     store.key?(nil).should be_true
   end
@@ -1621,7 +1621,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(0).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = 340282366920938463463374607431768211456
     store.key?(0).should be_true
   end
@@ -1684,7 +1684,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(nil).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = 340282366920938463463374607431768211456
     store.key?(nil).should be_true
   end
@@ -1747,7 +1747,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(0).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = 33
     store.key?(0).should be_true
   end
@@ -1810,7 +1810,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
     store.load(nil).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = 33
     store.key?(nil).should be_true
   end
@@ -1941,7 +1941,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -1992,7 +1992,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -2043,7 +2043,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -2094,7 +2094,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -2145,7 +2145,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store.load(0).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = true
     store.key?(0).should be_true
   end
@@ -2208,7 +2208,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store.load(nil).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = true
     store.key?(nil).should be_true
   end
@@ -2271,7 +2271,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store.load(0).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = false
     store.key?(0).should be_true
   end
@@ -2334,7 +2334,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
     store.load(nil).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = false
     store.key?(nil).should be_true
   end
@@ -2437,7 +2437,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -2488,7 +2488,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -2539,7 +2539,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -2590,7 +2590,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -2641,7 +2641,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store.load(0).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = "strval1"
     store.key?(0).should be_true
   end
@@ -2704,7 +2704,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store.load(nil).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = "strval1"
     store.key?(nil).should be_true
   end
@@ -2767,7 +2767,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store.load(0).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = "strval2"
     store.key?(0).should be_true
   end
@@ -2830,7 +2830,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
     store.load(nil).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = "strval2"
     store.key?(nil).should be_true
   end
@@ -2989,7 +2989,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -3040,7 +3040,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -3091,7 +3091,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -3142,7 +3142,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -3193,7 +3193,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store.load(0).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = {"hashval1"=>["array1", 1]}
     store.key?(0).should be_true
   end
@@ -3256,7 +3256,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store.load(nil).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = {"hashval1"=>["array1", 1]}
     store.key?(nil).should be_true
   end
@@ -3319,7 +3319,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store.load(0).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(0).should be_true
   end
@@ -3382,7 +3382,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
     store.load(nil).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(nil).should be_true
   end
@@ -3541,7 +3541,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -3592,7 +3592,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -3643,7 +3643,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
     (store[0] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0).should be_false
   end
 
@@ -3694,7 +3694,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
     (store[nil] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(nil).should be_false
   end
 
@@ -3745,7 +3745,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store.load(0).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = Value.new(:objval1)
     store.key?(0).should be_true
   end
@@ -3808,7 +3808,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store.load(nil).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = Value.new(:objval1)
     store.key?(nil).should be_true
   end
@@ -3871,7 +3871,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store.load(0).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0] = Value.new(:objval2)
     store.key?(0).should be_true
   end
@@ -3934,7 +3934,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
     store.load(nil).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[nil] = Value.new(:objval2)
     store.key?(nil).should be_true
   end
@@ -4093,7 +4093,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -4144,7 +4144,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -4195,7 +4195,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -4246,7 +4246,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -4297,7 +4297,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store.load(-10).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = 0
     store.key?(-10).should be_true
   end
@@ -4349,7 +4349,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store.load(42).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = 0
     store.key?(42).should be_true
   end
@@ -4401,7 +4401,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store.load(-10).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = nil
     store.key?(-10).should be_true
   end
@@ -4453,7 +4453,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
     store.load(42).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = nil
     store.key?(42).should be_true
   end
@@ -4545,7 +4545,7 @@ shared_examples_for 'null_integerkey_integervalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -4596,7 +4596,7 @@ shared_examples_for 'null_integerkey_integervalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -4647,7 +4647,7 @@ shared_examples_for 'null_integerkey_integervalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -4698,7 +4698,7 @@ shared_examples_for 'null_integerkey_integervalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -4749,7 +4749,7 @@ shared_examples_for 'store_integerkey_integervalue' do
     store.load(-10).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = 41
     store.key?(-10).should be_true
   end
@@ -4812,7 +4812,7 @@ shared_examples_for 'store_integerkey_integervalue' do
     store.load(42).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = 41
     store.key?(42).should be_true
   end
@@ -4875,7 +4875,7 @@ shared_examples_for 'store_integerkey_integervalue' do
     store.load(-10).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = -12
     store.key?(-10).should be_true
   end
@@ -4938,7 +4938,7 @@ shared_examples_for 'store_integerkey_integervalue' do
     store.load(42).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = -12
     store.key?(42).should be_true
   end
@@ -5041,7 +5041,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -5092,7 +5092,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -5143,7 +5143,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -5194,7 +5194,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -5245,7 +5245,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -5296,7 +5296,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -5347,7 +5347,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -5398,7 +5398,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -5449,7 +5449,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(-10).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = 123.456
     store.key?(-10).should be_true
   end
@@ -5512,7 +5512,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(42).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = 123.456
     store.key?(42).should be_true
   end
@@ -5575,7 +5575,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(-10).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = -98.7
     store.key?(-10).should be_true
   end
@@ -5638,7 +5638,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(42).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = -98.7
     store.key?(42).should be_true
   end
@@ -5701,7 +5701,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(-10).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = 340282366920938463463374607431768211456
     store.key?(-10).should be_true
   end
@@ -5764,7 +5764,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(42).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = 340282366920938463463374607431768211456
     store.key?(42).should be_true
   end
@@ -5827,7 +5827,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(-10).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = 33
     store.key?(-10).should be_true
   end
@@ -5890,7 +5890,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
     store.load(42).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = 33
     store.key?(42).should be_true
   end
@@ -6021,7 +6021,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -6072,7 +6072,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -6123,7 +6123,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -6174,7 +6174,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -6225,7 +6225,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store.load(-10).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = true
     store.key?(-10).should be_true
   end
@@ -6288,7 +6288,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store.load(42).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = true
     store.key?(42).should be_true
   end
@@ -6351,7 +6351,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store.load(-10).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = false
     store.key?(-10).should be_true
   end
@@ -6414,7 +6414,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
     store.load(42).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = false
     store.key?(42).should be_true
   end
@@ -6517,7 +6517,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -6568,7 +6568,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -6619,7 +6619,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -6670,7 +6670,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -6721,7 +6721,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store.load(-10).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = "strval1"
     store.key?(-10).should be_true
   end
@@ -6784,7 +6784,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store.load(42).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = "strval1"
     store.key?(42).should be_true
   end
@@ -6847,7 +6847,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store.load(-10).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = "strval2"
     store.key?(-10).should be_true
   end
@@ -6910,7 +6910,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
     store.load(42).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = "strval2"
     store.key?(42).should be_true
   end
@@ -7069,7 +7069,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -7120,7 +7120,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -7171,7 +7171,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -7222,7 +7222,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -7273,7 +7273,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store.load(-10).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = {"hashval1"=>["array1", 1]}
     store.key?(-10).should be_true
   end
@@ -7336,7 +7336,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store.load(42).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = {"hashval1"=>["array1", 1]}
     store.key?(42).should be_true
   end
@@ -7399,7 +7399,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store.load(-10).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(-10).should be_true
   end
@@ -7462,7 +7462,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
     store.load(42).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(42).should be_true
   end
@@ -7621,7 +7621,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -7672,7 +7672,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -7723,7 +7723,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
     (store[-10] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-10).should be_false
   end
 
@@ -7774,7 +7774,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
     (store[42] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(42).should be_false
   end
 
@@ -7825,7 +7825,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store.load(-10).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = Value.new(:objval1)
     store.key?(-10).should be_true
   end
@@ -7888,7 +7888,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store.load(42).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = Value.new(:objval1)
     store.key?(42).should be_true
   end
@@ -7951,7 +7951,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store.load(-10).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-10] = Value.new(:objval2)
     store.key?(-10).should be_true
   end
@@ -8014,7 +8014,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
     store.load(42).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[42] = Value.new(:objval2)
     store.key?(42).should be_true
   end
@@ -8173,7 +8173,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -8224,7 +8224,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -8275,7 +8275,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -8326,7 +8326,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -8377,7 +8377,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -8428,7 +8428,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -8479,7 +8479,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -8530,7 +8530,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -8581,7 +8581,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(0.5).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = 0
     store.key?(0.5).should be_true
   end
@@ -8633,7 +8633,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(-0.3).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = 0
     store.key?(-0.3).should be_true
   end
@@ -8685,7 +8685,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(0.5).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = nil
     store.key?(0.5).should be_true
   end
@@ -8737,7 +8737,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(-0.3).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = nil
     store.key?(-0.3).should be_true
   end
@@ -8789,7 +8789,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(170141183460469231731687303715884105728).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 0
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -8841,7 +8841,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(99).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = 0
     store.key?(99).should be_true
   end
@@ -8893,7 +8893,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(170141183460469231731687303715884105728).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = nil
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -8945,7 +8945,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
     store.load(99).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = nil
     store.key?(99).should be_true
   end
@@ -9065,7 +9065,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -9116,7 +9116,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -9167,7 +9167,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -9218,7 +9218,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -9269,7 +9269,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -9320,7 +9320,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -9371,7 +9371,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -9422,7 +9422,7 @@ shared_examples_for 'null_numberkey_integervalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -9473,7 +9473,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(0.5).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = 41
     store.key?(0.5).should be_true
   end
@@ -9536,7 +9536,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(-0.3).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = 41
     store.key?(-0.3).should be_true
   end
@@ -9599,7 +9599,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(0.5).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = -12
     store.key?(0.5).should be_true
   end
@@ -9662,7 +9662,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(-0.3).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = -12
     store.key?(-0.3).should be_true
   end
@@ -9725,7 +9725,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(170141183460469231731687303715884105728).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 41
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -9788,7 +9788,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(99).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = 41
     store.key?(99).should be_true
   end
@@ -9851,7 +9851,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(170141183460469231731687303715884105728).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = -12
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -9914,7 +9914,7 @@ shared_examples_for 'store_numberkey_integervalue' do
     store.load(99).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = -12
     store.key?(99).should be_true
   end
@@ -10045,7 +10045,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -10096,7 +10096,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -10147,7 +10147,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -10198,7 +10198,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -10249,7 +10249,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -10300,7 +10300,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -10351,7 +10351,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -10402,7 +10402,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -10453,7 +10453,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -10504,7 +10504,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -10555,7 +10555,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -10606,7 +10606,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -10657,7 +10657,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -10708,7 +10708,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -10759,7 +10759,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -10810,7 +10810,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -10861,7 +10861,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(0.5).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = 123.456
     store.key?(0.5).should be_true
   end
@@ -10924,7 +10924,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(-0.3).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = 123.456
     store.key?(-0.3).should be_true
   end
@@ -10987,7 +10987,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(0.5).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = -98.7
     store.key?(0.5).should be_true
   end
@@ -11050,7 +11050,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(-0.3).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = -98.7
     store.key?(-0.3).should be_true
   end
@@ -11113,7 +11113,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(0.5).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = 340282366920938463463374607431768211456
     store.key?(0.5).should be_true
   end
@@ -11176,7 +11176,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(-0.3).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = 340282366920938463463374607431768211456
     store.key?(-0.3).should be_true
   end
@@ -11239,7 +11239,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(0.5).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = 33
     store.key?(0.5).should be_true
   end
@@ -11302,7 +11302,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(-0.3).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = 33
     store.key?(-0.3).should be_true
   end
@@ -11365,7 +11365,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(170141183460469231731687303715884105728).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 123.456
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -11428,7 +11428,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(99).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = 123.456
     store.key?(99).should be_true
   end
@@ -11491,7 +11491,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(170141183460469231731687303715884105728).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = -98.7
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -11554,7 +11554,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(99).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = -98.7
     store.key?(99).should be_true
   end
@@ -11617,7 +11617,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(170141183460469231731687303715884105728).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 340282366920938463463374607431768211456
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -11680,7 +11680,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(99).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = 340282366920938463463374607431768211456
     store.key?(99).should be_true
   end
@@ -11743,7 +11743,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(170141183460469231731687303715884105728).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 33
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -11806,7 +11806,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
     store.load(99).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = 33
     store.key?(99).should be_true
   end
@@ -11993,7 +11993,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -12044,7 +12044,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -12095,7 +12095,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -12146,7 +12146,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -12197,7 +12197,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -12248,7 +12248,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -12299,7 +12299,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -12350,7 +12350,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -12401,7 +12401,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(0.5).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = true
     store.key?(0.5).should be_true
   end
@@ -12464,7 +12464,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(-0.3).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = true
     store.key?(-0.3).should be_true
   end
@@ -12527,7 +12527,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(0.5).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = false
     store.key?(0.5).should be_true
   end
@@ -12590,7 +12590,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(-0.3).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = false
     store.key?(-0.3).should be_true
   end
@@ -12653,7 +12653,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(170141183460469231731687303715884105728).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = true
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -12716,7 +12716,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(99).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = true
     store.key?(99).should be_true
   end
@@ -12779,7 +12779,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(170141183460469231731687303715884105728).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = false
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -12842,7 +12842,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
     store.load(99).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = false
     store.key?(99).should be_true
   end
@@ -12973,7 +12973,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -13024,7 +13024,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -13075,7 +13075,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -13126,7 +13126,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -13177,7 +13177,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -13228,7 +13228,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -13279,7 +13279,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -13330,7 +13330,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -13381,7 +13381,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(0.5).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = "strval1"
     store.key?(0.5).should be_true
   end
@@ -13444,7 +13444,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(-0.3).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = "strval1"
     store.key?(-0.3).should be_true
   end
@@ -13507,7 +13507,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(0.5).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = "strval2"
     store.key?(0.5).should be_true
   end
@@ -13570,7 +13570,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(-0.3).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = "strval2"
     store.key?(-0.3).should be_true
   end
@@ -13633,7 +13633,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(170141183460469231731687303715884105728).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = "strval1"
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -13696,7 +13696,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(99).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = "strval1"
     store.key?(99).should be_true
   end
@@ -13759,7 +13759,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(170141183460469231731687303715884105728).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = "strval2"
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -13822,7 +13822,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
     store.load(99).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = "strval2"
     store.key?(99).should be_true
   end
@@ -14057,7 +14057,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -14108,7 +14108,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -14159,7 +14159,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -14210,7 +14210,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -14261,7 +14261,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -14312,7 +14312,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -14363,7 +14363,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -14414,7 +14414,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -14465,7 +14465,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(0.5).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = {"hashval1"=>["array1", 1]}
     store.key?(0.5).should be_true
   end
@@ -14528,7 +14528,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(-0.3).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = {"hashval1"=>["array1", 1]}
     store.key?(-0.3).should be_true
   end
@@ -14591,7 +14591,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(0.5).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(0.5).should be_true
   end
@@ -14654,7 +14654,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(-0.3).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(-0.3).should be_true
   end
@@ -14717,7 +14717,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(170141183460469231731687303715884105728).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = {"hashval1"=>["array1", 1]}
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -14780,7 +14780,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(99).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = {"hashval1"=>["array1", 1]}
     store.key?(99).should be_true
   end
@@ -14843,7 +14843,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(170141183460469231731687303715884105728).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -14906,7 +14906,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
     store.load(99).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(99).should be_true
   end
@@ -15141,7 +15141,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -15192,7 +15192,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -15243,7 +15243,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[0.5] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(0.5).should be_false
   end
 
@@ -15294,7 +15294,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[-0.3] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(-0.3).should be_false
   end
 
@@ -15345,7 +15345,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -15396,7 +15396,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -15447,7 +15447,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[170141183460469231731687303715884105728] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(170141183460469231731687303715884105728).should be_false
   end
 
@@ -15498,7 +15498,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
     (store[99] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(99).should be_false
   end
 
@@ -15549,7 +15549,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(0.5).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = Value.new(:objval1)
     store.key?(0.5).should be_true
   end
@@ -15612,7 +15612,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(-0.3).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = Value.new(:objval1)
     store.key?(-0.3).should be_true
   end
@@ -15675,7 +15675,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(0.5).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[0.5] = Value.new(:objval2)
     store.key?(0.5).should be_true
   end
@@ -15738,7 +15738,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(-0.3).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[-0.3] = Value.new(:objval2)
     store.key?(-0.3).should be_true
   end
@@ -15801,7 +15801,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(170141183460469231731687303715884105728).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = Value.new(:objval1)
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -15864,7 +15864,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(99).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = Value.new(:objval1)
     store.key?(99).should be_true
   end
@@ -15927,7 +15927,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(170141183460469231731687303715884105728).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = Value.new(:objval2)
     store.key?(170141183460469231731687303715884105728).should be_true
   end
@@ -15990,7 +15990,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
     store.load(99).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[99] = Value.new(:objval2)
     store.key?(99).should be_true
   end
@@ -16225,7 +16225,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -16276,7 +16276,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -16327,7 +16327,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -16378,7 +16378,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -16429,7 +16429,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store.load(true).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = 0
     store.key?(true).should be_true
   end
@@ -16481,7 +16481,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store.load(false).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = 0
     store.key?(false).should be_true
   end
@@ -16533,7 +16533,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store.load(true).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = nil
     store.key?(true).should be_true
   end
@@ -16585,7 +16585,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
     store.load(false).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = nil
     store.key?(false).should be_true
   end
@@ -16677,7 +16677,7 @@ shared_examples_for 'null_booleankey_integervalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -16728,7 +16728,7 @@ shared_examples_for 'null_booleankey_integervalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -16779,7 +16779,7 @@ shared_examples_for 'null_booleankey_integervalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -16830,7 +16830,7 @@ shared_examples_for 'null_booleankey_integervalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -16881,7 +16881,7 @@ shared_examples_for 'store_booleankey_integervalue' do
     store.load(true).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = 41
     store.key?(true).should be_true
   end
@@ -16944,7 +16944,7 @@ shared_examples_for 'store_booleankey_integervalue' do
     store.load(false).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = 41
     store.key?(false).should be_true
   end
@@ -17007,7 +17007,7 @@ shared_examples_for 'store_booleankey_integervalue' do
     store.load(true).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = -12
     store.key?(true).should be_true
   end
@@ -17070,7 +17070,7 @@ shared_examples_for 'store_booleankey_integervalue' do
     store.load(false).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = -12
     store.key?(false).should be_true
   end
@@ -17173,7 +17173,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -17224,7 +17224,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -17275,7 +17275,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -17326,7 +17326,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -17377,7 +17377,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -17428,7 +17428,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -17479,7 +17479,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -17530,7 +17530,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -17581,7 +17581,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(true).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = 123.456
     store.key?(true).should be_true
   end
@@ -17644,7 +17644,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(false).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = 123.456
     store.key?(false).should be_true
   end
@@ -17707,7 +17707,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(true).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = -98.7
     store.key?(true).should be_true
   end
@@ -17770,7 +17770,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(false).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = -98.7
     store.key?(false).should be_true
   end
@@ -17833,7 +17833,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(true).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = 340282366920938463463374607431768211456
     store.key?(true).should be_true
   end
@@ -17896,7 +17896,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(false).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = 340282366920938463463374607431768211456
     store.key?(false).should be_true
   end
@@ -17959,7 +17959,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(true).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = 33
     store.key?(true).should be_true
   end
@@ -18022,7 +18022,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
     store.load(false).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = 33
     store.key?(false).should be_true
   end
@@ -18153,7 +18153,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -18204,7 +18204,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -18255,7 +18255,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -18306,7 +18306,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -18357,7 +18357,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store.load(true).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = true
     store.key?(true).should be_true
   end
@@ -18420,7 +18420,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store.load(false).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = true
     store.key?(false).should be_true
   end
@@ -18483,7 +18483,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store.load(true).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = false
     store.key?(true).should be_true
   end
@@ -18546,7 +18546,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
     store.load(false).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = false
     store.key?(false).should be_true
   end
@@ -18649,7 +18649,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -18700,7 +18700,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -18751,7 +18751,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -18802,7 +18802,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -18853,7 +18853,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store.load(true).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = "strval1"
     store.key?(true).should be_true
   end
@@ -18916,7 +18916,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store.load(false).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = "strval1"
     store.key?(false).should be_true
   end
@@ -18979,7 +18979,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store.load(true).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = "strval2"
     store.key?(true).should be_true
   end
@@ -19042,7 +19042,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
     store.load(false).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = "strval2"
     store.key?(false).should be_true
   end
@@ -19201,7 +19201,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -19252,7 +19252,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -19303,7 +19303,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -19354,7 +19354,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -19405,7 +19405,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store.load(true).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = {"hashval1"=>["array1", 1]}
     store.key?(true).should be_true
   end
@@ -19468,7 +19468,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store.load(false).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = {"hashval1"=>["array1", 1]}
     store.key?(false).should be_true
   end
@@ -19531,7 +19531,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store.load(true).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(true).should be_true
   end
@@ -19594,7 +19594,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
     store.load(false).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(false).should be_true
   end
@@ -19753,7 +19753,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -19804,7 +19804,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -19855,7 +19855,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
     (store[true] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(true).should be_false
   end
 
@@ -19906,7 +19906,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
     (store[false] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(false).should be_false
   end
 
@@ -19957,7 +19957,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store.load(true).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = Value.new(:objval1)
     store.key?(true).should be_true
   end
@@ -20020,7 +20020,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store.load(false).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = Value.new(:objval1)
     store.key?(false).should be_true
   end
@@ -20083,7 +20083,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store.load(true).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[true] = Value.new(:objval2)
     store.key?(true).should be_true
   end
@@ -20146,7 +20146,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
     store.load(false).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[false] = Value.new(:objval2)
     store.key?(false).should be_true
   end
@@ -20305,7 +20305,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -20356,7 +20356,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -20407,7 +20407,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -20458,7 +20458,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -20509,7 +20509,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -20560,7 +20560,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -20611,7 +20611,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -20662,7 +20662,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -20713,7 +20713,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("strkey1").should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 0
     store.key?("strkey1").should be_true
   end
@@ -20765,7 +20765,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("strkey2").should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 0
     store.key?("strkey2").should be_true
   end
@@ -20817,7 +20817,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("strkey1").should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = nil
     store.key?("strkey1").should be_true
   end
@@ -20869,7 +20869,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("strkey2").should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = nil
     store.key?("strkey2").should be_true
   end
@@ -20921,7 +20921,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("foo/bar").should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 0
     store.key?("foo/bar").should be_true
   end
@@ -20973,7 +20973,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("bar/foo/baz").should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 0
     store.key?("bar/foo/baz").should be_true
   end
@@ -21025,7 +21025,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("foo/bar").should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = nil
     store.key?("foo/bar").should be_true
   end
@@ -21077,7 +21077,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
     store.load("bar/foo/baz").should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = nil
     store.key?("bar/foo/baz").should be_true
   end
@@ -21197,7 +21197,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -21248,7 +21248,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -21299,7 +21299,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -21350,7 +21350,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -21401,7 +21401,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -21452,7 +21452,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -21503,7 +21503,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -21554,7 +21554,7 @@ shared_examples_for 'null_stringkey_integervalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -21605,7 +21605,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("strkey1").should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 41
     store.key?("strkey1").should be_true
   end
@@ -21668,7 +21668,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("strkey2").should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 41
     store.key?("strkey2").should be_true
   end
@@ -21731,7 +21731,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("strkey1").should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = -12
     store.key?("strkey1").should be_true
   end
@@ -21794,7 +21794,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("strkey2").should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = -12
     store.key?("strkey2").should be_true
   end
@@ -21857,7 +21857,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("foo/bar").should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 41
     store.key?("foo/bar").should be_true
   end
@@ -21920,7 +21920,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("bar/foo/baz").should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 41
     store.key?("bar/foo/baz").should be_true
   end
@@ -21983,7 +21983,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("foo/bar").should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = -12
     store.key?("foo/bar").should be_true
   end
@@ -22046,7 +22046,7 @@ shared_examples_for 'store_stringkey_integervalue' do
     store.load("bar/foo/baz").should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = -12
     store.key?("bar/foo/baz").should be_true
   end
@@ -22177,7 +22177,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -22228,7 +22228,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -22279,7 +22279,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -22330,7 +22330,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -22381,7 +22381,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -22432,7 +22432,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -22483,7 +22483,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -22534,7 +22534,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -22585,7 +22585,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -22636,7 +22636,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -22687,7 +22687,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -22738,7 +22738,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -22789,7 +22789,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -22840,7 +22840,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -22891,7 +22891,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -22942,7 +22942,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -22993,7 +22993,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey1").should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 123.456
     store.key?("strkey1").should be_true
   end
@@ -23056,7 +23056,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey2").should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 123.456
     store.key?("strkey2").should be_true
   end
@@ -23119,7 +23119,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey1").should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = -98.7
     store.key?("strkey1").should be_true
   end
@@ -23182,7 +23182,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey2").should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = -98.7
     store.key?("strkey2").should be_true
   end
@@ -23245,7 +23245,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey1").should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 340282366920938463463374607431768211456
     store.key?("strkey1").should be_true
   end
@@ -23308,7 +23308,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey2").should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 340282366920938463463374607431768211456
     store.key?("strkey2").should be_true
   end
@@ -23371,7 +23371,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey1").should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 33
     store.key?("strkey1").should be_true
   end
@@ -23434,7 +23434,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("strkey2").should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 33
     store.key?("strkey2").should be_true
   end
@@ -23497,7 +23497,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("foo/bar").should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 123.456
     store.key?("foo/bar").should be_true
   end
@@ -23560,7 +23560,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("bar/foo/baz").should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 123.456
     store.key?("bar/foo/baz").should be_true
   end
@@ -23623,7 +23623,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("foo/bar").should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = -98.7
     store.key?("foo/bar").should be_true
   end
@@ -23686,7 +23686,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("bar/foo/baz").should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = -98.7
     store.key?("bar/foo/baz").should be_true
   end
@@ -23749,7 +23749,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("foo/bar").should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 340282366920938463463374607431768211456
     store.key?("foo/bar").should be_true
   end
@@ -23812,7 +23812,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("bar/foo/baz").should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 340282366920938463463374607431768211456
     store.key?("bar/foo/baz").should be_true
   end
@@ -23875,7 +23875,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("foo/bar").should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 33
     store.key?("foo/bar").should be_true
   end
@@ -23938,7 +23938,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
     store.load("bar/foo/baz").should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 33
     store.key?("bar/foo/baz").should be_true
   end
@@ -24125,7 +24125,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -24176,7 +24176,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -24227,7 +24227,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -24278,7 +24278,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -24329,7 +24329,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -24380,7 +24380,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -24431,7 +24431,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -24482,7 +24482,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -24533,7 +24533,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("strkey1").should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = true
     store.key?("strkey1").should be_true
   end
@@ -24596,7 +24596,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("strkey2").should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = true
     store.key?("strkey2").should be_true
   end
@@ -24659,7 +24659,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("strkey1").should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = false
     store.key?("strkey1").should be_true
   end
@@ -24722,7 +24722,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("strkey2").should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = false
     store.key?("strkey2").should be_true
   end
@@ -24785,7 +24785,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("foo/bar").should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = true
     store.key?("foo/bar").should be_true
   end
@@ -24848,7 +24848,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("bar/foo/baz").should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = true
     store.key?("bar/foo/baz").should be_true
   end
@@ -24911,7 +24911,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("foo/bar").should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = false
     store.key?("foo/bar").should be_true
   end
@@ -24974,7 +24974,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
     store.load("bar/foo/baz").should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = false
     store.key?("bar/foo/baz").should be_true
   end
@@ -25105,7 +25105,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -25156,7 +25156,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -25207,7 +25207,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -25258,7 +25258,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -25309,7 +25309,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -25360,7 +25360,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -25411,7 +25411,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -25462,7 +25462,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -25513,7 +25513,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("strkey1").should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = "strval1"
     store.key?("strkey1").should be_true
   end
@@ -25576,7 +25576,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("strkey2").should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = "strval1"
     store.key?("strkey2").should be_true
   end
@@ -25639,7 +25639,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("strkey1").should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = "strval2"
     store.key?("strkey1").should be_true
   end
@@ -25702,7 +25702,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("strkey2").should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = "strval2"
     store.key?("strkey2").should be_true
   end
@@ -25765,7 +25765,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("foo/bar").should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = "strval1"
     store.key?("foo/bar").should be_true
   end
@@ -25828,7 +25828,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("bar/foo/baz").should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = "strval1"
     store.key?("bar/foo/baz").should be_true
   end
@@ -25891,7 +25891,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("foo/bar").should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = "strval2"
     store.key?("foo/bar").should be_true
   end
@@ -25954,7 +25954,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
     store.load("bar/foo/baz").should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = "strval2"
     store.key?("bar/foo/baz").should be_true
   end
@@ -26189,7 +26189,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -26240,7 +26240,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -26291,7 +26291,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -26342,7 +26342,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -26393,7 +26393,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -26444,7 +26444,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -26495,7 +26495,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -26546,7 +26546,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -26597,7 +26597,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("strkey1").should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store.key?("strkey1").should be_true
   end
@@ -26660,7 +26660,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("strkey2").should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = {"hashval1"=>["array1", 1]}
     store.key?("strkey2").should be_true
   end
@@ -26723,7 +26723,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("strkey1").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?("strkey1").should be_true
   end
@@ -26786,7 +26786,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("strkey2").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?("strkey2").should be_true
   end
@@ -26849,7 +26849,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("foo/bar").should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
     store.key?("foo/bar").should be_true
   end
@@ -26912,7 +26912,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("bar/foo/baz").should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = {"hashval1"=>["array1", 1]}
     store.key?("bar/foo/baz").should be_true
   end
@@ -26975,7 +26975,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("foo/bar").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?("foo/bar").should be_true
   end
@@ -27038,7 +27038,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
     store.load("bar/foo/baz").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?("bar/foo/baz").should be_true
   end
@@ -27273,7 +27273,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -27324,7 +27324,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -27375,7 +27375,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -27426,7 +27426,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -27477,7 +27477,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -27528,7 +27528,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -27579,7 +27579,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["foo/bar"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("foo/bar").should be_false
   end
 
@@ -27630,7 +27630,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
     (store["bar/foo/baz"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("bar/foo/baz").should be_false
   end
 
@@ -27681,7 +27681,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("strkey1").should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = Value.new(:objval1)
     store.key?("strkey1").should be_true
   end
@@ -27744,7 +27744,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("strkey2").should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = Value.new(:objval1)
     store.key?("strkey2").should be_true
   end
@@ -27807,7 +27807,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("strkey1").should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = Value.new(:objval2)
     store.key?("strkey1").should be_true
   end
@@ -27870,7 +27870,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("strkey2").should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = Value.new(:objval2)
     store.key?("strkey2").should be_true
   end
@@ -27933,7 +27933,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("foo/bar").should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = Value.new(:objval1)
     store.key?("foo/bar").should be_true
   end
@@ -27996,7 +27996,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("bar/foo/baz").should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = Value.new(:objval1)
     store.key?("bar/foo/baz").should be_true
   end
@@ -28059,7 +28059,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("foo/bar").should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["foo/bar"] = Value.new(:objval2)
     store.key?("foo/bar").should be_true
   end
@@ -28122,7 +28122,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
     store.load("bar/foo/baz").should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = Value.new(:objval2)
     store.key?("bar/foo/baz").should be_true
   end
@@ -28357,7 +28357,7 @@ shared_examples_for 'null_simplestringkey_nilvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -28408,7 +28408,7 @@ shared_examples_for 'null_simplestringkey_nilvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -28459,7 +28459,7 @@ shared_examples_for 'null_simplestringkey_nilvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -28510,7 +28510,7 @@ shared_examples_for 'null_simplestringkey_nilvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -28561,7 +28561,7 @@ shared_examples_for 'store_simplestringkey_nilvalue' do
     store.load("strkey1").should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 0
     store.key?("strkey1").should be_true
   end
@@ -28613,7 +28613,7 @@ shared_examples_for 'store_simplestringkey_nilvalue' do
     store.load("strkey2").should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 0
     store.key?("strkey2").should be_true
   end
@@ -28665,7 +28665,7 @@ shared_examples_for 'store_simplestringkey_nilvalue' do
     store.load("strkey1").should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = nil
     store.key?("strkey1").should be_true
   end
@@ -28717,7 +28717,7 @@ shared_examples_for 'store_simplestringkey_nilvalue' do
     store.load("strkey2").should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = nil
     store.key?("strkey2").should be_true
   end
@@ -28809,7 +28809,7 @@ shared_examples_for 'null_simplestringkey_integervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -28860,7 +28860,7 @@ shared_examples_for 'null_simplestringkey_integervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -28911,7 +28911,7 @@ shared_examples_for 'null_simplestringkey_integervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -28962,7 +28962,7 @@ shared_examples_for 'null_simplestringkey_integervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -29013,7 +29013,7 @@ shared_examples_for 'store_simplestringkey_integervalue' do
     store.load("strkey1").should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 41
     store.key?("strkey1").should be_true
   end
@@ -29076,7 +29076,7 @@ shared_examples_for 'store_simplestringkey_integervalue' do
     store.load("strkey2").should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 41
     store.key?("strkey2").should be_true
   end
@@ -29139,7 +29139,7 @@ shared_examples_for 'store_simplestringkey_integervalue' do
     store.load("strkey1").should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = -12
     store.key?("strkey1").should be_true
   end
@@ -29202,7 +29202,7 @@ shared_examples_for 'store_simplestringkey_integervalue' do
     store.load("strkey2").should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = -12
     store.key?("strkey2").should be_true
   end
@@ -29305,7 +29305,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -29356,7 +29356,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -29407,7 +29407,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -29458,7 +29458,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -29509,7 +29509,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -29560,7 +29560,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -29611,7 +29611,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -29662,7 +29662,7 @@ shared_examples_for 'null_simplestringkey_numbervalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -29713,7 +29713,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey1").should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 123.456
     store.key?("strkey1").should be_true
   end
@@ -29776,7 +29776,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey2").should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 123.456
     store.key?("strkey2").should be_true
   end
@@ -29839,7 +29839,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey1").should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = -98.7
     store.key?("strkey1").should be_true
   end
@@ -29902,7 +29902,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey2").should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = -98.7
     store.key?("strkey2").should be_true
   end
@@ -29965,7 +29965,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey1").should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 340282366920938463463374607431768211456
     store.key?("strkey1").should be_true
   end
@@ -30028,7 +30028,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey2").should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 340282366920938463463374607431768211456
     store.key?("strkey2").should be_true
   end
@@ -30091,7 +30091,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey1").should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = 33
     store.key?("strkey1").should be_true
   end
@@ -30154,7 +30154,7 @@ shared_examples_for 'store_simplestringkey_numbervalue' do
     store.load("strkey2").should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = 33
     store.key?("strkey2").should be_true
   end
@@ -30285,7 +30285,7 @@ shared_examples_for 'null_simplestringkey_booleanvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -30336,7 +30336,7 @@ shared_examples_for 'null_simplestringkey_booleanvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -30387,7 +30387,7 @@ shared_examples_for 'null_simplestringkey_booleanvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -30438,7 +30438,7 @@ shared_examples_for 'null_simplestringkey_booleanvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -30489,7 +30489,7 @@ shared_examples_for 'store_simplestringkey_booleanvalue' do
     store.load("strkey1").should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = true
     store.key?("strkey1").should be_true
   end
@@ -30552,7 +30552,7 @@ shared_examples_for 'store_simplestringkey_booleanvalue' do
     store.load("strkey2").should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = true
     store.key?("strkey2").should be_true
   end
@@ -30615,7 +30615,7 @@ shared_examples_for 'store_simplestringkey_booleanvalue' do
     store.load("strkey1").should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = false
     store.key?("strkey1").should be_true
   end
@@ -30678,7 +30678,7 @@ shared_examples_for 'store_simplestringkey_booleanvalue' do
     store.load("strkey2").should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = false
     store.key?("strkey2").should be_true
   end
@@ -30781,7 +30781,7 @@ shared_examples_for 'null_simplestringkey_stringvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -30832,7 +30832,7 @@ shared_examples_for 'null_simplestringkey_stringvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -30883,7 +30883,7 @@ shared_examples_for 'null_simplestringkey_stringvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -30934,7 +30934,7 @@ shared_examples_for 'null_simplestringkey_stringvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -30985,7 +30985,7 @@ shared_examples_for 'store_simplestringkey_stringvalue' do
     store.load("strkey1").should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = "strval1"
     store.key?("strkey1").should be_true
   end
@@ -31048,7 +31048,7 @@ shared_examples_for 'store_simplestringkey_stringvalue' do
     store.load("strkey2").should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = "strval1"
     store.key?("strkey2").should be_true
   end
@@ -31111,7 +31111,7 @@ shared_examples_for 'store_simplestringkey_stringvalue' do
     store.load("strkey1").should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = "strval2"
     store.key?("strkey1").should be_true
   end
@@ -31174,7 +31174,7 @@ shared_examples_for 'store_simplestringkey_stringvalue' do
     store.load("strkey2").should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = "strval2"
     store.key?("strkey2").should be_true
   end
@@ -31333,7 +31333,7 @@ shared_examples_for 'null_simplestringkey_hashvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -31384,7 +31384,7 @@ shared_examples_for 'null_simplestringkey_hashvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -31435,7 +31435,7 @@ shared_examples_for 'null_simplestringkey_hashvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -31486,7 +31486,7 @@ shared_examples_for 'null_simplestringkey_hashvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -31537,7 +31537,7 @@ shared_examples_for 'store_simplestringkey_hashvalue' do
     store.load("strkey1").should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store.key?("strkey1").should be_true
   end
@@ -31600,7 +31600,7 @@ shared_examples_for 'store_simplestringkey_hashvalue' do
     store.load("strkey2").should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = {"hashval1"=>["array1", 1]}
     store.key?("strkey2").should be_true
   end
@@ -31663,7 +31663,7 @@ shared_examples_for 'store_simplestringkey_hashvalue' do
     store.load("strkey1").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?("strkey1").should be_true
   end
@@ -31726,7 +31726,7 @@ shared_examples_for 'store_simplestringkey_hashvalue' do
     store.load("strkey2").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?("strkey2").should be_true
   end
@@ -31885,7 +31885,7 @@ shared_examples_for 'null_simplestringkey_objectvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -31936,7 +31936,7 @@ shared_examples_for 'null_simplestringkey_objectvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -31987,7 +31987,7 @@ shared_examples_for 'null_simplestringkey_objectvalue' do
     (store["strkey1"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey1").should be_false
   end
 
@@ -32038,7 +32038,7 @@ shared_examples_for 'null_simplestringkey_objectvalue' do
     (store["strkey2"] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?("strkey2").should be_false
   end
 
@@ -32089,7 +32089,7 @@ shared_examples_for 'store_simplestringkey_objectvalue' do
     store.load("strkey1").should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = Value.new(:objval1)
     store.key?("strkey1").should be_true
   end
@@ -32152,7 +32152,7 @@ shared_examples_for 'store_simplestringkey_objectvalue' do
     store.load("strkey2").should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = Value.new(:objval1)
     store.key?("strkey2").should be_true
   end
@@ -32215,7 +32215,7 @@ shared_examples_for 'store_simplestringkey_objectvalue' do
     store.load("strkey1").should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey1"] = Value.new(:objval2)
     store.key?("strkey1").should be_true
   end
@@ -32278,7 +32278,7 @@ shared_examples_for 'store_simplestringkey_objectvalue' do
     store.load("strkey2").should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store["strkey2"] = Value.new(:objval2)
     store.key?("strkey2").should be_true
   end
@@ -32437,7 +32437,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -32488,7 +32488,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -32539,7 +32539,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -32590,7 +32590,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -32641,7 +32641,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store.load(Value.new(:objkey1)).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 0
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -32693,7 +32693,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store.load(Value.new(:objkey2)).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 0
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -32745,7 +32745,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store.load(Value.new(:objkey1)).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = nil
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -32797,7 +32797,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
     store.load(Value.new(:objkey2)).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = nil
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -32889,7 +32889,7 @@ shared_examples_for 'null_objectkey_integervalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -32940,7 +32940,7 @@ shared_examples_for 'null_objectkey_integervalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -32991,7 +32991,7 @@ shared_examples_for 'null_objectkey_integervalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -33042,7 +33042,7 @@ shared_examples_for 'null_objectkey_integervalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -33093,7 +33093,7 @@ shared_examples_for 'store_objectkey_integervalue' do
     store.load(Value.new(:objkey1)).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 41
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -33156,7 +33156,7 @@ shared_examples_for 'store_objectkey_integervalue' do
     store.load(Value.new(:objkey2)).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 41
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -33219,7 +33219,7 @@ shared_examples_for 'store_objectkey_integervalue' do
     store.load(Value.new(:objkey1)).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = -12
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -33282,7 +33282,7 @@ shared_examples_for 'store_objectkey_integervalue' do
     store.load(Value.new(:objkey2)).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = -12
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -33385,7 +33385,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -33436,7 +33436,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -33487,7 +33487,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -33538,7 +33538,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -33589,7 +33589,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -33640,7 +33640,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -33691,7 +33691,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -33742,7 +33742,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -33793,7 +33793,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey1)).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 123.456
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -33856,7 +33856,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey2)).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 123.456
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -33919,7 +33919,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey1)).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = -98.7
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -33982,7 +33982,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey2)).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = -98.7
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -34045,7 +34045,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey1)).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 340282366920938463463374607431768211456
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -34108,7 +34108,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey2)).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 340282366920938463463374607431768211456
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -34171,7 +34171,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey1)).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 33
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -34234,7 +34234,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
     store.load(Value.new(:objkey2)).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 33
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -34365,7 +34365,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -34416,7 +34416,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -34467,7 +34467,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -34518,7 +34518,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -34569,7 +34569,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store.load(Value.new(:objkey1)).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = true
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -34632,7 +34632,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store.load(Value.new(:objkey2)).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = true
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -34695,7 +34695,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store.load(Value.new(:objkey1)).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = false
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -34758,7 +34758,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
     store.load(Value.new(:objkey2)).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = false
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -34861,7 +34861,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -34912,7 +34912,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -34963,7 +34963,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -35014,7 +35014,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -35065,7 +35065,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store.load(Value.new(:objkey1)).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = "strval1"
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -35128,7 +35128,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store.load(Value.new(:objkey2)).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = "strval1"
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -35191,7 +35191,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store.load(Value.new(:objkey1)).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = "strval2"
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -35254,7 +35254,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
     store.load(Value.new(:objkey2)).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = "strval2"
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -35413,7 +35413,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -35464,7 +35464,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -35515,7 +35515,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -35566,7 +35566,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -35617,7 +35617,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store.load(Value.new(:objkey1)).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -35680,7 +35680,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store.load(Value.new(:objkey2)).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -35743,7 +35743,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store.load(Value.new(:objkey1)).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -35806,7 +35806,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
     store.load(Value.new(:objkey2)).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -35965,7 +35965,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -36016,7 +36016,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -36067,7 +36067,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
     (store[Value.new(:objkey1)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey1)).should be_false
   end
 
@@ -36118,7 +36118,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
     (store[Value.new(:objkey2)] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?(Value.new(:objkey2)).should be_false
   end
 
@@ -36169,7 +36169,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store.load(Value.new(:objkey1)).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -36232,7 +36232,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store.load(Value.new(:objkey2)).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = Value.new(:objval1)
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -36295,7 +36295,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store.load(Value.new(:objkey1)).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = Value.new(:objval2)
     store.key?(Value.new(:objkey1)).should be_true
   end
@@ -36358,7 +36358,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
     store.load(Value.new(:objkey2)).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = Value.new(:objval2)
     store.key?(Value.new(:objkey2)).should be_true
   end
@@ -36517,7 +36517,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -36568,7 +36568,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -36619,7 +36619,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -36670,7 +36670,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -36721,7 +36721,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 0
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -36773,7 +36773,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == 0
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 0
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -36825,7 +36825,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = nil
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -36877,7 +36877,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == nil
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = nil
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -36969,7 +36969,7 @@ shared_examples_for 'null_hashkey_integervalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -37020,7 +37020,7 @@ shared_examples_for 'null_hashkey_integervalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -37071,7 +37071,7 @@ shared_examples_for 'null_hashkey_integervalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -37122,7 +37122,7 @@ shared_examples_for 'null_hashkey_integervalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -37173,7 +37173,7 @@ shared_examples_for 'store_hashkey_integervalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 41
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -37236,7 +37236,7 @@ shared_examples_for 'store_hashkey_integervalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == 41
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 41
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -37299,7 +37299,7 @@ shared_examples_for 'store_hashkey_integervalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = -12
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -37362,7 +37362,7 @@ shared_examples_for 'store_hashkey_integervalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == -12
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = -12
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -37465,7 +37465,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -37516,7 +37516,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -37567,7 +37567,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -37618,7 +37618,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -37669,7 +37669,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -37720,7 +37720,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -37771,7 +37771,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -37822,7 +37822,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -37873,7 +37873,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -37936,7 +37936,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == 123.456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -37999,7 +37999,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -38062,7 +38062,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == -98.7
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -38125,7 +38125,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 340282366920938463463374607431768211456
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -38188,7 +38188,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == 340282366920938463463374607431768211456
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 340282366920938463463374607431768211456
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -38251,7 +38251,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 33
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -38314,7 +38314,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == 33
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 33
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -38445,7 +38445,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -38496,7 +38496,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -38547,7 +38547,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -38598,7 +38598,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -38649,7 +38649,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = true
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -38712,7 +38712,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == true
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = true
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -38775,7 +38775,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -38838,7 +38838,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == false
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = false
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -38941,7 +38941,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -38992,7 +38992,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -39043,7 +39043,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -39094,7 +39094,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -39145,7 +39145,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -39208,7 +39208,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == "strval1"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -39271,7 +39271,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -39334,7 +39334,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == "strval2"
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -39493,7 +39493,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -39544,7 +39544,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -39595,7 +39595,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -39646,7 +39646,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -39697,7 +39697,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -39760,7 +39760,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == {"hashval1"=>["array1", 1]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -39823,7 +39823,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -39886,7 +39886,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -40045,7 +40045,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -40096,7 +40096,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -40147,7 +40147,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
     (store[{"hashkey1"=>"hashkey2"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey1"=>"hashkey2"}).should be_false
   end
 
@@ -40198,7 +40198,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
     (store[{"hashkey3"=>"hashkey4"}] = value).should equal(value)
   end
 
-  it 'returns false from key? if a key is not available' do
+  it 'returns false from #key? if a key is not available' do
     store.key?({"hashkey3"=>"hashkey4"}).should be_false
   end
 
@@ -40249,7 +40249,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -40312,7 +40312,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == Value.new(:objval1)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -40375,7 +40375,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store.load({"hashkey1"=>"hashkey2"}).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
     store.key?({"hashkey1"=>"hashkey2"}).should be_true
   end
@@ -40438,7 +40438,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
     store.load({"hashkey3"=>"hashkey4"}).should == Value.new(:objval2)
   end
 
-  it 'returns true from key? if a key is available' do
+  it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
     store.key?({"hashkey3"=>"hashkey4"}).should be_true
   end
@@ -40814,7 +40814,7 @@ shared_examples_for 'expires' do
     store['key1'].should == 'val1'
   end
 
-  it 'does not update the expiration time in key? when not asked to do so', :retry => 3 do
+  it 'does not update the expiration time in #key? when not asked to do so', :retry => 3 do
     store.store('key1', 'val1', :expires => 1)
     store.key?('key1').should be_true
     store.key?('key1', :expires => nil).should be_true
@@ -41123,7 +41123,7 @@ shared_examples_for 'marshallable_key' do
     end.to raise_error(marshal_error)
   end
 
-  it 'refuses to check for key? if the key cannot be marshalled' do
+  it 'refuses to check for #key? if the key cannot be marshalled' do
     expect do
       store.key? Struct.new(:foo).new(:bar)
     end.to raise_error(marshal_error)
