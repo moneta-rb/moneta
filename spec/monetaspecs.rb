@@ -40688,7 +40688,7 @@ shared_examples_for 'expires' do
     store.load('key1').should be_nil
   end
 
-  it 'supports expires on store and key?', :retry => 3 do
+  it 'supports expires on store and #key?', :retry => 3 do
     store.store('key1', 'val1', :expires => 3)
     store.key?('key1').should be_true
     sleep 1
@@ -40697,7 +40697,7 @@ shared_examples_for 'expires' do
     store.key?('key1').should be_false
   end
 
-  it 'supports strict expires on store and key?' do
+  it 'supports strict expires on store and #key?' do
     store.store('key1', 'val1', :expires => 2)
     store.key?('key1').should be_true
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
@@ -40730,7 +40730,7 @@ shared_examples_for 'expires' do
     store.load('key1').should == 'val1'
   end
 
-  it 'supports updating the expiration time in key?', :retry => 3 do
+  it 'supports updating the expiration time in #key?', :retry => 3 do
     store.store('key2', 'val2', :expires => 3)
     store['key2'].should == 'val2'
     sleep 1
@@ -40742,14 +40742,14 @@ shared_examples_for 'expires' do
     store['key2'].should be_nil
   end
 
-  it 'supports 0 as no-expires in key?' do
+  it 'supports 0 as no-expires in #key?' do
     store.store('key1', 'val1', :expires => 2)
     store.key?('key1', :expires => 0).should be_true
     sleep 3
     store['key1'].should == 'val1'
   end
 
-  it 'supports false as no-expires in key?' do
+  it 'supports false as no-expires in #key?' do
     store.store('key1', 'val1', :expires => 2)
     store.key?('key1', :expires => false ).should be_true
     sleep 3

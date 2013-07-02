@@ -1691,7 +1691,7 @@ it 'guarantees that the same value is returned when setting a key' do
   (store[#{key1}] = value).should equal(value)
 end
 
-it 'returns false from key? if a key is not available' do
+it 'returns false from #key? if a key is not available' do
   store.key?(#{key1}).should be_false
 end
 
@@ -1739,7 +1739,7 @@ end}
   store.load(#{key1}).should == #{val1}
 end
 
-it 'returns true from key? if a key is available' do
+it 'returns true from #key? if a key is available' do
   store[#{key1}] = #{val1}
   store.key?(#{key1}).should be_true
 end
@@ -1917,7 +1917,7 @@ it 'supports strict expires on store and load' do
   store.load('key1').should be_nil
 end
 
-it 'supports expires on store and key?', :retry => 3 do
+it 'supports expires on store and #key?', :retry => 3 do
   store.store('key1', 'val1', :expires => 3)
   store.key?('key1').should be_true
   sleep 1
@@ -1926,7 +1926,7 @@ it 'supports expires on store and key?', :retry => 3 do
   store.key?('key1').should be_false
 end
 
-it 'supports strict expires on store and key?' do
+it 'supports strict expires on store and #key?' do
   store.store('key1', 'val1', :expires => 2)
   store.key?('key1').should be_true
   sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
@@ -1959,7 +1959,7 @@ it 'supports false as no-expires in load' do
   store.load('key1').should == 'val1'
 end
 
-it 'supports updating the expiration time in key?', :retry => 3 do
+it 'supports updating the expiration time in #key?', :retry => 3 do
   store.store('key2', 'val2', :expires => 3)
   store['key2'].should == 'val2'
   sleep 1
@@ -1971,14 +1971,14 @@ it 'supports updating the expiration time in key?', :retry => 3 do
   store['key2'].should be_nil
 end
 
-it 'supports 0 as no-expires in key?' do
+it 'supports 0 as no-expires in #key?' do
   store.store('key1', 'val1', :expires => 2)
   store.key?('key1', :expires => 0).should be_true
   sleep 3
   store['key1'].should == 'val1'
 end
 
-it 'supports false as no-expires in key?' do
+it 'supports false as no-expires in #key?' do
   store.store('key1', 'val1', :expires => 2)
   store.key?('key1', :expires => false ).should be_true
   sleep 3
@@ -2043,7 +2043,7 @@ it 'supports false as no-expires on store and []' do
   store['key1'].should == 'val1'
 end
 
-it 'does not update the expiration time in key? when not asked to do so', :retry => 3 do
+it 'does not update the expiration time in #key? when not asked to do so', :retry => 3 do
   store.store('key1', 'val1', :expires => 1)
   store.key?('key1').should be_true
   store.key?('key1', :expires => nil).should be_true
@@ -2316,7 +2316,7 @@ it 'refuses to store to keys that cannot be marshalled' do
   end.to raise_error(marshal_error)
 end
 
-it 'refuses to check for key? if the key cannot be marshalled' do
+it 'refuses to check for #key? if the key cannot be marshalled' do
   expect do
     store.key? Struct.new(:foo).new(:bar)
   end.to raise_error(marshal_error)
