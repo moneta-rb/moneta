@@ -14,7 +14,7 @@ class MonetaParallelFormatter < RSpec::Core::Formatters::BaseTextFormatter
     @heartbeat = Thread.new do
       count = 0
       until @stopped
-        if (count += 1) % 20 == 0
+        if (count += 1) % 60 == 0
           output.puts(color("RUNNING  #{ARGV.join(' ')} - #{@passed_count} passed, #{failed_examples.size} failures",
                             failed_examples.empty? ? RSpec.configuration.success_color : RSpec.configuration.failure_color))
         end
