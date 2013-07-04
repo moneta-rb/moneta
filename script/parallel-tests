@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 def rspec(spec)
-  puts "rspec #{spec}"
   if system("rspec #{spec}")
     true
   elsif sig = $?.termsig
@@ -14,7 +13,11 @@ def rspec(spec)
   end
 end
 
+ENV['PARALLEL_TESTS'] = 'yes'
+
 specs = Dir['spec/*/*_spec.rb'].sort
+
+specs.select! { |s| s.include?('memory') || s.include?('file') }
 
 # Shuffle specs to ensure equal distribution over the test groups
 # We have to shuffle with the same seed every time because rake is started
@@ -55,7 +58,7 @@ else
   exit 1
 end
 
-puts "The following specs will be executed:\n#{specs.join "\n"}\n\n"
+puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n"
 
 # Memcached and Redis specs cannot be used in parallel
 # because of flushing and lacking namespaces
