@@ -2,6 +2,7 @@ master
 
 * ActionDispatch::Session::MonetaStore fixed for Rails 4
 * Moneta::Server: Tries now to remove stale unix socket
+* Moneta::Server: More robust and better performance
 
 0.7.18
 
