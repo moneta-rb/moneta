@@ -17,8 +17,6 @@ ENV['PARALLEL_TESTS'] = 'yes'
 
 specs = Dir['spec/*/*_spec.rb'].sort
 
-specs.select! { |s| s.include?('memory') || s.include?('file') }
-
 # Shuffle specs to ensure equal distribution over the test groups
 # We have to shuffle with the same seed every time because rake is started
 # multiple times!
