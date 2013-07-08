@@ -103,13 +103,8 @@ module Moneta
     case name
     when :Sequel, :ActiveRecord, :Couch, :DataMapper
       # Sequel, DataMapper and AR accept only base64 keys and values
-      # FIXME: Couch should work only with :marshal but this raises an error on 1.9
       transformer[:key] << :base64
       transformer[:value] << :base64
-    when :Riak, :RestClient
-      # Riak accepts only utf-8 keys over the http interface
-      # We use base64 encoding therefore.
-      transformer[:key] << :base64
     when :PStore, :YAML, :Null
       # For PStore and YAML only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]
@@ -117,8 +112,8 @@ module Moneta
       # Use spreading hashes
       transformer[:key] << :md5 << :spread
       name = :File
-    when :File
-      # Use escaping
+    when :File, :Couch, :Riak, :RestClient
+      # Use escaping for file and HTTP interfaces
       transformer[:key] << :escape
     end
     a = Adapters.const_get(name).new(options)
