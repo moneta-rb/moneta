@@ -101,9 +101,8 @@ module Moneta
         key = to_binary(key)
         @collection.insert(value_to_doc(key, value, options))
         true
-      rescue ::Mongo::OperationFailure
-        # FIXME: This catches too many errors
-        # it should only catch a not-unique-exception
+      rescue ::Mongo::OperationFailure => ex
+        raise if ex.error_code != 11000 # duplicate key error
         false
       end
 
