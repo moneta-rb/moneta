@@ -49,6 +49,7 @@ class MonetaBenchmarks
     :LRUHash => {},
     :LevelDB => { :dir => "#{DIR}/leveldb" },
     :LocalMemCache => { :file => "#{DIR}/lmc" },
+    :MDB => { :env => "#{DIR}/mdb" },
     :MemcachedDalli => {},
     :MemcachedNative => {},
     :Memory => {},
