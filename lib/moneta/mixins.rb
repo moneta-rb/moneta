@@ -45,7 +45,7 @@ module Moneta
     # @return [OptionMerger]
     # @api public
     def expires(expires)
-      with(:expires => expires, :only => [:store, :create])
+      with(:expires => expires, :only => [:store, :create, :increment])
     end
   end
 
@@ -222,7 +222,6 @@ module Moneta
   # @api private
   module IncrementSupport
     # (see Defaults#increment)
-    # @api public
     def increment(key, amount = 1, options = {})
       value = Utils.to_int(load(key, options)) + amount
       store(key, value.to_s, options)
@@ -239,8 +238,7 @@ module Moneta
   # This is sufficient for non-shared stores or if atomicity is not required.
   # @api private
   module CreateSupport
-    # (see Default#create)
-    # @api public
+    # (see Defaults#create)
     def create(key, value, options = {})
       if key? key
         false
@@ -257,51 +255,32 @@ module Moneta
 
   # @api private
   module HashAdapter
+    attr_reader :backend
+
     # (see Proxy#key?)
     def key?(key, options = {})
-      @hash.has_key?(key)
+      @backend.has_key?(key)
     end
 
     # (see Proxy#load)
     def load(key, options = {})
-      @hash[key]
+      @backend[key]
     end
 
     # (see Proxy#store)
     def store(key, value, options = {})
-      @hash[key] = value
+      @backend[key] = value
     end
 
     # (see Proxy#delete)
     def delete(key, options = {})
-      @hash.delete(key)
+      @backend.delete(key)
     end
 
     # (see Proxy#clear)
     def clear(options = {})
-      @hash.clear
+      @backend.clear
       self
-    end
-  end
-
-  # @api private
-  module Net
-    DEFAULT_PORT = 9000
-
-    class Error < RuntimeError; end
-
-    def pack(o)
-      s = Marshal.dump(o)
-      [s.bytesize].pack('N') << s
-    end
-
-    def read(io)
-      size = io.read(4).unpack('N').first
-      Marshal.load(io.read(size))
-    end
-
-    def write(io, o)
-      io.write(pack(o))
     end
   end
 

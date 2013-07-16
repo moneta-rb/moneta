@@ -28,25 +28,24 @@ end
 
 class MonetaBenchmarks
   DIR = __FILE__ + '.tmp'
-  FileUtils.mkpath(DIR)
 
   STORES = {
-    # SDBM is unstable, the rest is too slow
+    # SDBM accepts only very short key/value pairs (1k for both)
     # :SDBM => { :file => "#{DIR}/sdbm" },
+    # YAML is too slow
     # :YAML => { :file => "#{DIR}/yaml" },
-    # :RestClient => { :url => 'http://localhost:8808/' },
-    :ActiveRecord => { :connection => { :adapter  => 'sqlite3', :database => ':memory:' } },
+    :ActiveRecord => { :table => 'activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :username => 'root', :database => 'moneta' } },
     :Cassandra => {},
     :Client => {},
     :Couch => {},
     :DBM => { :file => "#{DIR}/dbm" },
-    :DataMapper => { :setup => "sqlite3:#{DIR}/datamapper" },
+    :DataMapper => { :setup => 'mysql://root:@localhost/moneta', :table => 'datamapper' },
     :Daybreak => { :file => "#{DIR}/daybreak" },
     :File => { :dir => "#{DIR}/file" },
     :GDBM => { :file => "#{DIR}/gdbm" },
     :HBase => {},
     :HashFile => { :dir => "#{DIR}/hashfile" },
-    :KyotoCabinet => { :file => 'kyotocabinet.kch' },
+    :KyotoCabinet => { :file => "#{DIR}/kyotocabinet.kch" },
     :LRUHash => {},
     :LevelDB => { :dir => "#{DIR}/leveldb" },
     :LocalMemCache => { :file => "#{DIR}/lmc" },
@@ -56,11 +55,15 @@ class MonetaBenchmarks
     :Mongo => {},
     :PStore => { :file => "#{DIR}/pstore" },
     :Redis => {},
+    :RestClient => { :url => 'http://localhost:8808/' },
     :Riak => {},
-    :Sequel => { :db => 'sqlite:/' },
+    :Sequel => { :table => 'sequel',
+      :db => (defined?(JRUBY_VERSION) ?
+              'jdbc:mysql://localhost/moneta?user=root' :
+              'mysql2://root:@localhost/moneta') },
     :Sqlite => { :file => ':memory:' },
     :TDB => { :file => "#{DIR}/tdb" },
-    :TokyoCabinet => { :file => 'tokyocabinet' },
+    :TokyoCabinet => { :file => "#{DIR}/tokyocabinet" },
     :TokyoTyrant => {},
   }
 
@@ -79,7 +82,7 @@ class MonetaBenchmarks
       :runs => 3,
       :keys => 1000,
       :min_key_len => 3,
-      :max_key_len => 200,
+      :max_key_len => 128,
       :key_dist => :uniform,
       :min_val_len => 0,
       :max_val_len => 1024,
@@ -89,7 +92,7 @@ class MonetaBenchmarks
       :runs => 3,
       :keys => 100,
       :min_key_len => 3,
-      :max_key_len => 200,
+      :max_key_len => 128,
       :key_dist => :uniform,
       :min_val_len => 0,
       :max_val_len => 10240,
@@ -109,7 +112,7 @@ class MonetaBenchmarks
       :runs => 3,
       :keys => 1000,
       :min_key_len => 3,
-      :max_key_len => 200,
+      :max_key_len => 128,
       :key_dist => :normal,
       :min_val_len => 0,
       :max_val_len => 1024,
@@ -119,7 +122,7 @@ class MonetaBenchmarks
       :runs => 3,
       :keys => 100,
       :min_key_len => 3,
-      :max_key_len => 200,
+      :max_key_len => 128,
       :key_dist => :normal,
       :min_val_len => 0,
       :max_val_len => 10240,
@@ -188,31 +191,31 @@ class MonetaBenchmarks
       end
     end
 
-    # parallel do
-    #   begin
-    #     require 'rack'
-    #     require 'webrick'
-    #     require 'rack/moneta_rest'
+    parallel do
+      begin
+        require 'rack'
+        require 'webrick'
+        require 'rack/moneta_rest'
 
-    #     # Keep webrick quiet
-    #     ::WEBrick::HTTPServer.class_eval do
-    #       def access_log(config, req, res); end
-    #     end
-    #     ::WEBrick::BasicLog.class_eval do
-    #       def log(level, data); end
-    #     end
+        # Keep webrick quiet
+        ::WEBrick::HTTPServer.class_eval do
+          def access_log(config, req, res); end
+        end
+        ::WEBrick::BasicLog.class_eval do
+          def log(level, data); end
+        end
 
-    #     Rack::Server.start(:app => Rack::Builder.app do
-    #                          use Rack::Lint
-    #                          run Rack::MonetaRest.new(:store => :Memory)
-    #                        end,
-    #                        :environment => :none,
-    #                        :server => :webrick,
-    #                        :Port => 8808)
-    #   rescue Exception => ex
-    #     puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
-    #   end
-    # end
+        Rack::Server.start(:app => Rack::Builder.app do
+                             use Rack::Lint
+                             run Rack::MonetaRest.new(:store => :Memory)
+                           end,
+                           :environment => :none,
+                           :server => :webrick,
+                           :Port => 8808)
+      rescue Exception => ex
+        puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
+      end
+    end
 
     sleep 1 # Wait for servers
   end
@@ -306,14 +309,13 @@ class MonetaBenchmarks
 
       @config[:runs].times do |run|
         store.clear
-        print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'W']
 
         @data.shuffle!
         m1 = Benchmark.measure do
           @data.each {|k,v| store[k] = v }
         end
 
-        print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'R']
+        print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'W']
 
         @data.shuffle!
         error = 0
@@ -322,6 +324,8 @@ class MonetaBenchmarks
             error += 1 if v != store[k]
           end
         end
+
+        print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'R']
 
         if type == 'Measure'
           @stats[name][:write] << m1.real * 1000
@@ -340,7 +344,10 @@ class MonetaBenchmarks
   end
 
   def run_benchmarks
-    STORES.each {|name, options| benchmark_store(name, options) }
+    STORES.each do |name, options|
+      benchmark_store(name, options)
+      sleep 1
+    end
   end
 
   def print_summary
@@ -370,12 +377,15 @@ class MonetaBenchmarks
   end
 
   def run
+    FileUtils.rm_rf(DIR)
+    FileUtils.mkpath(DIR)
     start_servers
     test_stores
     print_config
     generate_data
     run_benchmarks
     print_summary
+    FileUtils.rm_rf(DIR)
   end
 end
 

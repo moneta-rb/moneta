@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "stack_memory_file" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'stack_memory_file.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
@@ -24,6 +20,8 @@ describe_moneta "stack_memory_file" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
+  it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'create'
   it_should_behave_like 'features'
   it_should_behave_like 'increment'
@@ -32,4 +30,5 @@ describe_moneta "stack_memory_file" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

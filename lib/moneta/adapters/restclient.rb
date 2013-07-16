@@ -1,4 +1,4 @@
-require 'net/http'
+require 'faraday'
 
 module Moneta
   module Adapters
@@ -7,49 +7,44 @@ module Moneta
     class RestClient
       include Defaults
 
+      attr_reader :backend
+
       # @param [Hash] options
       # @option options [String] :url URL
+      # @option options [Faraday connection] :backend Use existing backend instance
       def initialize(options = {})
         raise ArgumentError, 'Option :url is required' unless url = options[:url]
-        url = URI(url)
-        @path = url.path
-        @client = ::Net::HTTP.start(url.host, url.port)
+        @backend = options[:backend] || ::Faraday.new(:url => url)
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        response = @client.request_head(@path + key)
-        response.code == '200'
+        @backend.head(key).status == 200
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        response = @client.request_get(@path + key)
-        response.code == '200' ? response.body : nil
+        response = @backend.get(key)
+        response.status == 200 ? response.body : nil
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        response = @client.request_post(@path + key, value)
-        raise "HTTP error #{response.code}" unless response.code == '200'
+        response = @backend.post(key, value)
+        raise "HTTP error #{response.status}" unless response.status == 200
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        response = @client.request(::Net::HTTP::Delete.new(@path + key))
-        response.code == '200' ? response.body : nil
+        response = @backend.delete(key)
+        response.status == 200 ? response.body : nil
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @client.request(::Net::HTTP::Delete.new(@path))
+        @backend.delete ''
         self
-      end
-
-      def close
-        @client.finish
-        nil
       end
     end
   end

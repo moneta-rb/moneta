@@ -1,45 +1,54 @@
 language: ruby
 rvm:
-  - 1.8.7
+  - 2.0.0
   - 1.9.3
-  - jruby-18mode
+  - 1.8.7
   - jruby-19mode
-  - rbx-18mode
+  - jruby-18mode
   - rbx-19mode
+  - rbx-18mode
 before_install:
   - script/kill-travis
+  #- script/install-kyotocabinet
+  - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
-  - script/install-kyotocabinet
-  - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev tokyotyrant
   - script/install-bundle
   - script/upload-bundle
+  - script/wait-services
 install: 'echo "Bundle installed"'
+before_script:
+  - mysql -e 'create database moneta;'
+  - mysql -e 'create database moneta_activerecord1;'
+  - mysql -e 'create database moneta_activerecord2;'
 env:
   global:
-    - secure: "B0vx1g1CB1A6mM3B/iy2ATicfS4OXT80bb2RVe8mSRsPzez1B4q4Q4hJcaMI\nrMARONN8Krtnti+IqvmDnB0Z0AKYMEyIc+zT37zJOCjLdkLJl+x/thuU/MbC\nvlLVwjMf6JE2EUzTfORDRFYc5ycCqfsfgNk1Go0D2CPT6P9u9uQ="
+    - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="
   matrix:
-    - "TASK=test TEST_GROUP=1/5"
-    - "TASK=test TEST_GROUP=2/5"
-    - "TASK=test TEST_GROUP=3/5"
-    - "TASK=test TEST_GROUP=4/5"
-    - "TASK=test TEST_GROUP=5/5"
-    - "TASK=test TEST_GROUP=unstable"
-    - "TASK=benchmarks CONFIG=uniform_small"
-    - "TASK=benchmarks CONFIG=uniform_medium"
-    - "TASK=benchmarks CONFIG=uniform_large"
-    - "TASK=benchmarks CONFIG=normal_small"
-    - "TASK=benchmarks CONFIG=normal_medium"
-    - "TASK=benchmarks CONFIG=normal_large"
+    - "SCRIPT='parallel-tests 1/10'"
+    - "SCRIPT='parallel-tests 2/10'"
+    - "SCRIPT='parallel-tests 3/10'"
+    - "SCRIPT='parallel-tests 4/10'"
+    - "SCRIPT='parallel-tests 5/10'"
+    - "SCRIPT='parallel-tests 6/10'"
+    - "SCRIPT='parallel-tests 7/10'"
+    - "SCRIPT='parallel-tests 8/10'"
+    - "SCRIPT='parallel-tests 9/10'"
+    - "SCRIPT='parallel-tests 10/10'"
+    - "SCRIPT='parallel-tests unstable'"
+    - "SCRIPT='benchmarks uniform_small'"
+    - "SCRIPT='benchmarks uniform_medium'"
+    - "SCRIPT='benchmarks uniform_large'"
+    - "SCRIPT='benchmarks normal_small'"
+    - "SCRIPT='benchmarks normal_medium'"
+    - "SCRIPT='benchmarks normal_large'"
 matrix:
   allow_failures:
     - rvm: jruby-18mode
     - rvm: jruby-19mode
     - rvm: rbx-18mode
     - rvm: rbx-19mode
-    - env:
-      - "TASK=test TEST_GROUP=unstable"
-      - secure: "B0vx1g1CB1A6mM3B/iy2ATicfS4OXT80bb2RVe8mSRsPzez1B4q4Q4hJcaMI\nrMARONN8Krtnti+IqvmDnB0Z0AKYMEyIc+zT37zJOCjLdkLJl+x/thuU/MbC\nvlLVwjMf6JE2EUzTfORDRFYc5ycCqfsfgNk1Go0D2CPT6P9u9uQ="
-script: "bundle exec rake $TASK"
+    - env: "SCRIPT='parallel-tests unstable'"
+script: "eval bundle exec ruby script/$SCRIPT"
 branches:
   only:
     - master

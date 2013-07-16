@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_null" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_null.log'), 'a')
-  end
-
   def features
     []
   end
 
   def new_store
-    Moneta.new(:Null, :logger => {:out => log})
+    Moneta.new(:Null, :logger => {:file => File.join(make_tempdir, 'simple_null.log')})
   end
 
   def load_value(value)
@@ -30,36 +26,49 @@ describe_moneta "simple_null" do
   it_should_behave_like 'null_objectkey_booleanvalue'
   it_should_behave_like 'null_objectkey_nilvalue'
   it_should_behave_like 'null_objectkey_integervalue'
+  it_should_behave_like 'null_objectkey_numbervalue'
   it_should_behave_like 'null_stringkey_objectvalue'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'null_stringkey_hashvalue'
   it_should_behave_like 'null_stringkey_booleanvalue'
   it_should_behave_like 'null_stringkey_nilvalue'
   it_should_behave_like 'null_stringkey_integervalue'
+  it_should_behave_like 'null_stringkey_numbervalue'
   it_should_behave_like 'null_hashkey_objectvalue'
   it_should_behave_like 'null_hashkey_stringvalue'
   it_should_behave_like 'null_hashkey_hashvalue'
   it_should_behave_like 'null_hashkey_booleanvalue'
   it_should_behave_like 'null_hashkey_nilvalue'
   it_should_behave_like 'null_hashkey_integervalue'
+  it_should_behave_like 'null_hashkey_numbervalue'
   it_should_behave_like 'null_booleankey_objectvalue'
   it_should_behave_like 'null_booleankey_stringvalue'
   it_should_behave_like 'null_booleankey_hashvalue'
   it_should_behave_like 'null_booleankey_booleanvalue'
   it_should_behave_like 'null_booleankey_nilvalue'
   it_should_behave_like 'null_booleankey_integervalue'
+  it_should_behave_like 'null_booleankey_numbervalue'
   it_should_behave_like 'null_nilkey_objectvalue'
   it_should_behave_like 'null_nilkey_stringvalue'
   it_should_behave_like 'null_nilkey_hashvalue'
   it_should_behave_like 'null_nilkey_booleanvalue'
   it_should_behave_like 'null_nilkey_nilvalue'
   it_should_behave_like 'null_nilkey_integervalue'
+  it_should_behave_like 'null_nilkey_numbervalue'
   it_should_behave_like 'null_integerkey_objectvalue'
   it_should_behave_like 'null_integerkey_stringvalue'
   it_should_behave_like 'null_integerkey_hashvalue'
   it_should_behave_like 'null_integerkey_booleanvalue'
   it_should_behave_like 'null_integerkey_nilvalue'
   it_should_behave_like 'null_integerkey_integervalue'
+  it_should_behave_like 'null_integerkey_numbervalue'
+  it_should_behave_like 'null_numberkey_objectvalue'
+  it_should_behave_like 'null_numberkey_stringvalue'
+  it_should_behave_like 'null_numberkey_hashvalue'
+  it_should_behave_like 'null_numberkey_booleanvalue'
+  it_should_behave_like 'null_numberkey_nilvalue'
+  it_should_behave_like 'null_numberkey_integervalue'
+  it_should_behave_like 'null_numberkey_numbervalue'
   it_should_behave_like 'returndifferent_objectkey_objectvalue'
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_objectkey_hashvalue'
@@ -78,4 +87,7 @@ describe_moneta "simple_null" do
   it_should_behave_like 'returndifferent_integerkey_objectvalue'
   it_should_behave_like 'returndifferent_integerkey_stringvalue'
   it_should_behave_like 'returndifferent_integerkey_hashvalue'
+  it_should_behave_like 'returndifferent_numberkey_objectvalue'
+  it_should_behave_like 'returndifferent_numberkey_stringvalue'
+  it_should_behave_like 'returndifferent_numberkey_hashvalue'
 end

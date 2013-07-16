@@ -43,7 +43,8 @@ describe Rack::MonetaCookies do
     get 'key' => 'value' do
       @store.delete('key')
     end
-    expect( @response['Set-Cookie'] ).to eql('key=; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 -0000')
+    expect( @response['Set-Cookie'] ).to match(/key=;/)
+    expect( @response['Set-Cookie'] ).to match(/\s+expires=.*?1970/)
   end
 
   it 'should accept a config block' do

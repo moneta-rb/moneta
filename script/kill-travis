@@ -1,5 +1,5 @@
 #!/bin/bash
-# Allow Travis-CI builds to be canceled
+# Allow Travis-CI builds to be cancelled
 
 if [[ $TRAVIS ]]; then
     echo 'Started Travis-CI killer!'

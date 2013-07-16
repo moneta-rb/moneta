@@ -16,12 +16,23 @@ end
 
 BUNDLE_FILE = "moneta-bundle-#{RUBY_VERSION}-#{ruby}.tar.gz"
 
-if system("wget --no-check-certificate --quiet -O #{BUNDLE_FILE} https://moneta:#{ENV['DAV_PW']}@mendler.net/dav/#{BUNDLE_FILE}")
+if system("curl -f -u moneta:#{ENV['DAV_PW']} -k -o #{BUNDLE_FILE} https://mendler.net/dav/#{BUNDLE_FILE}")
   cmd 'rm -rf .bundle'
   cmd "tar -xpf #{BUNDLE_FILE}"
   cmd "rm -f #{BUNDLE_FILE}"
+
+  # Write newest moneta version in Gemfile.lock
+  require './lib/moneta/version'
+  File.open('Gemfile.lock', 'r+') do |fp|
+    content = fp.read
+    content.gsub!(/moneta\s*\(.*?\)/, "moneta (#{Moneta::VERSION})")
+    fp.truncate(0)
+    fp.pos = 0
+    fp.write(content)
+  end
 else
   cmd 'bundle install --path .bundle'
+  cmd 'bundle update'
   cmd 'bundle install --deployment --path .bundle'
   cmd "tar -cpzf #{BUNDLE_FILE} Gemfile.lock .bundle"
 end

@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "simple_memory_with_json_value_serializer" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'simple_memory_with_json_value_serializer.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:Memory, :value_serializer => :json, :logger => {:out => log})
+    Moneta.new(:Memory, :value_serializer => :json, :logger => {:file => File.join(make_tempdir, 'simple_memory_with_json_value_serializer.log')})
   end
 
   def load_value(value)
@@ -42,6 +38,9 @@ describe_moneta "simple_memory_with_json_value_serializer" do
   it_should_behave_like 'null_integerkey_stringvalue'
   it_should_behave_like 'null_integerkey_hashvalue'
   it_should_behave_like 'null_integerkey_integervalue'
+  it_should_behave_like 'null_numberkey_stringvalue'
+  it_should_behave_like 'null_numberkey_hashvalue'
+  it_should_behave_like 'null_numberkey_integervalue'
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_objectkey_hashvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
@@ -54,6 +53,8 @@ describe_moneta "simple_memory_with_json_value_serializer" do
   it_should_behave_like 'returndifferent_nilkey_hashvalue'
   it_should_behave_like 'returndifferent_integerkey_stringvalue'
   it_should_behave_like 'returndifferent_integerkey_hashvalue'
+  it_should_behave_like 'returndifferent_numberkey_stringvalue'
+  it_should_behave_like 'returndifferent_numberkey_hashvalue'
   it_should_behave_like 'store_objectkey_stringvalue'
   it_should_behave_like 'store_objectkey_hashvalue'
   it_should_behave_like 'store_objectkey_integervalue'
@@ -72,5 +73,9 @@ describe_moneta "simple_memory_with_json_value_serializer" do
   it_should_behave_like 'store_integerkey_stringvalue'
   it_should_behave_like 'store_integerkey_hashvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_numberkey_stringvalue'
+  it_should_behave_like 'store_numberkey_hashvalue'
+  it_should_behave_like 'store_numberkey_integervalue'
+  it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value'
 end

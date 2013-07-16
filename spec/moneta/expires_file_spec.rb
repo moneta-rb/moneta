@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "expires_file" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'expires_file.log'), 'a')
-  end
-
   def features
     [:create, :expires, :increment]
   end
@@ -23,6 +19,8 @@ describe_moneta "expires_file" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
+  it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'create'
   it_should_behave_like 'create_expires'
   it_should_behave_like 'expires'
@@ -37,24 +35,29 @@ describe_moneta "expires_file" do
   it_should_behave_like 'null_booleankey_stringvalue'
   it_should_behave_like 'null_nilkey_stringvalue'
   it_should_behave_like 'null_integerkey_stringvalue'
+  it_should_behave_like 'null_numberkey_stringvalue'
   it_should_behave_like 'persist_objectkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'persist_hashkey_stringvalue'
   it_should_behave_like 'persist_booleankey_stringvalue'
   it_should_behave_like 'persist_nilkey_stringvalue'
   it_should_behave_like 'persist_integerkey_stringvalue'
+  it_should_behave_like 'persist_numberkey_stringvalue'
   it_should_behave_like 'returndifferent_objectkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_hashkey_stringvalue'
   it_should_behave_like 'returndifferent_booleankey_stringvalue'
   it_should_behave_like 'returndifferent_nilkey_stringvalue'
   it_should_behave_like 'returndifferent_integerkey_stringvalue'
+  it_should_behave_like 'returndifferent_numberkey_stringvalue'
   it_should_behave_like 'store_objectkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
   it_should_behave_like 'store_hashkey_stringvalue'
   it_should_behave_like 'store_booleankey_stringvalue'
   it_should_behave_like 'store_nilkey_stringvalue'
   it_should_behave_like 'store_integerkey_stringvalue'
+  it_should_behave_like 'store_numberkey_stringvalue'
+  it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value_expires'
   it 'deletes expired value in underlying file storage' do
     store.store('foo', 'bar', :expires => 2)

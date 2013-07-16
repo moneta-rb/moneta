@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_yaml" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_yaml.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
@@ -56,4 +52,5 @@ describe_moneta "adapter_yaml" do
   it_should_behave_like 'store_integerkey_stringvalue'
   it_should_behave_like 'store_integerkey_hashvalue'
   it_should_behave_like 'store_integerkey_integervalue'
+  it_should_behave_like 'store_large'
 end

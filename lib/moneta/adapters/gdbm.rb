@@ -7,14 +7,18 @@ module Moneta
     class GDBM < Memory
       # @param [Hash] options
       # @option options [String] :file Database file
+      # @option options [::GDBM] :backend Use existing backend instance
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        @hash = ::GDBM.new(options[:file])
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            ::GDBM.new(options[:file])
+          end
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

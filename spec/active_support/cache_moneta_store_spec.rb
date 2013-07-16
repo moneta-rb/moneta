@@ -33,7 +33,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
   it 'writes the data with expiration time' do
     @store.write 'rabbit', @white_rabbit, :expires_in => 1.second
-    # @store.read('rabbit').should == @white_rabbit
+    @store.read('rabbit').should == @white_rabbit
     sleep 2
     @store.read('rabbit').should be_nil
   end
@@ -45,7 +45,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
   it 'verifies existence of an object in the store' do
     @store.exist?('rabbit').should == true
-    @store.exist?('rab-a-dub').should == false
+    (!!@store.exist?('rab-a-dub')).should == false
   end
 
   it 'fetches data' do
@@ -55,7 +55,7 @@ describe ActiveSupport::Cache::MonetaStore do
     @store.fetch('rub-a-dub').should == 'Flora de Cana'
     @store.fetch('rabbit', :force => true) # force cache miss
     @store.fetch('rabbit', :force => true, :expires_in => 1.second) { @white_rabbit }
-    # @store.fetch('rabbit').should == @white_rabbit
+    @store.fetch('rabbit').should == @white_rabbit
     sleep 2
     @store.fetch('rabbit').should be_nil
   end

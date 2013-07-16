@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+def rspec(spec)
+  if system("rspec #{spec}")
+    true
+  elsif sig = $?.termsig
+    found = Signal.list.to_a.select {|name, id| id == sig }.first
+    puts "\e[31m########## SIG#{found ? found.first : sig} rspec #{spec} ##########\e[0m"
+    false
+  else
+    puts "rspec terminated with #{$?.exitstatus}"
+    false
+  end
+end
+
+ENV['PARALLEL_TESTS'] = 'yes'
+
+specs = Dir['spec/*/*_spec.rb'].sort
+
+# Shuffle specs to ensure equal distribution over the test groups
+# We have to shuffle with the same seed every time because rake is started
+# multiple times!
+old_seed = srand(43)
+specs.shuffle!
+srand(old_seed)
+
+# FIXME:
+#
+# * QuickLZ segfaults because of an assertion
+#   QuickLZ is also not maintained on Github, but on Bitbucket
+#   and I don't know where the issue tracker is.
+#
+# * PStore increment/locking doesn't work correctly on JRuby
+#
+unstable = %w(quicklz riak cassandra)
+unstable += %w(pstore) if defined?(JRUBY_VERSION)
+
+unstable_re = /#{unstable.join('|')}/
+unstable = specs.select {|s| s =~ unstable_re }
+specs -= unstable
+
+group = ARGV.first || '1/1'
+case group
+when /^(\d+)\/(\d+)$/
+  n = $1.to_i
+  max = $2.to_i
+  if n == max
+    specs = specs[(n-1)*(specs.size/max)..-1]
+  else
+    specs = specs[(n-1)*(specs.size/max), specs.size/max]
+  end
+when 'unstable'
+  specs = unstable
+else
+  puts "Invalid test group #{group}"
+  exit 1
+end
+
+puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n"
+
+# Memcached and Redis specs cannot be used in parallel
+# because of flushing and lacking namespaces
+parallel = []
+%w(memcached redis client shared riak tokyotyrant couch cassandra).each do |name|
+  serial = specs.select { |s| s.include?(name) }
+  unless serial.empty?
+    specs -= serial
+    parallel << serial
+  end
+end
+parallel += specs.map {|s| [s] }
+
+threads = []
+failed = false
+parallel.each do |serial|
+  threads << Thread.new do
+    begin
+      serial.each do |spec|
+        failed = true unless rspec(spec)
+      end
+    ensure
+      threads.delete Thread.current
+    end
+  end
+  sleep 0.1
+  sleep 0.1 while threads.size >= 5
+end
+sleep 0.1 until threads.empty?
+
+if failed
+  puts "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
+  exit 1
+end
+
+puts "\e[32m########## MONETA TESTSUITE SUCCEDED ##########\e[0m"

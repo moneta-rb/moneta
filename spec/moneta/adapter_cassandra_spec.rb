@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_cassandra" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_cassandra.log'), 'a')
-  end
-
   def features
     [:expires]
   end
@@ -28,4 +24,5 @@ describe_moneta "adapter_cassandra" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

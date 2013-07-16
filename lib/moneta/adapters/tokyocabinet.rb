@@ -8,34 +8,39 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)
+      # @option options [::TokyoCabinet::*DB] :backend Use existing backend instance
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        if options[:type] == :bdb
-          @hash = ::TokyoCabinet::BDB.new
-          @hash.open(options[:file], ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
+        if options[:backend]
+          @backend = options[:backend]
         else
-          @hash = ::TokyoCabinet::HDB.new
-          @hash.open(options[:file], ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
-        end or raise @hash.errmsg(@hash.ecode)
+          raise ArgumentError, 'Option :file is required' unless options[:file]
+          if options[:type] == :bdb
+            @backend = ::TokyoCabinet::BDB.new
+            @backend.open(options[:file], ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
+          else
+            @backend = ::TokyoCabinet::HDB.new
+            @backend.open(options[:file], ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
+          end or raise @backend.errmsg(@backend.ecode)
+        end
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
         if value
-          @hash.delete(key)
+          @backend.delete(key)
           value
         end
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @hash.putkeep(key, value)
+        @backend.putkeep(key, value)
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

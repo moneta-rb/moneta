@@ -17,7 +17,8 @@ module Rack
           raise ArgumentError, 'Block or option :store is required' unless @pool = options[:store]
           @pool = ::Moneta.new(@pool, :expires => true) if Symbol === @pool
         end
-        @mutex = Mutex.new
+        @pool = ::Moneta::WeakCreate.new(@pool) unless @pool.supports?(:create)
+        @mutex = ::Mutex.new
       end
 
       def generate_sid
@@ -30,8 +31,10 @@ module Rack
       def get_session(env, sid)
         with_lock(env) do
           unless sid && session = @pool[sid]
-            sid, session = generate_sid, {}
-            @pool[sid] = session
+            session = {}
+            begin
+              sid = generate_sid
+            end until @pool.create(sid, session)
           end
           [sid, session]
         end
@@ -40,7 +43,7 @@ module Rack
       def set_session(env, session_id, new_session, options)
         with_lock(env) do
           @pool.store(session_id, new_session,
-                       options[:expire_after] ? {:expires => options[:expire_after]} : {})
+                      options[:expire_after] ? { :expires => options[:expire_after] } : {})
           session_id
         end
       end

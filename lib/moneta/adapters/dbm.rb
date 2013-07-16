@@ -7,14 +7,18 @@ module Moneta
     class DBM < Memory
       # @param [Hash] options
       # @option options [String] :file Database file
+      # @option options [::DBM] :backend Use existing backend instance
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        @hash = ::DBM.new(options[:file])
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            ::DBM.new(options[:file])
+          end
       end
 
       # (see Proxy#close)
       def close
-        @hash.close
+        @backend.close
         nil
       end
     end

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_cookie" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_cookie.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
@@ -26,4 +22,5 @@ describe_moneta "adapter_cookie" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

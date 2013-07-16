@@ -2,17 +2,13 @@
 require 'helper'
 
 describe_moneta "adapter_riak" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_riak.log'), 'a')
-  end
+  require 'riak'
+
+  Riak.disable_list_keys_warnings = true
 
   def features
     []
   end
-
-  require 'riak'
-
-  Riak.disable_list_keys_warnings = true
 
   def new_store
     Moneta::Adapters::Riak.new
@@ -31,4 +27,5 @@ describe_moneta "adapter_riak" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

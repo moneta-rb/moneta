@@ -9,26 +9,34 @@ module Moneta
       include IncrementSupport
 
       supports :create
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [String] :table ('moneta') Table name
+      # @option options [Fixnum] :busy_timeout (1000) Sqlite timeout if database is busy
+      # @option options [::Sqlite3::Database] :backend Use existing backend instance
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
         table = options[:table] || 'moneta'
-        @db = ::SQLite3::Database.new(options[:file])
-        @db.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            ::SQLite3::Database.new(options[:file])
+          end
+        @backend.busy_timeout(options[:busy_timeout] || 1000)
+        @backend.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
         @stmts =
-          [@select = @db.prepare("select v from #{table} where k = ?"),
-           @replace = @db.prepare("replace into #{table} values (?, ?)"),
-           @delete = @db.prepare("delete from #{table} where k = ?"),
-           @clear = @db.prepare("delete from #{table}"),
-           @create = @db.prepare("insert into #{table} values (?, ?)")]
+          [@exists  = @backend.prepare("select exists(select 1 from #{table} where k = ?)"),
+           @select  = @backend.prepare("select v from #{table} where k = ?"),
+           @replace = @backend.prepare("replace into #{table} values (?, ?)"),
+           @delete  = @backend.prepare("delete from #{table} where k = ?"),
+           @clear   = @backend.prepare("delete from #{table}"),
+           @create  = @backend.prepare("insert into #{table} values (?, ?)")]
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@select.execute!(key).empty?
+        @exists.execute!(key).first.first.to_i == 1
       end
 
       # (see Proxy#load)
@@ -52,7 +60,7 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @db.transaction(:exclusive) { return super }
+        @backend.transaction(:exclusive) { return super }
       end
 
       # (see Proxy#clear)
@@ -75,7 +83,7 @@ module Moneta
       # (see Proxy#close)
       def close
         @stmts.each {|s| s.close }
-        @db.close
+        @backend.close
         nil
       end
     end

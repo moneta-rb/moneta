@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "stack_file_memory" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'stack_file_memory.log'), 'a')
-  end
-
   def features
     []
   end
@@ -34,4 +30,5 @@ describe_moneta "stack_file_memory" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

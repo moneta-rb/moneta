@@ -1,8 +1,11 @@
 # Moneta: A unified interface for key/value stores
 
-[![Gem Version](https://badge.fury.io/rb/moneta.png)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/minad/moneta)
+[![Gem Version](https://badge.fury.io/rb/moneta.png)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.png)](https://codeclimate.com/github/minad/moneta)
 
-Moneta provides a standard interface for interacting with various kinds of key/value stores. A short overview of the features:
+Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta supports the well-known
+NoSQL and document based stores.
+
+A short overview of the features:
 
 * Supports a lot of backends with consistent behaviour (See below)
 * Allows a full configuration of the serialization -> compression -> adapter stack using proxies (Similar to [Rack middlewares](http://rack.github.com/))
@@ -96,7 +99,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * Filesystem directory store (`:File`)
     * Filesystem directory store which spreads files in subdirectories using md5 hash (`:HashFile`)
 * Key/value databases:
-    * [Berkeley DB](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html) (`:DBM`)
+    * [Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html) (`:DBM`)
     * [Cassandra](http://cassandra.apache.org/) (`:Cassandra`)
     * [Daybreak](http://propublica.github.com/daybreak/) (`:Daybreak`)
     * [GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) (`:GDBM`)
@@ -144,17 +147,17 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>Sequel</td><td>sequel</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
 
-<tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
+<tr><td>TokyoTyrant</td><td>tokyotyrant or ruby-tokyotyrant</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyotyrant/">TokyoTyrant</a> database</td></tr>
 
-<tr><td>PStore</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
+<tr><td>PStore</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
 
-<tr><td>TokyoTyrant</td><td>tokoytyrant</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyotyrant/">TokyoTyrant</a> database</td></tr>
+<tr><td>YAML</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
 
-<tr><td>YAML</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
+<tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
 
 <tr><td>Daybreak</td><td>daybreak</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">(✓)<sup>[7]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td>Incredibly fast pure-ruby key/value store <a href="http://propublica.github.com/daybreak/">Daybreak</a></td></tr>
 
-<tr><td>DBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB</a></td></tr>
+<tr><td>DBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)</a></td></tr>
 
 <tr><td>GDBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html">GDBM</a> database</td></tr>
 
@@ -164,21 +167,21 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>TDB</td><td>tdb</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://tdb.samba.org/">TDB</a> database</td></tr>
 
-<tr><td>KyotoCabinet</td><td>tokoycabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/kyotocabinet/">KyotoCabinet</a> database</td></tr>
+<tr><td>KyotoCabinet</td><td>kyotocabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/kyotocabinet/">KyotoCabinet</a> database</td></tr>
 
-<tr><td>TokyoCabinet</td><td>tokoycabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
+<tr><td>TokyoCabinet</td><td>tokyocabinet</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyocabinet/">TokyoCabinet</a> database</td></tr>
 
 <tr><td>DataMapper</td><td>dm-core, dm-migrations</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://datamapper.org/">DataMapper</a> ORM</td></tr>
+
+<tr><td>Couch</td><td>faraday, multi_json</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
+
+<tr><td>HBase</td><td>hbaserb</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://hbase.apache.org/">HBase</a> database</td></tr>
 
 <tr><td>Cassandra</td><td>cassandra</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://cassandra.apache.org/">Cassandra</a> distributed database</td></tr>
 
 <tr><td>LocalMemCache</td><td>localmemcache</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://localmemcache.rubyforge.org/">LocalMemCache</a> database</td></tr>
 
-<tr><td>Couch</td><td>couchrest</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://couchdb.apache.org/">CouchDB</a> database</td></tr>
-
 <tr><td>Fog</td><td>fog</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fog.io/">Fog</a> cloud store</td></tr>
-
-<tr><td>HBase</td><td>hbase</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://hbase.apache.org/">HBase</a> database</td></tr>
 
 <tr><td>Riak</td><td>riak-client</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://docs.basho.com/">Riak</a> database</td></tr>
 
@@ -200,7 +203,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><td>Client</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
 
-<tr><td>RestClient</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
+<tr><td>RestClient</td><td>faraday</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
 
 </table>
 
@@ -211,8 +214,9 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 * [5]: Depends on server
 * [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
 * [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
-* [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` using the `Moneta::WeakIncrement` proxy.
-* [8]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` using the `Moneta::WeakCreate` proxy.
+* [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
+* [9]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
+* [10]: Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
 
 ------
 
@@ -248,6 +252,7 @@ Supported serializers:
 
 Supported value compressors:
 
+* LZ4 (`:lz4`)
 * LZMA (`:lzma`)
 * LZO (`:lzo`)
 * Snappy (`:snappy`)
@@ -256,7 +261,7 @@ Supported value compressors:
 
 Special transformers:
 
-* Digests (MD5, Shas, ...)
+* Digests (MD5, Shas, CityHash, ...)
 * Add prefix to keys (`:prefix`)
 * HMAC to verify values (`:hmac`, useful for `Rack::MonetaCookies`)
 
@@ -310,10 +315,16 @@ Moneta does not support iteration or partial matches.
 
 ### Creating a Store
 
-There is a simple interface to create a store using `Moneta.new`:
+There is a simple interface to create a store using `Moneta.new`. You will
+get automatic key and value serialization which is provided by `Moneta::Transformer`.
+This allows you to store arbitrary Ruby objects. You can tune some options
+when you call `Moneta.new`. However for very fine tuning use `Moneta.build`.
 
 ~~~ ruby
 store = Moneta.new(:Memcached, :server => 'localhost:11211')
+store['key'] = 'value'
+store['hash_key'] = {:a => 1, :b => 2}
+store['object_key'] = MarshallableRubyObject.new
 ~~~
 
 If you want to have control over the proxies, you have to use `Moneta.build`:
@@ -322,11 +333,31 @@ If you want to have control over the proxies, you have to use `Moneta.build`:
 store = Moneta.build do
   # Adds expires proxy
   use :Expires
+
   # Transform key using Marshal and Base64 and value using Marshal
   use :Transformer, :key => [:marshal, :base64], :value => :marshal
+
+  # IMPORTANT: adapter must be defined last for the builder to function properly.
+
   # Memory backend
   adapter :Memory
 end
+~~~
+
+You can also directly access the underlying adapters if you don't want
+to use the Moneta stack.
+
+~~~ ruby
+db = Moneta::Adapters::File.new(:dir => 'directory')
+db['key'] = {:a => 1, :b => 2} # This will fail since you can only store Strings
+
+# However for Mongo and Couch this works
+# The hash will be mapped directly to a Mongo/Couch document.
+db = Moneta::Adapters::Couch.new
+db['key'] = {:a => 1, :b => 2}
+
+db = Moneta::Adapters::Mongo.new
+db['key'] = {:a => 1, :b => 2}
 ~~~
 
 ### Expiration
@@ -756,6 +787,33 @@ Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/minad/mon
 to compare the speed of the different key value stores for different key/value sizes and size distributions.
 Feel free to add your own configurations! The impact of Moneta should be minimal since it is only a thin layer
 on top of the different stores.
+
+
+------
+
+## How to contribute?
+
+Always feel free to open an issue on
+https://github.com/minad/moneta/issues if something doesn't work
+as you expect it to work. Feedback is also very welcome!
+
+My only request about patches is that you please try
+to test them before submitting.
+
+### Contribute an adapter
+
+If you want support for another adapter you can at first at it to the list of
+missing adapters at https://github.com/minad/moneta/issues/16
+
+If you choose to implement an adapter please also add tests. Usually you
+only have to add a few lines to `script/generate-specs` to generate appropriate
+tests for your adapter. Please check also if travis.yml needs changes, for example
+if you need to start additional services.
+
+Check if the default settings in Moneta#new are appropriate for your adapter. If
+not specify a better one.
+
+Don't forget to edit the README.md and the CHANGES.
 
 ------
 

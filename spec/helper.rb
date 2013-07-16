@@ -1,13 +1,49 @@
 require 'rspec'
-require 'rspec/core/formatters/progress_formatter'
+require 'rspec/core/formatters/base_text_formatter'
 require 'rspec/retry'
 require 'moneta'
 require 'fileutils'
 require 'monetaspecs'
 
-RSpec::Core::Formatters::ProgressFormatter.class_eval do
+class MonetaParallelFormatter < RSpec::Core::Formatters::BaseTextFormatter
+  def start(*args)
+
+    output.puts colorise_summary("STARTING #{ARGV.join(' ')}")
+    @stopped = false
+    @passed_count = 0
+    @heartbeat = Thread.new do
+      count = 0
+      until @stopped
+        if (count += 1) % 60 == 0
+          output.puts(color("RUNNING  #{ARGV.join(' ')} - #{@passed_count} passed, #{failed_examples.size} failures",
+                            failed_examples.empty? ? RSpec.configuration.success_color : RSpec.configuration.failure_color))
+        end
+        sleep 0.5
+      end
+    end
+  end
+
   def example_passed(example)
-    # do nothing
+    super
+    @passed_count += 1
+  end
+
+  def stop
+    @stopped = true
+    @heartbeat.join
+  end
+
+  def dump_summary(duration, example_count, failure_count, pending_count)
+    @duration = duration
+    @example_count = example_count
+    @failure_count = failure_count
+    @pending_count = pending_count
+    output.puts colorise_summary(summary_line(example_count, failure_count, pending_count))
+    dump_commands_to_rerun_failed_examples
+  end
+
+  def summary_line(example_count, failure_count, pending_count)
+    "FINISHED #{ARGV.join(' ')} in #{format_duration(duration)} - #{super}"
   end
 end
 
@@ -15,7 +51,7 @@ RSpec.configure do |config|
   config.verbose_retry = true
   config.color_enabled = true
   config.tty = true
-  config.formatter = :progress
+  config.formatter = ENV['PARALLEL_TESTS'] ? MonetaParallelFormatter : :progress
 end
 
 # Disable jruby stdout pollution by memcached
@@ -133,10 +169,9 @@ shared_context 'setup_store' do
   end
 
   after do
-    store.close.should == nil if store
-    if @log
-      @log.close
-      @log = nil
+    if store
+      store.close.should == nil
+      @store = nil
     end
   end
 end

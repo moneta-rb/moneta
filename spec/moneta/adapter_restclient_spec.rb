@@ -2,15 +2,11 @@
 require 'helper'
 
 describe_moneta "adapter_restclient" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_restclient.log'), 'a')
-  end
-
+  start_restserver
   def features
     []
   end
 
-  start_restserver
   def new_store
     Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/moneta/')
   end
@@ -28,4 +24,5 @@ describe_moneta "adapter_restclient" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

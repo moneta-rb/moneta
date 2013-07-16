@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "adapter_activerecord" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_activerecord.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta::Adapters::ActiveRecord.new(:connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'adapter_activerecord') })
+    Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root' })
   end
 
   def load_value(value)
@@ -19,6 +15,8 @@ describe_moneta "adapter_activerecord" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
+  it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'create'
   it_should_behave_like 'features'
   it_should_behave_like 'increment'
@@ -27,18 +25,36 @@ describe_moneta "adapter_activerecord" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'updates an existing key/value' do
     store['foo/bar'] = '1'
     store['foo/bar'] = '2'
-    records = store.table.find :all, :conditions => { :k => 'foo/bar' }
-    records.count.should == 1
+    store.table.where(:k => 'foo/bar').count.should == 1
   end
 
-  it 'uses an existing connection' do
-    ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'), :database => File.join(make_tempdir, 'activerecord-existing')
+  it 'supports different tables same database' do
+    store1 = Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord1', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root' })
+    store2 = Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord2', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root' })
 
-    store = Moneta::Adapters::ActiveRecord.new
-    store.table.should be_table_exists
+    store1['key'] = 'value1'
+    store2['key'] = 'value2'
+    store1['key'].should == 'value1'
+    store2['key'].should == 'value2'
+
+    store1.close
+    store2.close
   end
 
+  it 'supports different databases same table' do
+    store1 = Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta_activerecord1', :username => 'root' })
+    store2 = Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta_activerecord2', :username => 'root' })
+
+    store1['key'] = 'value1'
+    store2['key'] = 'value2'
+    store1['key'].should == 'value1'
+    store2['key'].should == 'value2'
+
+    store1.close
+    store2.close
+  end
 end

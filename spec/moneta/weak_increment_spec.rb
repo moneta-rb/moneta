@@ -2,10 +2,8 @@
 require 'helper'
 
 describe_moneta "weak_increment" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'weak_increment.log'), 'a')
-  end
-
+  require 'fog'
+  Fog.mock!
   def features
     [:increment]
   end
@@ -13,7 +11,11 @@ describe_moneta "weak_increment" do
   def new_store
     Moneta.build do
       use :WeakIncrement
-      adapter :Couch, :db => 'weak_increment'
+      adapter :Fog,
+        :aws_access_key_id => 'fake_access_key_id',
+        :aws_secret_access_key  => 'fake_secret_access_key',
+        :provider               => 'AWS',
+        :dir                    => 'weak_increment'
     end
   end
 
@@ -28,6 +30,7 @@ describe_moneta "weak_increment" do
   it_should_behave_like 'not_create'
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
-  it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

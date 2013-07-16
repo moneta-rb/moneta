@@ -65,7 +65,7 @@ Closes the store
 
 ### <code>features => Array&lt;Symbol&gt;</code> and <code>supports?(Symbol) => [TrueClass, FalseClass]</code>
 
-Feature detection. Adapters MUST return <code>:create</code> and <code>:increment</code> if these methods are supported. 
+Feature detection. Adapters MUST return <code>:create</code> and <code>:increment</code> if these methods are supported.
 
 ## Additional Options Hashes
 

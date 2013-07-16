@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "cache_memory_null" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'cache_memory_null.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
@@ -13,7 +9,7 @@ describe_moneta "cache_memory_null" do
   def new_store
     Moneta.build do
       use(:Cache) do
-        backend(Moneta::Adapters::Memory.new)
+        adapter(Moneta::Adapters::Memory.new)
         cache(Moneta::Adapters::Null.new)
       end
     end
@@ -31,4 +27,5 @@ describe_moneta "cache_memory_null" do
   it_should_behave_like 'null_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

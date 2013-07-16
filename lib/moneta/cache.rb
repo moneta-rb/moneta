@@ -1,10 +1,10 @@
 module Moneta
-  # Combines two stores. One is used as cache, the other as backend.
+  # Combines two stores. One is used as cache, the other as backend adapter.
   #
   # @example Add `Moneta::Cache` to proxy stack
   #   Moneta.build do
   #     use(:Cache) do
-  #      backend { adapter :File, :dir => 'data' }
+  #      adapter { adapter :File, :dir => 'data' }
   #      cache { adapter :Memory }
   #     end
   #   end
@@ -21,10 +21,10 @@ module Moneta
       end
 
       # @api public
-      def backend(store = nil, &block)
-        raise 'Backend already set' if @store.backend
+      def adapter(store = nil, &block)
+        raise 'Adapter already set' if @store.adapter
         raise ArgumentError, 'Only argument or block allowed' if store && block
-        @store.backend = store || Moneta.build(&block)
+        @store.adapter = store || Moneta.build(&block)
       end
 
       # @api public
@@ -35,27 +35,27 @@ module Moneta
       end
     end
 
-    attr_accessor :cache, :backend
+    attr_accessor :cache, :adapter
 
     # @param [Hash] options Options hash
     # @option options [Moneta store] :cache Moneta store used as cache
-    # @option options [Moneta store] :backend Moneta store used as backend
+    # @option options [Moneta store] :adapter Moneta store used as adapter
     # @yieldparam Builder block
     def initialize(options = {}, &block)
-      @cache, @backend = options[:cache], options[:backend]
+      @cache, @adapter = options[:cache], options[:adapter]
       DSL.new(self, &block) if block_given?
     end
 
     # (see Proxy#key?)
     def key?(key, options = {})
-      @cache.key?(key, options) || @backend.key?(key, options)
+      @cache.key?(key, options) || @adapter.key?(key, options)
     end
 
     # (see Proxy#load)
     def load(key, options = {})
       value = @cache.load(key, options)
       if value == nil
-        value = @backend.load(key, options)
+        value = @adapter.load(key, options)
         @cache.store(key, value, options) if value != nil
       end
       value
@@ -64,18 +64,18 @@ module Moneta
     # (see Proxy#store)
     def store(key, value, options = {})
       @cache.store(key, value, options)
-      @backend.store(key, value, options)
+      @adapter.store(key, value, options)
     end
 
     # (see Proxy#increment)
     def increment(key, amount = 1, options = {})
       @cache.delete(key, options)
-      @backend.increment(key, amount, options)
+      @adapter.increment(key, amount, options)
     end
 
     # (see Proxy#create)
     def create(key, value, options = {})
-      if @backend.create(key, value, options)
+      if @adapter.create(key, value, options)
         @cache.store(key, value, options)
         true
       else
@@ -86,25 +86,25 @@ module Moneta
     # (see Proxy#delete)
     def delete(key, options = {})
       @cache.delete(key, options)
-      @backend.delete(key, options)
+      @adapter.delete(key, options)
     end
 
     # (see Proxy#clear)
     def clear(options = {})
       @cache.clear(options)
-      @backend.clear(options)
+      @adapter.clear(options)
       self
     end
 
     # (see Proxy#close)
     def close
       @cache.close
-      @backend.close
+      @adapter.close
     end
 
     # (see Proxy#features)
     def features
-      @features ||= ((@cache.features + [:create, :increment]) & @backend.features).freeze
+      @features ||= ((@cache.features + [:create, :increment]) & @adapter.features).freeze
     end
   end
 end

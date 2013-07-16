@@ -10,15 +10,19 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :file Database file
+      # @option options [::LocalMemCache] :backend Use existing backend instance
       def initialize(options = {})
-        raise ArgumentError, 'Option :file is required' unless options[:file]
-        @hash = ::LocalMemCache.new(:filename => options[:file])
+        @backend = options[:backend] ||
+          begin
+            raise ArgumentError, 'Option :file is required' unless options[:file]
+            ::LocalMemCache.new(:filename => options[:file])
+          end
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
-        @hash.delete(key)
+        @backend.delete(key)
         value
       end
     end

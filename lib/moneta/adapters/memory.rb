@@ -9,8 +9,9 @@ module Moneta
       include CreateSupport
 
       # @param [Hash] options Options hash
+      # @option options [Hash] :backend Use existing backend instance
       def initialize(options = {})
-        @hash = {}
+        @backend = options[:backend] || {}
       end
     end
   end

@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "shared_tcp" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'shared_tcp.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
@@ -23,6 +19,8 @@ describe_moneta "shared_tcp" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
+  it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'create'
   it_should_behave_like 'features'
   it_should_behave_like 'increment'
@@ -31,6 +29,7 @@ describe_moneta "shared_tcp" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'shares values' do
     store['shared_key'] = 'shared_value'
     second = new_store

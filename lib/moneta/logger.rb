@@ -7,11 +7,21 @@ module Moneta
     class Format
       def initialize(options)
         @prefix = options[:prefix] || 'Moneta '
-        @out = options[:out] || STDOUT
+        if options[:file]
+          @close = true
+          @out = File.open(options[:file], 'a')
+        else
+          @close = options[:close]
+          @out = options[:out] || STDOUT
+        end
       end
 
-      def call(entry)
+      def log(entry)
         @out.write(format(entry))
+      end
+
+      def close
+        @out.close if @close
       end
 
       protected
@@ -35,22 +45,29 @@ module Moneta
 
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
-    # @option options [Object] :logger (Moneta::Logger::Format) Callable logger object
-    # @option options [String] :logprefix ('Moneta ') Prefix string
-    # @option options [IO] :logout (STDOUT) Output
+    # @option options [Object] :logger (Moneta::Logger::Format) Logger object
+    # @option options [String] :prefix ('Moneta ') Prefix string
+    # @option options [File] :file Log file
+    # @option options [IO] :out (STDOUT) Output
     def initialize(adapter, options = {})
       super
       @logger = options[:logger] || Format.new(options)
+    end
+
+    def close
+      super
+      @logger.close
+      nil
     end
 
     protected
 
     def wrap(method, *args)
       ret = yield
-      @logger.call(:method => method, :args => args, :return => (method == :clear ? 'self' : ret))
+      @logger.log(:method => method, :args => args, :return => (method == :clear ? 'self' : ret))
       ret
     rescue Exception => error
-      @logger.call(:method => method, :args => args, :error => error)
+      @logger.log(:method => method, :args => args, :error => error)
       raise
     end
   end

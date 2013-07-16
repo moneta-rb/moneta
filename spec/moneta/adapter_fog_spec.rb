@@ -2,21 +2,17 @@
 require 'helper'
 
 describe_moneta "adapter_fog" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_fog.log'), 'a')
-  end
-
+  require 'fog'
+  Fog.mock!
   def features
     []
   end
 
-  require 'fog'
-  Fog.mock!
   def new_store
     Moneta::Adapters::Fog.new(:aws_access_key_id => 'fake_access_key_id',
         :aws_secret_access_key  => 'fake_secret_access_key',
         :provider               => 'AWS',
-        :dir                    => 'moneta')
+        :dir                    => 'adapter_fog')
   end
 
   def load_value(value)
@@ -32,4 +28,5 @@ describe_moneta "adapter_fog" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

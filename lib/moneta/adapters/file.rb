@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'fcntl'
 
 module Moneta
   module Adapters
@@ -7,9 +6,7 @@ module Moneta
     # @api public
     class File
       include Defaults
-      include IncrementSupport
-
-      supports :create
+      supports :create, :increment
 
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
@@ -32,16 +29,15 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        path = store_path(key)
         temp_file = ::File.join(@dir, "value-#{$$}-#{Thread.current.object_id}")
+        path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
-        ::File.open(temp_file, 'wb') {|file| file.write(value) }
-        ::File.unlink(path) if ::File.exist?(path)
+        ::File.open(temp_file, 'wb') {|f| f.write(value) }
         ::File.rename(temp_file, path)
         value
-      rescue Errno::ENOENT
-        ::File.unlink(temp_file) rescue nil
-        value
+      rescue Exception
+        File.unlink(temp_file) rescue nil
+        raise
       end
 
       # (see Proxy#delete)
@@ -57,42 +53,57 @@ module Moneta
         temp_dir = "#{@dir}-#{$$}-#{Thread.current.object_id}"
         ::File.rename(@dir, temp_dir)
         FileUtils.mkpath(@dir)
-        FileUtils.rm_rf(temp_dir)
         self
       rescue Errno::ENOENT
         self
+      ensure
+        FileUtils.rm_rf(temp_dir)
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        lock(key) { super }
-      end
-
-      # (see Proxy#create)
-      def create(key, value, options = {})
         path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
-        fd = ::File.sysopen(path, Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
-        ::File.open(fd, 'wb') {|file| file.write(value) }
-        true
-      rescue Errno::EEXIST
-        false
+        ::File.open(path, ::File::RDWR | ::File::CREAT) do |f|
+          Thread.pass until f.flock(::File::LOCK_EX)
+          content = f.read
+          amount += Utils.to_int(content) unless content.empty?
+          content = amount.to_s
+          f.pos = 0
+          f.write(content)
+          f.truncate(content.bytesize)
+          amount
+        end
+      end
+
+      # HACK: The implementation using File::EXCL is not atomic under JRuby 1.7.4
+      # See https://github.com/jruby/jruby/issues/827
+      if defined?(JRUBY_VERSION)
+        # (see Proxy#create)
+        def create(key, value, options = {})
+          path = store_path(key)
+          FileUtils.mkpath(::File.dirname(path))
+          # Call native java.io.File#createNewFile
+          return false unless ::Java::JavaIo::File.new(path).createNewFile
+          ::File.open(path, 'wb+') {|f| f.write(value) }
+          true
+        end
+      else
+        # (see Proxy#create)
+        def create(key, value, options = {})
+          path = store_path(key)
+          FileUtils.mkpath(::File.dirname(path))
+          ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |f|
+            f.binmode
+            f.write(value)
+          end
+          true
+        rescue Errno::EEXIST
+          false
+        end
       end
 
       protected
-
-      def lock(key, &block)
-        path = store_path(key)
-        return yield unless ::File.exist?(path)
-        ::File.open(path, 'r+') do |f|
-          begin
-            Thread.pass until f.flock(::File::LOCK_EX)
-            yield
-          ensure
-            f.flock(::File::LOCK_UN)
-          end
-        end
-      end
 
       def store_path(key)
         ::File.join(@dir, key)

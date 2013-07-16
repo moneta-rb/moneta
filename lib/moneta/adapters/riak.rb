@@ -1,23 +1,25 @@
-# Copyright: 2011 TMX Credit
-# Author: Potapov Sergey (aka Blake)
-
 require 'riak'
 
 module Moneta
   module Adapters
     # Riak backend
     # @api public
+    # @author Potapov Sergey (aka Blake)
     class Riak
       include Defaults
+
+      attr_reader :backend
 
       # @param [Hash] options
       # @option options [String] :bucket ('moneta') Bucket name
       # @option options [String] :content_type ('application/octet-stream') Default content type
       # @option options All other options passed to `Riak::Client#new`
+      # @option options [::Riak::Client] :backend Use existing backend instance
       def initialize(options = {})
         bucket = options.delete(:bucket) || 'moneta'
         @content_type = options.delete(:content_type) || 'application/octet-stream'
-        @bucket = ::Riak::Client.new(options).bucket(bucket)
+        @backend = options[:backend] || ::Riak::Client.new(options)
+        @bucket = @backend.bucket(bucket)
       end
 
       # (see Proxy#key?)

@@ -17,11 +17,14 @@ module Moneta
       adapter = @proxies.first
       if Array === adapter
         klass, options, block = adapter
-        adapter = klass.new(options, &block)
+        adapter = new_proxy(klass, options, &block)
+        check_arity(klass, adapter, 1)
       end
-      @proxies[1..-1].inject([adapter]) do |stores, proxy|
+      @proxies[1..-1].inject([adapter]) do |result, proxy|
         klass, options, block = proxy
-        stores << klass.new(stores.last, options, &block)
+        proxy = new_proxy(klass, result.last, options, &block)
+        check_arity(klass, proxy, 2)
+        result << proxy
       end
     end
 
@@ -55,5 +58,26 @@ module Moneta
         nil
       end
     end
+
+    protected
+
+    def new_proxy(klass, *args, &block)
+      klass.new(*args, &block)
+    rescue ArgumentError => ex
+      check_arity(klass, klass.allocate, args.size)
+      raise
+    end
+
+    def check_arity(klass, proxy, expected)
+      args = proxy.method(:initialize).arity.abs
+      raise(ArgumentError, %{#{klass.name}#new accepts wrong number of arguments (#{args} accepted, #{expected} expected)
+
+Please check your Moneta builder block:
+  * Proxies must be used before the adapter
+  * Only one adapter is allowed
+  * The adapter must be used last
+}) if args != expected
+    end
   end
+
 end

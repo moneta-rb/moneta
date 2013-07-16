@@ -7,22 +7,29 @@ module Moneta
     class HBase
       include Defaults
 
+      attr_reader :backend
+
+      # TODO: Add create support using checkAndPut if added to thrift api
+      # https://issues.apache.org/jira/browse/HBASE-3307
+      # https://github.com/bmuller/hbaserb/issues/2
+      supports :increment
+
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (9090) Server port
       # @option options [String] :table ('moneta') Table name
       # @option options [String] :column_family ('moneta') Column family
       # @option options [String] :column ('value') Column
+      # @option options [::HBaseRb::Client] :backend Use existing backend instance
       def initialize(options = {})
-        options[:host] ||= '127.0.0.1'
-        options[:port] ||= '9090'
-        options[:table] ||= 'moneta'
         options[:column] ||= 'value'
+        options[:table] ||= 'moneta'
         cf = (options[:column_family] || 'moneta')
-        @db = HBaseRb::Client.new(options[:host], options[:port])
-        @db.create_table(options[:table], cf) unless @db.has_table?(options[:table])
-        @table = @db.get_table(options[:table])
         @column = "#{cf}:#{options[:column]}"
+        @backend = options[:backend] ||
+          HBaseRb::Client.new(options[:host] || '127.0.0.1', options[:port] || '9090')
+        @backend.create_table(options[:table], cf) unless @backend.has_table?(options[:table])
+        @table = @backend.get_table(options[:table])
       end
 
       # (see Proxy#key?)
@@ -54,7 +61,7 @@ module Moneta
       def delete(key, options = {})
         if value = load(key, options)
           @table.delete_row(key)
-          unpack(value)
+          value
         end
       end
 
@@ -68,7 +75,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @db.close
+        @backend.close
         nil
       end
 
@@ -81,7 +88,7 @@ module Moneta
           [intvalue].pack('Q>')
         elsif value.bytesize >= 8
           # Add nul character to make value distinguishable from integer
-          value << "\0"
+          value + "\0"
         else
           value
         end

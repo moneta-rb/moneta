@@ -2,16 +2,12 @@
 require 'helper'
 
 describe_moneta "mutex" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'mutex.log'), 'a')
-  end
-
   def features
     []
   end
 
   def new_store
-    Moneta.new(:Memory, :logger => {:out => log})
+    Moneta.new(:Memory, :logger => {:file => File.join(make_tempdir, 'mutex.log')})
   end
 
   def load_value(value)

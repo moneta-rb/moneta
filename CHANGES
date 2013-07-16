@@ -1,6 +1,60 @@
-master
+0.7.19
+
+* ActionDispatch::Session::MonetaStore fixed for Rails 4
+* Moneta::Server: Tries now to remove stale unix socket
+* Moneta::Server: More robust and better performance
+
+0.7.18
+
+* Adapters::File#increment and #create fixed on JRuby
+* Adapters::Couch and Adapters::Mongo can store hashes directly as documents.
+  It is not necessary to serialize values as strings anymore.
+* Adapters::Couch#create added
+* Pool thread safety improved
+* Transformer: Add CityHash
+
+0.7.17
+
+* Transformer: LZ4 compression added
+
+0.7.16
+
+* Better builder validation
+* Adapters::Sequel: check for correct exceptions
+
+0.7.15
+
+* CONTRIBUTORS file added
+* Adapters::File#increment fixed
+
+0.7.14
+
+* Adapters::ActiveRecord, Adapters::Sequel: store values as blobs
+* Adapters::ActiveRecord fixed and improved
+
+0.7.13
+
+* Adapters::ActiveRecord: Use connection_pool
+* Adapters::File: Race condition in #increment fixed
+
+0.7.12
+
+* Concurrency tests added
+* Bugfixes for File, Sqlite, Sequel and Datamapper, ActiveRecord
+
+0.7.11
+
+* Logger: Add option :file
+* Adapters::TokyoTyrant supports both native (ruby-tokyotyrant) and pure-ruby tokyotyrant gems
+* Adapters::Couch use Faraday directly instead of buggy CouchRest
+* Adapters::RestClient use Faraday
+* Transformer: add quoted printable encoding (:qp)
+
+0.7.10
 
 * Adapters::TokyoTyrant added
+* Add attr_reader :backend and option :backend to some adapters
+* Cache rename #backend to #adapter
 
 0.7.9
 

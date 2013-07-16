@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sudo service riak start
+sudo service couchdb start
+sudo service redis-server start
+sudo service cassandra start
+sudo service memcached start
+sudo service mongodb start
+
+# Waiting for servers to start
+sleep 3
+
+echo 'TokyoTyrant status'
+ps aux | grep ttserver
+cat /tmp/ttserver.log

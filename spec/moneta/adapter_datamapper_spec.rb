@@ -2,18 +2,14 @@
 require 'helper'
 
 describe_moneta "adapter_datamapper" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_datamapper.log'), 'a')
-  end
-
+  require 'dm-core'
+  DataMapper.setup(:default, :adapter => :in_memory)
   def features
     [:create]
   end
 
-  require 'dm-core'
-  DataMapper.setup(:default, :adapter => :in_memory)
   def new_store
-    Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/adapter_datamapper")
+    Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "adapter_datamapper")
   end
 
   def load_value(value)
@@ -21,6 +17,7 @@ describe_moneta "adapter_datamapper" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
   it_should_behave_like 'create'
   it_should_behave_like 'features'
   it_should_behave_like 'multiprocess'
@@ -29,11 +26,12 @@ describe_moneta "adapter_datamapper" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
   it 'does not cross contaminate when storing' do
-    first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table => "datamapper_second")
     second.clear
 
     first['key'] = 'value'
@@ -44,10 +42,10 @@ describe_moneta "adapter_datamapper" do
   end
 
   it 'does not cross contaminate when deleting' do
-    first = Moneta::Adapters::DataMapper.new(:setup => "sqlite3://#{make_tempdir}/datamapper-first")
+    first = Moneta::Adapters::DataMapper.new(:setup => "mysql://root:@localhost/moneta", :table => "datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "sqlite3://#{make_tempdir}/datamapper-second")
+    second = Moneta::Adapters::DataMapper.new(:repository => :sample, :setup => "mysql://root:@localhost/moneta", :table => "datamapper_second")
     second.clear
 
     first['key'] = 'value'

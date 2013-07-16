@@ -2,10 +2,6 @@
 require 'helper'
 
 describe_moneta "adapter_tdb" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_tdb.log'), 'a')
-  end
-
   def features
     [:create, :increment]
   end
@@ -26,4 +22,5 @@ describe_moneta "adapter_tdb" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

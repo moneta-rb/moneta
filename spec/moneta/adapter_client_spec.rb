@@ -2,15 +2,11 @@
 require 'helper'
 
 describe_moneta "adapter_client" do
-  def log
-    @log ||= File.open(File.join(make_tempdir, 'adapter_client.log'), 'a')
-  end
-
+  start_server(Moneta::Adapters::Memory.new)
   def features
     [:create, :increment]
   end
 
-  start_server(Moneta::Adapters::Memory.new)
   def new_store
     Moneta::Adapters::Client.new
   end
@@ -20,6 +16,8 @@ describe_moneta "adapter_client" do
   end
 
   include_context 'setup_store'
+  it_should_behave_like 'concurrent_create'
+  it_should_behave_like 'concurrent_increment'
   it_should_behave_like 'create'
   it_should_behave_like 'features'
   it_should_behave_like 'increment'
@@ -28,4 +26,5 @@ describe_moneta "adapter_client" do
   it_should_behave_like 'persist_stringkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_large'
 end

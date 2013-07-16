@@ -10,7 +10,6 @@ module Moneta
   autoload :Lock,              'moneta/lock'
   autoload :Logger,            'moneta/logger'
   autoload :Mutex,             'moneta/synchronize'
-  autoload :Net,               'moneta/mixins'
   autoload :OptionMerger,      'moneta/optionmerger'
   autoload :OptionSupport,     'moneta/mixins'
   autoload :Pool,              'moneta/pool'
@@ -47,6 +46,7 @@ module Moneta
     autoload :MemcachedNative, 'moneta/adapters/memcached/native'
     autoload :Memory,          'moneta/adapters/memory'
     autoload :Mongo,           'moneta/adapters/mongo'
+    autoload :Mysql,           'moneta/adapters/mysql'
     autoload :Null,            'moneta/adapters/null'
     autoload :PStore,          'moneta/adapters/pstore'
     autoload :Redis,           'moneta/adapters/redis'
@@ -54,6 +54,7 @@ module Moneta
     autoload :Riak,            'moneta/adapters/riak'
     autoload :SDBM,            'moneta/adapters/sdbm'
     autoload :Sequel,          'moneta/adapters/sequel'
+    autoload :SFTP,            'moneta/adapters/sftp'
     autoload :Sqlite,          'moneta/adapters/sqlite'
     autoload :TDB,             'moneta/adapters/tdb'
     autoload :TokyoCabinet,    'moneta/adapters/tokyocabinet'
@@ -102,15 +103,10 @@ module Moneta
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise ArgumentError, 'Name must be Symbol' unless Symbol === name
     case name
-    when :Sequel, :ActiveRecord, :Couch, :DataMapper
-      # Sequel accept only base64 keys and values
-      # FIXME: Couch should work only with :marshal but this raises an error on 1.9
+    when :Sequel, :ActiveRecord, :Couch, :DataMapper, :Mysql
+      # Sequel, DataMapper and AR accept only base64 keys and values
       transformer[:key] << :base64
       transformer[:value] << :base64
-    when :Riak, :RestClient
-      # Riak accepts only utf-8 keys over the http interface
-      # We use base64 encoding therefore.
-      transformer[:key] << :base64
     when :PStore, :YAML, :Null
       # For PStore and YAML only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]
@@ -118,8 +114,8 @@ module Moneta
       # Use spreading hashes
       transformer[:key] << :md5 << :spread
       name = :File
-    when :File
-      # Use escaping
+    when :File, :Couch, :Riak, :RestClient, :SFTP
+      # Use escaping for file and HTTP interfaces
       transformer[:key] << :escape
     end
     a = Adapters.const_get(name).new(options)
