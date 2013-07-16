@@ -11,11 +11,13 @@ module Moneta
       include CreateSupport
 
       # @param [Hash] options
-      # @option options [Integer] :max_size (1024000) Maximum total byte size of hash values
-      # @option options [Integer] :max_count (10240) Maximum number of hash values
+      # @option options [Integer] :max_size (1024000) Maximum byte size of all values
+      # @option options [Integer] :max_value (options[:max_size]) Maximum byte size of one value
+      # @option options [Integer] :max_count (10240) Maximum number of values
       def initialize(options = {})
         @max_size = options[:max_size] || 1024000
         @max_count = options[:max_count] || 10240
+        @max_value = options[:max_value] || @max_size
         clear
       end
 
@@ -34,16 +36,20 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        if entry = @entry[key]
-          @size -= entry.value.bytesize
+        if value.bytesize > @max_value
+          delete(key)
         else
-          @entry[key] = entry = Entry.new
-          entry.key = key
+          if entry = @entry[key]
+            @size -= entry.value.bytesize
+          else
+            @entry[key] = entry = Entry.new
+            entry.key = key
+          end
+          entry.value = value
+          @size += entry.value.bytesize
+          entry.insert_after(@list)
+          delete(@list.prev.key) while @list.next != @list.prev && (@size > @max_size || @entry.size > @max_count)
         end
-        entry.value = value
-        @size += entry.value.bytesize
-        entry.insert_after(@list)
-        delete(@list.prev.key) while @list.next != @list.prev && (@size > @max_size || @entry.size > @max_count)
         value
       end
 
