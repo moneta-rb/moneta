@@ -1,3 +1,8 @@
+master
+
+* Adapters::LRUHash: add option :max_value
+* Moneta.new(:Couch, :Riak, :RestClient): use urlencode instead of base64 for key encoding)
+
 0.7.19
 
 * ActionDispatch::Session::MonetaStore fixed for Rails 4
