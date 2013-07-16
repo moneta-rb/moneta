@@ -48,6 +48,7 @@ gem 'activerecord', *rails_version
 gem 'redis'
 gem 'mongo'
 gem 'sequel'
+gem 'couchbase'
 gem 'dalli'
 gem 'riak-client'
 gem 'cassandra'
