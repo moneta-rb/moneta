@@ -2,6 +2,7 @@ master
 
 * Adapters::LRUHash: add option :max_value
 * Moneta.new(:Couch, :Riak, :RestClient): use urlencode instead of base64 for key encoding)
+* Transformer: Add :hex encoder
 
 0.7.19
 
