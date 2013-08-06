@@ -11,7 +11,7 @@ describe_moneta "simple_sequel_with_expires" do
   end
 
   def load_value(value)
-    ::Marshal.load(value.unpack('m').first)
+    ::Marshal.load(value)
   end
 
   include_context 'setup_store'
