@@ -247,17 +247,27 @@ Supported serializers:
 * Marshal (`:marshal`)
 * MessagePack (`:msgpack`)
 * Ox (`:ox`)
+* PHP (`:php`)
 * TNetStrings (`:tnet`)
 * YAML (`:yaml`)
 
 Supported value compressors:
 
+* Bzip2 (`:bzip2`)
 * LZ4 (`:lz4`)
 * LZMA (`:lzma`)
 * LZO (`:lzo`)
 * Snappy (`:snappy`)
 * QuickLZ (`:quicklz`)
 * Zlib (`:zlib`)
+
+Supported encoders:
+
+* Base64 (`:base64`)
+* Url escape (`:escape`)
+* Hexadecimal (`:hex`)
+* QP (`:qp`)
+* UUEncode (`:uuencode`)
 
 Special transformers:
 
