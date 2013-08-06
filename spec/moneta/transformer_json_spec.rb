@@ -14,7 +14,7 @@ describe_moneta "transformer_json" do
   end
 
   def load_value(value)
-    ::MultiJson.load(value).first
+    ::MultiJson.load(value)
   end
 
   include_context 'setup_store'

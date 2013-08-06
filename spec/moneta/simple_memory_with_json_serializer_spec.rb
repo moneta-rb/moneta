@@ -11,7 +11,7 @@ describe_moneta "simple_memory_with_json_serializer" do
   end
 
   def load_value(value)
-    ::MultiJson.load(value).first
+    ::MultiJson.load(value)
   end
 
   include_context 'setup_store'
