@@ -9,40 +9,66 @@ module Moneta
 
       # @param [Hash] options
       def initialize(options = {})
+        @backend =
+          if options[:backend]
+            options[:backend]
+          elsif defined?(Rails)
+            Rails.cache
+          else
+            raise ArgumentError, 'Option :backend is required'
+          end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @store.exist?(key)
+        @backend.exist?(key)
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        @store.read(key)
+        @backend.read(key)
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @store.write(key, value)
+        @backend.write(key, value)
+        value
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         if amount >= 0
-          @store.increment(key, amount)
+          result = @backend.increment(key, amount)
+          if result == nil
+            @backend.write(key, amount)
+            amount
+          else
+            result
+          end
         else
-          @store.decrement(key, amount)
+          result = @backend.decrement(key, amount)
+          if result == nil
+            @backend.write(key, -amount)
+            -amount
+          else
+            result
+          end
         end
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @store.delete(key)
+        value = @backend.read(key)
+        if value != nil
+          @backend.delete(key)
+          value
+        end
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @store.clear
+        @backend.clear
+        self
       end
     end
   end
