@@ -170,7 +170,7 @@ end
   'simple_memory_with_json_serializer' => {
     :store => :Memory,
     :options => ':serializer => :json',
-    :load_value => '::MultiJson.load(value).first',
+    :load_value => '::MultiJson.load(value)',
     :specs => STANDARD_SPECS.without_marshallable.simplekeys_only.simplevalues_only.without_persist
   },
   'simple_memory_with_json_key_serializer' => {
@@ -182,7 +182,7 @@ end
     :store => :Memory,
     :options => ':value_serializer => :json',
     :specs => STANDARD_SPECS.without_marshallable_value.simplevalues_only.without_persist,
-    :load_value => '::MultiJson.load(value).first'
+    :load_value => '::MultiJson.load(value)'
   },
   'simple_memory_with_snappy_compress' => {
     :store => :Memory,
@@ -438,14 +438,14 @@ end
   'simple_sequel' => {
     :store => :Sequel,
     :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "simple_sequel"',
-    :load_value => '::Marshal.load(value.unpack(\'m\').first)',
+    :load_value => '::Marshal.load(value)',
     :specs => STANDARD_SPECS
   },
   'simple_sequel_with_expires' => {
     :store => :Sequel,
     :options => ':db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "simple_sequel_with_expires", :expires => true',
     :specs => STANDARD_SPECS.with_expires,
-    :load_value => '::Marshal.load(value.unpack(\'m\').first)'
+    :load_value => '::Marshal.load(value)'
   },
   'simple_datamapper' => {
     :store => :DataMapper,
@@ -777,7 +777,7 @@ end}
   adapter :Memory
 end},
     :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
-    :load_value => '::MultiJson.load(value).first',
+    :load_value => '::MultiJson.load(value)',
     :tests => %{
 it 'compile transformer class' do
   store.should_not be_nil
@@ -835,6 +835,19 @@ end},
 it 'compile transformer class' do
   store.should_not be_nil
   Moneta::Transformer::OxKeyOxValue.should_not be_nil
+end}
+  },
+  'transformer_php' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => :php, :value => :php
+  adapter :Memory
+end},
+    :specs => TRANSFORMER_SPECS.simplekeys_only.simplevalues_only,
+    :load_value => '::PHP.unserialize(value)',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::PhpKeyPhpValue.should_not be_nil
 end}
   },
   'transformer_tnet' => {
@@ -991,6 +1004,19 @@ end},
 it 'compile transformer class' do
   store.should_not be_nil
   Moneta::Transformer::MarshalBase64KeyMarshalBase64Value.should_not be_nil
+end}
+  },
+  'transformer_marshal_hex' => {
+    :build => %{Moneta.build do
+  use :Transformer, :key => [:marshal, :hex], :value => [:marshal, :hex]
+  adapter :Memory
+end},
+    :specs => STANDARD_SPECS.without_persist,
+    :load_value => '::Marshal.load([value].pack(\'H*\'))',
+    :tests => %{
+it 'compile transformer class' do
+  store.should_not be_nil
+  Moneta::Transformer::MarshalHexKeyMarshalHexValue.should_not be_nil
 end}
   },
   'transformer_marshal_prefix' => {

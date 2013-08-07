@@ -104,8 +104,11 @@ module Moneta
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise ArgumentError, 'Name must be Symbol' unless Symbol === name
     case name
-    when :Sequel, :ActiveRecord, :Couch, :DataMapper, :Mysql
-      # Sequel, DataMapper and AR accept only base64 keys and values
+    when :Sequel
+      # Sequel accept only base64 keys
+      transformer[:key] << :base64
+    when :ActiveRecord, :DataMapper, :Couch, :Mysql
+      # DataMapper and AR accept only base64 keys and values
       transformer[:key] << :base64
       transformer[:value] << :base64
     when :PStore, :YAML, :Null
@@ -115,7 +118,7 @@ module Moneta
       # Use spreading hashes
       transformer[:key] << :md5 << :spread
       name = :File
-    when :File, :Couch, :Riak, :RestClient, :SFTP
+    when :File, :Riak, :RestClient, :SFTP
       # Use escaping for file and HTTP interfaces
       transformer[:key] << :escape
     end

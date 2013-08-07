@@ -22,6 +22,7 @@ gem 'ox', :platforms => :ruby
 gem 'msgpack', :platforms => :ruby
 gem 'msgpack-jruby', :platforms => :jruby
 gem 'bert', :platforms => :ruby
+gem 'php_serialize'
 
 # Compressors used by Transformer
 if RUBY_VERSION < '2.0'

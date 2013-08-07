@@ -47,9 +47,9 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         begin
-          @table.insert(:k => key, :v => value)
+          @table.insert(:k => key, :v => ::Sequel.blob(value))
         rescue UniqueConstraintViolation
-          @table.where(:k => key).update(:v => value)
+          @table.where(:k => key).update(:v => ::Sequel.blob(value))
         end
         value
       rescue ::Sequel::DatabaseError
@@ -59,7 +59,7 @@ module Moneta
 
       # (see Proxy#store)
       def create(key, value, options = {})
-        @table.insert(:k => key, :v => value)
+        @table.insert(:k => key, :v => ::Sequel.blob(value))
         true
       rescue UniqueConstraintViolation
         false
@@ -71,10 +71,10 @@ module Moneta
           locked_table = @table.for_update
           if record = locked_table[:k => key]
             value = Utils.to_int(record[:v]) + amount
-            locked_table.where(:k => key).update(:v => value.to_s)
+            locked_table.where(:k => key).update(:v => ::Sequel.blob(value.to_s))
             value
           else
-            locked_table.insert(:k => key, :v => amount.to_s)
+            locked_table.insert(:k => key, :v => ::Sequel.blob(amount.to_s))
             amount
           end
         end

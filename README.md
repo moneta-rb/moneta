@@ -210,7 +210,7 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 * [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `:threadsafe => true` to `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple threads if the store is multi-process safe. I recommend to add the option `:threadsafe` to ensure thread-safety since for example under JRuby and Rubinius even the basic datastructures are not thread safe due to the lack of a global interpreter lock (GIL). This differs from MRI where some adapters might appear thread safe already but only due to the GIL.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 * [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
-* [4]: There are some servers which use the memcached protocol but which are persistent (e.g. [MemcacheDB](http://memcachedb.org/), [Kai](http://sourceforge.net/apps/mediawiki/kai), [IronCache](http://dev.iron.io/cache/reference/memcache/), [Roma](https://github.com/roma/roma/tree) and [Flare](http://labs.gree.jp/Top/OpenSource/Flare-en.html))
+* [4]: There are some servers which use the memcached protocol but which are persistent (e.g. [MemcacheDB](http://memcachedb.org/), [Kai](http://sourceforge.net/apps/mediawiki/kai), [IronCache](http://dev.iron.io/cache/reference/memcache/), [Roma](https://github.com/roma/roma/tree), [Flare](http://labs.gree.jp/Top/OpenSource/Flare-en.html) and [Kumofs](https://github.com/etolabo/kumofs))
 * [5]: Depends on server
 * [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
 * [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
@@ -229,7 +229,7 @@ add additional features to storage backends:
 * `Moneta::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
 * `Moneta::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use(:Stack) {}`.
 * `Moneta::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.
-* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::Memory`). Add it in the builder using `use(:Cache) {}`.
+* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::LRUHash`). Add it in the builder using `use(:Cache) {}`.
 * `Moneta::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
 * `Moneta::Pool` to create a pool of stores as a means of making the store thread safe. Add it in the builder using `use(:Pool) {}`.
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
@@ -247,17 +247,27 @@ Supported serializers:
 * Marshal (`:marshal`)
 * MessagePack (`:msgpack`)
 * Ox (`:ox`)
+* PHP (`:php`)
 * TNetStrings (`:tnet`)
 * YAML (`:yaml`)
 
 Supported value compressors:
 
+* Bzip2 (`:bzip2`)
 * LZ4 (`:lz4`)
 * LZMA (`:lzma`)
 * LZO (`:lzo`)
 * Snappy (`:snappy`)
 * QuickLZ (`:quicklz`)
 * Zlib (`:zlib`)
+
+Supported encoders:
+
+* Base64 (`:base64`)
+* Url escape (`:escape`)
+* Hexadecimal (`:hex`)
+* QP (`:qp`)
+* UUEncode (`:uuencode`)
 
 Special transformers:
 
