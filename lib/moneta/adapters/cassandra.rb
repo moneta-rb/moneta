@@ -19,13 +19,18 @@ module Moneta
       # @option options [Integer] :expires Default expiration time
       # @option options [::Cassandra] :backend Use existing backend instance
       def initialize(options = {})
-        self.default_expires = options[:expires]
-        @cf = (options[:column_family] || 'moneta').to_sym
+        self.default_expires = options.delete(:expires)
+        @cf = (options.delete(:column_family) || 'moneta').to_sym
         if options[:backend]
           @backend = options[:backend]
         else
-          keyspace = options[:keyspace] || 'moneta'
-          @backend = ::Cassandra.new('system', "#{options[:host] || '127.0.0.1'}:#{options[:port] || 9160}")
+          keyspace = options.delete(:keyspace) || 'moneta'
+          options[:retries] ||= 3
+          options[:connect_timeout] ||= 10
+          options[:timeout] ||= 10
+          @backend = ::Cassandra.new('system',
+                                     "#{options[:host] || '127.0.0.1'}:#{options[:port] || 9160}",
+                                     options)
           unless @backend.keyspaces.include?(keyspace)
             cf_def = ::Cassandra::ColumnFamily.new(:keyspace => keyspace, :name => @cf.to_s)
             ks_def = ::Cassandra::Keyspace.new(:name => keyspace,
@@ -71,10 +76,6 @@ module Moneta
       def store(key, value, options = {})
         @backend.insert(@cf, key, {'value' => value}, :ttl => expires_value(options) || nil)
         value
-      rescue
-        # FIXME: We get spurious cassandra transport exceptions
-        tries ||= 0
-        (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#delete)
