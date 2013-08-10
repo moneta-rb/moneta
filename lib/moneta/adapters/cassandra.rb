@@ -18,6 +18,7 @@ module Moneta
       # @option options [Integer] :port (9160) Server port
       # @option options [Integer] :expires Default expiration time
       # @option options [::Cassandra] :backend Use existing backend instance
+      # @option options Other options passed to `Cassandra#new`
       def initialize(options = {})
         self.default_expires = options.delete(:expires)
         @cf = (options.delete(:column_family) || 'moneta').to_sym
