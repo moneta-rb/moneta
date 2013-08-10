@@ -87,9 +87,7 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.each_key(@cf) do |key|
-          delete(key)
-        end
+        @backend.clear_column_family!(@cf)
         self
       end
 
