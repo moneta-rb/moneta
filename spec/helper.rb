@@ -152,9 +152,9 @@ def describe_moneta(name, &block)
     InitializeStore.new(&block)
     describe(name, &block)
   rescue LoadError => ex
-    puts "\e[31mTest #{name} not executed: #{ex.message}\e[0m"
+    puts "\e[31mTest #{name} not executed: #{ex.class} - #{ex.message}\e[0m"
   rescue Exception => ex
-    puts "\e[31mTest #{name} not executed: #{ex.message}\e[0m"
+    puts "\e[31mTest #{name} not executed: #{ex.class} - #{ex.message}\e[0m"
     puts ex.backtrace.join("\n")
   end
 end
