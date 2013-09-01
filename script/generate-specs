@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
 
 PATH = File.expand_path(File.join(__FILE__, '..', '..', 'spec'))
 
@@ -1681,7 +1682,7 @@ KEYS = {
   'integer' => [-10, 42],
   'number' => [0.5, -0.3, 1<<127, 99],
   'boolean' => [true, false],
-  'string' => %w(strkey1 strkey2 foo/bar bar/foo/baz).map(&:inspect),
+  'string' => ['strkey1', 'strkey2', 'bar/foo/baz', 'foo/bar', 'über', "\xAA\xBB\xCC"].map(&:inspect),
   'simplestring' => %w(strkey1 strkey2).map(&:inspect),
   'object' => ['Value.new(:objkey1)', 'Value.new(:objkey2)'],
   'hash' => [{'hashkey1' => 'hashkey2'}, {'hashkey3' => 'hashkey4'}].map(&:inspect)
@@ -1692,7 +1693,7 @@ VALUES = {
   'integer' => [41, -12],
   'number' => [123.456, -98.7, 1<<128, 33],
   'boolean' => [true, false],
-  'string' => %w(strval1 strval2).map(&:inspect),
+  'string' => ['strval1', 'strval2', '', "\xAA\xBB\xCC"].map(&:inspect),
   'hash' => [{'hashval1' => ['array1', 1]}, {'hashval3' => ['array2', {'hashval4' => 42}]}].map(&:inspect),
   'object' => ['Value.new(:objval1)', 'Value.new(:objval2)'],
 }
