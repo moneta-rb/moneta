@@ -53,8 +53,7 @@ module Moneta
 
     # (see Proxy#load)
     def load(key, options = {})
-      value = @cache.load(key, options)
-      if value == nil
+      if options[:sync] || (value = @cache.load(key, options)) == nil
         value = @adapter.load(key, options)
         @cache.store(key, value, options) if value != nil
       end
