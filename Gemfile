@@ -58,6 +58,7 @@ gem 'tokyotyrant'
 #gem 'localmemcache'
 gem 'tdb', :platforms => :ruby
 gem 'leveldb-ruby', :platforms => :ruby
+gem 'lmdb', :platforms => :ruby, :github => 'minad/lmdb'
 if RUBY_VERSION < '2.0'
   gem 'tokyocabinet', :platforms => :ruby
 end

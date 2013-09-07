@@ -40,6 +40,7 @@ module Moneta
     autoload :LRUHash,         'moneta/adapters/lruhash'
     autoload :KyotoCabinet,    'moneta/adapters/kyotocabinet'
     autoload :LevelDB,         'moneta/adapters/leveldb'
+    autoload :LMDB,            'moneta/adapters/lmdb'
     autoload :LocalMemCache,   'moneta/adapters/localmemcache'
     autoload :Memcached,       'moneta/adapters/memcached'
     autoload :MemcachedDalli,  'moneta/adapters/memcached/dalli'
