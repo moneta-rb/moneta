@@ -298,12 +298,12 @@ end
   'simple_lmdb' => {
     :store => :LMDB,
     :options => ':dir => File.join(make_tempdir, "simple_lmdb")',
-    :specs => STANDARD_SPECS.without_multiprocess.without_concurrent
+    :specs => STANDARD_SPECS.without_concurrent
   },
   'simple_lmdb_with_expires' => {
     :store => :LMDB,
     :options => ':dir => File.join(make_tempdir, "simple_lmdb_with_expires"), :expires => true',
-    :specs => STANDARD_SPECS.with_expires.without_multiprocess.without_concurrent
+    :specs => STANDARD_SPECS.with_expires.without_concurrent
   },
   'simple_pstore' => {
     :store => :PStore,
@@ -1429,11 +1429,11 @@ end}
   },
   'adapter_lmdb' => {
     :build => 'Moneta::Adapters::LMDB.new(:dir => File.join(make_tempdir, "adapter_lmdb"))',
-    :specs => ADAPTER_SPECS.without_multiprocess.without_concurrent
+    :specs => ADAPTER_SPECS.without_concurrent
   },
   'adapter_lmdb_with_db' => {
     :build => 'Moneta::Adapters::LMDB.new(:dir => File.join(make_tempdir, "adapter_lmdb"), :db => "adapter_lmdb_with_db")',
-    :specs => ADAPTER_SPECS.without_multiprocess.without_concurrent
+    :specs => ADAPTER_SPECS.without_concurrent
   },
   'adapter_leveldb' => {
     :build => 'Moneta::Adapters::LevelDB.new(:dir => File.join(make_tempdir, "adapter_leveldb"))',
