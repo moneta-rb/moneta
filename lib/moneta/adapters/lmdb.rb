@@ -11,6 +11,8 @@ module Moneta
       supports :create, :increment
       attr_reader :backend, :db
 
+      PUT_FLAGS = [:nooverwrite, :nodupdata, :current, :append, :appenddup]
+
       # @param [Hash] options
       # @option options [String] :dir Environment directory
       # @option options [::LMDB::Environment] :backend Use existing backend instance
@@ -19,12 +21,12 @@ module Moneta
         db = options.delete(:db)
         @backend = options.delete(:backend) ||
           begin
-            raise ArgumentError, 'Option :dir is required' unless dir = options[:dir]
+            raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
             FileUtils.mkpath(dir)
-            ::LMDB.open(dir, options)
+            ::LMDB.new(dir, options)
           end
 
-        @db = @backend.database(db, ::LMDB::CREATE)
+        @db = @backend.database(db, :create => true)
       end
 
       # (see Proxy#key?)
@@ -39,7 +41,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @db.put(key, value)
+        @db.put(key, value, Utils.only(options, *PUT_FLAGS))
         value
       end
 
@@ -64,7 +66,7 @@ module Moneta
         @backend.transaction do
           value = @db.get(key)
           value = Utils.to_int(value) + amount
-          @db.put(key, value.to_s)
+          @db.put(key, value.to_s, Utils.only(options, *PUT_FLAGS))
           value
         end
       end
@@ -75,7 +77,7 @@ module Moneta
           if @db.get(key)
             false
           else
-            @db.put(key, value)
+            @db.put(key, value, Utils.only(options, *PUT_FLAGS))
             true
           end
         end
