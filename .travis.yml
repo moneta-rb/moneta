@@ -8,7 +8,6 @@ rvm:
   - rbx-19mode
   - rbx-18mode
 before_install:
-  - script/kill-travis
   #- script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services

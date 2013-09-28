@@ -59,6 +59,7 @@ gem 'tokyotyrant'
 #gem 'localmemcache'
 gem 'tdb', :platforms => :ruby
 gem 'leveldb-ruby', :platforms => :ruby
+gem 'lmdb', :platforms => :ruby
 if RUBY_VERSION < '2.0'
   gem 'tokyocabinet', :platforms => :ruby
 end
@@ -84,3 +85,8 @@ gem 'rack-cache'
 # Rails integration testing
 gem 'actionpack', *rails_version
 gem 'minitest', '~> 4.7.4'
+
+# Fix versions for old ruby 1.8
+if RUBY_VERSION < '1.9'
+  gem 'nokogiri', '< 1.6'
+end

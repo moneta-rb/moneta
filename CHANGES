@@ -6,6 +6,7 @@ master
 * Transformer: Don't wrap object in array for JSON serialization
 * Transformer: Add :php serializer
 * Moneta.new(:Sequel) - Don't encode blob data using base64
+* Moneta::Adapters::LMDB added (Symas Lightning Memory-Mapped Database)
 
 0.7.19
 

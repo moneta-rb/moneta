@@ -39,6 +39,7 @@ module Moneta
     # @option options [Integer] :expires Update expiration time (See {Expires})
     # @option options [Boolean] :raw Raw access without value transformation (See {Transformer})
     # @option options [String] :prefix Prefix key (See {Transformer})
+    # @option options [Boolean] :sync Synchronized load ({Cache} reloads from adapter, {Adapters::Daybreak} syncs with file)
     # @option options Other options as defined by the adapters or middleware
     # @return [Object] value
     # @api public

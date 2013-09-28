@@ -105,6 +105,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * [GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) (`:GDBM`)
     * [HBase](http://hbase.apache.org/) (`:HBase`)
     * [LevelDB](http://code.google.com/p/leveldb/) (`:LevelDB`)
+    * [LMDB](http://symas.com/mdb/) (`:LMDB`)
     * [Redis](http://redis.io/) (`:Redis`)
     * [Riak](http://docs.basho.com/) (`:Riak`)
     * [SDBM](http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html) (`:SDBM`)
@@ -144,6 +145,8 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 <tr><td>ActiveRecord</td><td>activerecord</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="https://rubygems.org/gems/activerecord">ActiveRecord</a> ORM</td></tr>
 
 <tr><td>File</td><td>-</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td>File store</td></tr>
+
+<tr><td>LMDB</td><td>lmdb</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://symas.com/mdb/">Symas Lightning Memory-Mapped Database (LMDB)</a></td></tr>
 
 <tr><td>Sequel</td><td>sequel</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
 
