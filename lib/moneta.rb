@@ -52,6 +52,7 @@ module Moneta
     autoload :Redis,           'moneta/adapters/redis'
     autoload :RestClient,      'moneta/adapters/restclient'
     autoload :Riak,            'moneta/adapters/riak'
+    autoload :ROM,             'moneta/adapters/rom'
     autoload :SDBM,            'moneta/adapters/sdbm'
     autoload :Sequel,          'moneta/adapters/sequel'
     autoload :Sqlite,          'moneta/adapters/sqlite'

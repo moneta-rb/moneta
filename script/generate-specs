@@ -1443,6 +1443,10 @@ end}
     :build => 'Moneta::Adapters::Sequel.new(:db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "adapter_sequel")',
     :specs => ADAPTER_SPECS
   },
+  'adapter_rom' => {
+    :build => 'Moneta::Adapters::ROM.new(:table => "adapter_rom")',
+    :specs => ADAPTER_SPECS.without_concurrent
+  },
   'adapter_sqlite' => {
     :build => 'Moneta::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))',
     :specs => ADAPTER_SPECS.without_concurrent
