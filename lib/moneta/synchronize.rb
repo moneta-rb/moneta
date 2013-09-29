@@ -31,11 +31,10 @@ module Moneta
     # @param [Number] wait Sleep time between tries to acquire lock
     # @return [Boolean] true if the lock was aquired
     def enter(timeout = nil, wait = 0.01)
-      total = 0
-      while !timeout || total < timeout
+      time_at_timeout = Time.now + timeout if timeout
+      while !timeout || Time.now < time_at_timeout
         return true if try_enter
         sleep(wait)
-        total += wait
       end
       false
     end
