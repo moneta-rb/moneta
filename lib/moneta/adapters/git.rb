@@ -9,6 +9,8 @@ module Moneta
       include Defaults
       attr_reader :backend
 
+      supports :create, :increment
+
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
       def initialize(options = {})
@@ -36,7 +38,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @branch.commit(:lock => :pessimistic) do |builder|
+        @branch.commit do |builder|
           builder.tree[key] = value
         end
         value
@@ -46,7 +48,7 @@ module Moneta
       def delete(key, options = {})
         object = @branch[key]
         value = object.type == :file ? object.content : nil
-        @branch.commit(:lock => :pessimistic) do |builder|
+        @branch.commit do |builder|
           builder.tree.delete(key)
         end
         value
@@ -59,12 +61,12 @@ module Moneta
         @branch.resolve.update(:pessimistic) do
           ::MultiGit::Commit::Builder.new
         end
-        nil
+        self
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @branch.commit(:lock => :pessimistic) do |builder|
+        @branch.commit do |builder|
           begin
             content = builder.tree[key].content
             amount += Utils.to_int(content) unless content.empty?
@@ -77,7 +79,7 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @branch.commit(:lock => :pessimistic) do |builder|
+        @branch.commit do |builder|
           builder.tree[key] = value
         end
         true

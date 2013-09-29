@@ -38,6 +38,7 @@ module Moneta
     autoload :File,            'moneta/adapters/file'
     autoload :Fog,             'moneta/adapters/fog'
     autoload :GDBM,            'moneta/adapters/gdbm'
+    autoload :Git,             'moneta/adapters/git'
     autoload :HBase,           'moneta/adapters/hbase'
     autoload :LRUHash,         'moneta/adapters/lruhash'
     autoload :KyotoCabinet,    'moneta/adapters/kyotocabinet'

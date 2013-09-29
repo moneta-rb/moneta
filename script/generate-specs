@@ -1356,6 +1356,10 @@ end
     :build => 'Moneta::Adapters::GDBM.new(:file => File.join(make_tempdir, "adapter_gdbm"))',
     :specs => ADAPTER_SPECS.without_multiprocess
   },
+  'adapter_git' => {
+    :build => 'Moneta::Adapters::Git.new(:dir => File.join(make_tempdir, "adapter_git"))',
+    :specs => ADAPTER_SPECS
+  },
   'adapter_localmemcache' => {
     :build => 'Moneta::Adapters::LocalMemCache.new(:file => File.join(make_tempdir, "adapter_localmemcache"))',
     :specs => ADAPTER_SPECS.without_increment.without_create
