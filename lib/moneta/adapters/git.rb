@@ -22,33 +22,30 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @branch[key]
-        true
-      rescue ::MultiGit::Error::InvalidTraversal
-        false
+        @branch.target.tree.key?(key)
       end
 
       # (see Proxy#load)
       def load(key, options = {})
         object = @branch[key]
-        object == :file ? object.content : nil
+        object.type == :file ? object.content : nil
       rescue ::MultiGit::Error::InvalidTraversal
         nil
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @branch.commit do |builder|
+        commit do |builder|
           builder.tree[key] = value
         end
-        value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        object = @branch[key]
+        commit do |builder|
+          if builder.tree.key?(key)
+            object = builder.tree.@branch[key]
         value = object.type == :file ? object.content : nil
-        @branch.commit do |builder|
           builder.tree.delete(key)
         end
         value
@@ -58,17 +55,18 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @branch.resolve.update(:pessimistic) do
-          ::MultiGit::Commit::Builder.new
+        commit do |builder|
+          # FIXME: Hack to create empty commit tree!
+          builder.instance_variable_set(:@tree, ::MultiGit::Tree::Builder.new)
         end
         self
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @branch.commit do |builder|
+        commit do |builder|
           begin
-            content = builder.tree[key].content
+            content = @branch[key].content
             amount += Utils.to_int(content) unless content.empty?
           rescue ::MultiGit::Error::InvalidTraversal
           end
@@ -79,10 +77,28 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @branch.commit do |builder|
-          builder.tree[key] = value
+        commit do |builder|
+          if builder.tree.key?(key)
+            #builder.abort
+            false
+          else
+            builder.tree[key] = value
+            true
+          end
         end
-        true
+      end
+
+      private
+
+      def commit
+        # FIXME: @branch.commit returns altered reference, maybe it would be
+        # more intuitive to update the reference itself!
+        # This would also make the result hack unnecessary.
+        result = nil
+        @branch = @branch.commit(:lock => :pessimistic) do |builder|
+          result = yield(builder)
+        end
+        result
       end
     end
   end
