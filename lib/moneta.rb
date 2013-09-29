@@ -44,7 +44,6 @@ module Moneta
     autoload :LevelDB,         'moneta/adapters/leveldb'
     autoload :LMDB,            'moneta/adapters/lmdb'
     autoload :LocalMemCache,   'moneta/adapters/localmemcache'
-    autoload :MDB,             'moneta/adapters/mdb'
     autoload :Memcached,       'moneta/adapters/memcached'
     autoload :MemcachedDalli,  'moneta/adapters/memcached/dalli'
     autoload :MemcachedNative, 'moneta/adapters/memcached/native'
