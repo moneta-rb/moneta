@@ -26,8 +26,12 @@ describe_moneta "adapter_redis_with_default_expires" do
   it_should_behave_like 'increment'
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'null_stringkey_stringvalue'
+  it_should_behave_like 'null_pathkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
+  it_should_behave_like 'persist_pathkey_stringvalue'
   it_should_behave_like 'returndifferent_stringkey_stringvalue'
+  it_should_behave_like 'returndifferent_pathkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_pathkey_stringvalue'
   it_should_behave_like 'store_large'
 end

@@ -30,8 +30,12 @@ describe_moneta "weak_create" do
   it_should_behave_like 'multiprocess'
   it_should_behave_like 'not_increment'
   it_should_behave_like 'null_stringkey_stringvalue'
+  it_should_behave_like 'null_pathkey_stringvalue'
   it_should_behave_like 'persist_stringkey_stringvalue'
+  it_should_behave_like 'persist_pathkey_stringvalue'
   it_should_behave_like 'returnsame_stringkey_stringvalue'
+  it_should_behave_like 'returnsame_pathkey_stringvalue'
   it_should_behave_like 'store_stringkey_stringvalue'
+  it_should_behave_like 'store_pathkey_stringvalue'
   it_should_behave_like 'store_large'
 end
