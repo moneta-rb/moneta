@@ -1696,7 +1696,7 @@ end}
 SPECS = {}
 
 KEYS = {
-  'nil' => [0, 'nil'],
+  'nil' => ["''", 'nil', 0, false],
   'integer' => [-10, 42],
   'number' => [0.5, -0.3, 1<<127, 99],
   'boolean' => [true, false],
@@ -1708,7 +1708,7 @@ KEYS = {
 }
 
 VALUES = {
-  'nil' => [0, 'nil'],
+  'nil' => ["''", 'nil', 0, false],
   'integer' => [41, -12],
   'number' => [123.456, -98.7, 1<<128, 33],
   'boolean' => [true, false],
