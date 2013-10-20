@@ -1,4 +1,4 @@
-master
+0.7.20
 
 * Adapters::LRUHash: add option :max_value
 * Moneta.new(:Couch, :Riak, :RestClient): use urlencode instead of base64 for key encoding)
@@ -7,6 +7,7 @@ master
 * Transformer: Add :php serializer
 * Moneta.new(:Sequel) - Don't encode blob data using base64
 * Moneta::Adapters::LMDB added (Symas Lightning Memory-Mapped Database)
+* Moneta::Adapters::Sequel - Fix for https://github.com/jeremyevans/sequel/issues/715
 
 0.7.19
 
