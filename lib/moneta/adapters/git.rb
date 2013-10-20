@@ -44,11 +44,12 @@ module Moneta
       def delete(key, options = {})
         commit do |builder|
           if builder.tree.key?(key)
-            object = builder.tree.@branch[key]
-        value = object.type == :file ? object.content : nil
-          builder.tree.delete(key)
+            object = builder.tree.branch[key]
+            value = object.type == :file ? object.content : nil
+            builder.tree.delete(key)
+            value
+          end
         end
-        value
       rescue ::MultiGit::Error::InvalidTraversal
         nil
       end
@@ -56,8 +57,7 @@ module Moneta
       # (see Proxy#clear)
       def clear(options = {})
         commit do |builder|
-          # FIXME: Hack to create empty commit tree!
-          builder.instance_variable_set(:@tree, ::MultiGit::Tree::Builder.new)
+          builder.tree.clear
         end
         self
       end
