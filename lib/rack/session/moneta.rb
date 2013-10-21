@@ -4,6 +4,18 @@ require 'thread'
 
 module Rack
   module Session
+    # Rack::Session::Moneta stores sessions in a Moneta store.
+    #
+    # Example:
+    #
+    # use Rack::Session::Moneta, :key => 'rack.session',
+    # :domain => 'foo.com',
+    # :path => '/',
+    # :expire_after => 2592000,
+    # :store => Moneta.new(...)
+    #
+    # You can use all options supported by `Rack::Session::Abstract::ID`.
+    #
     # @api public
     class Moneta < Abstract::ID
       attr_reader :mutex, :pool
