@@ -33,6 +33,7 @@ module Moneta
     autoload :Daybreak,        'moneta/adapters/daybreak'
     autoload :DBM,             'moneta/adapters/dbm'
     autoload :DataMapper,      'moneta/adapters/datamapper'
+    autoload :Environment,     'moneta/adapters/environment'
     autoload :File,            'moneta/adapters/file'
     autoload :Fog,             'moneta/adapters/fog'
     autoload :GDBM,            'moneta/adapters/gdbm'

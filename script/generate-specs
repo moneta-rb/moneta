@@ -30,6 +30,10 @@ class Specs
     new(:value => %w(string))
   end
 
+  def stringkeys_only
+    new(:key => %w(string))
+  end
+
   def simplekeys_only
     new(:key => %w(string hash integer))
   end
@@ -151,6 +155,10 @@ end
   'standard_memory' => {
     :store => :Memory,
     :specs => STANDARD_SPECS.without_persist
+  },
+  'standard_environment' => {
+    :store => :Environment,
+    :specs => STANDARD_SPECS.stringkeys_only.without_large.stringvalues_only.without_multiprocess.without_create
   },
   'standard_memory_with_expires' => {
     :store => :Memory,
