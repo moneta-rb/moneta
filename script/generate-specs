@@ -158,7 +158,8 @@ end
   },
   'standard_environment' => {
     :store => :Environment,
-    :specs => STANDARD_SPECS.stringkeys_only.without_large.stringvalues_only.without_multiprocess.without_create
+    :specs => STANDARD_SPECS.stringkeys_only.without_large.stringvalues_only.without_multiprocess,
+    :load_value => 'value'
   },
   'standard_memory_with_expires' => {
     :store => :Memory,
@@ -1474,6 +1475,11 @@ end}
   'adapter_yaml' => {
     :build => 'Moneta::Adapters::YAML.new(:file => File.join(make_tempdir, "adapter_yaml"))',
     :specs => STANDARD_SPECS.simplevalues_only.simplekeys_only.without_transform.without_concurrent
+  },
+  'adapter_environment' => {
+    :build      => 'Moneta::Adapters::Environment.new()',
+    :specs      => STANDARD_SPECS.stringkeys_only.without_large.stringvalues_only.without_multiprocess,
+    :load_value => 'value.to_s',
   },
   'mutex' => {
     :store => :Memory,
