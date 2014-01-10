@@ -115,6 +115,8 @@ module Moneta
       transformer.delete(:value) if transformer[:value] == [:marshal]
     when :Environment
       # For Environment everything is a string and needs to be a string
+      transformer.delete(:value) if transformer[:value] == [:marshal]
+      transformer.delete(:key) if transformer[:key] == [:marshal]
       transformer[:value] == [:to_s]
       transformer[:key] == [:to_s]
     when :HashFile
