@@ -5,6 +5,7 @@ module Moneta
     class Environment
       include Defaults
       include HashAdapter
+      include CreateSupport
       include IncrementSupport
 
       # @param [Hash] options Options hash
