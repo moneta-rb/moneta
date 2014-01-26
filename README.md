@@ -116,7 +116,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * [Simple Samba database TDB](http://tdb.samba.org/) (`:TDB`)
 * Document databases:
     * [CouchDB](http://couchdb.apache.org/) (`:Couch`)
-    * [MongoDB](http://www.mongodb.org/) (`:Mongo`)
+    * [MongoDB](http://www.mongodb.org/) (`:Mongo`, `:MongoOffical` or `:MongoMoped`)
 * Moneta network protocols:
     * Moneta key/value client (`:Client` works with `Moneta::Server`)
     * Moneta HTTP/REST client (`:RestClient` works with `Rack::MonetaRest`)
