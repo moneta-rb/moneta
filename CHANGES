@@ -1,3 +1,7 @@
+master
+
+* Rename Moneta::Adapters::Mongo to Moneta::Adapters::MongoOfficial
+
 0.7.20
 
 * Adapters::LRUHash: add option :max_value
