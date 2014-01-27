@@ -48,6 +48,7 @@ gem 'fog', :github => 'fog/fog'
 gem 'activerecord', *rails_version
 gem 'redis'
 gem 'mongo'
+gem 'moped'
 gem 'sequel'
 gem 'dalli'
 gem 'riak-client'
