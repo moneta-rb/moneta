@@ -1,6 +1,7 @@
 # Moneta: A unified interface for key/value stores
 
-[![Gem Version](https://badge.fury.io/rb/moneta.png)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.png)](https://codeclimate.com/github/minad/moneta)
+[![Gem Version](https://badge.fury.io/rb/moneta.png)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.png?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.png?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.png)](https://codeclimate.com/github/minad/moneta) [![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/min4d/ "Donate weekly to this project using Gittip")
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/minad/moneta&title=Moneta&language=&tags=github&category=software)
 
 Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta supports the well-known
 NoSQL and document based stores.
@@ -115,7 +116,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * [Simple Samba database TDB](http://tdb.samba.org/) (`:TDB`)
 * Document databases:
     * [CouchDB](http://couchdb.apache.org/) (`:Couch`)
-    * [MongoDB](http://www.mongodb.org/) (`:Mongo`)
+    * [MongoDB](http://www.mongodb.org/) (`:Mongo`, `:MongoOffical` or `:MongoMoped`)
 * Moneta network protocols:
     * Moneta key/value client (`:Client` works with `Moneta::Server`)
     * Moneta HTTP/REST client (`:RestClient` works with `Rack::MonetaRest`)
@@ -138,7 +139,11 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 <tr><th colspan="2">Persistent stores</th><th colspan="7"></th></tr>
 
-<tr><td>Mongo</td><td>mongo</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
+<tr><td>Mongo</td><td>mongo or moped</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
+
+<tr><td>MongoOfficial</td><td>mongo</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
+
+<tr><td>MongoMoped</td><td>moped</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
 
 <tr><td>Redis</td><td>redis</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://redis.io/">Redis</a> database</td></tr>
 
@@ -607,6 +612,13 @@ use Rack::Session::Moneta, :store => :Redis
 
 # Use Moneta.new
 use Rack::Session::Moneta, :store => Moneta.new(:Memory, :expires => true)
+
+# Set rack options
+use Rack::Session::Moneta, :key => 'rack.session',
+:domain => 'foo.com',
+:path => '/',
+:expire_after => 2592000,
+:store => Moneta.new(:Memory, :expires => true)
 
 # Use the Moneta builder
 use Rack::Session::Moneta do

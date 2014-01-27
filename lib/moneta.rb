@@ -51,6 +51,8 @@ module Moneta
     autoload :Memory,          'moneta/adapters/memory'
     autoload :Mongo,           'moneta/adapters/mongo'
     autoload :Mysql,           'moneta/adapters/mysql'
+    autoload :MongoMoped,      'moneta/adapters/mongo/moped'
+    autoload :MongoOfficial,   'moneta/adapters/mongo/official'
     autoload :Null,            'moneta/adapters/null'
     autoload :PStore,          'moneta/adapters/pstore'
     autoload :Redis,           'moneta/adapters/redis'
