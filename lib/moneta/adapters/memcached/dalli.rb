@@ -30,14 +30,14 @@ module Moneta
         value = @backend.get(key)
         if value
           expires = expires_value(options, nil)
-          @backend.set(key, value, expires || nil, :raw => true) if expires != nil
+          @backend.set(key, value, expires || nil, raw: true) if expires != nil
           value
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.set(key, value, expires_value(options) || nil, :raw => true)
+        @backend.set(key, value, expires_value(options) || nil, raw: true)
         value
       end
 
@@ -76,7 +76,7 @@ module Moneta
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        @backend.add(key, value, expires_value(options) || nil, :raw => true)
+        @backend.add(key, value, expires_value(options) || nil, raw: true)
       end
 
       # (see Proxy#close)

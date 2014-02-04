@@ -8,7 +8,7 @@ describe_moneta "standard_daybreak" do
   end
 
   def new_store
-    Moneta.new(:Daybreak, :file => File.join(make_tempdir, "simple_daybreak"), :logger => {:file => File.join(make_tempdir, 'standard_daybreak.log')})
+    Moneta.new(:Daybreak, file: File.join(make_tempdir, "simple_daybreak"), logger: {file: File.join(make_tempdir, 'standard_daybreak.log')})
   end
 
   def load_value(value)

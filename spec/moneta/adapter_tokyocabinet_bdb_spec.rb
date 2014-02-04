@@ -8,7 +8,7 @@ describe_moneta "adapter_tokyocabinet_bdb" do
   end
 
   def new_store
-    Moneta::Adapters::TokyoCabinet.new(:file => File.join(make_tempdir, "adapter_tokyocabinet_bdb"), :type => :bdb)
+    Moneta::Adapters::TokyoCabinet.new(file: File.join(make_tempdir, "adapter_tokyocabinet_bdb"), type: :bdb)
   end
 
   def load_value(value)

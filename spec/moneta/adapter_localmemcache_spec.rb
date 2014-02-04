@@ -8,7 +8,7 @@ describe_moneta "adapter_localmemcache" do
   end
 
   def new_store
-    Moneta::Adapters::LocalMemCache.new(:file => File.join(make_tempdir, "adapter_localmemcache"))
+    Moneta::Adapters::LocalMemCache.new(file: File.join(make_tempdir, "adapter_localmemcache"))
   end
 
   def load_value(value)

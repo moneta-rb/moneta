@@ -8,7 +8,7 @@ describe_moneta "standard_kyotocabinet_with_expires" do
   end
 
   def new_store
-    Moneta.new(:KyotoCabinet, :file => File.join(make_tempdir, "simple_kyotocabinet_with_expires.kch"), :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_kyotocabinet_with_expires.log')})
+    Moneta.new(:KyotoCabinet, file: File.join(make_tempdir, "simple_kyotocabinet_with_expires.kch"), expires: true, logger: {file: File.join(make_tempdir, 'standard_kyotocabinet_with_expires.log')})
   end
 
   def load_value(value)

@@ -60,12 +60,12 @@ module Moneta
 
           table.connection_pool.with_connection do |conn|
             unless table.table_exists?
-              conn.create_table(table.table_name, :id => false) do |t|
+              conn.create_table(table.table_name, id: false) do |t|
                 # Do not use binary key (Issue #17)
-                t.string :k, :null => false
+                t.string :k, null: false
                 t.binary :v
               end
-              conn.add_index(table.table_name, :k, :unique => true)
+              conn.add_index(table.table_name, :k, unique: true)
             end
           end
 
@@ -86,14 +86,14 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         @table.connection_pool.with_connection do
-          !@table.where(:k => key).empty?
+          !@table.where(k: key).empty?
         end
       end
 
       # (see Proxy#load)
       def load(key, options = {})
         @table.connection_pool.with_connection do
-          record = @table.select(:v).where(:k => key).first
+          record = @table.select(:v).where(k: key).first
           record && record.v
         end
       end
@@ -101,7 +101,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         @table.connection_pool.with_connection do
-          record = @table.select(:k).where(:k => key).first_or_initialize
+          record = @table.select(:k).where(k: key).first_or_initialize
           record.v = value
           record.save
           value
@@ -114,7 +114,7 @@ module Moneta
       # (see Proxy#delete)
       def delete(key, options = {})
         @table.connection_pool.with_connection do
-          if record = @table.where(:k => key).first
+          if record = @table.where(k: key).first
             record.destroy
             record.v
           end
@@ -125,7 +125,7 @@ module Moneta
       def increment(key, amount = 1, options = {})
         @table.connection_pool.with_connection do
           @table.transaction do
-            if record = @table.where(:k => key).lock.first
+            if record = @table.where(k: key).lock.first
               value = Utils.to_int(record.v) + amount
               record.v = value.to_s
               record.save

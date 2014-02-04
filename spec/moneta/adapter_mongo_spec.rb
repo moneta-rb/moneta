@@ -8,7 +8,7 @@ describe_moneta "adapter_mongo" do
   end
 
   def new_store
-    Moneta::Adapters::Mongo.new(:db => "adapter_mongo")
+    Moneta::Adapters::Mongo.new(db: "adapter_mongo")
   end
 
   def load_value(value)

@@ -4,13 +4,13 @@ require 'helper'
 
 describe_moneta "adapter_activerecord_exisiting_connection" do
   require 'active_record'
-  ActiveRecord::Base.establish_connection :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :database => 'moneta', :username => 'root'
+  ActiveRecord::Base.establish_connection adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root'
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta::Adapters::ActiveRecord.new(:table => 'adapter_activerecord_existing_connection')
+    Moneta::Adapters::ActiveRecord.new(table: 'adapter_activerecord_existing_connection')
   end
 
   def load_value(value)

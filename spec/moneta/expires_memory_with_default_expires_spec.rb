@@ -9,7 +9,7 @@ describe_moneta "expires_memory_with_default_expires" do
 
   def new_store
     Moneta.build do
-      use :Expires, :expires => 1
+      use :Expires, expires: 1
       adapter :Memory
     end
   end

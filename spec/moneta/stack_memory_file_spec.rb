@@ -11,7 +11,7 @@ describe_moneta "stack_memory_file" do
     Moneta.build do
       use(:Stack) do
         add { adapter :Memory }
-        add { adapter :File, :dir => File.join(make_tempdir, "stack_memory_file") }
+        add { adapter :File, dir: File.join(make_tempdir, "stack_memory_file") }
       end
     end
   end

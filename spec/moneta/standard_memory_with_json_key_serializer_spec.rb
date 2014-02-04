@@ -8,7 +8,7 @@ describe_moneta "standard_memory_with_json_key_serializer" do
   end
 
   def new_store
-    Moneta.new(:Memory, :key_serializer => :json, :logger => {:file => File.join(make_tempdir, 'standard_memory_with_json_key_serializer.log')})
+    Moneta.new(:Memory, key_serializer: :json, logger: {file: File.join(make_tempdir, 'standard_memory_with_json_key_serializer.log')})
   end
 
   def load_value(value)

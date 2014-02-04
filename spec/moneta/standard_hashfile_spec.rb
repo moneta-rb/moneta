@@ -8,7 +8,7 @@ describe_moneta "standard_hashfile" do
   end
 
   def new_store
-    Moneta.new(:HashFile, :dir => File.join(make_tempdir, "simple_hashfile"), :logger => {:file => File.join(make_tempdir, 'standard_hashfile.log')})
+    Moneta.new(:HashFile, dir: File.join(make_tempdir, "simple_hashfile"), logger: {file: File.join(make_tempdir, 'standard_hashfile.log')})
   end
 
   def load_value(value)

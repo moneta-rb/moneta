@@ -6,8 +6,8 @@ module Moneta
   #   Moneta.build do
   #     use(:Stack) do
   #       add { adapter :Redis }
-  #       add { adapter :File, :dir => 'data' }
-  #       add { adapter :File, :dir => 'replicate' }
+  #       add { adapter :File, dir: 'data' }
+  #       add { adapter :File, dir: 'replicate' }
   #     end
   #   end
   #

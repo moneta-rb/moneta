@@ -8,7 +8,7 @@ describe_moneta "adapter_cassandra_with_default_expires" do
   end
 
   def new_store
-    Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra_with_default_expires', :expires => 1)
+    Moneta::Adapters::Cassandra.new(keyspace: 'adapter_cassandra_with_default_expires', expires: 1)
   end
 
   def load_value(value)

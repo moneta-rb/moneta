@@ -8,7 +8,7 @@ describe_moneta "adapter_memcached_dalli_with_default_expires" do
   end
 
   def new_store
-    Moneta::Adapters::MemcachedDalli.new(:expires => 1)
+    Moneta::Adapters::MemcachedDalli.new(expires: 1)
   end
 
   def load_value(value)

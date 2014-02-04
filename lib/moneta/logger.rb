@@ -64,10 +64,10 @@ module Moneta
 
     def wrap(method, *args)
       ret = yield
-      @logger.log(:method => method, :args => args, :return => (method == :clear ? 'self' : ret))
+      @logger.log(method: method, args: args, return: (method == :clear ? 'self' : ret))
       ret
     rescue Exception => error
-      @logger.log(:method => method, :args => args, :error => error)
+      @logger.log(method: method, args: args, error: error)
       raise
     end
   end

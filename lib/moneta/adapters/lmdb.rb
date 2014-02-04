@@ -26,7 +26,7 @@ module Moneta
             ::LMDB.new(dir, options)
           end
 
-        @db = @backend.database(db, :create => true)
+        @db = @backend.database(db, create: true)
       end
 
       # (see Proxy#key?)

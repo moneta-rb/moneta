@@ -9,7 +9,7 @@ describe_moneta "transformer_marshal_truncate" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => [:marshal, :truncate], :value => :marshal, :maxlen => 64
+      use :Transformer, key: [:marshal, :truncate], value: :marshal, maxlen: 64
       adapter :Memory
     end
   end

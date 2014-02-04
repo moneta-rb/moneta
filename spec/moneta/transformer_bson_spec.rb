@@ -9,7 +9,7 @@ describe_moneta "transformer_bson" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :bson, :value => :bson
+      use :Transformer, key: :bson, value: :bson
       adapter :Memory
     end
   end

@@ -8,7 +8,7 @@ describe_moneta "standard_tdb" do
   end
 
   def new_store
-    Moneta.new(:TDB, :file => File.join(make_tempdir, "simple_tdb"), :logger => {:file => File.join(make_tempdir, 'standard_tdb.log')})
+    Moneta.new(:TDB, file: File.join(make_tempdir, "simple_tdb"), logger: {file: File.join(make_tempdir, 'standard_tdb.log')})
   end
 
   def load_value(value)

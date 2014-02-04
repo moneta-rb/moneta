@@ -8,7 +8,7 @@ describe_moneta "adapter_hbase" do
   end
 
   def new_store
-    Moneta::Adapters::HBase.new(:table => 'adapter_hbase')
+    Moneta::Adapters::HBase.new(table: 'adapter_hbase')
   end
 
   def load_value(value)

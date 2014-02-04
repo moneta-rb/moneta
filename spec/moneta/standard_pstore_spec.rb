@@ -8,7 +8,7 @@ describe_moneta "standard_pstore" do
   end
 
   def new_store
-    Moneta.new(:PStore, :file => File.join(make_tempdir, "simple_pstore"), :logger => {:file => File.join(make_tempdir, 'standard_pstore.log')})
+    Moneta.new(:PStore, file: File.join(make_tempdir, "simple_pstore"), logger: {file: File.join(make_tempdir, 'standard_pstore.log')})
   end
 
   def load_value(value)

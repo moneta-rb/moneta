@@ -9,7 +9,7 @@ describe_moneta "transformer_snappy" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :value => :snappy
+      use :Transformer, value: :snappy
       adapter :Memory
     end
   end

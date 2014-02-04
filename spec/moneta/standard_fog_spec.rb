@@ -11,9 +11,9 @@ describe_moneta "standard_fog" do
 
   def new_store
     Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
-        :aws_secret_access_key  => 'fake_secret_access_key',
-        :provider               => 'AWS',
-        :dir                    => 'standard_fog', :logger => {:file => File.join(make_tempdir, 'standard_fog.log')})
+        aws_secret_access_key:  'fake_secret_access_key',
+        provider:               'AWS',
+        dir:                    'standard_fog', logger: {file: File.join(make_tempdir, 'standard_fog.log')})
   end
 
   def load_value(value)

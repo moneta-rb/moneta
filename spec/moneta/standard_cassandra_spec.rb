@@ -8,7 +8,7 @@ describe_moneta "standard_cassandra" do
   end
 
   def new_store
-    Moneta.new(:Cassandra, :keyspace => "simple_cassandra", :logger => {:file => File.join(make_tempdir, 'standard_cassandra.log')})
+    Moneta.new(:Cassandra, keyspace: "simple_cassandra", logger: {file: File.join(make_tempdir, 'standard_cassandra.log')})
   end
 
   def load_value(value)

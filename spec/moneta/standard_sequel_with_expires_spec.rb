@@ -8,7 +8,7 @@ describe_moneta "standard_sequel_with_expires" do
   end
 
   def new_store
-    Moneta.new(:Sequel, :db => (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), :table => "simple_sequel_with_expires", :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_sequel_with_expires.log')})
+    Moneta.new(:Sequel, db: (defined?(JRUBY_VERSION) ? "jdbc:mysql://localhost/moneta?user=root" : "mysql2://root:@localhost/moneta"), table: "simple_sequel_with_expires", expires: true, logger: {file: File.join(make_tempdir, 'standard_sequel_with_expires.log')})
   end
 
   def load_value(value)

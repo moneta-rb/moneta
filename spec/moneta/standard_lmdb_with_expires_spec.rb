@@ -8,7 +8,7 @@ describe_moneta "standard_lmdb_with_expires" do
   end
 
   def new_store
-    Moneta.new(:LMDB, :dir => File.join(make_tempdir, "simple_lmdb_with_expires"), :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_lmdb_with_expires.log')})
+    Moneta.new(:LMDB, dir: File.join(make_tempdir, "simple_lmdb_with_expires"), expires: true, logger: {file: File.join(make_tempdir, 'standard_lmdb_with_expires.log')})
   end
 
   def load_value(value)

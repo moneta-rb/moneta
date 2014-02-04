@@ -33,12 +33,12 @@ module Moneta
                                      "#{options[:host] || '127.0.0.1'}:#{options[:port] || 9160}",
                                      options)
           unless @backend.keyspaces.include?(keyspace)
-            cf_def = ::Cassandra::ColumnFamily.new(:keyspace => keyspace, :name => @cf.to_s)
-            ks_def = ::Cassandra::Keyspace.new(:name => keyspace,
-                                               :strategy_class => 'SimpleStrategy',
-                                               :strategy_options => { 'replication_factor' => '1' },
-                                               :replication_factor => 1,
-                                               :cf_defs => [cf_def])
+            cf_def = ::Cassandra::ColumnFamily.new(keyspace: keyspace, name: @cf.to_s)
+            ks_def = ::Cassandra::Keyspace.new(name: keyspace,
+                                               strategy_class: 'SimpleStrategy',
+                                               strategy_options: { 'replication_factor' => '1' },
+                                               replication_factor: 1,
+                                               cf_defs: [cf_def])
             # Wait for keyspace to be created (issue #24)
             10.times do
               begin
@@ -68,14 +68,14 @@ module Moneta
       def load(key, options = {})
         if value = @backend.get(@cf, key)
           expires = expires_value(options, nil)
-          @backend.insert(@cf, key, {'value' => value['value'] }, :ttl => expires || nil) if expires != nil
+          @backend.insert(@cf, key, {'value' => value['value'] }, ttl: expires || nil) if expires != nil
           value['value']
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.insert(@cf, key, {'value' => value}, :ttl => expires_value(options) || nil)
+        @backend.insert(@cf, key, {'value' => value}, ttl: expires_value(options) || nil)
         value
       end
 

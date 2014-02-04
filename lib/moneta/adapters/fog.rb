@@ -16,7 +16,7 @@ module Moneta
       def initialize(options = {})
         raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
         @backend = options[:backend] || ::Fog::Storage.new(options)
-        @directory = @backend.directories.get(dir) || @backend.directories.create(:key => dir)
+        @directory = @backend.directories.get(dir) || @backend.directories.create(key: dir)
       end
 
       # (see Proxy#key?)
@@ -42,7 +42,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         value = value.dup if value.frozen? # HACK: Fog needs unfrozen string
-        @directory.files.create(options.merge(:key => key, :body => value))
+        @directory.files.create(options.merge(key: key, body: value))
         value
       end
 

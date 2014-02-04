@@ -9,7 +9,7 @@ describe_moneta "standard_restclient" do
   end
 
   def new_store
-    Moneta.new(:RestClient, :url => 'http://localhost:8808/moneta/', :logger => {:file => File.join(make_tempdir, 'standard_restclient.log')})
+    Moneta.new(:RestClient, :url => 'http://localhost:8808/moneta/', logger: {file: File.join(make_tempdir, 'standard_restclient.log')})
   end
 
   def load_value(value)

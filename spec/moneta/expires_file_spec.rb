@@ -10,8 +10,8 @@ describe_moneta "expires_file" do
   def new_store
     Moneta.build do
       use :Expires
-      use :Transformer, :key => [:marshal, :escape], :value => :marshal
-      adapter :File, :dir => File.join(make_tempdir, "expires-file")
+      use :Transformer, key: [:marshal, :escape], value: :marshal
+      adapter :File, dir: File.join(make_tempdir, "expires-file")
     end
   end
 
@@ -65,7 +65,7 @@ describe_moneta "expires_file" do
   it_should_behave_like 'store_large'
   it_should_behave_like 'transform_value_expires'
   it 'deletes expired value in underlying file storage' do
-    store.store('foo', 'bar', :expires => 2)
+    store.store('foo', 'bar', expires: 2)
     store['foo'].should == 'bar'
     sleep 1
     store['foo'].should == 'bar'

@@ -8,11 +8,11 @@ module Rack
     #
     # Example:
     #
-    # use Rack::Session::Moneta, :key => 'rack.session',
-    # :domain => 'foo.com',
-    # :path => '/',
-    # :expire_after => 2592000,
-    # :store => Moneta.new(...)
+    # use Rack::Session::Moneta, key: 'rack.session',
+    # domain: 'foo.com',
+    # path: '/',
+    # expire_after: 2592000,
+    # store: Moneta.new(...)
     #
     # You can use all options supported by `Rack::Session::Abstract::ID`.
     #
@@ -27,7 +27,7 @@ module Rack
           @pool = ::Moneta.build(&block)
         else
           raise ArgumentError, 'Block or option :store is required' unless @pool = options[:store]
-          @pool = ::Moneta.new(@pool, :expires => true) if Symbol === @pool
+          @pool = ::Moneta.new(@pool, expires: true) if Symbol === @pool
         end
         @pool = ::Moneta::WeakCreate.new(@pool) unless @pool.supports?(:create)
         @mutex = ::Mutex.new
@@ -55,7 +55,7 @@ module Rack
       def set_session(env, session_id, new_session, options)
         with_lock(env) do
           @pool.store(session_id, new_session,
-                      options[:expire_after] ? { :expires => options[:expire_after] } : {})
+                      options[:expire_after] ? { expires: options[:expire_after] } : {})
           session_id
         end
       end

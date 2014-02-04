@@ -80,7 +80,7 @@ module Moneta
     protected
 
     def enter_primitive
-      @store.create(@lock, '', :expires => false)
+      @store.create(@lock, '', expires: false)
     end
 
     def leave_primitive
@@ -105,7 +105,7 @@ module Moneta
     def initialize(store, counter, max = 1)
       raise 'Store must support feature :increment' unless store.supports?(:increment)
       @store, @counter, @max = store, counter, max
-      @store.increment(@counter, 0, :expires => false) # Ensure that counter exists
+      @store.increment(@counter, 0, expires: false) # Ensure that counter exists
     end
 
     protected

@@ -11,10 +11,10 @@ describe_moneta "standard_fog_with_expires" do
 
   def new_store
     Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
-        :aws_secret_access_key  => 'fake_secret_access_key',
-        :provider               => 'AWS',
-        :dir                    => 'standard_fog_with_expires',
-        :expires                => true, :logger => {:file => File.join(make_tempdir, 'standard_fog_with_expires.log')})
+        aws_secret_access_key:  'fake_secret_access_key',
+        provider:               'AWS',
+        dir:                    'standard_fog_with_expires',
+        expires:                true, logger: {file: File.join(make_tempdir, 'standard_fog_with_expires.log')})
   end
 
   def load_value(value)

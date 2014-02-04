@@ -44,7 +44,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -95,7 +95,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -146,7 +146,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -197,7 +197,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -248,7 +248,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -299,7 +299,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -350,7 +350,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -401,7 +401,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -936,7 +936,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -987,7 +987,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -1038,7 +1038,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -1089,7 +1089,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -1432,7 +1432,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -1483,7 +1483,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -1534,7 +1534,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -1585,7 +1585,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -1636,7 +1636,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -1687,7 +1687,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -1738,7 +1738,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -1789,7 +1789,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -2412,7 +2412,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -2463,7 +2463,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -2514,7 +2514,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -2565,7 +2565,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -2908,7 +2908,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -2959,7 +2959,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -3010,7 +3010,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -3061,7 +3061,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -3460,7 +3460,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -3511,7 +3511,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -3562,7 +3562,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -3613,7 +3613,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -4012,7 +4012,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -4063,7 +4063,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -4114,7 +4114,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -4165,7 +4165,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -4564,7 +4564,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -4615,7 +4615,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -4666,7 +4666,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(nil, options).should be_false
     store.load(nil, options).should be_nil
@@ -4717,7 +4717,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0, options).should be_false
     store.load(0, options).should be_nil
@@ -5116,7 +5116,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -5167,7 +5167,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -5218,7 +5218,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -5269,7 +5269,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -5320,7 +5320,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -5371,7 +5371,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -5422,7 +5422,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -5473,7 +5473,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -6008,7 +6008,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -6059,7 +6059,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -6110,7 +6110,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -6161,7 +6161,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -6504,7 +6504,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -6555,7 +6555,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -6606,7 +6606,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -6657,7 +6657,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -6708,7 +6708,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -6759,7 +6759,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -6810,7 +6810,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -6861,7 +6861,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -7484,7 +7484,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -7535,7 +7535,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -7586,7 +7586,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -7637,7 +7637,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -7980,7 +7980,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -8031,7 +8031,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -8082,7 +8082,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -8133,7 +8133,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -8532,7 +8532,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -8583,7 +8583,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -8634,7 +8634,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -8685,7 +8685,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -9084,7 +9084,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -9135,7 +9135,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -9186,7 +9186,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -9237,7 +9237,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -9636,7 +9636,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -9687,7 +9687,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -9738,7 +9738,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-10, options).should be_false
     store.load(-10, options).should be_nil
@@ -9789,7 +9789,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(42, options).should be_false
     store.load(42, options).should be_nil
@@ -10188,7 +10188,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -10239,7 +10239,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -10290,7 +10290,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -10341,7 +10341,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -10392,7 +10392,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -10443,7 +10443,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -10494,7 +10494,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -10545,7 +10545,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -10596,7 +10596,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -10647,7 +10647,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -10698,7 +10698,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -10749,7 +10749,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -10800,7 +10800,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -10851,7 +10851,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -10902,7 +10902,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -10953,7 +10953,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -11960,7 +11960,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -12011,7 +12011,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -12062,7 +12062,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -12113,7 +12113,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -12164,7 +12164,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -12215,7 +12215,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -12266,7 +12266,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -12317,7 +12317,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -12940,7 +12940,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -12991,7 +12991,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -13042,7 +13042,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -13093,7 +13093,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -13144,7 +13144,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -13195,7 +13195,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -13246,7 +13246,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -13297,7 +13297,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -13348,7 +13348,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -13399,7 +13399,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -13450,7 +13450,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -13501,7 +13501,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -13552,7 +13552,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -13603,7 +13603,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -13654,7 +13654,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -13705,7 +13705,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -14888,7 +14888,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -14939,7 +14939,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -14990,7 +14990,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -15041,7 +15041,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -15092,7 +15092,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -15143,7 +15143,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -15194,7 +15194,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -15245,7 +15245,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -15868,7 +15868,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -15919,7 +15919,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -15970,7 +15970,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -16021,7 +16021,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -16072,7 +16072,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -16123,7 +16123,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -16174,7 +16174,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -16225,7 +16225,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -16952,7 +16952,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -17003,7 +17003,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -17054,7 +17054,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -17105,7 +17105,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -17156,7 +17156,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -17207,7 +17207,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -17258,7 +17258,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -17309,7 +17309,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -18036,7 +18036,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -18087,7 +18087,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -18138,7 +18138,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -18189,7 +18189,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -18240,7 +18240,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -18291,7 +18291,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -18342,7 +18342,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -18393,7 +18393,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -19120,7 +19120,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -19171,7 +19171,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -19222,7 +19222,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(0.5, options).should be_false
     store.load(0.5, options).should be_nil
@@ -19273,7 +19273,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(-0.3, options).should be_false
     store.load(-0.3, options).should be_nil
@@ -19324,7 +19324,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -19375,7 +19375,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -19426,7 +19426,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(170141183460469231731687303715884105728, options).should be_false
     store.load(170141183460469231731687303715884105728, options).should be_nil
@@ -19477,7 +19477,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(99, options).should be_false
     store.load(99, options).should be_nil
@@ -20204,7 +20204,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -20255,7 +20255,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -20306,7 +20306,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -20357,7 +20357,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -20408,7 +20408,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -20459,7 +20459,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -20510,7 +20510,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -20561,7 +20561,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -21096,7 +21096,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -21147,7 +21147,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -21198,7 +21198,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -21249,7 +21249,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -21592,7 +21592,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -21643,7 +21643,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -21694,7 +21694,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -21745,7 +21745,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -21796,7 +21796,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -21847,7 +21847,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -21898,7 +21898,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -21949,7 +21949,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -22572,7 +22572,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -22623,7 +22623,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -22674,7 +22674,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -22725,7 +22725,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -23068,7 +23068,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -23119,7 +23119,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -23170,7 +23170,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -23221,7 +23221,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -23620,7 +23620,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -23671,7 +23671,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -23722,7 +23722,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -23773,7 +23773,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -24172,7 +24172,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -24223,7 +24223,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -24274,7 +24274,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -24325,7 +24325,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -24724,7 +24724,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -24775,7 +24775,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -24826,7 +24826,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(true, options).should be_false
     store.load(true, options).should be_nil
@@ -24877,7 +24877,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(false, options).should be_false
     store.load(false, options).should be_nil
@@ -25276,7 +25276,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -25327,7 +25327,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -25378,7 +25378,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -25429,7 +25429,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -25480,7 +25480,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -25531,7 +25531,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -25582,7 +25582,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -25633,7 +25633,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -26168,7 +26168,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -26219,7 +26219,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -26270,7 +26270,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -26321,7 +26321,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -26664,7 +26664,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -26715,7 +26715,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -26766,7 +26766,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -26817,7 +26817,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -26868,7 +26868,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -26919,7 +26919,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -26970,7 +26970,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -27021,7 +27021,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -27644,7 +27644,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -27695,7 +27695,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -27746,7 +27746,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -27797,7 +27797,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -28140,7 +28140,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -28191,7 +28191,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -28242,7 +28242,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -28293,7 +28293,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -28692,7 +28692,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -28743,7 +28743,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -28794,7 +28794,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -28845,7 +28845,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -29244,7 +29244,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -29295,7 +29295,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -29346,7 +29346,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -29397,7 +29397,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -29796,7 +29796,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -29847,7 +29847,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -29898,7 +29898,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey1", options).should be_false
     store.load("strkey1", options).should be_nil
@@ -29949,7 +29949,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("strkey2", options).should be_false
     store.load("strkey2", options).should be_nil
@@ -30348,7 +30348,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -30399,7 +30399,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -30450,7 +30450,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -30501,7 +30501,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -30552,7 +30552,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -30603,7 +30603,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -30654,7 +30654,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -30705,7 +30705,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -31240,7 +31240,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -31291,7 +31291,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -31342,7 +31342,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -31393,7 +31393,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -31736,7 +31736,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -31787,7 +31787,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -31838,7 +31838,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -31889,7 +31889,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -31940,7 +31940,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -31991,7 +31991,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -32042,7 +32042,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -32093,7 +32093,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -32716,7 +32716,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -32767,7 +32767,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -32818,7 +32818,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -32869,7 +32869,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -33212,7 +33212,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -33263,7 +33263,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -33314,7 +33314,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -33365,7 +33365,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -33764,7 +33764,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -33815,7 +33815,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -33866,7 +33866,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -33917,7 +33917,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -34316,7 +34316,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -34367,7 +34367,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -34418,7 +34418,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -34469,7 +34469,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -34868,7 +34868,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -34919,7 +34919,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -34970,7 +34970,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("bar/foo/baz", options).should be_false
     store.load("bar/foo/baz", options).should be_nil
@@ -35021,7 +35021,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("foo/bar", options).should be_false
     store.load("foo/bar", options).should be_nil
@@ -35420,7 +35420,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -35471,7 +35471,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -35522,7 +35522,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -35573,7 +35573,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -35624,7 +35624,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -35675,7 +35675,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -35726,7 +35726,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -35777,7 +35777,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -36312,7 +36312,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -36363,7 +36363,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -36414,7 +36414,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -36465,7 +36465,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -36808,7 +36808,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -36859,7 +36859,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -36910,7 +36910,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -36961,7 +36961,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -37012,7 +37012,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -37063,7 +37063,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -37114,7 +37114,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -37165,7 +37165,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -37788,7 +37788,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -37839,7 +37839,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -37890,7 +37890,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -37941,7 +37941,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -38284,7 +38284,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -38335,7 +38335,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -38386,7 +38386,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -38437,7 +38437,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -38836,7 +38836,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -38887,7 +38887,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -38938,7 +38938,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -38989,7 +38989,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -39388,7 +39388,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -39439,7 +39439,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -39490,7 +39490,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -39541,7 +39541,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -39940,7 +39940,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -39991,7 +39991,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -40042,7 +40042,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("über", options).should be_false
     store.load("über", options).should be_nil
@@ -40093,7 +40093,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?("\xAA\xBB\xCC", options).should be_false
     store.load("\xAA\xBB\xCC", options).should be_nil
@@ -40492,7 +40492,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -40543,7 +40543,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -40594,7 +40594,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -40645,7 +40645,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -40696,7 +40696,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -40747,7 +40747,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -40798,7 +40798,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -40849,7 +40849,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -41384,7 +41384,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -41435,7 +41435,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -41486,7 +41486,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -41537,7 +41537,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -41880,7 +41880,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -41931,7 +41931,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -41982,7 +41982,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -42033,7 +42033,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -42084,7 +42084,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -42135,7 +42135,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -42186,7 +42186,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -42237,7 +42237,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -42860,7 +42860,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -42911,7 +42911,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -42962,7 +42962,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -43013,7 +43013,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -43356,7 +43356,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -43407,7 +43407,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -43458,7 +43458,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -43509,7 +43509,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -43908,7 +43908,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -43959,7 +43959,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -44010,7 +44010,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -44061,7 +44061,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -44460,7 +44460,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -44511,7 +44511,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -44562,7 +44562,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -44613,7 +44613,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -45012,7 +45012,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -45063,7 +45063,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -45114,7 +45114,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey1), options).should be_false
     store.load(Value.new(:objkey1), options).should be_nil
@@ -45165,7 +45165,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?(Value.new(:objkey2), options).should be_false
     store.load(Value.new(:objkey2), options).should be_nil
@@ -45564,7 +45564,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -45615,7 +45615,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -45666,7 +45666,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -45717,7 +45717,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -45768,7 +45768,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -45819,7 +45819,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -45870,7 +45870,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -45921,7 +45921,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -46456,7 +46456,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -46507,7 +46507,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -46558,7 +46558,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -46609,7 +46609,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -46952,7 +46952,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -47003,7 +47003,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -47054,7 +47054,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -47105,7 +47105,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -47156,7 +47156,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -47207,7 +47207,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -47258,7 +47258,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -47309,7 +47309,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -47932,7 +47932,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -47983,7 +47983,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -48034,7 +48034,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -48085,7 +48085,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -48428,7 +48428,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -48479,7 +48479,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -48530,7 +48530,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -48581,7 +48581,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -48980,7 +48980,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -49031,7 +49031,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -49082,7 +49082,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -49133,7 +49133,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -49532,7 +49532,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -49583,7 +49583,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -49634,7 +49634,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -49685,7 +49685,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -50084,7 +50084,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -50135,7 +50135,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -50186,7 +50186,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
@@ -50237,7 +50237,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'accepts frozen options' do
-    options = {:option1 => 1, :options2 => 2}
+    options = {option1: 1, options2: 2}
     options.freeze
     store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
@@ -50635,8 +50635,8 @@ end
 #################### expires ####################
 
 shared_examples_for 'expires' do
-  it 'supports expires on store and []', :retry => 3 do
-    store.store('key1', 'val1', :expires => 3)
+  it 'supports expires on store and []', retry: 3 do
+    store.store('key1', 'val1', expires: 3)
     store['key1'].should == 'val1'
     sleep 1
     store['key1'].should == 'val1'
@@ -50645,14 +50645,14 @@ shared_examples_for 'expires' do
   end
 
   it 'supports strict expires on store and []' do
-    store.store('key1', 'val1', :expires => 2)
+    store.store('key1', 'val1', expires: 2)
     store['key1'].should == 'val1'
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
     store['key1'].should be_nil
   end
 
-  it 'supports expires on store and fetch', :retry => 3 do
-    store.store('key1', 'val1', :expires => 3)
+  it 'supports expires on store and fetch', retry: 3 do
+    store.store('key1', 'val1', expires: 3)
     store.fetch('key1').should == 'val1'
     sleep 1
     store.fetch('key1').should == 'val1'
@@ -50661,28 +50661,28 @@ shared_examples_for 'expires' do
   end
 
   it 'supports strict expires on store and fetch' do
-    store.store('key1', 'val1', :expires => 2)
+    store.store('key1', 'val1', expires: 2)
     store.fetch('key1').should == 'val1'
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
     store.fetch('key1').should be_nil
   end
 
   it 'supports 0 as no-expires on store and []' do
-    store.store('key1', 'val1', :expires => 0)
+    store.store('key1', 'val1', expires: 0)
     store['key1'].should == 'val1'
     sleep 2
     store['key1'].should == 'val1'
   end
 
   it 'supports false as no-expires on store and []' do
-    store.store('key1', 'val1', :expires => false)
+    store.store('key1', 'val1', expires: false)
     store['key1'].should == 'val1'
     sleep 2
     store['key1'].should == 'val1'
   end
 
-  it 'supports expires on store and load', :retry => 3 do
-    store.store('key1', 'val1', :expires => 3)
+  it 'supports expires on store and load', retry: 3 do
+    store.store('key1', 'val1', expires: 3)
     store.load('key1').should == 'val1'
     sleep 1
     store.load('key1').should == 'val1'
@@ -50691,14 +50691,14 @@ shared_examples_for 'expires' do
   end
 
   it 'supports strict expires on store and load' do
-    store.store('key1', 'val1', :expires => 2)
+    store.store('key1', 'val1', expires: 2)
     store.load('key1').should == 'val1'
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
     store.load('key1').should be_nil
   end
 
-  it 'supports expires on store and #key?', :retry => 3 do
-    store.store('key1', 'val1', :expires => 3)
+  it 'supports expires on store and #key?', retry: 3 do
+    store.store('key1', 'val1', expires: 3)
     store.key?('key1').should be_true
     sleep 1
     store.key?('key1').should be_true
@@ -50707,17 +50707,17 @@ shared_examples_for 'expires' do
   end
 
   it 'supports strict expires on store and #key?' do
-    store.store('key1', 'val1', :expires => 2)
+    store.store('key1', 'val1', expires: 2)
     store.key?('key1').should be_true
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
     store.key?('key1').should be_false
   end
 
-  it 'supports updating the expiration time in load', :retry => 3 do
-    store.store('key2', 'val2', :expires => 3)
+  it 'supports updating the expiration time in load', retry: 3 do
+    store.store('key2', 'val2', expires: 3)
     store['key2'].should == 'val2'
     sleep 1
-    store.load('key2', :expires => 5).should == 'val2'
+    store.load('key2', expires: 5).should == 'val2'
     store['key2'].should == 'val2'
     sleep 3
     store['key2'].should == 'val2'
@@ -50726,24 +50726,24 @@ shared_examples_for 'expires' do
   end
 
   it 'supports 0 as no-expires in load' do
-    store.store('key1', 'val1', :expires => 2)
-    store.load('key1', :expires => 0).should == 'val1'
+    store.store('key1', 'val1', expires: 2)
+    store.load('key1', expires: 0).should == 'val1'
     sleep 3
     store.load('key1').should == 'val1'
   end
 
   it 'supports false as no-expires in load' do
-    store.store('key1', 'val1', :expires => 2)
-    store.load('key1', :expires => false).should == 'val1'
+    store.store('key1', 'val1', expires: 2)
+    store.load('key1', expires: false).should == 'val1'
     sleep 3
     store.load('key1').should == 'val1'
   end
 
-  it 'supports updating the expiration time in #key?', :retry => 3 do
-    store.store('key2', 'val2', :expires => 3)
+  it 'supports updating the expiration time in #key?', retry: 3 do
+    store.store('key2', 'val2', expires: 3)
     store['key2'].should == 'val2'
     sleep 1
-    store.key?('key2', :expires => 5).should be_true
+    store.key?('key2', expires: 5).should be_true
     store['key2'].should == 'val2'
     sleep 3
     store['key2'].should == 'val2'
@@ -50752,24 +50752,24 @@ shared_examples_for 'expires' do
   end
 
   it 'supports 0 as no-expires in #key?' do
-    store.store('key1', 'val1', :expires => 2)
-    store.key?('key1', :expires => 0).should be_true
+    store.store('key1', 'val1', expires: 2)
+    store.key?('key1', expires: 0).should be_true
     sleep 3
     store['key1'].should == 'val1'
   end
 
   it 'supports false as no-expires in #key?' do
-    store.store('key1', 'val1', :expires => 2)
-    store.key?('key1', :expires => false ).should be_true
+    store.store('key1', 'val1', expires: 2)
+    store.key?('key1', expires: false ).should be_true
     sleep 3
     store['key1'].should == 'val1'
   end
 
-  it 'supports updating the expiration time in fetch', :retry => 3 do
-    store.store('key1', 'val1', :expires => 3)
+  it 'supports updating the expiration time in fetch', retry: 3 do
+    store.store('key1', 'val1', expires: 3)
     store['key1'].should == 'val1'
     sleep 1
-    store.fetch('key1', nil, :expires => 5).should == 'val1'
+    store.fetch('key1', nil, expires: 5).should == 'val1'
     store['key1'].should == 'val1'
     sleep 3
     store['key1'].should == 'val1'
@@ -50778,28 +50778,28 @@ shared_examples_for 'expires' do
   end
 
   it 'supports 0 as no-expires in fetch' do
-    store.store('key1', 'val1', :expires => 2)
-    store.fetch('key1', nil, :expires => 0).should == 'val1'
+    store.store('key1', 'val1', expires: 2)
+    store.fetch('key1', nil, expires: 0).should == 'val1'
     sleep 3
     store.load('key1').should == 'val1'
   end
 
   it 'supports false as no-expires in fetch' do
-    store.store('key1', 'val1', :expires => 2)
-    store.fetch('key1', nil, :expires => false).should == 'val1'
+    store.store('key1', 'val1', expires: 2)
+    store.fetch('key1', nil, expires: false).should == 'val1'
     sleep 3
     store.load('key1').should == 'val1'
   end
 
   it 'strictly respects expires in delete' do
-    store.store('key2', 'val2', :expires => 2)
+    store.store('key2', 'val2', expires: 2)
     store['key2'].should == 'val2'
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
     store.delete('key2').should be_nil
   end
 
-  it 'respects expires in delete', :retry => 3 do
-    store.store('key2', 'val2', :expires => 3)
+  it 'respects expires in delete', retry: 3 do
+    store.store('key2', 'val2', expires: 3)
     store['key2'].should == 'val2'
     sleep 1
     store['key2'].should == 'val2'
@@ -50807,8 +50807,8 @@ shared_examples_for 'expires' do
     store.delete('key2').should be_nil
   end
 
-  it 'supports the #expires syntactic sugar', :retry => 3 do
-    store.store('persistent_key', 'persistent_value', :expires => 0)
+  it 'supports the #expires syntactic sugar', retry: 3 do
+    store.store('persistent_key', 'persistent_value', expires: 0)
     store.expires(1).store('key2', 'val2')
     store['key2'].should == 'val2'
     sleep 2
@@ -50817,32 +50817,32 @@ shared_examples_for 'expires' do
   end
 
   it 'supports false as no-expires on store and []' do
-    store.store('key1', 'val1', :expires => false)
+    store.store('key1', 'val1', expires: false)
     store['key1'].should == 'val1'
     sleep 2
     store['key1'].should == 'val1'
   end
 
-  it 'does not update the expiration time in #key? when not asked to do so', :retry => 3 do
-    store.store('key1', 'val1', :expires => 1)
+  it 'does not update the expiration time in #key? when not asked to do so', retry: 3 do
+    store.store('key1', 'val1', expires: 1)
     store.key?('key1').should be_true
-    store.key?('key1', :expires => nil).should be_true
+    store.key?('key1', expires: nil).should be_true
     sleep 2
     store.key?('key1').should be_false
   end
 
-  it 'does not update the expiration time in fetch when not asked to do so', :retry => 3 do
-    store.store('key1', 'val1', :expires => 1)
+  it 'does not update the expiration time in fetch when not asked to do so', retry: 3 do
+    store.store('key1', 'val1', expires: 1)
     store.fetch('key1').should == 'val1'
-    store.fetch('key1', :expires => nil).should == 'val1'
+    store.fetch('key1', expires: nil).should == 'val1'
     sleep 2
     store.fetch('key1').should be_nil
   end
 
-  it 'does not update the expiration time in load when not asked to do so', :retry => 3 do
-    store.store('key1', 'val1', :expires => 1)
+  it 'does not update the expiration time in load when not asked to do so', retry: 3 do
+    store.store('key1', 'val1', expires: 1)
     store.load('key1').should == 'val1'
-    store.load('key1', :expires => nil).should == 'val1'
+    store.load('key1', expires: nil).should == 'val1'
     sleep 2
     store.load('key1').should be_nil
   end
@@ -50887,10 +50887,10 @@ shared_examples_for 'concurrent_increment' do
       s = new_store
       100.times do |i|
         100.times do |j|
-          s.increment("counter#{j}", 1, :expires => false)
+          s.increment("counter#{j}", 1, expires: false)
           Thread.pass if rand(1000) >= 995
         end
-        s.store("#{name}#{i}", i.to_s, :expires => false)
+        s.store("#{name}#{i}", i.to_s, expires: false)
       end
       s.close
     end
@@ -50921,7 +50921,7 @@ shared_examples_for 'concurrent_create' do
     Thread.new do
       s = new_store
       1000.times do |i|
-        s[i.to_s].should == name if s.create(i.to_s, name, :expires => false)
+        s[i.to_s].should == name if s.create(i.to_s, name, expires: false)
         Thread.pass if rand(100) >= 99
       end
       s.close
@@ -50947,9 +50947,9 @@ shared_examples_for 'increment' do
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '1'
     store.raw.load('inckey').should == '1'
-    store.load('inckey', :raw => true).should == '1'
+    store.load('inckey', raw: true).should == '1'
 
-    store.delete('inckey', :raw => true).should == '1'
+    store.delete('inckey', raw: true).should == '1'
     store.key?('inckey').should be_false
   end
 
@@ -50957,14 +50957,14 @@ shared_examples_for 'increment' do
     store.increment('inckey', 42).should == 42
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '42'
-    store.delete('inckey', :raw => true).should == '42'
+    store.delete('inckey', raw: true).should == '42'
   end
 
   it 'initializes in #increment with 0' do
     store.increment('inckey', 0).should == 0
     store.key?('inckey').should be_true
     store.raw['inckey'].should == '0'
-    store.delete('inckey', :raw => true).should == '0'
+    store.delete('inckey', raw: true).should == '0'
   end
 
   it 'initializes in #decrement with 0' do
@@ -51006,7 +51006,7 @@ shared_examples_for 'increment' do
   end
 
   it 'interprets raw value as integer' do
-    store.store('inckey', '42', :raw => true)
+    store.store('inckey', '42', raw: true)
     store.increment('inckey').should == 43
     store.raw['inckey'].should == '43'
   end
@@ -51083,15 +51083,15 @@ end
 
 shared_examples_for 'create_expires' do
   it 'creates the given key and expires it' do
-    store.create('key','value', :expires => 1).should be_true
+    store.create('key','value', expires: 1).should be_true
     store['key'].should == 'value'
     sleep 2
     store.key?('key').should be_false
   end
 
   it 'does not change expires if the key exists' do
-    store.store('key', 'value', :expires => false).should == 'value'
-    store.create('key','another value', :expires => 1).should be_false
+    store.store('key', 'value', expires: false).should == 'value'
+    store.create('key','another value', expires: 1).should be_false
     store['key'].should == 'value'
     sleep 2
     store['key'].should == 'value'
@@ -51160,11 +51160,11 @@ end
 shared_examples_for 'transform_value' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
-    load_value(store.load('key', :raw => true)).should == 'value'
+    load_value(store.load('key', raw: true)).should == 'value'
 
-    store.store('key', 'value', :raw => true)
-    store.load('key', :raw => true).should == 'value'
-    store.delete('key', :raw => true).should == 'value'
+    store.store('key', 'value', raw: true)
+    store.load('key', raw: true).should == 'value'
+    store.delete('key', raw: true).should == 'value'
   end
 
   it 'allows to bypass transformer with raw syntactic sugar' do
@@ -51181,12 +51181,12 @@ shared_examples_for 'transform_value' do
   end
 
   it 'returns unmarshalled value' do
-    store.store('key', 'unmarshalled value', :raw => true)
-    store.load('key', :raw => true).should == 'unmarshalled value'
+    store.store('key', 'unmarshalled value', raw: true)
+    store.load('key', raw: true).should == 'unmarshalled value'
   end
 
   it 'might raise exception on invalid value' do
-    store.store('key', 'unmarshalled value', :raw => true)
+    store.store('key', 'unmarshalled value', raw: true)
 
     begin
       store['key'].should == load_value('unmarshalled value')
@@ -51207,30 +51207,30 @@ end
 shared_examples_for 'transform_value_expires' do
   it 'allows to bypass transformer with :raw' do
     store['key'] = 'value'
-    load_value(store.load('key', :raw => true)).should == 'value'
+    load_value(store.load('key', raw: true)).should == 'value'
     store['key'] = [1,2,3]
-    load_value(store.load('key', :raw => true)).should == [[1,2,3]]
+    load_value(store.load('key', raw: true)).should == [[1,2,3]]
     store['key'] = nil
-    load_value(store.load('key', :raw => true)).should == [nil]
+    load_value(store.load('key', raw: true)).should == [nil]
     store['key'] = false
-    load_value(store.load('key', :raw => true)).should be_false
+    load_value(store.load('key', raw: true)).should be_false
 
-    store.store('key', 'value', :expires => 10)
-    load_value(store.load('key', :raw => true)).first.should == 'value'
-    load_value(store.load('key', :raw => true)).last.should respond_to(:to_int)
+    store.store('key', 'value', expires: 10)
+    load_value(store.load('key', raw: true)).first.should == 'value'
+    load_value(store.load('key', raw: true)).last.should respond_to(:to_int)
 
-    store.store('key', 'value', :raw => true)
-    store.load('key', :raw => true).should == 'value'
-    store.delete('key', :raw => true).should == 'value'
+    store.store('key', 'value', raw: true)
+    store.load('key', raw: true).should == 'value'
+    store.delete('key', raw: true).should == 'value'
   end
 
   it 'returns unmarshalled value' do
-    store.store('key', 'unmarshalled value', :raw => true)
-    store.load('key', :raw => true).should == 'unmarshalled value'
+    store.store('key', 'unmarshalled value', raw: true)
+    store.load('key', raw: true).should == 'unmarshalled value'
   end
 
   it 'might raise exception on invalid value' do
-    store.store('key', 'unmarshalled value', :raw => true)
+    store.store('key', 'unmarshalled value', raw: true)
 
     begin
       store['key'].should == load_value('unmarshalled value')

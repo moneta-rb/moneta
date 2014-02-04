@@ -9,7 +9,7 @@ describe_moneta "adapter_restclient" do
   end
 
   def new_store
-    Moneta::Adapters::RestClient.new(:url => 'http://localhost:8808/moneta/')
+    Moneta::Adapters::RestClient.new(url: 'http://localhost:8808/moneta/')
   end
 
   def load_value(value)

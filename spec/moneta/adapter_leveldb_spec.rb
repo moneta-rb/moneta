@@ -8,7 +8,7 @@ describe_moneta "adapter_leveldb" do
   end
 
   def new_store
-    Moneta::Adapters::LevelDB.new(:dir => File.join(make_tempdir, "adapter_leveldb"))
+    Moneta::Adapters::LevelDB.new(dir: File.join(make_tempdir, "adapter_leveldb"))
   end
 
   def load_value(value)

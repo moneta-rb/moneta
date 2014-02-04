@@ -17,14 +17,14 @@ module Moneta
       options ? OptionMerger.new(adapter, options) : adapter
     end
 
-    # Return Moneta store with default option :raw => true
+    # Return Moneta store with default option raw: true
     #
     # @return [OptionMerger]
     # @api public
     def raw
       @raw_store ||=
         begin
-          store = with(:raw => true, :only => [:load, :store, :create, :delete])
+          store = with(raw: true, only: [:load, :store, :create, :delete])
           store.instance_variable_set(:@raw_store, store)
           store
         end
@@ -36,7 +36,7 @@ module Moneta
     # @return [OptionMerger]
     # @api public
     def prefix(prefix)
-      with(:prefix => prefix, :except => :clear)
+      with(prefix: prefix, except: :clear)
     end
 
     # Return Moneta store with default expiration time
@@ -45,7 +45,7 @@ module Moneta
     # @return [OptionMerger]
     # @api public
     def expires(expires)
-      with(:expires => expires, :only => [:store, :create, :increment])
+      with(expires: expires, only: [:store, :create, :increment])
     end
   end
 

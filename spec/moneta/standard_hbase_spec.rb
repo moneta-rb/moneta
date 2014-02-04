@@ -8,7 +8,7 @@ describe_moneta "standard_hbase" do
   end
 
   def new_store
-    Moneta.new(:HBase, :table => "simple_hbase", :logger => {:file => File.join(make_tempdir, 'standard_hbase.log')})
+    Moneta.new(:HBase, table: "simple_hbase", logger: {file: File.join(make_tempdir, 'standard_hbase.log')})
   end
 
   def load_value(value)

@@ -12,7 +12,7 @@ describe_moneta "standard_riak" do
   end
 
   def new_store
-    Moneta.new(:Riak, :bucket => 'standard_riak', :logger => {:file => File.join(make_tempdir, 'standard_riak.log')})
+    Moneta.new(:Riak, :bucket => 'standard_riak', logger: {file: File.join(make_tempdir, 'standard_riak.log')})
   end
 
   def load_value(value)

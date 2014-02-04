@@ -27,7 +27,7 @@ module Moneta
             ::Sequel.connect(db, options)
           end
         @backend.create_table?(table) do
-          String :k, :null => false, :primary_key => true
+          String :k, null: false, primary_key: true
           Blob :v
         end
         @table = @backend[table]
@@ -35,21 +35,21 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @table[:k => key] != nil
+        @table[k: key] != nil
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        record = @table[:k => key]
+        record = @table[k: key]
         record && record[:v]
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
         begin
-          @table.insert(:k => key, :v => blob(value))
+          @table.insert(k: key, v: blob(value))
         rescue UniqueConstraintViolation
-          @table.where(:k => key).update(:v => blob(value))
+          @table.where(k: key).update(v: blob(value))
         end
         value
       rescue ::Sequel::DatabaseError
@@ -59,7 +59,7 @@ module Moneta
 
       # (see Proxy#store)
       def create(key, value, options = {})
-        @table.insert(:k => key, :v => blob(value))
+        @table.insert(k: key, v: blob(value))
         true
       rescue UniqueConstraintViolation
         false
@@ -69,12 +69,12 @@ module Moneta
       def increment(key, amount = 1, options = {})
         @backend.transaction do
           locked_table = @table.for_update
-          if record = locked_table[:k => key]
+          if record = locked_table[k: key]
             value = Utils.to_int(record[:v]) + amount
-            locked_table.where(:k => key).update(:v => blob(value.to_s))
+            locked_table.where(k: key).update(v: blob(value.to_s))
             value
           else
-            locked_table.insert(:k => key, :v => blob(amount.to_s))
+            locked_table.insert(k: key, v: blob(amount.to_s))
             amount
           end
         end
@@ -87,7 +87,7 @@ module Moneta
       # (see Proxy#delete)
       def delete(key, options = {})
         if value = load(key, options)
-          @table.filter(:k => key).delete
+          @table.filter(k: key).delete
           value
         end
       end

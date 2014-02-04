@@ -8,7 +8,7 @@ describe_moneta "standard_memory_with_compress" do
   end
 
   def new_store
-    Moneta.new(:Memory, :compress => true, :logger => {:file => File.join(make_tempdir, 'standard_memory_with_compress.log')})
+    Moneta.new(:Memory, compress: true, logger: {file: File.join(make_tempdir, 'standard_memory_with_compress.log')})
   end
 
   def load_value(value)

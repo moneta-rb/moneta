@@ -12,7 +12,7 @@ module Moneta
         @backend = options[:backend] ||
           begin
             raise ArgumentError, 'Option :file is required' unless options[:file]
-            ::Daybreak::DB.new(options[:file], :serializer => ::Daybreak::Serializer::None)
+            ::Daybreak::DB.new(options[:file], serializer: ::Daybreak::Serializer::None)
           end
       end
 

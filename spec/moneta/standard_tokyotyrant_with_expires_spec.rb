@@ -8,7 +8,7 @@ describe_moneta "standard_tokyotyrant_with_expires" do
   end
 
   def new_store
-    Moneta.new(:TokyoTyrant, :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_tokyotyrant_with_expires.log')})
+    Moneta.new(:TokyoTyrant, expires: true, logger: {file: File.join(make_tempdir, 'standard_tokyotyrant_with_expires.log')})
   end
 
   def load_value(value)

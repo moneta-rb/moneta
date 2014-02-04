@@ -3,13 +3,13 @@
 require 'helper'
 
 describe_moneta "standard_client_unix" do
-  start_server(Moneta::Adapters::Memory.new, :socket => File.join(make_tempdir, 'standard_client_unix'))
+  start_server(Moneta::Adapters::Memory.new, socket: File.join(make_tempdir, 'standard_client_unix'))
   def features
     [:create, :increment]
   end
 
   def new_store
-    Moneta.new(:Client, :socket => File.join(make_tempdir, 'standard_client_unix'), :logger => {:file => File.join(make_tempdir, 'standard_client_unix.log')})
+    Moneta.new(:Client, :socket => File.join(make_tempdir, 'standard_client_unix'), logger: {file: File.join(make_tempdir, 'standard_client_unix.log')})
   end
 
   def load_value(value)

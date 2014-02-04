@@ -8,7 +8,7 @@ describe_moneta "standard_tokyocabinet" do
   end
 
   def new_store
-    Moneta.new(:TokyoCabinet, :file => File.join(make_tempdir, "simple_tokyocabinet"), :logger => {:file => File.join(make_tempdir, 'standard_tokyocabinet.log')})
+    Moneta.new(:TokyoCabinet, file: File.join(make_tempdir, "simple_tokyocabinet"), logger: {file: File.join(make_tempdir, 'standard_tokyocabinet.log')})
   end
 
   def load_value(value)

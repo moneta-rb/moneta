@@ -8,7 +8,7 @@ describe_moneta "standard_hbase_with_expires" do
   end
 
   def new_store
-    Moneta.new(:HBase, :table => "simple_hbase", :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_hbase_with_expires.log')})
+    Moneta.new(:HBase, table: "simple_hbase", expires: true, logger: {file: File.join(make_tempdir, 'standard_hbase_with_expires.log')})
   end
 
   def load_value(value)

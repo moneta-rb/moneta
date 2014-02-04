@@ -8,7 +8,7 @@ describe_moneta "standard_memory_with_prefix" do
   end
 
   def new_store
-    Moneta.new(:Memory, :prefix => "moneta", :logger => {:file => File.join(make_tempdir, 'standard_memory_with_prefix.log')})
+    Moneta.new(:Memory, prefix: "moneta", logger: {file: File.join(make_tempdir, 'standard_memory_with_prefix.log')})
   end
 
   def load_value(value)

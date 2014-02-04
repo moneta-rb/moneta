@@ -4,17 +4,17 @@ module Moneta
   #
   # @example Add `Moneta::Transformer` to proxy stack
   #   Moneta.build do
-  #     transformer :key => [:marshal, :escape], :value => [:marshal]
-  #     adapter :File, :dir => 'data'
+  #     transformer key: [:marshal, :escape], value: => [:marshal]
+  #     adapter :File, dir: 'data'
   #   end
   #
   # @example Bypass serialization
-  #   store.store('key', 'value', :raw => true)
+  #   store.store('key', 'value', raw: true)
   #   store['key'] # raises an Exception
-  #   store.load('key', :raw => true) # returns 'value'
+  #   store.load('key', raw: true) # returns 'value'
   #
   #   store['key'] = 'value'
-  #   store.load('key', :raw => true) # returns "\x04\bI\"\nvalue\x06:\x06ET"
+  #   store.load('key', raw: true) # returns "\x04\bI\"\nvalue\x06:\x06ET"
   #
   # @api public
   class Transformer < Proxy

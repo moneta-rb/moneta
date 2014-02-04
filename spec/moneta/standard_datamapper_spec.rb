@@ -4,13 +4,13 @@ require 'helper'
 
 describe_moneta "standard_datamapper" do
   require 'dm-core'
-  DataMapper.setup(:default, :adapter => :in_memory)
+  DataMapper.setup(:default, adapter: :in_memory)
   def features
     [:create]
   end
 
   def new_store
-    Moneta.new(:DataMapper, :setup => "mysql://root:@localhost/moneta", :table => "simple_datamapper", :logger => {:file => File.join(make_tempdir, 'standard_datamapper.log')})
+    Moneta.new(:DataMapper, setup: "mysql://root:@localhost/moneta", table: "simple_datamapper", logger: {file: File.join(make_tempdir, 'standard_datamapper.log')})
   end
 
   def load_value(value)

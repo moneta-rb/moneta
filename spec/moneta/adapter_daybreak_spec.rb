@@ -8,7 +8,7 @@ describe_moneta "adapter_daybreak" do
   end
 
   def new_store
-    Moneta::Adapters::Daybreak.new(:file => File.join(make_tempdir, "adapter_daybreak"))
+    Moneta::Adapters::Daybreak.new(file: File.join(make_tempdir, "adapter_daybreak"))
   end
 
   def load_value(value)

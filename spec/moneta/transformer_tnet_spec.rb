@@ -9,7 +9,7 @@ describe_moneta "transformer_tnet" do
 
   def new_store
     Moneta.build do
-     use :Transformer, :key => :tnet, :value => :tnet
+     use :Transformer, key: :tnet, value: :tnet
      adapter :Memory
     end
   end

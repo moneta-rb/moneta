@@ -31,7 +31,7 @@ stats
 
 %q{require 'moneta'
 Moneta.new(:Memory)
-Moneta.new(:File, :dir => 'filestore')
+Moneta.new(:File, dir: 'filestore')
 Moneta.new(:MemcachedNative)
 Moneta.new(:MemcachedDalli)}.each_line do |line|
   puts line

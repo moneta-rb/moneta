@@ -8,7 +8,7 @@ describe_moneta "standard_leveldb" do
   end
 
   def new_store
-    Moneta.new(:LevelDB, :dir => File.join(make_tempdir, "simple_leveldb"), :logger => {:file => File.join(make_tempdir, 'standard_leveldb.log')})
+    Moneta.new(:LevelDB, dir: File.join(make_tempdir, "simple_leveldb"), logger: {file: File.join(make_tempdir, 'standard_leveldb.log')})
   end
 
   def load_value(value)

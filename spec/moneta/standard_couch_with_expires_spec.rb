@@ -8,7 +8,7 @@ describe_moneta "standard_couch_with_expires" do
   end
 
   def new_store
-    Moneta.new(:Couch, :db => 'standard_couch_with_expires', :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_couch_with_expires.log')})
+    Moneta.new(:Couch, :db => 'standard_couch_with_expires', expires: true, logger: {file: File.join(make_tempdir, 'standard_couch_with_expires.log')})
   end
 
   def load_value(value)

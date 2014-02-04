@@ -82,7 +82,7 @@ module Rack
         def write(body, ttl = 0)
           buf = StringIO.new
           key, size = slurp(body) { |part| buf.write(part) }
-          @cache.store(key, buf.string, ttl == 0 ? {} : {:expires => ttl})
+          @cache.store(key, buf.string, ttl == 0 ? {} : {expires: ttl})
           [key, size]
         end
 

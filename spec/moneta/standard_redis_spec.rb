@@ -8,7 +8,7 @@ describe_moneta "standard_redis" do
   end
 
   def new_store
-    Moneta.new(:Redis, :logger => {:file => File.join(make_tempdir, 'standard_redis.log')})
+    Moneta.new(:Redis, logger: {file: File.join(make_tempdir, 'standard_redis.log')})
   end
 
   def load_value(value)

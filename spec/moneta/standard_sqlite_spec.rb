@@ -8,7 +8,7 @@ describe_moneta "standard_sqlite" do
   end
 
   def new_store
-    Moneta.new(:Sqlite, :file => File.join(make_tempdir, "simple_sqlite"), :logger => {:file => File.join(make_tempdir, 'standard_sqlite.log')})
+    Moneta.new(:Sqlite, file: File.join(make_tempdir, "simple_sqlite"), logger: {file: File.join(make_tempdir, 'standard_sqlite.log')})
   end
 
   def load_value(value)

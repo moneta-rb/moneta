@@ -8,7 +8,7 @@ describe_moneta "mutex" do
   end
 
   def new_store
-    Moneta.new(:Memory, :logger => {:file => File.join(make_tempdir, 'mutex.log')})
+    Moneta.new(:Memory, logger: {file: File.join(make_tempdir, 'mutex.log')})
   end
 
   def load_value(value)

@@ -8,7 +8,7 @@ describe_moneta "standard_lruhash_with_expires" do
   end
 
   def new_store
-    Moneta.new(:LRUHash, :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_lruhash_with_expires.log')})
+    Moneta.new(:LRUHash, expires: true, logger: {file: File.join(make_tempdir, 'standard_lruhash_with_expires.log')})
   end
 
   def load_value(value)

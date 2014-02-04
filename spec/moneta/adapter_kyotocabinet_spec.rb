@@ -8,7 +8,7 @@ describe_moneta "adapter_kyotocabinet" do
   end
 
   def new_store
-    Moneta::Adapters::KyotoCabinet.new(:file => File.join(make_tempdir, "adapter_kyotocabinet.kch"))
+    Moneta::Adapters::KyotoCabinet.new(file: File.join(make_tempdir, "adapter_kyotocabinet.kch"))
   end
 
   def load_value(value)

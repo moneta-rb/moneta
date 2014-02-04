@@ -8,7 +8,7 @@ describe_moneta "standard_memory_with_expires" do
   end
 
   def new_store
-    Moneta.new(:Memory, :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_memory_with_expires.log')})
+    Moneta.new(:Memory, expires: true, logger: {file: File.join(make_tempdir, 'standard_memory_with_expires.log')})
   end
 
   def load_value(value)

@@ -8,7 +8,7 @@ describe_moneta "standard_sdbm" do
   end
 
   def new_store
-    Moneta.new(:SDBM, :file => File.join(make_tempdir, "simple_sdbm"), :logger => {:file => File.join(make_tempdir, 'standard_sdbm.log')})
+    Moneta.new(:SDBM, file: File.join(make_tempdir, "simple_sdbm"), logger: {file: File.join(make_tempdir, 'standard_sdbm.log')})
   end
 
   def load_value(value)

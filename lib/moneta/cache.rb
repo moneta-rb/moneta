@@ -4,7 +4,7 @@ module Moneta
   # @example Add `Moneta::Cache` to proxy stack
   #   Moneta.build do
   #     use(:Cache) do
-  #      adapter { adapter :File, :dir => 'data' }
+  #      adapter { adapter :File, dir: 'data' }
   #      cache { adapter :Memory }
   #     end
   #   end

@@ -31,104 +31,104 @@ class MonetaBenchmarks
 
   STORES = {
     # SDBM accepts only very short key/value pairs (1k for both)
-    # :SDBM => { :file => "#{DIR}/sdbm" },
+    # SDBM: { file: "#{DIR}/sdbm" },
     # YAML is too slow
-    # :YAML => { :file => "#{DIR}/yaml" },
-    :ActiveRecord => { :table => 'activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :username => 'root', :database => 'moneta' } },
-    :Cassandra => {},
-    :Client => {},
-    :Couch => {},
-    :DBM => { :file => "#{DIR}/dbm" },
-    :DataMapper => { :setup => 'mysql://root:@localhost/moneta', :table => 'datamapper' },
-    :Daybreak => { :file => "#{DIR}/daybreak" },
-    :File => { :dir => "#{DIR}/file" },
-    :GDBM => { :file => "#{DIR}/gdbm" },
-    :HBase => {},
-    :HashFile => { :dir => "#{DIR}/hashfile" },
-    :KyotoCabinet => { :file => "#{DIR}/kyotocabinet.kch" },
-    :LRUHash => {},
-    :LevelDB => { :dir => "#{DIR}/leveldb" },
-    :LocalMemCache => { :file => "#{DIR}/lmc" },
-    :LMDB => { :dir => "#{DIR}/lmdb" },
-    :MemcachedDalli => {},
-    :MemcachedNative => {},
-    :Memory => {},
-    :MongoMoped => {},
-    :MongoOfficial => {},
-    :PStore => { :file => "#{DIR}/pstore" },
-    :Redis => {},
-    :RestClient => { :url => 'http://localhost:8808/' },
-    :Riak => {},
-    :Sequel => { :table => 'sequel',
-      :db => (defined?(JRUBY_VERSION) ?
+    # YAML: { file: "#{DIR}/yaml" },
+    ActiveRecord: { table: 'activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), username: 'root', database: 'moneta' } },
+    Cassandra: {},
+    Client: {},
+    Couch: {},
+    DBM: { file: "#{DIR}/dbm" },
+    DataMapper: { setup: 'mysql://root:@localhost/moneta', table: 'datamapper' },
+    Daybreak: { file: "#{DIR}/daybreak" },
+    File: { dir: "#{DIR}/file" },
+    GDBM: { file: "#{DIR}/gdbm" },
+    HBase: {},
+    HashFile: { dir: "#{DIR}/hashfile" },
+    KyotoCabinet: { file: "#{DIR}/kyotocabinet.kch" },
+    LRUHash: {},
+    LevelDB: { dir: "#{DIR}/leveldb" },
+    LocalMemCache: { file: "#{DIR}/lmc" },
+    LMDB: { dir: "#{DIR}/lmdb" },
+    MemcachedDalli: {},
+    MemcachedNative: {},
+    Memory: {},
+    MongoMoped: {},
+    MongoOfficial: {},
+    PStore: { file: "#{DIR}/pstore" },
+    Redis: {},
+    RestClient: { url: 'http://localhost:8808/' },
+    Riak: {},
+    Sequel: { table: 'sequel',
+      db: (defined?(JRUBY_VERSION) ?
               'jdbc:mysql://localhost/moneta?user=root' :
               'mysql2://root:@localhost/moneta') },
-    :Sqlite => { :file => ':memory:' },
-    :TDB => { :file => "#{DIR}/tdb" },
-    :TokyoCabinet => { :file => "#{DIR}/tokyocabinet" },
-    :TokyoTyrant => {},
+    Sqlite: { file: ':memory:' },
+    TDB: { file: "#{DIR}/tdb" },
+    TokyoCabinet: { file: "#{DIR}/tokyocabinet" },
+    TokyoTyrant: {},
   }
 
   CONFIGS = {
-    :uniform_small => {
-      :runs => 3,
-      :keys => 1000,
-      :min_key_len => 1,
-      :max_key_len => 32,
-      :key_dist => :uniform,
-      :min_val_len => 0,
-      :max_val_len => 256,
-      :val_dist => :uniform
+    uniform_small: {
+      runs: 3,
+      keys: 1000,
+      min_key_len: 1,
+      max_key_len: 32,
+      key_dist: :uniform,
+      min_val_len: 0,
+      max_val_len: 256,
+      val_dist: :uniform
     },
-    :uniform_medium => {
-      :runs => 3,
-      :keys => 1000,
-      :min_key_len => 3,
-      :max_key_len => 128,
-      :key_dist => :uniform,
-      :min_val_len => 0,
-      :max_val_len => 1024,
-      :val_dist => :uniform
+    uniform_medium: {
+      runs: 3,
+      keys: 1000,
+      min_key_len: 3,
+      max_key_len: 128,
+      key_dist: :uniform,
+      min_val_len: 0,
+      max_val_len: 1024,
+      val_dist: :uniform
     },
-    :uniform_large => {
-      :runs => 3,
-      :keys => 100,
-      :min_key_len => 3,
-      :max_key_len => 128,
-      :key_dist => :uniform,
-      :min_val_len => 0,
-      :max_val_len => 10240,
-      :val_dist => :uniform
+    uniform_large: {
+      runs: 3,
+      keys: 100,
+      min_key_len: 3,
+      max_key_len: 128,
+      key_dist: :uniform,
+      min_val_len: 0,
+      max_val_len: 10240,
+      val_dist: :uniform
     },
-    :normal_small => {
-      :runs => 3,
-      :keys => 1000,
-      :min_key_len => 1,
-      :max_key_len => 32,
-      :key_dist => :normal,
-      :min_val_len => 0,
-      :max_val_len => 256,
-      :val_dist => :normal
+    normal_small: {
+      runs: 3,
+      keys: 1000,
+      min_key_len: 1,
+      max_key_len: 32,
+      key_dist: :normal,
+      min_val_len: 0,
+      max_val_len: 256,
+      val_dist: :normal
     },
-    :normal_medium => {
-      :runs => 3,
-      :keys => 1000,
-      :min_key_len => 3,
-      :max_key_len => 128,
-      :key_dist => :normal,
-      :min_val_len => 0,
-      :max_val_len => 1024,
-      :val_dist => :normal
+    normal_medium: {
+      runs: 3,
+      keys: 1000,
+      min_key_len: 3,
+      max_key_len: 128,
+      key_dist: :normal,
+      min_val_len: 0,
+      max_val_len: 1024,
+      val_dist: :normal
     },
-    :normal_large => {
-      :runs => 3,
-      :keys => 100,
-      :min_key_len => 3,
-      :max_key_len => 128,
-      :key_dist => :normal,
-      :min_val_len => 0,
-      :max_val_len => 10240,
-      :val_dist => :normal
+    normal_large: {
+      runs: 3,
+      keys: 100,
+      min_key_len: 3,
+      max_key_len: 128,
+      key_dist: :normal,
+      min_val_len: 0,
+      max_val_len: 10240,
+      val_dist: :normal
     },
   }
 
@@ -207,13 +207,13 @@ class MonetaBenchmarks
           def log(level, data); end
         end
 
-        Rack::Server.start(:app => Rack::Builder.app do
+        Rack::Server.start(app: Rack::Builder.app do
                              use Rack::Lint
-                             run Rack::MonetaRest.new(:store => :Memory)
+                             run Rack::MonetaRest.new(store: :Memory)
                            end,
-                           :environment => :none,
-                           :server => :webrick,
-                           :Port => 8808)
+                           environment: :none,
+                           server: :webrick,
+                           Port: 8808)
       rescue Exception => ex
         puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
       end
@@ -228,7 +228,7 @@ class MonetaBenchmarks
         if name == :DataMapper
           begin
             require 'dm-core'
-            DataMapper.setup(:default, :adapter => :in_memory)
+            DataMapper.setup(:default, adapter: :in_memory)
           rescue LoadError => ex
             puts "\e[31mFailed to load DataMapper - #{ex.message}\e[0m"
           end
@@ -299,10 +299,10 @@ class MonetaBenchmarks
     store = Moneta.new(name, options.dup)
 
     @stats[name] = {
-      :write => [],
-      :read => [],
-      :sum => [],
-      :error => []
+      write: [],
+      read: [],
+      sum: [],
+      error: []
     }
 
     %w(Rehearse Measure).each do |type|

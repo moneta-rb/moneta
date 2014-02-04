@@ -9,7 +9,7 @@ describe_moneta "transformer_marshal_hmac" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :marshal, :value => [:marshal, :hmac], :secret => 'secret'
+      use :Transformer, key: :marshal, value: [:marshal, :hmac], secret: 'secret'
       adapter :Memory
     end
   end

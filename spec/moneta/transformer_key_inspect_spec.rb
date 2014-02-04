@@ -9,7 +9,7 @@ describe_moneta "transformer_key_inspect" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :inspect
+      use :Transformer, key: :inspect
       adapter :Memory
     end
   end

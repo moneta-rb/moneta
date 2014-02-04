@@ -9,7 +9,7 @@ describe_moneta "transformer_lzma" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :value => :lzma
+      use :Transformer, value: :lzma
       adapter :Memory
     end
   end

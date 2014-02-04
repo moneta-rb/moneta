@@ -77,11 +77,7 @@ module Moneta
       protected
 
       def new_store(options)
-        if RUBY_VERSION > '1.9'
-          ::PStore.new(options[:file], options[:threadsafe])
-        else
-          ::PStore.new(options[:file])
-        end
+        ::PStore.new(options[:file], options[:threadsafe])
       end
     end
   end

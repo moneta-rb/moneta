@@ -10,7 +10,7 @@ describe_moneta "pool" do
   def new_store
     Moneta.build do
       use :Pool do
-        adapter :File, :dir => File.join(make_tempdir, "pool")
+        adapter :File, dir: File.join(make_tempdir, "pool")
       end
     end
   end

@@ -28,7 +28,7 @@ describe_moneta "adapter_lruhash" do
   it_should_behave_like 'store_pathkey_stringvalue'
   it_should_behave_like 'store_large'
   it 'deletes oldest' do
-    store = Moneta::Adapters::LRUHash.new(:max_size => 10)
+    store = Moneta::Adapters::LRUHash.new(max_size: 10)
     store[0]  = 'y'
     (1..1000).each do |i|
       store[i] = 'x'

@@ -4,21 +4,21 @@ module ActiveSupport
     class MonetaStore < Store
       def initialize(options = nil)
         raise ArgumentError, 'Option :store is required' unless @store = options.delete(:store)
-        @store = ::Moneta.new(@store, :expires => true) if Symbol === @store
+        @store = ::Moneta.new(@store, expires: true) if Symbol === @store
         super(options)
         extend Strategy::LocalCache
       end
 
       def increment(key, amount = 1, options = nil)
         options = merged_options(options)
-        instrument(:increment, key, :amount => amount) do
+        instrument(:increment, key, amount: amount) do
           @store.increment(namespaced_key(key, options), amount, moneta_options(options))
         end
       end
 
       def decrement(key, amount = 1, options = nil)
         options = merged_options(options)
-        instrument(:decrement, key, :amount => amount) do
+        instrument(:decrement, key, amount: amount) do
           @store.increment(namespaced_key(key, options), -amount, moneta_options(options))
         end
       end

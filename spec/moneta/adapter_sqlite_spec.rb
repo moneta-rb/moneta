@@ -8,7 +8,7 @@ describe_moneta "adapter_sqlite" do
   end
 
   def new_store
-    Moneta::Adapters::Sqlite.new(:file => File.join(make_tempdir, "adapter_sqlite"))
+    Moneta::Adapters::Sqlite.new(file: File.join(make_tempdir, "adapter_sqlite"))
   end
 
   def load_value(value)

@@ -8,7 +8,7 @@ describe_moneta "adapter_mongo_moped_with_default_expires" do
   end
 
   def new_store
-    Moneta::Adapters::MongoMoped.new(:expires => 1)
+    Moneta::Adapters::MongoMoped.new(expires: 1)
   end
 
   def load_value(value)

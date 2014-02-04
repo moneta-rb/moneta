@@ -9,7 +9,7 @@ describe_moneta "transformer_key_to_s" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :to_s
+      use :Transformer, key: :to_s
       adapter :Memory
     end
   end

@@ -13,10 +13,10 @@ describe_moneta "weak_create" do
     Moneta.build do
       use :WeakCreate
       adapter :Fog,
-        :aws_access_key_id => 'fake_access_key_id',
-        :aws_secret_access_key  => 'fake_secret_access_key',
-        :provider               => 'AWS',
-        :dir                    => 'weak_create'
+        aws_access_key_id: 'fake_access_key_id',
+        aws_secret_access_key:  'fake_secret_access_key',
+        provider:               'AWS',
+        dir:                    'weak_create'
     end
   end
 

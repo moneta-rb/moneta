@@ -8,7 +8,7 @@ describe_moneta "standard_yaml" do
   end
 
   def new_store
-    Moneta.new(:YAML, :file => File.join(make_tempdir, "simple_yaml"), :logger => {:file => File.join(make_tempdir, 'standard_yaml.log')})
+    Moneta.new(:YAML, file: File.join(make_tempdir, "simple_yaml"), logger: {file: File.join(make_tempdir, 'standard_yaml.log')})
   end
 
   def load_value(value)

@@ -9,7 +9,7 @@ describe_moneta "transformer_key_yaml" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :yaml
+      use :Transformer, key: :yaml
       adapter :Memory
     end
   end

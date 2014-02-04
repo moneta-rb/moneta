@@ -9,7 +9,7 @@ describe_moneta "transformer_bzip2" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :value => :bzip2
+      use :Transformer, value: :bzip2
       adapter :Memory
     end
   end

@@ -10,7 +10,7 @@ describe_moneta "cache_file_memory" do
   def new_store
     Moneta.build do
       use(:Cache) do
-        adapter { adapter :File, :dir => File.join(make_tempdir, "cache_file_memory") }
+        adapter { adapter :File, dir: File.join(make_tempdir, "cache_file_memory") }
         cache { adapter :Memory }
       end
     end

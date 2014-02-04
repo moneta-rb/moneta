@@ -9,7 +9,7 @@ describe_moneta "transformer_bencode" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :bencode, :value => :bencode
+      use :Transformer, key: :bencode, value: :bencode
       adapter :Memory
     end
   end

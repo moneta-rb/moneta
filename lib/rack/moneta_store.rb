@@ -2,11 +2,11 @@ require 'moneta'
 
 module Rack
   # A Rack middleware that inserts a Moneta store in the environment
-  # and supports per-request caching via the the option `:cache => true`.
+  # and supports per-request caching via the the option `cache: true`.
   #
   # @example config.ru
   #   # Add Rack::MonetaStore somewhere in your rack stack
-  #   use Rack::MonetaStore, :Memory, :cache => true
+  #   use Rack::MonetaStore, :Memory, cache: true
   #
   #   run lambda { |env|
   #     env['rack.moneta_store'] # is a Moneta store with per-request caching
@@ -15,7 +15,7 @@ module Rack
   # @example config.ru
   #   # Pass it a block like the one passed to Moneta.build
   #   use Rack::MonetaStore do
-  #     use :Transformer, :value => :zlib
+  #     use :Transformer, value: :zlib
   #     adapter :Cookie
   #   end
   #
@@ -38,7 +38,7 @@ module Rack
     end
 
     def call(env)
-      env['rack.moneta_store'] = @cache ? ::Moneta::Cache.new(:cache => ::Moneta::Adapters::Memory.new, :adapter => @store) : @store
+      env['rack.moneta_store'] = @cache ? ::Moneta::Cache.new(cache: ::Moneta::Adapters::Memory.new, adapter: @store) : @store
       @app.call(env)
     end
   end

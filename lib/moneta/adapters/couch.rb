@@ -30,7 +30,7 @@ module Moneta
         @value_field = options[:value_field] || 'value'
         @type_field = options[:type_field] || 'type'
         url = "http://#{options[:host] || '127.0.0.1'}:#{options[:port] || 5984}/#{options[:db] || 'moneta'}"
-        @backend = options[:backend] || ::Faraday.new(:url => url)
+        @backend = options[:backend] || ::Faraday.new(url: url)
         create_db
       end
 

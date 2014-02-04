@@ -8,7 +8,7 @@ describe_moneta "standard_mongo" do
   end
 
   def new_store
-    Moneta.new(:Mongo, :db => 'standard_mongo', :logger => {:file => File.join(make_tempdir, 'standard_mongo.log')})
+    Moneta.new(:Mongo, :db => 'standard_mongo', logger: {file: File.join(make_tempdir, 'standard_mongo.log')})
   end
 
   def load_value(value)

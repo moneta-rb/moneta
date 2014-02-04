@@ -45,7 +45,7 @@ module Moneta
         db.authenticate(user, password, true) if user && password
         @collection = db.collection(collection)
         if @backend.server_version >= '2.2'
-          @collection.ensure_index([[@expires_field, ::Mongo::ASCENDING]], :expireAfterSeconds => 0)
+          @collection.ensure_index([[@expires_field, ::Mongo::ASCENDING]], expireAfterSeconds: 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
         end
@@ -69,7 +69,7 @@ module Moneta
         key = to_binary(key)
         @collection.update({ '_id' => key },
                            value_to_doc(key, value, options),
-                           { :upsert => true })
+                           { upsert: true })
         value
       end
 
@@ -82,10 +82,10 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @collection.find_and_modify(:query => { '_id' => to_binary(key) },
-                                    :update => { '$inc' => { @value_field => amount } },
-                                    :new => true,
-                                    :upsert => true)[@value_field]
+        @collection.find_and_modify(query: { '_id' => to_binary(key) },
+                                    update: { '$inc' => { @value_field => amount } },
+                                    new: true,
+                                    upsert: true)[@value_field]
       end
 
       # (see Proxy#create)

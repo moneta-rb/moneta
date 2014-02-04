@@ -8,7 +8,7 @@ describe_moneta "standard_memcached_native" do
   end
 
   def new_store
-    Moneta.new(:MemcachedNative, :namespace => "simple_memcached_native", :logger => {:file => File.join(make_tempdir, 'standard_memcached_native.log')})
+    Moneta.new(:MemcachedNative, namespace: "simple_memcached_native", logger: {file: File.join(make_tempdir, 'standard_memcached_native.log')})
   end
 
   def load_value(value)

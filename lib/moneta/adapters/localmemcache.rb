@@ -15,7 +15,7 @@ module Moneta
         @backend = options[:backend] ||
           begin
             raise ArgumentError, 'Option :file is required' unless options[:file]
-            ::LocalMemCache.new(:filename => options[:file])
+            ::LocalMemCache.new(filename: options[:file])
           end
       end
 

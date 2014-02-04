@@ -44,8 +44,8 @@ module Moneta
         @backend.use(db)
         @backend.login(user, password) if user && password
         @collection = @backend[collection]
-        if @backend.command(:buildinfo => 1)['version'] >= '2.2'
-          @collection.indexes.create({ @expires_field => 1 }, :expireAfterSeconds => 0)
+        if @backend.command(buildinfo: 1)['version'] >= '2.2'
+          @collection.indexes.create({ @expires_field => 1 }, expireAfterSeconds: 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
         end
@@ -54,11 +54,11 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         key = to_binary(key)
-        doc = @collection.find(:_id => key).one
+        doc = @collection.find(_id: key).one
         if doc && (!doc[@expires_field] || doc[@expires_field] >= Time.now)
           # @expires_field must be a Time object (BSON date datatype)
           expires = expires_at(options, nil)
-          @collection.find(:_id => key).update(:$set => { @expires_field => expires || nil }) if expires != nil
+          @collection.find(_id: key).update(:$set => { @expires_field => expires || nil }) if expires != nil
           doc_to_value(doc)
         end
       end
@@ -66,29 +66,29 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         key = to_binary(key)
-        @collection.find(:_id => key).upsert(value_to_doc(key, value, options))
+        @collection.find(_id: key).upsert(value_to_doc(key, value, options))
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
-        @collection.find(:_id => to_binary(key)).remove if value
+        @collection.find(_id: to_binary(key)).remove if value
         value
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.with(:safe => true, :consistency => :strong) do |safe|
-          safe[@collection.name].find(:_id => to_binary(key)).modify({:$inc => { @value_field => amount }},
-                                                                     :new => true, :upsert => true)[@value_field]
+        @backend.with(safe: true, consistency: :strong) do |safe|
+          safe[@collection.name].find(_id: to_binary(key)).modify({:$inc => { @value_field => amount }},
+                                                                     new: true, upsert: true)[@value_field]
         end
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
         key = to_binary(key)
-        @backend.with(:safe => true, :consistency => :strong) do |safe|
+        @backend.with(safe: true, consistency: :strong) do |safe|
           safe[@collection.name].insert(value_to_doc(key, value, options))
         end
         true

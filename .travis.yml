@@ -3,11 +3,8 @@ rvm:
   - 2.1.0
   - 2.0.0
   - 1.9.3
-  - 1.8.7
   - jruby-19mode
-  - jruby-18mode
   - rbx-19mode
-  - rbx-18mode
 before_install:
   #- script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
@@ -43,9 +40,7 @@ env:
     - "SCRIPT='benchmarks normal_large'"
 matrix:
   allow_failures:
-    - rvm: jruby-18mode
     - rvm: jruby-19mode
-    - rvm: rbx-18mode
     - rvm: rbx-19mode
     - env: "SCRIPT='parallel-tests unstable'"
 script: "eval bundle exec ruby script/$SCRIPT"

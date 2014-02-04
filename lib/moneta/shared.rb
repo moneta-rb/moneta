@@ -3,9 +3,9 @@ module Moneta
   #
   # @example Share a store
   #   Moneta.build do
-  #     use :Transformer, :key => :marshal, :value => :marshal
+  #     use :Transformer, key: :marshal, value: :marshal
   #     use :Shared do
-  #       adapter :GDBM, :file => 'shared.db'
+  #       adapter :GDBM, file: 'shared.db'
   #     end
   #   end
   #

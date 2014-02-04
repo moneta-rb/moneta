@@ -12,8 +12,8 @@ module Moneta
 
       class Store
         include ::DataMapper::Resource
-        property :k, String, :key => true, :length => 255
-        property :v, Text, :lazy => false
+        property :k, String, key: true, length: 255
+        property :v, Text, lazy: false
         self.raise_on_save_failure = true
       end
 
@@ -46,9 +46,9 @@ module Moneta
       def store(key, value, options = {})
         context do
           if record = Store.get(key)
-            record.update(:k => key, :v => value)
+            record.update(k: key, v: value)
           else
-            Store.create(:k => key, :v => value)
+            Store.create(k: key, v: value)
           end
           value
         end
@@ -60,7 +60,7 @@ module Moneta
       # (see Proxy#create)
       def create(key, value, options = {})
         context do
-          Store.create(:k => key, :v => value)
+          Store.create(k: key, v: value)
           true
         end
       rescue

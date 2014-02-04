@@ -8,7 +8,7 @@ describe_moneta "standard_gdbm_with_expires" do
   end
 
   def new_store
-    Moneta.new(:GDBM, :file => File.join(make_tempdir, "simple_gdbm_with_expires"), :expires => true, :logger => {:file => File.join(make_tempdir, 'standard_gdbm_with_expires.log')})
+    Moneta.new(:GDBM, file: File.join(make_tempdir, "simple_gdbm_with_expires"), expires: true, logger: {file: File.join(make_tempdir, 'standard_gdbm_with_expires.log')})
   end
 
   def load_value(value)

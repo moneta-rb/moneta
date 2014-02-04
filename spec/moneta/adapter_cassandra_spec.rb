@@ -8,7 +8,7 @@ describe_moneta "adapter_cassandra" do
   end
 
   def new_store
-    Moneta::Adapters::Cassandra.new(:keyspace => 'adapter_cassandra')
+    Moneta::Adapters::Cassandra.new(keyspace: 'adapter_cassandra')
   end
 
   def load_value(value)

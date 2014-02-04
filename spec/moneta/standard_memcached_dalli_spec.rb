@@ -8,7 +8,7 @@ describe_moneta "standard_memcached_dalli" do
   end
 
   def new_store
-    Moneta.new(:MemcachedDalli, :namespace => "simple_memcached_dalli", :logger => {:file => File.join(make_tempdir, 'standard_memcached_dalli.log')})
+    Moneta.new(:MemcachedDalli, namespace: "simple_memcached_dalli", logger: {file: File.join(make_tempdir, 'standard_memcached_dalli.log')})
   end
 
   def load_value(value)

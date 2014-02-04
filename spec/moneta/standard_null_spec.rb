@@ -8,7 +8,7 @@ describe_moneta "standard_null" do
   end
 
   def new_store
-    Moneta.new(:Null, :logger => {:file => File.join(make_tempdir, 'standard_null.log')})
+    Moneta.new(:Null, logger: {file: File.join(make_tempdir, 'standard_null.log')})
   end
 
   def load_value(value)

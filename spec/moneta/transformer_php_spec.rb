@@ -9,7 +9,7 @@ describe_moneta "transformer_php" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :php, :value => :php
+      use :Transformer, key: :php, value: :php
       adapter :Memory
     end
   end

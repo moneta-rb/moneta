@@ -9,8 +9,8 @@ describe_moneta "shared_unix" do
 
   def new_store
     Moneta.build do
-      use(:Shared, :socket => File.join(make_tempdir, 'shared_unix.socket')) do
-        adapter :PStore, :file => File.join(make_tempdir, 'shared_unix')
+      use(:Shared, socket: File.join(make_tempdir, 'shared_unix.socket')) do
+        adapter :PStore, file: File.join(make_tempdir, 'shared_unix')
       end
     end
   end

@@ -8,7 +8,7 @@ describe_moneta "adapter_lmdb" do
   end
 
   def new_store
-    Moneta::Adapters::LMDB.new(:dir => File.join(make_tempdir, "adapter_lmdb"))
+    Moneta::Adapters::LMDB.new(dir: File.join(make_tempdir, "adapter_lmdb"))
   end
 
   def load_value(value)

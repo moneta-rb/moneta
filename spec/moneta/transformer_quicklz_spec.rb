@@ -9,7 +9,7 @@ describe_moneta "transformer_quicklz" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :value => :quicklz
+      use :Transformer, value: :quicklz
       adapter :Memory
     end
   end

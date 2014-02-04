@@ -8,7 +8,7 @@ describe_moneta "standard_localmemcache" do
   end
 
   def new_store
-    Moneta.new(:LocalMemCache, :file => File.join(make_tempdir, "simple_localmemcache"), :logger => {:file => File.join(make_tempdir, 'standard_localmemcache.log')})
+    Moneta.new(:LocalMemCache, file: File.join(make_tempdir, "simple_localmemcache"), logger: {file: File.join(make_tempdir, 'standard_localmemcache.log')})
   end
 
   def load_value(value)

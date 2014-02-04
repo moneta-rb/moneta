@@ -14,12 +14,12 @@ module Rack
   #
   # @example config.ru
   #   # Give it some options
-  #   use Rack::MonetaCookies, :domain => 'example.com', :path => '/path'
+  #   use Rack::MonetaCookies, domain: 'example.com', path: '/path'
   #
   # @example config.ru
   #   # Pass it a block like the one passed to Moneta.build
   #   use Rack::MonetaCookies do
-  #     use :Transformer, :key => :prefix, :prefix => 'moneta.'
+  #     use :Transformer, key: :prefix, prefix: 'moneta.'
   #     adapter :Cookie
   #   end
   #

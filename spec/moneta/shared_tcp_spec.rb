@@ -9,8 +9,8 @@ describe_moneta "shared_tcp" do
 
   def new_store
     Moneta.build do
-      use(:Shared, :port => 9001) do
-        adapter :PStore, :file => File.join(make_tempdir, 'shared_tcp')
+      use(:Shared, port: 9001) do
+        adapter :PStore, file: File.join(make_tempdir, 'shared_tcp')
       end
     end
   end

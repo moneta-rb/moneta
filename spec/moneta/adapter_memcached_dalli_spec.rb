@@ -8,7 +8,7 @@ describe_moneta "adapter_memcached_dalli" do
   end
 
   def new_store
-    Moneta::Adapters::MemcachedDalli.new(:namespace => "adapter_memcached_dalli")
+    Moneta::Adapters::MemcachedDalli.new(namespace: "adapter_memcached_dalli")
   end
 
   def load_value(value)

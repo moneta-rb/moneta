@@ -14,7 +14,7 @@ module Moneta
       # @option options [Faraday connection] :backend Use existing backend instance
       def initialize(options = {})
         raise ArgumentError, 'Option :url is required' unless url = options[:url]
-        @backend = options[:backend] || ::Faraday.new(:url => url)
+        @backend = options[:backend] || ::Faraday.new(url: url)
       end
 
       # (see Proxy#key?)

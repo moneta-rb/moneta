@@ -9,7 +9,7 @@ describe_moneta "transformer_msgpack" do
 
   def new_store
     Moneta.build do
-      use :Transformer, :key => :msgpack, :value => :msgpack
+      use :Transformer, key: :msgpack, value: :msgpack
       adapter :Memory
     end
   end
