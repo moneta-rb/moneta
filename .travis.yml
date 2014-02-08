@@ -48,3 +48,4 @@ branches:
   only:
     - master
     - travis
+    - drop18

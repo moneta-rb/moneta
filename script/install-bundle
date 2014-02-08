@@ -16,7 +16,7 @@ end
 
 BUNDLE_FILE = "moneta-bundle-#{RUBY_VERSION}-#{ruby}.tar.gz"
 
-if system("curl -f -u moneta:#{ENV['DAV_PW']} -k -o #{BUNDLE_FILE} https://mendler.net/dav/#{BUNDLE_FILE}")
+if system("curl -f -u moneta:#{ENV['DAV_PW']} -k -o #{BUNDLE_FILE} https://qxqx.de/dav/#{BUNDLE_FILE}")
   cmd 'rm -rf .bundle'
   cmd "tar -xpf #{BUNDLE_FILE}"
   cmd "rm -f #{BUNDLE_FILE}"

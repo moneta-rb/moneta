@@ -1,2 +1,2 @@
 #!/bin/bash
-curl -f -u moneta:$DAV_PW -k -T moneta-bundle-*.tar.gz https://mendler.net/dav/ || echo 'Nothing uploaded'
+curl -f -u moneta:$DAV_PW -k -T moneta-bundle-*.tar.gz https://qxqx.de/dav/ || echo 'Nothing uploaded'
