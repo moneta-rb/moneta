@@ -55,7 +55,7 @@ Now you are ready to go:
 require 'moneta'
 
 # Create a simple file store
-store = Moneta.new(:File, :dir => 'moneta')
+store = Moneta.new(:File, dir: 'moneta')
 
 # Store some entries
 store['key'] = 'value'
@@ -215,9 +215,9 @@ __NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable 
 
 </table>
 
-* [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `:threadsafe => true` to `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple threads if the store is multi-process safe. I recommend to add the option `:threadsafe` to ensure thread-safety since for example under JRuby and Rubinius even the basic datastructures are not thread safe due to the lack of a global interpreter lock (GIL). This differs from MRI where some adapters might appear thread safe already but only due to the GIL.
+* [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `threadsafe: true` to `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple threads if the store is multi-process safe. I recommend to add the option `:threadsafe` to ensure thread-safety since for example under JRuby and Rubinius even the basic datastructures are not thread safe due to the lack of a global interpreter lock (GIL). This differs from MRI where some adapters might appear thread safe already but only due to the GIL.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
-* [3]: Add expiration support by using `Moneta::Expires` or by passing the option `:expires => true` to `Moneta#new`.
+* [3]: Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to `Moneta#new`.
 * [4]: There are some servers which use the memcached protocol but which are persistent (e.g. [MemcacheDB](http://memcachedb.org/), [Kai](http://sourceforge.net/apps/mediawiki/kai), [IronCache](http://dev.iron.io/cache/reference/memcache/), [Roma](https://github.com/roma/roma/tree), [Flare](http://labs.gree.jp/Top/OpenSource/Flare-en.html) and [Kumofs](https://github.com/etolabo/kumofs))
 * [5]: Depends on server
 * [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
@@ -339,9 +339,9 @@ This allows you to store arbitrary Ruby objects. You can tune some options
 when you call `Moneta.new`. However for very fine tuning use `Moneta.build`.
 
 ~~~ ruby
-store = Moneta.new(:Memcached, :server => 'localhost:11211')
+store = Moneta.new(:Memcached, server: 'localhost:11211')
 store['key'] = 'value'
-store['hash_key'] = {:a => 1, :b => 2}
+store['hash_key'] = {a: 1, b: 2}
 store['object_key'] = MarshallableRubyObject.new
 ~~~
 
@@ -353,7 +353,7 @@ store = Moneta.build do
   use :Expires
 
   # Transform key using Marshal and Base64 and value using Marshal
-  use :Transformer, :key => [:marshal, :base64], :value => :marshal
+  use :Transformer, key: [:marshal, :base64], value: :marshal
 
   # IMPORTANT: adapter must be defined last for the builder to function properly.
 
@@ -366,16 +366,16 @@ You can also directly access the underlying adapters if you don't want
 to use the Moneta stack.
 
 ~~~ ruby
-db = Moneta::Adapters::File.new(:dir => 'directory')
-db['key'] = {:a => 1, :b => 2} # This will fail since you can only store Strings
+db = Moneta::Adapters::File.new(dir: 'directory')
+db['key'] = {a: 1, b: 2} # This will fail since you can only store Strings
 
 # However for Mongo and Couch this works
 # The hash will be mapped directly to a Mongo/Couch document.
 db = Moneta::Adapters::Couch.new
-db['key'] = {:a => 1, :b => 2}
+db['key'] = {a: 1, b: 2}
 
 db = Moneta::Adapters::Mongo.new
-db['key'] = {:a => 1, :b => 2}
+db['key'] = {a: 1, b: 2}
 ~~~
 
 ### Expiration
@@ -391,19 +391,19 @@ cache = Moneta.build do
 end
 
 # Expires in 60 seconds
-cache.store(key, value, :expires => 60)
+cache.store(key, value, expires: 60)
 
 # Never expire
-cache.store(key, value, :expires => 0)
-cache.store(key, value, :expires => false)
+cache.store(key, value, expires: 0)
+cache.store(key, value, expires: false)
 
 # Update expires time if value is found
-cache.load(key, :expires => 30)
-cache.key?(key, :expires => 30)
+cache.load(key, expires: 30)
+cache.key?(key, expires: 30)
 
 # Or remove the expiration if found
-cache.load(key, :expires => false)
-cache.key?(key, :expires => 0)
+cache.load(key, expires: false)
+cache.key?(key, expires: 0)
 ~~~
 
 You can add the expires feature to other backends using the `Moneta::Expires` proxy. But be aware
@@ -411,15 +411,15 @@ that expired values are not deleted automatically if they are not looked up.
 
 ~~~ ruby
 # Using the :expires option
-cache = Moneta.new(:File, :dir => '...', :expires => true)
+cache = Moneta.new(:File, dir: '...', expires: true)
 
 # or manually by using the proxy...
-cache = Moneta::Expires.new(Moneta::Adapters::File.new(:dir => '...'))
+cache = Moneta::Expires.new(Moneta::Adapters::File.new(dir: '...'))
 
 # or using the builder...
 cache = Moneta.build do
   use :Expires
-  adapter :File, :dir => '...'
+  adapter :File, dir: '...'
 end
 ~~~
 
@@ -446,9 +446,9 @@ if you have a `Moneta::Transformer` somewhere in your proxy stack which transfor
 
 ~~~ ruby
 store.increment('counter')          # returns 1, counter created
-store.load('counter', :raw => true) # returns 1
+store.load('counter', raw: true) # returns 1
 
-store.store('counter', '10', :raw => true)
+store.store('counter', '10', raw: true)
 store.increment('counter') # returns 11
 ~~~
 
@@ -545,11 +545,11 @@ For raw data access as described before the class `Moneta::OptionMerger` is used
 
 ~~~ ruby
 # All methods after 'with' get the options passed
-store.with(:raw => true).load('key')
+store.with(raw: true).load('key')
 
 # You can also specify the methods
-store.with(:raw => true, :only => :load).load('key')
-store.with(:raw => true, :except => [:key?, :increment]).load('key')
+store.with(raw: true, only: :load).load('key')
+store.with(raw: true, except: [:key?, :increment]).load('key')
 
 # Syntactic sugar for raw access
 store.raw.load('key')
@@ -570,8 +570,8 @@ short_lived_store['key'] = 'value'
 You can add proxies to an existing store. This is useful if you want to compress only a few values for example.
 
 ~~~ ruby
-compressed_store = store.with(:prefix => 'compressed') do
-  use :Transformer, :value => :zlib
+compressed_store = store.with(prefix: 'compressed') do
+  use :Transformer, value: :zlib
 end
 
 store['key'] = 'this value will not be compressed'
@@ -608,17 +608,17 @@ You can use Moneta as a [Rack](http://rack.github.com/) session store. Use it in
 require 'rack/session/moneta'
 
 # Use only the adapter name
-use Rack::Session::Moneta, :store => :Redis
+use Rack::Session::Moneta, store: :Redis
 
 # Use Moneta.new
-use Rack::Session::Moneta, :store => Moneta.new(:Memory, :expires => true)
+use Rack::Session::Moneta, store: Moneta.new(:Memory, expires: true)
 
 # Set rack options
-use Rack::Session::Moneta, :key => 'rack.session',
-:domain => 'foo.com',
-:path => '/',
-:expire_after => 2592000,
-:store => Moneta.new(:Memory, :expires => true)
+use Rack::Session::Moneta, key: 'rack.session',
+domain: 'foo.com',
+path: '/',
+expire_after: 2592000,
+store: Moneta.new(:Memory, expires: true)
 
 # Use the Moneta builder
 use Rack::Session::Moneta do
@@ -630,11 +630,11 @@ end
 #### Moneta middleware
 
 There is a simple middleware which places a Moneta store in the Rack environment at `env['rack.moneta_store']`. It supports per-request
-caching if you add the option `:cache => true`. Use it in your `config.ru` like this:
+caching if you add the option `cache: true`. Use it in your `config.ru` like this:
 
 ~~~ ruby
 # Add Rack::MonetaStore somewhere in your rack stack
-use Rack::MonetaStore, :Memory, :cache => true
+use Rack::MonetaStore, :Memory, cache: true
 
 run lambda { |env|
   env['rack.moneta_store'] # is a Moneta store with per-request caching
@@ -642,7 +642,7 @@ run lambda { |env|
 
 # Pass it a block like the one passed to Moneta.build
 use Rack::MonetaStore do
-  use :Transformer, :value => :zlib
+  use :Transformer, value: :zlib
   adapter :Cookie
 end
 
@@ -664,7 +664,7 @@ end
 
 # Or pass it a block like the one passed to Moneta.build
 run Rack::MonetaRest.new do
-  use :Transformer, :value => :zlib
+  use :Transformer, value: :zlib
   adapter :Memory
 end
 ~~~
@@ -677,8 +677,8 @@ You can use Moneta as a [Rack-Cache](https://github.com/rtomayko/rack-cache) sto
 require 'rack/cache/moneta'
 
 use Rack::Cache,
-      :metastore   => 'moneta://Memory?expires=true',
-      :entitystore => 'moneta://Memory?expires=true'
+      metastore:   'moneta://Memory?expires=true',
+      entitystore: 'moneta://Memory?expires=true'
 
 # Or used named Moneta stores
 Rack::Cache::Moneta['named_metastore'] = Moneta.build do
@@ -686,8 +686,8 @@ Rack::Cache::Moneta['named_metastore'] = Moneta.build do
   adapter :Memory
 end
 use Rack::Cache,
-      :metastore => 'moneta://named_metastore',
-      :entity_store => 'moneta://named_entitystore'
+      metastore: 'moneta://named_metastore',
+      entity_store: 'moneta://named_entitystore'
 ~~~
 
 #### Cookies
@@ -699,7 +699,7 @@ to use all the transformers on the cookies (e.g. `:prefix`, `:marshal` and `:hma
 ~~~ ruby
 require 'rack/moneta_cookies'
 
-use Rack::MonetaCookies, :domain => 'example.com', :path => '/path'
+use Rack::MonetaCookies, domain: 'example.com', path: '/path'
 run lambda { |env|
   req = Rack::Request.new(env)
   req.cookies #=> is now a Moneta store!
@@ -721,13 +721,13 @@ Add the session store in your application configuration `config/environments/*.r
 require 'moneta'
 
 # Only by adapter name
-config.cache_store :moneta_store, :store => :Memory
+config.cache_store :moneta_store, store: :Memory
 
 # Use Moneta.new
-config.cache_store :moneta_store, :store => Moneta.new(:Memory)
+config.cache_store :moneta_store, store: Moneta.new(:Memory)
 
 # Use the Moneta builder
-config.cache_store :moneta_store, :store => Moneta.build do
+config.cache_store :moneta_store, store: Moneta.build do
   use :Expires
   adapter :Memory
 end
@@ -742,13 +742,13 @@ Moneta cache store doesn't support matchers. If you need these features use a di
 require 'moneta'
 
 # Only by adapter name
-config.cache_store :moneta_store, :store => :Memory
+config.cache_store :moneta_store, store: :Memory
 
 # Use Moneta.new
-config.cache_store :moneta_store, :store => Moneta.new(:Memory)
+config.cache_store :moneta_store, store: Moneta.new(:Memory)
 
 # Use the Moneta builder
-config.cache_store :moneta_store, :store => Moneta.build do
+config.cache_store :moneta_store, store: Moneta.build do
   use :Expires
   adapter :Memory
 end
@@ -760,12 +760,12 @@ end
 
 ~~~ ruby
 # Global Padrino caching
-# Don't forget the :expires => [true, Integer] if you want expiration support!
-Padrino.cache = Moneta.new(:Memory, :expires => true)
+# Don't forget the expires: [true, Integer] if you want expiration support!
+Padrino.cache = Moneta.new(:Memory, expires: true)
 
 # Application caching
-# Don't forget the :expires => [true, Integer] if you want expiration support!
-set :cache, Moneta.new(:Memory, :expires => true)
+# Don't forget the expires: [true, Integer] if you want expiration support!
+set :cache, Moneta.new(:Memory, expires: true)
 ~~~
 
 ## Advanced
@@ -780,14 +780,14 @@ they will share the same data which will also be persistet in the database `shar
 require 'moneta'
 
 store = Moneta.build do
-  use :Transformer, :key => :marshal, :value => :marshal
+  use :Transformer, key: :marshal, value: :marshal
   use :Shared do
     use :Cache do
       cache do
         adapter :LRUHash
       end
       backend do
-        adapter :GDBM, :file => 'shared.db'
+        adapter :GDBM, file: 'shared.db'
       end
     end
   end
