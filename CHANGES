@@ -1,6 +1,8 @@
 master
 
 * Rename Moneta::Adapters::Mongo to Moneta::Adapters::MongoOfficial
+* Add Moneta::Adapters::MongoMoped
+* Drop Ruby 1.8 support
 
 0.7.20
 
