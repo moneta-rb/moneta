@@ -10,7 +10,7 @@ describe_moneta "standard_fog_with_expires" do
   end
 
   def new_store
-    Moneta.new(:Fog, :aws_access_key_id => 'fake_access_key_id',
+    Moneta.new(:Fog, aws_access_key_id: 'fake_access_key_id',
         aws_secret_access_key:  'fake_secret_access_key',
         provider:               'AWS',
         dir:                    'standard_fog_with_expires',

@@ -4,7 +4,7 @@ module Moneta
   #
   # @example Add `Moneta::Transformer` to proxy stack
   #   Moneta.build do
-  #     transformer key: [:marshal, :escape], value: => [:marshal]
+  #     transformer key: [:marshal, :escape], value: [:marshal]
   #     adapter :File, dir: 'data'
   #   end
   #

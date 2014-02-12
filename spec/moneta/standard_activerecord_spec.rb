@@ -8,7 +8,7 @@ describe_moneta "standard_activerecord" do
   end
 
   def new_store
-    Moneta.new(:ActiveRecord, :table => 'standard_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' }, logger: {file: File.join(make_tempdir, 'standard_activerecord.log')})
+    Moneta.new(:ActiveRecord, table: 'standard_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' }, logger: {file: File.join(make_tempdir, 'standard_activerecord.log')})
   end
 
   def load_value(value)

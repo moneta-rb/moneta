@@ -9,7 +9,7 @@ describe_moneta "standard_client_unix" do
   end
 
   def new_store
-    Moneta.new(:Client, :socket => File.join(make_tempdir, 'standard_client_unix'), logger: {file: File.join(make_tempdir, 'standard_client_unix.log')})
+    Moneta.new(:Client, socket: File.join(make_tempdir, 'standard_client_unix'), logger: {file: File.join(make_tempdir, 'standard_client_unix.log')})
   end
 
   def load_value(value)

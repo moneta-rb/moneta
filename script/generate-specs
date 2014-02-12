@@ -139,13 +139,13 @@ end
   'standard_client_unix' => {
     preamble: "start_server(Moneta::Adapters::Memory.new, socket: File.join(make_tempdir, 'standard_client_unix'))\n",
     store: :Client,
-    options: ":socket => File.join(make_tempdir, 'standard_client_unix')",
+    options: "socket: File.join(make_tempdir, 'standard_client_unix')",
     specs: STANDARD_SPECS
   },
   'standard_restclient' => {
     preamble: "start_restserver\n",
     store: :RestClient,
-    options: ":url => 'http://localhost:8808/moneta/'",
+    options: "url: 'http://localhost:8808/moneta/'",
     specs: STANDARD_SPECS.without_increment.without_create
   },
   'standard_memory' => {
@@ -399,43 +399,43 @@ end
   },
   'standard_riak' => {
     store: :Riak,
-    options: ":bucket => 'standard_riak'",
+    options: "bucket: 'standard_riak'",
     # We don't want Riak warnings in tests
     preamble: "require 'riak'\n\nRiak.disable_list_keys_warnings = true\n\n",
     specs: STANDARD_SPECS.without_increment.without_create
   },
   'standard_riak_with_expires' => {
     store: :Riak,
-    options: ":bucket => 'standard_riak_with_expires', expires: true",
+    options: "bucket: 'standard_riak_with_expires', expires: true",
     # We don't want Riak warnings in tests
     preamble: "require 'riak'\n\nRiak.disable_list_keys_warnings = true\n\n",
     specs: STANDARD_SPECS.without_increment.with_expires.without_create
   },
   'standard_couch' => {
     store: :Couch,
-    options: ":db => 'standard_couch'",
+    options: "db: 'standard_couch'",
     load_value: '::Marshal.load(value.unpack(\'m\').first)',
     specs: STANDARD_SPECS.without_increment
   },
   'standard_couch_with_expires' => {
     store: :Couch,
-    options: ":db => 'standard_couch_with_expires', expires: true",
+    options: "db: 'standard_couch_with_expires', expires: true",
     specs: STANDARD_SPECS.without_increment.with_expires,
     load_value: '::Marshal.load(value.unpack(\'m\').first)'
   },
   'standard_mongo' => {
     store: :Mongo,
-    options: ":db => 'standard_mongo'",
+    options: "db: 'standard_mongo'",
     specs: STANDARD_SPECS.with_native_expires
   },
   'standard_mongo_moped' => {
     store: :MongoMoped,
-    options: ":db => 'standard_mongo_moped'",
+    options: "db: 'standard_mongo_moped'",
     specs: STANDARD_SPECS.with_native_expires
   },
   'standard_mongo_official' => {
     store: :MongoOfficial,
-    options: ":db => 'standard_mongo_official'",
+    options: "db: 'standard_mongo_official'",
     specs: STANDARD_SPECS.with_native_expires
   },
   'standard_null' => {
@@ -485,19 +485,19 @@ end
   'standard_activerecord' => {
     store: :ActiveRecord,
     specs: STANDARD_SPECS,
-    options: ":table => 'standard_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' }",
+    options: "table: 'standard_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' }",
     load_value: '::Marshal.load(value.unpack(\'m\').first)'
   },
   'standard_activerecord_with_expires' => {
     store: :ActiveRecord,
-    options: ":table => 'standard_activerecord_with_expires', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' }, expires: true",
+    options: "table: 'standard_activerecord_with_expires', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' }, expires: true",
     specs: STANDARD_SPECS.with_expires,
     load_value: '::Marshal.load(value.unpack(\'m\').first)'
   },
   'standard_fog' => {
     store:                  :Fog,
     specs:                  STANDARD_SPECS.without_increment.without_create,
-    options: ":aws_access_key_id => 'fake_access_key_id',
+    options: "aws_access_key_id: 'fake_access_key_id',
     aws_secret_access_key:  'fake_secret_access_key',
     provider:               'AWS',
     dir:                    'standard_fog'",
@@ -506,7 +506,7 @@ end
   },
   'standard_fog_with_expires' => {
     store:                  :Fog,
-    options: ":aws_access_key_id => 'fake_access_key_id',
+    options: "aws_access_key_id: 'fake_access_key_id',
     aws_secret_access_key:  'fake_secret_access_key',
     provider:               'AWS',
     dir:                    'standard_fog_with_expires',
@@ -1701,14 +1701,14 @@ end
 
 it 'has method #prefix' do
   store.prefix('a').default_options.should == {store:{prefix:'a'},load:{prefix:'a'},create:{prefix:'a'},
-                                               delete:{prefix:'a'},:key? => {prefix:'a'},increment:{prefix:'a'}}
+                                               delete:{prefix:'a'},key?: {prefix:'a'},increment:{prefix:'a'}}
 
   store.prefix('a').prefix('b').default_options.should == {store:{prefix:'ab'},load:{prefix:'ab'},create:{prefix:'ab'},
-                                                           delete:{prefix:'ab'},:key? => {prefix:'ab'},increment:{prefix:'ab'}}
+                                                           delete:{prefix:'ab'},key?: {prefix:'ab'},increment:{prefix:'ab'}}
 
-  store.raw.prefix('b').default_options.should == {store:{raw:true,prefix:'b'},load:{raw:true,prefix:'b'},create:{raw:true,prefix:'b'},delete:{raw:true,prefix:'b'},:key? => {prefix:'b'},increment:{prefix:'b'}}
+  store.raw.prefix('b').default_options.should == {store:{raw:true,prefix:'b'},load:{raw:true,prefix:'b'},create:{raw:true,prefix:'b'},delete:{raw:true,prefix:'b'},key?: {prefix:'b'},increment:{prefix:'b'}}
 
-  store.prefix('a').raw.default_options.should == {store:{raw:true,prefix:'a'},load:{raw:true,prefix:'a'},create:{raw:true,prefix:'a'},delete:{raw:true,prefix:'a'},:key? => {prefix:'a'},increment:{prefix:'a'}}
+  store.prefix('a').raw.default_options.should == {store:{raw:true,prefix:'a'},load:{raw:true,prefix:'a'},create:{raw:true,prefix:'a'},delete:{raw:true,prefix:'a'},key?: {prefix:'a'},increment:{prefix:'a'}}
 end
 
 it 'supports adding proxis using #with' do

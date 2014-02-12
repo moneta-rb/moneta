@@ -87,14 +87,14 @@ describe_moneta "optionmerger" do
 
   it 'has method #prefix' do
     store.prefix('a').default_options.should == {store:{prefix:'a'},load:{prefix:'a'},create:{prefix:'a'},
-                                                 delete:{prefix:'a'},:key? => {prefix:'a'},increment:{prefix:'a'}}
+                                                 delete:{prefix:'a'},key?: {prefix:'a'},increment:{prefix:'a'}}
 
     store.prefix('a').prefix('b').default_options.should == {store:{prefix:'ab'},load:{prefix:'ab'},create:{prefix:'ab'},
-                                                             delete:{prefix:'ab'},:key? => {prefix:'ab'},increment:{prefix:'ab'}}
+                                                             delete:{prefix:'ab'},key?: {prefix:'ab'},increment:{prefix:'ab'}}
 
-    store.raw.prefix('b').default_options.should == {store:{raw:true,prefix:'b'},load:{raw:true,prefix:'b'},create:{raw:true,prefix:'b'},delete:{raw:true,prefix:'b'},:key? => {prefix:'b'},increment:{prefix:'b'}}
+    store.raw.prefix('b').default_options.should == {store:{raw:true,prefix:'b'},load:{raw:true,prefix:'b'},create:{raw:true,prefix:'b'},delete:{raw:true,prefix:'b'},key?: {prefix:'b'},increment:{prefix:'b'}}
 
-    store.prefix('a').raw.default_options.should == {store:{raw:true,prefix:'a'},load:{raw:true,prefix:'a'},create:{raw:true,prefix:'a'},delete:{raw:true,prefix:'a'},:key? => {prefix:'a'},increment:{prefix:'a'}}
+    store.prefix('a').raw.default_options.should == {store:{raw:true,prefix:'a'},load:{raw:true,prefix:'a'},create:{raw:true,prefix:'a'},delete:{raw:true,prefix:'a'},key?: {prefix:'a'},increment:{prefix:'a'}}
   end
 
   it 'supports adding proxis using #with' do

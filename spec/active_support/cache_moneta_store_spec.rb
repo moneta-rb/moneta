@@ -13,9 +13,9 @@ describe ActiveSupport::Cache::MonetaStore do
 
   before(:each) do
     @events.clear
-    @store  = ActiveSupport::Cache::MonetaStore.new(:store => Moneta.new(:Memory))
-    @rabbit = OpenStruct.new :name => 'bunny'
-    @white_rabbit = OpenStruct.new :color => 'white'
+    @store  = ActiveSupport::Cache::MonetaStore.new(store: Moneta.new(:Memory))
+    @rabbit = OpenStruct.new name: 'bunny'
+    @white_rabbit = OpenStruct.new color: 'white'
 
     @store.write 'rabbit', @rabbit
     @store.delete 'counter'
@@ -32,7 +32,7 @@ describe ActiveSupport::Cache::MonetaStore do
   end
 
   it 'writes the data with expiration time' do
-    @store.write 'rabbit', @white_rabbit, :expires_in => 1.second
+    @store.write 'rabbit', @white_rabbit, expires_in: 1.second
     @store.read('rabbit').should == @white_rabbit
     sleep 2
     @store.read('rabbit').should be_nil
@@ -53,8 +53,8 @@ describe ActiveSupport::Cache::MonetaStore do
     @store.fetch('rub-a-dub').should be_nil
     @store.fetch('rub-a-dub') { 'Flora de Cana' }
     @store.fetch('rub-a-dub').should == 'Flora de Cana'
-    @store.fetch('rabbit', :force => true) # force cache miss
-    @store.fetch('rabbit', :force => true, :expires_in => 1.second) { @white_rabbit }
+    @store.fetch('rabbit', force: true) # force cache miss
+    @store.fetch('rabbit', force: true, expires_in: 1.second) { @white_rabbit }
     @store.fetch('rabbit').should == @white_rabbit
     sleep 2
     @store.fetch('rabbit').should be_nil
@@ -76,24 +76,24 @@ describe ActiveSupport::Cache::MonetaStore do
 
   it 'increments a key' do
     3.times { @store.increment 'counter' }
-    @store.read('counter', :raw => true).should == '3'
+    @store.read('counter', raw: true).should == '3'
   end
 
   it 'decrements a key' do
     3.times { @store.increment 'counter' }
     2.times { @store.decrement 'counter' }
-    @store.read('counter', :raw => true).should == '1'
+    @store.read('counter', raw: true).should == '1'
   end
 
   it 'increments a key by given value' do
     @store.increment 'counter', 3
-    @store.read('counter', :raw => true).should == '3'
+    @store.read('counter', raw: true).should == '3'
   end
 
   it 'decrements a key by given value' do
     3.times { @store.increment 'counter' }
     @store.decrement 'counter', 2
-    @store.read('counter', :raw => true).should == '1'
+    @store.read('counter', raw: true).should == '1'
   end
 
   describe 'notifications' do
@@ -105,13 +105,13 @@ describe ActiveSupport::Cache::MonetaStore do
       read, generate, write = @events
 
       read.name.should == 'cache_read.active_support'
-      read.payload.should == { :key => 'radiohead', :super_operation => :fetch }
+      read.payload.should == { key: 'radiohead', super_operation: :fetch }
 
       generate.name.should == 'cache_generate.active_support'
-      generate.payload.should == { :key => 'radiohead' }
+      generate.payload.should == { key: 'radiohead' }
 
       write.name.should == 'cache_write.active_support'
-      write.payload.should == { :key => 'radiohead' }
+      write.payload.should == { key: 'radiohead' }
     end
 
     it 'notifies on #read' do
@@ -121,7 +121,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       read = @events.first
       read.name.should == 'cache_read.active_support'
-      read.payload.should == { :key => 'metallica', :hit => false }
+      read.payload.should == { key: 'metallica', hit: false }
     end
 
     it 'notifies on #write' do
@@ -131,7 +131,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       write = @events.first
       write.name.should == 'cache_write.active_support'
-      write.payload.should == { :key => 'depeche mode' }
+      write.payload.should == { key: 'depeche mode' }
     end
 
     it 'notifies on #delete' do
@@ -141,7 +141,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       delete = @events.first
       delete.name.should == 'cache_delete.active_support'
-      delete.payload.should == { :key => 'the new cardigans' }
+      delete.payload.should == { key: 'the new cardigans' }
     end
 
     it 'notifies on #exist?' do
@@ -151,7 +151,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       exist = @events.first
       exist.name.should == 'cache_exist?.active_support'
-      exist.payload.should == { :key => 'the smiths' }
+      exist.payload.should == { key: 'the smiths' }
     end
 
     it 'notifies on #increment' do
@@ -161,7 +161,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       increment = @events.first
       increment.name.should == 'cache_increment.active_support'
-      increment.payload.should == { :key => 'pearl jam', :amount => 1 }
+      increment.payload.should == { key: 'pearl jam', amount: 1 }
     end
 
     it 'notifies on #decrement' do
@@ -171,7 +171,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       decrement = @events.first
       decrement.name.should == 'cache_decrement.active_support'
-      decrement.payload.should == { :key => 'placebo', :amount => 1 }
+      decrement.payload.should == { key: 'placebo', amount: 1 }
     end
 
     it 'should notify on clear' do
@@ -181,7 +181,7 @@ describe ActiveSupport::Cache::MonetaStore do
 
       clear = @events.first
       clear.name.should == 'cache_clear.active_support'
-      clear.payload.should == { :key => nil }
+      clear.payload.should == { key: nil }
     end
   end
 
