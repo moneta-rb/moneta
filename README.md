@@ -130,7 +130,7 @@ to upgrade to a real key/value store.
 
 ### Backend feature matrix
 
-__NOTE:__ <a name="backend-matrix">The backend matrix</a> is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/minad/moneta/master/file/README.md#backend-matrix)
+__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/minad/moneta/master/file/README.md#backend-matrix)
 
 <table>
 
