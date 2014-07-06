@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.licenses         = %w(MIT)
   s.require_paths    = %w(lib)
   s.summary          = %{A unified interface to key/value stores, including Redis, Memcached, TokyoCabinet, ActiveRecord and many more}
+  s.required_ruby_version = '>= 1.9'
 end
