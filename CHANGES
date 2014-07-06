@@ -1,4 +1,4 @@
-master
+0.8.0
 
 * Rename Moneta::Adapters::Mongo to Moneta::Adapters::MongoOfficial
 * Add Moneta::Adapters::MongoMoped
