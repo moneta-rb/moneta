@@ -17,10 +17,7 @@ module Moneta
       # @option options Other options passed to `Mysql2::Client#new`
       def initialize(options = {})
         @table = options.delete(:table) || 'moneta'
-        @backend = options[:backend] ||
-          begin
-            ::Mysql2::Client.new(options)
-          end
+        @backend = options[:backend] || ::Mysql2::Client.new(options)
 
         if table_exists?
           columns       = @backend.query("SHOW COLUMNS FROM #{@table}", :as=>:hash).to_a
@@ -35,13 +32,13 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'", :cast => false).empty?
+        @backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'", :cast => false).any?
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        rows = @backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'", :cast => false)
-        rows.empty? ? nil : rows.first.first
+        rows = @backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}' LIMIT 1", :as=>:array, :cast => false)
+        rows.first.first if rows.any?
       end
 
       # (see Proxy#store)
