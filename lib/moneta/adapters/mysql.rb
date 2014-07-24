@@ -32,25 +32,25 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'", :cast => false).any?
+        @backend.query("SELECT #{@value_column} FROM #{@table} WHERE #{@key_column} = '#{@backend.escape key}'", :cast => false).any?
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        rows = @backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}' LIMIT 1", :as=>:array, :cast => false)
+        rows = @backend.query("SELECT #{@value_column} FROM #{@table} WHERE #{@key_column} = '#{@backend.escape key}' LIMIT 1", :as=>:array, :cast => false)
         rows.first.first if rows.any?
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.query("REPLACE INTO #{@table} SET #{value_column} = '#{@backend.escape value}' WHERE #{key_column} = '#{@backend.escape key}'")
+        @backend.query("REPLACE INTO #{@table} SET #{@value_column} = '#{@backend.escape value}' WHERE #{@key_column} = '#{@backend.escape key}'")
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
-        @backend.query("DELETE FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'")
+        @backend.query("DELETE FROM #{@table} WHERE #{@key_column} = '#{@backend.escape key}'")
         value
       end
 
@@ -67,7 +67,7 @@ module Moneta
 
       # (see Default#create)
       def create(key, value, options = {})
-        @backend.query("INSERT INTO #{@table} SET #{value_column} = '#{@backend.escape value}' WHERE #{key_column} = '#{@backend.escape key}' ON DUPLICATE KEY UPDATE ")
+        @backend.query("INSERT INTO #{@table} SET #{@key_column} = '#{@backend.escape key}', #{@value_column} = '#{@backend.escape value}' ON DUPLICATE KEY UPDATE #{@key_column} = #{@key_column}")
         value
       end
 
