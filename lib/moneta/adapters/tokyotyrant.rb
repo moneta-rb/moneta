@@ -22,8 +22,9 @@ module Moneta
       # @option options [Integer] :port (1978) Server port
       # @option options [::TokyoTyrant::RDB] :backend Use existing backend instance
       def initialize(options = {})
-        options[:host] ||= '127.0.0.1'
-        options[:port] ||= 1978
+        options[:host]     ||= '127.0.0.1'
+        options[:port]     ||= 1978
+        options[:use_pack] ||= true
         if options[:backend]
           @backend = options[:backend]
         elsif defined?(::TokyoTyrant::RDB)
@@ -35,10 +36,12 @@ module Moneta
           @backend = ::TokyoTyrant::DB.new(options[:host], options[:port])
         end
         @native = @backend.class.name != 'TokyoTyrant::RDB'
-        probe = '__tokyotyrant_endianness_probe'
-        @backend.delete(probe)
-        @backend.addint(probe, 1)
-        @pack = @backend.delete(probe) == [1].pack('l>') ? 'l>' : 'l<'
+        if options[:use_pack]
+          probe = '__tokyotyrant_endianness_probe'
+          @backend.delete(probe)
+          @backend.addint(probe, 1)
+          @pack = @backend.delete(probe) == [1].pack('l>') ? 'l>' : 'l<'
+        end
       end
 
       # (see Proxy#load)
@@ -64,6 +67,7 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
+        raise 'increment is not supported when option :use_pack is false' if !@pack
         @backend.addint(key, amount) || raise('Tried to increment non integer value')
       end
 
@@ -90,6 +94,7 @@ module Moneta
       private
 
       def pack(value)
+        return value if !@pack
         intvalue = value.to_i
         if intvalue >= 0 && intvalue <= 0xFFFFFFFF && intvalue.to_s == value
           # Pack as 4 byte integer
@@ -103,6 +108,7 @@ module Moneta
       end
 
       def unpack(value)
+        return value if !@pack
         if value.bytesize == 4
           # Unpack 4 byte integer
           value.unpack(@pack).first.to_s
