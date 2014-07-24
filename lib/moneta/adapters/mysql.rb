@@ -37,7 +37,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.query("replace into #{@table} values (#{@backend.escape key}, #{@backend.escape value})"),
+        @backend.query("replace into #{@table} values ('#{@backend.escape key}', '#{@backend.escape value}')")
         value
       end
 
