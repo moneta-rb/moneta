@@ -56,7 +56,9 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        # @backend.transaction(:exclusive) { return super }
+        raise "Amount must be numeric" if !amount.is_a?(Numeric)
+        @backend.query("INSERT INTO #{@table} SET #{@key_column} = '#{@backend.escape key}', #{@value_column} = #{amount} ON DUPLICATE KEY UPDATE #{@value_column} = #{@value_column} + #{amount}")
+        amount
       end
 
       # (see Proxy#clear)
