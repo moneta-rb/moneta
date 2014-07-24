@@ -13,7 +13,7 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :table ('moneta') Table name
-      # @option options [::Sqlite3::Database] :backend Use existing backend instance
+      # @option options [::Mysql2::Client] :backend Use existing backend instance
       # @option options Other options passed to `Mysql2::Client#new`
       def initialize(options = {})
         @table = options.delete(:table) || 'moneta'
@@ -26,12 +26,12 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@backend.query("select v from #{@table} where k = '#{@backend.escape key}'").empty?
+        !@backend.query("select v from #{@table} where k = '#{@backend.escape key}'", :cast => false).empty?
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        rows = @backend.query("select v from #{@table} where k = '#{@backend.escape key}'")
+        rows = @backend.query("select v from #{@table} where k = '#{@backend.escape key}'", :cast => false)
         rows.empty? ? nil : rows.first.first
       end
 
@@ -55,7 +55,7 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.query("delete from #{@table}")
+        @backend.query("truncate #{@table}")
         self
       end
 
