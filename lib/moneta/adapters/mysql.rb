@@ -21,30 +21,39 @@ module Moneta
           begin
             ::Mysql2::Client.new(options)
           end
-        @backend.query("create table if not exists #{@table} (k blob not null primary key, v blob)")
+
+        if table_exists?
+          columns       = @backend.query("SHOW COLUMNS FROM #{@table}", :as=>:hash).to_a
+          @key_column   = columns.detect{|h|h['Key']=='PRI'}['Field']
+          @value_column = columns.detect{|h|h['Key']!='PRI'}['Field']
+        else
+          @key_column   = 'k'
+          @value_column = 'v'
+          create_table!
+        end
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@backend.query("select v from #{@table} where k = '#{@backend.escape key}'", :cast => false).empty?
+        !@backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'", :cast => false).empty?
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        rows = @backend.query("select v from #{@table} where k = '#{@backend.escape key}'", :cast => false)
+        rows = @backend.query("SELECT #{value_column} FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'", :cast => false)
         rows.empty? ? nil : rows.first.first
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.query("replace into #{@table} values ('#{@backend.escape key}', '#{@backend.escape value}')")
+        @backend.query("REPLACE INTO #{@table} SET #{value_column} = '#{@backend.escape value}' WHERE #{key_column} = '#{@backend.escape key}'")
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
-        @backend.query("delete from #{@table} where k = '#{@backend.escape key}'")
+        @backend.query("DELETE FROM #{@table} WHERE #{key_column} = '#{@backend.escape key}'")
         value
       end
 
@@ -55,13 +64,14 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.query("truncate #{@table}")
+        @backend.query("TRUNCATE #{@table}")
         self
       end
 
       # (see Default#create)
       def create(key, value, options = {})
-        false
+        @backend.query("INSERT INTO #{@table} SET #{value_column} = '#{@backend.escape value}' WHERE #{key_column} = '#{@backend.escape key}' ON DUPLICATE KEY UPDATE ")
+        value
       end
 
       # (see Proxy#close)
@@ -69,6 +79,19 @@ module Moneta
         @backend.close
         nil
       end
+
+    private
+      def create_table!
+        # InnoDB has a max key length of 767. Seems like a good default
+        @backend.query("CREATE TABLE IF NOT EXISTS #{@table} (#{@key_column} VARBINARY(767) NOT NULL PRIMARY KEY, #{@value_column} BLOB)")
+      end
+
+      def table_exists?
+        @backend.query("SHOW TABLES LIKE '#{@table}'").any?
+      end
     end
   end
 end
+
+
+
