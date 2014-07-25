@@ -14,6 +14,9 @@ module Moneta
       include Defaults
       include HashAdapter
 
+      # error code: no record found
+      ENOREC = 7
+
       supports :create, :increment
       attr_reader :backend
 
@@ -29,7 +32,7 @@ module Moneta
         elsif defined?(::TokyoTyrant::RDB)
           # Use ruby client
           @backend = ::TokyoTyrant::RDB.new
-          @backend.open(options[:host], options[:port]) or raise @backend.errmsg(@backend.ecode)
+          @backend.open(options[:host], options[:port]) or error
         else
           # Use native client
           @backend = ::TokyoTyrant::DB.new(options[:host], options[:port])
@@ -44,12 +47,14 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         value = @backend[key]
+        # raise if there is an error and the error is not "no record"
+        error if value.nil? && @backend.ecode != ENOREC
         value && unpack(value)
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend[key] = pack(value)
+        @backend.put(key, pack(value)) or error
         value
       end
 
@@ -57,14 +62,14 @@ module Moneta
       def delete(key, options = {})
         value = load(key, options)
         if value
-          @backend.delete(key)
+          @backend.delete(key) or error
           value
         end
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.addint(key, amount) || raise('Tried to increment non integer value')
+        @backend.addint(key, amount) or error
       end
 
       # (see Proxy#create)
@@ -112,6 +117,10 @@ module Moneta
         else
           value
         end
+      end
+
+      def error
+        raise "#{@backend.class.name} error: #{@backend.errmsg}"
       end
     end
   end
