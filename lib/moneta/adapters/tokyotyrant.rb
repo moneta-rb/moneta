@@ -20,11 +20,13 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (1978) Server port
+      # @option options [Boolean] :use_pack (true) Store data in packed format, to support increment
       # @option options [::TokyoTyrant::RDB] :backend Use existing backend instance
       def initialize(options = {})
         options[:host]     ||= '127.0.0.1'
         options[:port]     ||= 1978
-        options[:use_pack] ||= true
+        options[:use_pack] = true if !options.key?(:use_pack)
+
         if options[:backend]
           @backend = options[:backend]
         elsif defined?(::TokyoTyrant::RDB)
