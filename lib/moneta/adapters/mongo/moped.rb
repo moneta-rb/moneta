@@ -106,7 +106,7 @@ module Moneta
       protected
 
       def to_binary(s)
-        ::Moped::BSON::Binary.new(:generic, s)
+        ::BSON::Binary.new(s)
       end
     end
   end
