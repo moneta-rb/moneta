@@ -30,7 +30,12 @@ module Moneta
         when 'Number'
           doc[@value_field]
         else
-          doc[@value_field].to_s
+          # In ruby_bson version 2 (and probably up), #to_s no longer returns the binary data
+          if doc[@value_field].is_a? ::BSON::Binary and defined? ::BSON::VERSION and ::BSON::VERSION[0].to_i >= 2
+            doc[@value_field].data
+          else
+            doc[@value_field].to_s
+          end
         end
       end
 
