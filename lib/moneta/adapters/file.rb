@@ -23,7 +23,7 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        ::File.read(store_path(key))
+        ::File.read(store_path(key), mode: 'rb')
       rescue Errno::ENOENT
       end
 
@@ -69,6 +69,7 @@ module Moneta
           content = f.read
           amount += Utils.to_int(content) unless content.empty?
           content = amount.to_s
+          f.binmode
           f.pos = 0
           f.write(content)
           f.truncate(content.bytesize)
