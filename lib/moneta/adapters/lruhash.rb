@@ -11,9 +11,9 @@ module Moneta
       include CreateSupport
 
       # @param [Hash] options
-      # @option options [Integer] :max_size (1024000) Maximum byte size of all values
-      # @option options [Integer] :max_value (options[:max_size]) Maximum byte size of one value
-      # @option options [Integer] :max_count (10240) Maximum number of values
+      # @option options [Integer] :max_size (1024000) Maximum byte size of all values, nil disables the limit
+      # @option options [Integer] :max_value (options[:max_size]) Maximum byte size of one value, nil disables the limit
+      # @option options [Integer] :max_count (10240) Maximum number of values, nil disables the limit
       def initialize(options = {})
         @max_size = options[:max_size] || 1024000
         @max_count = options[:max_count] || 10240
@@ -36,19 +36,19 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        if value.bytesize > @max_value
+        if @max_value && value.bytesize > @max_value
           delete(key)
         else
           if entry = @entry[key]
-            @size -= entry.value.bytesize
+            @size -= entry.value.bytesize if @max_size
           else
             @entry[key] = entry = Entry.new
             entry.key = key
           end
           entry.value = value
-          @size += entry.value.bytesize
+          @size += entry.value.bytesize if @max_size
           entry.insert_after(@list)
-          delete(@list.prev.key) while @list.next != @list.prev && (@size > @max_size || @entry.size > @max_count)
+          delete(@list.prev.key) while @list.next != @list.prev && (@max_size && @size > @max_size || @max_count && @entry.size > @max_count)
         end
         value
       end
@@ -56,7 +56,7 @@ module Moneta
       # (see Proxy#delete)
       def delete(key, options = {})
         if entry = @entry.delete(key)
-          @size -= entry.value.bytesize
+          @size -= entry.value.bytesize if @max_size
           entry.unlink
           entry.value
         end
