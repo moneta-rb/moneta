@@ -14,11 +14,11 @@ module Moneta
 
       def hmacverify(value, secret)
         hash, value = value[0..31], value[32..-1]
-        value if hash == OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), secret, value)
+        value if hash == OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), secret, value)
       end
 
       def hmacsign(value, secret)
-        OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha256'), secret, value) << value
+        OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), secret, value) << value
       end
 
       def truncate(value, maxlen)
