@@ -63,7 +63,7 @@ module Moneta
 
     def new_proxy(klass, *args, &block)
       klass.new(*args, &block)
-    rescue ArgumentError => ex
+    rescue ArgumentError
       check_arity(klass, klass.allocate, args.size)
       raise
     end
