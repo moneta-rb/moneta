@@ -15,9 +15,9 @@ module Moneta
       # @option options [Integer] :max_value (options[:max_size]) Maximum byte size of one value, nil disables the limit
       # @option options [Integer] :max_count (10240) Maximum number of values, nil disables the limit
       def initialize(options = {})
-        @max_size = options[:max_size] || 1024000
-        @max_count = options[:max_count] || 10240
-        @max_value = options[:max_value] || @max_size
+        @max_size = options.fetch(:max_size) { 1024000 }
+        @max_count = options.fetch(:max_count) { 10240 }
+        @max_value = options.fetch(:max_value) { @max_size }
         clear
       end
 
