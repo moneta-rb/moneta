@@ -10,14 +10,17 @@ module Moneta
       include IncrementSupport
       include CreateSupport
 
+      DEFAULT_MAX_SIZE = 1024000
+      DEFAULT_MAX_COUNT = 10240
+
       # @param [Hash] options
       # @option options [Integer] :max_size (1024000) Maximum byte size of all values, nil disables the limit
       # @option options [Integer] :max_value (options[:max_size]) Maximum byte size of one value, nil disables the limit
       # @option options [Integer] :max_count (10240) Maximum number of values, nil disables the limit
       def initialize(options = {})
-        @max_size = options[:max_size] || 1024000
-        @max_count = options[:max_count] || 10240
-        @max_value = options[:max_value] || @max_size
+        @max_size = options.fetch(:max_size) { DEFAULT_MAX_SIZE }
+        @max_count = options.fetch(:max_count) { DEFAULT_MAX_COUNT }
+        @max_value = [options[:max_value], @max_size].compact.min
         clear
       end
 
