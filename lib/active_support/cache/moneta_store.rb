@@ -33,6 +33,7 @@ module ActiveSupport
       protected
 
       def read_entry(key, options)
+        options.delete(:expires_in)
         entry = @store.load(key, moneta_options(options))
         entry && (ActiveSupport::Cache::Entry === entry ? entry : ActiveSupport::Cache::Entry.new(entry))
       end
