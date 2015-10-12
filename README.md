@@ -717,7 +717,7 @@ run lambda { |env|
 Add the session store in your application configuration `config/environments/*.rb`.
 
 ~~~ ruby
-require 'moneta'
+require 'action_dispatch/middleware/session/moneta_store'
 
 # Only by adapter name
 config.cache_store :moneta_store, store: :Memory
@@ -738,7 +738,7 @@ Add the cache store in your application configuration `config/environments/*.rb`
 Moneta cache store doesn't support matchers. If you need these features use a different server-specific implementation.
 
 ~~~ ruby
-require 'moneta'
+require 'active_support/cache/moneta_store'
 
 # Only by adapter name
 config.cache_store :moneta_store, store: :Memory
