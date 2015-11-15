@@ -28,7 +28,7 @@ module Moneta
           end
         @backend.create_table?(table) do
           String :k, null: false, primary_key: true
-          Blob :v
+          File :v
         end
         @table = @backend[table]
       end
