@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 gemspec
 
 # Testing
-gem 'rspec'
-gem 'rspec-retry'
+gem 'rspec', '~> 2.0'
+gem 'rspec-retry', '0.4.4' # 0.4.5 does not work with rspec 2
 
 # Serializer used by Transformer
 gem 'tnetstring'
