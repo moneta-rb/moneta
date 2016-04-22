@@ -1,7 +1,7 @@
 require 'moneta'
 require 'rack/cache/key'
-require 'rack/cache/metastore'
-require 'rack/cache/entitystore'
+require 'rack/cache/meta_store'
+require 'rack/cache/entity_store'
 
 module Rack
   module Cache
