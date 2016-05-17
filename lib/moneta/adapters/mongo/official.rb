@@ -27,25 +27,25 @@ module Moneta
       # @option options [String] :expires_field ('expiresAt') Document field to store expiration time
       # @option options [String] :value_field ('value') Document field to store value
       # @option options [String] :type_field ('type') Document field to store value type
-      # @option options [::Mongo::MongoClient] :backend Use existing backend instance
+      # @option options [::Mongo::Client] :backend Use existing backend instance
       # @option options Other options passed to `Mongo::MongoClient#new`
       def initialize(options = {})
         super(options)
         collection = options.delete(:collection) || 'moneta'
         db = options.delete(:db) || 'moneta'
-        user = options.delete(:user)
-        password = options.delete(:password)
         @backend = options[:backend] ||
           begin
             host = options.delete(:host) || '127.0.0.1'
-            port = options.delete(:port) || ::Mongo::MongoClient::DEFAULT_PORT
-            ::Mongo::MongoClient.new(host, port, options)
+            port = options.delete(:port) || DEFAULT_PORT
+            options[:logger] ||= ::Logger.new(STDERR).tap do |logger|
+              logger.level = ::Logger::ERROR
+            end
+            ::Mongo::Client.new(["#{host}:#{port}"], options)
           end
-        db = @backend.db(db)
-        db.authenticate(user, password, true) if user && password
-        @collection = db.collection(collection)
-        if @backend.server_version >= '2.2'
-          @collection.ensure_index([[@expires_field, ::Mongo::ASCENDING]], expireAfterSeconds: 0)
+        @backend.use(db)
+        @collection = @backend[collection]
+        if @backend.command(buildinfo: 1).documents.first['version'] >= '2.2'
+          @collection.indexes.create_one({@expires_field => 1}, expire_after: 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
         end
@@ -54,12 +54,12 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         key = to_binary(key)
-        doc = @collection.find_one('_id' => key)
+        doc = @collection.find(_id: key).limit(1).first
         if doc && (!doc[@expires_field] || doc[@expires_field] >= Time.now)
           expires = expires_at(options, nil)
-          @collection.update({ '_id' => key },
-                             # @expires_field must be a Time object (BSON date datatype)
-                             { '$set' => { @expires_field => expires || nil } }) if expires != nil
+          # @expires_field must be a Time object (BSON date datatype)
+          @collection.update_one({ _id: key },
+                                 '$set' => { @expires_field => expires }) unless expires.nil?
           doc_to_value(doc)
         end
       end
@@ -67,40 +67,43 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         key = to_binary(key)
-        @collection.update({ '_id' => key },
-                           value_to_doc(key, value, options),
-                           { upsert: true })
+        @collection.replace_one({ _id: key },
+                                value_to_doc(key, value, options),
+                                upsert: true)
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        value = load(key, options)
-        @collection.remove('_id' => to_binary(key)) if value
-        value
+        key = to_binary(key)
+        if doc = @collection.find(_id: key).find_one_and_delete and
+          !doc[@expires_field] || doc[@expires_field] >= Time.now
+        then
+          doc_to_value(doc)
+        end
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @collection.find_and_modify(query: { '_id' => to_binary(key) },
-                                    update: { '$inc' => { @value_field => amount } },
-                                    new: true,
-                                    upsert: true)[@value_field]
+        @collection.find_one_and_update({ _id: to_binary(key) },
+                                        { '$inc' => { @value_field => amount } },
+                                        :return_document => :after,
+                                        :upsert => true)[@value_field]
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
         key = to_binary(key)
-        @collection.insert(value_to_doc(key, value, options))
+        @collection.insert_one(value_to_doc(key, value, options))
         true
-      rescue ::Mongo::OperationFailure => ex
-        raise if ex.error_code != 11000 # duplicate key error
+      rescue ::Mongo::Error::OperationFailure => ex
+        raise unless ex.message =~ /^E11000 / # duplicate key error
         false
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @collection.remove
+        @collection.delete_many
         self
       end
 
