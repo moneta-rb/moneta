@@ -38,7 +38,7 @@ module Moneta
         @backend = options[:backend] ||
           begin
             host = options.delete(:host) || '127.0.0.1'
-            port = options.delete(:port) || 27017
+            port = options.delete(:port) || DEFAULT_PORT
             ::Moped::Session.new(["#{host}:#{port}"])
           end
         @backend.use(db)
@@ -99,14 +99,8 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @collection.drop
+        @collection.find.remove_all
         self
-      end
-
-      protected
-
-      def to_binary(s)
-        ::BSON::Binary.new(s)
       end
     end
   end

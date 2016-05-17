@@ -109,13 +109,6 @@ module Moneta
         @backend.close
         nil
       end
-
-      protected
-
-      def to_binary(s)
-        s = s.dup if s.frozen? # HACK: BSON::Binary needs unfrozen string
-        ::BSON::Binary.new(s)
-      end
     end
   end
 end
