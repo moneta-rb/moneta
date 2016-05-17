@@ -36,8 +36,13 @@ gem 'daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
 gem 'dm-mysql-adapter'
-# FIXME: Use fog master because of failing tests, fixed after 1.11.1
-gem 'fog', github: 'fog/fog'
+if RUBY_VERSION < '2.0'
+  gem 'fog', '~> 1.12'
+  gem 'mime-types', '~> 2.0'
+else
+  gem 'fog', '>= 1.11.1'
+  gem 'mime-types'
+end
 gem 'activerecord', '>= 3.2.11'
 gem 'redis'
 gem 'mongo'
