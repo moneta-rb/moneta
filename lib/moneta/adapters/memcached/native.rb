@@ -85,6 +85,12 @@ module Moneta
         @backend.flush
         self
       end
+
+      # (see Proxy#close)
+      def close
+        @backend.reset
+        nil
+      end
     end
   end
 end
