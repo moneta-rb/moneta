@@ -15,7 +15,7 @@ describe_moneta "transformer_bzip2" do
   end
 
   def load_value(value)
-    ::Bzip2.uncompress(value)
+    ::RBzip2::Decompressor.new(::StringIO.new(value)).read
   end
 
   include_context 'setup_store'

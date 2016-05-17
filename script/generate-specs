@@ -710,7 +710,7 @@ end}
   adapter :Memory
 end},
     specs: TRANSFORMER_SPECS.stringvalues_only,
-    load_value: '::Bzip2.uncompress(value)',
+    load_value: '::RBzip2::Decompressor.new(::StringIO.new(value)).read',
     tests: %{
 it 'compile transformer class' do
   store.should_not be_nil
