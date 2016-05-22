@@ -5,14 +5,18 @@ rvm:
   - 1.9.3
   - jruby-19mode
   - rbx-19mode
+services:
+  - riak
+  - couchdb
+  - redis
+  - cassandra
+  - memcached
+  - mongodb
 before_install:
   #- script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
-  - script/install-bundle
-  - script/upload-bundle
-  - script/wait-services
-install: 'echo "Bundle installed"'
+cache: bundler
 before_script:
   - mysql -e 'create database moneta;'
   - mysql -e 'create database moneta_activerecord1;'
