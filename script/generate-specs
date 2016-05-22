@@ -425,17 +425,17 @@ end
   },
   'standard_mongo' => {
     store: :Mongo,
-    options: "db: 'standard_mongo'",
+    options: "db: 'standard_mongo', collection: 'default'",
     specs: STANDARD_SPECS.with_native_expires
   },
   'standard_mongo_moped' => {
     store: :MongoMoped,
-    options: "db: 'standard_mongo_moped'",
+    options: "db: 'standard_mongo', collection: 'moped'",
     specs: STANDARD_SPECS.with_native_expires
   },
   'standard_mongo_official' => {
     store: :MongoOfficial,
-    options: "db: 'standard_mongo_official'",
+    options: "db: 'standard_mongo', collection: 'official'",
     specs: STANDARD_SPECS.with_native_expires
   },
   'standard_null' => {
@@ -1498,41 +1498,56 @@ it 'adds more values than DEFAULT_MAX_COUNT allows when max_count is nil' do
 end}
   },
   'adapter_mongo' => {
-    build: 'Moneta::Adapters::Mongo.new(db: "adapter_mongo")',
+    build: %{\
+Moneta::Adapters::Mongo.new(db: "adapter_mongo",
+                            collection: 'default')},
     specs: ADAPTER_SPECS.with_native_expires.simplevalues_only
   },
   'adapter_mongo_with_default_expires' => {
-    build: %{Moneta::Adapters::Mongo.new(expires: 1)},
+    build: %{\
+Moneta::Adapters::Mongo.new(db: "adapter_mongo",
+                            collection: 'with_default_expires',
+                            expires: 1)},
     specs: ADAPTER_SPECS.with_expires.with_default_expires.simplevalues_only
   },
   'adapter_mongo_moped' => {
-    build: 'Moneta::Adapters::MongoMoped.new(db: "adapter_mongo")',
+    build: %{\
+Moneta::Adapters::MongoMoped.new(db: "adapter_mongo",
+                                 collection: 'moped')},
     specs: ADAPTER_SPECS.with_native_expires.simplevalues_only,
     tests: %{
 it 'automatically deletes expired document' do
   store.store('key', 'val', expires: 5)
-  store.instance_variable_get(:@collection).find('_id' => ::Moped::BSON::Binary.new(:generic, 'key')).one.should_not be_nil
+  store.instance_variable_get(:@collection).find('_id' => ::BSON::Binary.new('key')).one.should_not be_nil
   sleep 70 # Mongo needs up to 60 seconds
-  store.instance_variable_get(:@collection).find('_id' => ::Moped::BSON::Binary.new(:generic, 'key')).one.should be_nil
+  store.instance_variable_get(:@collection).find('_id' => ::BSON::Binary.new('key')).one.should be_nil
 end}
   },
   'adapter_mongo_moped_with_default_expires' => {
-    build: %{Moneta::Adapters::MongoMoped.new(expires: 1)},
+    build: %{\
+Moneta::Adapters::MongoMoped.new(db: "adapter_mongo",
+                                 collection: 'moped_with_default_expires',
+                                 expires: 1)},
     specs: ADAPTER_SPECS.with_expires.with_default_expires.simplevalues_only
   },
   'adapter_mongo_official' => {
-    build: 'Moneta::Adapters::MongoOfficial.new(db: "adapter_mongo")',
+    build: %{\
+Moneta::Adapters::MongoOfficial.new(db: "adapter_mongo",
+                                    collection: 'official')},
     specs: ADAPTER_SPECS.with_native_expires.simplevalues_only,
     tests: %{
 it 'automatically deletes expired document' do
   store.store('key', 'val', expires: 5)
-  store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should_not be_nil
+  store.instance_variable_get(:@collection).find('_id' => ::BSON::Binary.new('key')).first.should_not be_nil
   sleep 70 # Mongo needs up to 60 seconds
-  store.instance_variable_get(:@collection).find_one('_id' => ::BSON::Binary.new('key')).should be_nil
+  store.instance_variable_get(:@collection).find('_id' => ::BSON::Binary.new('key')).first.should be_nil
 end}
   },
   'adapter_mongo_official_with_default_expires' => {
-    build: %{Moneta::Adapters::MongoOfficial.new(expires: 1)},
+    build: %{\
+Moneta::Adapters::MongoOfficial.new(db: "adapter_mongo",
+                                    collection: 'official_with_default_expires',
+                                    expires: 1)},
     specs: ADAPTER_SPECS.with_expires.with_default_expires.simplevalues_only
   },
   'adapter_pstore' => {

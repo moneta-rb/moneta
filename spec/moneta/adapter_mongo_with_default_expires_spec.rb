@@ -8,7 +8,9 @@ describe_moneta "adapter_mongo_with_default_expires" do
   end
 
   def new_store
-    Moneta::Adapters::Mongo.new(expires: 1)
+    Moneta::Adapters::Mongo.new(db: "adapter_mongo",
+                                collection: 'with_default_expires',
+                                expires: 1)
   end
 
   def load_value(value)
