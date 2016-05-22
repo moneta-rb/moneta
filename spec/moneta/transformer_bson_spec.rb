@@ -15,7 +15,12 @@ describe_moneta "transformer_bson" do
   end
 
   def load_value(value)
-    ::BSON.deserialize(value)['v']
+
+    if ::BSON::VERSION >= '4.0.0'
+      ::BSON::Document.from_bson(::BSON::ByteBuffer.new(value))['v']
+    else
+      ::BSON::Document.from_bson(::StringIO.new(value))['v']
+    end
   end
 
   include_context 'setup_store'

@@ -10,7 +10,7 @@ gem 'tnetstring'
 gem 'bencode'
 gem 'multi_json'
 gem 'bson_ext', platforms: :ruby
-gem 'bson', platforms: :jruby
+gem 'bson', '>= 2.0.0'
 gem 'ox', platforms: :ruby
 gem 'msgpack', platforms: :ruby
 gem 'msgpack-jruby', platforms: :jruby

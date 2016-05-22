@@ -5,7 +5,7 @@ module Moneta
       # Name:   [ Type,       Load,                           Dump,                              Library         ],
       bencode:  [ :serialize, '::BEncode.load(%s)',           '::BEncode.dump(%s)',              'bencode'       ],
       bert:     [ :serialize, '::BERT.decode(%s)',            '::BERT.encode(%s)',               'bert'          ],
-      bson:     [ :serialize, "::BSON.deserialize(%s)['v']",  "::BSON.serialize('v'=>%s).to_s",  'bson'          ],
+      bson:     [ :serialize, 'Helper::BSON.load(%s)',        'Helper::BSON.dump(%s)',           'bson'          ],
       json:     [ :serialize, '::MultiJson.load(%s)',         '::MultiJson.dump(%s)',            'multi_json'    ],
       marshal:  [ :serialize, '::Marshal.load(%s)',           '::Marshal.dump(%s)'                               ],
       msgpack:  [ :serialize, '::MessagePack.unpack(%s)',     '::MessagePack.pack(%s)',          'msgpack'       ],
