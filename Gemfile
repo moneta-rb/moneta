@@ -54,7 +54,7 @@ gem 'cassandra'
 gem 'tokyotyrant'
 #gem 'ruby-tokyotyrant', platforms: :ruby
 #gem 'hbaserb'
-#gem 'localmemcache'
+gem 'localmemcache'
 gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby
 gem 'lmdb', platforms: :mri
