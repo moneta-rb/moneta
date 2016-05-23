@@ -8,7 +8,8 @@ describe_moneta "adapter_mongo_moped" do
   end
 
   def new_store
-    Moneta::Adapters::MongoMoped.new(db: "adapter_mongo")
+    Moneta::Adapters::MongoMoped.new(db: "adapter_mongo",
+                                     collection: 'moped')
   end
 
   def load_value(value)
@@ -49,8 +50,15 @@ describe_moneta "adapter_mongo_moped" do
   it_should_behave_like 'store_large'
   it 'automatically deletes expired document' do
     store.store('key', 'val', expires: 5)
-    store.instance_variable_get(:@collection).find('_id' => ::Moped::BSON::Binary.new(:generic, 'key')).one.should_not be_nil
-    sleep 70 # Mongo needs up to 60 seconds
-    store.instance_variable_get(:@collection).find('_id' => ::Moped::BSON::Binary.new(:generic, 'key')).one.should be_nil
+
+    i = 0
+    query = store.instance_variable_get(:@collection).find(_id: ::BSON::Binary.new('key'))
+    while i < 70 && query.first
+      i += 1
+      sleep 1 # Mongo needs up to 60 seconds
+    end
+
+    i.should be > 0 # Indicates that it took at least one sleep to expire
+    query.count.should == 0
   end
 end

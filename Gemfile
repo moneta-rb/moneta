@@ -10,7 +10,7 @@ gem 'tnetstring'
 gem 'bencode'
 gem 'multi_json'
 gem 'bson_ext', platforms: :ruby
-gem 'bson', platforms: :jruby
+gem 'bson', '>= 2.0.0'
 gem 'ox', platforms: :ruby
 gem 'msgpack', platforms: :ruby
 gem 'msgpack-jruby', platforms: :jruby
@@ -40,8 +40,8 @@ gem 'dm-mysql-adapter'
 gem 'fog', github: 'fog/fog'
 gem 'activerecord', '>= 3.2.11'
 gem 'redis'
-gem 'mongo'
-gem 'moped'
+gem 'mongo', '>= 2.0.0'
+gem 'moped', '>= 2.0.0'
 gem 'sequel'
 gem 'dalli'
 gem 'riak-client'

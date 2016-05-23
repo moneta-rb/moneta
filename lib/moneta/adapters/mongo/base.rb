@@ -1,3 +1,5 @@
+require 'bson'
+
 module Moneta
   module Adapters
     # @api private
@@ -62,6 +64,14 @@ module Moneta
         else
           raise ArgumentError, "Invalid value type: #{value.class}"
         end
+      end
+
+      # BSON will use String#force_encoding to make the string 8-bit
+      # ASCII.  This could break unicode text so we should dup in this
+      # case, and it also fails with frozen strings.
+      def to_binary(s)
+        s = s.dup if s.frozen? || s.encoding != Encoding::ASCII_8BIT
+        ::BSON::Binary.new(s)
       end
     end
   end

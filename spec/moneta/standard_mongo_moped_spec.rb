@@ -8,7 +8,7 @@ describe_moneta "standard_mongo_moped" do
   end
 
   def new_store
-    Moneta.new(:MongoMoped, db: 'standard_mongo_moped', logger: {file: File.join(make_tempdir, 'standard_mongo_moped.log')})
+    Moneta.new(:MongoMoped, db: 'standard_mongo', collection: 'moped', logger: {file: File.join(make_tempdir, 'standard_mongo_moped.log')})
   end
 
   def load_value(value)

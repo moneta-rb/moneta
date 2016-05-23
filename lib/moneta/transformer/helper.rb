@@ -32,6 +32,8 @@ module Moneta
       def spread(value)
         ::File.join(value[0..1], value[2..-1])
       end
+
+      autoload :BSON, 'moneta/transformer/helper/bson'
     end
   end
 end
