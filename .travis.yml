@@ -13,6 +13,7 @@ services:
   - memcached
   - mongodb
 before_install:
+  - gem install bundler -v '~> 1.10'
   #- script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet8 libtokyocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
