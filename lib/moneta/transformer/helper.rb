@@ -33,6 +33,18 @@ module Moneta
         ::File.join(value[0..1], value[2..-1])
       end
 
+      def bzip2(value)
+        io = ::StringIO.new
+        bz = ::RBzip2::Compressor.new(io)
+        bz.write(value)
+        bz.close
+        io.string
+      end
+
+      def bunzip2(value)
+        ::RBzip2::Decompressor.new(::StringIO.new(value)).read
+      end
+
       autoload :BSON, 'moneta/transformer/helper/bson'
     end
   end

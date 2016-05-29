@@ -18,9 +18,7 @@ gem 'bert', platforms: :ruby
 gem 'php_serialize'
 
 # Compressors used by Transformer
-if RUBY_VERSION < '2.0'
-  gem 'bzip2-ruby', platforms: :mri # Only on mri currently
-end
+gem 'rbzip2'
 gem 'lz4-ruby', platforms: :ruby
 gem 'ruby-lzma', platforms: :ruby
 gem 'lzoruby', platforms: :ruby

@@ -13,7 +13,7 @@ module Moneta
       php:      [ :serialize, '::PHP.unserialize(%s)',        '::PHP.serialize(%s)',           'php_serialize' ],
       tnet:     [ :serialize, '::TNetstring.parse(%s).first', '::TNetstring.dump(%s)',           'tnetstring'    ],
       yaml:     [ :serialize, '::YAML.load(%s)',              '::YAML.dump(%s)',                 'yaml'          ],
-      bzip2:    [ :compress,  '::Bzip2.uncompress(%s)',       '::Bzip2.compress(%s)',            'bzip2'         ],
+      bzip2:    [ :compress,  'Helper.bunzip2(%s)',           'Helper.bzip2(%s)',                'rbzip2'        ],
       lz4:      [ :compress,  '::LZ4.uncompress(%s)',         '::LZ4.compress(%s)',              'lz4-ruby'      ],
       lzma:     [ :compress,  '::LZMA.decompress(%s)',        '::LZMA.compress(%s)',             'lzma'          ],
       lzo:      [ :compress,  '::LZO.decompress(%s)',         '::LZO.compress(%s)',              'lzoruby'       ],
