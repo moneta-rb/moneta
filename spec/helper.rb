@@ -49,7 +49,7 @@ end
 
 RSpec.configure do |config|
   config.verbose_retry = true
-  config.color_enabled = true
+  config.color = true
   config.tty = true
   config.formatter = ENV['PARALLEL_TESTS'] ? MonetaParallelFormatter : :progress
 end
