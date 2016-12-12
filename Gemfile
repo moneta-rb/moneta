@@ -37,6 +37,7 @@ gem 'dm-mysql-adapter'
 if RUBY_VERSION < '2.0'
   gem 'fog', '~> 1.12'
   gem 'mime-types', '~> 2.0'
+  gem 'addressable', '~> 2.4.0'
 else
   gem 'fog', '>= 1.11.1'
   gem 'mime-types'
