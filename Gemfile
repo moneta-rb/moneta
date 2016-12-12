@@ -50,6 +50,9 @@ gem 'sequel'
 gem 'dalli'
 gem 'riak-client'
 gem 'cassandra'
+if RUBY_VERSION < '2.0'
+  gem 'json', '~> 1.0'
+end
 gem 'tokyotyrant'
 #gem 'ruby-tokyotyrant', platforms: :ruby
 #gem 'hbaserb'
