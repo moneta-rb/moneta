@@ -76,7 +76,7 @@ module Moneta
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        @backend.add(key, value, expires_value(options) || nil, raw: true)
+        !!@backend.add(key, value, expires_value(options) || nil, raw: true)
       end
 
       # (see Proxy#close)
