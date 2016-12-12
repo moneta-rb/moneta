@@ -15,7 +15,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26,8 +26,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[nil] = ''
     store[0] = nil
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -46,7 +46,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -66,7 +66,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -77,8 +77,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[0] = ''
     store[nil] = nil
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -97,7 +97,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -117,7 +117,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -128,8 +128,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[nil] = nil
     store[0] = ''
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -148,7 +148,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -168,7 +168,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -179,8 +179,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[0] = nil
     store[nil] = ''
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -199,7 +199,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -219,7 +219,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -230,8 +230,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[nil] = 0
     store[0] = false
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -250,7 +250,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -270,7 +270,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -281,8 +281,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[0] = 0
     store[nil] = false
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -301,7 +301,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -321,7 +321,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -332,8 +332,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[nil] = false
     store[0] = 0
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -352,7 +352,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -372,7 +372,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -383,8 +383,8 @@ shared_examples_for 'null_nilkey_nilvalue' do
     store[0] = false
     store[nil] = 0
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -403,7 +403,7 @@ shared_examples_for 'null_nilkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -424,7 +424,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = ''
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -446,7 +446,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = ''
     store.delete(nil).should == ''
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -476,7 +476,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = ''
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -498,7 +498,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = ''
     store.delete(0).should == ''
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -528,7 +528,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = nil
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -550,7 +550,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = nil
     store.delete(nil).should == nil
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -580,7 +580,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = nil
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -602,7 +602,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = nil
     store.delete(0).should == nil
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -632,7 +632,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = 0
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -654,7 +654,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = 0
     store.delete(nil).should == 0
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -684,7 +684,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = 0
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -706,7 +706,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = 0
     store.delete(0).should == 0
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -736,7 +736,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = false
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -758,7 +758,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = false
     store.delete(nil).should == false
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -788,7 +788,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = false
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -810,7 +810,7 @@ shared_examples_for 'store_nilkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = false
     store.delete(0).should == false
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -907,7 +907,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -918,8 +918,8 @@ shared_examples_for 'null_nilkey_integervalue' do
     store[nil] = 41
     store[0] = -12
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -938,7 +938,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -958,7 +958,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -969,8 +969,8 @@ shared_examples_for 'null_nilkey_integervalue' do
     store[0] = 41
     store[nil] = -12
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -989,7 +989,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -1009,7 +1009,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1020,8 +1020,8 @@ shared_examples_for 'null_nilkey_integervalue' do
     store[nil] = -12
     store[0] = 41
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1040,7 +1040,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -1060,7 +1060,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1071,8 +1071,8 @@ shared_examples_for 'null_nilkey_integervalue' do
     store[0] = -12
     store[nil] = 41
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1091,7 +1091,7 @@ shared_examples_for 'null_nilkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -1112,7 +1112,7 @@ shared_examples_for 'store_nilkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = 41
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -1134,7 +1134,7 @@ shared_examples_for 'store_nilkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = 41
     store.delete(nil).should == 41
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -1175,7 +1175,7 @@ shared_examples_for 'store_nilkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = 41
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -1197,7 +1197,7 @@ shared_examples_for 'store_nilkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = 41
     store.delete(0).should == 41
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -1238,7 +1238,7 @@ shared_examples_for 'store_nilkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = -12
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -1260,7 +1260,7 @@ shared_examples_for 'store_nilkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = -12
     store.delete(nil).should == -12
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -1301,7 +1301,7 @@ shared_examples_for 'store_nilkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = -12
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -1323,7 +1323,7 @@ shared_examples_for 'store_nilkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = -12
     store.delete(0).should == -12
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -1403,7 +1403,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1414,8 +1414,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[nil] = 123.456
     store[0] = -98.7
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1434,7 +1434,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -1454,7 +1454,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1465,8 +1465,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[0] = 123.456
     store[nil] = -98.7
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1485,7 +1485,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -1505,7 +1505,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1516,8 +1516,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[nil] = -98.7
     store[0] = 123.456
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1536,7 +1536,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -1556,7 +1556,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1567,8 +1567,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[0] = -98.7
     store[nil] = 123.456
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1587,7 +1587,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -1607,7 +1607,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1618,8 +1618,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[nil] = 340282366920938463463374607431768211456
     store[0] = 33
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1638,7 +1638,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -1658,7 +1658,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1669,8 +1669,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[0] = 340282366920938463463374607431768211456
     store[nil] = 33
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1689,7 +1689,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -1709,7 +1709,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1720,8 +1720,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[nil] = 33
     store[0] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1740,7 +1740,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -1760,7 +1760,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -1771,8 +1771,8 @@ shared_examples_for 'null_nilkey_numbervalue' do
     store[0] = 33
     store[nil] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1791,7 +1791,7 @@ shared_examples_for 'null_nilkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -1812,7 +1812,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = 123.456
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -1834,7 +1834,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = 123.456
     store.delete(nil).should == 123.456
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -1875,7 +1875,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = 123.456
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -1897,7 +1897,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = 123.456
     store.delete(0).should == 123.456
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -1938,7 +1938,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = -98.7
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -1960,7 +1960,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = -98.7
     store.delete(nil).should == -98.7
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -2001,7 +2001,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = -98.7
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -2023,7 +2023,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = -98.7
     store.delete(0).should == -98.7
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -2064,7 +2064,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = 340282366920938463463374607431768211456
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -2086,7 +2086,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = 340282366920938463463374607431768211456
     store.delete(nil).should == 340282366920938463463374607431768211456
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -2127,7 +2127,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = 340282366920938463463374607431768211456
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -2149,7 +2149,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = 340282366920938463463374607431768211456
     store.delete(0).should == 340282366920938463463374607431768211456
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -2190,7 +2190,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = 33
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -2212,7 +2212,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = 33
     store.delete(nil).should == 33
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -2253,7 +2253,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = 33
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -2275,7 +2275,7 @@ shared_examples_for 'store_nilkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = 33
     store.delete(0).should == 33
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -2383,7 +2383,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2394,8 +2394,8 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     store[nil] = true
     store[0] = false
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -2414,7 +2414,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -2434,7 +2434,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2445,8 +2445,8 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     store[0] = true
     store[nil] = false
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -2465,7 +2465,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -2485,7 +2485,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2496,8 +2496,8 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     store[nil] = false
     store[0] = true
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -2516,7 +2516,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -2536,7 +2536,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2547,8 +2547,8 @@ shared_examples_for 'null_nilkey_booleanvalue' do
     store[0] = false
     store[nil] = true
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -2567,7 +2567,7 @@ shared_examples_for 'null_nilkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -2588,7 +2588,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = true
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -2610,7 +2610,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = true
     store.delete(nil).should == true
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -2651,7 +2651,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = true
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -2673,7 +2673,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = true
     store.delete(0).should == true
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -2714,7 +2714,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = false
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -2736,7 +2736,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = false
     store.delete(nil).should == false
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -2777,7 +2777,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = false
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -2799,7 +2799,7 @@ shared_examples_for 'store_nilkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = false
     store.delete(0).should == false
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -2879,7 +2879,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2890,8 +2890,8 @@ shared_examples_for 'null_nilkey_stringvalue' do
     store[nil] = "strval1"
     store[0] = "strval2"
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -2910,7 +2910,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -2930,7 +2930,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2941,8 +2941,8 @@ shared_examples_for 'null_nilkey_stringvalue' do
     store[0] = "strval1"
     store[nil] = "strval2"
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -2961,7 +2961,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -2981,7 +2981,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -2992,8 +2992,8 @@ shared_examples_for 'null_nilkey_stringvalue' do
     store[nil] = "strval2"
     store[0] = "strval1"
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -3012,7 +3012,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -3032,7 +3032,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -3043,8 +3043,8 @@ shared_examples_for 'null_nilkey_stringvalue' do
     store[0] = "strval2"
     store[nil] = "strval1"
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -3063,7 +3063,7 @@ shared_examples_for 'null_nilkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -3084,7 +3084,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = "strval1"
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -3106,7 +3106,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = "strval1"
     store.delete(nil).should == "strval1"
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -3147,7 +3147,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = "strval1"
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -3169,7 +3169,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = "strval1"
     store.delete(0).should == "strval1"
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -3210,7 +3210,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = "strval2"
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -3232,7 +3232,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = "strval2"
     store.delete(nil).should == "strval2"
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -3273,7 +3273,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = "strval2"
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -3295,7 +3295,7 @@ shared_examples_for 'store_nilkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = "strval2"
     store.delete(0).should == "strval2"
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -3431,7 +3431,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -3442,8 +3442,8 @@ shared_examples_for 'null_nilkey_binaryvalue' do
     store[nil] = "über"
     store[0] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -3462,7 +3462,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -3482,7 +3482,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -3493,8 +3493,8 @@ shared_examples_for 'null_nilkey_binaryvalue' do
     store[0] = "über"
     store[nil] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -3513,7 +3513,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -3533,7 +3533,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -3544,8 +3544,8 @@ shared_examples_for 'null_nilkey_binaryvalue' do
     store[nil] = "\xAA\xBB\xCC"
     store[0] = "über"
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -3564,7 +3564,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -3584,7 +3584,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -3595,8 +3595,8 @@ shared_examples_for 'null_nilkey_binaryvalue' do
     store[0] = "\xAA\xBB\xCC"
     store[nil] = "über"
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -3615,7 +3615,7 @@ shared_examples_for 'null_nilkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -3636,7 +3636,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = "über"
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -3658,7 +3658,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = "über"
     store.delete(nil).should == "über"
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -3699,7 +3699,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = "über"
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -3721,7 +3721,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = "über"
     store.delete(0).should == "über"
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -3762,7 +3762,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = "\xAA\xBB\xCC"
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -3784,7 +3784,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = "\xAA\xBB\xCC"
     store.delete(nil).should == "\xAA\xBB\xCC"
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -3825,7 +3825,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = "\xAA\xBB\xCC"
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -3847,7 +3847,7 @@ shared_examples_for 'store_nilkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = "\xAA\xBB\xCC"
     store.delete(0).should == "\xAA\xBB\xCC"
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -3983,7 +3983,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -3994,8 +3994,8 @@ shared_examples_for 'null_nilkey_hashvalue' do
     store[nil] = {"hashval1"=>["array1", 1]}
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4014,7 +4014,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -4034,7 +4034,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4045,8 +4045,8 @@ shared_examples_for 'null_nilkey_hashvalue' do
     store[0] = {"hashval1"=>["array1", 1]}
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4065,7 +4065,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -4085,7 +4085,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4096,8 +4096,8 @@ shared_examples_for 'null_nilkey_hashvalue' do
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4116,7 +4116,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -4136,7 +4136,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4147,8 +4147,8 @@ shared_examples_for 'null_nilkey_hashvalue' do
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[nil] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4167,7 +4167,7 @@ shared_examples_for 'null_nilkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -4188,7 +4188,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = {"hashval1"=>["array1", 1]}
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -4210,7 +4210,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = {"hashval1"=>["array1", 1]}
     store.delete(nil).should == {"hashval1"=>["array1", 1]}
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -4251,7 +4251,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = {"hashval1"=>["array1", 1]}
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -4273,7 +4273,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = {"hashval1"=>["array1", 1]}
     store.delete(0).should == {"hashval1"=>["array1", 1]}
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -4314,7 +4314,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -4336,7 +4336,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(nil).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -4377,7 +4377,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -4399,7 +4399,7 @@ shared_examples_for 'store_nilkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(0).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -4535,7 +4535,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4546,8 +4546,8 @@ shared_examples_for 'null_nilkey_objectvalue' do
     store[nil] = Value.new(:objval1)
     store[0] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4566,7 +4566,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -4586,7 +4586,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4597,8 +4597,8 @@ shared_examples_for 'null_nilkey_objectvalue' do
     store[0] = Value.new(:objval1)
     store[nil] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4617,7 +4617,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -4637,7 +4637,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4648,8 +4648,8 @@ shared_examples_for 'null_nilkey_objectvalue' do
     store[nil] = Value.new(:objval2)
     store[0] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(nil).should be_false
-    store.key?(0).should be_false
+    store.key?(nil).should be false
+    store.key?(0).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4668,7 +4668,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(nil, options).should be_false
+    store.key?(nil, options).should be false
     store.load(nil, options).should be_nil
     store.fetch(nil, 42, options).should == 42
     store.fetch(nil, options) { 42 }.should == 42
@@ -4688,7 +4688,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -4699,8 +4699,8 @@ shared_examples_for 'null_nilkey_objectvalue' do
     store[0] = Value.new(:objval2)
     store[nil] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(0).should be_false
-    store.key?(nil).should be_false
+    store.key?(0).should be false
+    store.key?(nil).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -4719,7 +4719,7 @@ shared_examples_for 'null_nilkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0, options).should be_false
+    store.key?(0, options).should be false
     store.load(0, options).should be_nil
     store.fetch(0, 42, options).should == 42
     store.fetch(0, options) { 42 }.should == 42
@@ -4740,7 +4740,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = Value.new(:objval1)
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -4762,7 +4762,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = Value.new(:objval1)
     store.delete(nil).should == Value.new(:objval1)
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -4803,7 +4803,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = Value.new(:objval1)
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -4825,7 +4825,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = Value.new(:objval1)
     store.delete(0).should == Value.new(:objval1)
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -4866,7 +4866,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[nil] = Value.new(:objval2)
-    store.key?(nil).should be_true
+    store.key?(nil).should be true
   end
 
   it 'stores values with #store' do
@@ -4888,7 +4888,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[nil] = Value.new(:objval2)
     store.delete(nil).should == Value.new(:objval2)
-    store.key?(nil).should be_false
+    store.key?(nil).should be false
   end
 
   it 'overwrites existing values' do
@@ -4929,7 +4929,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0] = Value.new(:objval2)
-    store.key?(0).should be_true
+    store.key?(0).should be true
   end
 
   it 'stores values with #store' do
@@ -4951,7 +4951,7 @@ shared_examples_for 'store_nilkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0] = Value.new(:objval2)
     store.delete(0).should == Value.new(:objval2)
-    store.key?(0).should be_false
+    store.key?(0).should be false
   end
 
   it 'overwrites existing values' do
@@ -5087,7 +5087,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5098,8 +5098,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[-10] = ''
     store[42] = nil
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5118,7 +5118,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -5138,7 +5138,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5149,8 +5149,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[42] = ''
     store[-10] = nil
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5169,7 +5169,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -5189,7 +5189,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5200,8 +5200,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[-10] = nil
     store[42] = ''
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5220,7 +5220,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -5240,7 +5240,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5251,8 +5251,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[42] = nil
     store[-10] = ''
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5271,7 +5271,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -5291,7 +5291,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5302,8 +5302,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[-10] = 0
     store[42] = false
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5322,7 +5322,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -5342,7 +5342,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5353,8 +5353,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[42] = 0
     store[-10] = false
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5373,7 +5373,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -5393,7 +5393,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5404,8 +5404,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[-10] = false
     store[42] = 0
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5424,7 +5424,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -5444,7 +5444,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5455,8 +5455,8 @@ shared_examples_for 'null_integerkey_nilvalue' do
     store[42] = false
     store[-10] = 0
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -5475,7 +5475,7 @@ shared_examples_for 'null_integerkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -5496,7 +5496,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = ''
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -5518,7 +5518,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = ''
     store.delete(-10).should == ''
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -5548,7 +5548,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = ''
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -5570,7 +5570,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = ''
     store.delete(42).should == ''
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -5600,7 +5600,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = nil
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -5622,7 +5622,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = nil
     store.delete(-10).should == nil
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -5652,7 +5652,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = nil
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -5674,7 +5674,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = nil
     store.delete(42).should == nil
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -5704,7 +5704,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = 0
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -5726,7 +5726,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = 0
     store.delete(-10).should == 0
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -5756,7 +5756,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = 0
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -5778,7 +5778,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = 0
     store.delete(42).should == 0
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -5808,7 +5808,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = false
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -5830,7 +5830,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = false
     store.delete(-10).should == false
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -5860,7 +5860,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = false
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -5882,7 +5882,7 @@ shared_examples_for 'store_integerkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = false
     store.delete(42).should == false
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -5979,7 +5979,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -5990,8 +5990,8 @@ shared_examples_for 'null_integerkey_integervalue' do
     store[-10] = 41
     store[42] = -12
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6010,7 +6010,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -6030,7 +6030,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6041,8 +6041,8 @@ shared_examples_for 'null_integerkey_integervalue' do
     store[42] = 41
     store[-10] = -12
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6061,7 +6061,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -6081,7 +6081,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6092,8 +6092,8 @@ shared_examples_for 'null_integerkey_integervalue' do
     store[-10] = -12
     store[42] = 41
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6112,7 +6112,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -6132,7 +6132,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6143,8 +6143,8 @@ shared_examples_for 'null_integerkey_integervalue' do
     store[42] = -12
     store[-10] = 41
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6163,7 +6163,7 @@ shared_examples_for 'null_integerkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -6184,7 +6184,7 @@ shared_examples_for 'store_integerkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = 41
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -6206,7 +6206,7 @@ shared_examples_for 'store_integerkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = 41
     store.delete(-10).should == 41
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -6247,7 +6247,7 @@ shared_examples_for 'store_integerkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = 41
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -6269,7 +6269,7 @@ shared_examples_for 'store_integerkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = 41
     store.delete(42).should == 41
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -6310,7 +6310,7 @@ shared_examples_for 'store_integerkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = -12
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -6332,7 +6332,7 @@ shared_examples_for 'store_integerkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = -12
     store.delete(-10).should == -12
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -6373,7 +6373,7 @@ shared_examples_for 'store_integerkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = -12
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -6395,7 +6395,7 @@ shared_examples_for 'store_integerkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = -12
     store.delete(42).should == -12
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -6475,7 +6475,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6486,8 +6486,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[-10] = 123.456
     store[42] = -98.7
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6506,7 +6506,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -6526,7 +6526,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6537,8 +6537,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[42] = 123.456
     store[-10] = -98.7
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6557,7 +6557,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -6577,7 +6577,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6588,8 +6588,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[-10] = -98.7
     store[42] = 123.456
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6608,7 +6608,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -6628,7 +6628,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6639,8 +6639,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[42] = -98.7
     store[-10] = 123.456
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6659,7 +6659,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -6679,7 +6679,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6690,8 +6690,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[-10] = 340282366920938463463374607431768211456
     store[42] = 33
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6710,7 +6710,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -6730,7 +6730,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6741,8 +6741,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[42] = 340282366920938463463374607431768211456
     store[-10] = 33
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6761,7 +6761,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -6781,7 +6781,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6792,8 +6792,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[-10] = 33
     store[42] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6812,7 +6812,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -6832,7 +6832,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -6843,8 +6843,8 @@ shared_examples_for 'null_integerkey_numbervalue' do
     store[42] = 33
     store[-10] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -6863,7 +6863,7 @@ shared_examples_for 'null_integerkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -6884,7 +6884,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = 123.456
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -6906,7 +6906,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = 123.456
     store.delete(-10).should == 123.456
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -6947,7 +6947,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = 123.456
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -6969,7 +6969,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = 123.456
     store.delete(42).should == 123.456
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -7010,7 +7010,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = -98.7
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -7032,7 +7032,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = -98.7
     store.delete(-10).should == -98.7
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -7073,7 +7073,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = -98.7
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -7095,7 +7095,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = -98.7
     store.delete(42).should == -98.7
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -7136,7 +7136,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = 340282366920938463463374607431768211456
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -7158,7 +7158,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = 340282366920938463463374607431768211456
     store.delete(-10).should == 340282366920938463463374607431768211456
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -7199,7 +7199,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = 340282366920938463463374607431768211456
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -7221,7 +7221,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = 340282366920938463463374607431768211456
     store.delete(42).should == 340282366920938463463374607431768211456
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -7262,7 +7262,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = 33
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -7284,7 +7284,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = 33
     store.delete(-10).should == 33
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -7325,7 +7325,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = 33
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -7347,7 +7347,7 @@ shared_examples_for 'store_integerkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = 33
     store.delete(42).should == 33
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -7455,7 +7455,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -7466,8 +7466,8 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     store[-10] = true
     store[42] = false
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -7486,7 +7486,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -7506,7 +7506,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -7517,8 +7517,8 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     store[42] = true
     store[-10] = false
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -7537,7 +7537,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -7557,7 +7557,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -7568,8 +7568,8 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     store[-10] = false
     store[42] = true
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -7588,7 +7588,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -7608,7 +7608,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -7619,8 +7619,8 @@ shared_examples_for 'null_integerkey_booleanvalue' do
     store[42] = false
     store[-10] = true
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -7639,7 +7639,7 @@ shared_examples_for 'null_integerkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -7660,7 +7660,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = true
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -7682,7 +7682,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = true
     store.delete(-10).should == true
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -7723,7 +7723,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = true
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -7745,7 +7745,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = true
     store.delete(42).should == true
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -7786,7 +7786,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = false
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -7808,7 +7808,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = false
     store.delete(-10).should == false
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -7849,7 +7849,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = false
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -7871,7 +7871,7 @@ shared_examples_for 'store_integerkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = false
     store.delete(42).should == false
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -7951,7 +7951,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -7962,8 +7962,8 @@ shared_examples_for 'null_integerkey_stringvalue' do
     store[-10] = "strval1"
     store[42] = "strval2"
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -7982,7 +7982,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -8002,7 +8002,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8013,8 +8013,8 @@ shared_examples_for 'null_integerkey_stringvalue' do
     store[42] = "strval1"
     store[-10] = "strval2"
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8033,7 +8033,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -8053,7 +8053,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8064,8 +8064,8 @@ shared_examples_for 'null_integerkey_stringvalue' do
     store[-10] = "strval2"
     store[42] = "strval1"
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8084,7 +8084,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -8104,7 +8104,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8115,8 +8115,8 @@ shared_examples_for 'null_integerkey_stringvalue' do
     store[42] = "strval2"
     store[-10] = "strval1"
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8135,7 +8135,7 @@ shared_examples_for 'null_integerkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -8156,7 +8156,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = "strval1"
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -8178,7 +8178,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = "strval1"
     store.delete(-10).should == "strval1"
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -8219,7 +8219,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = "strval1"
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -8241,7 +8241,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = "strval1"
     store.delete(42).should == "strval1"
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -8282,7 +8282,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = "strval2"
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -8304,7 +8304,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = "strval2"
     store.delete(-10).should == "strval2"
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -8345,7 +8345,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = "strval2"
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -8367,7 +8367,7 @@ shared_examples_for 'store_integerkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = "strval2"
     store.delete(42).should == "strval2"
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -8503,7 +8503,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8514,8 +8514,8 @@ shared_examples_for 'null_integerkey_binaryvalue' do
     store[-10] = "über"
     store[42] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8534,7 +8534,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -8554,7 +8554,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8565,8 +8565,8 @@ shared_examples_for 'null_integerkey_binaryvalue' do
     store[42] = "über"
     store[-10] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8585,7 +8585,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -8605,7 +8605,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8616,8 +8616,8 @@ shared_examples_for 'null_integerkey_binaryvalue' do
     store[-10] = "\xAA\xBB\xCC"
     store[42] = "über"
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8636,7 +8636,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -8656,7 +8656,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -8667,8 +8667,8 @@ shared_examples_for 'null_integerkey_binaryvalue' do
     store[42] = "\xAA\xBB\xCC"
     store[-10] = "über"
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -8687,7 +8687,7 @@ shared_examples_for 'null_integerkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -8708,7 +8708,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = "über"
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -8730,7 +8730,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = "über"
     store.delete(-10).should == "über"
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -8771,7 +8771,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = "über"
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -8793,7 +8793,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = "über"
     store.delete(42).should == "über"
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -8834,7 +8834,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = "\xAA\xBB\xCC"
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -8856,7 +8856,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = "\xAA\xBB\xCC"
     store.delete(-10).should == "\xAA\xBB\xCC"
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -8897,7 +8897,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = "\xAA\xBB\xCC"
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -8919,7 +8919,7 @@ shared_examples_for 'store_integerkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = "\xAA\xBB\xCC"
     store.delete(42).should == "\xAA\xBB\xCC"
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -9055,7 +9055,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9066,8 +9066,8 @@ shared_examples_for 'null_integerkey_hashvalue' do
     store[-10] = {"hashval1"=>["array1", 1]}
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9086,7 +9086,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -9106,7 +9106,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9117,8 +9117,8 @@ shared_examples_for 'null_integerkey_hashvalue' do
     store[42] = {"hashval1"=>["array1", 1]}
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9137,7 +9137,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -9157,7 +9157,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9168,8 +9168,8 @@ shared_examples_for 'null_integerkey_hashvalue' do
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[42] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9188,7 +9188,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -9208,7 +9208,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9219,8 +9219,8 @@ shared_examples_for 'null_integerkey_hashvalue' do
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[-10] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9239,7 +9239,7 @@ shared_examples_for 'null_integerkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -9260,7 +9260,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = {"hashval1"=>["array1", 1]}
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -9282,7 +9282,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = {"hashval1"=>["array1", 1]}
     store.delete(-10).should == {"hashval1"=>["array1", 1]}
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -9323,7 +9323,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = {"hashval1"=>["array1", 1]}
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -9345,7 +9345,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = {"hashval1"=>["array1", 1]}
     store.delete(42).should == {"hashval1"=>["array1", 1]}
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -9386,7 +9386,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -9408,7 +9408,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(-10).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -9449,7 +9449,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -9471,7 +9471,7 @@ shared_examples_for 'store_integerkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(42).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -9607,7 +9607,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9618,8 +9618,8 @@ shared_examples_for 'null_integerkey_objectvalue' do
     store[-10] = Value.new(:objval1)
     store[42] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9638,7 +9638,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -9658,7 +9658,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9669,8 +9669,8 @@ shared_examples_for 'null_integerkey_objectvalue' do
     store[42] = Value.new(:objval1)
     store[-10] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9689,7 +9689,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -9709,7 +9709,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9720,8 +9720,8 @@ shared_examples_for 'null_integerkey_objectvalue' do
     store[-10] = Value.new(:objval2)
     store[42] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(-10).should be_false
-    store.key?(42).should be_false
+    store.key?(-10).should be false
+    store.key?(42).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9740,7 +9740,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-10, options).should be_false
+    store.key?(-10, options).should be false
     store.load(-10, options).should be_nil
     store.fetch(-10, 42, options).should == 42
     store.fetch(-10, options) { 42 }.should == 42
@@ -9760,7 +9760,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -9771,8 +9771,8 @@ shared_examples_for 'null_integerkey_objectvalue' do
     store[42] = Value.new(:objval2)
     store[-10] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(42).should be_false
-    store.key?(-10).should be_false
+    store.key?(42).should be false
+    store.key?(-10).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -9791,7 +9791,7 @@ shared_examples_for 'null_integerkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(42, options).should be_false
+    store.key?(42, options).should be false
     store.load(42, options).should be_nil
     store.fetch(42, 42, options).should == 42
     store.fetch(42, options) { 42 }.should == 42
@@ -9812,7 +9812,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = Value.new(:objval1)
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -9834,7 +9834,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = Value.new(:objval1)
     store.delete(-10).should == Value.new(:objval1)
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -9875,7 +9875,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = Value.new(:objval1)
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -9897,7 +9897,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = Value.new(:objval1)
     store.delete(42).should == Value.new(:objval1)
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -9938,7 +9938,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-10] = Value.new(:objval2)
-    store.key?(-10).should be_true
+    store.key?(-10).should be true
   end
 
   it 'stores values with #store' do
@@ -9960,7 +9960,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-10] = Value.new(:objval2)
     store.delete(-10).should == Value.new(:objval2)
-    store.key?(-10).should be_false
+    store.key?(-10).should be false
   end
 
   it 'overwrites existing values' do
@@ -10001,7 +10001,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[42] = Value.new(:objval2)
-    store.key?(42).should be_true
+    store.key?(42).should be true
   end
 
   it 'stores values with #store' do
@@ -10023,7 +10023,7 @@ shared_examples_for 'store_integerkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[42] = Value.new(:objval2)
     store.delete(42).should == Value.new(:objval2)
-    store.key?(42).should be_false
+    store.key?(42).should be false
   end
 
   it 'overwrites existing values' do
@@ -10159,7 +10159,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10170,8 +10170,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[0.5] = ''
     store[-0.3] = nil
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10190,7 +10190,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -10210,7 +10210,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10221,8 +10221,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[-0.3] = ''
     store[0.5] = nil
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10241,7 +10241,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -10261,7 +10261,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10272,8 +10272,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[0.5] = nil
     store[-0.3] = ''
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10292,7 +10292,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -10312,7 +10312,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10323,8 +10323,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[-0.3] = nil
     store[0.5] = ''
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10343,7 +10343,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -10363,7 +10363,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10374,8 +10374,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[0.5] = 0
     store[-0.3] = false
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10394,7 +10394,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -10414,7 +10414,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10425,8 +10425,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[-0.3] = 0
     store[0.5] = false
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10445,7 +10445,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -10465,7 +10465,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10476,8 +10476,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[0.5] = false
     store[-0.3] = 0
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10496,7 +10496,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -10516,7 +10516,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10527,8 +10527,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[-0.3] = false
     store[0.5] = 0
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10547,7 +10547,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -10567,7 +10567,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10578,8 +10578,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[170141183460469231731687303715884105728] = ''
     store[99] = nil
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10598,7 +10598,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -10618,7 +10618,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10629,8 +10629,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[99] = ''
     store[170141183460469231731687303715884105728] = nil
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10649,7 +10649,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -10669,7 +10669,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10680,8 +10680,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[170141183460469231731687303715884105728] = nil
     store[99] = ''
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10700,7 +10700,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -10720,7 +10720,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10731,8 +10731,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[99] = nil
     store[170141183460469231731687303715884105728] = ''
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10751,7 +10751,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -10771,7 +10771,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10782,8 +10782,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[170141183460469231731687303715884105728] = 0
     store[99] = false
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10802,7 +10802,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -10822,7 +10822,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10833,8 +10833,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[99] = 0
     store[170141183460469231731687303715884105728] = false
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10853,7 +10853,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -10873,7 +10873,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10884,8 +10884,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[170141183460469231731687303715884105728] = false
     store[99] = 0
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10904,7 +10904,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -10924,7 +10924,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -10935,8 +10935,8 @@ shared_examples_for 'null_numberkey_nilvalue' do
     store[99] = false
     store[170141183460469231731687303715884105728] = 0
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -10955,7 +10955,7 @@ shared_examples_for 'null_numberkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -10976,7 +10976,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = ''
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -10998,7 +10998,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = ''
     store.delete(0.5).should == ''
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -11028,7 +11028,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = ''
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -11050,7 +11050,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = ''
     store.delete(-0.3).should == ''
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -11080,7 +11080,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = nil
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -11102,7 +11102,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = nil
     store.delete(0.5).should == nil
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -11132,7 +11132,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = nil
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -11154,7 +11154,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = nil
     store.delete(-0.3).should == nil
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -11184,7 +11184,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = 0
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -11206,7 +11206,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = 0
     store.delete(0.5).should == 0
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -11236,7 +11236,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = 0
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -11258,7 +11258,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = 0
     store.delete(-0.3).should == 0
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -11288,7 +11288,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = false
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -11310,7 +11310,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = false
     store.delete(0.5).should == false
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -11340,7 +11340,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = false
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -11362,7 +11362,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = false
     store.delete(-0.3).should == false
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -11392,7 +11392,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = ''
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -11414,7 +11414,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = ''
     store.delete(170141183460469231731687303715884105728).should == ''
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -11444,7 +11444,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = ''
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -11466,7 +11466,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = ''
     store.delete(99).should == ''
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -11496,7 +11496,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = nil
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -11518,7 +11518,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = nil
     store.delete(170141183460469231731687303715884105728).should == nil
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -11548,7 +11548,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = nil
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -11570,7 +11570,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = nil
     store.delete(99).should == nil
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -11600,7 +11600,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 0
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -11622,7 +11622,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = 0
     store.delete(170141183460469231731687303715884105728).should == 0
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -11652,7 +11652,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = 0
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -11674,7 +11674,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = 0
     store.delete(99).should == 0
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -11704,7 +11704,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = false
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -11726,7 +11726,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = false
     store.delete(170141183460469231731687303715884105728).should == false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -11756,7 +11756,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = false
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -11778,7 +11778,7 @@ shared_examples_for 'store_numberkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = false
     store.delete(99).should == false
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -11931,7 +11931,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -11942,8 +11942,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[0.5] = 41
     store[-0.3] = -12
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -11962,7 +11962,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -11982,7 +11982,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -11993,8 +11993,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[-0.3] = 41
     store[0.5] = -12
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12013,7 +12013,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -12033,7 +12033,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12044,8 +12044,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[0.5] = -12
     store[-0.3] = 41
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12064,7 +12064,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -12084,7 +12084,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12095,8 +12095,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[-0.3] = -12
     store[0.5] = 41
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12115,7 +12115,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -12135,7 +12135,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12146,8 +12146,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[170141183460469231731687303715884105728] = 41
     store[99] = -12
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12166,7 +12166,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -12186,7 +12186,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12197,8 +12197,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[99] = 41
     store[170141183460469231731687303715884105728] = -12
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12217,7 +12217,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -12237,7 +12237,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12248,8 +12248,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[170141183460469231731687303715884105728] = -12
     store[99] = 41
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12268,7 +12268,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -12288,7 +12288,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12299,8 +12299,8 @@ shared_examples_for 'null_numberkey_integervalue' do
     store[99] = -12
     store[170141183460469231731687303715884105728] = 41
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12319,7 +12319,7 @@ shared_examples_for 'null_numberkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -12340,7 +12340,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = 41
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -12362,7 +12362,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = 41
     store.delete(0.5).should == 41
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -12403,7 +12403,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = 41
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -12425,7 +12425,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = 41
     store.delete(-0.3).should == 41
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -12466,7 +12466,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = -12
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -12488,7 +12488,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = -12
     store.delete(0.5).should == -12
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -12529,7 +12529,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = -12
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -12551,7 +12551,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = -12
     store.delete(-0.3).should == -12
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -12592,7 +12592,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 41
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -12614,7 +12614,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = 41
     store.delete(170141183460469231731687303715884105728).should == 41
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -12655,7 +12655,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = 41
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -12677,7 +12677,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = 41
     store.delete(99).should == 41
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -12718,7 +12718,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = -12
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -12740,7 +12740,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = -12
     store.delete(170141183460469231731687303715884105728).should == -12
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -12781,7 +12781,7 @@ shared_examples_for 'store_numberkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = -12
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -12803,7 +12803,7 @@ shared_examples_for 'store_numberkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = -12
     store.delete(99).should == -12
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -12911,7 +12911,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12922,8 +12922,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[0.5] = 123.456
     store[-0.3] = -98.7
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12942,7 +12942,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -12962,7 +12962,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -12973,8 +12973,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[-0.3] = 123.456
     store[0.5] = -98.7
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -12993,7 +12993,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -13013,7 +13013,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13024,8 +13024,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[0.5] = -98.7
     store[-0.3] = 123.456
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13044,7 +13044,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -13064,7 +13064,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13075,8 +13075,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[-0.3] = -98.7
     store[0.5] = 123.456
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13095,7 +13095,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -13115,7 +13115,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13126,8 +13126,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[0.5] = 340282366920938463463374607431768211456
     store[-0.3] = 33
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13146,7 +13146,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -13166,7 +13166,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13177,8 +13177,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[-0.3] = 340282366920938463463374607431768211456
     store[0.5] = 33
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13197,7 +13197,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -13217,7 +13217,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13228,8 +13228,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[0.5] = 33
     store[-0.3] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13248,7 +13248,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -13268,7 +13268,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13279,8 +13279,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[-0.3] = 33
     store[0.5] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13299,7 +13299,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -13319,7 +13319,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13330,8 +13330,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[170141183460469231731687303715884105728] = 123.456
     store[99] = -98.7
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13350,7 +13350,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -13370,7 +13370,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13381,8 +13381,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[99] = 123.456
     store[170141183460469231731687303715884105728] = -98.7
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13401,7 +13401,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -13421,7 +13421,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13432,8 +13432,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[170141183460469231731687303715884105728] = -98.7
     store[99] = 123.456
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13452,7 +13452,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -13472,7 +13472,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13483,8 +13483,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[99] = -98.7
     store[170141183460469231731687303715884105728] = 123.456
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13503,7 +13503,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -13523,7 +13523,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13534,8 +13534,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[170141183460469231731687303715884105728] = 340282366920938463463374607431768211456
     store[99] = 33
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13554,7 +13554,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -13574,7 +13574,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13585,8 +13585,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[99] = 340282366920938463463374607431768211456
     store[170141183460469231731687303715884105728] = 33
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13605,7 +13605,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -13625,7 +13625,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13636,8 +13636,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[170141183460469231731687303715884105728] = 33
     store[99] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13656,7 +13656,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -13676,7 +13676,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -13687,8 +13687,8 @@ shared_examples_for 'null_numberkey_numbervalue' do
     store[99] = 33
     store[170141183460469231731687303715884105728] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -13707,7 +13707,7 @@ shared_examples_for 'null_numberkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -13728,7 +13728,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = 123.456
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -13750,7 +13750,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = 123.456
     store.delete(0.5).should == 123.456
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -13791,7 +13791,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = 123.456
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -13813,7 +13813,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = 123.456
     store.delete(-0.3).should == 123.456
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -13854,7 +13854,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = -98.7
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -13876,7 +13876,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = -98.7
     store.delete(0.5).should == -98.7
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -13917,7 +13917,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = -98.7
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -13939,7 +13939,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = -98.7
     store.delete(-0.3).should == -98.7
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -13980,7 +13980,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = 340282366920938463463374607431768211456
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -14002,7 +14002,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = 340282366920938463463374607431768211456
     store.delete(0.5).should == 340282366920938463463374607431768211456
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -14043,7 +14043,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = 340282366920938463463374607431768211456
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -14065,7 +14065,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = 340282366920938463463374607431768211456
     store.delete(-0.3).should == 340282366920938463463374607431768211456
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -14106,7 +14106,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = 33
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -14128,7 +14128,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = 33
     store.delete(0.5).should == 33
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -14169,7 +14169,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = 33
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -14191,7 +14191,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = 33
     store.delete(-0.3).should == 33
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -14232,7 +14232,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 123.456
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -14254,7 +14254,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = 123.456
     store.delete(170141183460469231731687303715884105728).should == 123.456
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -14295,7 +14295,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = 123.456
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -14317,7 +14317,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = 123.456
     store.delete(99).should == 123.456
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -14358,7 +14358,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = -98.7
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -14380,7 +14380,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = -98.7
     store.delete(170141183460469231731687303715884105728).should == -98.7
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -14421,7 +14421,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = -98.7
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -14443,7 +14443,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = -98.7
     store.delete(99).should == -98.7
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -14484,7 +14484,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 340282366920938463463374607431768211456
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -14506,7 +14506,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = 340282366920938463463374607431768211456
     store.delete(170141183460469231731687303715884105728).should == 340282366920938463463374607431768211456
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -14547,7 +14547,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = 340282366920938463463374607431768211456
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -14569,7 +14569,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = 340282366920938463463374607431768211456
     store.delete(99).should == 340282366920938463463374607431768211456
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -14610,7 +14610,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = 33
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -14632,7 +14632,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = 33
     store.delete(170141183460469231731687303715884105728).should == 33
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -14673,7 +14673,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = 33
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -14695,7 +14695,7 @@ shared_examples_for 'store_numberkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = 33
     store.delete(99).should == 33
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -14859,7 +14859,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -14870,8 +14870,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[0.5] = true
     store[-0.3] = false
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -14890,7 +14890,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -14910,7 +14910,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -14921,8 +14921,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[-0.3] = true
     store[0.5] = false
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -14941,7 +14941,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -14961,7 +14961,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -14972,8 +14972,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[0.5] = false
     store[-0.3] = true
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -14992,7 +14992,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -15012,7 +15012,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15023,8 +15023,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[-0.3] = false
     store[0.5] = true
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15043,7 +15043,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -15063,7 +15063,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15074,8 +15074,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[170141183460469231731687303715884105728] = true
     store[99] = false
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15094,7 +15094,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -15114,7 +15114,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15125,8 +15125,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[99] = true
     store[170141183460469231731687303715884105728] = false
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15145,7 +15145,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -15165,7 +15165,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15176,8 +15176,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[170141183460469231731687303715884105728] = false
     store[99] = true
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15196,7 +15196,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -15216,7 +15216,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15227,8 +15227,8 @@ shared_examples_for 'null_numberkey_booleanvalue' do
     store[99] = false
     store[170141183460469231731687303715884105728] = true
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15247,7 +15247,7 @@ shared_examples_for 'null_numberkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -15268,7 +15268,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = true
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -15290,7 +15290,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = true
     store.delete(0.5).should == true
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -15331,7 +15331,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = true
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -15353,7 +15353,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = true
     store.delete(-0.3).should == true
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -15394,7 +15394,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = false
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -15416,7 +15416,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = false
     store.delete(0.5).should == false
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -15457,7 +15457,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = false
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -15479,7 +15479,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = false
     store.delete(-0.3).should == false
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -15520,7 +15520,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = true
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -15542,7 +15542,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = true
     store.delete(170141183460469231731687303715884105728).should == true
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -15583,7 +15583,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = true
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -15605,7 +15605,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = true
     store.delete(99).should == true
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -15646,7 +15646,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = false
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -15668,7 +15668,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = false
     store.delete(170141183460469231731687303715884105728).should == false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -15709,7 +15709,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = false
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -15731,7 +15731,7 @@ shared_examples_for 'store_numberkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = false
     store.delete(99).should == false
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -15839,7 +15839,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15850,8 +15850,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[0.5] = "strval1"
     store[-0.3] = "strval2"
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15870,7 +15870,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -15890,7 +15890,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15901,8 +15901,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[-0.3] = "strval1"
     store[0.5] = "strval2"
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15921,7 +15921,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -15941,7 +15941,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -15952,8 +15952,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[0.5] = "strval2"
     store[-0.3] = "strval1"
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -15972,7 +15972,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -15992,7 +15992,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16003,8 +16003,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[-0.3] = "strval2"
     store[0.5] = "strval1"
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -16023,7 +16023,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -16043,7 +16043,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16054,8 +16054,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[170141183460469231731687303715884105728] = "strval1"
     store[99] = "strval2"
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -16074,7 +16074,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -16094,7 +16094,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16105,8 +16105,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[99] = "strval1"
     store[170141183460469231731687303715884105728] = "strval2"
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -16125,7 +16125,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -16145,7 +16145,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16156,8 +16156,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[170141183460469231731687303715884105728] = "strval2"
     store[99] = "strval1"
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -16176,7 +16176,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -16196,7 +16196,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16207,8 +16207,8 @@ shared_examples_for 'null_numberkey_stringvalue' do
     store[99] = "strval2"
     store[170141183460469231731687303715884105728] = "strval1"
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -16227,7 +16227,7 @@ shared_examples_for 'null_numberkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -16248,7 +16248,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = "strval1"
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -16270,7 +16270,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = "strval1"
     store.delete(0.5).should == "strval1"
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -16311,7 +16311,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = "strval1"
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -16333,7 +16333,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = "strval1"
     store.delete(-0.3).should == "strval1"
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -16374,7 +16374,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = "strval2"
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -16396,7 +16396,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = "strval2"
     store.delete(0.5).should == "strval2"
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -16437,7 +16437,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = "strval2"
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -16459,7 +16459,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = "strval2"
     store.delete(-0.3).should == "strval2"
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -16500,7 +16500,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = "strval1"
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -16522,7 +16522,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = "strval1"
     store.delete(170141183460469231731687303715884105728).should == "strval1"
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -16563,7 +16563,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = "strval1"
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -16585,7 +16585,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = "strval1"
     store.delete(99).should == "strval1"
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -16626,7 +16626,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = "strval2"
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -16648,7 +16648,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = "strval2"
     store.delete(170141183460469231731687303715884105728).should == "strval2"
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -16689,7 +16689,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = "strval2"
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -16711,7 +16711,7 @@ shared_examples_for 'store_numberkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = "strval2"
     store.delete(99).should == "strval2"
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -16923,7 +16923,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16934,8 +16934,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[0.5] = "über"
     store[-0.3] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -16954,7 +16954,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -16974,7 +16974,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -16985,8 +16985,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[-0.3] = "über"
     store[0.5] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17005,7 +17005,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -17025,7 +17025,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -17036,8 +17036,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[0.5] = "\xAA\xBB\xCC"
     store[-0.3] = "über"
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17056,7 +17056,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -17076,7 +17076,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -17087,8 +17087,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[-0.3] = "\xAA\xBB\xCC"
     store[0.5] = "über"
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17107,7 +17107,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -17127,7 +17127,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -17138,8 +17138,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[170141183460469231731687303715884105728] = "über"
     store[99] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17158,7 +17158,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -17178,7 +17178,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -17189,8 +17189,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[99] = "über"
     store[170141183460469231731687303715884105728] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17209,7 +17209,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -17229,7 +17229,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -17240,8 +17240,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[170141183460469231731687303715884105728] = "\xAA\xBB\xCC"
     store[99] = "über"
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17260,7 +17260,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -17280,7 +17280,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -17291,8 +17291,8 @@ shared_examples_for 'null_numberkey_binaryvalue' do
     store[99] = "\xAA\xBB\xCC"
     store[170141183460469231731687303715884105728] = "über"
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -17311,7 +17311,7 @@ shared_examples_for 'null_numberkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -17332,7 +17332,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = "über"
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -17354,7 +17354,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = "über"
     store.delete(0.5).should == "über"
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -17395,7 +17395,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = "über"
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -17417,7 +17417,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = "über"
     store.delete(-0.3).should == "über"
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -17458,7 +17458,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = "\xAA\xBB\xCC"
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -17480,7 +17480,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = "\xAA\xBB\xCC"
     store.delete(0.5).should == "\xAA\xBB\xCC"
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -17521,7 +17521,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = "\xAA\xBB\xCC"
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -17543,7 +17543,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = "\xAA\xBB\xCC"
     store.delete(-0.3).should == "\xAA\xBB\xCC"
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -17584,7 +17584,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = "über"
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -17606,7 +17606,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = "über"
     store.delete(170141183460469231731687303715884105728).should == "über"
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -17647,7 +17647,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = "über"
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -17669,7 +17669,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = "über"
     store.delete(99).should == "über"
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -17710,7 +17710,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = "\xAA\xBB\xCC"
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -17732,7 +17732,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = "\xAA\xBB\xCC"
     store.delete(170141183460469231731687303715884105728).should == "\xAA\xBB\xCC"
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -17773,7 +17773,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = "\xAA\xBB\xCC"
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -17795,7 +17795,7 @@ shared_examples_for 'store_numberkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = "\xAA\xBB\xCC"
     store.delete(99).should == "\xAA\xBB\xCC"
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -18007,7 +18007,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18018,8 +18018,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[0.5] = {"hashval1"=>["array1", 1]}
     store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18038,7 +18038,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -18058,7 +18058,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18069,8 +18069,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[-0.3] = {"hashval1"=>["array1", 1]}
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18089,7 +18089,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -18109,7 +18109,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18120,8 +18120,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[-0.3] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18140,7 +18140,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -18160,7 +18160,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18171,8 +18171,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[0.5] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18191,7 +18191,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -18211,7 +18211,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18222,8 +18222,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[170141183460469231731687303715884105728] = {"hashval1"=>["array1", 1]}
     store[99] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18242,7 +18242,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -18262,7 +18262,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18273,8 +18273,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[99] = {"hashval1"=>["array1", 1]}
     store[170141183460469231731687303715884105728] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18293,7 +18293,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -18313,7 +18313,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18324,8 +18324,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[170141183460469231731687303715884105728] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[99] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18344,7 +18344,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -18364,7 +18364,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -18375,8 +18375,8 @@ shared_examples_for 'null_numberkey_hashvalue' do
     store[99] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[170141183460469231731687303715884105728] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -18395,7 +18395,7 @@ shared_examples_for 'null_numberkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -18416,7 +18416,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = {"hashval1"=>["array1", 1]}
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -18438,7 +18438,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = {"hashval1"=>["array1", 1]}
     store.delete(0.5).should == {"hashval1"=>["array1", 1]}
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -18479,7 +18479,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = {"hashval1"=>["array1", 1]}
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -18501,7 +18501,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = {"hashval1"=>["array1", 1]}
     store.delete(-0.3).should == {"hashval1"=>["array1", 1]}
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -18542,7 +18542,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -18564,7 +18564,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(0.5).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -18605,7 +18605,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -18627,7 +18627,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(-0.3).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -18668,7 +18668,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = {"hashval1"=>["array1", 1]}
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -18690,7 +18690,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = {"hashval1"=>["array1", 1]}
     store.delete(170141183460469231731687303715884105728).should == {"hashval1"=>["array1", 1]}
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -18731,7 +18731,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = {"hashval1"=>["array1", 1]}
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -18753,7 +18753,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = {"hashval1"=>["array1", 1]}
     store.delete(99).should == {"hashval1"=>["array1", 1]}
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -18794,7 +18794,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -18816,7 +18816,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(170141183460469231731687303715884105728).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -18857,7 +18857,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -18879,7 +18879,7 @@ shared_examples_for 'store_numberkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(99).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -19091,7 +19091,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19102,8 +19102,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[0.5] = Value.new(:objval1)
     store[-0.3] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19122,7 +19122,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -19142,7 +19142,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19153,8 +19153,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[-0.3] = Value.new(:objval1)
     store[0.5] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19173,7 +19173,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -19193,7 +19193,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19204,8 +19204,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[0.5] = Value.new(:objval2)
     store[-0.3] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(0.5).should be_false
-    store.key?(-0.3).should be_false
+    store.key?(0.5).should be false
+    store.key?(-0.3).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19224,7 +19224,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(0.5, options).should be_false
+    store.key?(0.5, options).should be false
     store.load(0.5, options).should be_nil
     store.fetch(0.5, 42, options).should == 42
     store.fetch(0.5, options) { 42 }.should == 42
@@ -19244,7 +19244,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19255,8 +19255,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[-0.3] = Value.new(:objval2)
     store[0.5] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(-0.3).should be_false
-    store.key?(0.5).should be_false
+    store.key?(-0.3).should be false
+    store.key?(0.5).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19275,7 +19275,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(-0.3, options).should be_false
+    store.key?(-0.3, options).should be false
     store.load(-0.3, options).should be_nil
     store.fetch(-0.3, 42, options).should == 42
     store.fetch(-0.3, options) { 42 }.should == 42
@@ -19295,7 +19295,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19306,8 +19306,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[170141183460469231731687303715884105728] = Value.new(:objval1)
     store[99] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19326,7 +19326,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -19346,7 +19346,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19357,8 +19357,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[99] = Value.new(:objval1)
     store[170141183460469231731687303715884105728] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19377,7 +19377,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -19397,7 +19397,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19408,8 +19408,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[170141183460469231731687303715884105728] = Value.new(:objval2)
     store[99] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(170141183460469231731687303715884105728).should be_false
-    store.key?(99).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
+    store.key?(99).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19428,7 +19428,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(170141183460469231731687303715884105728, options).should be_false
+    store.key?(170141183460469231731687303715884105728, options).should be false
     store.load(170141183460469231731687303715884105728, options).should be_nil
     store.fetch(170141183460469231731687303715884105728, 42, options).should == 42
     store.fetch(170141183460469231731687303715884105728, options) { 42 }.should == 42
@@ -19448,7 +19448,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -19459,8 +19459,8 @@ shared_examples_for 'null_numberkey_objectvalue' do
     store[99] = Value.new(:objval2)
     store[170141183460469231731687303715884105728] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(99).should be_false
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(99).should be false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -19479,7 +19479,7 @@ shared_examples_for 'null_numberkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(99, options).should be_false
+    store.key?(99, options).should be false
     store.load(99, options).should be_nil
     store.fetch(99, 42, options).should == 42
     store.fetch(99, options) { 42 }.should == 42
@@ -19500,7 +19500,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = Value.new(:objval1)
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -19522,7 +19522,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = Value.new(:objval1)
     store.delete(0.5).should == Value.new(:objval1)
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -19563,7 +19563,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = Value.new(:objval1)
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -19585,7 +19585,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = Value.new(:objval1)
     store.delete(-0.3).should == Value.new(:objval1)
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -19626,7 +19626,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[0.5] = Value.new(:objval2)
-    store.key?(0.5).should be_true
+    store.key?(0.5).should be true
   end
 
   it 'stores values with #store' do
@@ -19648,7 +19648,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[0.5] = Value.new(:objval2)
     store.delete(0.5).should == Value.new(:objval2)
-    store.key?(0.5).should be_false
+    store.key?(0.5).should be false
   end
 
   it 'overwrites existing values' do
@@ -19689,7 +19689,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[-0.3] = Value.new(:objval2)
-    store.key?(-0.3).should be_true
+    store.key?(-0.3).should be true
   end
 
   it 'stores values with #store' do
@@ -19711,7 +19711,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[-0.3] = Value.new(:objval2)
     store.delete(-0.3).should == Value.new(:objval2)
-    store.key?(-0.3).should be_false
+    store.key?(-0.3).should be false
   end
 
   it 'overwrites existing values' do
@@ -19752,7 +19752,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = Value.new(:objval1)
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -19774,7 +19774,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = Value.new(:objval1)
     store.delete(170141183460469231731687303715884105728).should == Value.new(:objval1)
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -19815,7 +19815,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = Value.new(:objval1)
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -19837,7 +19837,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = Value.new(:objval1)
     store.delete(99).should == Value.new(:objval1)
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -19878,7 +19878,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[170141183460469231731687303715884105728] = Value.new(:objval2)
-    store.key?(170141183460469231731687303715884105728).should be_true
+    store.key?(170141183460469231731687303715884105728).should be true
   end
 
   it 'stores values with #store' do
@@ -19900,7 +19900,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[170141183460469231731687303715884105728] = Value.new(:objval2)
     store.delete(170141183460469231731687303715884105728).should == Value.new(:objval2)
-    store.key?(170141183460469231731687303715884105728).should be_false
+    store.key?(170141183460469231731687303715884105728).should be false
   end
 
   it 'overwrites existing values' do
@@ -19941,7 +19941,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[99] = Value.new(:objval2)
-    store.key?(99).should be_true
+    store.key?(99).should be true
   end
 
   it 'stores values with #store' do
@@ -19963,7 +19963,7 @@ shared_examples_for 'store_numberkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[99] = Value.new(:objval2)
     store.delete(99).should == Value.new(:objval2)
-    store.key?(99).should be_false
+    store.key?(99).should be false
   end
 
   it 'overwrites existing values' do
@@ -20175,7 +20175,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20186,8 +20186,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[true] = ''
     store[false] = nil
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20206,7 +20206,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -20226,7 +20226,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20237,8 +20237,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[false] = ''
     store[true] = nil
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20257,7 +20257,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -20277,7 +20277,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20288,8 +20288,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[true] = nil
     store[false] = ''
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20308,7 +20308,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -20328,7 +20328,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20339,8 +20339,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[false] = nil
     store[true] = ''
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20359,7 +20359,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -20379,7 +20379,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20390,8 +20390,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[true] = 0
     store[false] = false
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20410,7 +20410,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -20430,7 +20430,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20441,8 +20441,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[false] = 0
     store[true] = false
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20461,7 +20461,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -20481,7 +20481,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20492,8 +20492,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[true] = false
     store[false] = 0
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20512,7 +20512,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -20532,7 +20532,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -20543,8 +20543,8 @@ shared_examples_for 'null_booleankey_nilvalue' do
     store[false] = false
     store[true] = 0
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -20563,7 +20563,7 @@ shared_examples_for 'null_booleankey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -20584,7 +20584,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = ''
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -20606,7 +20606,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = ''
     store.delete(true).should == ''
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -20636,7 +20636,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = ''
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -20658,7 +20658,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = ''
     store.delete(false).should == ''
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -20688,7 +20688,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = nil
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -20710,7 +20710,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = nil
     store.delete(true).should == nil
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -20740,7 +20740,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = nil
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -20762,7 +20762,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = nil
     store.delete(false).should == nil
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -20792,7 +20792,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = 0
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -20814,7 +20814,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = 0
     store.delete(true).should == 0
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -20844,7 +20844,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = 0
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -20866,7 +20866,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = 0
     store.delete(false).should == 0
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -20896,7 +20896,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = false
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -20918,7 +20918,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = false
     store.delete(true).should == false
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -20948,7 +20948,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = false
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -20970,7 +20970,7 @@ shared_examples_for 'store_booleankey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = false
     store.delete(false).should == false
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -21067,7 +21067,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21078,8 +21078,8 @@ shared_examples_for 'null_booleankey_integervalue' do
     store[true] = 41
     store[false] = -12
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21098,7 +21098,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -21118,7 +21118,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21129,8 +21129,8 @@ shared_examples_for 'null_booleankey_integervalue' do
     store[false] = 41
     store[true] = -12
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21149,7 +21149,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -21169,7 +21169,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21180,8 +21180,8 @@ shared_examples_for 'null_booleankey_integervalue' do
     store[true] = -12
     store[false] = 41
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21200,7 +21200,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -21220,7 +21220,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21231,8 +21231,8 @@ shared_examples_for 'null_booleankey_integervalue' do
     store[false] = -12
     store[true] = 41
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21251,7 +21251,7 @@ shared_examples_for 'null_booleankey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -21272,7 +21272,7 @@ shared_examples_for 'store_booleankey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = 41
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -21294,7 +21294,7 @@ shared_examples_for 'store_booleankey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = 41
     store.delete(true).should == 41
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -21335,7 +21335,7 @@ shared_examples_for 'store_booleankey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = 41
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -21357,7 +21357,7 @@ shared_examples_for 'store_booleankey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = 41
     store.delete(false).should == 41
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -21398,7 +21398,7 @@ shared_examples_for 'store_booleankey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = -12
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -21420,7 +21420,7 @@ shared_examples_for 'store_booleankey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = -12
     store.delete(true).should == -12
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -21461,7 +21461,7 @@ shared_examples_for 'store_booleankey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = -12
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -21483,7 +21483,7 @@ shared_examples_for 'store_booleankey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = -12
     store.delete(false).should == -12
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -21563,7 +21563,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21574,8 +21574,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[true] = 123.456
     store[false] = -98.7
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21594,7 +21594,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -21614,7 +21614,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21625,8 +21625,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[false] = 123.456
     store[true] = -98.7
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21645,7 +21645,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -21665,7 +21665,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21676,8 +21676,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[true] = -98.7
     store[false] = 123.456
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21696,7 +21696,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -21716,7 +21716,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21727,8 +21727,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[false] = -98.7
     store[true] = 123.456
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21747,7 +21747,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -21767,7 +21767,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21778,8 +21778,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[true] = 340282366920938463463374607431768211456
     store[false] = 33
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21798,7 +21798,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -21818,7 +21818,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21829,8 +21829,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[false] = 340282366920938463463374607431768211456
     store[true] = 33
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21849,7 +21849,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -21869,7 +21869,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21880,8 +21880,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[true] = 33
     store[false] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21900,7 +21900,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -21920,7 +21920,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -21931,8 +21931,8 @@ shared_examples_for 'null_booleankey_numbervalue' do
     store[false] = 33
     store[true] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -21951,7 +21951,7 @@ shared_examples_for 'null_booleankey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -21972,7 +21972,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = 123.456
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -21994,7 +21994,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = 123.456
     store.delete(true).should == 123.456
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -22035,7 +22035,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = 123.456
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -22057,7 +22057,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = 123.456
     store.delete(false).should == 123.456
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -22098,7 +22098,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = -98.7
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -22120,7 +22120,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = -98.7
     store.delete(true).should == -98.7
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -22161,7 +22161,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = -98.7
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -22183,7 +22183,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = -98.7
     store.delete(false).should == -98.7
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -22224,7 +22224,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = 340282366920938463463374607431768211456
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -22246,7 +22246,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = 340282366920938463463374607431768211456
     store.delete(true).should == 340282366920938463463374607431768211456
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -22287,7 +22287,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = 340282366920938463463374607431768211456
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -22309,7 +22309,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = 340282366920938463463374607431768211456
     store.delete(false).should == 340282366920938463463374607431768211456
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -22350,7 +22350,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = 33
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -22372,7 +22372,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = 33
     store.delete(true).should == 33
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -22413,7 +22413,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = 33
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -22435,7 +22435,7 @@ shared_examples_for 'store_booleankey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = 33
     store.delete(false).should == 33
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -22543,7 +22543,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -22554,8 +22554,8 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     store[true] = true
     store[false] = false
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -22574,7 +22574,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -22594,7 +22594,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -22605,8 +22605,8 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     store[false] = true
     store[true] = false
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -22625,7 +22625,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -22645,7 +22645,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -22656,8 +22656,8 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     store[true] = false
     store[false] = true
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -22676,7 +22676,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -22696,7 +22696,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -22707,8 +22707,8 @@ shared_examples_for 'null_booleankey_booleanvalue' do
     store[false] = false
     store[true] = true
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -22727,7 +22727,7 @@ shared_examples_for 'null_booleankey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -22748,7 +22748,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = true
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -22770,7 +22770,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = true
     store.delete(true).should == true
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -22811,7 +22811,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = true
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -22833,7 +22833,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = true
     store.delete(false).should == true
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -22874,7 +22874,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = false
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -22896,7 +22896,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = false
     store.delete(true).should == false
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -22937,7 +22937,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = false
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -22959,7 +22959,7 @@ shared_examples_for 'store_booleankey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = false
     store.delete(false).should == false
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -23039,7 +23039,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23050,8 +23050,8 @@ shared_examples_for 'null_booleankey_stringvalue' do
     store[true] = "strval1"
     store[false] = "strval2"
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23070,7 +23070,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -23090,7 +23090,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23101,8 +23101,8 @@ shared_examples_for 'null_booleankey_stringvalue' do
     store[false] = "strval1"
     store[true] = "strval2"
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23121,7 +23121,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -23141,7 +23141,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23152,8 +23152,8 @@ shared_examples_for 'null_booleankey_stringvalue' do
     store[true] = "strval2"
     store[false] = "strval1"
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23172,7 +23172,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -23192,7 +23192,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23203,8 +23203,8 @@ shared_examples_for 'null_booleankey_stringvalue' do
     store[false] = "strval2"
     store[true] = "strval1"
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23223,7 +23223,7 @@ shared_examples_for 'null_booleankey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -23244,7 +23244,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = "strval1"
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -23266,7 +23266,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = "strval1"
     store.delete(true).should == "strval1"
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -23307,7 +23307,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = "strval1"
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -23329,7 +23329,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = "strval1"
     store.delete(false).should == "strval1"
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -23370,7 +23370,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = "strval2"
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -23392,7 +23392,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = "strval2"
     store.delete(true).should == "strval2"
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -23433,7 +23433,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = "strval2"
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -23455,7 +23455,7 @@ shared_examples_for 'store_booleankey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = "strval2"
     store.delete(false).should == "strval2"
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -23591,7 +23591,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23602,8 +23602,8 @@ shared_examples_for 'null_booleankey_binaryvalue' do
     store[true] = "über"
     store[false] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23622,7 +23622,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -23642,7 +23642,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23653,8 +23653,8 @@ shared_examples_for 'null_booleankey_binaryvalue' do
     store[false] = "über"
     store[true] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23673,7 +23673,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -23693,7 +23693,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23704,8 +23704,8 @@ shared_examples_for 'null_booleankey_binaryvalue' do
     store[true] = "\xAA\xBB\xCC"
     store[false] = "über"
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23724,7 +23724,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -23744,7 +23744,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -23755,8 +23755,8 @@ shared_examples_for 'null_booleankey_binaryvalue' do
     store[false] = "\xAA\xBB\xCC"
     store[true] = "über"
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -23775,7 +23775,7 @@ shared_examples_for 'null_booleankey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -23796,7 +23796,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = "über"
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -23818,7 +23818,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = "über"
     store.delete(true).should == "über"
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -23859,7 +23859,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = "über"
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -23881,7 +23881,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = "über"
     store.delete(false).should == "über"
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -23922,7 +23922,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = "\xAA\xBB\xCC"
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -23944,7 +23944,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = "\xAA\xBB\xCC"
     store.delete(true).should == "\xAA\xBB\xCC"
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -23985,7 +23985,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = "\xAA\xBB\xCC"
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -24007,7 +24007,7 @@ shared_examples_for 'store_booleankey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = "\xAA\xBB\xCC"
     store.delete(false).should == "\xAA\xBB\xCC"
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -24143,7 +24143,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24154,8 +24154,8 @@ shared_examples_for 'null_booleankey_hashvalue' do
     store[true] = {"hashval1"=>["array1", 1]}
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24174,7 +24174,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -24194,7 +24194,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24205,8 +24205,8 @@ shared_examples_for 'null_booleankey_hashvalue' do
     store[false] = {"hashval1"=>["array1", 1]}
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24225,7 +24225,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -24245,7 +24245,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24256,8 +24256,8 @@ shared_examples_for 'null_booleankey_hashvalue' do
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[false] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24276,7 +24276,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -24296,7 +24296,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24307,8 +24307,8 @@ shared_examples_for 'null_booleankey_hashvalue' do
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[true] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24327,7 +24327,7 @@ shared_examples_for 'null_booleankey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -24348,7 +24348,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = {"hashval1"=>["array1", 1]}
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -24370,7 +24370,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = {"hashval1"=>["array1", 1]}
     store.delete(true).should == {"hashval1"=>["array1", 1]}
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -24411,7 +24411,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = {"hashval1"=>["array1", 1]}
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -24433,7 +24433,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = {"hashval1"=>["array1", 1]}
     store.delete(false).should == {"hashval1"=>["array1", 1]}
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -24474,7 +24474,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -24496,7 +24496,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(true).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -24537,7 +24537,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -24559,7 +24559,7 @@ shared_examples_for 'store_booleankey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(false).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -24695,7 +24695,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24706,8 +24706,8 @@ shared_examples_for 'null_booleankey_objectvalue' do
     store[true] = Value.new(:objval1)
     store[false] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24726,7 +24726,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -24746,7 +24746,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24757,8 +24757,8 @@ shared_examples_for 'null_booleankey_objectvalue' do
     store[false] = Value.new(:objval1)
     store[true] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24777,7 +24777,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -24797,7 +24797,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24808,8 +24808,8 @@ shared_examples_for 'null_booleankey_objectvalue' do
     store[true] = Value.new(:objval2)
     store[false] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(true).should be_false
-    store.key?(false).should be_false
+    store.key?(true).should be false
+    store.key?(false).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24828,7 +24828,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(true, options).should be_false
+    store.key?(true, options).should be false
     store.load(true, options).should be_nil
     store.fetch(true, 42, options).should == 42
     store.fetch(true, options) { 42 }.should == 42
@@ -24848,7 +24848,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -24859,8 +24859,8 @@ shared_examples_for 'null_booleankey_objectvalue' do
     store[false] = Value.new(:objval2)
     store[true] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(false).should be_false
-    store.key?(true).should be_false
+    store.key?(false).should be false
+    store.key?(true).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -24879,7 +24879,7 @@ shared_examples_for 'null_booleankey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(false, options).should be_false
+    store.key?(false, options).should be false
     store.load(false, options).should be_nil
     store.fetch(false, 42, options).should == 42
     store.fetch(false, options) { 42 }.should == 42
@@ -24900,7 +24900,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = Value.new(:objval1)
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -24922,7 +24922,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = Value.new(:objval1)
     store.delete(true).should == Value.new(:objval1)
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -24963,7 +24963,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = Value.new(:objval1)
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -24985,7 +24985,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = Value.new(:objval1)
     store.delete(false).should == Value.new(:objval1)
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -25026,7 +25026,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[true] = Value.new(:objval2)
-    store.key?(true).should be_true
+    store.key?(true).should be true
   end
 
   it 'stores values with #store' do
@@ -25048,7 +25048,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[true] = Value.new(:objval2)
     store.delete(true).should == Value.new(:objval2)
-    store.key?(true).should be_false
+    store.key?(true).should be false
   end
 
   it 'overwrites existing values' do
@@ -25089,7 +25089,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[false] = Value.new(:objval2)
-    store.key?(false).should be_true
+    store.key?(false).should be true
   end
 
   it 'stores values with #store' do
@@ -25111,7 +25111,7 @@ shared_examples_for 'store_booleankey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[false] = Value.new(:objval2)
     store.delete(false).should == Value.new(:objval2)
-    store.key?(false).should be_false
+    store.key?(false).should be false
   end
 
   it 'overwrites existing values' do
@@ -25247,7 +25247,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25258,8 +25258,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey1"] = ''
     store["strkey2"] = nil
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25278,7 +25278,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -25298,7 +25298,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25309,8 +25309,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey2"] = ''
     store["strkey1"] = nil
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25329,7 +25329,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -25349,7 +25349,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25360,8 +25360,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey1"] = nil
     store["strkey2"] = ''
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25380,7 +25380,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -25400,7 +25400,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25411,8 +25411,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey2"] = nil
     store["strkey1"] = ''
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25431,7 +25431,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -25451,7 +25451,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25462,8 +25462,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey1"] = 0
     store["strkey2"] = false
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25482,7 +25482,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -25502,7 +25502,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25513,8 +25513,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey2"] = 0
     store["strkey1"] = false
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25533,7 +25533,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -25553,7 +25553,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25564,8 +25564,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey1"] = false
     store["strkey2"] = 0
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25584,7 +25584,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -25604,7 +25604,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -25615,8 +25615,8 @@ shared_examples_for 'null_stringkey_nilvalue' do
     store["strkey2"] = false
     store["strkey1"] = 0
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -25635,7 +25635,7 @@ shared_examples_for 'null_stringkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -25656,7 +25656,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = ''
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -25678,7 +25678,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = ''
     store.delete("strkey1").should == ''
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -25708,7 +25708,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = ''
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -25730,7 +25730,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = ''
     store.delete("strkey2").should == ''
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -25760,7 +25760,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = nil
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -25782,7 +25782,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = nil
     store.delete("strkey1").should == nil
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -25812,7 +25812,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = nil
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -25834,7 +25834,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = nil
     store.delete("strkey2").should == nil
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -25864,7 +25864,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = 0
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -25886,7 +25886,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = 0
     store.delete("strkey1").should == 0
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -25916,7 +25916,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = 0
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -25938,7 +25938,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = 0
     store.delete("strkey2").should == 0
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -25968,7 +25968,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = false
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -25990,7 +25990,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = false
     store.delete("strkey1").should == false
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -26020,7 +26020,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = false
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -26042,7 +26042,7 @@ shared_examples_for 'store_stringkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = false
     store.delete("strkey2").should == false
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -26139,7 +26139,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26150,8 +26150,8 @@ shared_examples_for 'null_stringkey_integervalue' do
     store["strkey1"] = 41
     store["strkey2"] = -12
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26170,7 +26170,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -26190,7 +26190,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26201,8 +26201,8 @@ shared_examples_for 'null_stringkey_integervalue' do
     store["strkey2"] = 41
     store["strkey1"] = -12
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26221,7 +26221,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -26241,7 +26241,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26252,8 +26252,8 @@ shared_examples_for 'null_stringkey_integervalue' do
     store["strkey1"] = -12
     store["strkey2"] = 41
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26272,7 +26272,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -26292,7 +26292,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26303,8 +26303,8 @@ shared_examples_for 'null_stringkey_integervalue' do
     store["strkey2"] = -12
     store["strkey1"] = 41
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26323,7 +26323,7 @@ shared_examples_for 'null_stringkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -26344,7 +26344,7 @@ shared_examples_for 'store_stringkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = 41
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -26366,7 +26366,7 @@ shared_examples_for 'store_stringkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = 41
     store.delete("strkey1").should == 41
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -26407,7 +26407,7 @@ shared_examples_for 'store_stringkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = 41
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -26429,7 +26429,7 @@ shared_examples_for 'store_stringkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = 41
     store.delete("strkey2").should == 41
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -26470,7 +26470,7 @@ shared_examples_for 'store_stringkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = -12
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -26492,7 +26492,7 @@ shared_examples_for 'store_stringkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = -12
     store.delete("strkey1").should == -12
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -26533,7 +26533,7 @@ shared_examples_for 'store_stringkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = -12
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -26555,7 +26555,7 @@ shared_examples_for 'store_stringkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = -12
     store.delete("strkey2").should == -12
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -26635,7 +26635,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26646,8 +26646,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey1"] = 123.456
     store["strkey2"] = -98.7
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26666,7 +26666,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -26686,7 +26686,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26697,8 +26697,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey2"] = 123.456
     store["strkey1"] = -98.7
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26717,7 +26717,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -26737,7 +26737,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26748,8 +26748,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey1"] = -98.7
     store["strkey2"] = 123.456
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26768,7 +26768,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -26788,7 +26788,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26799,8 +26799,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey2"] = -98.7
     store["strkey1"] = 123.456
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26819,7 +26819,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -26839,7 +26839,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26850,8 +26850,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey1"] = 340282366920938463463374607431768211456
     store["strkey2"] = 33
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26870,7 +26870,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -26890,7 +26890,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26901,8 +26901,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey2"] = 340282366920938463463374607431768211456
     store["strkey1"] = 33
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26921,7 +26921,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -26941,7 +26941,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -26952,8 +26952,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey1"] = 33
     store["strkey2"] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -26972,7 +26972,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -26992,7 +26992,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -27003,8 +27003,8 @@ shared_examples_for 'null_stringkey_numbervalue' do
     store["strkey2"] = 33
     store["strkey1"] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -27023,7 +27023,7 @@ shared_examples_for 'null_stringkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -27044,7 +27044,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = 123.456
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -27066,7 +27066,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = 123.456
     store.delete("strkey1").should == 123.456
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -27107,7 +27107,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = 123.456
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -27129,7 +27129,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = 123.456
     store.delete("strkey2").should == 123.456
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -27170,7 +27170,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = -98.7
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -27192,7 +27192,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = -98.7
     store.delete("strkey1").should == -98.7
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -27233,7 +27233,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = -98.7
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -27255,7 +27255,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = -98.7
     store.delete("strkey2").should == -98.7
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -27296,7 +27296,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = 340282366920938463463374607431768211456
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -27318,7 +27318,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = 340282366920938463463374607431768211456
     store.delete("strkey1").should == 340282366920938463463374607431768211456
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -27359,7 +27359,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = 340282366920938463463374607431768211456
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -27381,7 +27381,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = 340282366920938463463374607431768211456
     store.delete("strkey2").should == 340282366920938463463374607431768211456
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -27422,7 +27422,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = 33
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -27444,7 +27444,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = 33
     store.delete("strkey1").should == 33
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -27485,7 +27485,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = 33
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -27507,7 +27507,7 @@ shared_examples_for 'store_stringkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = 33
     store.delete("strkey2").should == 33
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -27615,7 +27615,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -27626,8 +27626,8 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     store["strkey1"] = true
     store["strkey2"] = false
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -27646,7 +27646,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -27666,7 +27666,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -27677,8 +27677,8 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     store["strkey2"] = true
     store["strkey1"] = false
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -27697,7 +27697,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -27717,7 +27717,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -27728,8 +27728,8 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     store["strkey1"] = false
     store["strkey2"] = true
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -27748,7 +27748,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -27768,7 +27768,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -27779,8 +27779,8 @@ shared_examples_for 'null_stringkey_booleanvalue' do
     store["strkey2"] = false
     store["strkey1"] = true
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -27799,7 +27799,7 @@ shared_examples_for 'null_stringkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -27820,7 +27820,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = true
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -27842,7 +27842,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = true
     store.delete("strkey1").should == true
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -27883,7 +27883,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = true
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -27905,7 +27905,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = true
     store.delete("strkey2").should == true
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -27946,7 +27946,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = false
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -27968,7 +27968,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = false
     store.delete("strkey1").should == false
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -28009,7 +28009,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = false
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -28031,7 +28031,7 @@ shared_examples_for 'store_stringkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = false
     store.delete("strkey2").should == false
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -28111,7 +28111,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28122,8 +28122,8 @@ shared_examples_for 'null_stringkey_stringvalue' do
     store["strkey1"] = "strval1"
     store["strkey2"] = "strval2"
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28142,7 +28142,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -28162,7 +28162,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28173,8 +28173,8 @@ shared_examples_for 'null_stringkey_stringvalue' do
     store["strkey2"] = "strval1"
     store["strkey1"] = "strval2"
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28193,7 +28193,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -28213,7 +28213,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28224,8 +28224,8 @@ shared_examples_for 'null_stringkey_stringvalue' do
     store["strkey1"] = "strval2"
     store["strkey2"] = "strval1"
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28244,7 +28244,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -28264,7 +28264,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28275,8 +28275,8 @@ shared_examples_for 'null_stringkey_stringvalue' do
     store["strkey2"] = "strval2"
     store["strkey1"] = "strval1"
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28295,7 +28295,7 @@ shared_examples_for 'null_stringkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -28316,7 +28316,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = "strval1"
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -28338,7 +28338,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = "strval1"
     store.delete("strkey1").should == "strval1"
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -28379,7 +28379,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = "strval1"
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -28401,7 +28401,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = "strval1"
     store.delete("strkey2").should == "strval1"
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -28442,7 +28442,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = "strval2"
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -28464,7 +28464,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = "strval2"
     store.delete("strkey1").should == "strval2"
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -28505,7 +28505,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = "strval2"
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -28527,7 +28527,7 @@ shared_examples_for 'store_stringkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = "strval2"
     store.delete("strkey2").should == "strval2"
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -28663,7 +28663,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28674,8 +28674,8 @@ shared_examples_for 'null_stringkey_binaryvalue' do
     store["strkey1"] = "über"
     store["strkey2"] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28694,7 +28694,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -28714,7 +28714,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28725,8 +28725,8 @@ shared_examples_for 'null_stringkey_binaryvalue' do
     store["strkey2"] = "über"
     store["strkey1"] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28745,7 +28745,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -28765,7 +28765,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28776,8 +28776,8 @@ shared_examples_for 'null_stringkey_binaryvalue' do
     store["strkey1"] = "\xAA\xBB\xCC"
     store["strkey2"] = "über"
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28796,7 +28796,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -28816,7 +28816,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -28827,8 +28827,8 @@ shared_examples_for 'null_stringkey_binaryvalue' do
     store["strkey2"] = "\xAA\xBB\xCC"
     store["strkey1"] = "über"
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -28847,7 +28847,7 @@ shared_examples_for 'null_stringkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -28868,7 +28868,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = "über"
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -28890,7 +28890,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = "über"
     store.delete("strkey1").should == "über"
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -28931,7 +28931,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = "über"
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -28953,7 +28953,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = "über"
     store.delete("strkey2").should == "über"
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -28994,7 +28994,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = "\xAA\xBB\xCC"
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -29016,7 +29016,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = "\xAA\xBB\xCC"
     store.delete("strkey1").should == "\xAA\xBB\xCC"
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -29057,7 +29057,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = "\xAA\xBB\xCC"
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -29079,7 +29079,7 @@ shared_examples_for 'store_stringkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = "\xAA\xBB\xCC"
     store.delete("strkey2").should == "\xAA\xBB\xCC"
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -29215,7 +29215,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29226,8 +29226,8 @@ shared_examples_for 'null_stringkey_hashvalue' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29246,7 +29246,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -29266,7 +29266,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29277,8 +29277,8 @@ shared_examples_for 'null_stringkey_hashvalue' do
     store["strkey2"] = {"hashval1"=>["array1", 1]}
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29297,7 +29297,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -29317,7 +29317,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29328,8 +29328,8 @@ shared_examples_for 'null_stringkey_hashvalue' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["strkey2"] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29348,7 +29348,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -29368,7 +29368,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29379,8 +29379,8 @@ shared_examples_for 'null_stringkey_hashvalue' do
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29399,7 +29399,7 @@ shared_examples_for 'null_stringkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -29420,7 +29420,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -29442,7 +29442,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = {"hashval1"=>["array1", 1]}
     store.delete("strkey1").should == {"hashval1"=>["array1", 1]}
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -29483,7 +29483,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = {"hashval1"=>["array1", 1]}
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -29505,7 +29505,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = {"hashval1"=>["array1", 1]}
     store.delete("strkey2").should == {"hashval1"=>["array1", 1]}
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -29546,7 +29546,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -29568,7 +29568,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete("strkey1").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -29609,7 +29609,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -29631,7 +29631,7 @@ shared_examples_for 'store_stringkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete("strkey2").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -29767,7 +29767,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29778,8 +29778,8 @@ shared_examples_for 'null_stringkey_objectvalue' do
     store["strkey1"] = Value.new(:objval1)
     store["strkey2"] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29798,7 +29798,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -29818,7 +29818,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29829,8 +29829,8 @@ shared_examples_for 'null_stringkey_objectvalue' do
     store["strkey2"] = Value.new(:objval1)
     store["strkey1"] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29849,7 +29849,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -29869,7 +29869,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29880,8 +29880,8 @@ shared_examples_for 'null_stringkey_objectvalue' do
     store["strkey1"] = Value.new(:objval2)
     store["strkey2"] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?("strkey1").should be_false
-    store.key?("strkey2").should be_false
+    store.key?("strkey1").should be false
+    store.key?("strkey2").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29900,7 +29900,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey1", options).should be_false
+    store.key?("strkey1", options).should be false
     store.load("strkey1", options).should be_nil
     store.fetch("strkey1", 42, options).should == 42
     store.fetch("strkey1", options) { 42 }.should == 42
@@ -29920,7 +29920,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -29931,8 +29931,8 @@ shared_examples_for 'null_stringkey_objectvalue' do
     store["strkey2"] = Value.new(:objval2)
     store["strkey1"] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?("strkey2").should be_false
-    store.key?("strkey1").should be_false
+    store.key?("strkey2").should be false
+    store.key?("strkey1").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -29951,7 +29951,7 @@ shared_examples_for 'null_stringkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("strkey2", options).should be_false
+    store.key?("strkey2", options).should be false
     store.load("strkey2", options).should be_nil
     store.fetch("strkey2", 42, options).should == 42
     store.fetch("strkey2", options) { 42 }.should == 42
@@ -29972,7 +29972,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = Value.new(:objval1)
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -29994,7 +29994,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = Value.new(:objval1)
     store.delete("strkey1").should == Value.new(:objval1)
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -30035,7 +30035,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = Value.new(:objval1)
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -30057,7 +30057,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = Value.new(:objval1)
     store.delete("strkey2").should == Value.new(:objval1)
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -30098,7 +30098,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey1"] = Value.new(:objval2)
-    store.key?("strkey1").should be_true
+    store.key?("strkey1").should be true
   end
 
   it 'stores values with #store' do
@@ -30120,7 +30120,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey1"] = Value.new(:objval2)
     store.delete("strkey1").should == Value.new(:objval2)
-    store.key?("strkey1").should be_false
+    store.key?("strkey1").should be false
   end
 
   it 'overwrites existing values' do
@@ -30161,7 +30161,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["strkey2"] = Value.new(:objval2)
-    store.key?("strkey2").should be_true
+    store.key?("strkey2").should be true
   end
 
   it 'stores values with #store' do
@@ -30183,7 +30183,7 @@ shared_examples_for 'store_stringkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["strkey2"] = Value.new(:objval2)
     store.delete("strkey2").should == Value.new(:objval2)
-    store.key?("strkey2").should be_false
+    store.key?("strkey2").should be false
   end
 
   it 'overwrites existing values' do
@@ -30319,7 +30319,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30330,8 +30330,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["bar/foo/baz"] = ''
     store["foo/bar"] = nil
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30350,7 +30350,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -30370,7 +30370,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30381,8 +30381,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["foo/bar"] = ''
     store["bar/foo/baz"] = nil
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30401,7 +30401,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -30421,7 +30421,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30432,8 +30432,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["bar/foo/baz"] = nil
     store["foo/bar"] = ''
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30452,7 +30452,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -30472,7 +30472,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30483,8 +30483,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["foo/bar"] = nil
     store["bar/foo/baz"] = ''
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30503,7 +30503,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -30523,7 +30523,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30534,8 +30534,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["bar/foo/baz"] = 0
     store["foo/bar"] = false
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30554,7 +30554,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -30574,7 +30574,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30585,8 +30585,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["foo/bar"] = 0
     store["bar/foo/baz"] = false
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30605,7 +30605,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -30625,7 +30625,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30636,8 +30636,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["bar/foo/baz"] = false
     store["foo/bar"] = 0
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30656,7 +30656,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -30676,7 +30676,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -30687,8 +30687,8 @@ shared_examples_for 'null_pathkey_nilvalue' do
     store["foo/bar"] = false
     store["bar/foo/baz"] = 0
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -30707,7 +30707,7 @@ shared_examples_for 'null_pathkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -30728,7 +30728,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = ''
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -30750,7 +30750,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = ''
     store.delete("bar/foo/baz").should == ''
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -30780,7 +30780,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = ''
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -30802,7 +30802,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = ''
     store.delete("foo/bar").should == ''
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -30832,7 +30832,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = nil
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -30854,7 +30854,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = nil
     store.delete("bar/foo/baz").should == nil
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -30884,7 +30884,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = nil
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -30906,7 +30906,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = nil
     store.delete("foo/bar").should == nil
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -30936,7 +30936,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 0
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -30958,7 +30958,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = 0
     store.delete("bar/foo/baz").should == 0
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -30988,7 +30988,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 0
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -31010,7 +31010,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = 0
     store.delete("foo/bar").should == 0
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -31040,7 +31040,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = false
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -31062,7 +31062,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = false
     store.delete("bar/foo/baz").should == false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -31092,7 +31092,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = false
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -31114,7 +31114,7 @@ shared_examples_for 'store_pathkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = false
     store.delete("foo/bar").should == false
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -31211,7 +31211,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31222,8 +31222,8 @@ shared_examples_for 'null_pathkey_integervalue' do
     store["bar/foo/baz"] = 41
     store["foo/bar"] = -12
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31242,7 +31242,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -31262,7 +31262,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31273,8 +31273,8 @@ shared_examples_for 'null_pathkey_integervalue' do
     store["foo/bar"] = 41
     store["bar/foo/baz"] = -12
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31293,7 +31293,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -31313,7 +31313,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31324,8 +31324,8 @@ shared_examples_for 'null_pathkey_integervalue' do
     store["bar/foo/baz"] = -12
     store["foo/bar"] = 41
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31344,7 +31344,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -31364,7 +31364,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31375,8 +31375,8 @@ shared_examples_for 'null_pathkey_integervalue' do
     store["foo/bar"] = -12
     store["bar/foo/baz"] = 41
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31395,7 +31395,7 @@ shared_examples_for 'null_pathkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -31416,7 +31416,7 @@ shared_examples_for 'store_pathkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 41
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -31438,7 +31438,7 @@ shared_examples_for 'store_pathkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = 41
     store.delete("bar/foo/baz").should == 41
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -31479,7 +31479,7 @@ shared_examples_for 'store_pathkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 41
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -31501,7 +31501,7 @@ shared_examples_for 'store_pathkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = 41
     store.delete("foo/bar").should == 41
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -31542,7 +31542,7 @@ shared_examples_for 'store_pathkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = -12
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -31564,7 +31564,7 @@ shared_examples_for 'store_pathkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = -12
     store.delete("bar/foo/baz").should == -12
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -31605,7 +31605,7 @@ shared_examples_for 'store_pathkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = -12
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -31627,7 +31627,7 @@ shared_examples_for 'store_pathkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = -12
     store.delete("foo/bar").should == -12
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -31707,7 +31707,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31718,8 +31718,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["bar/foo/baz"] = 123.456
     store["foo/bar"] = -98.7
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31738,7 +31738,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -31758,7 +31758,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31769,8 +31769,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["foo/bar"] = 123.456
     store["bar/foo/baz"] = -98.7
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31789,7 +31789,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -31809,7 +31809,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31820,8 +31820,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["bar/foo/baz"] = -98.7
     store["foo/bar"] = 123.456
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31840,7 +31840,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -31860,7 +31860,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31871,8 +31871,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["foo/bar"] = -98.7
     store["bar/foo/baz"] = 123.456
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31891,7 +31891,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -31911,7 +31911,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31922,8 +31922,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["bar/foo/baz"] = 340282366920938463463374607431768211456
     store["foo/bar"] = 33
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31942,7 +31942,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -31962,7 +31962,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -31973,8 +31973,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["foo/bar"] = 340282366920938463463374607431768211456
     store["bar/foo/baz"] = 33
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -31993,7 +31993,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -32013,7 +32013,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -32024,8 +32024,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["bar/foo/baz"] = 33
     store["foo/bar"] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -32044,7 +32044,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -32064,7 +32064,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -32075,8 +32075,8 @@ shared_examples_for 'null_pathkey_numbervalue' do
     store["foo/bar"] = 33
     store["bar/foo/baz"] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -32095,7 +32095,7 @@ shared_examples_for 'null_pathkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -32116,7 +32116,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 123.456
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -32138,7 +32138,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = 123.456
     store.delete("bar/foo/baz").should == 123.456
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -32179,7 +32179,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 123.456
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -32201,7 +32201,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = 123.456
     store.delete("foo/bar").should == 123.456
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -32242,7 +32242,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = -98.7
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -32264,7 +32264,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = -98.7
     store.delete("bar/foo/baz").should == -98.7
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -32305,7 +32305,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = -98.7
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -32327,7 +32327,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = -98.7
     store.delete("foo/bar").should == -98.7
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -32368,7 +32368,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 340282366920938463463374607431768211456
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -32390,7 +32390,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = 340282366920938463463374607431768211456
     store.delete("bar/foo/baz").should == 340282366920938463463374607431768211456
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -32431,7 +32431,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 340282366920938463463374607431768211456
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -32453,7 +32453,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = 340282366920938463463374607431768211456
     store.delete("foo/bar").should == 340282366920938463463374607431768211456
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -32494,7 +32494,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = 33
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -32516,7 +32516,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = 33
     store.delete("bar/foo/baz").should == 33
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -32557,7 +32557,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = 33
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -32579,7 +32579,7 @@ shared_examples_for 'store_pathkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = 33
     store.delete("foo/bar").should == 33
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -32687,7 +32687,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -32698,8 +32698,8 @@ shared_examples_for 'null_pathkey_booleanvalue' do
     store["bar/foo/baz"] = true
     store["foo/bar"] = false
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -32718,7 +32718,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -32738,7 +32738,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -32749,8 +32749,8 @@ shared_examples_for 'null_pathkey_booleanvalue' do
     store["foo/bar"] = true
     store["bar/foo/baz"] = false
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -32769,7 +32769,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -32789,7 +32789,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -32800,8 +32800,8 @@ shared_examples_for 'null_pathkey_booleanvalue' do
     store["bar/foo/baz"] = false
     store["foo/bar"] = true
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -32820,7 +32820,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -32840,7 +32840,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -32851,8 +32851,8 @@ shared_examples_for 'null_pathkey_booleanvalue' do
     store["foo/bar"] = false
     store["bar/foo/baz"] = true
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -32871,7 +32871,7 @@ shared_examples_for 'null_pathkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -32892,7 +32892,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = true
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -32914,7 +32914,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = true
     store.delete("bar/foo/baz").should == true
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -32955,7 +32955,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = true
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -32977,7 +32977,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = true
     store.delete("foo/bar").should == true
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -33018,7 +33018,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = false
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -33040,7 +33040,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = false
     store.delete("bar/foo/baz").should == false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -33081,7 +33081,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = false
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -33103,7 +33103,7 @@ shared_examples_for 'store_pathkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = false
     store.delete("foo/bar").should == false
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -33183,7 +33183,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33194,8 +33194,8 @@ shared_examples_for 'null_pathkey_stringvalue' do
     store["bar/foo/baz"] = "strval1"
     store["foo/bar"] = "strval2"
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33214,7 +33214,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -33234,7 +33234,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33245,8 +33245,8 @@ shared_examples_for 'null_pathkey_stringvalue' do
     store["foo/bar"] = "strval1"
     store["bar/foo/baz"] = "strval2"
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33265,7 +33265,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -33285,7 +33285,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33296,8 +33296,8 @@ shared_examples_for 'null_pathkey_stringvalue' do
     store["bar/foo/baz"] = "strval2"
     store["foo/bar"] = "strval1"
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33316,7 +33316,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -33336,7 +33336,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33347,8 +33347,8 @@ shared_examples_for 'null_pathkey_stringvalue' do
     store["foo/bar"] = "strval2"
     store["bar/foo/baz"] = "strval1"
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33367,7 +33367,7 @@ shared_examples_for 'null_pathkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -33388,7 +33388,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = "strval1"
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -33410,7 +33410,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = "strval1"
     store.delete("bar/foo/baz").should == "strval1"
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -33451,7 +33451,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = "strval1"
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -33473,7 +33473,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = "strval1"
     store.delete("foo/bar").should == "strval1"
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -33514,7 +33514,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = "strval2"
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -33536,7 +33536,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = "strval2"
     store.delete("bar/foo/baz").should == "strval2"
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -33577,7 +33577,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = "strval2"
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -33599,7 +33599,7 @@ shared_examples_for 'store_pathkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = "strval2"
     store.delete("foo/bar").should == "strval2"
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -33735,7 +33735,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33746,8 +33746,8 @@ shared_examples_for 'null_pathkey_binaryvalue' do
     store["bar/foo/baz"] = "über"
     store["foo/bar"] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33766,7 +33766,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -33786,7 +33786,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33797,8 +33797,8 @@ shared_examples_for 'null_pathkey_binaryvalue' do
     store["foo/bar"] = "über"
     store["bar/foo/baz"] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33817,7 +33817,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -33837,7 +33837,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33848,8 +33848,8 @@ shared_examples_for 'null_pathkey_binaryvalue' do
     store["bar/foo/baz"] = "\xAA\xBB\xCC"
     store["foo/bar"] = "über"
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33868,7 +33868,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -33888,7 +33888,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -33899,8 +33899,8 @@ shared_examples_for 'null_pathkey_binaryvalue' do
     store["foo/bar"] = "\xAA\xBB\xCC"
     store["bar/foo/baz"] = "über"
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -33919,7 +33919,7 @@ shared_examples_for 'null_pathkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -33940,7 +33940,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = "über"
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -33962,7 +33962,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = "über"
     store.delete("bar/foo/baz").should == "über"
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -34003,7 +34003,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = "über"
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -34025,7 +34025,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = "über"
     store.delete("foo/bar").should == "über"
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -34066,7 +34066,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = "\xAA\xBB\xCC"
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -34088,7 +34088,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = "\xAA\xBB\xCC"
     store.delete("bar/foo/baz").should == "\xAA\xBB\xCC"
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -34129,7 +34129,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = "\xAA\xBB\xCC"
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -34151,7 +34151,7 @@ shared_examples_for 'store_pathkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = "\xAA\xBB\xCC"
     store.delete("foo/bar").should == "\xAA\xBB\xCC"
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -34287,7 +34287,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34298,8 +34298,8 @@ shared_examples_for 'null_pathkey_hashvalue' do
     store["bar/foo/baz"] = {"hashval1"=>["array1", 1]}
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34318,7 +34318,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -34338,7 +34338,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34349,8 +34349,8 @@ shared_examples_for 'null_pathkey_hashvalue' do
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
     store["bar/foo/baz"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34369,7 +34369,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -34389,7 +34389,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34400,8 +34400,8 @@ shared_examples_for 'null_pathkey_hashvalue' do
     store["bar/foo/baz"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34420,7 +34420,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -34440,7 +34440,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34451,8 +34451,8 @@ shared_examples_for 'null_pathkey_hashvalue' do
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["bar/foo/baz"] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34471,7 +34471,7 @@ shared_examples_for 'null_pathkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -34492,7 +34492,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = {"hashval1"=>["array1", 1]}
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -34514,7 +34514,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = {"hashval1"=>["array1", 1]}
     store.delete("bar/foo/baz").should == {"hashval1"=>["array1", 1]}
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -34555,7 +34555,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -34577,7 +34577,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = {"hashval1"=>["array1", 1]}
     store.delete("foo/bar").should == {"hashval1"=>["array1", 1]}
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -34618,7 +34618,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -34640,7 +34640,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete("bar/foo/baz").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -34681,7 +34681,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -34703,7 +34703,7 @@ shared_examples_for 'store_pathkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete("foo/bar").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -34839,7 +34839,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34850,8 +34850,8 @@ shared_examples_for 'null_pathkey_objectvalue' do
     store["bar/foo/baz"] = Value.new(:objval1)
     store["foo/bar"] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34870,7 +34870,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -34890,7 +34890,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34901,8 +34901,8 @@ shared_examples_for 'null_pathkey_objectvalue' do
     store["foo/bar"] = Value.new(:objval1)
     store["bar/foo/baz"] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34921,7 +34921,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -34941,7 +34941,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -34952,8 +34952,8 @@ shared_examples_for 'null_pathkey_objectvalue' do
     store["bar/foo/baz"] = Value.new(:objval2)
     store["foo/bar"] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?("bar/foo/baz").should be_false
-    store.key?("foo/bar").should be_false
+    store.key?("bar/foo/baz").should be false
+    store.key?("foo/bar").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -34972,7 +34972,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("bar/foo/baz", options).should be_false
+    store.key?("bar/foo/baz", options).should be false
     store.load("bar/foo/baz", options).should be_nil
     store.fetch("bar/foo/baz", 42, options).should == 42
     store.fetch("bar/foo/baz", options) { 42 }.should == 42
@@ -34992,7 +34992,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35003,8 +35003,8 @@ shared_examples_for 'null_pathkey_objectvalue' do
     store["foo/bar"] = Value.new(:objval2)
     store["bar/foo/baz"] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?("foo/bar").should be_false
-    store.key?("bar/foo/baz").should be_false
+    store.key?("foo/bar").should be false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35023,7 +35023,7 @@ shared_examples_for 'null_pathkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("foo/bar", options).should be_false
+    store.key?("foo/bar", options).should be false
     store.load("foo/bar", options).should be_nil
     store.fetch("foo/bar", 42, options).should == 42
     store.fetch("foo/bar", options) { 42 }.should == 42
@@ -35044,7 +35044,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = Value.new(:objval1)
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -35066,7 +35066,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = Value.new(:objval1)
     store.delete("bar/foo/baz").should == Value.new(:objval1)
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -35107,7 +35107,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = Value.new(:objval1)
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -35129,7 +35129,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = Value.new(:objval1)
     store.delete("foo/bar").should == Value.new(:objval1)
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -35170,7 +35170,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["bar/foo/baz"] = Value.new(:objval2)
-    store.key?("bar/foo/baz").should be_true
+    store.key?("bar/foo/baz").should be true
   end
 
   it 'stores values with #store' do
@@ -35192,7 +35192,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["bar/foo/baz"] = Value.new(:objval2)
     store.delete("bar/foo/baz").should == Value.new(:objval2)
-    store.key?("bar/foo/baz").should be_false
+    store.key?("bar/foo/baz").should be false
   end
 
   it 'overwrites existing values' do
@@ -35233,7 +35233,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["foo/bar"] = Value.new(:objval2)
-    store.key?("foo/bar").should be_true
+    store.key?("foo/bar").should be true
   end
 
   it 'stores values with #store' do
@@ -35255,7 +35255,7 @@ shared_examples_for 'store_pathkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["foo/bar"] = Value.new(:objval2)
     store.delete("foo/bar").should == Value.new(:objval2)
-    store.key?("foo/bar").should be_false
+    store.key?("foo/bar").should be false
   end
 
   it 'overwrites existing values' do
@@ -35391,7 +35391,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35402,8 +35402,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["über"] = ''
     store["\xAA\xBB\xCC"] = nil
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35422,7 +35422,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -35442,7 +35442,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35453,8 +35453,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["\xAA\xBB\xCC"] = ''
     store["über"] = nil
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35473,7 +35473,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -35493,7 +35493,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35504,8 +35504,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["über"] = nil
     store["\xAA\xBB\xCC"] = ''
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35524,7 +35524,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -35544,7 +35544,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35555,8 +35555,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["\xAA\xBB\xCC"] = nil
     store["über"] = ''
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35575,7 +35575,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -35595,7 +35595,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35606,8 +35606,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["über"] = 0
     store["\xAA\xBB\xCC"] = false
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35626,7 +35626,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -35646,7 +35646,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35657,8 +35657,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["\xAA\xBB\xCC"] = 0
     store["über"] = false
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35677,7 +35677,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -35697,7 +35697,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35708,8 +35708,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["über"] = false
     store["\xAA\xBB\xCC"] = 0
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35728,7 +35728,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -35748,7 +35748,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -35759,8 +35759,8 @@ shared_examples_for 'null_binarykey_nilvalue' do
     store["\xAA\xBB\xCC"] = false
     store["über"] = 0
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -35779,7 +35779,7 @@ shared_examples_for 'null_binarykey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -35800,7 +35800,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = ''
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -35822,7 +35822,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = ''
     store.delete("über").should == ''
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -35852,7 +35852,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = ''
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -35874,7 +35874,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = ''
     store.delete("\xAA\xBB\xCC").should == ''
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -35904,7 +35904,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = nil
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -35926,7 +35926,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = nil
     store.delete("über").should == nil
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -35956,7 +35956,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = nil
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -35978,7 +35978,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = nil
     store.delete("\xAA\xBB\xCC").should == nil
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -36008,7 +36008,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = 0
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -36030,7 +36030,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = 0
     store.delete("über").should == 0
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -36060,7 +36060,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = 0
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -36082,7 +36082,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = 0
     store.delete("\xAA\xBB\xCC").should == 0
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -36112,7 +36112,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = false
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -36134,7 +36134,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = false
     store.delete("über").should == false
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -36164,7 +36164,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = false
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -36186,7 +36186,7 @@ shared_examples_for 'store_binarykey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = false
     store.delete("\xAA\xBB\xCC").should == false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -36283,7 +36283,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36294,8 +36294,8 @@ shared_examples_for 'null_binarykey_integervalue' do
     store["über"] = 41
     store["\xAA\xBB\xCC"] = -12
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36314,7 +36314,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -36334,7 +36334,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36345,8 +36345,8 @@ shared_examples_for 'null_binarykey_integervalue' do
     store["\xAA\xBB\xCC"] = 41
     store["über"] = -12
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36365,7 +36365,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -36385,7 +36385,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36396,8 +36396,8 @@ shared_examples_for 'null_binarykey_integervalue' do
     store["über"] = -12
     store["\xAA\xBB\xCC"] = 41
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36416,7 +36416,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -36436,7 +36436,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36447,8 +36447,8 @@ shared_examples_for 'null_binarykey_integervalue' do
     store["\xAA\xBB\xCC"] = -12
     store["über"] = 41
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36467,7 +36467,7 @@ shared_examples_for 'null_binarykey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -36488,7 +36488,7 @@ shared_examples_for 'store_binarykey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = 41
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -36510,7 +36510,7 @@ shared_examples_for 'store_binarykey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = 41
     store.delete("über").should == 41
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -36551,7 +36551,7 @@ shared_examples_for 'store_binarykey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = 41
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -36573,7 +36573,7 @@ shared_examples_for 'store_binarykey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = 41
     store.delete("\xAA\xBB\xCC").should == 41
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -36614,7 +36614,7 @@ shared_examples_for 'store_binarykey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = -12
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -36636,7 +36636,7 @@ shared_examples_for 'store_binarykey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = -12
     store.delete("über").should == -12
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -36677,7 +36677,7 @@ shared_examples_for 'store_binarykey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = -12
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -36699,7 +36699,7 @@ shared_examples_for 'store_binarykey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = -12
     store.delete("\xAA\xBB\xCC").should == -12
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -36779,7 +36779,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36790,8 +36790,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["über"] = 123.456
     store["\xAA\xBB\xCC"] = -98.7
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36810,7 +36810,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -36830,7 +36830,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36841,8 +36841,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["\xAA\xBB\xCC"] = 123.456
     store["über"] = -98.7
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36861,7 +36861,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -36881,7 +36881,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36892,8 +36892,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["über"] = -98.7
     store["\xAA\xBB\xCC"] = 123.456
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36912,7 +36912,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -36932,7 +36932,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36943,8 +36943,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["\xAA\xBB\xCC"] = -98.7
     store["über"] = 123.456
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -36963,7 +36963,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -36983,7 +36983,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -36994,8 +36994,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["über"] = 340282366920938463463374607431768211456
     store["\xAA\xBB\xCC"] = 33
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37014,7 +37014,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -37034,7 +37034,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37045,8 +37045,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["\xAA\xBB\xCC"] = 340282366920938463463374607431768211456
     store["über"] = 33
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37065,7 +37065,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -37085,7 +37085,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37096,8 +37096,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["über"] = 33
     store["\xAA\xBB\xCC"] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37116,7 +37116,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -37136,7 +37136,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37147,8 +37147,8 @@ shared_examples_for 'null_binarykey_numbervalue' do
     store["\xAA\xBB\xCC"] = 33
     store["über"] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37167,7 +37167,7 @@ shared_examples_for 'null_binarykey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -37188,7 +37188,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = 123.456
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -37210,7 +37210,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = 123.456
     store.delete("über").should == 123.456
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -37251,7 +37251,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = 123.456
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -37273,7 +37273,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = 123.456
     store.delete("\xAA\xBB\xCC").should == 123.456
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -37314,7 +37314,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = -98.7
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -37336,7 +37336,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = -98.7
     store.delete("über").should == -98.7
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -37377,7 +37377,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = -98.7
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -37399,7 +37399,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = -98.7
     store.delete("\xAA\xBB\xCC").should == -98.7
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -37440,7 +37440,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = 340282366920938463463374607431768211456
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -37462,7 +37462,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = 340282366920938463463374607431768211456
     store.delete("über").should == 340282366920938463463374607431768211456
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -37503,7 +37503,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = 340282366920938463463374607431768211456
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -37525,7 +37525,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = 340282366920938463463374607431768211456
     store.delete("\xAA\xBB\xCC").should == 340282366920938463463374607431768211456
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -37566,7 +37566,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = 33
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -37588,7 +37588,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = 33
     store.delete("über").should == 33
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -37629,7 +37629,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = 33
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -37651,7 +37651,7 @@ shared_examples_for 'store_binarykey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = 33
     store.delete("\xAA\xBB\xCC").should == 33
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -37759,7 +37759,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37770,8 +37770,8 @@ shared_examples_for 'null_binarykey_booleanvalue' do
     store["über"] = true
     store["\xAA\xBB\xCC"] = false
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37790,7 +37790,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -37810,7 +37810,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37821,8 +37821,8 @@ shared_examples_for 'null_binarykey_booleanvalue' do
     store["\xAA\xBB\xCC"] = true
     store["über"] = false
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37841,7 +37841,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -37861,7 +37861,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37872,8 +37872,8 @@ shared_examples_for 'null_binarykey_booleanvalue' do
     store["über"] = false
     store["\xAA\xBB\xCC"] = true
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37892,7 +37892,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -37912,7 +37912,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -37923,8 +37923,8 @@ shared_examples_for 'null_binarykey_booleanvalue' do
     store["\xAA\xBB\xCC"] = false
     store["über"] = true
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -37943,7 +37943,7 @@ shared_examples_for 'null_binarykey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -37964,7 +37964,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = true
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -37986,7 +37986,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = true
     store.delete("über").should == true
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -38027,7 +38027,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = true
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -38049,7 +38049,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = true
     store.delete("\xAA\xBB\xCC").should == true
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -38090,7 +38090,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = false
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -38112,7 +38112,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = false
     store.delete("über").should == false
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -38153,7 +38153,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = false
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -38175,7 +38175,7 @@ shared_examples_for 'store_binarykey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = false
     store.delete("\xAA\xBB\xCC").should == false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -38255,7 +38255,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38266,8 +38266,8 @@ shared_examples_for 'null_binarykey_stringvalue' do
     store["über"] = "strval1"
     store["\xAA\xBB\xCC"] = "strval2"
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38286,7 +38286,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -38306,7 +38306,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38317,8 +38317,8 @@ shared_examples_for 'null_binarykey_stringvalue' do
     store["\xAA\xBB\xCC"] = "strval1"
     store["über"] = "strval2"
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38337,7 +38337,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -38357,7 +38357,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38368,8 +38368,8 @@ shared_examples_for 'null_binarykey_stringvalue' do
     store["über"] = "strval2"
     store["\xAA\xBB\xCC"] = "strval1"
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38388,7 +38388,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -38408,7 +38408,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38419,8 +38419,8 @@ shared_examples_for 'null_binarykey_stringvalue' do
     store["\xAA\xBB\xCC"] = "strval2"
     store["über"] = "strval1"
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38439,7 +38439,7 @@ shared_examples_for 'null_binarykey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -38460,7 +38460,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = "strval1"
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -38482,7 +38482,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = "strval1"
     store.delete("über").should == "strval1"
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -38523,7 +38523,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = "strval1"
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -38545,7 +38545,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = "strval1"
     store.delete("\xAA\xBB\xCC").should == "strval1"
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -38586,7 +38586,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = "strval2"
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -38608,7 +38608,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = "strval2"
     store.delete("über").should == "strval2"
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -38649,7 +38649,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = "strval2"
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -38671,7 +38671,7 @@ shared_examples_for 'store_binarykey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = "strval2"
     store.delete("\xAA\xBB\xCC").should == "strval2"
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -38807,7 +38807,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38818,8 +38818,8 @@ shared_examples_for 'null_binarykey_binaryvalue' do
     store["über"] = "über"
     store["\xAA\xBB\xCC"] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38838,7 +38838,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -38858,7 +38858,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38869,8 +38869,8 @@ shared_examples_for 'null_binarykey_binaryvalue' do
     store["\xAA\xBB\xCC"] = "über"
     store["über"] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38889,7 +38889,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -38909,7 +38909,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38920,8 +38920,8 @@ shared_examples_for 'null_binarykey_binaryvalue' do
     store["über"] = "\xAA\xBB\xCC"
     store["\xAA\xBB\xCC"] = "über"
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38940,7 +38940,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -38960,7 +38960,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -38971,8 +38971,8 @@ shared_examples_for 'null_binarykey_binaryvalue' do
     store["\xAA\xBB\xCC"] = "\xAA\xBB\xCC"
     store["über"] = "über"
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -38991,7 +38991,7 @@ shared_examples_for 'null_binarykey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -39012,7 +39012,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = "über"
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -39034,7 +39034,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = "über"
     store.delete("über").should == "über"
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -39075,7 +39075,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = "über"
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -39097,7 +39097,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = "über"
     store.delete("\xAA\xBB\xCC").should == "über"
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -39138,7 +39138,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = "\xAA\xBB\xCC"
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -39160,7 +39160,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = "\xAA\xBB\xCC"
     store.delete("über").should == "\xAA\xBB\xCC"
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -39201,7 +39201,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = "\xAA\xBB\xCC"
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -39223,7 +39223,7 @@ shared_examples_for 'store_binarykey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = "\xAA\xBB\xCC"
     store.delete("\xAA\xBB\xCC").should == "\xAA\xBB\xCC"
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -39359,7 +39359,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -39370,8 +39370,8 @@ shared_examples_for 'null_binarykey_hashvalue' do
     store["über"] = {"hashval1"=>["array1", 1]}
     store["\xAA\xBB\xCC"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -39390,7 +39390,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -39410,7 +39410,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -39421,8 +39421,8 @@ shared_examples_for 'null_binarykey_hashvalue' do
     store["\xAA\xBB\xCC"] = {"hashval1"=>["array1", 1]}
     store["über"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -39441,7 +39441,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -39461,7 +39461,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -39472,8 +39472,8 @@ shared_examples_for 'null_binarykey_hashvalue' do
     store["über"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["\xAA\xBB\xCC"] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -39492,7 +39492,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -39512,7 +39512,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -39523,8 +39523,8 @@ shared_examples_for 'null_binarykey_hashvalue' do
     store["\xAA\xBB\xCC"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store["über"] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -39543,7 +39543,7 @@ shared_examples_for 'null_binarykey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -39564,7 +39564,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = {"hashval1"=>["array1", 1]}
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -39586,7 +39586,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = {"hashval1"=>["array1", 1]}
     store.delete("über").should == {"hashval1"=>["array1", 1]}
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -39627,7 +39627,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = {"hashval1"=>["array1", 1]}
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -39649,7 +39649,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = {"hashval1"=>["array1", 1]}
     store.delete("\xAA\xBB\xCC").should == {"hashval1"=>["array1", 1]}
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -39690,7 +39690,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -39712,7 +39712,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete("über").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -39753,7 +39753,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -39775,7 +39775,7 @@ shared_examples_for 'store_binarykey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete("\xAA\xBB\xCC").should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -39911,7 +39911,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -39922,8 +39922,8 @@ shared_examples_for 'null_binarykey_objectvalue' do
     store["über"] = Value.new(:objval1)
     store["\xAA\xBB\xCC"] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -39942,7 +39942,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -39962,7 +39962,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -39973,8 +39973,8 @@ shared_examples_for 'null_binarykey_objectvalue' do
     store["\xAA\xBB\xCC"] = Value.new(:objval1)
     store["über"] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -39993,7 +39993,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -40013,7 +40013,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40024,8 +40024,8 @@ shared_examples_for 'null_binarykey_objectvalue' do
     store["über"] = Value.new(:objval2)
     store["\xAA\xBB\xCC"] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?("über").should be_false
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("über").should be false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40044,7 +40044,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("über", options).should be_false
+    store.key?("über", options).should be false
     store.load("über", options).should be_nil
     store.fetch("über", 42, options).should == 42
     store.fetch("über", options) { 42 }.should == 42
@@ -40064,7 +40064,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40075,8 +40075,8 @@ shared_examples_for 'null_binarykey_objectvalue' do
     store["\xAA\xBB\xCC"] = Value.new(:objval2)
     store["über"] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?("\xAA\xBB\xCC").should be_false
-    store.key?("über").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
+    store.key?("über").should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40095,7 +40095,7 @@ shared_examples_for 'null_binarykey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?("\xAA\xBB\xCC", options).should be_false
+    store.key?("\xAA\xBB\xCC", options).should be false
     store.load("\xAA\xBB\xCC", options).should be_nil
     store.fetch("\xAA\xBB\xCC", 42, options).should == 42
     store.fetch("\xAA\xBB\xCC", options) { 42 }.should == 42
@@ -40116,7 +40116,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = Value.new(:objval1)
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -40138,7 +40138,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = Value.new(:objval1)
     store.delete("über").should == Value.new(:objval1)
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -40179,7 +40179,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = Value.new(:objval1)
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -40201,7 +40201,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = Value.new(:objval1)
     store.delete("\xAA\xBB\xCC").should == Value.new(:objval1)
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -40242,7 +40242,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["über"] = Value.new(:objval2)
-    store.key?("über").should be_true
+    store.key?("über").should be true
   end
 
   it 'stores values with #store' do
@@ -40264,7 +40264,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["über"] = Value.new(:objval2)
     store.delete("über").should == Value.new(:objval2)
-    store.key?("über").should be_false
+    store.key?("über").should be false
   end
 
   it 'overwrites existing values' do
@@ -40305,7 +40305,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store["\xAA\xBB\xCC"] = Value.new(:objval2)
-    store.key?("\xAA\xBB\xCC").should be_true
+    store.key?("\xAA\xBB\xCC").should be true
   end
 
   it 'stores values with #store' do
@@ -40327,7 +40327,7 @@ shared_examples_for 'store_binarykey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store["\xAA\xBB\xCC"] = Value.new(:objval2)
     store.delete("\xAA\xBB\xCC").should == Value.new(:objval2)
-    store.key?("\xAA\xBB\xCC").should be_false
+    store.key?("\xAA\xBB\xCC").should be false
   end
 
   it 'overwrites existing values' do
@@ -40463,7 +40463,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40474,8 +40474,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey1)] = ''
     store[Value.new(:objkey2)] = nil
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40494,7 +40494,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -40514,7 +40514,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40525,8 +40525,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey2)] = ''
     store[Value.new(:objkey1)] = nil
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40545,7 +40545,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -40565,7 +40565,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40576,8 +40576,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey1)] = nil
     store[Value.new(:objkey2)] = ''
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40596,7 +40596,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -40616,7 +40616,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40627,8 +40627,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey2)] = nil
     store[Value.new(:objkey1)] = ''
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40647,7 +40647,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -40667,7 +40667,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40678,8 +40678,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey1)] = 0
     store[Value.new(:objkey2)] = false
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40698,7 +40698,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -40718,7 +40718,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40729,8 +40729,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey2)] = 0
     store[Value.new(:objkey1)] = false
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40749,7 +40749,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -40769,7 +40769,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40780,8 +40780,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey1)] = false
     store[Value.new(:objkey2)] = 0
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40800,7 +40800,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -40820,7 +40820,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -40831,8 +40831,8 @@ shared_examples_for 'null_objectkey_nilvalue' do
     store[Value.new(:objkey2)] = false
     store[Value.new(:objkey1)] = 0
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -40851,7 +40851,7 @@ shared_examples_for 'null_objectkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -40872,7 +40872,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = ''
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -40894,7 +40894,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = ''
     store.delete(Value.new(:objkey1)).should == ''
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -40924,7 +40924,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = ''
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -40946,7 +40946,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = ''
     store.delete(Value.new(:objkey2)).should == ''
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -40976,7 +40976,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = nil
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -40998,7 +40998,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = nil
     store.delete(Value.new(:objkey1)).should == nil
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41028,7 +41028,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = nil
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -41050,7 +41050,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = nil
     store.delete(Value.new(:objkey2)).should == nil
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41080,7 +41080,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 0
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -41102,7 +41102,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = 0
     store.delete(Value.new(:objkey1)).should == 0
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41132,7 +41132,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 0
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -41154,7 +41154,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = 0
     store.delete(Value.new(:objkey2)).should == 0
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41184,7 +41184,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = false
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -41206,7 +41206,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = false
     store.delete(Value.new(:objkey1)).should == false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41236,7 +41236,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = false
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -41258,7 +41258,7 @@ shared_examples_for 'store_objectkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = false
     store.delete(Value.new(:objkey2)).should == false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41355,7 +41355,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41366,8 +41366,8 @@ shared_examples_for 'null_objectkey_integervalue' do
     store[Value.new(:objkey1)] = 41
     store[Value.new(:objkey2)] = -12
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41386,7 +41386,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -41406,7 +41406,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41417,8 +41417,8 @@ shared_examples_for 'null_objectkey_integervalue' do
     store[Value.new(:objkey2)] = 41
     store[Value.new(:objkey1)] = -12
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41437,7 +41437,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -41457,7 +41457,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41468,8 +41468,8 @@ shared_examples_for 'null_objectkey_integervalue' do
     store[Value.new(:objkey1)] = -12
     store[Value.new(:objkey2)] = 41
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41488,7 +41488,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -41508,7 +41508,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41519,8 +41519,8 @@ shared_examples_for 'null_objectkey_integervalue' do
     store[Value.new(:objkey2)] = -12
     store[Value.new(:objkey1)] = 41
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41539,7 +41539,7 @@ shared_examples_for 'null_objectkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -41560,7 +41560,7 @@ shared_examples_for 'store_objectkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 41
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -41582,7 +41582,7 @@ shared_examples_for 'store_objectkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = 41
     store.delete(Value.new(:objkey1)).should == 41
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41623,7 +41623,7 @@ shared_examples_for 'store_objectkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 41
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -41645,7 +41645,7 @@ shared_examples_for 'store_objectkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = 41
     store.delete(Value.new(:objkey2)).should == 41
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41686,7 +41686,7 @@ shared_examples_for 'store_objectkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = -12
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -41708,7 +41708,7 @@ shared_examples_for 'store_objectkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = -12
     store.delete(Value.new(:objkey1)).should == -12
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41749,7 +41749,7 @@ shared_examples_for 'store_objectkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = -12
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -41771,7 +41771,7 @@ shared_examples_for 'store_objectkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = -12
     store.delete(Value.new(:objkey2)).should == -12
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -41851,7 +41851,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41862,8 +41862,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey1)] = 123.456
     store[Value.new(:objkey2)] = -98.7
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41882,7 +41882,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -41902,7 +41902,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41913,8 +41913,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey2)] = 123.456
     store[Value.new(:objkey1)] = -98.7
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41933,7 +41933,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -41953,7 +41953,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -41964,8 +41964,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey1)] = -98.7
     store[Value.new(:objkey2)] = 123.456
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -41984,7 +41984,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -42004,7 +42004,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42015,8 +42015,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey2)] = -98.7
     store[Value.new(:objkey1)] = 123.456
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42035,7 +42035,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -42055,7 +42055,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42066,8 +42066,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey1)] = 340282366920938463463374607431768211456
     store[Value.new(:objkey2)] = 33
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42086,7 +42086,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -42106,7 +42106,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42117,8 +42117,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey2)] = 340282366920938463463374607431768211456
     store[Value.new(:objkey1)] = 33
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42137,7 +42137,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -42157,7 +42157,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42168,8 +42168,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey1)] = 33
     store[Value.new(:objkey2)] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42188,7 +42188,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -42208,7 +42208,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42219,8 +42219,8 @@ shared_examples_for 'null_objectkey_numbervalue' do
     store[Value.new(:objkey2)] = 33
     store[Value.new(:objkey1)] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42239,7 +42239,7 @@ shared_examples_for 'null_objectkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -42260,7 +42260,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 123.456
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -42282,7 +42282,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = 123.456
     store.delete(Value.new(:objkey1)).should == 123.456
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42323,7 +42323,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 123.456
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -42345,7 +42345,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = 123.456
     store.delete(Value.new(:objkey2)).should == 123.456
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42386,7 +42386,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = -98.7
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -42408,7 +42408,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = -98.7
     store.delete(Value.new(:objkey1)).should == -98.7
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42449,7 +42449,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = -98.7
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -42471,7 +42471,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = -98.7
     store.delete(Value.new(:objkey2)).should == -98.7
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42512,7 +42512,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 340282366920938463463374607431768211456
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -42534,7 +42534,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = 340282366920938463463374607431768211456
     store.delete(Value.new(:objkey1)).should == 340282366920938463463374607431768211456
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42575,7 +42575,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 340282366920938463463374607431768211456
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -42597,7 +42597,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = 340282366920938463463374607431768211456
     store.delete(Value.new(:objkey2)).should == 340282366920938463463374607431768211456
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42638,7 +42638,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = 33
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -42660,7 +42660,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = 33
     store.delete(Value.new(:objkey1)).should == 33
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42701,7 +42701,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = 33
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -42723,7 +42723,7 @@ shared_examples_for 'store_objectkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = 33
     store.delete(Value.new(:objkey2)).should == 33
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -42831,7 +42831,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42842,8 +42842,8 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     store[Value.new(:objkey1)] = true
     store[Value.new(:objkey2)] = false
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42862,7 +42862,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -42882,7 +42882,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42893,8 +42893,8 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     store[Value.new(:objkey2)] = true
     store[Value.new(:objkey1)] = false
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42913,7 +42913,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -42933,7 +42933,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42944,8 +42944,8 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     store[Value.new(:objkey1)] = false
     store[Value.new(:objkey2)] = true
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -42964,7 +42964,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -42984,7 +42984,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -42995,8 +42995,8 @@ shared_examples_for 'null_objectkey_booleanvalue' do
     store[Value.new(:objkey2)] = false
     store[Value.new(:objkey1)] = true
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43015,7 +43015,7 @@ shared_examples_for 'null_objectkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -43036,7 +43036,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = true
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -43058,7 +43058,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = true
     store.delete(Value.new(:objkey1)).should == true
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43099,7 +43099,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = true
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -43121,7 +43121,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = true
     store.delete(Value.new(:objkey2)).should == true
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43162,7 +43162,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = false
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -43184,7 +43184,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = false
     store.delete(Value.new(:objkey1)).should == false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43225,7 +43225,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = false
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -43247,7 +43247,7 @@ shared_examples_for 'store_objectkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = false
     store.delete(Value.new(:objkey2)).should == false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43327,7 +43327,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43338,8 +43338,8 @@ shared_examples_for 'null_objectkey_stringvalue' do
     store[Value.new(:objkey1)] = "strval1"
     store[Value.new(:objkey2)] = "strval2"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43358,7 +43358,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -43378,7 +43378,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43389,8 +43389,8 @@ shared_examples_for 'null_objectkey_stringvalue' do
     store[Value.new(:objkey2)] = "strval1"
     store[Value.new(:objkey1)] = "strval2"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43409,7 +43409,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -43429,7 +43429,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43440,8 +43440,8 @@ shared_examples_for 'null_objectkey_stringvalue' do
     store[Value.new(:objkey1)] = "strval2"
     store[Value.new(:objkey2)] = "strval1"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43460,7 +43460,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -43480,7 +43480,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43491,8 +43491,8 @@ shared_examples_for 'null_objectkey_stringvalue' do
     store[Value.new(:objkey2)] = "strval2"
     store[Value.new(:objkey1)] = "strval1"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43511,7 +43511,7 @@ shared_examples_for 'null_objectkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -43532,7 +43532,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = "strval1"
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -43554,7 +43554,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = "strval1"
     store.delete(Value.new(:objkey1)).should == "strval1"
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43595,7 +43595,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = "strval1"
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -43617,7 +43617,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = "strval1"
     store.delete(Value.new(:objkey2)).should == "strval1"
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43658,7 +43658,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = "strval2"
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -43680,7 +43680,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = "strval2"
     store.delete(Value.new(:objkey1)).should == "strval2"
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43721,7 +43721,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = "strval2"
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -43743,7 +43743,7 @@ shared_examples_for 'store_objectkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = "strval2"
     store.delete(Value.new(:objkey2)).should == "strval2"
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -43879,7 +43879,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43890,8 +43890,8 @@ shared_examples_for 'null_objectkey_binaryvalue' do
     store[Value.new(:objkey1)] = "über"
     store[Value.new(:objkey2)] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43910,7 +43910,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -43930,7 +43930,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43941,8 +43941,8 @@ shared_examples_for 'null_objectkey_binaryvalue' do
     store[Value.new(:objkey2)] = "über"
     store[Value.new(:objkey1)] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -43961,7 +43961,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -43981,7 +43981,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -43992,8 +43992,8 @@ shared_examples_for 'null_objectkey_binaryvalue' do
     store[Value.new(:objkey1)] = "\xAA\xBB\xCC"
     store[Value.new(:objkey2)] = "über"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -44012,7 +44012,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -44032,7 +44032,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -44043,8 +44043,8 @@ shared_examples_for 'null_objectkey_binaryvalue' do
     store[Value.new(:objkey2)] = "\xAA\xBB\xCC"
     store[Value.new(:objkey1)] = "über"
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -44063,7 +44063,7 @@ shared_examples_for 'null_objectkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -44084,7 +44084,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = "über"
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -44106,7 +44106,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = "über"
     store.delete(Value.new(:objkey1)).should == "über"
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44147,7 +44147,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = "über"
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -44169,7 +44169,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = "über"
     store.delete(Value.new(:objkey2)).should == "über"
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44210,7 +44210,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = "\xAA\xBB\xCC"
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -44232,7 +44232,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = "\xAA\xBB\xCC"
     store.delete(Value.new(:objkey1)).should == "\xAA\xBB\xCC"
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44273,7 +44273,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = "\xAA\xBB\xCC"
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -44295,7 +44295,7 @@ shared_examples_for 'store_objectkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = "\xAA\xBB\xCC"
     store.delete(Value.new(:objkey2)).should == "\xAA\xBB\xCC"
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44431,7 +44431,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -44442,8 +44442,8 @@ shared_examples_for 'null_objectkey_hashvalue' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -44462,7 +44462,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -44482,7 +44482,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -44493,8 +44493,8 @@ shared_examples_for 'null_objectkey_hashvalue' do
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -44513,7 +44513,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -44533,7 +44533,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -44544,8 +44544,8 @@ shared_examples_for 'null_objectkey_hashvalue' do
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -44564,7 +44564,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -44584,7 +44584,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -44595,8 +44595,8 @@ shared_examples_for 'null_objectkey_hashvalue' do
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -44615,7 +44615,7 @@ shared_examples_for 'null_objectkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -44636,7 +44636,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -44658,7 +44658,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = {"hashval1"=>["array1", 1]}
     store.delete(Value.new(:objkey1)).should == {"hashval1"=>["array1", 1]}
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44699,7 +44699,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -44721,7 +44721,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = {"hashval1"=>["array1", 1]}
     store.delete(Value.new(:objkey2)).should == {"hashval1"=>["array1", 1]}
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44762,7 +44762,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -44784,7 +44784,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(Value.new(:objkey1)).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44825,7 +44825,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -44847,7 +44847,7 @@ shared_examples_for 'store_objectkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete(Value.new(:objkey2)).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -44983,7 +44983,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -44994,8 +44994,8 @@ shared_examples_for 'null_objectkey_objectvalue' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store[Value.new(:objkey2)] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45014,7 +45014,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -45034,7 +45034,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45045,8 +45045,8 @@ shared_examples_for 'null_objectkey_objectvalue' do
     store[Value.new(:objkey2)] = Value.new(:objval1)
     store[Value.new(:objkey1)] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45065,7 +45065,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -45085,7 +45085,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45096,8 +45096,8 @@ shared_examples_for 'null_objectkey_objectvalue' do
     store[Value.new(:objkey1)] = Value.new(:objval2)
     store[Value.new(:objkey2)] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey1)).should be_false
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45116,7 +45116,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey1), options).should be_false
+    store.key?(Value.new(:objkey1), options).should be false
     store.load(Value.new(:objkey1), options).should be_nil
     store.fetch(Value.new(:objkey1), 42, options).should == 42
     store.fetch(Value.new(:objkey1), options) { 42 }.should == 42
@@ -45136,7 +45136,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45147,8 +45147,8 @@ shared_examples_for 'null_objectkey_objectvalue' do
     store[Value.new(:objkey2)] = Value.new(:objval2)
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?(Value.new(:objkey2)).should be_false
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45167,7 +45167,7 @@ shared_examples_for 'null_objectkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?(Value.new(:objkey2), options).should be_false
+    store.key?(Value.new(:objkey2), options).should be false
     store.load(Value.new(:objkey2), options).should be_nil
     store.fetch(Value.new(:objkey2), 42, options).should == 42
     store.fetch(Value.new(:objkey2), options) { 42 }.should == 42
@@ -45188,7 +45188,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -45210,7 +45210,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = Value.new(:objval1)
     store.delete(Value.new(:objkey1)).should == Value.new(:objval1)
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -45251,7 +45251,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = Value.new(:objval1)
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -45273,7 +45273,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = Value.new(:objval1)
     store.delete(Value.new(:objkey2)).should == Value.new(:objval1)
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -45314,7 +45314,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey1)] = Value.new(:objval2)
-    store.key?(Value.new(:objkey1)).should be_true
+    store.key?(Value.new(:objkey1)).should be true
   end
 
   it 'stores values with #store' do
@@ -45336,7 +45336,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey1)] = Value.new(:objval2)
     store.delete(Value.new(:objkey1)).should == Value.new(:objval2)
-    store.key?(Value.new(:objkey1)).should be_false
+    store.key?(Value.new(:objkey1)).should be false
   end
 
   it 'overwrites existing values' do
@@ -45377,7 +45377,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[Value.new(:objkey2)] = Value.new(:objval2)
-    store.key?(Value.new(:objkey2)).should be_true
+    store.key?(Value.new(:objkey2)).should be true
   end
 
   it 'stores values with #store' do
@@ -45399,7 +45399,7 @@ shared_examples_for 'store_objectkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[Value.new(:objkey2)] = Value.new(:objval2)
     store.delete(Value.new(:objkey2)).should == Value.new(:objval2)
-    store.key?(Value.new(:objkey2)).should be_false
+    store.key?(Value.new(:objkey2)).should be false
   end
 
   it 'overwrites existing values' do
@@ -45535,7 +45535,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45546,8 +45546,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}] = ''
     store[{"hashkey3"=>"hashkey4"}] = nil
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45566,7 +45566,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -45586,7 +45586,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45597,8 +45597,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey3"=>"hashkey4"}] = ''
     store[{"hashkey1"=>"hashkey2"}] = nil
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45617,7 +45617,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -45637,7 +45637,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45648,8 +45648,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}] = nil
     store[{"hashkey3"=>"hashkey4"}] = ''
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45668,7 +45668,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -45688,7 +45688,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45699,8 +45699,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey3"=>"hashkey4"}] = nil
     store[{"hashkey1"=>"hashkey2"}] = ''
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45719,7 +45719,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -45739,7 +45739,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45750,8 +45750,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}] = 0
     store[{"hashkey3"=>"hashkey4"}] = false
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45770,7 +45770,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -45790,7 +45790,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45801,8 +45801,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey3"=>"hashkey4"}] = 0
     store[{"hashkey1"=>"hashkey2"}] = false
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45821,7 +45821,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -45841,7 +45841,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45852,8 +45852,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store[{"hashkey3"=>"hashkey4"}] = 0
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45872,7 +45872,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -45892,7 +45892,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -45903,8 +45903,8 @@ shared_examples_for 'null_hashkey_nilvalue' do
     store[{"hashkey3"=>"hashkey4"}] = false
     store[{"hashkey1"=>"hashkey2"}] = 0
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -45923,7 +45923,7 @@ shared_examples_for 'null_hashkey_nilvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -45944,7 +45944,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = ''
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -45966,7 +45966,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = ''
     store.delete({"hashkey1"=>"hashkey2"}).should == ''
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -45996,7 +45996,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = ''
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46018,7 +46018,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = ''
     store.delete({"hashkey3"=>"hashkey4"}).should == ''
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46048,7 +46048,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = nil
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46070,7 +46070,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = nil
     store.delete({"hashkey1"=>"hashkey2"}).should == nil
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46100,7 +46100,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = nil
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46122,7 +46122,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = nil
     store.delete({"hashkey3"=>"hashkey4"}).should == nil
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46152,7 +46152,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 0
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46174,7 +46174,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = 0
     store.delete({"hashkey1"=>"hashkey2"}).should == 0
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46204,7 +46204,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 0
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46226,7 +46226,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = 0
     store.delete({"hashkey3"=>"hashkey4"}).should == 0
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46256,7 +46256,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46278,7 +46278,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store.delete({"hashkey1"=>"hashkey2"}).should == false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46308,7 +46308,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46330,7 +46330,7 @@ shared_examples_for 'store_hashkey_nilvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = false
     store.delete({"hashkey3"=>"hashkey4"}).should == false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46427,7 +46427,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -46438,8 +46438,8 @@ shared_examples_for 'null_hashkey_integervalue' do
     store[{"hashkey1"=>"hashkey2"}] = 41
     store[{"hashkey3"=>"hashkey4"}] = -12
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -46458,7 +46458,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -46478,7 +46478,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -46489,8 +46489,8 @@ shared_examples_for 'null_hashkey_integervalue' do
     store[{"hashkey3"=>"hashkey4"}] = 41
     store[{"hashkey1"=>"hashkey2"}] = -12
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -46509,7 +46509,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -46529,7 +46529,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -46540,8 +46540,8 @@ shared_examples_for 'null_hashkey_integervalue' do
     store[{"hashkey1"=>"hashkey2"}] = -12
     store[{"hashkey3"=>"hashkey4"}] = 41
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -46560,7 +46560,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -46580,7 +46580,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -46591,8 +46591,8 @@ shared_examples_for 'null_hashkey_integervalue' do
     store[{"hashkey3"=>"hashkey4"}] = -12
     store[{"hashkey1"=>"hashkey2"}] = 41
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -46611,7 +46611,7 @@ shared_examples_for 'null_hashkey_integervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -46632,7 +46632,7 @@ shared_examples_for 'store_hashkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 41
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46654,7 +46654,7 @@ shared_examples_for 'store_hashkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = 41
     store.delete({"hashkey1"=>"hashkey2"}).should == 41
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46695,7 +46695,7 @@ shared_examples_for 'store_hashkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 41
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46717,7 +46717,7 @@ shared_examples_for 'store_hashkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = 41
     store.delete({"hashkey3"=>"hashkey4"}).should == 41
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46758,7 +46758,7 @@ shared_examples_for 'store_hashkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = -12
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46780,7 +46780,7 @@ shared_examples_for 'store_hashkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = -12
     store.delete({"hashkey1"=>"hashkey2"}).should == -12
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46821,7 +46821,7 @@ shared_examples_for 'store_hashkey_integervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = -12
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -46843,7 +46843,7 @@ shared_examples_for 'store_hashkey_integervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = -12
     store.delete({"hashkey3"=>"hashkey4"}).should == -12
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -46923,7 +46923,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -46934,8 +46934,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey1"=>"hashkey2"}] = 123.456
     store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -46954,7 +46954,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -46974,7 +46974,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -46985,8 +46985,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey3"=>"hashkey4"}] = 123.456
     store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47005,7 +47005,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -47025,7 +47025,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47036,8 +47036,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey1"=>"hashkey2"}] = -98.7
     store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47056,7 +47056,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -47076,7 +47076,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47087,8 +47087,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey3"=>"hashkey4"}] = -98.7
     store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47107,7 +47107,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -47127,7 +47127,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47138,8 +47138,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey1"=>"hashkey2"}] = 340282366920938463463374607431768211456
     store[{"hashkey3"=>"hashkey4"}] = 33
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47158,7 +47158,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -47178,7 +47178,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47189,8 +47189,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey3"=>"hashkey4"}] = 340282366920938463463374607431768211456
     store[{"hashkey1"=>"hashkey2"}] = 33
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47209,7 +47209,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -47229,7 +47229,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47240,8 +47240,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey1"=>"hashkey2"}] = 33
     store[{"hashkey3"=>"hashkey4"}] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47260,7 +47260,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -47280,7 +47280,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47291,8 +47291,8 @@ shared_examples_for 'null_hashkey_numbervalue' do
     store[{"hashkey3"=>"hashkey4"}] = 33
     store[{"hashkey1"=>"hashkey2"}] = 340282366920938463463374607431768211456
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47311,7 +47311,7 @@ shared_examples_for 'null_hashkey_numbervalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -47332,7 +47332,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 123.456
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47354,7 +47354,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = 123.456
     store.delete({"hashkey1"=>"hashkey2"}).should == 123.456
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47395,7 +47395,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 123.456
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47417,7 +47417,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = 123.456
     store.delete({"hashkey3"=>"hashkey4"}).should == 123.456
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47458,7 +47458,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = -98.7
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47480,7 +47480,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = -98.7
     store.delete({"hashkey1"=>"hashkey2"}).should == -98.7
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47521,7 +47521,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = -98.7
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47543,7 +47543,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = -98.7
     store.delete({"hashkey3"=>"hashkey4"}).should == -98.7
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47584,7 +47584,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 340282366920938463463374607431768211456
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47606,7 +47606,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = 340282366920938463463374607431768211456
     store.delete({"hashkey1"=>"hashkey2"}).should == 340282366920938463463374607431768211456
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47647,7 +47647,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 340282366920938463463374607431768211456
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47669,7 +47669,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = 340282366920938463463374607431768211456
     store.delete({"hashkey3"=>"hashkey4"}).should == 340282366920938463463374607431768211456
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47710,7 +47710,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = 33
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47732,7 +47732,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = 33
     store.delete({"hashkey1"=>"hashkey2"}).should == 33
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47773,7 +47773,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = 33
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -47795,7 +47795,7 @@ shared_examples_for 'store_hashkey_numbervalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = 33
     store.delete({"hashkey3"=>"hashkey4"}).should == 33
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -47903,7 +47903,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47914,8 +47914,8 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     store[{"hashkey1"=>"hashkey2"}] = true
     store[{"hashkey3"=>"hashkey4"}] = false
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47934,7 +47934,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -47954,7 +47954,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -47965,8 +47965,8 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     store[{"hashkey3"=>"hashkey4"}] = true
     store[{"hashkey1"=>"hashkey2"}] = false
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -47985,7 +47985,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -48005,7 +48005,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48016,8 +48016,8 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store[{"hashkey3"=>"hashkey4"}] = true
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48036,7 +48036,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -48056,7 +48056,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48067,8 +48067,8 @@ shared_examples_for 'null_hashkey_booleanvalue' do
     store[{"hashkey3"=>"hashkey4"}] = false
     store[{"hashkey1"=>"hashkey2"}] = true
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48087,7 +48087,7 @@ shared_examples_for 'null_hashkey_booleanvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -48108,7 +48108,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = true
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48130,7 +48130,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = true
     store.delete({"hashkey1"=>"hashkey2"}).should == true
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48171,7 +48171,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = true
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48193,7 +48193,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = true
     store.delete({"hashkey3"=>"hashkey4"}).should == true
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48234,7 +48234,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48256,7 +48256,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = false
     store.delete({"hashkey1"=>"hashkey2"}).should == false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48297,7 +48297,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48319,7 +48319,7 @@ shared_examples_for 'store_hashkey_booleanvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = false
     store.delete({"hashkey3"=>"hashkey4"}).should == false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48399,7 +48399,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48410,8 +48410,8 @@ shared_examples_for 'null_hashkey_stringvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48430,7 +48430,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -48450,7 +48450,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48461,8 +48461,8 @@ shared_examples_for 'null_hashkey_stringvalue' do
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48481,7 +48481,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -48501,7 +48501,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48512,8 +48512,8 @@ shared_examples_for 'null_hashkey_stringvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48532,7 +48532,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -48552,7 +48552,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48563,8 +48563,8 @@ shared_examples_for 'null_hashkey_stringvalue' do
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48583,7 +48583,7 @@ shared_examples_for 'null_hashkey_stringvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -48604,7 +48604,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48626,7 +48626,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = "strval1"
     store.delete({"hashkey1"=>"hashkey2"}).should == "strval1"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48667,7 +48667,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48689,7 +48689,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = "strval1"
     store.delete({"hashkey3"=>"hashkey4"}).should == "strval1"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48730,7 +48730,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48752,7 +48752,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = "strval2"
     store.delete({"hashkey1"=>"hashkey2"}).should == "strval2"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48793,7 +48793,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -48815,7 +48815,7 @@ shared_examples_for 'store_hashkey_stringvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = "strval2"
     store.delete({"hashkey3"=>"hashkey4"}).should == "strval2"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -48951,7 +48951,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -48962,8 +48962,8 @@ shared_examples_for 'null_hashkey_binaryvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "über"
     store[{"hashkey3"=>"hashkey4"}] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -48982,7 +48982,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -49002,7 +49002,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49013,8 +49013,8 @@ shared_examples_for 'null_hashkey_binaryvalue' do
     store[{"hashkey3"=>"hashkey4"}] = "über"
     store[{"hashkey1"=>"hashkey2"}] = "\xAA\xBB\xCC"
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49033,7 +49033,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -49053,7 +49053,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49064,8 +49064,8 @@ shared_examples_for 'null_hashkey_binaryvalue' do
     store[{"hashkey1"=>"hashkey2"}] = "\xAA\xBB\xCC"
     store[{"hashkey3"=>"hashkey4"}] = "über"
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49084,7 +49084,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -49104,7 +49104,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49115,8 +49115,8 @@ shared_examples_for 'null_hashkey_binaryvalue' do
     store[{"hashkey3"=>"hashkey4"}] = "\xAA\xBB\xCC"
     store[{"hashkey1"=>"hashkey2"}] = "über"
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49135,7 +49135,7 @@ shared_examples_for 'null_hashkey_binaryvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -49156,7 +49156,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "über"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49178,7 +49178,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = "über"
     store.delete({"hashkey1"=>"hashkey2"}).should == "über"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49219,7 +49219,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "über"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49241,7 +49241,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = "über"
     store.delete({"hashkey3"=>"hashkey4"}).should == "über"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49282,7 +49282,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = "\xAA\xBB\xCC"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49304,7 +49304,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = "\xAA\xBB\xCC"
     store.delete({"hashkey1"=>"hashkey2"}).should == "\xAA\xBB\xCC"
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49345,7 +49345,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = "\xAA\xBB\xCC"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49367,7 +49367,7 @@ shared_examples_for 'store_hashkey_binaryvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = "\xAA\xBB\xCC"
     store.delete({"hashkey3"=>"hashkey4"}).should == "\xAA\xBB\xCC"
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49503,7 +49503,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49514,8 +49514,8 @@ shared_examples_for 'null_hashkey_hashvalue' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49534,7 +49534,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -49554,7 +49554,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49565,8 +49565,8 @@ shared_examples_for 'null_hashkey_hashvalue' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49585,7 +49585,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -49605,7 +49605,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49616,8 +49616,8 @@ shared_examples_for 'null_hashkey_hashvalue' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49636,7 +49636,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -49656,7 +49656,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -49667,8 +49667,8 @@ shared_examples_for 'null_hashkey_hashvalue' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -49687,7 +49687,7 @@ shared_examples_for 'null_hashkey_hashvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -49708,7 +49708,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49730,7 +49730,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval1"=>["array1", 1]}
     store.delete({"hashkey1"=>"hashkey2"}).should == {"hashval1"=>["array1", 1]}
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49771,7 +49771,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49793,7 +49793,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval1"=>["array1", 1]}
     store.delete({"hashkey3"=>"hashkey4"}).should == {"hashval1"=>["array1", 1]}
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49834,7 +49834,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49856,7 +49856,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete({"hashkey1"=>"hashkey2"}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -49897,7 +49897,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -49919,7 +49919,7 @@ shared_examples_for 'store_hashkey_hashvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = {"hashval3"=>["array2", {"hashval4"=>42}]}
     store.delete({"hashkey3"=>"hashkey4"}).should == {"hashval3"=>["array2", {"hashval4"=>42}]}
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -50055,7 +50055,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -50066,8 +50066,8 @@ shared_examples_for 'null_hashkey_objectvalue' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -50086,7 +50086,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -50106,7 +50106,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -50117,8 +50117,8 @@ shared_examples_for 'null_hashkey_objectvalue' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -50137,7 +50137,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -50157,7 +50157,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -50168,8 +50168,8 @@ shared_examples_for 'null_hashkey_objectvalue' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -50188,7 +50188,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey1"=>"hashkey2"}, options).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}, options).should be false
     store.load({"hashkey1"=>"hashkey2"}, options).should be_nil
     store.fetch({"hashkey1"=>"hashkey2"}, 42, options).should == 42
     store.fetch({"hashkey1"=>"hashkey2"}, options) { 42 }.should == 42
@@ -50208,7 +50208,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   end
 
   it 'returns false from #key? if a key is not available' do
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'returns nil from delete if a value for a key does not exist' do
@@ -50219,8 +50219,8 @@ shared_examples_for 'null_hashkey_objectvalue' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store.clear.should equal(store)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -50239,7 +50239,7 @@ shared_examples_for 'null_hashkey_objectvalue' do
   it 'accepts frozen options' do
     options = {option1: 1, options2: 2}
     options.freeze
-    store.key?({"hashkey3"=>"hashkey4"}, options).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}, options).should be false
     store.load({"hashkey3"=>"hashkey4"}, options).should be_nil
     store.fetch({"hashkey3"=>"hashkey4"}, 42, options).should == 42
     store.fetch({"hashkey3"=>"hashkey4"}, options) { 42 }.should == 42
@@ -50260,7 +50260,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -50282,7 +50282,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval1)
     store.delete({"hashkey1"=>"hashkey2"}).should == Value.new(:objval1)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -50323,7 +50323,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -50345,7 +50345,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval1)
     store.delete({"hashkey3"=>"hashkey4"}).should == Value.new(:objval1)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -50386,7 +50386,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_true
+    store.key?({"hashkey1"=>"hashkey2"}).should be true
   end
 
   it 'stores values with #store' do
@@ -50408,7 +50408,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey1"=>"hashkey2"}] = Value.new(:objval2)
     store.delete({"hashkey1"=>"hashkey2"}).should == Value.new(:objval2)
-    store.key?({"hashkey1"=>"hashkey2"}).should be_false
+    store.key?({"hashkey1"=>"hashkey2"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -50449,7 +50449,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
 
   it 'returns true from #key? if a key is available' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_true
+    store.key?({"hashkey3"=>"hashkey4"}).should be true
   end
 
   it 'stores values with #store' do
@@ -50471,7 +50471,7 @@ shared_examples_for 'store_hashkey_objectvalue' do
   it 'removes and returns a value from the backing store via delete if it exists' do
     store[{"hashkey3"=>"hashkey4"}] = Value.new(:objval2)
     store.delete({"hashkey3"=>"hashkey4"}).should == Value.new(:objval2)
-    store.key?({"hashkey3"=>"hashkey4"}).should be_false
+    store.key?({"hashkey3"=>"hashkey4"}).should be false
   end
 
   it 'overwrites existing values' do
@@ -50699,18 +50699,18 @@ shared_examples_for 'expires' do
 
   it 'supports expires on store and #key?', retry: 3 do
     store.store('key1', 'val1', expires: 3)
-    store.key?('key1').should be_true
+    store.key?('key1').should be true
     sleep 1
-    store.key?('key1').should be_true
+    store.key?('key1').should be true
     sleep 3
-    store.key?('key1').should be_false
+    store.key?('key1').should be false
   end
 
   it 'supports strict expires on store and #key?' do
     store.store('key1', 'val1', expires: 2)
-    store.key?('key1').should be_true
+    store.key?('key1').should be true
     sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
-    store.key?('key1').should be_false
+    store.key?('key1').should be false
   end
 
   it 'supports updating the expiration time in load', retry: 3 do
@@ -50743,7 +50743,7 @@ shared_examples_for 'expires' do
     store.store('key2', 'val2', expires: 3)
     store['key2'].should == 'val2'
     sleep 1
-    store.key?('key2', expires: 5).should be_true
+    store.key?('key2', expires: 5).should be true
     store['key2'].should == 'val2'
     sleep 3
     store['key2'].should == 'val2'
@@ -50753,14 +50753,14 @@ shared_examples_for 'expires' do
 
   it 'supports 0 as no-expires in #key?' do
     store.store('key1', 'val1', expires: 2)
-    store.key?('key1', expires: 0).should be_true
+    store.key?('key1', expires: 0).should be true
     sleep 3
     store['key1'].should == 'val1'
   end
 
   it 'supports false as no-expires in #key?' do
     store.store('key1', 'val1', expires: 2)
-    store.key?('key1', expires: false ).should be_true
+    store.key?('key1', expires: false ).should be true
     sleep 3
     store['key1'].should == 'val1'
   end
@@ -50825,10 +50825,10 @@ shared_examples_for 'expires' do
 
   it 'does not update the expiration time in #key? when not asked to do so', retry: 3 do
     store.store('key1', 'val1', expires: 1)
-    store.key?('key1').should be_true
-    store.key?('key1', expires: nil).should be_true
+    store.key?('key1').should be true
+    store.key?('key1', expires: nil).should be true
     sleep 2
-    store.key?('key1').should be_false
+    store.key?('key1').should be false
   end
 
   it 'does not update the expiration time in fetch when not asked to do so', retry: 3 do
@@ -50853,11 +50853,11 @@ end
 shared_examples_for 'default_expires' do
   it 'does set default expiration time' do
     store['key1'] = 'val1'
-    store.key?('key1').should be_true
+    store.key?('key1').should be true
     store.fetch('key1').should == 'val1'
     store.load('key1').should == 'val1'
     sleep 2
-    store.key?('key1').should be_false
+    store.key?('key1').should be false
     store.fetch('key1').should be_nil
     store.load('key1').should be_nil
   end
@@ -50942,27 +50942,27 @@ end
 
 shared_examples_for 'increment' do
   it 'initializes in #increment with 1' do
-    store.key?('inckey').should be_false
+    store.key?('inckey').should be false
     store.increment('inckey').should == 1
-    store.key?('inckey').should be_true
+    store.key?('inckey').should be true
     store.raw['inckey'].should == '1'
     store.raw.load('inckey').should == '1'
     store.load('inckey', raw: true).should == '1'
 
     store.delete('inckey', raw: true).should == '1'
-    store.key?('inckey').should be_false
+    store.key?('inckey').should be false
   end
 
   it 'initializes in #increment with higher value' do
     store.increment('inckey', 42).should == 42
-    store.key?('inckey').should be_true
+    store.key?('inckey').should be true
     store.raw['inckey'].should == '42'
     store.delete('inckey', raw: true).should == '42'
   end
 
   it 'initializes in #increment with 0' do
     store.increment('inckey', 0).should == 0
-    store.key?('inckey').should be_true
+    store.key?('inckey').should be true
     store.raw['inckey'].should == '0'
     store.delete('inckey', raw: true).should == '0'
   end
@@ -51030,10 +51030,10 @@ shared_examples_for 'increment' do
     b = Moneta::Semaphore.new(store, 'semaphore', 2)
     c = Moneta::Semaphore.new(store, 'semaphore', 2)
     a.synchronize do
-      a.locked?.should be_true
+      a.locked?.should be true
       b.synchronize do
-        b.locked?.should be_true
-        c.try_lock.should be_false
+        b.locked?.should be true
+        c.try_lock.should be false
       end
     end
   end
@@ -51044,26 +51044,26 @@ end
 
 shared_examples_for 'create' do
   it 'creates the given key' do
-    store.create('key','value').should be_true
+    store.create('key','value').should be true
     store['key'].should == 'value'
   end
 
   it 'creates raw value with the given key' do
-    store.raw.create('key','value').should be_true
+    store.raw.create('key','value').should be true
     store.raw['key'].should == 'value'
   end
 
   it 'does not create a key if it exists' do
     store['key'] = 'value'
-    store.create('key','another value').should be_false
+    store.create('key','another value').should be false
     store['key'].should == 'value'
   end
 
   it 'supports Mutex' do
     a = Moneta::Mutex.new(store, 'mutex')
     b = Moneta::Mutex.new(store, 'mutex')
-    a.lock.should be_true
-    b.try_lock.should be_false
+    a.lock.should be true
+    b.try_lock.should be false
     a.unlock.should be_nil
   end
 
@@ -51083,19 +51083,19 @@ end
 
 shared_examples_for 'create_expires' do
   it 'creates the given key and expires it' do
-    store.create('key','value', expires: 1).should be_true
+    store.create('key','value', expires: 1).should be true
     store['key'].should == 'value'
     sleep 2
-    store.key?('key').should be_false
+    store.key?('key').should be false
   end
 
   it 'does not change expires if the key exists' do
     store.store('key', 'value', expires: false).should == 'value'
-    store.create('key','another value', expires: 1).should be_false
+    store.create('key','another value', expires: 1).should be false
     store['key'].should == 'value'
     sleep 2
     store['key'].should == 'value'
-    store.key?('key').should be_true
+    store.key?('key').should be true
   end
 end
 
@@ -51213,7 +51213,7 @@ shared_examples_for 'transform_value_expires' do
     store['key'] = nil
     load_value(store.load('key', raw: true)).should == [nil]
     store['key'] = false
-    load_value(store.load('key', raw: true)).should be_false
+    load_value(store.load('key', raw: true)).should be false
 
     store.store('key', 'value', expires: 10)
     load_value(store.load('key', raw: true)).first.should == 'value'
@@ -51254,14 +51254,14 @@ shared_examples_for 'features' do
   end
 
   it 'should have frozen features' do
-    store.features.frozen?.should be_true
+    store.features.frozen?.should be true
   end
 
   it 'should have #supports?' do
     features.each do |f|
-      store.supports?(f).should be_true
+      store.supports?(f).should be true
     end
-    store.supports?(:unknown).should be_false
+    store.supports?(:unknown).should be false
   end
 end
 

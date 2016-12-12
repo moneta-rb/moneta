@@ -57,7 +57,7 @@ describe_moneta "adapter_datamapper" do
     second['key'] = 'value2'
 
     first.delete('key').should == 'value'
-    first.key?('key').should be_false
+    first.key?('key').should be false
     second['key'].should == 'value2'
   end
 

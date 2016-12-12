@@ -19,8 +19,8 @@ describe_moneta "semaphore" do
 
   it 'should have #lock' do
     mutex = Moneta::Semaphore.new(store, 'semaphore')
-    mutex.lock.should be_true
-    mutex.locked?.should be_true
+    mutex.lock.should be true
+    mutex.locked?.should be true
     expect do
      mutex.lock
     end.to raise_error(RuntimeError)
@@ -28,13 +28,13 @@ describe_moneta "semaphore" do
      mutex.try_lock
     end.to raise_error(RuntimeError)
     mutex.unlock.should be_nil
-    mutex.locked?.should be_false
+    mutex.locked?.should be false
   end
 
   it 'should have #enter' do
     mutex = Moneta::Semaphore.new(store, 'semaphore')
-    mutex.enter.should be_true
-    mutex.locked?.should be_true
+    mutex.enter.should be true
+    mutex.locked?.should be true
     expect do
      mutex.enter
     end.to raise_error(RuntimeError)
@@ -42,22 +42,22 @@ describe_moneta "semaphore" do
      mutex.try_enter
     end.to raise_error(RuntimeError)
     mutex.leave.should be_nil
-    mutex.locked?.should be_false
+    mutex.locked?.should be false
   end
 
   it 'should lock with #lock' do
     a = Moneta::Semaphore.new(store, 'semaphore')
     b = Moneta::Semaphore.new(store, 'semaphore')
-    a.lock.should be_true
-    b.try_lock.should be_false
+    a.lock.should be true
+    b.try_lock.should be false
     a.unlock.should be_nil
   end
 
   it 'should have lock timeout' do
     a = Moneta::Semaphore.new(store, 'semaphore')
     b = Moneta::Semaphore.new(store, 'semaphore')
-    a.lock.should be_true
-    b.lock(1).should be_false
+    a.lock.should be true
+    b.lock(1).should be false
     a.unlock.should be_nil
   end
 
@@ -66,10 +66,10 @@ describe_moneta "semaphore" do
     b = Moneta::Semaphore.new(store, 'semaphore', 2)
     c = Moneta::Semaphore.new(store, 'semaphore', 2)
     a.synchronize do
-      a.locked?.should be_true
+      a.locked?.should be true
       b.synchronize do
-        b.locked?.should be_true
-        c.try_lock.should be_false
+        b.locked?.should be true
+        c.try_lock.should be false
       end
     end
   end
@@ -77,9 +77,9 @@ describe_moneta "semaphore" do
   it 'should have #synchronize' do
     semaphore = Moneta::Semaphore.new(store, 'semaphore')
     semaphore.synchronize do
-      semaphore.locked?.should be_true
+      semaphore.locked?.should be true
     end
-    semaphore.locked?.should be_false
+    semaphore.locked?.should be false
   end
 
 end

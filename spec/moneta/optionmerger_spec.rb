@@ -105,7 +105,7 @@ describe_moneta "optionmerger" do
     compressed_store['key'] = 'compressed value'
     store['key'].should == 'uncompressed value'
     compressed_store['key'].should == 'compressed value'
-    store.key?('compressedkey').should be_true
+    store.key?('compressedkey').should be true
     # Check if value is compressed
     compressed_store['key'].should_not == store['compressedkey']
   end

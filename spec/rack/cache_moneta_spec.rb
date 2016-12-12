@@ -301,8 +301,8 @@ describe Rack::Cache::EntityStore::Moneta do
 
   it 'correctly determines whether cached body exists for key with #exist?' do
     key, size = @store.write(['She rode to the devil,'])
-    @store.exist?(key).should be_true
-    @store.exist?('938jasddj83jasdh4438021ksdfjsdfjsdsf').should be_false
+    @store.exist?(key).should be true
+    @store.exist?('938jasddj83jasdh4438021ksdfjsdfjsdsf').should be false
   end
 
   it 'can read data written with #write' do

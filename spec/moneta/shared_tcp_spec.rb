@@ -38,7 +38,7 @@ describe_moneta "shared_tcp" do
   it 'shares values' do
     store['shared_key'] = 'shared_value'
     second = new_store
-    second.key?('shared_key').should be_true
+    second.key?('shared_key').should be true
     second['shared_key'].should == 'shared_value'
     second.close
   end

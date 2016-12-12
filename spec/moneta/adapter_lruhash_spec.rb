@@ -37,7 +37,7 @@ describe_moneta "adapter_lruhash" do
       (0...[9, i-1].min).each do |j|
         store.instance_variable_get(:@entry)[i-j].should_not be_nil
       end
-      store.key?(i-9).should be_false if i > 9
+      store.key?(i-9).should be false if i > 9
     end
   end
 
@@ -119,7 +119,7 @@ describe_moneta "adapter_lruhash" do
     stub_const('Moneta::Adapters::LRUHash::DEFAULT_MAX_COUNT', 5)
     store = Moneta::Adapters::LRUHash.new(max_value: nil, max_size: nil)
     (1..6).each { |n| store[n] = n }
-    store.key?(1).should be_false
+    store.key?(1).should be false
     store[1].should be_nil
     store[2].should eq(2)
     store[6].should eq(6)

@@ -67,7 +67,7 @@ describe Rack::MonetaStore do
     get do
       expect(@store.delete('key')).to eql('value')
     end
-    expect(uncached_store.key?('key')).to be_false
+    expect(uncached_store.key?('key')).to be false
   end
 
   it 'should accept a config block' do

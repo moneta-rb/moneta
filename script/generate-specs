@@ -633,7 +633,7 @@ end},
 it 'shares values' do
   store['shared_key'] = 'shared_value'
   second = new_store
-  second.key?('shared_key').should be_true
+  second.key?('shared_key').should be true
   second['shared_key'].should == 'shared_value'
   second.close
 end
@@ -650,7 +650,7 @@ end},
 it 'shares values' do
   store['shared_key'] = 'shared_value'
   second = new_store
-  second.key?('shared_key').should be_true
+  second.key?('shared_key').should be true
   second['shared_key'].should == 'shared_value'
   second.close
 end
@@ -1319,7 +1319,7 @@ it 'does not cross contaminate when deleting' do
   second['key'] = 'value2'
 
   first.delete('key').should == 'value'
-  first.key?('key').should be_false
+  first.key?('key').should be false
   second['key'].should == 'value2'
 end
 }
@@ -1400,7 +1400,7 @@ it 'deletes oldest' do
     (0...[9, i-1].min).each do |j|
       store.instance_variable_get(:@entry)[i-j].should_not be_nil
     end
-    store.key?(i-9).should be_false if i > 9
+    store.key?(i-9).should be false if i > 9
   end
 end
 
@@ -1482,7 +1482,7 @@ it 'only allows the default number of items when max_count is missing' do
   stub_const('Moneta::Adapters::LRUHash::DEFAULT_MAX_COUNT', 5)
   store = Moneta::Adapters::LRUHash.new(max_value: nil, max_size: nil)
   (1..6).each { |n| store[n] = n }
-  store.key?(1).should be_false
+  store.key?(1).should be false
   store[1].should be_nil
   store[2].should eq(2)
   store[6].should eq(6)
@@ -1633,8 +1633,8 @@ Moneta::Adapters::MongoOfficial.new(db: "adapter_mongo",
     tests: %{
 it 'should have #lock' do
   mutex = Moneta::Mutex.new(store, 'mutex')
-  mutex.lock.should be_true
-  mutex.locked?.should be_true
+  mutex.lock.should be true
+  mutex.locked?.should be true
   expect do
    mutex.lock
   end.to raise_error(RuntimeError)
@@ -1642,13 +1642,13 @@ it 'should have #lock' do
    mutex.try_lock
   end.to raise_error(RuntimeError)
   mutex.unlock.should be_nil
-  mutex.locked?.should be_false
+  mutex.locked?.should be false
 end
 
 it 'should have #enter' do
   mutex = Moneta::Mutex.new(store, 'mutex')
-  mutex.enter.should be_true
-  mutex.locked?.should be_true
+  mutex.enter.should be true
+  mutex.locked?.should be true
   expect do
    mutex.enter
   end.to raise_error(RuntimeError)
@@ -1656,31 +1656,31 @@ it 'should have #enter' do
    mutex.try_enter
   end.to raise_error(RuntimeError)
   mutex.leave.should be_nil
-  mutex.locked?.should be_false
+  mutex.locked?.should be false
 end
 
 it 'should lock with #lock' do
   a = Moneta::Mutex.new(store, 'mutex')
   b = Moneta::Mutex.new(store, 'mutex')
-  a.lock.should be_true
-  b.try_lock.should be_false
+  a.lock.should be true
+  b.try_lock.should be false
   a.unlock.should be_nil
 end
 
 it 'should have lock timeout' do
   a = Moneta::Mutex.new(store, 'mutex')
   b = Moneta::Mutex.new(store, 'mutex')
-  a.lock.should be_true
-  b.lock(1).should be_false
+  a.lock.should be true
+  b.lock(1).should be false
   a.unlock.should be_nil
 end
 
 it 'should have #synchronize' do
   mutex = Moneta::Mutex.new(store, 'mutex')
   mutex.synchronize do
-    mutex.locked?.should be_true
+    mutex.locked?.should be true
   end
-  mutex.locked?.should be_false
+  mutex.locked?.should be false
 end
   }
   },
@@ -1690,8 +1690,8 @@ end
     tests: %{
 it 'should have #lock' do
   mutex = Moneta::Semaphore.new(store, 'semaphore')
-  mutex.lock.should be_true
-  mutex.locked?.should be_true
+  mutex.lock.should be true
+  mutex.locked?.should be true
   expect do
    mutex.lock
   end.to raise_error(RuntimeError)
@@ -1699,13 +1699,13 @@ it 'should have #lock' do
    mutex.try_lock
   end.to raise_error(RuntimeError)
   mutex.unlock.should be_nil
-  mutex.locked?.should be_false
+  mutex.locked?.should be false
 end
 
 it 'should have #enter' do
   mutex = Moneta::Semaphore.new(store, 'semaphore')
-  mutex.enter.should be_true
-  mutex.locked?.should be_true
+  mutex.enter.should be true
+  mutex.locked?.should be true
   expect do
    mutex.enter
   end.to raise_error(RuntimeError)
@@ -1713,22 +1713,22 @@ it 'should have #enter' do
    mutex.try_enter
   end.to raise_error(RuntimeError)
   mutex.leave.should be_nil
-  mutex.locked?.should be_false
+  mutex.locked?.should be false
 end
 
 it 'should lock with #lock' do
   a = Moneta::Semaphore.new(store, 'semaphore')
   b = Moneta::Semaphore.new(store, 'semaphore')
-  a.lock.should be_true
-  b.try_lock.should be_false
+  a.lock.should be true
+  b.try_lock.should be false
   a.unlock.should be_nil
 end
 
 it 'should have lock timeout' do
   a = Moneta::Semaphore.new(store, 'semaphore')
   b = Moneta::Semaphore.new(store, 'semaphore')
-  a.lock.should be_true
-  b.lock(1).should be_false
+  a.lock.should be true
+  b.lock(1).should be false
   a.unlock.should be_nil
 end
 
@@ -1737,10 +1737,10 @@ it 'should count concurrent accesses' do
   b = Moneta::Semaphore.new(store, 'semaphore', 2)
   c = Moneta::Semaphore.new(store, 'semaphore', 2)
   a.synchronize do
-    a.locked?.should be_true
+    a.locked?.should be true
     b.synchronize do
-      b.locked?.should be_true
-      c.try_lock.should be_false
+      b.locked?.should be true
+      c.try_lock.should be false
     end
   end
 end
@@ -1748,9 +1748,9 @@ end
 it 'should have #synchronize' do
   semaphore = Moneta::Semaphore.new(store, 'semaphore')
   semaphore.synchronize do
-    semaphore.locked?.should be_true
+    semaphore.locked?.should be true
   end
-  semaphore.locked?.should be_false
+  semaphore.locked?.should be false
 end
   }
   },
@@ -1846,7 +1846,7 @@ it 'supports adding proxis using #with' do
   compressed_store['key'] = 'compressed value'
   store['key'].should == 'uncompressed value'
   compressed_store['key'].should == 'compressed value'
-  store.key?('compressedkey').should be_true
+  store.key?('compressedkey').should be true
   # Check if value is compressed
   compressed_store['key'].should_not == store['compressedkey']
 end}
@@ -1899,7 +1899,7 @@ it 'guarantees that the same value is returned when setting a key' do
 end
 
 it 'returns false from #key? if a key is not available' do
-  store.key?(#{key1}).should be_false
+  store.key?(#{key1}).should be false
 end
 
 it 'returns nil from delete if a value for a key does not exist' do
@@ -1910,8 +1910,8 @@ it 'removes all keys from the store with clear' do
   store[#{key1}] = #{val1}
   store[#{key2}] = #{val2}
   store.clear.should equal(store)
-  store.key?(#{key1}).should be_false
-  store.key?(#{key2}).should be_false
+  store.key?(#{key1}).should be false
+  store.key?(#{key2}).should be false
 end
 
 it 'fetches a key with a default value with fetch, if the key is not available' do
@@ -1930,7 +1930,7 @@ end
 it 'accepts frozen options' do
   options = {option1: 1, options2: 2}
   options.freeze
-  store.key?(#{key1}, options).should be_false
+  store.key?(#{key1}, options).should be false
   store.load(#{key1}, options).should be_nil
   store.fetch(#{key1}, 42, options).should == 42
   store.fetch(#{key1}, options) { 42 }.should == 42
@@ -1948,7 +1948,7 @@ end
 
 it 'returns true from #key? if a key is available' do
   store[#{key1}] = #{val1}
-  store.key?(#{key1}).should be_true
+  store.key?(#{key1}).should be true
 end
 
 it 'stores values with #store' do
@@ -1970,7 +1970,7 @@ end
 it 'removes and returns a value from the backing store via delete if it exists' do
   store[#{key1}] = #{val1}
   store.delete(#{key1}).should == #{val1}
-  store.key?(#{key1}).should be_false
+  store.key?(#{key1}).should be false
 end
 
 it 'overwrites existing values' do
@@ -2126,18 +2126,18 @@ end
 
 it 'supports expires on store and #key?', retry: 3 do
   store.store('key1', 'val1', expires: 3)
-  store.key?('key1').should be_true
+  store.key?('key1').should be true
   sleep 1
-  store.key?('key1').should be_true
+  store.key?('key1').should be true
   sleep 3
-  store.key?('key1').should be_false
+  store.key?('key1').should be false
 end
 
 it 'supports strict expires on store and #key?' do
   store.store('key1', 'val1', expires: 2)
-  store.key?('key1').should be_true
+  store.key?('key1').should be true
   sleep 3 # Sleep 3 seconds because after 2 seconds the value can still exist!
-  store.key?('key1').should be_false
+  store.key?('key1').should be false
 end
 
 it 'supports updating the expiration time in load', retry: 3 do
@@ -2170,7 +2170,7 @@ it 'supports updating the expiration time in #key?', retry: 3 do
   store.store('key2', 'val2', expires: 3)
   store['key2'].should == 'val2'
   sleep 1
-  store.key?('key2', expires: 5).should be_true
+  store.key?('key2', expires: 5).should be true
   store['key2'].should == 'val2'
   sleep 3
   store['key2'].should == 'val2'
@@ -2180,14 +2180,14 @@ end
 
 it 'supports 0 as no-expires in #key?' do
   store.store('key1', 'val1', expires: 2)
-  store.key?('key1', expires: 0).should be_true
+  store.key?('key1', expires: 0).should be true
   sleep 3
   store['key1'].should == 'val1'
 end
 
 it 'supports false as no-expires in #key?' do
   store.store('key1', 'val1', expires: 2)
-  store.key?('key1', expires: false ).should be_true
+  store.key?('key1', expires: false ).should be true
   sleep 3
   store['key1'].should == 'val1'
 end
@@ -2252,10 +2252,10 @@ end
 
 it 'does not update the expiration time in #key? when not asked to do so', retry: 3 do
   store.store('key1', 'val1', expires: 1)
-  store.key?('key1').should be_true
-  store.key?('key1', expires: nil).should be_true
+  store.key?('key1').should be true
+  store.key?('key1', expires: nil).should be true
   sleep 2
-  store.key?('key1').should be_false
+  store.key?('key1').should be false
 end
 
 it 'does not update the expiration time in fetch when not asked to do so', retry: 3 do
@@ -2276,11 +2276,11 @@ end}
 
 SPECS['default_expires'] = %{it 'does set default expiration time' do
   store['key1'] = 'val1'
-  store.key?('key1').should be_true
+  store.key?('key1').should be true
   store.fetch('key1').should == 'val1'
   store.load('key1').should == 'val1'
   sleep 2
-  store.key?('key1').should be_false
+  store.key?('key1').should be false
   store.fetch('key1').should be_nil
   store.load('key1').should be_nil
 end}
@@ -2349,27 +2349,27 @@ it 'have atomic create across multiple processes' do
 end}
 
 SPECS['increment'] = %{it 'initializes in #increment with 1' do
-  store.key?('inckey').should be_false
+  store.key?('inckey').should be false
   store.increment('inckey').should == 1
-  store.key?('inckey').should be_true
+  store.key?('inckey').should be true
   store.raw['inckey'].should == '1'
   store.raw.load('inckey').should == '1'
   store.load('inckey', raw: true).should == '1'
 
   store.delete('inckey', raw: true).should == '1'
-  store.key?('inckey').should be_false
+  store.key?('inckey').should be false
 end
 
 it 'initializes in #increment with higher value' do
   store.increment('inckey', 42).should == 42
-  store.key?('inckey').should be_true
+  store.key?('inckey').should be true
   store.raw['inckey'].should == '42'
   store.delete('inckey', raw: true).should == '42'
 end
 
 it 'initializes in #increment with 0' do
   store.increment('inckey', 0).should == 0
-  store.key?('inckey').should be_true
+  store.key?('inckey').should be true
   store.raw['inckey'].should == '0'
   store.delete('inckey', raw: true).should == '0'
 end
@@ -2437,36 +2437,36 @@ it 'supports Semaphore' do
   b = Moneta::Semaphore.new(store, 'semaphore', 2)
   c = Moneta::Semaphore.new(store, 'semaphore', 2)
   a.synchronize do
-    a.locked?.should be_true
+    a.locked?.should be true
     b.synchronize do
-      b.locked?.should be_true
-      c.try_lock.should be_false
+      b.locked?.should be true
+      c.try_lock.should be false
     end
   end
 end
 }
 
 SPECS['create'] = %{it 'creates the given key' do
-  store.create('key','value').should be_true
+  store.create('key','value').should be true
   store['key'].should == 'value'
 end
 
 it 'creates raw value with the given key' do
-  store.raw.create('key','value').should be_true
+  store.raw.create('key','value').should be true
   store.raw['key'].should == 'value'
 end
 
 it 'does not create a key if it exists' do
   store['key'] = 'value'
-  store.create('key','another value').should be_false
+  store.create('key','another value').should be false
   store['key'].should == 'value'
 end
 
 it 'supports Mutex' do
   a = Moneta::Mutex.new(store, 'mutex')
   b = Moneta::Mutex.new(store, 'mutex')
-  a.lock.should be_true
-  b.try_lock.should be_false
+  a.lock.should be true
+  b.try_lock.should be false
   a.unlock.should be_nil
 end
 }
@@ -2478,19 +2478,19 @@ SPECS['not_create'] = %{it 'does not support #create' do
 end}
 
 SPECS['create_expires'] = %{it 'creates the given key and expires it' do
-  store.create('key','value', expires: 1).should be_true
+  store.create('key','value', expires: 1).should be true
   store['key'].should == 'value'
   sleep 2
-  store.key?('key').should be_false
+  store.key?('key').should be false
 end
 
 it 'does not change expires if the key exists' do
   store.store('key', 'value', expires: false).should == 'value'
-  store.create('key','another value', expires: 1).should be_false
+  store.create('key','another value', expires: 1).should be false
   store['key'].should == 'value'
   sleep 2
   store['key'].should == 'value'
-  store.key?('key').should be_true
+  store.key?('key').should be true
 end}
 
 SPECS['marshallable_key']  = %{it 'refuses to #[] from keys that cannot be marshalled' do
@@ -2592,7 +2592,7 @@ SPECS['transform_value_expires']  = %{it 'allows to bypass transformer with :raw
   store['key'] = nil
   load_value(store.load('key', raw: true)).should == [nil]
   store['key'] = false
-  load_value(store.load('key', raw: true)).should be_false
+  load_value(store.load('key', raw: true)).should be false
 
   store.store('key', 'value', expires: 10)
   load_value(store.load('key', raw: true)).first.should == 'value'
@@ -2629,14 +2629,14 @@ SPECS['features'] = %{it 'should report correct features' do
 end
 
 it 'should have frozen features' do
-  store.features.frozen?.should be_true
+  store.features.frozen?.should be true
 end
 
 it 'should have #supports?' do
   features.each do |f|
-    store.supports?(f).should be_true
+    store.supports?(f).should be true
   end
-  store.supports?(:unknown).should be_false
+  store.supports?(:unknown).should be false
 end}
 
 specs_code = "#{header}\n"
