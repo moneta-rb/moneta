@@ -1,3 +1,18 @@
+0.8.1
+
+* Adapters::TokyoTyrant - more consistent error handling
+* Adapters::MongoMoped - support for moped gem v2.0
+* Adapters::MongoOfficial - support for mongo gem versions 2-4
+* Adapters::File - fix a bug in #load (#74)
+* Adapters::LRUHash - allow to disable the limits by passing nil for max_size, max_count
+* Transformer - don't use OpenSSL::Digest::Digest namespace
+* Adapters::Sequel - fix issue with unknown "blob" type
+* Rack::Cache - fix deprecated require paths
+* Adapters::MemcachedNative - properly close connections
+* Transformer - support bson gem versions 2-4
+* Transformer - switch to rbzip2 gem for bzip2 support
+* Adapters::MemcachedDalli - #create returns a boolean
+
 0.8.0
 
 * Rename Moneta::Adapters::Mongo to Moneta::Adapters::MongoOfficial
