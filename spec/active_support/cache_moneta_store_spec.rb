@@ -60,6 +60,13 @@ describe ActiveSupport::Cache::MonetaStore do
     @store.fetch('rabbit').should be_nil
   end
 
+  it 'fetches data with expiration time' do
+    @store.fetch('rabbit', expires_in: 1.second) { @white_rabbit }
+    @store.fetch('rabbit').should == @white_rabbit
+    sleep 2
+    @store.fetch('rabbit').should be_nil
+  end
+
   it 'reads multiple keys' do
     @store.write 'irish whisky', 'Jameson'
     result = @store.read_multi 'rabbit', 'irish whisky'
@@ -194,4 +201,3 @@ describe ActiveSupport::Cache::MonetaStore do
     ActiveSupport::Cache::MonetaStore.instrument = false
   end
 end
-

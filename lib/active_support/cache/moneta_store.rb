@@ -50,9 +50,9 @@ module ActiveSupport
       private
 
       def moneta_options(options)
-        options ||= {}
-        options[:expires] = options.delete(:expires_in).to_i if options.include?(:expires_in)
-        options
+        new_options = options ? options.dup : {}
+        new_options[:expires] = new_options.delete(:expires_in).to_i if new_options.include?(:expires_in)
+        new_options
       end
     end
   end
