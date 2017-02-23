@@ -17,15 +17,24 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :db Sequel database
       # @option options [String/Symbol] :table (:moneta) Table name
+      # @option options [Array] :extensions ([]) List of Sequel extensions
+      # @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
       # @option options All other options passed to `Sequel#connect`
       # @option options [Sequel connection] :backend Use existing backend instance
       def initialize(options = {})
         table = (options.delete(:table) || :moneta).to_sym
+        extensions = options.delete(:extensions) || []
+        raise ArgumentError, 'Option :extensions must be an Array' unless extensions.is_a?(Array)
+        connection_validation_timeout = options.delete(:connection_validation_timeout)
         @backend = options[:backend] ||
           begin
             raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
             ::Sequel.connect(db, options)
           end
+        extensions.each do |extension|
+          @backend.extension(extension.to_sym)
+        end
+        @backend.pool.connection_validation_timeout = connection_validation_timeout if connection_validation_timeout
         @backend.create_table?(table) do
           String :k, null: false, primary_key: true
           File :v
