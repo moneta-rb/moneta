@@ -68,6 +68,18 @@ parallel = []
     parallel << serial
   end
 end
+
+# The activesupport cache specs also use memcached
+activesupport_cache_specs = specs.grep(/active_support.+cache/)
+specs -= activesupport_cache_specs
+
+if memcache_specs = parallel.find{ |serial| serial.all?{ |s| s.match /memcached/ } }
+  activesupport_cache_specs.each(&memcache_specs.method(:push))
+else
+  parallel += activesupport_cache_specs
+end
+
+# All the left-overs
 parallel += specs.map {|s| [s] }
 
 threads = []
