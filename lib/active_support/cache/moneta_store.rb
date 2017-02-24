@@ -38,7 +38,8 @@ module ActiveSupport
       end
 
       def write_entry(key, entry, options)
-        @store.store(key, entry, moneta_options(options))
+        value = options[:raw] ? entry.value.to_s : entry
+        @store.store(key, value, moneta_options(options))
         true
       end
 
