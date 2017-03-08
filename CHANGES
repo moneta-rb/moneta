@@ -1,3 +1,9 @@
+1.0.0
+
+* Adapters::Sequel - allow usage of Sequel extensions and connection validation
+* ActiveSupport::Cache::MonetaStore - dup options before mutating them
+* ActiveSupport::Cache::MonetaStore - allow writing raw values
+
 0.8.1
 
 * Adapters::TokyoTyrant - more consistent error handling
