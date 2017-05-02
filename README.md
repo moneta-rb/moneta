@@ -632,6 +632,8 @@ There is a simple middleware which places a Moneta store in the Rack environment
 caching if you add the option `cache: true`. Use it in your `config.ru` like this:
 
 ~~~ ruby
+require 'rack/moneta_store'
+
 # Add Rack::MonetaStore somewhere in your rack stack
 use Rack::MonetaStore, :Memory, cache: true
 
