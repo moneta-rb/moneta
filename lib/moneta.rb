@@ -33,6 +33,7 @@ module Moneta
     autoload :Daybreak,        'moneta/adapters/daybreak'
     autoload :DBM,             'moneta/adapters/dbm'
     autoload :DataMapper,      'moneta/adapters/datamapper'
+    autoload :Environment,     'moneta/adapters/environment'
     autoload :File,            'moneta/adapters/file'
     autoload :Fog,             'moneta/adapters/fog'
     autoload :GDBM,            'moneta/adapters/gdbm'
@@ -114,6 +115,12 @@ module Moneta
     when :PStore, :YAML, :Null
       # For PStore and YAML only the key has to be a string
       transformer.delete(:value) if transformer[:value] == [:marshal]
+    when :Environment
+      # For Environment everything is a string and needs to be a string
+      transformer.delete(:value) if transformer[:value] == [:marshal]
+      transformer.delete(:key) if transformer[:key] == [:marshal]
+      transformer[:value] == [:to_s]
+      transformer[:key] == [:to_s]
     when :HashFile
       # Use spreading hashes
       transformer[:key] << :md5 << :spread
