@@ -35,14 +35,14 @@ module Moneta
 
       def bzip2(value)
         io = ::StringIO.new
-        bz = ::RBzip2::Compressor.new(io)
+        bz = ::RBzip2.default_adapter::Compressor.new(io)
         bz.write(value)
         bz.close
         io.string
       end
 
       def bunzip2(value)
-        ::RBzip2::Decompressor.new(::StringIO.new(value)).read
+        ::RBzip2.default_adapter::Decompressor.new(::StringIO.new(value)).read
       end
 
       autoload :BSON, 'moneta/transformer/helper/bson'
