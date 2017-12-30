@@ -10,3 +10,4 @@ script/benchmarks.tmp
 Gemfile.lock
 logs
 secure
+.bundle
