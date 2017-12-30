@@ -1,4 +1,3 @@
-require 'moneta'
 describe Moneta::Builder do
   it 'raises an error if #use is called after #adapter' do
     expect do

@@ -30,10 +30,15 @@ srand(old_seed)
 #   QuickLZ is also not maintained on Github, but on Bitbucket
 #   and I don't know where the issue tracker is.
 #
+# * At present, we can't run the kyotocabinet, hbase or localmemcache tests at all
+#
 # * PStore increment/locking doesn't work correctly on JRuby
 #
-unstable = %w(quicklz riak cassandra)
+# * tokyocabinet doesn't compile on Ruby >= 2
+#
+unstable = %w(quicklz riak cassandra kyotocabinet hbase localmemcache)
 unstable += %w(pstore) if defined?(JRUBY_VERSION)
+unstable += %w(tokyocabinet) if defined?(JRUBY_VERSION) || RUBY_VERSION.split('.').first.to_i >= 2
 
 unstable_re = /#{unstable.join('|')}/
 unstable = specs.select {|s| s =~ unstable_re }
