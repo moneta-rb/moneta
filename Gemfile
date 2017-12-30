@@ -15,7 +15,7 @@ gem 'ox', platforms: :ruby
 gem 'msgpack', platforms: :ruby
 gem 'msgpack-jruby', platforms: :jruby
 gem 'bert', platforms: :ruby
-gem 'php_serialize'
+gem 'php-serialize'
 gem 'nokogiri', '~> 1.6.0'
 
 # Compressors used by Transformer
