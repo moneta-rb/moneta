@@ -19,7 +19,7 @@ gem 'php-serialize'
 gem 'nokogiri', '~> 1.6.0'
 
 # Compressors used by Transformer
-gem 'rbzip2'
+gem 'rbzip2', '~> 0.3.0'
 gem 'lz4-ruby', platforms: :ruby
 gem 'ruby-lzma', platforms: :ruby
 gem 'lzoruby', platforms: :ruby
