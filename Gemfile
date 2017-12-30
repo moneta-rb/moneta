@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 gemspec
 
 # Testing
-gem 'rspec', '~> 2.0'
-gem 'rspec-retry', '0.4.4' # 0.4.5 does not work with rspec 2
+gem 'rspec', '~> 3.0'
+gem 'rspec-retry'
+gem 'rantly'
 
 # Serializer used by Transformer
 gem 'tnetstring'
@@ -57,7 +58,7 @@ end
 gem 'tokyotyrant'
 #gem 'ruby-tokyotyrant', platforms: :ruby
 #gem 'hbaserb'
-gem 'localmemcache'
+#gem 'localmemcache', platforms: :ruby
 gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby
 gem 'lmdb', platforms: :mri
