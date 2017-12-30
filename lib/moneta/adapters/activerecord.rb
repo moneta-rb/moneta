@@ -59,7 +59,7 @@ module Moneta
           end
 
           table.connection_pool.with_connection do |conn|
-            unless table.table_exists?
+            unless conn.table_exists?(table.table_name)
               conn.create_table(table.table_name, id: false) do |t|
                 # Do not use binary key (Issue #17)
                 t.string :k, null: false
