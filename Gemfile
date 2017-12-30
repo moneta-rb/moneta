@@ -44,7 +44,7 @@ else
   gem 'mime-types'
 end
 gem 'activerecord', '~> 4.0.0'
-gem 'redis'
+gem 'redis', '~> 3.3.5'
 gem 'mongo', '~> 2.1.0'
 gem 'moped', '>= 2.0.0'
 gem 'sequel'
