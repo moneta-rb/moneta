@@ -234,7 +234,9 @@ module MonetaHelpers
       end
 
       before do
+        store = new_store
         store.clear
+        store.close
       end
 
       specs.specs.sort.each do |s|
