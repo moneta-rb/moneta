@@ -181,8 +181,9 @@ module Moneta
       end
 
       def class_name(keys, values)
-        (keys.empty? ? '' : keys.map(&:to_s).map(&:capitalize).join + 'Key') +
-          (values.empty? ? '' : values.map(&:to_s).map(&:capitalize).join + 'Value')
+        camel_case = lambda{ |sym| sym.to_s.split('_').map(&:capitalize).join }
+        (keys.empty? ? '' : keys.map(&camel_case).join + 'Key') +
+          (values.empty? ? '' : values.map(&camel_case).join + 'Value')
       end
     end
   end

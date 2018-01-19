@@ -21,6 +21,8 @@ module Moneta
       quicklz:  [ :compress,  '::QuickLZ.decompress(%s)',     '::QuickLZ.compress(%s)',          'qlzruby'       ],
       zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'          ],
       base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                  ],
+      urlsafe_base64: [
+                  :encode,    'Base64.urlsafe_decode64(%s)',  'Base64.urlsafe_encode64(%s)',     'base64'        ],
       escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                                ],
       hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first"                            ],
       qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')"                                   ],
