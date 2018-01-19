@@ -18,6 +18,7 @@ module Moneta
     def initialize(options = {}, &block)
       @options = options
       @builder = Builder.new(&block)
+      @connect_lock = ::Mutex.new
     end
 
     # (see Proxy#close)
@@ -38,10 +39,22 @@ module Moneta
     def wrap(*args)
       connect
       yield
+    rescue NoMethodError
+      # Happens when the adapter is deleted after the above call to connect
+      # (i.e. in concurrent usage)
+      tries ||= 0
+      (tries += 1) < 3 ? retry : raise
+    rescue Errno::ECONNRESET, Errno::EPIPE
+      @connect_lock.synchronize{ close unless @server }
+      tries ||= 0
+      (tries += 1) < 3 ? retry : raise
     end
 
     def connect
-      @adapter ||= Adapters::Client.new(@options)
+      return if @adapter
+      @connect_lock.synchronize do
+        @adapter ||= Adapters::Client.new(@options)
+      end
     rescue Errno::ECONNREFUSED, Errno::ENOENT => ex
       start_server
       tries ||= 0
@@ -52,16 +65,22 @@ module Moneta
     # TODO: Implement this using forking (MRI) and threading (JRuby)
     # to get maximal performance
     def start_server
-      @adapter = Lock.new(@builder.build.last)
-      @server = Server.new(@adapter, @options)
-      @thread = Thread.new { @server.run }
-      sleep 0.1 until @server.running?
-    rescue Exception => ex
-      @adapter.close if @adapter
-      @adapter = nil
-      @server = nil
-      @thread = nil
-      warn "Moneta::Shared - Failed to start server: #{ex.message}"
+      @connect_lock.synchronize do
+        begin
+          raise "Adapter already set" if @adapter
+          @adapter = Lock.new(@builder.build.last)
+          raise "Server already set" if @server
+          @server = Server.new(@adapter, @options)
+          @thread = Thread.new { @server.run }
+          sleep 0.1 until @server.running?
+        rescue Exception => ex
+          @adapter.close if @adapter
+          @adapter = nil
+          @server = nil
+          @thread = nil
+          warn "Moneta::Shared - Failed to start server: #{ex.message}"
+        end
+      end
     end
   end
 end
