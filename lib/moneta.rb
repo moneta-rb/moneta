@@ -107,9 +107,13 @@ module Moneta
     when :Sequel
       # Sequel accept only base64 keys
       transformer[:key] << :base64
-    when :ActiveRecord, :DataMapper, :Couch
+    when :ActiveRecord, :DataMapper
       # DataMapper and AR accept only base64 keys and values
       transformer[:key] << :base64
+      transformer[:value] << :base64
+    when :Couch
+      # CouchDB needs to use URL-safe Base64 for its keys
+      transformer[:key] << :urlsafe_base64
       transformer[:value] << :base64
     when :PStore, :YAML, :Null
       # For PStore and YAML only the key has to be a string

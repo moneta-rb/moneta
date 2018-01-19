@@ -1,5 +1,6 @@
 require 'faraday'
 require 'multi_json'
+require 'pp'
 
 module Moneta
   module Adapters
@@ -8,7 +9,7 @@ module Moneta
     # You can store hashes directly using this adapter.
     #
     # @example Store hashes
-    #     db = Moneta::Adapters::Mongo.new
+    #     db = Moneta::Adapters::Couch.new
     #     db['key'] = {a: 1, b: 2}
     #
     # @api public
