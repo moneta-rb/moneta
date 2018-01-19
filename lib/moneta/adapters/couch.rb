@@ -1,6 +1,5 @@
 require 'faraday'
 require 'multi_json'
-require 'pp'
 
 module Moneta
   module Adapters
