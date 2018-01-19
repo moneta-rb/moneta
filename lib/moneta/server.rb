@@ -35,6 +35,7 @@ module Moneta
         end
       ensure
         File.unlink(@socket) if @socket
+        @ios.each{ |io| io.close }
       end
     end
 
