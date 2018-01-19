@@ -12,6 +12,6 @@ describe 'transformer_key_to_s' do
 
   it 'compile transformer class' do
     store.should_not be_nil
-    Moneta::Transformer::To_sKey.should_not be_nil
+    Moneta::Transformer::ToSKey.should_not be_nil
   end
 end
