@@ -270,7 +270,8 @@ Supported value compressors:
 
 Supported encoders:
 
-* Base64 (`:base64`)
+* Base64 (RFC 2045; `:base64`)
+* URL-safe Base64 (RFC 4648; `:urlsafe_base64`)
 * Url escape (`:escape`)
 * Hexadecimal (`:hex`)
 * QP (`:qp`)
