@@ -1,6 +1,6 @@
 # Moneta: A unified interface for key/value stores
 
-[![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.svg?branch=master)](http://travis-ci.org/minad/moneta) [![Dependency Status](https://gemnasium.com/minad/moneta.svg?travis)](https://gemnasium.com/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.svg)](https://codeclimate.com/github/minad/moneta) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/minad/moneta&title=Moneta&language=&tags=github&category=software)
+[![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.svg?branch=master)](http://travis-ci.org/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.svg)](https://codeclimate.com/github/minad/moneta) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/minad/moneta&title=Moneta&language=&tags=github&category=software)
 
 Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta supports the well-known
 NoSQL and document based stores.
