@@ -188,6 +188,16 @@ module Moneta
       store(key, value)
     end
 
+    # Calls block once for each key in store, passing the key as a parameter. If no block is given, an enumerator is returned instead.
+    #
+    # @note Not every Moneta store implements this method,
+    #       a NotImplementedError is raised if it is not supported.
+    # @return [Enumerator] An all-the-keys enumerator
+    # @api public
+    def each_key
+      raise NotImplementedError, 'each_key is not supported'
+    end
+
     # Atomically sets a key to value if it's not set.
     #
     # @note Not every Moneta store implements this method,
@@ -230,6 +240,90 @@ module Moneta
 
     def self.included(base)
       base.supports(:increment) if base.respond_to?(:supports)
+    end
+  end
+
+  # @api private
+  module EachKeySupport
+    def self.prepended(base)
+      base.supports(:each_key) if base.respond_to?(:supports)
+      require 'set'
+    end
+
+    # (see Defaults#each_key)
+    def each_key
+      return enum_for(:each_key) unless block_given?
+      @all_keys&.each{ |k| yield(k) }
+      self
+    end
+
+    # (see Defaults#create)
+    def create(key, value, options = {})
+      each_key_save(key)
+      super
+    end
+
+    # (see Defaults#store)
+    def store(key, value, options = {})
+      each_key_save(key)
+      super
+    end
+
+    # (see Defaults#[]=)
+    def []=(key, value)
+      each_key_save(key)
+      super
+    end
+
+    # (see Defaults#increment)
+    def increment(key, amount = 1, options = {})
+      each_key_save(key)
+      super
+    end
+
+    # (see Defaults#decrement)
+    def decrement(key, amount = 1, options = {})
+      each_key_save(key)
+      super
+    end
+
+    # (see Defaults#clear)
+    def clear(options = {})
+      @all_keys&.clear
+      super
+    end
+
+    # (see Defaults#delete)
+    def delete(key, options = {})
+      @all_keys&.delete(key)
+      super
+    end
+
+    # (see Defaults#key?)
+    def key?(key, options = {})
+      found = super
+      if found then each_key_save(key) else @all_keys&.delete(key) end
+      found
+    end
+
+    # (see Proxy#load)
+    def load(key, options = {})
+      value = super
+      if value.nil? then @all_keys&.delete(key) else each_key_save(key) end
+      value
+    end
+
+    # (see Defaults#[])
+    def [](key)
+      value = super
+      if value.nil? then @all_keys&.delete(key) else each_key_save(key) end
+      value
+    end
+
+
+    private
+    def each_key_save(key)
+      @all_keys = Set.new(@all_keys).add(key)
     end
   end
 

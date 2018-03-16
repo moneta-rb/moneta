@@ -1,10 +1,11 @@
 language: ruby
 rvm:
-  - 2.1
-  - 2.0.0
-  - 1.9.3
-  - jruby-1.7
-  - rbx-2
+  - 2.5
+  - 2.4
+  - 2.3
+  - 2.2
+  - jruby-9.1
+  - rbx-3
 services:
   - riak
   - couchdb
@@ -13,7 +14,7 @@ services:
   - memcached
   - mongodb
 before_install:
-  - gem install bundler -v '~> 1.10'
+  - gem install bundler
   #- script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet9 libtokyocabinet-dev libkyotocabinet16 libkyotocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
@@ -45,8 +46,9 @@ env:
     - "SCRIPT='benchmarks normal_large'"
 matrix:
   allow_failures:
-    - rvm: jruby-1.7
-    - rvm: rbx-2
+    - rvm: jruby-9.1
+    - rvm: rbx-3
+    - rvm: 2.2 # EOL March 2018
     - env: "SCRIPT='parallel-tests unstable'"
 script: "eval bundle exec ruby script/$SCRIPT"
 branches:

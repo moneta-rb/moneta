@@ -3,5 +3,5 @@ describe 'adapter_gdbm' do
     Moneta::Adapters::GDBM.new(file: File.join(tempdir, "adapter_gdbm"))
   end
 
-  moneta_specs ADAPTER_SPECS.without_multiprocess
+  moneta_specs ADAPTER_SPECS.with_each_key.without_multiprocess
 end
