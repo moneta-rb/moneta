@@ -38,7 +38,7 @@ srand(old_seed)
 #
 unstable = %w(quicklz riak cassandra kyotocabinet hbase localmemcache)
 unstable += %w(pstore) if defined?(JRUBY_VERSION)
-unstable += %w(tokyocabinet) if defined?(JRUBY_VERSION) || RUBY_VERSION.split('.').first.to_i >= 2
+unstable += %w(tokyocabinet) if defined?(JRUBY_VERSION)
 
 unstable_re = /#{unstable.join('|')}/
 unstable = specs.select {|s| s =~ unstable_re }

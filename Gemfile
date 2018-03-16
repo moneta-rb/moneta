@@ -62,9 +62,7 @@ gem 'tokyotyrant'
 gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby
 gem 'lmdb', platforms: :mri
-if RUBY_VERSION < '2.0'
-  gem 'tokyocabinet', platforms: :ruby
-end
+gem 'tokyocabinet', platforms: :ruby
 #if RUBY_VERSION < '2.0' && !defined?(JRUBY_VERSION)
   # FIXME: We have to check manually for jruby
   # otherwise bundle install --deployment doesn't work
