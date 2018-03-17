@@ -9,8 +9,8 @@ describe 'transformer_ox' do
   moneta_loader do |value|
     ::Ox.parse_obj(value)
   end
-  
-  moneta_specs TRANSFORMER_SPECS
+
+  moneta_specs TRANSFORMER_SPECS.without_keys_or_values(:binary, :float)
 
   it 'compile transformer class' do
     store.should_not be_nil
