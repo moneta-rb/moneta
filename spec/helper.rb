@@ -97,6 +97,18 @@ class MonetaSpecs
     self.class.new({specs: specs, key: key, value: value}.merge(options))
   end
 
+  def without_keys(*keys)
+    new(key: self.key - keys.map(&:to_s))
+  end
+
+  def without_values(*values)
+    new(value: self.value - values.map(&:to_s))
+  end
+
+  def without_keys_or_values(*types)
+    without_keys(*types).without_values(*types)
+  end
+
   def without_path
     new(key: key - %w(path))
   end
