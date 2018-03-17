@@ -56,7 +56,7 @@ class MonetaSpecs
   KEYS = {
     'nil' => [:choose, nil, 0],
     'integer' => :integer,
-    'number' => proc{ choose integer, float },
+    'float' => :float,
     'boolean' => :boolean,
     'string' => proc{ sized(range 5, 10){ string(:alnum) } },
     'path' => proc{ array(range 2, 3){ sized(range 5, 10){ string(:alpha) } }.join('/') },
@@ -68,7 +68,7 @@ class MonetaSpecs
   VALUES = {
     'nil' => [:choose, '', nil, 0, false],
     'integer' => :integer,
-    'number' => proc{ choose integer, float },
+    'float' => :float,
     'boolean' => :boolean,
     'string' => [:string, :alnum],
     'binary' => [:string, :cntrl],
@@ -89,8 +89,8 @@ class MonetaSpecs
       features.uniq!
     end
 
-    @key = options.delete(:key)     || %w(object string binary hash boolean nil integer number)
-    @value = options.delete(:value) || %w(object string binary hash boolean nil integer number)
+    @key = options.delete(:key)     || %w(object string binary hash boolean nil integer float)
+    @value = options.delete(:value) || %w(object string binary hash boolean nil integer float)
   end
 
   def new(options)
