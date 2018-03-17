@@ -72,8 +72,9 @@ class MonetaSpecs
     'boolean' => :boolean,
     'string' => [:string, :alnum],
     'binary' => [:string, :cntrl],
+    'object' => proc{ choose Value.new(:objval1), Value.new(:objval2) },
     'hash' => proc{ dict{ [string(:alnum), array(2){ choose(string(:alnum), integer, dict{ [string(:alnum), integer] }) }] } },
-    'object' => proc{ choose Value.new(:objval1), Value.new(:objval2) }
+    'smallhash' => proc{ dict(2){ sized(range 5, 10){ [string(:alnum), string(:alnum)] } } }
   }
 
   attr_reader :key, :value, :specs, :features
@@ -97,8 +98,16 @@ class MonetaSpecs
     self.class.new({specs: specs, key: key, value: value}.merge(options))
   end
 
+  def with_keys(*keys)
+    new(key: self.key | keys.map(&:to_s))
+  end
+
   def without_keys(*keys)
     new(key: self.key - keys.map(&:to_s))
+  end
+
+  def with_values(*values)
+    new(value: self.value | values.map(&:to_s))
   end
 
   def without_values(*values)
@@ -130,7 +139,13 @@ class MonetaSpecs
   end
 
   def without_large
-    new(specs: specs - [:store_large])
+    new(specs: specs - [:store_large]).instance_exec do
+      if value.include? 'hash'
+        without_values(:hash).with_values(:smallhash)
+      else
+        self
+      end
+    end
   end
 
   def without_concurrent
