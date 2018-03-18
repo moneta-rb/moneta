@@ -3,5 +3,5 @@ describe 'adapter_memory' do
     Moneta::Adapters::Memory.new
   end
 
-  moneta_specs STANDARD_SPECS.without_transform.returnsame.without_persist
+  moneta_specs STANDARD_SPECS.with_each_key.without_transform.returnsame.without_persist
 end

@@ -1,6 +1,6 @@
 shared_examples :features do
   it 'should report correct features' do
-    store.features.sort_by(&:to_s).should == features
+    expect(store.features).to contain_exactly(*features)
   end
 
   it 'should have frozen features' do

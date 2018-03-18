@@ -81,15 +81,7 @@ class MonetaSpecs
 
   def initialize(options = {})
     @specs = options.delete(:specs).to_a
-
-    @features = [].tap do |features|
-      [:expires, :expires_native, :increment, :create].each do |feature|
-        features << feature if @specs.include?(feature)
-      end
-      features.sort_by!(&:to_s)
-      features.uniq!
-    end
-
+    @features = @specs & [:expires, :expires_native, :increment, :each_key, :create]
     @key = options.delete(:key)     || %w(object string binary hash boolean nil integer float)
     @value = options.delete(:value) || %w(object string binary hash boolean nil integer float)
   end
@@ -203,6 +195,10 @@ class MonetaSpecs
 
   def with_default_expires
     new(specs: specs + [:default_expires])
+  end
+
+  def with_each_key
+    new(specs: specs + [:each_key])
   end
 
   def without_create

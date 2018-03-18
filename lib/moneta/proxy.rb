@@ -17,6 +17,11 @@ module Moneta
       adapter.key?(key, options)
     end
 
+    # (see Defaults#each_key)
+    def each_key
+      if block_given? then adapter.each_key { |k| yield(k) } else adapter.each_key end
+    end
+
     # (see Defaults#increment)
     def increment(key, amount = 1, options = {})
       adapter.increment(key, amount, options)

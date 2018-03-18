@@ -8,10 +8,34 @@ module Moneta
       include IncrementSupport
       include CreateSupport
 
+      supports :each_key
+
       # @param [Hash] options Options hash
       # @option options [Hash] :backend Use existing backend instance
       def initialize(options = {})
         @backend = options[:backend] || {}
+      end
+
+      def each_key
+        if @backend.respond_to?(:each_key)
+          return @backend.enum_for(:each_key) unless block_given?
+          @backend.each_key { |k| yield(k) }
+          return self
+        elsif @backend.respond_to?(:keys)
+          return @backend.keys.enum_for unless block_given?
+          @backend.keys&.each { |k| yield(k) }
+          return self
+        elsif @backend.respond_to?(:each)
+          if block_given?
+            @backend.each { |k, v| yield(k) }
+            return self
+          else
+            Enumerator.new do |y|
+              it = @backend.each
+              loop { y << it.next.first }
+            end
+          end
+        end
       end
     end
   end

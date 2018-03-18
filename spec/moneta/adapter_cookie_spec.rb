@@ -3,5 +3,5 @@ describe 'adapter_cookie' do
     Moneta::Adapters::Cookie.new
   end
 
-  moneta_specs ADAPTER_SPECS.without_persist.returnsame
+  moneta_specs ADAPTER_SPECS.with_each_key.without_persist.returnsame
 end

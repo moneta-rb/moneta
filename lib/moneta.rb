@@ -3,6 +3,7 @@ module Moneta
   autoload :Cache,             'moneta/cache'
   autoload :CreateSupport,     'moneta/mixins'
   autoload :Defaults,          'moneta/mixins'
+  autoload :EachKeySupport,    'moneta/mixins'
   autoload :ExpiresSupport,    'moneta/mixins'
   autoload :Expires,           'moneta/expires'
   autoload :HashAdapter,       'moneta/mixins'
@@ -21,6 +22,7 @@ module Moneta
   autoload :Transformer,       'moneta/transformer'
   autoload :Utils,             'moneta/utils'
   autoload :WeakCreate,        'moneta/weak'
+  autoload :WeakEachKey,       'moneta/weak'
   autoload :WeakIncrement,     'moneta/weak'
   autoload :Wrapper,           'moneta/wrapper'
 
