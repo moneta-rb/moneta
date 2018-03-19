@@ -16,6 +16,7 @@ module Moneta
         @backend = options[:backend] || {}
       end
 
+      # (see Defaults#each_key)
       def each_key
         if @backend.respond_to?(:each_key)
           return @backend.enum_for(:each_key) unless block_given?

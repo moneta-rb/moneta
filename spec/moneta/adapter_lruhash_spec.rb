@@ -3,7 +3,7 @@ describe 'adapter_lruhash' do
     Moneta::Adapters::LRUHash.new
   end
 
-  moneta_specs ADAPTER_SPECS.without_persist.returnsame
+  moneta_specs ADAPTER_SPECS.with_each_key.without_persist.returnsame
 
   it 'deletes oldest' do
     store = Moneta::Adapters::LRUHash.new(max_size: 10)

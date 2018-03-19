@@ -8,7 +8,7 @@ module Moneta
     class ActiveRecord
       include Defaults
 
-      supports :create, :increment
+      supports :create, :increment, :each_key
       attr_reader :table
 
       @table_mutex = ::Mutex.new
@@ -86,6 +86,20 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         !@table.where(k: key).empty?
+      end
+
+      # (see Proxy#each_key)
+      def each_key
+        all_keys = @table.connection_pool.with_connection do
+          @table.pluck(:k)
+        end
+
+        return all_keys&.enum_for(:each) do
+          @table.connection_pool.with_connection { @table.count }
+        end unless block_given?
+
+        all_keys&.each { |k| yield(k) }
+        self
       end
 
       # (see Proxy#load)

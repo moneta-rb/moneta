@@ -21,7 +21,7 @@ describe 'adapter_activerecord' do
       connection: connection1)
   end
 
-  moneta_specs ADAPTER_SPECS
+  moneta_specs ADAPTER_SPECS.with_each_key
 
   it 'updates an existing key/value' do
     store['foo/bar'] = '1'
