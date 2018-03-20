@@ -31,10 +31,11 @@ module Moneta
             return self
           else
             Enumerator.new do |y|
-              it = @backend.each
-              loop { y << it.next.first }
+              @backend.each { |k, v| y << k }
             end
           end
+        else
+          raise ::NotImplementedError, "No enumerator found on backend"
         end
       end
     end
