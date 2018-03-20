@@ -10,7 +10,7 @@ describe 'transformer_bzip2' do
     ::RBzip2.default_adapter::Decompressor.new(::StringIO.new(value)).read
   end
 
-  moneta_specs TRANSFORMER_SPECS.stringvalues_only
+  moneta_specs TRANSFORMER_SPECS.stringvalues_only.with_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil

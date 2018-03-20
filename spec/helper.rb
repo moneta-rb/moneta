@@ -219,7 +219,8 @@ STANDARD_SPECS = MonetaSpecs.new(
     :features, :store_large, :not_each_key])
 TRANSFORMER_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
-    :transform_value, :increment, :create, :features, :store_large])
+    :transform_value, :increment, :create, :features, :store_large,
+    :not_each_key])
 
 module MonetaHelpers
   module ClassMethods
