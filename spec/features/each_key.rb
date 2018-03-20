@@ -32,15 +32,21 @@ shared_examples :each_key do
   end
 
   it 'yields the keys to the block and returns the store' do
-    2.times { |i| store.store("key_#{i}", "#{i}_val") }
+    # Make a list of keys that we expect to find in the store
+    keys = []
+    2.times do |i|
+      key = "key_#{i}"
+      keys << key
+      store.store(key, "#{i}_val")
+    end
 
-    i = 0
+    # Enumerate the store, making store that at each iteration we find one of
+    # the keys we are looking for
     expect(store.each_key do |k|
-      expect(k).to eq("key_#{i}")
-      i += 1
+      expect(keys.delete(k)).not_to be_nil
     end).to eq(store)
 
-    # To assert that the loop inside the block run
-    expect(i).to eq(2)
+    # To assert that all keys were seen by the block
+    expect(keys).to be_empty
   end
 end
