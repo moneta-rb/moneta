@@ -8,5 +8,5 @@ describe "proxy_expires_memory" do
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_transform.with_expires.returnsame.without_persist
+  moneta_specs STANDARD_SPECS.without_transform.with_expires.returnsame.without_persist.with_each_key
 end
