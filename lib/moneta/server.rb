@@ -100,8 +100,11 @@ module Moneta
       buffer.slice!(0, 4)
       method, *args = Marshal.load(buffer.slice!(0, size))
       case method
-      when :key?, :load, :delete, :increment, :create, :features
+      when :key?, :load, :delete, :increment, :create
         io.write(pack @store.send(method, *args))
+      when :features
+        # all features except each_key are supported
+        io.write(pack(@store.features - [:each_key]))
       when :store, :clear
         @store.send(method, *args)
         io.write(@nil ||= pack(nil))
