@@ -6,5 +6,5 @@ describe 'expires_memory_with_default_expires' do
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_transform.with_expires.with_default_expires.without_persist.returnsame
+  moneta_specs STANDARD_SPECS.without_transform.with_expires.with_default_expires.without_persist.returnsame.with_each_key
 end

@@ -5,6 +5,6 @@ describe 'expires_memory' do
       adapter :Memory
     end
   end
-  
-  moneta_specs STANDARD_SPECS.without_transform.with_expires.without_persist.returnsame
+
+  moneta_specs STANDARD_SPECS.without_transform.with_expires.without_persist.returnsame.with_each_key
 end
