@@ -19,7 +19,12 @@ module Moneta
 
     # (see Defaults#each_key)
     def each_key
-      if block_given? then adapter.each_key { |k| yield(k) } else adapter.each_key end
+      if block_given?
+        adapter.each_key { |k| yield(k) }
+        self
+      else
+        adapter.each_key
+      end
     end
 
     # (see Defaults#increment)

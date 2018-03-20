@@ -46,5 +46,10 @@ module Moneta
     def features
       wrap(:features) { super }
     end
+
+    # (see Proxy#each_key)
+    def each_key
+      wrap(:each_key) { super }
+    end
   end
 end
