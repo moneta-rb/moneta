@@ -79,11 +79,10 @@ module Moneta
 
       def compile_key_transformer(klass, key, key_opts)
         klass.class_eval <<-end_eval, __FILE__, __LINE__
+          not_supports :each_key
+
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
-          end
-          def each_key
-            raise NotImplementedError, 'each_key is not supported when using transformers'
           end
           def increment(key, amount = 1, options = {})
             @adapter.increment(#{key}, amount, #{without key_opts})
@@ -125,11 +124,10 @@ module Moneta
 
       def compile_key_value_transformer(klass, key, key_opts, load, load_opts, dump, dump_opts)
         klass.class_eval <<-end_eval, __FILE__, __LINE__
+          not_supports :each_key
+
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
-          end
-          def each_key
-            raise NotImplementedError, 'each_key is not supported when using transformers'
           end
           def increment(key, amount = 1, options = {})
             @adapter.increment(#{key}, amount, #{without key_opts})

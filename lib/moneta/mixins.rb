@@ -74,7 +74,26 @@ module Moneta
       #     end
       #   end
       def supports(*features)
-        @features = (self.features + features).uniq.freeze
+        @features = (self.features | features).freeze
+      end
+
+      # Declares that this adapter does not support the given feature, and adds
+      # a stub method that raises a NotImplementedError.  Useful when inheriting
+      # from another adapter.
+      #
+      # @example
+      #   class MyAdapter < OtherAdapterWithCreate
+      #     include Moneta::Defaults
+      #     not_supports :create
+      #   end
+      def not_supports(*features)
+        features.each do |feature|
+          define_method(feature) do
+            raise ::NotImplementedError, "#{feature} not supported"
+          end
+        end
+
+        @features = (self.features - features).freeze
       end
     end
 

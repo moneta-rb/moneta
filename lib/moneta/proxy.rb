@@ -92,7 +92,20 @@ module Moneta
 
     # (see Default#features)
     def features
-      @features ||= (self.class.features + adapter.features).uniq.freeze
+      @features ||= (self.class.features | adapter.features - self.class.features_mask).freeze
+    end
+
+    class << self
+      # @api private
+      def features_mask
+        @features_mask ||= [].freeze
+      end
+
+      # (see Default#not_supports)
+      def not_supports *features
+        @features_mask = (self.features_mask | features).freeze
+        super
+      end
     end
   end
 end
