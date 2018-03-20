@@ -198,7 +198,7 @@ class MonetaSpecs
   end
 
   def with_each_key
-    new(specs: specs + [:each_key])
+    new(specs: specs - [:not_each_key] | [:each_key])
   end
 
   def without_create
@@ -209,14 +209,14 @@ end
 ADAPTER_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
     :increment, :concurrent_increment, :concurrent_create, :persist, :multiprocess,
-    :create, :features, :store_large],
+    :create, :features, :store_large, :not_each_key],
   key: %w(string path),
   value: %w(string path))
 STANDARD_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
     :marshallable_key, :marshallable_value, :transform_value, :increment,
     :concurrent_increment, :concurrent_create, :persist, :multiprocess, :create,
-    :features, :store_large])
+    :features, :store_large, :not_each_key])
 TRANSFORMER_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
     :transform_value, :increment, :create, :features, :store_large])
