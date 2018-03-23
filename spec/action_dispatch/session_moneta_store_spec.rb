@@ -20,11 +20,11 @@ class MonetaStoreTest < ActionDispatch::IntegrationTest
     end
 
     def get_session_value
-      render text: "foo: #{session[:foo].inspect}"
+      render plain: "foo: #{session[:foo].inspect}"
     end
 
     def get_session_id
-      render text: "#{request.session_options[:id]}"
+      render plain: "#{request.cookies['_session_id']}"
     end
 
     def call_reset_session
@@ -144,7 +144,7 @@ class MonetaStoreTest < ActionDispatch::IntegrationTest
 
       get '/get_session_value'
       assert_response :success
-      assert_equal nil, headers['Set-Cookie'], "should not resend the cookie again if session_id cookie is already exists"
+      assert_nil headers['Set-Cookie'], "should not resend the cookie again if session_id cookie is already exists"
     end
   end
 
@@ -157,7 +157,7 @@ class MonetaStoreTest < ActionDispatch::IntegrationTest
 
       reset!
 
-      get '/set_session_value', _session_id: session_id
+      get '/set_session_value', params: {_session_id: session_id}
       assert_response :success
       assert_not_equal session_id, cookies['_session_id']
     end
@@ -183,7 +183,15 @@ class MonetaStoreTest < ActionDispatch::IntegrationTest
   def with_test_route_set
     with_routing do |set|
       set.draw do
-        get ':action', to: ::MonetaStoreTest::TestController
+        scope module: "moneta_store_test" do
+          controller "test" do
+            get 'set_session_value'
+            get 'get_session_value'
+            get 'call_reset_session'
+            get 'get_session_id'
+            get 'set_serialized_session_value'
+          end
+        end
       end
 
       @app = ActionDispatch::MiddlewareStack.new do |middleware|

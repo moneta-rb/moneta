@@ -1,6 +1,24 @@
 describe 'adapter_activerecord' do
+  let(:connection1) do
+    {
+      adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+      database: mysql_database1,
+      username: mysql_username
+    }
+  end
+
+  let(:connection2) do
+    {
+      adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+      database: mysql_database2,
+      username: mysql_username
+    }
+  end
+
   moneta_build do
-    Moneta::Adapters::ActiveRecord.new(table: 'adapter_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' })
+    Moneta::Adapters::ActiveRecord.new(
+      table: 'adapter_activerecord',
+      connection: connection1)
   end
 
   moneta_specs ADAPTER_SPECS
@@ -12,8 +30,12 @@ describe 'adapter_activerecord' do
   end
 
   it 'supports different tables same database' do
-    store1 = Moneta::Adapters::ActiveRecord.new(table: 'adapter_activerecord1', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' })
-    store2 = Moneta::Adapters::ActiveRecord.new(table: 'adapter_activerecord2', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta', username: 'root' })
+    store1 = Moneta::Adapters::ActiveRecord.new(
+      table: 'adapter_activerecord1',
+      connection: connection1)
+    store2 = Moneta::Adapters::ActiveRecord.new(
+      table: 'adapter_activerecord2',
+      connection: connection1)
 
     store1['key'] = 'value1'
     store2['key'] = 'value2'
@@ -25,8 +47,12 @@ describe 'adapter_activerecord' do
   end
 
   it 'supports different databases same table' do
-    store1 = Moneta::Adapters::ActiveRecord.new(table: 'adapter_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta_activerecord1', username: 'root' })
-    store2 = Moneta::Adapters::ActiveRecord.new(table: 'adapter_activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), database: 'moneta_activerecord2', username: 'root' })
+    store1 = Moneta::Adapters::ActiveRecord.new(
+      table: 'adapter_activerecord',
+      connection: connection1)
+    store2 = Moneta::Adapters::ActiveRecord.new(
+      table: 'adapter_activerecord',
+      connection: connection2)
 
     store1['key'] = 'value1'
     store2['key'] = 'value2'

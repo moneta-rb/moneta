@@ -3,19 +3,6 @@ require 'active_support'
 require 'active_support/cache/moneta_store'
 require 'ostruct'
 
-module MonetaStoreHelpers
-  def with_notifications
-    described_class.instrument = true
-    yield
-  ensure
-    described_class.instrument = false
-  end
-end
-
-RSpec.configure do |config|
-  config.include(MonetaStoreHelpers)
-end
-
 describe "cache_moneta_store" do
   before(:all) do
     @events = []
@@ -36,6 +23,7 @@ describe "cache_moneta_store" do
 
       store.clear
       store.write 'rabbit', @rabbit
+      @events.clear
     end
 
     it 'reads the data' do
@@ -81,23 +69,22 @@ describe "cache_moneta_store" do
 
   shared_examples :expiry do
     it 'writes the data with expiration time' do
-      store.write 'rabbit', @white_rabbit, expires_in: 1.second
+      store.write 'rabbit', @white_rabbit, expires_in: 0.2.second
       store.read('rabbit').should == @white_rabbit
-      sleep 2
+      sleep 0.3
       store.read('rabbit').should be_nil
     end
 
     it "sets expiry on cache miss" do
-      store.fetch('rabbit', force: true) # force cache miss
-      store.fetch('rabbit', force: true, expires_in: 1.second) { @white_rabbit }
+      store.fetch('rabbit', force: true, expires_in: 0.2.second) { @white_rabbit }
       store.fetch('rabbit').should == @white_rabbit
-      sleep 2
+      sleep 0.3
       store.fetch('rabbit').should be_nil
     end
 
     it 'does not set expiry on cache hit' do
-      store.fetch('rabbit', expires_in: 1.second) { @white_rabbit }.should == @rabbit
-      sleep 2
+      store.fetch('rabbit', expires_in: 0.2.second) { @white_rabbit }.should == @rabbit
+      sleep 0.3
       store.fetch('rabbit').should == @rabbit
     end
   end
@@ -133,13 +120,11 @@ describe "cache_moneta_store" do
 
   shared_examples :basic_instrumentation do
     it 'notifies on #fetch' do
-      with_notifications do
-        store.fetch('radiohead') { 'House Of Cards' }
-      end
+      store.fetch('radiohead') { 'House Of Cards' }
 
       read = @events.shift
       read.name.should == 'cache_read.active_support'
-      read.payload.should == { key: 'radiohead', super_operation: :fetch }
+      read.payload.should == { key: 'radiohead', super_operation: :fetch, hit: false }
 
       generate = @events.shift
       generate.name.should == 'cache_generate.active_support'
@@ -151,9 +136,7 @@ describe "cache_moneta_store" do
     end
 
     it 'notifies on #read' do
-      with_notifications do
-        store.read 'metallica'
-      end
+      store.read 'metallica'
 
       read = @events.shift
       read.name.should == 'cache_read.active_support'
@@ -161,9 +144,7 @@ describe "cache_moneta_store" do
     end
 
     it 'notifies on #write' do
-      with_notifications do
-        store.write 'depeche mode', 'Enjoy The Silence'
-      end
+      store.write 'depeche mode', 'Enjoy The Silence'
 
       write = @events.shift
       write.name.should == 'cache_write.active_support'
@@ -171,9 +152,7 @@ describe "cache_moneta_store" do
     end
 
     it 'notifies on #delete' do
-      with_notifications do
-        store.delete 'the new cardigans'
-      end
+      store.delete 'the new cardigans'
 
       delete = @events.shift
       delete.name.should == 'cache_delete.active_support'
@@ -181,9 +160,7 @@ describe "cache_moneta_store" do
     end
 
     it 'notifies on #exist?' do
-      with_notifications do
-        store.exist? 'the smiths'
-      end
+      store.exist? 'the smiths'
 
       exist = @events.shift
       exist.name.should == 'cache_exist?.active_support'
@@ -196,9 +173,7 @@ describe "cache_moneta_store" do
   # behavior of MemCacheStore.
   shared_examples :increment_decrement_instrumentation do
     it 'notifies on #increment' do
-      with_notifications do
-        store.increment 'pearl jam'
-      end
+      store.increment 'pearl jam'
 
       increment = @events.shift
       increment.name.should == 'cache_increment.active_support'
@@ -206,10 +181,7 @@ describe "cache_moneta_store" do
     end
 
     it 'notifies on #decrement' do
-      with_notifications do
-        store.decrement 'placebo'
-      end
-
+      store.decrement 'placebo'
       decrement = @events.shift
       decrement.name.should == 'cache_decrement.active_support'
       decrement.payload.should == { key: 'placebo', amount: 1 }
@@ -228,9 +200,7 @@ describe "cache_moneta_store" do
     # FIXME: no other store does this -- perhaps this should be
     # removed.
     it 'notifies on #clear' do
-      with_notifications do
-        store.clear
-      end
+      store.clear
 
       clear = @events.shift
       clear.name.should == 'cache_clear.active_support'
