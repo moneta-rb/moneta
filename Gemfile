@@ -44,7 +44,7 @@ else
   gem 'fog', '>= 1.11.1'
   gem 'mime-types'
 end
-gem 'activerecord', '~> 4.0.0'
+gem 'activerecord', '~> 5.0'
 gem 'redis', '~> 3.3.5'
 gem 'mongo', '~> 2.1.0'
 gem 'moped', '>= 2.0.0'
@@ -83,5 +83,5 @@ gem 'rack'
 gem 'rack-cache'
 
 # Rails integration testing
-gem 'actionpack', '~> 4.0.0'
-gem 'minitest', '~> 4.7.4'
+gem 'actionpack', '~> 5.0'
+gem 'minitest', '~> 5.0'

@@ -257,6 +257,13 @@ module MonetaHelpers
         [:branch, *specs.value.map{ |k| MonetaSpecs::VALUES[k] }.compact]
       end
 
+      # Used by tests that rely on MySQL.  These env vars can be used if you
+      # want to run the tests but don't want to grant root access to moneta
+      let(:mysql_username) { ENV['MONETA_MYSQL_USERNAME'] || 'root' }
+      let(:mysql_password) { ENV['MONETA_MYSQL_PASSWORD'] }
+      let(:mysql_database1) { ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta' }
+      let(:mysql_database2) { ENV['MONETA_MYSQL_DATABSASE2'] || 'moneta2' }
+
       before do
         store = new_store
         store.clear

@@ -21,8 +21,7 @@ before_install:
 cache: bundler
 before_script:
   - mysql -e 'create database moneta;'
-  - mysql -e 'create database moneta_activerecord1;'
-  - mysql -e 'create database moneta_activerecord2;'
+  - mysql -e 'create database moneta2;'
 env:
   global:
     - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="

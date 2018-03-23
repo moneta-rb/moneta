@@ -85,83 +85,56 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @table.connection_pool.with_connection do
-          !@table.where(k: key).empty?
-        end
+        !@table.where(k: key).empty?
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        @table.connection_pool.with_connection do
-          record = @table.select(:v).where(k: key).first
-          record && record.v
-        end
+        record = @table.select(:v).where(k: key).first
+        record && record.v
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @table.connection_pool.with_connection do
-          record = @table.select(:k).where(k: key).first_or_initialize
-          record.v = value
-          record.save
-          value
-        end
-      rescue
-        tries ||= 0
-        (tries += 1) < 10 ? retry : raise
+        record = @table.select(:k).find_or_initialize_by(k: key)
+        record.v = value
+        record.save!
+        value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @table.connection_pool.with_connection do
-          if record = @table.where(k: key).first
-            record.destroy
-            record.v
-          end
+        if record = @table.find_by(k: key)
+          record.destroy
+          record.v
         end
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @table.connection_pool.with_connection do
-          @table.transaction do
-            if record = @table.where(k: key).lock.first
-              value = Utils.to_int(record.v) + amount
-              record.v = value.to_s
-              record.save
-              value
-            elsif create(key, amount.to_s, options)
-              amount
-            else
-              raise 'Concurrent modification'
-            end
-          end
+        @table.transaction do
+          record = @table.lock.find_or_initialize_by(k: key)
+          value = (record.v ? Utils.to_int(record.v) : 0) + amount
+          record.v = value.to_s
+          record.save!
+          value
         end
-      rescue
+      rescue ::ActiveRecord::RecordNotUnique, ::ActiveRecord::Deadlocked
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @table.connection_pool.with_connection do
-          record = @table.new
-          record.k = key
-          record.v = value
-          record.save
-          true
-        end
-      rescue
-        # FIXME: This catches too many errors
-        # it should only catch a not-unique-exception
+        @table.create(k: key, v: value)
+        true
+      rescue ::ActiveRecord::RecordNotUnique
         false
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @table.connection_pool.with_connection do
-          @table.delete_all
-        end
+        @table.delete_all
         self
       end
 

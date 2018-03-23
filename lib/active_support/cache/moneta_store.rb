@@ -12,14 +12,14 @@ module ActiveSupport
       def increment(key, amount = 1, options = nil)
         options = merged_options(options)
         instrument(:increment, key, amount: amount) do
-          @store.increment(namespaced_key(key, options), amount, moneta_options(options))
+          @store.increment(normalize_key(key, options), amount, moneta_options(options))
         end
       end
 
       def decrement(key, amount = 1, options = nil)
         options = merged_options(options)
         instrument(:decrement, key, amount: amount) do
-          @store.increment(namespaced_key(key, options), -amount, moneta_options(options))
+          @store.increment(normalize_key(key, options), -amount, moneta_options(options))
         end
       end
 
