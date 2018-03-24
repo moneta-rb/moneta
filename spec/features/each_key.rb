@@ -15,6 +15,27 @@ shared_examples :each_key do
       .to(['1st_key', '2nd_key'].sort)
   end
 
+  it 'when a lazy size implementation exist it returns the size of the collection or nil' do
+    expect(store.each_key.size).to eq(nil) | eq(0)
+
+    if store.each_key.size&.zero?
+      expect { store.store('1st_key', 'value') }
+        .to change { store.each_key.size }
+        .from(0)
+        .to(1)
+
+      expect { store.store('2nd_key', 'value') }
+        .to change { store.each_key.size }
+        .from(1)
+        .to(2)
+
+      expect { store.delete('1st_key') }
+        .to change { store.each_key.size }
+        .from(2)
+        .to(1)
+    end
+  end
+
   it 'wont duplicate keys' do
     expect { 2.times { |i| store.store('a_key', "#{i}_val") } }
       .to change { store.each_key.to_a }

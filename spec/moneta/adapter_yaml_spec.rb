@@ -3,5 +3,5 @@ describe 'adapter_yaml' do
     Moneta::Adapters::YAML.new(file: File.join(tempdir, "adapter_yaml"))
   end
 
-  moneta_specs STANDARD_SPECS.simplevalues_only.simplekeys_only.without_transform.without_concurrent
+  moneta_specs STANDARD_SPECS.simplevalues_only.simplekeys_only.with_each_key.without_transform.without_concurrent
 end

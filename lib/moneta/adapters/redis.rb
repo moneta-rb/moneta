@@ -8,7 +8,7 @@ module Moneta
       include Defaults
       include ExpiresSupport
 
-      supports :create, :increment
+      supports :create, :increment, :each_key
       attr_reader :backend
 
       # @param [Hash] options
@@ -31,6 +31,14 @@ module Moneta
         else
           false
         end
+      end
+
+      # (see Proxy#each_key)
+      def each_key
+        return @backend.scan_each unless block_given?
+
+        @backend.scan_each { |k| yield(k) }
+        self
       end
 
       # (see Proxy#load)
