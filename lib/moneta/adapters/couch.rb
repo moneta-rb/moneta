@@ -117,7 +117,7 @@ module Moneta
           doc = value.merge(@type_field => 'Hash')
         when String
           doc = { @value_field => value, @type_field => 'String' }
-        when Float, Fixnum
+        when Float, Integer
           doc = { @value_field => value, @type_field => 'Number' }
         else
           raise ArgumentError, "Invalid value type: #{value.class}"
