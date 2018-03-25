@@ -18,13 +18,13 @@ module Moneta
     end
 
     # (see Defaults#each_key)
-    def each_key
-      if block_given?
-        adapter.each_key { |k| yield(k) }
-        self
-      else
-        adapter.each_key
-      end
+    def each_key(&block)
+      raise NotImplementedError, "each_key is not supported on this proxy" \
+        unless supports? :each_key
+
+      return enum_for(:each_key) unless block_given?
+      adapter.each_key(&block)
+      self
     end
 
     # (see Defaults#increment)

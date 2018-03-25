@@ -14,8 +14,15 @@ module Moneta
 
     protected
 
-    def wrap(*args, &block)
-      @lock.synchronize(&block)
+    def wrap(name, *args, &block)
+      # Other methods (e.g. each_key) may need to call into #supports?; and
+      # support is not supposed to change once a class is instantiated, so
+      # locking is not necessary.
+      if name == :features
+        block.call
+      else
+        @lock.synchronize(&block)
+      end
     end
   end
 end

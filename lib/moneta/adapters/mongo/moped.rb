@@ -80,9 +80,17 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @backend.with(safe: true, consistency: :strong) do |safe|
-          safe[@collection.name].find(_id: to_binary(key)).modify({:$inc => { @value_field => amount }},
-                                                                     new: true, upsert: true)[@value_field]
+          safe[@collection.name].
+            find(_id: to_binary(key)).
+            modify({:$inc => { @value_field => amount }},
+                   new: true,
+                   upsert: true)[@value_field]
         end
+      rescue ::Moped::Errors::OperationFailure
+        tries ||= 0
+        tries += 1
+        retry if tries < 3
+        raise # otherwise
       end
 
       # (see Proxy#create)

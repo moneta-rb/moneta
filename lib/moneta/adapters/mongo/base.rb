@@ -48,7 +48,7 @@ module Moneta
                       @type_field => 'Hash',
                       # @expires_field must be a Time object (BSON date datatype)
                       @expires_field => expires_at(options) || nil)
-        when Float, Fixnum
+        when Float, Integer
           { '_id' => key,
             @type_field => 'Number',
             @value_field => value,

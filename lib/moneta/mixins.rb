@@ -264,7 +264,7 @@ module Moneta
 
   # @api private
   module EachKeySupport
-    def self.prepended(base)
+    def self.included(base)
       base.supports(:each_key) if base.respond_to?(:supports)
       require 'set'
     end
@@ -272,7 +272,7 @@ module Moneta
     # (see Defaults#each_key)
     def each_key
       return enum_for(:each_key) unless block_given?
-      @all_keys&.each{ |k| yield(k) }
+      all_keys.each{ |k| yield(k) }
       self
     end
 
@@ -308,39 +308,43 @@ module Moneta
 
     # (see Defaults#clear)
     def clear(options = {})
-      @all_keys&.clear
+      all_keys.clear
       super
     end
 
     # (see Defaults#delete)
     def delete(key, options = {})
-      @all_keys&.delete(key)
+      all_keys.delete(key)
       super
     end
 
     # (see Defaults#key?)
     def key?(key, options = {})
       found = super
-      if found then each_key_save(key) else @all_keys&.delete(key) end
+      if found then each_key_save(key) else all_keys.delete(key) end
       found
     end
 
     # (see Proxy#load)
     def load(key, options = {})
       value = super
-      if value.nil? then @all_keys&.delete(key) else each_key_save(key) end
+      if value.nil? then all_keys.delete(key) else each_key_save(key) end
       value
     end
 
     # (see Defaults#[])
     def [](key)
       value = super
-      if value.nil? then @all_keys&.delete(key) else each_key_save(key) end
+      if value.nil? then all_keys.delete(key) else each_key_save(key) end
       value
     end
 
-
     private
+
+    def all_keys
+      @all_keys ||= Set.new
+    end
+
     def each_key_save(key)
       @all_keys = Set.new(@all_keys).add(key)
     end

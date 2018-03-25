@@ -101,7 +101,7 @@ module Moneta
   class Semaphore < SynchronizePrimitive
     # @param [Moneta store] store The store we want to lock
     # @param [Object] counter Key of the counter entry
-    # @param [Fixnum] max Maximum number of threads which are allowed to enter the critical section
+    # @param [Integer] max Maximum number of threads which are allowed to enter the critical section
     def initialize(store, counter, max = 1)
       raise 'Store must support feature :increment' unless store.supports?(:increment)
       @store, @counter, @max = store, counter, max
