@@ -43,7 +43,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        # TTL must be Fixnum
+        # TTL must be Integer
         @backend.set(key, value, expires_value(options) || 0, false)
         value
       end
