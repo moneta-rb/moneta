@@ -16,27 +16,20 @@ module Moneta
         @backend = options[:backend] || {}
       end
 
-      def each_key
+      def each_key(&block)
+        return enum_for(:each_key) unless block_given?
+
         if @backend.respond_to?(:each_key)
-          return @backend.enum_for(:each_key) unless block_given?
-          @backend.each_key { |k| yield(k) }
-          return self
+          @backend.each_key(&block)
         elsif @backend.respond_to?(:keys)
-          return @backend.keys.enum_for unless block_given?
-          @backend.keys&.each { |k| yield(k) }
-          return self
+          @backend.keys&.each(&block)
         elsif @backend.respond_to?(:each)
-          if block_given?
-            @backend.each { |k, v| yield(k) }
-            return self
-          else
-            Enumerator.new do |y|
-              @backend.each { |k, v| y << k }
-            end
-          end
+          @backend.each { |k| yield(k) }
         else
           raise ::NotImplementedError, "No enumerator found on backend"
         end
+
+        self
       end
     end
   end
