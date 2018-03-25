@@ -22,12 +22,11 @@ module Moneta
       end
 
       # (see Proxy#each_key)
-      def each_key
-        entries = ::Dir.entries(@dir)
-                       .sort_by { |k| ::File.stat(::File.join(@dir, k)).ctime }
-                       .reject { |k| ::File.directory?(::File.join(@dir, k)) }
+      def each_key(&block)
+        entries = ::Dir.entries(@dir).reject { |k| ::File.directory?(::File.join(@dir, k)) }
 
-        return entries.enum_for { ::Dir.entries(@dir).length - 2 } unless block_given?
+        return enum_for(:each_key) { ::Dir.entries(@dir).length - 2 } unless block_given?
+
         entries.each { |k| yield(k) }
         self
       end

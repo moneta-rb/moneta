@@ -270,7 +270,7 @@ module Moneta
     end
 
     # (see Defaults#each_key)
-    def each_key
+    def each_key(&block)
       return enum_for(:each_key) unless block_given?
       all_keys.each{ |k| yield(k) }
       self

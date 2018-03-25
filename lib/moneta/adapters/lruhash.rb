@@ -32,8 +32,9 @@ module Moneta
       end
 
       # (see Proxy#each_key)
-      def each_key
-        return @entry.enum_for(:each_key) { @entry.length } unless block_given?
+      def each_key(&block)
+        return enum_for(:each_key) { @entry.length } unless block_given?
+
         @entry.each_key { |k| yield(k) }
         self
       end

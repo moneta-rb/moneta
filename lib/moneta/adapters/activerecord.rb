@@ -88,17 +88,10 @@ module Moneta
         !@table.where(k: key).empty?
       end
 
-      # (see Proxy#each_key)
-      def each_key
-        all_keys = @table.connection_pool.with_connection do
-          @table.pluck(:k)
-        end
+      def each_key(&block)
+        return enum_for(:each_key) { @table.count } unless block_given?
 
-        return all_keys&.enum_for(:each) do
-          @table.connection_pool.with_connection { @table.count }
-        end unless block_given?
-
-        all_keys&.each { |k| yield(k) }
+        @table.pluck(:k).each { |k| yield(k) }
         self
       end
 

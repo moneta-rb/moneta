@@ -29,12 +29,8 @@ module Moneta
       end
 
       # (see Proxy#each_key)
-      def each_key
-        @backend.transaction(true) do
-          return @backend.roots&.enum_for(:each) do
-            @backend.transaction(true) { @backend.roots.size }
-          end
-        end unless block_given?
+      def each_key(&block)
+        return enum_for(:each_key) { @backend.transaction(true) { @backend.roots.size } } unless block_given?
 
         @backend.transaction(true) do
           @backend.roots&.each { |k| yield(k) }

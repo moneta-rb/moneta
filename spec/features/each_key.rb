@@ -67,7 +67,7 @@ shared_examples :each_key do
   end
 
   context "when a block is given" do
-    let :each_key do
+    let(:each_key) do
       proc do
         Enumerator.new do |y|
           store.each_key(&y.method(:<<))
