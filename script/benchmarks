@@ -11,19 +11,13 @@ class String
   end
 end
 
-class Array
-  def sum
-    inject(0, &:+)
-  end
+def mean arr
+  arr.sum / arr.length
+end
 
-  def mean
-    sum / size
-  end
-
-  def stddev
-    m = mean
-    Math.sqrt(map {|s| (s - m) ** 2 }.mean)
-  end
+def stddev arr
+  m = mean(arr)
+  Math.sqrt(mean(arr.map {|s| (s - m) ** 2 }))
 end
 
 class MonetaBenchmarks
@@ -262,8 +256,8 @@ class MonetaBenchmarks
 
     puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mComputing keys and values...\n\e[34m#{SEPARATOR}\e[0m"
     puts %{                         Minimum  Maximum    Total     Mean   Stddev}
-    puts 'Key Length              % 8d % 8d % 8d % 8d % 8d' % [key_lens.min, key_lens.max, key_lens.sum, key_lens.mean, key_lens.stddev]
-    puts 'Value Length            % 8d % 8d % 8d % 8d % 8d' % [val_lens.min, val_lens.max, val_lens.sum, val_lens.mean, val_lens.stddev]
+    puts 'Key Length              % 8d % 8d % 8d % 8d % 8d' % [key_lens.min, key_lens.max, key_lens.sum, mean(key_lens), stddev(key_lens)]
+    puts 'Value Length            % 8d % 8d % 8d % 8d % 8d' % [val_lens.min, val_lens.max, val_lens.sum, mean(val_lens), stddev(val_lens)]
   end
 
   def print_config
@@ -279,7 +273,7 @@ class MonetaBenchmarks
       ops = (1000 * @config[:runs] * @data.size) / @stats[name][i].sum
       line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d % 8d' %
         [name, i, @stats[name][i].min, @stats[name][i].max, @stats[name][i].sum,
-         @stats[name][i].mean, @stats[name][i].stddev, ops]
+         mean(@stats[name][i]), mean(@stats[name][i]), ops]
       @summary << [-ops, line << "\n"] if i == :sum
       puts line
     end
