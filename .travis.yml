@@ -47,7 +47,6 @@ matrix:
   allow_failures:
     - rvm: jruby-9.1
     - rvm: rbx-3
-    - rvm: 2.2 # EOL March 2018
     - env: "SCRIPT='parallel-tests unstable'"
 script: "eval bundle exec ruby script/$SCRIPT"
 branches:
