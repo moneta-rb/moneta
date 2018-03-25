@@ -22,7 +22,9 @@ module Moneta
         if @backend.respond_to?(:each_key)
           @backend.each_key(&block)
         elsif @backend.respond_to?(:keys)
-          @backend.keys&.each(&block)
+          if keys = @backend.keys
+            keys.each(&block)
+          end
         elsif @backend.respond_to?(:each)
           @backend.each { |k| yield(k) }
         else
