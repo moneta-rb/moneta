@@ -264,7 +264,7 @@ module Moneta
 
   # @api private
   module EachKeySupport
-    def self.included(base)
+    def self.prepended(base)
       base.supports(:each_key) if base.respond_to?(:supports)
       require 'set'
     end

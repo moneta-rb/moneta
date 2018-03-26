@@ -35,7 +35,7 @@ module Moneta
   # so by no means it "knows" the state of the data (this is meant by weak).
   # @api public
   class WeakEachKey < Proxy
-    include EachKeySupport
+    prepend EachKeySupport
 
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
