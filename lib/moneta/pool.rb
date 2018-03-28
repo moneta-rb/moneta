@@ -48,13 +48,11 @@ module Moneta
     end
 
     def pop
-      if @mutex.synchronize { @pool.empty? }
+      unless store = @mutex.synchronize { @pool.pop }
         store = @builder.build.last
         @mutex.synchronize { @all << store }
-        store
-      else
-        @mutex.synchronize { @pool.pop }
       end
+      store
     end
   end
 end
