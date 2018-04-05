@@ -83,8 +83,17 @@ module Moneta
       end
 
       def read
-        size = @socket.read(4).unpack('N').first
-        result = Marshal.load(@socket.read(size))
+        size = @socket.
+          recv(4).tap do |bytes|
+            raise EOFError.new('failed to read size') unless bytes.bytesize == 4
+          end.
+          unpack('N').
+          first
+
+        result = Marshal.load(@socket.recv(size).tap do |bytes|
+          raise EOFError.new("Not enough bytes read") unless bytes.bytesize == size
+        end)
+
         raise result if Exception === result
         result
       end
