@@ -35,7 +35,10 @@ module Moneta
         value = @backend.get(key, false)
         if value
           expires = expires_value(options, nil)
-          @backend.set(key, value, expires || 0, false) if expires != nil
+          unless expires.nil?
+            Numeric === expires and expires = expires.to_i
+            @backend.set(key, value, expires || 0, false)
+          end
           value
         end
       rescue ::Memcached::NotFound
@@ -44,7 +47,9 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         # TTL must be Integer
-        @backend.set(key, value, expires_value(options) || 0, false)
+        expires = expires_value(options)
+        Numeric === expires and expires = expires.to_i
+        @backend.set(key, value, expires || 0, false)
         value
       end
 
@@ -74,7 +79,9 @@ module Moneta
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        @backend.add(key, value, expires_value(options) || 0, false)
+        expires = expires_value(options)
+        Numeric === expires and expires = expires.to_i
+        @backend.add(key, value, expires || 0, false)
         true
       rescue ::Memcached::ConnectionDataExists
         false
