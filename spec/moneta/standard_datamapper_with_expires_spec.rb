@@ -1,4 +1,7 @@
 describe "standard_datamapper_with_expires" do
+  let(:t_res){ 0.1 }
+  let(:min_ttl){ t_res }
+
   before :all do
     require 'dm-core'
 

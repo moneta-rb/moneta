@@ -1,5 +1,4 @@
 require 'rspec/core/formatters/base_text_formatter'
-#require 'rspec/retry'
 require 'moneta'
 require 'fileutils'
 require 'tmpdir'
@@ -276,6 +275,12 @@ module MonetaHelpers
         end
       end
     end
+
+    # Used to test time-dependent specs (e.g. expiry at different positions
+    # within a second)
+    def usecs
+      [1e5, 9e5, 99e4].map(&:to_i)
+    end
   end
 
   module InstanceMethods
@@ -420,6 +425,18 @@ RSpec.shared_context :setup_moneta_store do |builder|
   after :all do
     if @moneta_tempdir
       FileUtils.remove_dir(@moneta_tempdir)
+    end
+  end
+end
+
+RSpec.shared_context :at_usec do |usec|
+  before do
+    now = Time.now
+    # 1000us is a rough guess at how many microseconds this code will take to run
+    if now.usec + 1000 > usec
+      sleep(1 - 1e-6 * (now.usec - usec))
+    else
+      sleep(1e-6 * (usec - now.usec))
     end
   end
 end

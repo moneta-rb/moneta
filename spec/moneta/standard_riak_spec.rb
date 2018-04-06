@@ -6,5 +6,5 @@ describe 'standard_riak' do
   end
 
   moneta_store :Riak, {bucket: 'standard_riak'}
-  use_moneta_specs STANDARD_SPECS.without_increment.without_create
+  moneta_specs STANDARD_SPECS.without_increment.without_create
 end

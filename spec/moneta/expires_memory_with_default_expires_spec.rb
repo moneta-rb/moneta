@@ -1,7 +1,10 @@
 describe 'expires_memory_with_default_expires' do
+  let(:t_res){ 1 }
+  let(:min_ttl){ t_res }
+
   moneta_build do
     Moneta.build do
-      use :Expires, expires: 1
+      use :Expires, expires: min_ttl
       adapter :Memory
     end
   end

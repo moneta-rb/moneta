@@ -1,4 +1,7 @@
 describe 'standard_sdbm_with_expires' do
+  let(:t_res){ 0.1 }
+  let(:min_ttl){ t_res }
+
   moneta_store :SDBM do
     {file: File.join(tempdir, "simple_sdbm_with_expires"), expires: true}
   end
