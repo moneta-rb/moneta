@@ -443,9 +443,9 @@ module Moneta
       when 0, false
         false
       when nil
-        default ? default.to_i : nil
+        default ? default.to_r : nil
       when Numeric
-        value = value.to_i
+        value = value.to_r
         raise ArgumentError, ":expires must be a positive value, got #{value}" if value < 0
         value
       else
