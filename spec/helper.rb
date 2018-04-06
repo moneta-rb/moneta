@@ -271,7 +271,9 @@ module MonetaHelpers
       end
 
       specs.specs.sort.each do |s|
-        include_examples(s)
+        context "#{s} feature" do
+          include_examples(s)
+        end
       end
     end
   end
