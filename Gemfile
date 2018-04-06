@@ -63,11 +63,7 @@ gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby
 gem 'lmdb', platforms: :mri
 gem 'tokyocabinet', platforms: :ruby
-#if RUBY_VERSION < '2.0' && !defined?(JRUBY_VERSION)
-  # FIXME: We have to check manually for jruby
-  # otherwise bundle install --deployment doesn't work
-#  gem 'kyotocabinet-ruby', github: 'minad/kyotocabinet-ruby'
-#end
+gem 'kyotocabinet-ruby-reanimated', platforms: :ruby
 gem 'memcached', platforms: :ruby
 gem 'jruby-memcached', platforms: :jruby
 gem 'sqlite3', platforms: :ruby
