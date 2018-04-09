@@ -1,4 +1,7 @@
 describe 'expires_file' do
+  let(:t_res){ 0.1 }
+  let(:min_ttl){ t_res }
+
   moneta_build do
     tempdir = self.tempdir
     Moneta.build do
