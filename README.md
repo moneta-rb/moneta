@@ -872,4 +872,5 @@ Don't forget to edit the README.md and the CHANGES.
 
 * [Daniel Mendler](https://github.com/minad)
 * [Hannes Georg](https://github.com/hannesg)
+* [Alastair Pharo](https://github.com/asppsa)
 * Originally by [Yehuda Katz](https://github.com/wycats) and contributors
