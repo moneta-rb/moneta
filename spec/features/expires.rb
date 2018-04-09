@@ -85,11 +85,11 @@ shared_examples :expires do
         store.store('key2', 'val2', expires: min_ttl + t_res)
         store['key2'].should == 'val2'
         sleep t_res
-        store.load('key2', expires: min_ttl + t_res * 2).should == 'val2'
+        store.load('key2', expires: min_ttl * 2 + t_res).should == 'val2'
         store['key2'].should == 'val2'
         sleep min_ttl + t_res
         store['key2'].should == 'val2'
-        sleep t_res * 2
+        sleep min_ttl + t_res
         store['key2'].should be_nil
       end
 
@@ -111,11 +111,11 @@ shared_examples :expires do
         store.store('key2', 'val2', expires: min_ttl + t_res)
         store['key2'].should == 'val2'
         sleep t_res
-        store.key?('key2', expires: min_ttl + t_res * 2).should be true
+        store.key?('key2', expires: min_ttl * 2 + t_res).should be true
         store['key2'].should == 'val2'
         sleep min_ttl + t_res
         store['key2'].should == 'val2'
-        sleep t_res * 2
+        sleep min_ttl + t_res
         store['key2'].should be_nil
       end
 
@@ -137,11 +137,11 @@ shared_examples :expires do
         store.store('key1', 'val1', expires: min_ttl + t_res)
         store['key1'].should == 'val1'
         sleep t_res
-        store.fetch('key1', nil, expires: min_ttl + t_res * 2).should == 'val1'
+        store.fetch('key1', nil, expires: min_ttl * 2 + t_res).should == 'val1'
         store['key1'].should == 'val1'
         sleep min_ttl + t_res
         store['key1'].should == 'val1'
-        sleep t_res * 2
+        sleep min_ttl + t_res
         store['key1'].should be_nil
       end
 
