@@ -70,3 +70,6 @@ gem 'rack-cache'
 # Rails integration testing
 gem 'actionpack', '~> 5.0'
 gem 'minitest', '~> 5.0'
+
+# Used for generating the feature matrix
+gem 'kramdown', group: :doc

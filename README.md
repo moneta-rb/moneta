@@ -133,7 +133,7 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 
 <table>
 
-<tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment<sup>[8]</sup></th><th>Atomic create<sup>[9]</sup></th><th>Native expires<sup>[3]</sup></th><th>Persistent</th><th>Description</th></tr>
+<tr><th>Adapter</th><th>Required gems</th><th>Multi-thread safe<sup>[1]</sup></th><th>Multi-process safe<sup>[2]</sup></th><th>Atomic increment<sup>[3]</sup></th><th>Atomic create<sup>[4]</sup></th><th>Native expires<sup>[5]</sup></th><th>Persistent</th><th>Description</th></tr>
 
 <tr><th colspan="2">Persistent stores</th><th colspan="7"></th></tr>
 
@@ -155,13 +155,13 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 
 <tr><td>TokyoTyrant</td><td>tokyotyrant or ruby-tokyotyrant</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://fallabs.com/tokyotyrant/">TokyoTyrant</a> database</td></tr>
 
-<tr><td>PStore</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
+<tr><td>PStore</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[6]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html">PStore</a> store</td></tr>
 
-<tr><td>YAML</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
+<tr><td>YAML</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[6]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html">YAML</a> store</td></tr>
 
-<tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓<sup>[10]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
+<tr><td>Sqlite</td><td>sqlite3</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓<sup>[6]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sqlite.org/">Sqlite3</a> database</td></tr>
 
-<tr><td>Daybreak</td><td>daybreak</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td>Incredibly fast pure-ruby key/value store <a href="http://propublica.github.com/daybreak/">Daybreak</a></td></tr>
+<tr><td>Daybreak</td><td>daybreak</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td>Incredibly fast pure-ruby key/value store <a href="http://propublica.github.com/daybreak/">Daybreak</a></td></tr>
 
 <tr><td>DBM</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html">Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)</a></td></tr>
 
@@ -191,38 +191,39 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 
 <tr><td>Riak</td><td>riak-client</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://docs.basho.com/">Riak</a> database</td></tr>
 
-<tr><th colspan="2">Non persistent stores</th><th colspan="7"></th></tr>
+<tr><th colspan="2">Non-persistent stores</th><th colspan="7"></th></tr>
 
-<tr><td>MemcachedDalli</td><td>dalli</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database with Dalli library</td></tr>
+<tr><td>MemcachedDalli</td><td>dalli</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[7]</sup></td><td><a href="http://memcached.org/">Memcached</a> database with Dalli library</td></tr>
 
-<tr><td>Memcached</td><td>dalli or memcached</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[4]</sup></td><td><a href="http://memcached.org/">Memcached</a> database</td></tr>
+<tr><td>Memcached</td><td>dalli or memcached</td><td style="text-align:center;background:#55F">?</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[7]</sup></td><td><a href="http://memcached.org/">Memcached</a> database</td></tr>
 
-<tr><td>MemcachedNative</td><td>memcached</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[4]</sup></td><td>Memcached database with native library</td></tr>
+<tr><td>MemcachedNative</td><td>memcached</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗<sup>[7]</sup></td><td>Memcached database with native library</td></tr>
 
-<tr><td>Cookie</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">(✓)<sup>[6]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td>Cookie in memory store</td></tr>
+<tr><td>Cookie</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[8]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td>Cookie in memory store</td></tr>
 
-<tr><td>LRUHash</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">(✓)<sup>[6]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>LRU memory store</td></tr>
+<tr><td>LRUHash</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[8]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>LRU memory store</td></tr>
 
-<tr><td>Memory</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">(✓)<sup>[6]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>Memory store</td></tr>
+<tr><td>Memory</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓<sup>[8]</sup></td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>Memory store</td></tr>
 
 <tr><td>Null</td><td>-</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>No database</td></tr>
 
-<tr><td>Client</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
+<tr><th colspan="2">Network clients</th><th colspan="7"></th></tr>
 
-<tr><td>RestClient</td><td>faraday</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta REST client adapter</td></tr>
+<tr><td>Client</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#55F">?<sup>[9]</sup></td><td style="text-align:center;background:#55F">?<sup>[9]</sup></td><td style="text-align:center;background:#55F">?<sup>[9]</sup></td><td style="text-align:center;background:#55F">?<sup>[9]</sup></td><td>Moneta client adapter</td></tr>
+
+<tr><td>RestClient</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>[9]</sup></td><td>Moneta REST client adapter</td></tr>
 
 </table>
 
 * [1]: Make adapters thread-safe by using `Moneta::Lock` or by passing the option `threadsafe: true` to `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple threads if the store is multi-process safe. I recommend to add the option `:threadsafe` to ensure thread-safety since for example under JRuby and Rubinius even the basic datastructures are not thread safe due to the lack of a global interpreter lock (GIL). This differs from MRI where some adapters might appear thread safe already but only due to the GIL.
 * [2]: Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
-* [3]: Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to `Moneta#new`.
-* [4]: There are some servers which use the memcached protocol but which are persistent (e.g. [MemcacheDB](http://memcachedb.org/), [Kai](http://sourceforge.net/apps/mediawiki/kai), [IronCache](http://dev.iron.io/cache/reference/memcache/), [Roma](https://github.com/roma/roma/tree), [Flare](http://labs.gree.jp/Top/OpenSource/Flare-en.html) and [Kumofs](https://github.com/etolabo/kumofs))
-* [5]: Depends on server
-* [6]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
-* [7]: Store is multi-process safe, but not synchronized automatically between multiple processes
-* [8]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
-* [9]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
-* [10]: Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
+* [3]: If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
+* [4]: If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
+* [5]: Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to `Moneta#new`.
+* [6]: Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
+* [7]: There are some servers which use the memcached protocol but which are persistent (e.g. [MemcacheDB](http://memcachedb.org/), [Kai](http://sourceforge.net/apps/mediawiki/kai), [IronCache](http://dev.iron.io/cache/reference/memcache/), [Roma](https://github.com/roma/roma/tree), [Flare](http://labs.gree.jp/Top/OpenSource/Flare-en.html) and [Kumofs](https://github.com/etolabo/kumofs))
+* [8]: Store is multi-process safe because it is an in-memory store, values are not shared between multiple processes
+* [9]: Depends on server
 
 ------
 

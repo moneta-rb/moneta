@@ -1,0 +1,118 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+Bundler.require(:doc)
+
+require 'yaml'
+
+output = "<table>\n\n"
+output << <<-TAB.lines.map(&:strip).join
+  <tr>
+    <th>Adapter</th><th>Required gems</th>
+    <th>Multi-thread safe<sup>[1]</sup></th>
+    <th>Multi-process safe<sup>[2]</sup></th>
+    <th>Atomic increment<sup>[3]</sup></th>
+    <th>Atomic create<sup>[4]</sup></th>
+    <th>Native expires<sup>[5]</sup></th>
+    <th>Persistent</th>
+    <th>Description</th>
+  </tr>
+TAB
+output << "\n\n"
+
+footnotes = {
+  "multi-thread safe" => <<-EOF,
+  Make adapters thread-safe by using `Moneta::Lock` or by passing the option `threadsafe: true` to
+  `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple
+  threads if the store is multi-process safe. I recommend to add the option `:threadsafe` to
+  ensure thread-safety since for example under JRuby and Rubinius even the basic datastructures
+  are not thread safe due to the lack of a global interpreter lock (GIL). This differs from MRI
+  where some adapters might appear thread safe already but only due to the GIL.
+  EOF
+  "multi-process safe" => <<-EOF,
+  Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
+  EOF
+  "atomic increment" => <<-EOF,
+  If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak
+  `#increment` support using the `Moneta::WeakIncrement` proxy.
+  EOF
+  "atomic create" => <<-EOF,
+  If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak
+  `#create` support using the `Moneta::WeakCreate` proxy.
+  EOF
+  "native expires" => <<-EOF
+  Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to
+  `Moneta#new`.
+  EOF
+}
+
+YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'feature_matrix.yaml'))) do |document|
+  feature_group = document.to_ruby
+
+  output << %{<tr><th colspan="2">#{feature_group['group']}</th><th colspan="7"></th></tr>\n\n}
+
+  feature_group['notes'].each do |k,v|
+    footnotes[k] = v
+  end
+
+  feature_group['backends'].each do |backend|
+    output << '<tr>'
+    output << "<td>#{backend['adapter']}</td>"
+    output << "<td>#{backend['gems'] || '-'}</td>"
+
+    features = backend['features'] | (feature_group['features'] || [])
+    %w{threadsafe multiprocess increment create expires persist}.each do |feature|
+      mark = if features.include? feature
+               "✓"
+             elsif backend['unknown'] && backend['unknown'].include?(feature)
+               "?"
+             else
+               "✗"
+             end
+
+      note = if backend['notes'] && backend['notes'][feature]
+               "<sup>[#{footnotes.keys.index(backend['notes'][feature]) + 1}]</sup>"
+             else
+               ''
+             end
+
+      colour = case mark
+               when "✓"
+                 '#5F5'
+               when "✗"
+                 '#F44'
+               when '?'
+                 '#55F'
+               end
+
+      output << %{<td style="text-align:center;background:#{colour}">#{mark}#{note}</td>}
+    end
+
+    html_description = if backend['description']
+                         Kramdown::Document.new(backend['description']).to_html.match('<p>(.*)</p>')[1]
+                       else
+                         ''
+                       end
+    output << "<td>#{html_description}</td>"
+
+    output << '</tr>'
+    #<td>Client</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5"></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
+    output << "\n\n"
+  end
+
+
+end
+
+output << "</table>\n\n"
+
+footnotes.each_value.each_with_index do |note, idx|
+  output << "* [#{idx+1}]: #{note.lines.map(&:strip).join(" ")}\n"
+end
+
+readme = File.open('README.md', 'r+')
+new_readme = readme.read.sub(/(name="backend-matrix".*?\n).*?(------)/m, "\\1\n#{output}\n\\2")
+readme.rewind
+readme << new_readme
+readme.truncate(readme.tell)
+
