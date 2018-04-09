@@ -81,7 +81,7 @@ backends:
     features: [ increment, create ]
     description: "[TDB](http://tdb.samba.org/) database"
   - adapter: KyotoCabinet
-    gems: kyotocabinet
+    gems: kyotocabinet-ruby or kyotocabinet-ruby-reanimated
     features: [ increment, create ]
     description: "[KyotoCabinet](http://fallabs.com/kyotocabinet/) database"
   - adapter: TokyoCabinet
