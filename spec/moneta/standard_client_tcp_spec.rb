@@ -6,7 +6,7 @@ describe "standard_client_tcp" do
   moneta_store :Client
   moneta_specs STANDARD_SPECS
 
-  it 'supports multiple clients', multiple: true do
+  it 'supports multiple clients' do
     store['shared_key'] = 'shared_val'
     threads = (1..100).map do |i|
       Thread.new do
