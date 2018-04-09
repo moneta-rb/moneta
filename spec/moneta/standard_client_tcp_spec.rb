@@ -6,12 +6,11 @@ describe "standard_client_tcp" do
   moneta_store :Client
   moneta_specs STANDARD_SPECS
 
-  it 'supports multiple clients' do
-    client = Moneta.new(:Client)
-    client['shared_key'] = 'shared_val'
+  it 'supports multiple clients', multiple: true do
+    store['shared_key'] = 'shared_val'
     threads = (1..100).map do |i|
       Thread.new do
-        client = Moneta.new(:Client)
+        client = new_store
         (1..100).each do |j|
           client['shared_key'].should == 'shared_val'
           client["key-\#{j}-\#{i}"] = "val-\#{j}-\#{i}"
