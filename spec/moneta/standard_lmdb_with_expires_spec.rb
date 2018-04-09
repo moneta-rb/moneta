@@ -1,5 +1,5 @@
 describe 'standard_lmdb_with_expires' do
-  let(:t_res){ 0.2 }
+  let(:t_res){ 1 }
   let(:min_ttl){ t_res }
 
   moneta_store :LMDB do
