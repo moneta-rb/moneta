@@ -43,7 +43,13 @@ class MonetaBenchmarks
     LRUHash: {},
     LevelDB: { dir: "#{DIR}/leveldb" },
     LocalMemCache: { file: "#{DIR}/lmc" },
-    LMDB: { dir: "#{DIR}/lmdb" },
+    LMDB: {
+      dir: "#{DIR}/lmdb",
+      writemap: true,
+      mapasync: true,
+      nometasync: true,
+      mapsize: 4096 * 3e2
+    },
     MemcachedDalli: {},
     MemcachedNative: {},
     Memory: {},
