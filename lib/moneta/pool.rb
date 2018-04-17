@@ -39,7 +39,19 @@ module Moneta
       Thread.current[@id]
     end
 
-    def wrap(*args)
+    def wrap(*args, &block)
+      if checked_out?
+        yield
+      else
+        check_out!(&block)
+      end
+    end
+
+    def checked_out?
+      Thread.current.key?(@id)
+    end
+
+    def check_out!
       store = Thread.current[@id] = pop
       yield
     ensure

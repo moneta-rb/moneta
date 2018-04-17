@@ -1,4 +1,4 @@
-require 'thread'
+require 'set'
 
 module Moneta
   # Locks the underlying stores with a Mutex
@@ -15,14 +15,26 @@ module Moneta
     protected
 
     def wrap(name, *args, &block)
-      # Other methods (e.g. each_key) may need to call into #supports?; and
-      # support is not supposed to change once a class is instantiated, so
-      # locking is not necessary.
-      if name == :features
+      if locked?
         block.call
       else
-        @lock.synchronize(&block)
+        lock!(&block)
       end
+    end
+
+    def locks
+      Thread.current['Moneta::Lock'] ||= Set.new
+    end
+
+    def lock!(&block)
+      locks << @lock
+      @lock.synchronize(&block)
+    ensure
+      locks.delete @lock
+    end
+
+    def locked?
+      locks.include? @lock
     end
   end
 end
