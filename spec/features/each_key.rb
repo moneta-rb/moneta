@@ -31,6 +31,17 @@ shared_examples :each_key do
         .from(['a_key', 'b_key'].sort)
         .to(['b_key'])
     end
+
+    it 'allows checking and retrieving entries while enumerating' do
+      store['a'] = 'b'
+      store['c'] = 'd'
+      each_key.call do |k|
+        val = if k == 'a' then 'b' else 'd' end
+        expect(store.key?(k)).to be true
+        expect(store[k]).to eq val
+        expect(store.fetch(k)).to eq val
+      end
+    end
   end
 
   context "when a block is not given" do
@@ -47,9 +58,13 @@ shared_examples :each_key do
 
   context "when a block is given" do
     let :each_key do
-      proc do
-        Enumerator.new do |y|
-          store.each_key(&y.method(:<<))
+      proc do |&block|
+        if block
+          store.each_key(&block)
+        else
+          Enumerator.new do |y|
+            store.each_key(&y.method(:<<))
+          end
         end
       end
     end
