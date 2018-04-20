@@ -28,12 +28,19 @@ class MonetaBenchmarks
     # SDBM: { file: "#{DIR}/sdbm" },
     # YAML is too slow
     # YAML: { file: "#{DIR}/yaml" },
-    ActiveRecord: { table: 'activerecord', connection: { adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), username: 'root', database: 'moneta' } },
+    ActiveRecord: {
+      table: 'activerecord',
+      connection: {
+        adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+        username: ENV['MONETA_MYSQL_USERNAME'] || 'root',
+        database: ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'
+      }
+    },
     Cassandra: {},
     Client: {},
     Couch: {},
     DBM: { file: "#{DIR}/dbm" },
-    DataMapper: { setup: 'mysql://root:@localhost/moneta', table: 'datamapper' },
+    DataMapper: { setup: "mysql://#{ENV['MONETA_MYSQL_USERNAME'] || 'root'}:@localhost/#{ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'}", table: 'datamapper' },
     Daybreak: { file: "#{DIR}/daybreak" },
     File: { dir: "#{DIR}/file" },
     GDBM: { file: "#{DIR}/gdbm" },
@@ -61,8 +68,8 @@ class MonetaBenchmarks
     Riak: {},
     Sequel: { table: 'sequel',
       db: (defined?(JRUBY_VERSION) ?
-              'jdbc:mysql://localhost/moneta?user=root' :
-              'mysql2://root:@localhost/moneta') },
+              "jdbc:mysql://localhost/#{ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'}?user=#{ENV['MONETA_MYSQL_USERNAME'] || 'root'}" :
+              "mysql2://#{ENV['MONETA_MYSQL_USERNAME'] || 'root'}:@localhost/#{ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'}") },
     Sqlite: { file: ':memory:' },
     TDB: { file: "#{DIR}/tdb" },
     TokyoCabinet: { file: "#{DIR}/tokyocabinet" },
