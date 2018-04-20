@@ -16,6 +16,7 @@ output << <<-TAB.lines.map(&:strip).join
     <th>Atomic create<sup>[4]</sup></th>
     <th>Native expires<sup>[5]</sup></th>
     <th>Persistent</th>
+    <th>Key Traversal</th>
     <th>Description</th>
   </tr>
 TAB
@@ -62,7 +63,7 @@ YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'fea
     output << "<td>#{backend['gems'] || '-'}</td>"
 
     features = backend['features'] | (feature_group['features'] || [])
-    %w{threadsafe multiprocess increment create expires persist}.each do |feature|
+    %w{threadsafe multiprocess increment create expires persist each_key}.each do |feature|
       mark = if features.include? feature
                "✓"
              elsif backend['unknown'] && backend['unknown'].include?(feature)

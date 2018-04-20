@@ -61,32 +61,32 @@ backends:
       multiprocess: poor multiprocess performance
   - adapter: Daybreak
     gems: daybreak
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, each_key ]
     description: "Incredibly fast pure-ruby key/value store [Daybreak](http://propublica.github.com/daybreak/)"
   - adapter: DBM
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html)"
   - adapter: GDBM
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) database"
   - adapter: LevelDB
     gems: leveldb
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[LevelDB](http://code.google.com/p/leveldb/) database"
   - adapter: SDBM
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[SDBM](http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html) database"
   - adapter: TDB
     gems: tdb
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[TDB](http://tdb.samba.org/) database"
   - adapter: KyotoCabinet
     gems: kyotocabinet-ruby or kyotocabinet-ruby-reanimated
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[KyotoCabinet](http://fallabs.com/kyotocabinet/) database"
   - adapter: TokyoCabinet
     gems: tokyocabinet
-    features: [ increment, create ]
+    features: [ increment, create, each_key ]
     description: "[TokyoCabinet](http://fallabs.com/tokyocabinet/) database"
   - adapter: DataMapper
     gems: dm-core, dm-migrations
@@ -154,7 +154,7 @@ backends:
     notes:
       persist: memcached protocol
   - adapter: Cookie
-    features: [ multiprocess, increment, create, expires ]
+    features: [ multiprocess, increment, create, expires, each_key ]
     description: "Cookie in memory store"
     notes:
       multiprocess: in-memory multiprocess caveat
@@ -164,7 +164,7 @@ backends:
     notes:
       multiprocess: in-memory multiprocess caveat
   - adapter: Memory
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, each_key ]
     description: Memory store
     notes:
       multiprocess: in-memory multiprocess caveat
