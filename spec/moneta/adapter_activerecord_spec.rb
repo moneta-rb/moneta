@@ -26,7 +26,13 @@ describe 'adapter_activerecord' do
   it 'updates an existing key/value' do
     store['foo/bar'] = '1'
     store['foo/bar'] = '2'
-    store.table.where(k: 'foo/bar').count.should == 1
+    store.with_connection do |conn|
+      count = conn.select_value \
+        store.table.
+          where(store.table[:k].eq('foo/bar')).
+          project(store.table[:k].count)
+      expect(count).to eq 1
+    end
   end
 
   it 'supports different tables same database' do

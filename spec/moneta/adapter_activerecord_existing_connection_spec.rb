@@ -3,8 +3,8 @@ describe 'adapter_activerecord_existing_connection' do
     require 'active_record'
 
     ActiveRecord::Base.establish_connection adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
-                                            database: 'moneta',
-                                            username: 'root'
+                                            database: ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta',
+                                            username: ENV['MONETA_MYSQL_USERNAME'] || 'root'
   end
 
   moneta_build do
