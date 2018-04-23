@@ -74,7 +74,12 @@ class MonetaBenchmarks
     TDB: { file: "#{DIR}/tdb" },
     TokyoCabinet: { file: "#{DIR}/tokyocabinet" },
     TokyoTyrant: {},
-  }
+  }.tap do |stores|
+    if ENV['MONETA_STORES']
+      store_names = ENV['MONETA_STORES'].split(/\s+/).map(&:to_sym)
+      stores.select! { |k,_| store_names.include? k }
+    end
+  end
 
   CONFIGS = {
     uniform_small: {
