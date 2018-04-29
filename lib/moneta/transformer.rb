@@ -99,6 +99,36 @@ module Moneta
           def create(key, value, options = {})
             @adapter.create(#{key}, value, #{without :raw, key_opts})
           end
+          def values_at(*keys, **options)
+            t_keys = keys.map { |key| #{key} }
+            @adapter.values_at(*t_keys, **#{without :raw, key_opts})
+          end
+          def fetch_values(*keys, **options)
+            t_keys = keys.map { |key| #{key} }
+
+            block = if block_given?
+                      key_lookup = Hash[t_keys.zip(keys)]
+                      lambda { |t_key| yield key_lookup[t_key] }
+                    end
+            @adapter.fetch_values(*t_keys, **#{without :raw, key_opts}, &block)
+          end
+          def slice(*keys, **options)
+            t_keys = keys.map { |key| #{key} }
+            key_lookup = Hash[t_keys.zip(keys)]
+            @adapter.slice(*t_keys, **#{without :raw, key_opts}).map do |key, value|
+              [key_lookup[key], value]
+            end
+          end
+          def merge!(pairs, options = {})
+            keys, values = pairs.to_a.transpose
+            t_keys = keys.map { |key| #{key} }
+            block = if block_given?
+                      key_lookup = Hash[t_keys.zip(keys)]
+                      lambda { |k, old, new| yield(key_lookup[k], old, new) }
+                    end
+            @adapter.merge!(t_keys.zip(values), #{without :raw, key_opts}, &block)
+            self
+          end
         end_eval
       end
 
@@ -118,6 +148,54 @@ module Moneta
           end
           def create(key, value, options = {})
             @adapter.create(key, options[:raw] ? value : #{dump}, #{without :raw, dump_opts})
+          end
+          def values_at(*keys, **options)
+            values = @adapter.values_at(*keys, **#{without :raw, load_opts})
+            values.map do |value|
+              value && !options[:raw] ? #{load} : value
+            end
+          end
+          def fetch_values(*keys, **options, &orig_block)
+            substituted = {}
+            block = if block_given?
+                      lambda { |key| substituted[key] = true; yield key }
+                    end
+
+            values = @adapter.fetch_values(*keys, **#{without :raw, load_opts}, &block)
+            if options[:raw]
+              values
+            else
+              keys.map(&substituted.method(:key?)).zip(values).map do |substituted, value|
+                if substituted || !value
+                  value
+                else
+                  #{load}
+                end
+              end
+            end
+          end
+          def slice(*keys, **options)
+            @adapter.slice(*keys, **#{without :raw, load_opts}).map do |key, value|
+              [key, value && !options[:raw] ? #{load} : value]
+            end
+          end
+          def merge!(pairs, options = {}, &orig_block)
+            block = if block_given?
+                      if options[:raw]
+                        orig_block
+                      else
+                        lambda do |k, old_val, new_val|
+                          value = old_val; old_val = #{load}
+                          value = new_val; new_val = #{load}
+                          value = yield(k, old_val, new_val)
+                          #{dump}
+                        end
+                      end
+                    end
+
+            t_pairs = options[:raw] ? pairs : pairs.map { |key, value| [key, #{dump}] }
+            @adapter.merge!(t_pairs, #{without :raw, dump_opts}, &block)
+            self
           end
         end_eval
       end
@@ -146,6 +224,73 @@ module Moneta
           end
           def create(key, value, options = {})
             @adapter.create(#{key}, options[:raw] ? value : #{dump}, #{without :raw, key_opts, dump_opts})
+          end
+          def values_at(*keys, **options)
+            t_keys = keys.map { |key| #{key} }
+            values = @adapter.values_at(*t_keys, **#{without :raw, key_opts, load_opts})
+            values.map do |value|
+              value && !options[:raw] ? #{load} : value
+            end
+          end
+          def fetch_values(*keys, **options)
+            t_keys = keys.map { |key| #{key} }
+            key_lookup = Hash[t_keys.zip(keys)]
+            substituted = {}
+            block = if block_given?
+                      lambda do |t_key|
+                        key = key_lookup[t_key]
+                        substituted[key] = true
+                        yield key
+                      end
+                    end
+
+            values = @adapter.fetch_values(*t_keys, **#{without :raw, key_opts, load_opts}, &block)
+
+            if options[:raw]
+              values
+            else
+              keys.map(&substituted.method(:key?)).zip(values).map do |substituted, value|
+                if substituted || !value
+                  value
+                else
+                  #{load}
+                end
+              end
+            end
+          end
+          def slice(*keys, **options)
+            t_keys = keys.map { |key| #{key} }
+            key_lookup = Hash[t_keys.zip(keys)]
+            @adapter.slice(*t_keys, **#{without :raw, key_opts, load_opts}).map do |key, value|
+              [key_lookup[key], value && !options[:raw] ? #{load} : value]
+            end
+          end
+          def merge!(pairs, options = {})
+            keys, values = pairs.to_a.transpose
+            t_keys = keys.map { |key| #{key} }
+            key_lookup = Hash[t_keys.zip(keys)]
+
+            block = if block_given?
+                      if options[:raw]
+                        lambda do |k, old_val, new_val|
+                          yield(key_lookup[k], old_val, new_val)
+                        end
+                      else
+                        lambda do |k, old_val, new_val|
+                          value = old_val; old_val = #{load}
+                          value = new_val; new_val = #{load}
+                          value = yield(key_lookup[k], old_val, new_val)
+                          #{dump}
+                        end
+                      end
+                    end
+            t_pairs = if options[:raw]
+                        t_keys.zip(values)
+                      else
+                        t_keys.zip(values.map { |value| #{dump} })
+                      end
+            @adapter.merge!(t_pairs, #{without :raw, key_opts, dump_opts}, &block)
+            self
           end
         end_eval
       end

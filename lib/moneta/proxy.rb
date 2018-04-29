@@ -95,7 +95,28 @@ module Moneta
       self
     end
 
-    # (see Default#features)
+    # (see Defaults#values_at)
+    def values_at(*keys, **options)
+      adapter.values_at(*keys, **options)
+    end
+
+    # (see Defaults#fetch_values)
+    def fetch_values(*keys, **options, &defaults)
+      adapter.fetch_values(*keys, **options, &defaults)
+    end
+
+    # (see Defaults#slice)
+    def slice(*keys, **options)
+      adapter.slice(*keys, **options)
+    end
+
+    # (see Defaults#merge!)
+    def merge!(pairs, options = {}, &block)
+      adapter.merge!(pairs, options, &block)
+      self
+    end
+
+    # (see Defaults#features)
     def features
       @features ||= (self.class.features | adapter.features - self.class.features_mask).freeze
     end
@@ -106,7 +127,7 @@ module Moneta
         @features_mask ||= [].freeze
       end
 
-      # (see Default#not_supports)
+      # (see Defaults::ClassMethods#not_supports)
       def not_supports *features
         @features_mask = (self.features_mask | features).freeze
         super

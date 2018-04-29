@@ -241,6 +241,112 @@ module Moneta
       raise NotImplementedError, 'create is not supported'
     end
 
+    # Returns an array containing the values associated with the given keys, in
+    # the same order as the supplied keys. If a key is not present in the
+    # key-value-store, nil is returned in its place.
+    #
+    # @note Some adapters may implement this method atomically, but the default
+    #   implementation simply makes repeated calls to {#load}.
+    #
+    # @param keys [<Object>] The keys for the values to fetch
+    # @param options [Hash]
+    # @option options (see Proxy#load)
+    # @return [Array<Object, nil>] Array containing the values requested, with
+    #   nil for missing values
+    # @api public
+    def values_at(*keys, **options)
+      keys.map { |key| load(key, options) }
+    end
+
+    # Behaves identically to {#values_at} except that it accept an optional
+    # block. When supplied, the block will be called successively with each
+    # supplied key that is not present in the store.  The return value of the
+    # block call will be used in place of nil in returned the array of values.
+    #
+    # @note Some adapters may implement this method atomically. The default
+    #   implmentation uses {#values_at}.
+    #
+    # @overload fetch_values(*keys, **options)
+    #   @param (see #values_at)
+    #   @option options (see #values_at)
+    #   @return (see #values_at)
+    # @overload fetch_values(*keys, **options)
+    #   @param (see #values_at)
+    #   @option options (see #values_at)
+    #   @yieldparam key [Object] Each key that is not found in the store
+    #   @yieldreturn [Object, nil] The value to substitute for the missing one
+    #   @return [Array<Object, nil>] Array containing the values requested, or
+    #     where keys are missing, the return values from the corresponding block
+    #     calls
+    # @api public
+    def fetch_values(*keys, **options)
+      keys.zip(values_at(*keys, **options)).map do |key, value|
+        if value.nil? && !key?(key)
+          yield key if block_given?
+        else
+          value
+        end
+      end
+    end
+
+    # Returns a collection of key-value pairs corresponding to those supplied
+    # keys which are present in the key-value store, and their associated
+    # values.  Only those keys present in the store will have pairs in the
+    # return value.  The return value can be any enumerable object that yields
+    # pairs, so it could be a hash, but needn't be.
+    #
+    # @note The keys in the return value may be the same objects that were
+    #   supplied (i.e. {Object#equal?}), or may simply be equal (i.e.
+    #   {Object#==}).
+    #
+    # @note Some adapters may implement this method atomically. The default
+    #   implmentation uses {#values_at}.
+    #
+    # @param (see #values_at)
+    # @option options (see #values_at)
+    # @return [<(Object, Object)>] A collection of key-value pairs
+    # @api public
+    def slice(*keys, **options)
+      keys.zip(values_at(*keys, **options)).reject do |key, value|
+        value.nil? && !key?(key)
+      end
+    end
+
+    # Stores the pairs in the key-value store, and returns itself. When a block
+    # is provided, it will be called before overwriting any existing values with
+    # the key, old value and supplied value, and the return value of the block
+    # will be used in place of the supplied value.
+    #
+    # @note Some adapters may implement this method atomically, or in two passes
+    #   when a block is provided. The default implmentation uses {#key?},
+    #   {#load} and {#store}.
+    #
+    # @overload merge!(pairs, options={})
+    #   @param [<(Object, Object)>] pairs A collection of key-value pairs to store
+    #   @param [Hash] options
+    #   @option options (see Proxy#store)
+    #   @return [self]
+    # @overload merge!(pairs, options={})
+    #   @param [<(Object, Object)>] pairs A collection of key-value pairs to store
+    #   @param [Hash] options
+    #   @option options (see Proxy#store)
+    #   @yieldparam key [Object] A key that whose value is being overwritten
+    #   @yieldparam old_value [Object] The existing value which is being overwritten
+    #   @yieldparam new_value [Object] The value supplied in the method call
+    #   @yieldreturn [Object] The value to use for overwriting
+    #   @return [self]
+    # @api public
+    def merge!(pairs, options={})
+      pairs.each do |key, value|
+        if block_given? && key?(key, options)
+          existing = load(key, options)
+          value = yield(key, existing, value)
+        end
+        store(key, value, options)
+      end
+      self
+    end
+
     # Returns features list
     #
     # @return [Array<Symbol>] list of features
