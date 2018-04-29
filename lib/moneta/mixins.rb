@@ -513,6 +513,37 @@ module Moneta
       @backend.clear
       self
     end
+
+    # (see Defaults#values_at)
+    def values_at(*keys, **options)
+      return super unless @backend.respond_to? :values_at
+      @backend.values_at(*keys)
+    end
+
+    # (see Defaults#fetch_values)
+    def fetch_values(*keys, **options, &defaults)
+      return super unless @backend.respond_to? :fetch_values
+      defaults ||= {} # prevents KeyError
+      @backend.fetch_values(*keys, &defaults)
+    end
+
+    # (see Defaults#slice)
+    def slice(*keys, **options)
+      return super unless @backend.respond_to? :slice
+      @backend.slice(*keys)
+    end
+
+    # (see Defaults#merge!)
+    def merge!(pairs, options={}, &block)
+      return super unless @backend.respond_to? :merge!
+      hash = if Hash === pairs
+               pairs
+             else
+               Hash[pairs.to_a]
+             end
+      @backend.merge!(hash, &block)
+      self
+    end
   end
 
   # This mixin handles the calculation of expiration times.
