@@ -60,8 +60,11 @@ gem 'jruby-memcached', platforms: :jruby
 gem 'sqlite3', platforms: :ruby
 gem 'activerecord-jdbc-adapter', platforms: :jruby
 gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
+gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
+gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
 gem 'mysql2', platforms: :ruby
 gem 'ffi-gdbm', platforms: :jruby
+gem 'pg', platforms: :ruby
 
 # Rack integration testing
 gem 'rack'

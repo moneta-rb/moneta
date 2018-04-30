@@ -263,6 +263,10 @@ module MonetaHelpers
       let(:mysql_database1) { ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta' }
       let(:mysql_database2) { ENV['MONETA_MYSQL_DATABSASE2'] || 'moneta2' }
 
+      let(:postgres_username) { ENV['MONETA_POSTGRES_USERNAME'] || 'postgres' }
+      let(:postgres_database1) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1' }
+      let(:postgres_database2) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta2' }
+
       before do
         store = new_store
         store.clear
