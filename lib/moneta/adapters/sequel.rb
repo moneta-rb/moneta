@@ -16,11 +16,12 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :db Sequel database
-      # @option options [String/Symbol] :table (:moneta) Table name
+      # @option options [String, Symbol] :table (:moneta) Table name
       # @option options [Array] :extensions ([]) List of Sequel extensions
       # @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
+      # @option options [Sequel::Database] :backend Use existing backend instance
+      # @option options [Boolean] :noopt Do not apply database-specific optimisations
       # @option options All other options passed to `Sequel#connect`
-      # @option options [Sequel connection] :backend Use existing backend instance
       def self.new(*args)
         # Calls to subclass.new (below) are differentiated by # of args
         return super if args.length == 2
@@ -41,15 +42,19 @@ module Moneta
             end
           end
 
-        case backend.database_type
-        when :mysql
-          MySQL.new(options, backend)
-        when :postgres
-          Postgres.new(options, backend)
-        when :sqlite
-          SQLite.new(options, backend)
-        else
+        if options.delete(:noopt)
           super(options, backend)
+        else
+          case backend.database_type
+          when :mysql
+            MySQL.new(options, backend)
+          when :postgres
+            Postgres.new(options, backend)
+          when :sqlite
+            SQLite.new(options, backend)
+          else
+            super(options, backend)
+          end
         end
       end
 
