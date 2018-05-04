@@ -20,29 +20,32 @@ module Moneta
       # @option options [Array] :extensions ([]) List of Sequel extensions
       # @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
       # @option options [Sequel::Database] :backend Use existing backend instance
-      # @option options [Boolean] :noopt Do not apply database-specific optimisations
+      # @option options [Boolean] :no_opt Do not apply database-specific optimisations
       # @option options All other options passed to `Sequel#connect`
       def self.new(*args)
         # Calls to subclass.new (below) are differentiated by # of args
         return super if args.length == 2
         options = args.first || {}
 
-        backend = options[:backend] ||
+        extensions = options.delete(:extensions)
+        connection_validation_timeout = options.delete(:connection_validation_timeout)
+        no_opt = options.delete(:no_opt)
+        backend = options.delete(:backend) ||
           begin
             raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
-            ::Sequel.connect(db, options).tap do |backend|
-              if extensions = options.delete(:extensions)
+            ::Sequel.connect(db, options.reject { |k,_| k == :table }).tap do |backend|
+              if extensions
                 raise ArgumentError, 'Option :extensions must be an Array' unless extensions.is_a?(Array)
                 extensions.map(&:to_sym).each(&backend.method(:extension))
               end
 
-              if connection_validation_timeout = options.delete(:connection_validation_timeout)
+              if connection_validation_timeout
                 backend.pool.connection_validation_timeout = connection_validation_timeout
               end
             end
           end
 
-        if options.delete(:noopt)
+        if no_opt
           super(options, backend)
         else
           case backend.database_type
