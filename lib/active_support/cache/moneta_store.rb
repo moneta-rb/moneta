@@ -30,6 +30,13 @@ module ActiveSupport
         end
       end
 
+      def exist?(name, options = nil)
+        options = merged_options(options)
+        instrument(:exist?, name) do
+          @store.key?(normalize_key(name, options), options)
+        end
+      end
+
       protected
 
       def read_entry(key, options)
