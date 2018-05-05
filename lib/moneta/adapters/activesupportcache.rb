@@ -2,7 +2,7 @@ module Moneta
   module Adapters
     # ActiveSupport::Cache::Store adapter
     # @api public
-    class ActiveSupport
+    class ActiveSupportCache
       include Defaults
 
       supports :increment

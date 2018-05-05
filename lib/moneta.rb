@@ -28,6 +28,7 @@ module Moneta
 
   module Adapters
     autoload :ActiveRecord,    'moneta/adapters/activerecord'
+    autoload :ActiveSupportCache,'moneta/adapters/activesupportcache'
     autoload :Cassandra,       'moneta/adapters/cassandra'
     autoload :Client,          'moneta/adapters/client'
     autoload :Cookie,          'moneta/adapters/cookie'
