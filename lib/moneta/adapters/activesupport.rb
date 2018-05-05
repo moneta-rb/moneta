@@ -26,7 +26,12 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        @backend.read(key)
+        value = @backend.read(key)
+        if options[:raw]
+          value && value.to_s
+        else
+          value
+        end
       end
 
       # (see Proxy#store)
@@ -37,22 +42,13 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        if amount >= 0
-          result = @backend.increment(key, amount)
-          if result == nil
-            @backend.write(key, amount)
-            amount
-          else
-            result
-          end
+        if existing = @backend.read(key)
+          value = Integer(existing) + amount
+          @backend.write(key, value)
+          value
         else
-          result = @backend.decrement(key, amount)
-          if result == nil
-            @backend.write(key, -amount)
-            -amount
-          else
-            result
-          end
+          @backend.write(key, amount)
+          amount
         end
       end
 
@@ -61,7 +57,7 @@ module Moneta
         value = @backend.read(key)
         if value != nil
           @backend.delete(key)
-          value
+          options[:raw] ? value.to_s : value
         end
       end
 
