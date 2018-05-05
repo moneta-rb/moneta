@@ -4,6 +4,7 @@ $: << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'benchmark'
 require 'moneta'
 require 'fileutils'
+require 'active_support'
 
 class String
   def random(n)
@@ -35,6 +36,9 @@ class MonetaBenchmarks
         username: ENV['MONETA_MYSQL_USERNAME'] || 'root',
         database: ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'
       }
+    },
+    ActiveSupportCache: {
+      backend: ActiveSupport::Cache::MemoryStore.new
     },
     Cassandra: {},
     Client: {},
