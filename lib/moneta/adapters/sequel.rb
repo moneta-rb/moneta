@@ -14,14 +14,17 @@ module Moneta
       supports :create, :increment
       attr_reader :backend
 
-      # @param [Hash] options
-      # @option options [String] :db Sequel database
-      # @option options [String, Symbol] :table (:moneta) Table name
-      # @option options [Array] :extensions ([]) List of Sequel extensions
-      # @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
-      # @option options [Sequel::Database] :backend Use existing backend instance
-      # @option options [Boolean] :no_opt Do not apply database-specific optimisations
-      # @option options All other options passed to `Sequel#connect`
+      # @overload self.new(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :db Sequel database
+      #   @option options [String, Symbol] :table (:moneta) Table name
+      #   @option options [Array] :extensions ([]) List of Sequel extensions
+      #   @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
+      #   @option options [Sequel::Database] :backend Use existing backend instance
+      #   @option options [Boolean] :no_opt Do not apply database-specific optimisations
+      #   @option options All other options passed to `Sequel#connect`
+      # @overload self.new(options, backend)
+      #   @api private
       def self.new(*args)
         # Calls to subclass.new (below) are differentiated by # of args
         return super if args.length == 2
@@ -45,20 +48,23 @@ module Moneta
             end
           end
 
-        if no_opt
-          super(options, backend)
-        else
-          case backend.database_type
-          when :mysql
-            MySQL.new(options, backend)
-          when :postgres
-            Postgres.new(options, backend)
-          when :sqlite
-            SQLite.new(options, backend)
-          else
-            super(options, backend)
+        instance =
+          if !no_opt
+            case backend.database_type
+            when :mysql
+              MySQL.new(options, backend)
+            when :postgres
+              # Our optimisations only work on Postgres 9.5+
+              if matches = backend.get(::Sequel[:version].function).match(/PostgreSQL (\d+)\.(\d+)/)
+                major, minor = matches[1..2].map(&:to_i)
+                Postgres.new(options, backend) if major > 9 || (major == 9 && minor >= 5)
+              end
+            when :sqlite
+              SQLite.new(options, backend)
+            end
           end
-        end
+
+        instance || super(options, backend)
       end
 
       # @api private
@@ -115,7 +121,7 @@ module Moneta
             amount
           end
         end
-      rescue
+      rescue ::Sequel::DatabaseError
         # Concurrent modification might throw a bunch of different errors
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
