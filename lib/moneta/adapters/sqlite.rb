@@ -16,6 +16,7 @@ module Moneta
       # @option options [String] :table ('moneta') Table name
       # @option options [Integer] :busy_timeout (1000) Sqlite timeout if database is busy
       # @option options [::Sqlite3::Database] :backend Use existing backend instance
+      # @option options [String, Symbol] :journal_mode Set the journal mode for the connection
       def initialize(options = {})
         table = options[:table] || 'moneta'
         @backend = options[:backend] ||
@@ -25,6 +26,9 @@ module Moneta
           end
         @backend.busy_timeout(options[:busy_timeout] || 1000)
         @backend.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
+        if journal_mode = options[:journal_mode]
+          @backend.journal_mode = journal_mode.to_s
+        end
         @stmts =
           [@exists  = @backend.prepare("select exists(select 1 from #{table} where k = ?)"),
            @select  = @backend.prepare("select v from #{table} where k = ?"),
