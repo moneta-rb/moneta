@@ -30,11 +30,11 @@ module ActiveSupport
         end
       end
 
-      def exist?(name, options = nil)
-        options = merged_options(options)
-        instrument(:exist?, name) do
-          @store.key?(normalize_key(name, options), options)
-        end
+      # This prevents underlying Moneta transformers from erroring on raw values
+      def exist?(name, options = {})
+        super
+      rescue
+        super(name, options.merge(raw: true))
       end
 
       protected
