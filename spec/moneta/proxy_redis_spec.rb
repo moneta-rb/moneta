@@ -6,7 +6,7 @@ describe "proxy_redis" do
     Moneta.build do
       use :Proxy
       use :Proxy
-      adapter :Redis
+      adapter :Redis, db: 5
     end
   end
 

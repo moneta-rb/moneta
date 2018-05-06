@@ -7,7 +7,7 @@ describe 'adapter_activesupportcache' do
       Moneta::Adapters::ActiveSupportCache.new(backend: backend)
     end
 
-    moneta_specs ADAPTER_SPECS.without_create.with_native_expires
+    moneta_specs ADAPTER_SPECS.without_concurrent.without_create.with_native_expires
   end
 
   context 'using MemoryStore' do
@@ -30,7 +30,7 @@ describe 'adapter_activesupportcache' do
     let(:t_res) { 1 }
     let(:min_ttl) { t_res }
 
-    let(:backend) { ActiveSupport::Cache::RedisCacheStore.new }
+    let(:backend) { ActiveSupport::Cache::RedisCacheStore.new(url: 'redis:///1') }
     include_examples :adapter_activesupportcache
   end
 

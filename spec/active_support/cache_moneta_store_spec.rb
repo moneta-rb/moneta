@@ -230,7 +230,7 @@ describe "cache_moneta_store" do
   end
 
   describe ActiveSupport::Cache::RedisCacheStore do
-    let(:store){ described_class.new }
+    let(:store){ described_class.new(url: 'redis:///3') }
 
     include_examples :basic_store
     include_examples :expiry

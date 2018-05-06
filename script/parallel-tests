@@ -61,10 +61,10 @@ end
 
 puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n"
 
-# Memcached and Redis specs cannot be used in parallel
+# Memcached specs cannot be used in parallel
 # because of flushing and lacking namespaces
 parallel = []
-%w(memcached redis client shared riak tokyotyrant couch cassandra).each do |name|
+%w(memcached client shared riak tokyotyrant couch cassandra).each do |name|
   serial = specs.select { |s| s.include?(name) }
   unless serial.empty?
     specs -= serial
