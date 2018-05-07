@@ -1,6 +1,6 @@
 describe 'standard_sqlite_with_expires' do
   let(:t_res){ 0.1 }
-  let(:min_ttl){ 0.5 }
+  let(:min_ttl){ 1 }
 
   moneta_store :Sqlite do
     {
