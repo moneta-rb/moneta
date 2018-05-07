@@ -55,6 +55,19 @@ describe 'adapter_sequel' do
     include_examples :adapter_sequel
   end
 
+  context "with Postgres HStore" do
+    moneta_build do
+      Moneta::Adapters::Sequel.new(
+        db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}postgres://localhost/#{postgres_database1}",
+        user: postgres_username,
+        table: 'hstore_table1',
+        hstore: 'row')
+    end
+
+    # Concurrency is too slow
+    moneta_specs specs.without_concurrent
+  end
+
   describe 'table creation' do
     let(:conn_str) do
       "#{defined?(JRUBY_VERSION) && 'jdbc:'}sqlite://" + File.join(tempdir, 'adapter_sequel.db')
@@ -99,7 +112,7 @@ describe 'adapter_sequel' do
         let(:opts) { {} }
         include_examples :table_creation
       end
-      
+
       context 'with :key_column option' do
         let(:opts) { {key_column: :some_key} }
         include_examples :table_creation
@@ -137,6 +150,6 @@ describe 'adapter_sequel' do
         new_store
         expect(backend.table_exists?(table_name)).to be false
       end
-    end      
+    end
   end
 end

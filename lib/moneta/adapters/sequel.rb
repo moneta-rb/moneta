@@ -21,12 +21,16 @@ module Moneta
       #   @option options [Array] :extensions ([]) List of Sequel extensions
       #   @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
       #   @option options [Sequel::Database] :backend Use existing backend instance
-      #   @option options [Boolean] :optimize Set to false to prevent database-specific optimisations
+      #   @option options [Boolean] :optimize (true) Set to false to prevent database-specific optimisations
       #   @option options [Proc, Boolean] :create_table Provide a Proc for creating the table, or
       #     set to false to disable table creation all together.  If a Proc is given, it will be
       #     called regardless of whether the table exists already.
       #   @option options [Symbol] :key_column (:k) The name of the key column
       #   @option options [Symbol] :value_column (:v) The name of the value column
+      #   @option options [String] :hstore If using Postgres, keys and values are stored in a single
+      #     row of the table in the value_column using the hstore format.  The row to use is
+      #     the one where the value_column is equal to the value of this option, and will be created
+      #     if it doesn't exist.
       #   @option options All other options passed to `Sequel#connect`
       def self.new(*args)
         # Calls to subclass.new (below) are differentiated by # of args
@@ -39,7 +43,7 @@ module Moneta
         backend = options.delete(:backend) ||
           begin
             raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
-            other_cols = [:table, :create_table, :key_column, :value_column]
+            other_cols = [:table, :create_table, :key_column, :value_column, :hstore]
             ::Sequel.connect(db, options.reject { |k,_| other_cols.member?(k) }).tap do |backend|
               if extensions
                 raise ArgumentError, 'Option :extensions must be an Array' unless extensions.is_a?(Array)
@@ -53,13 +57,15 @@ module Moneta
           end
 
         instance =
-          if !optimize.nil? && !optimize
+          if optimize.nil? || optimize
             case backend.database_type
             when :mysql
               MySQL.new(options, backend)
             when :postgres
-              # Our optimisations only work on Postgres 9.5+
-              if matches = backend.get(::Sequel[:version].function).match(/PostgreSQL (\d+)\.(\d+)/)
+              if options[:hstore]
+                PostgresHStore.new(options, backend)
+              elsif matches = backend.get(::Sequel[:version].function).match(/PostgreSQL (\d+)\.(\d+)/)
+                # Our optimisations only work on Postgres 9.5+
                 major, minor = matches[1..2].map(&:to_i)
                 Postgres.new(options, backend) if major > 9 || (major == 9 && minor >= 5)
               end
@@ -230,6 +236,88 @@ module Moneta
         def delete(key, options = {})
           if row = @table.returning(value_column).where(key_column => key).delete.first
             row[value_column]
+          end
+        end
+      end
+
+      # @api private
+      class PostgresHStore < Sequel
+        def initialize(options, backend)
+          @row = options.delete(:hstore).to_s
+          backend.extension :pg_hstore
+          ::Sequel.extension :pg_hstore_ops
+          super
+        end
+
+        def key?(key, options = {})
+          !!@table.where(key_column => @row).get(::Sequel[value_column].hstore.key?(key))
+        end
+
+        def store(key, value, options = {})
+          create_row
+          @table.
+            where(key_column => @row).
+            update(value_column => ::Sequel[@table_name][value_column].hstore.merge(key => value))
+          value
+        end
+
+        def load(key, options = {})
+          @table.where(key_column => @row).get(::Sequel[value_column].hstore[key])
+        end
+
+        def delete(key, options = {})
+          value = load(key, options)
+          @table.where(key_column => @row).update(value_column => ::Sequel[value_column].hstore.delete(key))
+          value
+        end
+
+        def increment(key, amount = 1, options = {})
+          create_row
+          pair = ::Sequel[:hstore].function(
+            key,
+            (::Sequel[:coalesce].function(
+              ::Sequel[value_column].hstore[key].cast(Integer),
+              0) + amount).cast(String))
+
+          if row = @table.
+            returning(::Sequel[value_column].hstore[key].as(:value)).
+            where(key_column => @row).
+            update(value_column => ::Sequel.join([value_column, pair])).
+            first
+          then
+            row[:value].to_i
+          end
+        end
+
+        def create(key, value, options = {})
+          create_row
+          1 == @table.
+            where(key_column => @row).
+            exclude(::Sequel[value_column].hstore.key?(key)).
+            update(value_column => ::Sequel[value_column].hstore.merge(key => value))
+        end
+
+        def clear(options = {})
+          @table.where(key_column => @row).update(value_column => '')
+          self
+        end
+
+        protected
+
+        def create_row
+          @table.
+            insert_ignore.
+            insert(key_column => @row, value_column => '')
+        end
+
+        def create_table
+          key_column = self.key_column
+          value_column = self.value_column
+
+          @backend.create_table?(@table_name) do
+            column key_column, String, null: false, primary_key: true
+            column value_column, :hstore
+            index value_column, type: :gin
           end
         end
       end
