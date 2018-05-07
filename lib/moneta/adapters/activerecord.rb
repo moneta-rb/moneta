@@ -41,9 +41,10 @@ module Moneta
       # @option options [Object]               :backend A class object inheriting from ActiveRecord::Base to use as a table
       # @option options [String]               :table ('moneta') Table name
       # @option options [Hash/String/Symbol]   :connection ActiveRecord connection configuration (`Hash` or `String`), or symbol giving the name of a Rails connection (e.g. :production)
-      # @option options [Proc]                 :create_table Proc called with a connection if table needs to be created
-      # @option options [Symbol]               :key_column The name of the column to use for keys
-      # @option options [Symbol]               :value_column The name of the column to use for values
+      # @option options [Proc, Boolean]        :create_table Proc called with a connection if table
+      #   needs to be created.  Pass false to skip the create table check all together.
+      # @option options [Symbol]               :key_column (:k) The name of the column to use for keys
+      # @option options [Symbol]               :value_column (:v) The name of the column to use for values
       def initialize(options = {})
         @key_column = options.delete(:key_column) || :k
         @value_column = options.delete(:value_column) || :v
@@ -95,7 +96,12 @@ module Moneta
             end
 
           table_name = (options.delete(:table) || :moneta).to_sym
-          create_table_if_not_exists(table_name, &options.delete(:create_table))
+          create_table_proc = options.delete(:create_table)
+          if create_table_proc.nil?
+            create_table(table_name)
+          elsif create_table_proc
+            with_connection(&create_table_proc)
+          end
 
           @table = ::Arel::Table.new(table_name)
         end
@@ -188,22 +194,18 @@ module Moneta
 
       private
 
-      def create_table_if_not_exists table_name
+      def create_table table_name
         with_connection do |conn|
           return if conn.table_exists?(table_name)
 
           # Prevent multiple connections from attempting to create the table simultaneously.
           self.class.connection_lock.synchronize do
-            if block_given?
-              yield conn
-            else
-              conn.create_table(table_name, id: false) do |t|
-                # Do not use binary key (Issue #17)
-                t.string key_column, null: false
-                t.binary value_column
-              end
-              conn.add_index(table_name, key_column, unique: true)
+            conn.create_table(table_name, id: false) do |t|
+              # Do not use binary key (Issue #17)
+              t.string key_column, null: false
+              t.binary value_column
             end
+            conn.add_index(table_name, key_column, unique: true)
           end
         end
       end

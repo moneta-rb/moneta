@@ -1,3 +1,5 @@
+require 'sequel'
+
 describe 'adapter_sequel' do
   specs = ADAPTER_SPECS
 
@@ -46,10 +48,95 @@ describe 'adapter_sequel' do
     let(:opts) do
       {
         table: "adapter_sequel",
-        noopt: 1
+        optimize: false
       }
     end
 
     include_examples :adapter_sequel
+  end
+
+  describe 'table creation' do
+    let(:conn_str) do
+      "#{defined?(JRUBY_VERSION) && 'jdbc:'}sqlite://" + File.join(tempdir, 'adapter_sequel.db')
+    end
+
+    let(:backend) do
+      Sequel.connect(conn_str)
+    end
+
+    let(:table_name) { :adapter_sequel_table_creation }
+
+    before { backend.drop_table?(table_name) }
+
+    shared_examples :create_table do
+      it "creates the table" do
+        store = new_store
+        expect(backend.table_exists?(table_name)).to be true
+        expect(backend[table_name].columns).to include(store.key_column, store.value_column)
+      end
+    end
+
+    shared_examples :table_creation do
+      context "with :db parameter" do
+        moneta_build do
+          Moneta::Adapters::Sequel.new(opts.merge(db: conn_str, table: table_name))
+        end
+
+        include_examples :create_table
+      end
+
+      context "with :backend parameter" do
+        moneta_build do
+          Moneta::Adapters::Sequel.new(opts.merge(backend: backend, table: table_name))
+        end
+
+        include_examples :create_table
+      end
+    end
+
+    context 'without :create_table option' do
+      context 'with default columns' do
+        let(:opts) { {} }
+        include_examples :table_creation
+      end
+      
+      context 'with :key_column option' do
+        let(:opts) { {key_column: :some_key} }
+        include_examples :table_creation
+      end
+
+      context 'with :value_column option' do
+        let(:opts) { {value_column: :my_value} }
+        include_examples :table_creation
+      end
+    end
+
+    context 'with :create_table proc' do
+      let :opts do
+        {
+          create_table: lambda do |conn|
+            called = true
+            conn.create_table? table_name do
+              String :k, primary_key: true
+              File :v
+              Integer :other_col
+            end
+          end
+        }
+      end
+
+      include_examples :table_creation
+    end
+
+    context 'with :create_table false' do
+      moneta_build do
+        Moneta::Adapters::Sequel.new(db: conn_str, table: table_name, create_table: false)
+      end
+
+      it "doesn't create the table" do
+        new_store
+        expect(backend.table_exists?(table_name)).to be false
+      end
+    end      
   end
 end
