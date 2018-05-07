@@ -15,7 +15,7 @@ services:
   - mongodb
   - postgresql
 addons:
-  postgresql: '10'
+  postgresql: '9.6'
 before_install:
   - gem install bundler
   - sudo apt-get install -qq libtokyocabinet9 libtokyocabinet-dev libkyotocabinet16 libkyotocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
