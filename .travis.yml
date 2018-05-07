@@ -14,9 +14,10 @@ services:
   - memcached
   - mongodb
   - postgresql
+addons:
+  postgresql: '9.6'
 before_install:
   - gem install bundler
-  #- script/install-kyotocabinet
   - sudo apt-get install -qq libtokyocabinet9 libtokyocabinet-dev libkyotocabinet16 libkyotocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
 cache: bundler
