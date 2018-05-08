@@ -25,6 +25,7 @@ before_script:
   - mysql -e 'create database moneta;'
   - mysql -e 'create database moneta2;'
   - psql -c 'create database moneta1;' -U postgres
+  - psql -c 'create extension hstore;' -U postgres moneta1
   - psql -c 'create database moneta2;' -U postgres
 env:
   global:
