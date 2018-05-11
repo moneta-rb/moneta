@@ -14,7 +14,6 @@ module Moneta
   #
   # @api public
   class Pool < Wrapper
-    # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
     # @option options [String] :mutex (::Mutex.new) Mutex object
     def initialize(options = {}, &block)

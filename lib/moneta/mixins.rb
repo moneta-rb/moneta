@@ -207,11 +207,19 @@ module Moneta
       store(key, value)
     end
 
-    # Calls block once for each key in store, passing the key as a parameter. If no block is given, an enumerator is returned instead.
+    # Calls block once for each key in store, passing the key as a parameter. If
+    # no block is given, an enumerator is returned instead.
     #
     # @note Not every Moneta store implements this method,
     #       a NotImplementedError is raised if it is not supported.
-    # @return [Enumerator] An all-the-keys enumerator
+    #
+    # @overload each_key
+    #   @return [Enumerator] An all-the-keys enumerator
+    #
+    # @overload each_key
+    #   @yieldparam key [Object] Each key is yielded to the supplied block
+    #   @return [self]
+    #
     # @api public
     def each_key
       raise NotImplementedError, 'each_key is not supported'
