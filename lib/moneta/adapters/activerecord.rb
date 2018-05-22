@@ -136,7 +136,7 @@ module Moneta
         with_connection do |conn|
           conn.transaction do
             sel = arel_sel_key(key).project(table[value_column]).lock
-            value = conn.select_value(sel)
+            value = decode(conn, conn.select_value(sel))
 
             del = arel_del.where(table[key_column].eq(key))
             conn.delete(del)
@@ -150,15 +150,16 @@ module Moneta
       def increment(key, amount = 1, options = {})
         with_connection do |conn|
           begin
-            conn_ins(conn, key, amount)
+            conn_ins(conn, key, amount.to_s)
             amount
           rescue
             conn.transaction do
-              # This will raise if the existing value is not an integer
-              conn_sel_int_value(conn, key)
+              sel = arel_sel_key(key).project(table[value_column]).lock
+              value = decode(conn, conn.select_value(sel))
+              value = (value ? Integer(value) : 0) + amount
               raise "No row updated" \
-                unless conn_upd(conn, key, ::Arel.sql("#{value_column} + #{amount}")) == 1
-              conn_sel_int_value(conn, key)
+                unless conn_upd(conn, key, value.to_s) == 1
+              value
             end
           end
         end
@@ -237,11 +238,19 @@ module Moneta
       end
 
       def conn_sel_value(conn, key)
-        conn.select_value arel_sel_key(key).project(table[value_column])
+        decode(conn, conn.select_value(arel_sel_key(key).project(table[value_column])))
       end
 
-      def conn_sel_int_value(conn, key)
-        Integer(conn_sel_value(conn, key))
+      def decode(conn, value)
+        return nil if value.nil?
+        if defined?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
+          conn.is_a?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
+          value.start_with?('\\x')
+        then
+          [value[2..-1]].pack('H*')
+        else
+          value
+        end
       end
     end
   end
