@@ -6,5 +6,5 @@ describe 'adapter_redis_with_default_expires' do
     Moneta::Adapters::Redis.new(db: 7, expires: min_ttl)
   end
 
-  moneta_specs ADAPTER_SPECS.with_native_expires.with_default_expires
+  moneta_specs ADAPTER_SPECS.with_each_key.with_native_expires.with_default_expires
 end

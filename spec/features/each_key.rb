@@ -19,7 +19,7 @@ shared_examples :each_key do
     it 'when a lazy size implementation exist it returns the size of the collection or nil' do
       expect(store.each_key.size).to eq(nil) | eq(0)
 
-      if store.each_key.size&.zero?
+      if !store.each_key.size.nil? && store.each_key.size.zero?
         expect { store.store('1st_key', 'value') }
           .to change { store.each_key.size }
           .from(0)
