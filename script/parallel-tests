@@ -30,15 +30,13 @@ srand(old_seed)
 #   QuickLZ is also not maintained on Github, but on Bitbucket
 #   and I don't know where the issue tracker is.
 #
-# * At present, we can't run the kyotocabinet, hbase or localmemcache tests at all
+# * At present, we can't run the hbase or localmemcache tests at all
 #
 # * PStore increment/locking doesn't work correctly on JRuby
 #
-# * tokyocabinet doesn't compile on Ruby >= 2
-#
-unstable = %w(quicklz riak cassandra kyotocabinet hbase localmemcache)
+unstable = %w(quicklz riak cassandra hbase localmemcache)
 unstable += %w(pstore) if defined?(JRUBY_VERSION)
-unstable += %w(tokyocabinet) if defined?(JRUBY_VERSION)
+unstable += %w(tokyocabinet kyotocabinet) if defined?(JRUBY_VERSION)
 
 unstable_re = /#{unstable.join('|')}/
 unstable = specs.select {|s| s =~ unstable_re }
@@ -63,10 +61,10 @@ end
 
 puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n"
 
-# Memcached and Redis specs cannot be used in parallel
+# Memcached specs cannot be used in parallel
 # because of flushing and lacking namespaces
 parallel = []
-%w(memcached redis client shared riak tokyotyrant couch cassandra).each do |name|
+%w(memcached client shared riak tokyotyrant couch cassandra).each do |name|
   serial = specs.select { |s| s.include?(name) }
   unless serial.empty?
     specs -= serial
@@ -75,7 +73,7 @@ parallel = []
 end
 
 # The activesupport cache specs also use memcached
-activesupport_cache_specs = specs.grep(/active_support.+cache/)
+activesupport_cache_specs = specs.grep(/active_support|activesupportcache/)
 specs -= activesupport_cache_specs
 
 if memcache_specs = parallel.find{ |serial| serial.all?{ |s| s.match /memcached/ } }

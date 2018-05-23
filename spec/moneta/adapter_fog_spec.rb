@@ -1,6 +1,6 @@
 describe 'adapter_fog' do
   before :all do
-    require 'fog'
+    require 'fog/aws'
     Fog.mock!
   end
 

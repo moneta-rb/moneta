@@ -6,5 +6,5 @@ describe 'standard_riak_with_expires' do
   end
 
   moneta_store :Riak, {bucket: 'standard_riak_with_expires', expires: true}
-  use_moneta_specs STANDARD_SPECS.without_increment.with_expires.without_create
+  moneta_specs STANDARD_SPECS.without_increment.with_expires.without_create
 end

@@ -44,7 +44,7 @@ module Moneta
     def delete(key, options = {})
       return super if options.include?(:raw)
       value, expires = super
-      value if !expires || Time.now.to_i <= expires
+      value if !expires || Time.now <= Time.at(expires)
     end
 
     # (see Proxy#store)
@@ -62,7 +62,7 @@ module Moneta
       entry = @adapter.load(key, options)
       if entry != nil
         value, expires = entry
-        if expires && Time.now.to_i > expires
+        if expires && Time.now > Time.at(expires)
           delete(key)
           nil
         elsif new_expires != nil
@@ -76,7 +76,7 @@ module Moneta
 
     def new_entry(value, expires)
       if expires
-        [value, expires.to_i]
+        [value, expires.to_r]
       elsif Array === value || value == nil
         [value]
       else

@@ -207,11 +207,19 @@ module Moneta
       store(key, value)
     end
 
-    # Calls block once for each key in store, passing the key as a parameter. If no block is given, an enumerator is returned instead.
+    # Calls block once for each key in store, passing the key as a parameter. If
+    # no block is given, an enumerator is returned instead.
     #
     # @note Not every Moneta store implements this method,
     #       a NotImplementedError is raised if it is not supported.
-    # @return [Enumerator] An all-the-keys enumerator
+    #
+    # @overload each_key
+    #   @return [Enumerator] An all-the-keys enumerator
+    #
+    # @overload each_key
+    #   @yieldparam key [Object] Each key is yielded to the supplied block
+    #   @return [self]
+    #
     # @api public
     def each_key
       raise NotImplementedError, 'each_key is not supported'
@@ -264,7 +272,7 @@ module Moneta
 
   # @api private
   module EachKeySupport
-    def self.included(base)
+    def self.prepended(base)
       base.supports(:each_key) if base.respond_to?(:supports)
       require 'set'
     end
@@ -443,9 +451,9 @@ module Moneta
       when 0, false
         false
       when nil
-        default ? default.to_i : nil
+        default ? default.to_r : nil
       when Numeric
-        value = value.to_i
+        value = value.to_r
         raise ArgumentError, ":expires must be a positive value, got #{value}" if value < 0
         value
       else

@@ -31,11 +31,16 @@ module Moneta
 
   # Adds weak key enumeration support to the underlying store
   #
-  # @note The each_key method hooks into the methods that stores or access the values to collect or discover which keys are valid
-  # so by no means it "knows" the state of the data (this is meant by weak).
+  # @note This class wraps methods that store and retrieve entries in order to
+  #   track which keys are in the store, and uses this list when doing key
+  #   traversal.  This means that {#each_key each_key} will only yield keys
+  #   which have been accessed previously via the present store object.  This
+  #   wrapper is therefore best suited to adapters which are not persistent, and
+  #   which cannot be shared (e.g. {Adapters::LRUHash LRUHash}).
+  #
   # @api public
   class WeakEachKey < Proxy
-    include EachKeySupport
+    prepend EachKeySupport
 
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options

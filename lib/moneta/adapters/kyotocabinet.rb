@@ -39,6 +39,13 @@ module Moneta
         @backend.close
         nil
       end
+
+      # (see Proxy#each_key)
+      def each_key
+        return enum_for(:each_key) unless block_given?
+        @backend.each_key{ |arr| yield arr.first }
+        self
+      end
     end
   end
 end

@@ -7,17 +7,17 @@ describe "standard_client_tcp" do
   moneta_specs STANDARD_SPECS
 
   it 'supports multiple clients' do
-    client = Moneta.new(:Client)
-    client['shared_key'] = 'shared_val'
-    (1..100).each do |i|
+    store['shared_key'] = 'shared_val'
+    threads = (1..100).map do |i|
       Thread.new do
-        client = Moneta.new(:Client)
-        (1.100).each do |j|
+        client = new_store
+        (1..100).each do |j|
           client['shared_key'].should == 'shared_val'
           client["key-\#{j}-\#{i}"] = "val-\#{j}-\#{i}"
           client["key-\#{j}-\#{i}"].should == "val-\#{j}-\#{i}"
         end
       end
     end
+    threads.map(&:join)
   end
 end

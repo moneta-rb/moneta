@@ -1,6 +1,9 @@
 describe 'standard_fog_with_expires' do
+  let(:t_res){ 0.1 }
+  let(:min_ttl){ t_res }
+
   before :all do
-    require 'fog'
+    require 'fog/aws'
 
     # Put Fog into testing mode
     Fog.mock!

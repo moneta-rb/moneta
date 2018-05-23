@@ -1,6 +1,6 @@
 describe 'weak_create' do
   before :all do
-    require 'fog'
+    require 'fog/aws'
 
     # Put Fog into testing mode
     Fog.mock!

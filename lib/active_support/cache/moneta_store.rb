@@ -30,6 +30,13 @@ module ActiveSupport
         end
       end
 
+      # This prevents underlying Moneta transformers from erroring on raw values
+      def exist?(name, options = {})
+        super
+      rescue
+        super(name, options.merge(raw: true))
+      end
+
       protected
 
       def read_entry(key, options)

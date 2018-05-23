@@ -1,4 +1,7 @@
 describe 'adapter_mongo_official' do
+  let(:t_res){ 0.1 }
+  let(:min_ttl){ t_res }
+
   moneta_build do
     Moneta::Adapters::MongoOfficial.new(db: "adapter_mongo",
                                         collection: 'official')

@@ -51,6 +51,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         if expires = expires_value(options)
+          Numeric === expires and expires = expires.to_i
           @backend.setex(key, expires, value)
         else
           @backend.set(key, value)
@@ -102,7 +103,7 @@ module Moneta
         when false
           @backend.persist(key)
         when Numeric
-          @backend.expire(key, expires)
+          @backend.expire(key, expires.to_i)
         end
       end
     end

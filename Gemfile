@@ -36,25 +36,16 @@ gem 'daybreak'
 gem 'dm-core'
 gem 'dm-migrations'
 gem 'dm-mysql-adapter'
-if RUBY_VERSION < '2.0'
-  gem 'fog', '~> 1.12'
-  gem 'mime-types', '~> 2.0'
-  gem 'addressable', '~> 2.4.0'
-else
-  gem 'fog', '>= 1.11.1'
-  gem 'mime-types'
-end
+gem 'fog-aws', '>= 1.11.1'
+gem 'mime-types'
 gem 'activerecord', '~> 5.0'
-gem 'redis', '~> 3.3.5'
+gem 'redis', '~> 4.0.0'
 gem 'mongo', '~> 2.1.0'
 gem 'moped', '>= 2.0.0'
 gem 'sequel'
 gem 'dalli'
 gem 'riak-client'
 gem 'cassandra'
-if RUBY_VERSION < '2.0'
-  gem 'json', '~> 1.0'
-end
 gem 'tokyotyrant'
 #gem 'ruby-tokyotyrant', platforms: :ruby
 #gem 'hbaserb'
@@ -63,18 +54,17 @@ gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby
 gem 'lmdb', platforms: :mri
 gem 'tokyocabinet', platforms: :ruby
-#if RUBY_VERSION < '2.0' && !defined?(JRUBY_VERSION)
-  # FIXME: We have to check manually for jruby
-  # otherwise bundle install --deployment doesn't work
-#  gem 'kyotocabinet-ruby', github: 'minad/kyotocabinet-ruby'
-#end
+gem 'kyotocabinet-ruby-reanimated', platforms: :ruby
 gem 'memcached', platforms: :ruby
 gem 'jruby-memcached', platforms: :jruby
 gem 'sqlite3', platforms: :ruby
 gem 'activerecord-jdbc-adapter', platforms: :jruby
 gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
-gem 'mysql2', '~> 0.3.12b5', platforms: :ruby
+gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
+gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
+gem 'mysql2', platforms: :ruby
 gem 'ffi-gdbm', platforms: :jruby
+gem 'pg', platforms: :ruby
 
 # Rack integration testing
 gem 'rack'
@@ -83,3 +73,6 @@ gem 'rack-cache'
 # Rails integration testing
 gem 'actionpack', '~> 5.0'
 gem 'minitest', '~> 5.0'
+
+# Used for generating the feature matrix
+gem 'kramdown', group: :doc

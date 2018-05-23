@@ -67,6 +67,28 @@ Closes the store
 
 Feature detection. Adapters MUST return <code>:create</code> and <code>:increment</code> if these methods are supported.
 
+### `each_key => Enumerator` and `each_key(&block) => Object`
+
+Enumerates over the keys in the store. This method is not supported by all
+stores. When not supported, this method MUST raise a `NotImplementedError`,
+regardless of whether a block is supplied. When supported, this method allows
+traversal of all keys in the store. The method behaves differently depending on
+whether a block is supplied.  In either case, for each key, `k` in the
+traversal, `key?(k)` MUST return `true`; and for each key, `k` for which
+`key?(k)` returns `true`, `k` MUST be traversed by `each_key`. Keys MAY be
+traversed in any order. Mutation of the store while traversing keys MAY be
+allowed. Querying the store (calling `fetch`, `key?`, etc.) while traversing
+MUST be allowed.
+
+* If no block is supplied, `each_key` MUST return an `Enumerator` that can be
+  used to traverse each key (e.g. by calling `each`). Calling methods on the
+  `Enumerator` such as `each` with a block MUST return the store object.
+
+* If a block is supplied, that block MUST be called once with each traversed key
+  as the only argument.  When called in this way, `each_key` MUST return the
+  store object.
+
+
 ## Additional Options Hashes
 
 The following methods may all take an additional Hash as a final argument. This allows the client to send additional options which can be specified by the adapter (and which may be specified by extensions to this specification). The methods MUST NOT modify the supplied option hash.

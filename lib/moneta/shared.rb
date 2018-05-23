@@ -39,12 +39,7 @@ module Moneta
     def wrap(*args)
       connect
       yield
-    rescue NoMethodError
-      # Happens when the adapter is deleted after the above call to connect
-      # (i.e. in concurrent usage)
-      tries ||= 0
-      (tries += 1) < 3 ? retry : raise
-    rescue Errno::ECONNRESET, Errno::EPIPE
+    rescue Errno::ECONNRESET, Errno::EPIPE, IOError
       @connect_lock.synchronize{ close unless @server }
       tries ||= 0
       (tries += 1) < 3 ? retry : raise

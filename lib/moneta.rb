@@ -28,6 +28,7 @@ module Moneta
 
   module Adapters
     autoload :ActiveRecord,    'moneta/adapters/activerecord'
+    autoload :ActiveSupportCache,'moneta/adapters/activesupportcache'
     autoload :Cassandra,       'moneta/adapters/cassandra'
     autoload :Client,          'moneta/adapters/client'
     autoload :Cookie,          'moneta/adapters/cookie'
@@ -95,7 +96,7 @@ module Moneta
   # @api public
   def self.new(name, options = {})
     expires = options[:expires]
-    options.delete(:expires) unless Integer === expires
+    options.delete(:expires) unless Numeric === expires
     logger = options.delete(:logger)
     threadsafe = options.delete(:threadsafe)
     compress = options.delete(:compress)
