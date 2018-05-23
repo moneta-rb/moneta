@@ -152,18 +152,19 @@ module Moneta
           begin
             conn_ins(conn, key, amount.to_s)
             amount
-          rescue
+          rescue ::ActiveRecord::RecordNotUnique
             conn.transaction do
               sel = arel_sel_key(key).project(table[value_column]).lock
               value = decode(conn, conn.select_value(sel))
               value = (value ? Integer(value) : 0) + amount
-              raise "No row updated" \
-                unless conn_upd(conn, key, value.to_s) == 1
+              # Re-raise if the upate affects no rows (i.e. row deleted after attempted insert,
+              # before select for update)
+              raise unless conn_upd(conn, key, value.to_s) == 1
               value
             end
           end
         end
-      rescue
+      rescue ::ActiveRecord::RecordNotUnique
         # This handles the "no row updated" issue, above
         tries ||= 0
         if (tries += 1) <= 3; retry else raise end
@@ -175,7 +176,7 @@ module Moneta
           conn_ins(conn, key, value)
           true
         end
-      rescue
+      rescue ::ActiveRecord::RecordNotUnique
         false
       end
 
