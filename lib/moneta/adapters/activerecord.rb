@@ -116,9 +116,10 @@ module Moneta
 
       # (see Proxy#each_key)
       def each_key(&block)
-        return enum_for(:each_key) { @table.count } unless block_given?
-
-        @table.pluck(:k).each { |k| yield(k) }
+        with_connection do |conn|
+          return enum_for(:each_key) { conn.select_value(arel_sel.project(table[key_column].count)) } unless block_given?
+          conn.select_values(arel_sel.project(table[key_column])).each { |k| yield(k) }
+        end
         self
       end
 
