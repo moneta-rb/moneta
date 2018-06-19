@@ -8,8 +8,7 @@ module Moneta
     class PStore
       include Defaults
 
-      # The each_key support is not advertised until we allow "checking and retrieving entries while enumerating"
-      supports :create, :increment #, :each_key
+      supports :create, :increment, :each_key
       attr_reader :backend
 
       # @param [Hash] options
@@ -33,9 +32,9 @@ module Moneta
 
       # (see Proxy#each_key)
       def each_key(&block)
-        return enum_for(:each_key) { @backend.transaction(true) { @backend.roots.size } } unless block_given?
+        return enum_for(:each_key) { transaction(true) { @backend.roots.size } } unless block_given?
 
-        @backend.transaction(true) do
+        transaction(true) do
           @backend.roots.each { |k| yield(k) }
         end
         self
