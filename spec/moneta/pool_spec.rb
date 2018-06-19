@@ -8,5 +8,5 @@ describe "pool" do
     end
   end
 
-  moneta_specs ADAPTER_SPECS
+  moneta_specs ADAPTER_SPECS.with_each_key
 end

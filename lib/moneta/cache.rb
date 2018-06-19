@@ -103,7 +103,7 @@ module Moneta
 
     # (see Proxy#features)
     def features
-      @features ||= ((@cache.features + [:create, :increment]) & @adapter.features).freeze
+      @features ||= ((@cache.features + [:create, :increment]) & @adapter.features - [:each_key]).freeze
     end
   end
 end
