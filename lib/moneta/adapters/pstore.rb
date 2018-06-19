@@ -22,11 +22,13 @@ module Moneta
             FileUtils.mkpath(::File.dirname(options[:file]))
             new_store(options)
           end
+
+        @id = "Moneta::Adapters::PStore(#{object_id})"
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @backend.transaction(true) { @backend.root?(key) }
+        transaction(true) { @backend.root?(key) }
       end
 
       # (see Proxy#each_key)
@@ -41,22 +43,22 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        @backend.transaction(true) { @backend[key] }
+        transaction(true) { @backend[key] }
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.transaction { @backend[key] = value }
+        transaction {@backend[key] = value }
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @backend.transaction { @backend.delete(key) }
+        transaction { @backend.delete(key) }
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.transaction do
+        transaction do
           value = Utils.to_int(@backend[key]) + amount
           @backend[key] = value.to_s
           value
@@ -65,7 +67,7 @@ module Moneta
 
       # (see Proxy#create)
       def create(key, value, options = {})
-        @backend.transaction do
+        transaction do
           if @backend.root?(key)
             false
           else
@@ -77,7 +79,7 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.transaction do
+        transaction do
           @backend.roots.each do |key|
             @backend.delete(key)
           end
@@ -87,8 +89,26 @@ module Moneta
 
       protected
 
+      class TransactionError < StandardError; end
+
       def new_store(options)
         ::PStore.new(options[:file], options[:threadsafe])
+      end
+
+      def transaction(read_only = false)
+        case Thread.current[@id]
+        when read_only, true
+          yield
+        when false
+          raise TransactionError, "Attempt to start read-write transaction inside a read-only transaction"
+        else
+          begin
+            Thread.current[@id] = read_only
+            @backend.transaction(read_only) { yield }
+          ensure
+            Thread.current[@id] = nil
+          end
+        end
       end
     end
   end
