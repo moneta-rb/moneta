@@ -7,5 +7,5 @@ describe 'adapter_mongo' do
                                 collection: 'default')
   end
 
-  moneta_specs ADAPTER_SPECS.with_native_expires.simplevalues_only
+  moneta_specs ADAPTER_SPECS.with_each_key.with_native_expires.simplevalues_only
 end

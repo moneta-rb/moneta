@@ -7,7 +7,7 @@ module Moneta
       include Defaults
       include ExpiresSupport
 
-      supports :create, :increment
+      supports :each_key, :create, :increment
       attr_reader :backend
 
       DEFAULT_PORT = 27017

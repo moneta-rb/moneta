@@ -7,7 +7,7 @@ describe 'adapter_mongo_moped' do
                                      collection: 'moped')
   end
 
-  moneta_specs ADAPTER_SPECS.with_native_expires.simplevalues_only
+  moneta_specs ADAPTER_SPECS.with_each_key.with_native_expires.simplevalues_only
 
   it 'automatically deletes expired document' do
     store.store('key', 'val', expires: 5)
