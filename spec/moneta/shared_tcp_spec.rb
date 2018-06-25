@@ -8,7 +8,7 @@ describe "shared_tcp" do
     end
   end
 
-  moneta_specs ADAPTER_SPECS
+  moneta_specs ADAPTER_SPECS.with_each_key
 
   it 'shares values' do
     store['shared_key'] = 'shared_value'
