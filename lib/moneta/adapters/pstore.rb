@@ -8,7 +8,7 @@ module Moneta
     class PStore
       include Defaults
 
-      supports :create, :increment
+      supports :create, :increment, :each_key
       attr_reader :backend
 
       # @param [Hash] options
@@ -28,6 +28,16 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         transaction(true) { @backend.root?(key) }
+      end
+
+      # (see Proxy#each_key)
+      def each_key(&block)
+        return enum_for(:each_key) { transaction(true) { @backend.roots.size } } unless block_given?
+
+        transaction(true) do
+          @backend.roots.each { |k| yield(k) }
+        end
+        self
       end
 
       # (see Proxy#load)

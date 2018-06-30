@@ -6,7 +6,7 @@ module Moneta
     # @api public
     class File
       include Defaults
-      supports :create, :increment
+      supports :create, :increment, :each_key
 
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
@@ -19,6 +19,16 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         ::File.exist?(store_path(key))
+      end
+
+      # (see Proxy#each_key)
+      def each_key(&block)
+        entries = ::Dir.entries(@dir).reject { |k| ::File.directory?(::File.join(@dir, k)) }
+
+        return enum_for(:each_key) { ::Dir.entries(@dir).length - 2 } unless block_given?
+
+        entries.each { |k| yield(k) }
+        self
       end
 
       # (see Proxy#load)

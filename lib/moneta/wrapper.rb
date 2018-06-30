@@ -48,7 +48,7 @@ module Moneta
     end
 
     # (see Proxy#each_key)
-    def each_key
+    def each_key(&block)
       wrap(:each_key) { super }
     end
   end

@@ -6,5 +6,5 @@ describe 'adapter_redis' do
     Moneta::Adapters::Redis.new(db: 6)
   end
 
-  moneta_specs ADAPTER_SPECS.with_native_expires
+  moneta_specs ADAPTER_SPECS.with_each_key.with_native_expires
 end

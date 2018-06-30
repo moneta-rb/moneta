@@ -3,5 +3,5 @@ describe 'adapter_pstore' do
     Moneta::Adapters::PStore.new(file: File.join(tempdir, "adapter_pstore"))
   end
 
-  moneta_specs STANDARD_SPECS.without_transform
+  moneta_specs STANDARD_SPECS.with_each_key.without_transform
 end

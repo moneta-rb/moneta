@@ -99,7 +99,7 @@ module Moneta
       @features ||=
         begin
           features = @stack.map(&:features)
-          features.inject(features.first, &:&).freeze
+          (features.inject(features.first, &:&) - [:each_key]).freeze
         end
     end
   end

@@ -8,5 +8,5 @@ describe 'adapter_mongo_with_default_expires' do
                                 expires: min_ttl)
   end
 
-  moneta_specs ADAPTER_SPECS.with_expires.with_default_expires.simplevalues_only
+  moneta_specs ADAPTER_SPECS.with_each_key.with_expires.with_default_expires.simplevalues_only
 end

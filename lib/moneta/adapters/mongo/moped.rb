@@ -70,6 +70,13 @@ module Moneta
         value
       end
 
+      # (see Proxy#each_key)
+      def each_key(&block)
+        return enum_for(:each_key) unless block_given?
+        @collection.find().each { |doc| yield(doc.fetch('_id').data) }
+        self
+      end
+
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)

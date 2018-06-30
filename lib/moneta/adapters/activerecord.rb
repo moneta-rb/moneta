@@ -8,7 +8,7 @@ module Moneta
     class ActiveRecord
       include Defaults
 
-      supports :create, :increment
+      supports :create, :increment, :each_key
 
       attr_reader :connection_pool, :table, :key_column, :value_column
       delegate :with_connection, to: :connection_pool
@@ -69,10 +69,8 @@ module Moneta
               hash = resolver.resolve(:dummy)
               hash.delete('name')
               hash.delete(:password) # For security
-
               # Make a name unique to this config
               name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
-
               # Add into configurations unless its already there (initially done without locking for
               # speed)
               unless self.class.configurations.key? name
@@ -114,6 +112,15 @@ module Moneta
           result = conn.select_all(sel)
           !result.empty?
         end
+      end
+
+      # (see Proxy#each_key)
+      def each_key(&block)
+        with_connection do |conn|
+          return enum_for(:each_key) { conn.select_value(arel_sel.project(table[key_column].count)) } unless block_given?
+          conn.select_values(arel_sel.project(table[key_column])).each { |k| yield(k) }
+        end
+        self
       end
 
       # (see Proxy#load)

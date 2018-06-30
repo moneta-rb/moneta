@@ -13,6 +13,8 @@ module Moneta
       DEFAULT_MAX_SIZE = 1024000
       DEFAULT_MAX_COUNT = 10240
 
+      supports :each_key
+
       # @param [Hash] options
       # @option options [Integer] :max_size (1024000) Maximum byte size of all values, nil disables the limit
       # @option options [Integer] :max_value (options[:max_size]) Maximum byte size of one value, nil disables the limit
@@ -27,6 +29,14 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         @entry.key?(key)
+      end
+
+      # (see Proxy#each_key)
+      def each_key(&block)
+        return enum_for(:each_key) { @entry.length } unless block_given?
+
+        @entry.each_key { |k| yield(k) }
+        self
       end
 
       # (see Proxy#load)

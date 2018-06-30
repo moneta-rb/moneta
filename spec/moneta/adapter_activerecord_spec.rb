@@ -6,6 +6,7 @@ describe 'adapter_activerecord' do
         connection: connection1)
     end
 
+
     moneta_specs specs
 
     it 'updates an existing key/value' do
@@ -72,7 +73,7 @@ describe 'adapter_activerecord' do
       }
     end
 
-    include_examples :adapter_activerecord, ADAPTER_SPECS
+    include_examples :adapter_activerecord, ADAPTER_SPECS.with_each_key
   end
 
   context "with PostgreSQL" do
@@ -92,7 +93,7 @@ describe 'adapter_activerecord' do
       }
     end
 
-    include_examples :adapter_activerecord, ADAPTER_SPECS
+    include_examples :adapter_activerecord, ADAPTER_SPECS.with_each_key
   end
 
   context "with SQLite" do
@@ -110,6 +111,6 @@ describe 'adapter_activerecord' do
       }
     end
 
-    include_examples :adapter_activerecord, ADAPTER_SPECS.without_concurrent
+    include_examples :adapter_activerecord, ADAPTER_SPECS.with_each_key.without_concurrent
   end
 end
