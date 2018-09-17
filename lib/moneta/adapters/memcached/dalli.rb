@@ -84,6 +84,59 @@ module Moneta
         @backend.close
         nil
       end
+
+      # (see Defaults#slice)
+      def slice(*keys, **options)
+        @backend.get_multi(keys).tap do |pairs|
+          next if pairs.empty?
+          expires = expires_value(options, nil)
+          next if expires.nil?
+          expires = expires.to_i if Numeric === expires
+          expires ||= 0
+          @backend.multi do
+            pairs.each do |key, value|
+              @backend.set(key, value, expires, false)
+            end
+          end
+        end
+      end
+
+      # (see Defaults#values_at)
+      def values_at(*keys, **options)
+        pairs = slice(*keys, **options)
+        keys.map { |key| pairs.delete(key) }
+      end
+
+      # (see Defaults#merge!)
+      def merge!(pairs, options = {})
+        expires = expires_value(options)
+        expires = expires.to_i if Numeric === expires
+        expires ||= nil
+
+        if block_given?
+          keys = pairs.map { |key, _| key }
+          old_pairs = @backend.get_multi(keys)
+          updates = pairs.each_with_object({}) do |(key, new_value), updates|
+            next unless old_pairs.key? key
+            updates[key] = yield(key, old_pairs[key], new_value)
+          end
+          unless updates.empty?
+            pairs = if pairs.respond_to?(:merge)
+                      pairs.merge(updates)
+                    else
+                      Hash[pairs.to_a].merge!(updates)
+                    end
+          end
+        end
+
+        @backend.multi do
+          pairs.each do |key, value|
+            @backend.set(key, value, expires, raw: true)
+          end
+        end
+
+        self
+      end
     end
   end
 end

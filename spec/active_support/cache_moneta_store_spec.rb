@@ -42,7 +42,7 @@ describe "cache_moneta_store" do
 
     it 'verifies existence of an object in the store' do
       expect(store.exist?('rabbit')).to be true
-      expect((!!store.exist?('rab-a-dub'))).to be false
+      expect(!!store.exist?('rab-a-dub')).to be false
     end
 
     it 'fetches data' do
@@ -62,8 +62,18 @@ describe "cache_moneta_store" do
     it 'reads multiple keys and returns only the matched ones' do
       store.delete 'irish whisky'
       result = store.read_multi 'rabbit', 'irish whisky'
-      result.should_not include('irish whisky')
+      expect(result).not_to include('irish whisky')
       expect(result).to include('rabbit')
+    end
+
+    it 'fetches multiple keys and fills in the missing ones' do
+      store.delete 'irish whisky'
+      result = store.fetch_multi('rabbit', 'irish whisky') do |k|
+        k + ' was missing'
+      end
+      expect(result['rabbit']).to eq @rabbit
+      expect(result['irish whisky']).to eq 'irish whisky was missing'
+      expect(store.fetch 'irish whisky').to eq 'irish whisky was missing'
     end
   end
 
@@ -73,6 +83,20 @@ describe "cache_moneta_store" do
       expect(store.read('rabbit')).to eq @white_rabbit
       sleep 0.3
       expect(store.read('rabbit')).to be_nil
+    end
+
+    it 'writes multiple values with expiration time' do
+      store.write_multi({
+        'rabbit' => @white_rabbit,
+        'irish whisky' => 'Jameson'
+      }, expires_in: 0.2.second)
+
+      expect(store.read_multi('rabbit', 'irish whisky')).to eq \
+        'rabbit' => @white_rabbit,
+        'irish whisky' => 'Jameson'
+
+      sleep 0.3
+      expect(store.read_multi('rabbit', 'irish whisky')).to be_empty
     end
 
     it "sets expiry on cache miss" do

@@ -88,6 +88,45 @@ MUST be allowed.
   as the only argument.  When called in this way, `each_key` MUST return the
   store object.
 
+### `values_at(*keys[Array<Object>], **options[Hash]) => Array<Object>`
+
+Returns an array containing the values associated with the given keys, in the
+same order as the supplied keys.  If a key is not present in the
+key-value-store, `nil` MUST be returned in its place.  For each key, and each
+value, the same restrictions apply as apply to individual keys passed to, and
+values received from the store in the specification of `[]` (see above).  The
+adapter MAY perform this operation atomically.
+
+### `fetch_values(*keys[Array<Object>], **options[Hash], &defaults) => Array<Object>`
+
+Behaves identically to `values_at`, except that it MUST accept an optional
+block. When supplied, the block will be called successively with each supplied
+key that is not present in the store.  The return value of the block call MUST
+be used in place of `nil` in returned the array of values.  As with `fetch`
+(above), the adapter MUST NOT store the return value of the block call in the
+key-value-store.  The adapter MAY perform this operation atomically.
+
+### `slice(*keys[Array<Object>], **options[Hash]) => <Array(Object, Object)>`
+
+Returns a collection of key-value pairs corresponding to those supplied keys
+which are present in the key-value store, and their associated values.  A key
+MUST be present in the return value if and only if it was supplied in the `keys`
+parameter and it is present in the key-value store.  For each key, and each
+value, the same restrictions apply as apply to individual keys passed to, and
+values received from the store in the specification of `[]` (see above).  The
+adapter MAY perform this operation atomically.
+
+### `merge!(pairs[<Array(Object, Object)>], options[Hash] => {}, &block) => self`
+
+Stores the pairs in the key-value-store, and returns the store object.  This
+method MUST behave identically to successively calling `[]=` with each key-value
+pair and the options hash; except that the adapter MAY perform this operation
+atomically, and the method MUST accept an optional block, which MUST be called
+for each key that is to be overwritten.  When the block is provided, it MUST be
+called before overwriting any existing values with the key, old value and
+supplied value, and the return value of the block MUST be used in place of the
+supplied value.
+
 
 ## Additional Options Hashes
 
@@ -100,6 +139,15 @@ The following methods may all take an additional Hash as a final argument. This 
 * key?
 * increment
 * clear
+* merge!
+
+Additionally, the following methods accept options as keyword arguments, after
+non-keyword arguments.  These keyword arguments are treated as a hash,
+equivalent to supplying a hash to the above methods.
+
+* values_at
+* fetch_values
+* slice
 
 In the case of methods with optional arguments, the Hash MUST be provided as the final argument. Keys in this Hash MUST be Symbols.
 

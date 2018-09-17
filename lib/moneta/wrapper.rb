@@ -51,5 +51,25 @@ module Moneta
     def each_key(&block)
       wrap(:each_key) { super }
     end
+
+    # (see Proxy#values_at)
+    def values_at(*keys, **options)
+      wrap(:values_at, keys, options) { super }
+    end
+
+    # (see Proxy#fetch_values)
+    def fetch_values(*keys, **options, &defaults)
+      wrap(:fetch_values, keys, options, defaults) { super }
+    end
+
+    # (see Proxy#slice)
+    def slice(*keys, **options)
+      wrap(:slice, keys, options) { super }
+    end
+
+    # (see Proxy#merge!)
+    def merge!(pairs, options = {})
+      wrap(:merge!, pairs, options) { super }
+    end
   end
 end
