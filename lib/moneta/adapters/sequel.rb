@@ -14,29 +14,24 @@ module Moneta
       supports :create, :increment
       attr_reader :backend, :key_column, :value_column
 
-      # @overload new(options = {})
-      #   @param [Hash] options
-      #   @option options [String] :db Sequel database
-      #   @option options [String, Symbol] :table (:moneta) Table name
-      #   @option options [Array] :extensions ([]) List of Sequel extensions
-      #   @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
-      #   @option options [Sequel::Database] :backend Use existing backend instance
-      #   @option options [Boolean] :optimize (true) Set to false to prevent database-specific optimisations
-      #   @option options [Proc, Boolean] :create_table Provide a Proc for creating the table, or
-      #     set to false to disable table creation all together.  If a Proc is given, it will be
-      #     called regardless of whether the table exists already.
-      #   @option options [Symbol] :key_column (:k) The name of the key column
-      #   @option options [Symbol] :value_column (:v) The name of the value column
-      #   @option options [String] :hstore If using Postgres, keys and values are stored in a single
-      #     row of the table in the value_column using the hstore format.  The row to use is
-      #     the one where the value_column is equal to the value of this option, and will be created
-      #     if it doesn't exist.
-      #   @option options All other options passed to `Sequel#connect`
-      def self.new(*args)
-        # Calls to subclass.new (below) are differentiated by # of args
-        return super if args.length == 2
-        options = args.first || {}
-
+      # @param [Hash] options
+      # @option options [String] :db Sequel database
+      # @option options [String, Symbol] :table (:moneta) Table name
+      # @option options [Array] :extensions ([]) List of Sequel extensions
+      # @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
+      # @option options [Sequel::Database] :backend Use existing backend instance
+      # @option options [Boolean] :optimize (true) Set to false to prevent database-specific optimisations
+      # @option options [Proc, Boolean] :create_table Provide a Proc for creating the table, or
+      #   set to false to disable table creation all together.  If a Proc is given, it will be
+      #   called regardless of whether the table exists already.
+      # @option options [Symbol] :key_column (:k) The name of the key column
+      # @option options [Symbol] :value_column (:v) The name of the value column
+      # @option options [String] :hstore If using Postgres, keys and values are stored in a single
+      #   row of the table in the value_column using the hstore format.  The row to use is
+      #   the one where the value_column is equal to the value of this option, and will be created
+      #   if it doesn't exist.
+      # @option options All other options passed to `Sequel#connect`
+      def self.new(options = {})
         extensions = options.delete(:extensions)
         connection_validation_timeout = options.delete(:connection_validation_timeout)
         optimize = options.delete(:optimize)
@@ -60,21 +55,22 @@ module Moneta
           if optimize.nil? || optimize
             case backend.database_type
             when :mysql
-              MySQL.new(options, backend)
+              MySQL.allocate
             when :postgres
               if options[:hstore]
-                PostgresHStore.new(options, backend)
+                PostgresHStore.allocate
               elsif matches = backend.get(::Sequel[:version].function).match(/PostgreSQL (\d+)\.(\d+)/)
                 # Our optimisations only work on Postgres 9.5+
                 major, minor = matches[1..2].map(&:to_i)
-                Postgres.new(options, backend) if major > 9 || (major == 9 && minor >= 5)
+                Postgres.allocate if major > 9 || (major == 9 && minor >= 5)
               end
             when :sqlite
-              SQLite.new(options, backend)
+              SQLite.allocate
             end
-          end
+          end || allocate
 
-        instance || super(options, backend)
+        instance.send(:initialize, options, backend)
+        instance
       end
 
       # @api private
