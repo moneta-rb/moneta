@@ -1,6 +1,6 @@
 module Moneta
   # Base class for {Mutex} and {Semaphore}
-  # @api private
+  # @abstract
   class SynchronizePrimitive
     # Synchronize block
     #
@@ -16,7 +16,6 @@ module Moneta
 
     # Try to enter critical section (nonblocking)
     #
-    # @api public
     # @return [Boolean] true if the lock was acquired
     def try_enter
       raise 'Already locked' if @locked
@@ -26,7 +25,6 @@ module Moneta
 
     # Enter critical section (blocking)
     #
-    # @api public
     # @param [Number] timeout Maximum time to wait
     # @param [Number] wait Sleep time between tries to acquire lock
     # @return [Boolean] true if the lock was aquired
@@ -41,8 +39,6 @@ module Moneta
     alias_method :lock, :enter
 
     # Leave critical section
-    #
-    # @api public
     def leave
       raise 'Not locked' unless @locked
       leave_primitive
@@ -52,8 +48,6 @@ module Moneta
     alias_method :unlock, :leave
 
     # Is the lock acquired?
-    #
-    # @api public
     def locked?
       @locked
     end
