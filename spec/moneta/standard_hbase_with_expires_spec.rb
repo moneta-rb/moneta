@@ -1,4 +1,4 @@
-describe 'standard_hbase_with_expires' do
+describe 'standard_hbase_with_expires', isolate: true, unstable: true do
   let(:t_res){ 0.1 }
   let(:min_ttl){ t_res }
 

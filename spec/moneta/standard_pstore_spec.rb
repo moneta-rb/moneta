@@ -1,4 +1,4 @@
-describe 'standard_pstore' do
+describe 'standard_pstore', unstable: RUBY_ENGINE == 'jruby' do
   moneta_store :PStore do
     {file: File.join(tempdir, "simple_pstore")}
   end

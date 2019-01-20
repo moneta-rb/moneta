@@ -1,4 +1,4 @@
-describe 'standard_memcached_native' do
+describe 'standard_memcached_native', isolate: true do
   let(:t_res){ 1 }
   let(:min_ttl){ 2 }
 

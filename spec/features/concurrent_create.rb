@@ -10,7 +10,7 @@ shared_examples :concurrent_create do
     end
   end
 
-  it 'have atomic create across multiple processes' do
+  it 'have atomic create across multiple threads', isolate: true do
     a = create_thread('a')
     b = create_thread('b')
     c = create_thread('c')

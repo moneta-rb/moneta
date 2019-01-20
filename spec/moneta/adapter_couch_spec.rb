@@ -1,4 +1,4 @@
-describe 'adapter_couch' do
+describe 'adapter_couch', isolate: true do
   moneta_build do
     Moneta::Adapters::Couch.new(db: 'adapter_couch')
   end

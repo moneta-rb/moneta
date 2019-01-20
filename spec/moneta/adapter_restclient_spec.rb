@@ -1,4 +1,4 @@
-describe 'adapter_restclient' do
+describe 'adapter_restclient', isolate: true do
   before :all do
     start_restserver
   end

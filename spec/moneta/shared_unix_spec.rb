@@ -1,4 +1,4 @@
-describe "shared_unix" do
+describe "shared_unix", isolate: true do
   moneta_build do
     tempdir = self.tempdir
     Moneta.build do

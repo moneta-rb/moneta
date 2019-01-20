@@ -1,4 +1,4 @@
-describe 'expires_memory_with_default_expires' do
+describe 'expires_memory_with_default_expires', isolate: true do
   let(:t_res){ 1 }
   let(:min_ttl){ t_res }
 

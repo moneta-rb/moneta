@@ -1,4 +1,4 @@
-describe 'standard_riak' do
+describe 'standard_riak', isolate: true, unstable: true do
   before :all do
     require 'riak'
 

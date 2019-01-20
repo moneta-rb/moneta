@@ -1,108 +1,55 @@
 #!/usr/bin/env ruby
 
-def rspec(spec)
-  if system("rspec #{spec}")
-    true
-  elsif sig = $?.termsig
-    found = Signal.list.to_a.select {|name, id| id == sig }.first
-    puts "\e[31m########## SIG#{found ? found.first : sig} rspec #{spec} ##########\e[0m"
-    false
-  else
-    puts "rspec terminated with #{$?.exitstatus}"
-    false
-  end
-end
-
-ENV['PARALLEL_TESTS'] = 'yes'
-
-specs = Dir['spec/*/*_spec.rb'].sort
+files = Dir['spec/**/*_spec.rb', 'test/**/*_test.rb'].sort
 
 # Shuffle specs to ensure equal distribution over the test groups
 # We have to shuffle with the same seed every time because rake is started
 # multiple times!
 old_seed = srand(43)
-specs.shuffle!
+files.shuffle!
 srand(old_seed)
 
-# FIXME:
-#
-# * QuickLZ segfaults because of an assertion
-#   QuickLZ is also not maintained on Github, but on Bitbucket
-#   and I don't know where the issue tracker is.
-#
-# * At present, we can't run the hbase or localmemcache tests at all
-#
-# * PStore increment/locking doesn't work correctly on JRuby
-#
-unstable = %w(quicklz riak cassandra hbase localmemcache)
-unstable += %w(pstore) if defined?(JRUBY_VERSION)
-unstable += %w(tokyocabinet kyotocabinet) if defined?(JRUBY_VERSION)
-
-unstable_re = /#{unstable.join('|')}/
-unstable = specs.select {|s| s =~ unstable_re }
-specs -= unstable
-
-group = ARGV.first || '1/1'
-case group
-when /^(\d+)\/(\d+)$/
-  n = $1.to_i
-  max = $2.to_i
-  if n == max
-    specs = specs[(n-1)*(specs.size/max)..-1]
-  else
-    specs = specs[(n-1)*(specs.size/max), specs.size/max]
-  end
-when 'unstable'
-  specs = unstable
+n, max = if ARGV.first and matches = ARGV.first.match(/^(\d+)\/(\d+)$/)
+					 ARGV.shift
+           matches[1..-1].map(&:to_i)
+				 else
+				   [1, 1]
+  			 end
+  			 
+if n == max
+  files = files[(n - 1) * (files.size / max)..-1]
 else
-  puts "Invalid test group #{group}"
-  exit 1
+  files = files[(n - 1) * (files.size / max), files.size / max]
 end
 
-puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n"
+specs, tests = files.partition { |file| file.match /_spec\.rb$/ }
 
-# Memcached specs cannot be used in parallel
-# because of flushing and lacking namespaces
-parallel = []
-%w(memcached client shared riak tokyotyrant couch cassandra).each do |name|
-  serial = specs.select { |s| s.include?(name) }
-  unless serial.empty?
-    specs -= serial
-    parallel << serial
-  end
+puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n" unless specs.empty?
+puts "The following tests will be executed:\n\t#{tests.join "\n\t"}\n\n" unless tests.empty?
+
+def tag_args tags
+  tags.flat_map{ |tag| ['--tag', tag] }
 end
 
-# The activesupport cache specs also use memcached
-activesupport_cache_specs = specs.grep(/active_support|activesupportcache/)
-specs -= activesupport_cache_specs
+tags = ARGV.dup
+results = []
+unless specs.empty?
+  results << system(*%w{bundle exec parallel_rspec --},
+                    *tag_args(tags | %w{~isolate}),
+                    '--',
+                    *specs)
 
-if memcache_specs = parallel.find{ |serial| serial.all?{ |s| s.match /memcached/ } }
-  activesupport_cache_specs.each(&memcache_specs.method(:push))
-else
-  parallel += activesupport_cache_specs
+  results << system(*%w{bundle exec rspec},
+                    *tag_args(tags | %w{isolate}),
+                    '--',
+                    *specs)
 end
 
-# All the left-overs
-parallel += specs.map {|s| [s] }
-
-threads = []
-failed = false
-parallel.each do |serial|
-  threads << Thread.new do
-    begin
-      serial.each do |spec|
-        failed = true unless rspec(spec)
-      end
-    ensure
-      threads.delete Thread.current
-    end
-  end
-  sleep 0.1
-  sleep 0.1 while threads.size >= 5
+tests.each do |test|
+  results << system(*%w{bundle exec ruby}, test)
 end
-sleep 0.1 until threads.empty?
 
-if failed
+if results.any?{ |result| !result }
   puts "\e[31m########## MONETA TESTSUITE FAILED ##########\e[0m"
   exit 1
 end

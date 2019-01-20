@@ -1,4 +1,4 @@
-describe 'adapter_riak' do
+describe 'adapter_riak', isolate: true, unstable: true do
   before :all do
     require 'riak'
 

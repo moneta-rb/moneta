@@ -1,4 +1,4 @@
-describe "proxy_expires_memory" do
+describe "proxy_expires_memory", isolate: true do
   let(:t_res){ 0.1 }
   let(:min_ttl){ t_res }
   

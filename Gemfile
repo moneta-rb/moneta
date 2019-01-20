@@ -5,6 +5,7 @@ gemspec
 gem 'rspec', '~> 3.0'
 gem 'rspec-retry'
 gem 'rantly'
+gem 'parallel_tests'
 
 # Serializer used by Transformer
 gem 'tnetstring'

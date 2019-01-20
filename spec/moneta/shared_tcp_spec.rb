@@ -1,4 +1,4 @@
-describe "shared_tcp" do
+describe "shared_tcp", isolate: true do
   moneta_build do
     tempdir = self.tempdir
     Moneta.build do

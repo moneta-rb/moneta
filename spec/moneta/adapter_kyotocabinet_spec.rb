@@ -1,4 +1,4 @@
-describe 'adapter_kyotocabinet' do
+describe 'adapter_kyotocabinet', unstable: RUBY_ENGINE == 'jruby' do
   moneta_build do
     Moneta::Adapters::KyotoCabinet.new(file: File.join(tempdir, "adapter_kyotocabinet.kch"))
   end

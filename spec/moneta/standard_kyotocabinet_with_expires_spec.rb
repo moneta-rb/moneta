@@ -1,4 +1,4 @@
-describe 'standard_kyotocabinet_with_expires' do
+describe 'standard_kyotocabinet_with_expires', isolate: true, unstable: RUBY_ENGINE == 'jruby' do
   let(:t_res){ 0.1 }
   let(:min_ttl){ t_res }
 

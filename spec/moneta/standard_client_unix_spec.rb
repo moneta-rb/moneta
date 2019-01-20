@@ -1,4 +1,4 @@
-describe "standard_client_unix" do
+describe "standard_client_unix", isolate: true do
   before :all do
     start_server Moneta::Adapters::Memory.new,
                  socket: File.join(tempdir, 'standard_client_unix')

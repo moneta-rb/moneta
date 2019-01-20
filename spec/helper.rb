@@ -281,9 +281,10 @@ module MonetaHelpers
     end
 
     # Used to test time-dependent specs (e.g. expiry at different positions
-    # within a second)
+    # within a second). Once close to the start of the second, and once close
+    # to the end.
     def usecs
-      [1e5, 9e5, 99e4].map(&:to_i)
+      [1e4, 99e4].map(&:to_i)
     end
   end
 

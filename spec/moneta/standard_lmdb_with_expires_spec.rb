@@ -1,4 +1,4 @@
-describe 'standard_lmdb_with_expires' do
+describe 'standard_lmdb_with_expires', isolate: true do
   let(:t_res){ 1 }
   let(:min_ttl){ t_res }
 

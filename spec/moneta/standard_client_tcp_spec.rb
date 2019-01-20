@@ -1,4 +1,4 @@
-describe "standard_client_tcp" do
+describe "standard_client_tcp", isolate: true do
   before :all do
     start_server(Moneta::Adapters::Memory.new)
   end

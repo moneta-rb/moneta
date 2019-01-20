@@ -1,6 +1,6 @@
 shared_examples :expires do
   shared_examples :expires_at_usec do |usec|
-    context "at #{usec} microseconds" do
+    context "at #{usec} microseconds", isolate: true do
       include_context :at_usec, usec
 
       it 'supports expires on store and []' do

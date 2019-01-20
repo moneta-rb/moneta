@@ -31,29 +31,22 @@ env:
   global:
     - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="
   matrix:
-    - "SCRIPT='parallel-tests 1/10'"
-    - "SCRIPT='parallel-tests 2/10'"
-    - "SCRIPT='parallel-tests 3/10'"
-    - "SCRIPT='parallel-tests 4/10'"
-    - "SCRIPT='parallel-tests 5/10'"
-    - "SCRIPT='parallel-tests 6/10'"
-    - "SCRIPT='parallel-tests 7/10'"
-    - "SCRIPT='parallel-tests 8/10'"
-    - "SCRIPT='parallel-tests 9/10'"
-    - "SCRIPT='parallel-tests 10/10'"
-    - "SCRIPT='parallel-tests unstable'"
-    - "SCRIPT='benchmarks uniform_small'"
-    - "SCRIPT='benchmarks uniform_medium'"
-    - "SCRIPT='benchmarks uniform_large'"
-    - "SCRIPT='benchmarks normal_small'"
-    - "SCRIPT='benchmarks normal_medium'"
-    - "SCRIPT='benchmarks normal_large'"
+    - SCRIPT='parallel-tests 1/3 ~unstable'
+    - SCRIPT='parallel-tests 2/3 ~unstable'
+    - SCRIPT='parallel-tests 3/3 ~unstable'
+    - SCRIPT='parallel-tests unstable'
+    - SCRIPT='benchmarks uniform_small'
+    - SCRIPT='benchmarks uniform_medium'
+    - SCRIPT='benchmarks uniform_large'
+    - SCRIPT='benchmarks normal_small'
+    - SCRIPT='benchmarks normal_medium'
+    - SCRIPT='benchmarks normal_large'
 matrix:
   allow_failures:
     - rvm: jruby-9.1
     - rvm: rbx-3
-    - env: "SCRIPT='parallel-tests unstable'"
-script: "eval bundle exec ruby script/$SCRIPT"
+    - env: SCRIPT='parallel-tests unstable'
+script: "bundle exec script/$SCRIPT"
 branches:
   only:
     - master

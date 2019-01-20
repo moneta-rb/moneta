@@ -1,4 +1,4 @@
-describe 'adapter_tokyotyrant' do
+describe 'adapter_tokyotyrant', isolate: true do
   moneta_build do
     Moneta::Adapters::TokyoTyrant.new
   end

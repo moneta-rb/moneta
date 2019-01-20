@@ -13,7 +13,7 @@ shared_examples :concurrent_increment do
     end
   end
 
-  it 'have atomic increment across multiple processes' do
+  it 'have atomic increment across multiple threads', isolate: true do
     a = increment_thread('a')
     b = increment_thread('b')
     c = increment_thread('c')

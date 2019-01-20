@@ -1,4 +1,4 @@
-describe 'adapter_client' do
+describe 'adapter_client', isolate: true do
   before :all do
     start_server(Moneta::Adapters::Memory.new)
   end

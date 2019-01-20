@@ -1,4 +1,4 @@
-describe 'adapter_tokyocabinet_bdb' do
+describe 'adapter_tokyocabinet_bdb', unstable: RUBY_ENGINE == 'jruby' do
   moneta_build do
     Moneta::Adapters::TokyoCabinet.new(file: File.join(tempdir, "adapter_tokyocabinet_bdb"), type: :bdb)
   end

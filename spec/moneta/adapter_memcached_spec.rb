@@ -1,4 +1,4 @@
-describe 'adapter_memcached' do
+describe 'adapter_memcached', isolate: true do
   # See https://github.com/memcached/memcached/issues/307
   let(:t_res){ 1 }
   let(:min_ttl){ 2 }

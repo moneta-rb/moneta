@@ -1,4 +1,4 @@
-describe "standard_couch" do
+describe "standard_couch", isolate: true do
   moneta_store :Couch, db: 'standard_couch'
 
   moneta_loader do |value|

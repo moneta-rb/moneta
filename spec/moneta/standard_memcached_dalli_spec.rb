@@ -1,4 +1,4 @@
-describe 'standard_memcached_dalli' do
+describe 'standard_memcached_dalli', isolate: true do
   let(:t_res){ 1 }
   let(:min_ttl){ 2 }
 
