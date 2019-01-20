@@ -4,7 +4,7 @@ gemspec
 # Testing
 gem 'rspec', '~> 3.0'
 gem 'rspec-retry'
-gem 'rantly'
+gem 'rantly', '~> 1.2.0'
 gem 'parallel_tests'
 
 # Serializer used by Transformer
@@ -58,7 +58,7 @@ gem 'tokyocabinet', platforms: :ruby
 gem 'kyotocabinet-ruby-reanimated', platforms: :ruby
 gem 'memcached', platforms: :ruby
 gem 'jruby-memcached', platforms: :jruby
-gem 'sqlite3', platforms: :ruby
+gem 'sqlite3', '~> 1.3.6', platforms: :ruby
 gem 'activerecord-jdbc-adapter', platforms: :jruby
 gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
 gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
@@ -76,4 +76,4 @@ gem 'actionpack', '~> 5.0'
 gem 'minitest', '~> 5.0'
 
 # Used for generating the feature matrix
-gem 'kramdown', group: :doc
+gem 'kramdown', '~> 1.17.0', group: :doc
