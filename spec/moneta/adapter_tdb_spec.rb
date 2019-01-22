@@ -1,4 +1,4 @@
-describe 'adapter_tdb' do
+describe 'adapter_tdb', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta::Adapters::TDB.new(file: File.join(tempdir, "adapter_tdb"))
   end

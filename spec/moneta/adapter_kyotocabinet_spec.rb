@@ -1,4 +1,4 @@
-describe 'adapter_kyotocabinet', unsupported: RUBY_ENGINE == 'jruby' do
+describe 'adapter_kyotocabinet', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta::Adapters::KyotoCabinet.new(file: File.join(tempdir, "adapter_kyotocabinet.kch"))
   end

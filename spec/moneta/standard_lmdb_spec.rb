@@ -1,4 +1,4 @@
-describe 'standard_lmdb' do
+describe 'standard_lmdb', unsupported: defined?(JRUBY_VERSION) do
   moneta_store :LMDB do
     {dir: File.join(tempdir, "simple_lmdb")}
   end

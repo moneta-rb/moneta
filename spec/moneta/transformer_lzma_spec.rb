@@ -1,4 +1,4 @@
-describe 'transformer_lzma' do
+describe 'transformer_lzma', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta.build do
       use :Transformer, value: :lzma

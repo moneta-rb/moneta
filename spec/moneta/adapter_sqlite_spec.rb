@@ -1,4 +1,4 @@
-describe 'adapter_sqlite' do
+describe 'adapter_sqlite', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta::Adapters::Sqlite.new(file: File.join(tempdir, "adapter_sqlite"))
   end

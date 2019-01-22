@@ -1,6 +1,6 @@
-describe "standard_datamapper_with_expires", isolate: true do
+describe "standard_datamapper_with_expires", isolate: true, broken: defined?(JRUBY_VERSION) do
   let(:t_res){ 0.1 }
-  let(:min_ttl){ t_res }
+  let(:min_ttl){ 1 }
 
   before :all do
     require 'dm-core'
@@ -9,10 +9,13 @@ describe "standard_datamapper_with_expires", isolate: true do
     DataMapper.setup(:default, adapter: :in_memory)
   end
 
-  moneta_store :DataMapper,
-                   setup: "mysql://root:@localhost/moneta",
-                   table: "simple_datamapper_with_expires",
-                   expires: true
+  moneta_store :DataMapper do
+    {
+      setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}",
+      table: "simple_datamapper_with_expires",
+      expires: true
+    }
+  end
 
   moneta_loader do |value|
     ::Marshal.load(value.unpack('m').first)

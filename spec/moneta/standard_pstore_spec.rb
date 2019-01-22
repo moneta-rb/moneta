@@ -1,4 +1,4 @@
-describe 'standard_pstore', unsupported: RUBY_ENGINE == 'jruby' do
+describe 'standard_pstore', unsupported: defined?(JRUBY_VERSION) do
   moneta_store :PStore do
     {file: File.join(tempdir, "simple_pstore")}
   end

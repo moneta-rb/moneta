@@ -1,4 +1,4 @@
-describe 'transformer_ox' do
+describe 'transformer_ox', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta.build do
       use :Transformer, key: :ox, value: :ox

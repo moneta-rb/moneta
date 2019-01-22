@@ -1,4 +1,4 @@
-describe 'transformer_quicklz', unstable: true, unsupported: RUBY_ENGINE == 'jruby' do
+describe 'transformer_quicklz', unstable: true, unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta.build do
       use :Transformer, value: :quicklz

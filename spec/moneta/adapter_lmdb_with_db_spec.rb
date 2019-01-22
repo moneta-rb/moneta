@@ -1,4 +1,4 @@
-describe 'adapter_lmdb_with_db' do
+describe 'adapter_lmdb_with_db', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta::Adapters::LMDB.new(dir: File.join(tempdir, "adapter_lmdb"), db: "adapter_lmdb_with_db")
   end

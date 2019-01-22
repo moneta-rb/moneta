@@ -1,4 +1,4 @@
-describe 'transformer_marshal_city128' do
+describe 'transformer_marshal_city128', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta.build do
       use :Transformer, key: [:marshal, :city128], value: :marshal

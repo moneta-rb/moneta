@@ -1,4 +1,4 @@
-describe 'standard_sdbm' do
+describe 'standard_sdbm', unsupported: defined?(JRUBY_VERSION) do
   moneta_store :SDBM do
     {file: File.join(tempdir, "simple_sdbm")}
   end

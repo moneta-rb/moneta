@@ -1,4 +1,4 @@
-describe 'standard_sqlite_with_expires' do
+describe 'standard_sqlite_with_expires', unsupported: defined?(JRUBY_VERSION) do
   let(:t_res){ 0.1 }
   let(:min_ttl){ 1 }
 

@@ -1,4 +1,4 @@
-describe "standard_datamapper" do
+describe "standard_datamapper", broken: defined?(JRUBY_VERSION) do
   before :all do
     require 'dm-core'
 
@@ -6,9 +6,12 @@ describe "standard_datamapper" do
     DataMapper.setup(:default, adapter: :in_memory)
   end
 
-  moneta_store :DataMapper,
-                   setup: "mysql://root:@localhost/moneta",
-                   table: "simple_datamapper"
+  moneta_store :DataMapper do
+    {
+      setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}",
+      table: "simple_datamapper"
+    }
+  end
 
   moneta_loader do |value|
     ::Marshal.load(value.unpack('m').first)

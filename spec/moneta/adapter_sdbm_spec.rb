@@ -1,4 +1,4 @@
-describe 'adapter_sdbm' do
+describe 'adapter_sdbm', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta::Adapters::SDBM.new(file: File.join(tempdir, "adapter_sdbm"))
   end

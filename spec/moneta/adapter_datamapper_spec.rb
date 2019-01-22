@@ -1,4 +1,4 @@
-describe 'adapter_datamapper' do
+describe 'adapter_datamapper', broken: defined?(JRUBY_VERSION) do
   before :all do
     require 'dm-core'
 
@@ -7,16 +7,16 @@ describe 'adapter_datamapper' do
   end
   
   moneta_build do
-    Moneta::Adapters::DataMapper.new(setup: "mysql://root:@localhost/moneta", table: "adapter_datamapper")
+    Moneta::Adapters::DataMapper.new(setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "adapter_datamapper")
   end
 
   moneta_specs ADAPTER_SPECS.without_increment
     
   it 'does not cross contaminate when storing' do
-    first = Moneta::Adapters::DataMapper.new(setup: "mysql://root:@localhost/moneta", table: "datamapper_first")
+    first = Moneta::Adapters::DataMapper.new(setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(repository: :sample, setup: "mysql://root:@localhost/moneta", table: "datamapper_second")
+    second = Moneta::Adapters::DataMapper.new(repository: :sample, setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "datamapper_second")
     second.clear
 
     first['key'] = 'value'
@@ -27,10 +27,10 @@ describe 'adapter_datamapper' do
   end
 
   it 'does not cross contaminate when deleting' do
-    first = Moneta::Adapters::DataMapper.new(setup: "mysql://root:@localhost/moneta", table: "datamapper_first")
+    first = Moneta::Adapters::DataMapper.new(setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "datamapper_first")
     first.clear
 
-    second = Moneta::Adapters::DataMapper.new(repository: :sample, setup: "mysql://root:@localhost/moneta", table: "datamapper_second")
+    second = Moneta::Adapters::DataMapper.new(repository: :sample, setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "datamapper_second")
     second.clear
 
     first['key'] = 'value'

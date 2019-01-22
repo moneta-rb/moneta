@@ -1,4 +1,4 @@
-describe 'standard_leveldb' do
+describe 'standard_leveldb', unsupported: defined?(JRUBY_VERSION) do
   moneta_store :LevelDB do
     {dir: File.join(tempdir, "standard_leveldb")}
   end

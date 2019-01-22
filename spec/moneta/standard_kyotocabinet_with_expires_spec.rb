@@ -1,4 +1,4 @@
-describe 'standard_kyotocabinet_with_expires', isolate: true, unsupported: RUBY_ENGINE == 'jruby' do
+describe 'standard_kyotocabinet_with_expires', isolate: true, unsupported: defined?(JRUBY_VERSION) do
   let(:t_res){ 0.1 }
   let(:min_ttl){ t_res }
 

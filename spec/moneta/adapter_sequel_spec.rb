@@ -30,7 +30,7 @@ describe 'adapter_sequel' do
     context "with Postgres" do
       moneta_build do
         Moneta::Adapters::Sequel.new(opts.merge(
-          db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}postgres://localhost/#{postgres_database1}",
+          db: "#{defined?(JRUBY_VERSION) ? 'jdbc:postgresql' : 'postgres'}://localhost/#{postgres_database1}",
           user: postgres_username))
       end
 
@@ -58,7 +58,7 @@ describe 'adapter_sequel' do
   context "with Postgres HStore" do
     moneta_build do
       Moneta::Adapters::Sequel.new(
-        db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}postgres://localhost/#{postgres_database1}",
+        db: "#{defined?(JRUBY_VERSION) ? 'jdbc:postgresql' : 'postgres'}://localhost/#{postgres_database1}",
         user: postgres_username,
         table: 'hstore_table1',
         hstore: 'row')
