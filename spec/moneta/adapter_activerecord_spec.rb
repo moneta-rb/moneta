@@ -99,14 +99,14 @@ describe 'adapter_activerecord' do
   context "with SQLite" do
     let(:connection1) do
       {
-        adapter: (defined?(JRUBY_VERSION) ? 'jdbsqlite3' : 'sqlite3'),
+        adapter: (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'),
         database: File.join(tempdir, 'adapter_activerecord1.db')
       }
     end
 
     let(:connection2) do
       {
-        adapter: (defined?(JRUBY_VERSION) ? 'jdbsqlite3' : 'sqlite3'),
+        adapter: (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'),
         database: File.join(tempdir, 'adapter_activerecord2.db')
       }
     end
