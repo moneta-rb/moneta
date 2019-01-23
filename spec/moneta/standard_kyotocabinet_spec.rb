@@ -1,4 +1,4 @@
-describe 'standard_kyotocabinet', unstable: RUBY_ENGINE == 'jruby' do
+describe 'standard_kyotocabinet', unsupported: RUBY_ENGINE == 'jruby' do
   moneta_store :KyotoCabinet do
     {file: File.join(tempdir, "simple_kyotocabinet.kch")}
   end

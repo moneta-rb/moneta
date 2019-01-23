@@ -1,4 +1,4 @@
-describe 'standard_localmemcache', unstable: true do
+describe 'standard_localmemcache', broken: true do
   moneta_store :LocalMemCache do
     {file: File.join(tempdir, "simple_localmemcache")}
   end
