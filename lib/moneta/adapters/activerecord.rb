@@ -247,7 +247,11 @@ module Moneta
 
       def decode(conn, value)
         return nil if value.nil?
-        if defined?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
+        if defined?(::ActiveModel::Type::Binary::Data) &&
+          value.is_a?(::ActiveModel::Type::Binary::Data)
+        then
+          value.to_s
+        elsif defined?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
           conn.is_a?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
           value.start_with?('\\x')
         then
