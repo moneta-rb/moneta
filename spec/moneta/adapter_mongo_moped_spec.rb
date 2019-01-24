@@ -1,6 +1,6 @@
 describe 'adapter_mongo_moped' do
-  let(:t_res){ 0.1 }
-  let(:min_ttl){ t_res }
+  let(:t_res) { 0.125 }
+  let(:min_ttl) { t_res }
 
   moneta_build do
     Moneta::Adapters::MongoMoped.new(db: "adapter_mongo",

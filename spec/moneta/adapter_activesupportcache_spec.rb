@@ -11,7 +11,7 @@ describe 'adapter_activesupportcache' do
   end
 
   context 'using MemoryStore' do
-    let(:t_res) { 0.1 }
+    let(:t_res) { 0.125 }
     let(:min_ttl) { t_res }
 
     let(:backend) { ActiveSupport::Cache::MemoryStore.new }
@@ -35,7 +35,7 @@ describe 'adapter_activesupportcache' do
   end
 
   context 'using MonetaStore' do
-    let(:t_res) { 0.1 }
+    let(:t_res) { 0.125 }
     let(:min_ttl) { t_res }
 
     let(:backend) { ActiveSupport::Cache::MonetaStore.new(store: Moneta.new(:Memory)) }
