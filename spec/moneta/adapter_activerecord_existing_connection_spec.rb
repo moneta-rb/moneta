@@ -4,8 +4,9 @@ describe 'adapter_activerecord_existing_connection' do
   end
 
   before do
+    default_env = ActiveRecord::ConnectionHandling::DEFAULT_ENV.call
     ActiveRecord::Base.configurations = {
-      'default_env' => {
+      default_env => {
         'adapter' => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
         'database' => mysql_database1,
         'username' => mysql_username,
