@@ -10,7 +10,7 @@ module Moneta
 
       supports :create, :increment, :each_key
 
-      attr_reader :connection_pool, :table, :key_column, :value_column
+      attr_reader :table, :key_column, :value_column
       delegate :with_connection, to: :connection_pool
 
       @connection_lock = ::Mutex.new
@@ -50,13 +50,13 @@ module Moneta
         @value_column = options.delete(:value_column) || :v
 
         if backend = options.delete(:backend)
-          @connection_pool = backend.connection_pool
+          @spec = backend.connection_pool.spec
           @table = ::Arel::Table.new(backend.table_name.to_sym)
         else
           # Feed the connection info into ActiveRecord and get back a name to use for getting the
           # connection pool
           connection = options.delete(:connection)
-          spec =
+          @spec =
             case connection
             when Symbol
               connection
@@ -82,15 +82,7 @@ module Moneta
 
               name.to_sym
             else
-              Rails.env.to_sym if defined? Rails
-            end
-
-          # If no connection spec is given, fallback to default connection pool
-          @connection_pool =
-            if spec
-              self.class.retrieve_or_establish_connection_pool(spec)
-            else
-              ::ActiveRecord::Base.connection_pool
+              ::ActiveRecord::Base.connection_pool.spec.name.to_s
             end
 
           table_name = (options.delete(:table) || :moneta).to_sym
@@ -198,10 +190,14 @@ module Moneta
       # (see Proxy#close)
       def close
         @table = nil
-        @connection_pool = nil
+        @spec = nil
       end
 
       private
+
+      def connection_pool
+        self.class.retrieve_or_establish_connection_pool(@spec)
+      end
 
       def create_table table_name
         with_connection do |conn|
