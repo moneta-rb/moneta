@@ -25,7 +25,7 @@ describe 'adapter_activerecord_existing_connection' do
 
   # This is based on
   # https://github.com/jjb/rails/blob/ar-connection-management-guide/guides/source/active_record_connection_management.md
-  it "supports use on a forking web server" do
+  it "supports use on a forking web server", unsupported: !Process.respond_to?(:fork) do
     store['a'] = 'b'
 
     # Before forking, the connection pool is disconnected so that the
