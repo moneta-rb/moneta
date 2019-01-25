@@ -1,6 +1,7 @@
 describe 'standard_lmdb_with_expires', isolate: true, unsupported: defined?(JRUBY_VERSION) do
   let(:t_res) { 1 }
   let(:min_ttl) { t_res }
+  use_timecop
 
   moneta_store :LMDB do
     {dir: File.join(tempdir, "simple_lmdb_with_expires"), expires: true}

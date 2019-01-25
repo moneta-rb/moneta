@@ -78,47 +78,41 @@ describe "cache_moneta_store" do
   end
 
   shared_examples :expiry do
-    shared_examples :expiry_at_usec do |usec|
-      context "at #{usec} microseconds", isolate: true do
-        include_context :at_usec, usec
+    at_each_usec do
+      it 'writes the data with expiration time' do
+        store.write 'rabbit', @white_rabbit, expires_in: 0.2.second
+        expect(store.read('rabbit')).to eq @white_rabbit
+        sleep 0.3
+        expect(store.read('rabbit')).to be_nil
+      end
 
-        it 'writes the data with expiration time' do
-          store.write 'rabbit', @white_rabbit, expires_in: 0.2.second
-          expect(store.read('rabbit')).to eq @white_rabbit
-          sleep 0.3
-          expect(store.read('rabbit')).to be_nil
-        end
+      it 'writes multiple values with expiration time' do
+        store.write_multi({
+          'rabbit' => @white_rabbit,
+          'irish whisky' => 'Jameson'
+        }, expires_in: 0.2.second)
 
-        it 'writes multiple values with expiration time' do
-          store.write_multi({
-            'rabbit' => @white_rabbit,
-            'irish whisky' => 'Jameson'
-          }, expires_in: 0.2.second)
+        expect(store.read_multi('rabbit', 'irish whisky')).to eq \
+          'rabbit' => @white_rabbit,
+          'irish whisky' => 'Jameson'
 
-          expect(store.read_multi('rabbit', 'irish whisky')).to eq \
-            'rabbit' => @white_rabbit,
-            'irish whisky' => 'Jameson'
+        sleep 0.3
+        expect(store.read_multi('rabbit', 'irish whisky')).to be_empty
+      end
 
-          sleep 0.3
-          expect(store.read_multi('rabbit', 'irish whisky')).to be_empty
-        end
+      it "sets expiry on cache miss" do
+        store.fetch('rabbit', force: true, expires_in: 0.2.second) { @white_rabbit }
+        expect(store.fetch('rabbit')).to eq @white_rabbit
+        sleep 0.3
+        expect(store.fetch('rabbit')).to be_nil
+      end
 
-        it "sets expiry on cache miss" do
-          store.fetch('rabbit', force: true, expires_in: 0.2.second) { @white_rabbit }
-          expect(store.fetch('rabbit')).to eq @white_rabbit
-          sleep 0.3
-          expect(store.fetch('rabbit')).to be_nil
-        end
-
-        it 'does not set expiry on cache hit' do
-          expect(store.fetch('rabbit', expires_in: 0.2.second) { @white_rabbit }).to eq @rabbit
-          sleep 0.3
-          expect(store.fetch('rabbit')).to eq @rabbit
-        end
+      it 'does not set expiry on cache hit' do
+        expect(store.fetch('rabbit', expires_in: 0.2.second) { @white_rabbit }).to eq @rabbit
+        sleep 0.3
+        expect(store.fetch('rabbit')).to eq @rabbit
       end
     end
-
-    usecs.each{ |usec| include_examples :expiry_at_usec, usec }
   end
 
   # A store *may* implement this

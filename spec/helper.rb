@@ -8,6 +8,7 @@ ENV['RANTLY_VERBOSE'] ||= '0'
 require 'rantly'
 require 'rantly/rspec_extensions'
 # rantly/shrinks
+require 'timecop'
 
 class MonetaParallelFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def start(*args)
@@ -286,6 +287,35 @@ module MonetaHelpers
     def usecs
       [1e4, 99e4].map(&:to_i)
     end
+
+    def at_each_usec(&block)
+      example_name = "#{self}_at_usec"
+      shared_examples example_name do |usec|
+        context "at #{usec} microseconds", isolate: true do
+          before do
+            now = Time.now
+            # 1000us is a rough guess at how many microseconds this code will take to run
+            if now.usec + 1000 > usec
+              advance(1 - 1e-6 * (now.usec - usec))
+            else
+              advance(1e-6 * (usec - now.usec))
+            end
+          end
+
+          after do
+            Timecop.return if @timecop
+          end
+
+          instance_exec(&block)
+        end
+      end
+
+      usecs.each{ |usec| include_examples example_name, usec }
+    end
+
+    def use_timecop
+      before{ @timecop = true }
+    end
   end
 
   module InstanceMethods
@@ -353,6 +383,15 @@ module MonetaHelpers
         else
           values
         end
+      end
+    end
+
+    def advance(seconds)
+      return if seconds < 0
+      if @timecop
+        Timecop.freeze(Time.now + seconds)
+      else
+        sleep seconds
       end
     end
   end
@@ -430,18 +469,6 @@ RSpec.shared_context :setup_moneta_store do |builder|
   after :all do
     if @moneta_tempdir
       FileUtils.remove_dir(@moneta_tempdir)
-    end
-  end
-end
-
-RSpec.shared_context :at_usec do |usec|
-  before do
-    now = Time.now
-    # 1000us is a rough guess at how many microseconds this code will take to run
-    if now.usec + 1000 > usec
-      sleep(1 - 1e-6 * (now.usec - usec))
-    else
-      sleep(1e-6 * (usec - now.usec))
     end
   end
 end

@@ -1,6 +1,7 @@
 describe 'standard_fog_with_expires', isolate: true do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
+  use_timecop
 
   before :all do
     require 'fog/aws'

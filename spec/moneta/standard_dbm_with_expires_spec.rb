@@ -1,6 +1,7 @@
 describe 'standard_dbm_with_expires', isolate: true, unsupported: defined?(JRUBY_VERSION) do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
+  use_timecop
 
   moneta_store :DBM do
     { file: File.join(tempdir, "simple_dbm_with_expires"),
