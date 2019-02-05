@@ -47,7 +47,7 @@ module Moneta
     end
 
     def checked_out?
-      Thread.current.key?(@id)
+      Thread.current.key?(@id) && Thread.current[@id] != nil
     end
 
     def check_out!
