@@ -18,7 +18,6 @@ services:
 addons:
   postgresql: '9.6'
 before_install:
-  - gem install bundler --conservative -v '~> 1.17.0'
   - sudo apt-get install -qq libtokyocabinet9 libtokyocabinet-dev libkyotocabinet16 libkyotocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
 cache: bundler
