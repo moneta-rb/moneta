@@ -175,57 +175,57 @@ shared_examples :store do
     end
   end
 
-  describe '#merge!' do
-    shared_examples :merge! do
-      it 'stores values' do
-        moneta_property_of(keys: 3, values: 3).check do |keys:, values:|
-          expect(store.merge!(pairs.call(keys[0] => values[0], keys[1] => values[1], keys[2] => values[2]))).to be store
-          expect(store.key?(keys[0])).to be true
-          expect(store[keys[0]]).to eq values[0]
-          expect(store.key?(keys[1])).to be true
-          expect(store[keys[1]]).to eq values[1]
-          expect(store.key?(keys[2])).to be true
-          expect(store[keys[2]]).to eq values[2]
-          store.clear
-        end
-      end
-
-      it 'overwrites existing values' do
-        moneta_property_of(keys: 2, values: 3).check do |keys:, values:|
-          expect(store[keys[0]] = values[0]).to eq values[0]
-          expect(store.merge!(pairs.call(keys[0] => values[1], keys[1] => values[2]))).to be store
-          expect(store.key?(keys[0])).to be true
-          expect(store[keys[0]]).to eq values[1]
-          expect(store.key?(keys[1])).to be true
-          expect(store[keys[1]]).to eq values[2]
-          store.clear
-        end
-      end
-
-      it 'stores the return value of the block, if given, for keys that will be overwritten' do
-        moneta_property_of(keys: 2, values: 4).check do |keys:, values:|
-          expect(store[keys[0]] = values[0]).to eq values[0]
-          expect(store.merge!(pairs.call(keys[0] => values[1], keys[1] => values[2])) do |key, old_val, new_val|
-            expect(key).to eq keys[0]
-            expect(old_val).to eq values[0]
-            expect(new_val).to eq values[1]
-            values[3]
-          end).to be store
-
-          expect(store.key?(keys[0])).to be true
-          expect(store[keys[0]]).to eq values[3]
-          expect(store.key?(keys[1])).to be true
-          expect(store[keys[1]]).to eq values[2]
-          store.clear
-        end
-      end
-
-      it 'raises any error raised in the block' do
-        store['x'] = 'y'
-        expect { store.merge!('x' => 'v') { raise 'yarg' } }.to raise_error 'yarg'
+  shared_examples :merge! do
+    it 'stores values' do
+      moneta_property_of(keys: 3, values: 3).check do |keys:, values:|
+        expect(store.public_send(method, pairs.call(keys[0] => values[0], keys[1] => values[1], keys[2] => values[2]))).to be store
+        expect(store.key?(keys[0])).to be true
+        expect(store[keys[0]]).to eq values[0]
+        expect(store.key?(keys[1])).to be true
+        expect(store[keys[1]]).to eq values[1]
+        expect(store.key?(keys[2])).to be true
+        expect(store[keys[2]]).to eq values[2]
+        store.clear
       end
     end
 
+    it 'overwrites existing values' do
+      moneta_property_of(keys: 2, values: 3).check do |keys:, values:|
+        expect(store[keys[0]] = values[0]).to eq values[0]
+        expect(store.public_send(method, pairs.call(keys[0] => values[1], keys[1] => values[2]))).to be store
+        expect(store.key?(keys[0])).to be true
+        expect(store[keys[0]]).to eq values[1]
+        expect(store.key?(keys[1])).to be true
+        expect(store[keys[1]]).to eq values[2]
+        store.clear
+      end
+    end
+
+    it 'stores the return value of the block, if given, for keys that will be overwritten' do
+      moneta_property_of(keys: 2, values: 4).check do |keys:, values:|
+        expect(store[keys[0]] = values[0]).to eq values[0]
+        expect(store.public_send(method, pairs.call(keys[0] => values[1], keys[1] => values[2])) do |key, old_val, new_val|
+          expect(key).to eq keys[0]
+          expect(old_val).to eq values[0]
+          expect(new_val).to eq values[1]
+          values[3]
+        end).to be store
+
+        expect(store.key?(keys[0])).to be true
+        expect(store[keys[0]]).to eq values[3]
+        expect(store.key?(keys[1])).to be true
+        expect(store[keys[1]]).to eq values[2]
+        store.clear
+      end
+    end
+
+    it 'raises any error raised in the block' do
+      store['x'] = 'y'
+      expect { store.public_send(method, 'x' => 'v') { raise 'yarg' } }.to raise_error 'yarg'
+    end
+  end
+
+  shared_examples :merge_or_update do
     context 'when passed a hash' do
       let(:pairs) { :itself.to_proc }
       include_examples :merge!
@@ -247,5 +247,15 @@ shared_examples :store do
 
       include_examples :merge!
     end
+  end
+
+  describe '#merge!' do
+    let(:method) { :merge! }
+    include_examples :merge_or_update
+  end
+
+  describe '#update' do
+    let(:method) { :update }
+    include_examples :merge_or_update
   end
 end

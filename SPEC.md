@@ -125,7 +125,7 @@ atomically, and the method MUST accept an optional block, which MUST be called
 for each key that is to be overwritten.  When the block is provided, it MUST be
 called before overwriting any existing values with the key, old value and
 supplied value, and the return value of the block MUST be used in place of the
-supplied value.
+supplied value. `merge!` MUST also be aliased as `update`.
 
 
 ## Additional Options Hashes

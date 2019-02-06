@@ -347,6 +347,11 @@ module Moneta
       self
     end
 
+    # (see #merge!)
+    def update(pairs, options = {}, &block)
+      merge!(pairs, options, &block)
+    end
+
     # Returns features list
     #
     # @return [Array<Symbol>] list of features
