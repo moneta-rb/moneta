@@ -1,12 +1,12 @@
 shared_examples :persist do
   it 'persists values' do
-    moneta_property_of(keys,values).check do |key1,val1|
+    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
       new_store.tap do |store|
-        store[key1] = val1
+        store[keys[0]] = values[0]
         store.close
       end
       new_store.tap do |store|
-        store[key1].should == val1
+        store[keys[0]].should == values[0]
         store.close
       end
     end

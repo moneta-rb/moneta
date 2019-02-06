@@ -1,10 +1,9 @@
 shared_examples :returnsame do
   it 'guarantees that the same value is retrieved' do
-    moneta_property_of(keys,values).check do |key1,val1|
-      next if [TrueClass,FalseClass,Numeric].any?(&val1.method(:is_a?))
-      value = val1
-      store[key1] = value
-      store[key1].should be_equal(value)
+    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
+      next if [TrueClass,FalseClass,Numeric].any?(&values[0].method(:is_a?))
+      store[keys[0]] = values[0]
+      store[keys[0]].should be_equal(values[0])
     end
   end
 end

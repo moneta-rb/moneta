@@ -250,10 +250,10 @@ module MonetaHelpers
 
     def moneta_specs specs
       let(:features){ specs.features }
-      let(:keys) do
+      let(:keys_meta) do
         [:branch, *specs.key.map{ |k| MonetaSpecs::KEYS[k] }.compact]
       end
-      let(:values) do
+      let(:values_meta) do
         [:branch, *specs.value.map{ |k| MonetaSpecs::VALUES[k] }.compact]
       end
 
@@ -374,15 +374,19 @@ module MonetaHelpers
       puts "Failed to start server - #{ex.message}"
     end
 
-    def moneta_property_of(*args)
+    def moneta_property_of(keys: 0, values: 0)
+      keys_meta = self.keys_meta
+      values_meta = self.values_meta
       property_of do
-        values = args.map(&self.method(:call))
-        guard values.uniq.length == values.length
-        if values.length == 1
-          values.first
-        else
-          values
-        end
+        key_values = keys.times.map { call(keys_meta) }
+        guard key_values.uniq.length == key_values.length
+
+        value_values = values.times.map { call(values_meta) }
+        guard value_values.uniq.length == value_values.length
+
+        [[:keys, key_values], [:values, value_values]].
+          reject { |key, value| value.empty? }.
+          to_h
       end
     end
 
