@@ -2,6 +2,8 @@ describe 'expires_memory' do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
 
+  use_timecop
+
   moneta_build do
     Moneta.build do
       use :Expires

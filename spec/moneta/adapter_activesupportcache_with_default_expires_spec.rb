@@ -37,6 +37,7 @@ describe 'adapter_activesupportcache_with_default_expires' do
   context 'using MonetaStore' do
     let(:t_res) { 0.125 }
     let(:min_ttl) { t_res }
+    use_timecop
 
     let(:backend) { ActiveSupport::Cache::MonetaStore.new(store: Moneta.new(:Memory)) }
     include_examples :adapter_activesupportcache_with_default_expires
