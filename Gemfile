@@ -64,6 +64,7 @@ gem 'activerecord-jdbc-adapter', platforms: :jruby
 gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
 gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
 gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
+gem 'activerecord-jdbch2-adapter', platforms: :jruby
 gem 'mysql2', platforms: :ruby
 gem 'ffi-gdbm', platforms: :jruby
 gem 'pg', platforms: :ruby

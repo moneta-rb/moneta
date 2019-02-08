@@ -236,12 +236,12 @@ shared_examples :store do
       include_examples :merge!
     end
 
-    context 'when passed an enumerator' do
+    context 'when passed a lazy enumerator' do
       let :pairs do
         lambda do |hash|
           Enumerator.new do |y|
             hash.each(&y.method(:<<))
-          end
+          end.lazy
         end
       end
 

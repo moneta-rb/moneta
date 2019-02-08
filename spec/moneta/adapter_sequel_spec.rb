@@ -1,7 +1,7 @@
 require 'sequel'
 
 describe 'adapter_sequel' do
-  specs = ADAPTER_SPECS
+  specs = ADAPTER_SPECS.with_values('binary')
 
   shared_examples :adapter_sequel do
     context 'with MySQL' do
@@ -30,8 +30,24 @@ describe 'adapter_sequel' do
     context "with Postgres" do
       moneta_build do
         Moneta::Adapters::Sequel.new(opts.merge(
-          db: "#{defined?(JRUBY_VERSION) ? 'jdbc:postgresql' : 'postgres'}://localhost/#{postgres_database1}",
-          user: postgres_username))
+          if defined?(JRUBY_VERSION)
+            {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
+          else
+            {
+              db: "postgres://localhost/#{postgres_database1}",
+              user: postgres_username
+            }
+          end
+        ))
+      end
+
+      moneta_specs specs
+    end
+
+    context "with H2", unsupported: !defined?(JRUBY_VERSION) do
+      moneta_build do
+        Moneta::Adapters::Sequel.new(opts.merge(
+          db: "jdbc:h2:" + tempdir))
       end
 
       moneta_specs specs
@@ -58,14 +74,21 @@ describe 'adapter_sequel' do
   context "with Postgres HStore" do
     moneta_build do
       Moneta::Adapters::Sequel.new(
-        db: "#{defined?(JRUBY_VERSION) ? 'jdbc:postgresql' : 'postgres'}://localhost/#{postgres_database1}",
-        user: postgres_username,
-        table: 'hstore_table1',
-        hstore: 'row')
+        if defined?(JRUBY_VERSION)
+          {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
+        else
+          {
+            db: "postgres://localhost/#{postgres_database1}",
+            user: postgres_username
+          }
+        end.merge(
+          table: 'hstore_table1',
+          hstore: 'row')
+      )
     end
 
-    # Concurrency is too slow
-    moneta_specs specs.without_concurrent
+    # Concurrency is too slow, and binary values cannot be stored in an hstore
+    moneta_specs specs.without_values('binary').without_concurrent
   end
 
   describe 'table creation' do

@@ -211,5 +211,12 @@ shared_examples :expires do
       advance min_ttl + t_res
       store.load('key1').should be_nil
     end
+
+    it 'supports expiration with merge!' do
+      store.merge!({'key1' => 'val1', 'key2' => 'val2'}, expires: min_ttl)
+      expect(store.values_at('key1', 'key2')).to eq ['val1', 'val2']
+      advance min_ttl + t_res
+      expect(store.slice('key1', 'key2')).to be_empty
+    end
   end
 end

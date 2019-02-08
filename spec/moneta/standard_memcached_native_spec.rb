@@ -1,4 +1,4 @@
-describe 'standard_memcached_native', isolate: true do
+describe 'standard_memcached_native', isolate: true, unstable: defined?(JRUBY_VERSION) do
   let(:t_res) { 1 }
   let(:min_ttl) { 2 }
 

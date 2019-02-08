@@ -1,4 +1,4 @@
-describe 'adapter_memcached_native_with_default_expires', isolate: true do
+describe 'adapter_memcached_native_with_default_expires', isolate: true, unstable: defined?(JRUBY_VERSION) do
   # See https://github.com/memcached/memcached/issues/307
   let(:t_res) { 1 }
   let(:min_ttl) { 2 }
