@@ -18,24 +18,24 @@ module Moneta
       # @option options [::Sqlite3::Database] :backend Use existing backend instance
       # @option options [String, Symbol] :journal_mode Set the journal mode for the connection
       def initialize(options = {})
-        table = options[:table] || 'moneta'
+        @table = options[:table] || 'moneta'
         @backend = options[:backend] ||
           begin
             raise ArgumentError, 'Option :file is required' unless options[:file]
             ::SQLite3::Database.new(options[:file])
           end
         @backend.busy_timeout(options[:busy_timeout] || 1000)
-        @backend.execute("create table if not exists #{table} (k blob not null primary key, v blob)")
+        @backend.execute("create table if not exists #{@table} (k blob not null primary key, v blob)")
         if journal_mode = options[:journal_mode]
           @backend.journal_mode = journal_mode.to_s
         end
         @stmts =
-          [@exists  = @backend.prepare("select exists(select 1 from #{table} where k = ?)"),
-           @select  = @backend.prepare("select v from #{table} where k = ?"),
-           @replace = @backend.prepare("replace into #{table} values (?, ?)"),
-           @delete  = @backend.prepare("delete from #{table} where k = ?"),
-           @clear   = @backend.prepare("delete from #{table}"),
-           @create  = @backend.prepare("insert into #{table} values (?, ?)")]
+          [@exists  = @backend.prepare("select exists(select 1 from #{@table} where k = ?)"),
+           @select  = @backend.prepare("select v from #{@table} where k = ?"),
+           @replace = @backend.prepare("replace into #{@table} values (?, ?)"),
+           @delete  = @backend.prepare("delete from #{@table} where k = ?"),
+           @clear   = @backend.prepare("delete from #{@table}"),
+           @create  = @backend.prepare("insert into #{@table} values (?, ?)")]
       end
 
       # (see Proxy#key?)
@@ -89,6 +89,55 @@ module Moneta
         @stmts.each {|s| s.close }
         @backend.close
         nil
+      end
+
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        query = "select k, v from #{@table} where k in (#{(['?'] * keys.length).join(',')})"
+        @backend.execute(query, keys)
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        hash = Hash[slice(*keys, **options)]
+        keys.map { |key| hash[key] }
+      end
+
+      # (see Proxy#fetch_values)
+      def fetch_values(*keys, **options)
+        return values_at(*keys, **options) unless block_given?
+        hash = Hash[slice(*keys, **options)]
+        keys.map do |key|
+          if hash.key?(key)
+            hash[key]
+          else
+            yield key
+          end
+        end
+      end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        transaction = if block_given?; @backend.transaction end
+
+        if block_given?
+          existing = Hash[slice(*pairs.map { |k, _| k }.to_a)]
+          pairs = pairs.map do |key, new_value|
+            new_value = yield(key, existing[key], new_value) if existing.key?(key)
+            [key, new_value]
+          end.to_a
+        else
+          pairs = pairs.to_a
+        end
+
+        query = "replace into #{@table} (k, v) values" + (['(?, ?)'] * pairs.length).join(',')
+        @backend.query(query, pairs.flatten).close
+      rescue
+        @backend.rollback if transaction
+        raise
+      else
+        @backend.commit if transaction
+        self
       end
     end
   end
