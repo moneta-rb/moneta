@@ -43,6 +43,22 @@ module Moneta
       def close
         @backend.close
       end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        if block_given?
+          @backend.lock do
+            @backend.update(pairs.map do |key, new_value|
+              new_value = yield(key, load(key), new_value) if key?(key)
+              [key, new_value]
+            end)
+          end
+        else
+          @backend.update(pairs)
+        end
+
+        self
+      end
     end
   end
 end
