@@ -92,6 +92,28 @@ module Moneta
         nil
       end
 
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        hash =
+          if @native
+            @backend.mget(*keys)
+          else
+            hash = Hash[keys.map { |key| [key] }]
+            raise unless @backend.mget(hash) >= 0
+            hash
+          end
+
+        hash.each do |key, value|
+          hash[key] = unpack(value)
+        end
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        hash = slice(*keys, **options)
+        keys.map { |key| hash[key] }
+      end
+
       private
 
       def pack(value)
