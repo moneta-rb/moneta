@@ -83,6 +83,26 @@ module Moneta
         self
       end
 
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        @entry.values_at(*keys).map do |entry|
+          if entry
+            entry.insert_after(@list)
+            entry.value
+          end
+        end
+      end
+
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        return super unless @entry.respond_to?(:slice)
+        hash = @entry.slice(*keys)
+        hash.each do |key, entry|
+          entry.insert_after(@list)
+          hash[key] = entry.value
+        end
+      end
+
       private
 
       class Entry
