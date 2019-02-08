@@ -69,13 +69,13 @@ module Moneta
             end
           end || allocate
 
-        instance.send(:initialize, options, backend)
+        instance.instance_variable_set(:@backend, backend)
+        instance.send(:initialize, options)
         instance
       end
 
       # @api private
-      def initialize(options, backend)
-        @backend = backend
+      def initialize(options)
         @table_name = (options.delete(:table) || :moneta).to_sym
         @key_column = options.delete(:key_column) || :k
         @value_column = options.delete(:value_column) || :v
@@ -103,8 +103,8 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         blob_value = blob(value)
-        unless @table.where(key_column => key).update(value_column => blob(value)) == 1
-          @table.insert(key_column => key, value_column => blob(value))
+        unless @table.where(key_column => key).update(value_column => blob_value) == 1
+          @table.insert(key_column => key, value_column => blob_value)
         end
         value
       rescue ::Sequel::DatabaseError
@@ -159,11 +159,62 @@ module Moneta
         nil
       end
 
-      private
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        @table.filter(key_column => keys).as_hash(key_column, value_column)
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        pairs = slice(*keys, **options)
+        keys.map { |key| pairs[key] }
+      end
+
+      # (see Proxy#fetch_values)
+      def fetch_values(*keys, **options)
+        return values_at(*keys, **options) unless block_given?
+        existing = slice(*keys, **options)
+        keys.map do |key|
+          if existing.key? key
+            existing[key]
+          else
+            yield key
+          end
+        end
+      end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        @backend.transaction do
+          existing = existing_for_update(pairs)
+          update_pairs, insert_pairs = pairs.partition { |k, _| existing.key?(k) }
+          @table.import([key_column, value_column], blob_pairs(insert_pairs))
+
+          if block_given?
+            update_pairs.map! do |key, new_value|
+              [key, yield(key, existing[key], new_value)]
+            end
+          end
+
+          update_pairs.each do |key, value|
+            @table.filter(key_column => key).update(value_column => blob(value))
+          end
+        end
+
+        self
+      end
+
+      protected
 
       # See https://github.com/jeremyevans/sequel/issues/715
       def blob(s)
         s.empty? ? '' : ::Sequel.blob(s)
+      end
+
+      def blob_pairs(pairs)
+        pairs.map do |key, value|
+          [key, blob(value)]
+        end
       end
 
       def create_table
@@ -175,11 +226,26 @@ module Moneta
         end
       end
 
+      def existing_for_update(pairs)
+        @table.
+          filter(key_column => pairs.map { |k, _| k }.to_a).
+          for_update.
+          as_hash(key_column, value_column)
+      end
+
+      def yield_merge_pairs(pairs)
+        existing = existing_for_update(pairs)
+        pairs.map do |key, new_value|
+          new_value = yield(key, existing[key], new_value) if existing.key?(key)
+          [key, new_value]
+        end
+      end
+
       # @api private
       class MySQL < Sequel
         def store(key, value, options = {})
           @table.
-            on_duplicate_key_update(value_column => ::Sequel[:values].function(value_column)).
+            on_duplicate_key_update.
             insert(key_column => key, value_column => blob(value))
           value
         end
@@ -198,6 +264,17 @@ module Moneta
         rescue ::Sequel::SerializationFailure # Thrown on deadlock
           tries ||= 0
           (tries += 1) <= 3 ? retry : raise
+        end
+
+        def merge!(pairs, options = {}, &block)
+          @backend.transaction do
+            pairs = yield_merge_pairs(pairs, &block) if block_given?
+            @table.
+              on_duplicate_key_update.
+              import([key_column, value_column], blob_pairs(pairs).to_a)
+          end
+
+          self
         end
       end
 
@@ -222,7 +299,7 @@ module Moneta
           if row = @table.
             returning(value_column).
             insert_conflict(target: key_column, update: {value_column => update_expr}).
-            insert(key_column => key, value_column => blob(amount.to_s)).
+            insert(key_column => key, value_column => amount.to_s).
             first
           then
             row[value_column].to_i
@@ -234,14 +311,28 @@ module Moneta
             row[value_column]
           end
         end
+
+        def merge!(pairs, options = {}, &block)
+          @backend.transaction do
+            pairs = yield_merge_pairs(pairs, &block) if block_given?
+            @table.
+              insert_conflict(
+                target: key_column,
+                update: {value_column => ::Sequel[:excluded][value_column]}).
+              import([key_column, value_column], blob_pairs(pairs).to_a)
+          end
+
+          self
+        end
       end
 
       # @api private
       class PostgresHStore < Sequel
-        def initialize(options, backend)
+        def initialize(options)
           @row = options.delete(:hstore).to_s
-          backend.extension :pg_hstore
+          @backend.extension :pg_hstore
           ::Sequel.extension :pg_hstore_ops
+          @backend.extension :pg_array
           super
         end
 
@@ -298,6 +389,29 @@ module Moneta
           self
         end
 
+        def values_at(*keys, **options)
+          @table.
+            where(key_column => @row).
+            get(::Sequel[value_column].hstore[::Sequel.pg_array(keys)]).to_a
+        end
+
+        def slice(*keys, **options)
+          @table.where(key_column => @row).get(::Sequel[value_column].hstore.slice(keys)).to_h
+        end
+
+        def merge!(pairs, options = {}, &block)
+          @backend.transaction do
+            create_row
+            pairs = yield_merge_pairs(pairs, &block) if block_given?
+            hash = Hash === pairs ? pairs : Hash[pairs.to_a]
+            @table.
+              where(key_column => @row).
+              update(value_column => ::Sequel[@table_name][value_column].hstore.merge(hash))
+          end
+
+          self
+        end
+
         protected
 
         def create_row
@@ -316,6 +430,11 @@ module Moneta
             index value_column, type: :gin
           end
         end
+
+        def existing_for_update(pairs)
+          @table.where(key_column => @row).for_update.
+            get(::Sequel[value_column].hstore.slice(pairs.map { |k, _| k }.to_a)).to_h
+        end
       end
 
       # @api private
@@ -323,6 +442,15 @@ module Moneta
         def store(key, value, options = {})
           @table.insert_conflict(:replace).insert(key_column => key, value_column => blob(value))
           value
+        end
+
+        def merge!(pairs, options = {}, &block)
+          @backend.transaction do
+            pairs = yield_merge_pairs(pairs, &block) if block_given?
+            @table.insert_conflict(:replace).import([key_column, value_column], blob_pairs(pairs).to_a)
+          end
+
+          self
         end
       end
     end
