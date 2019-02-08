@@ -258,7 +258,7 @@ module Moneta
       keys.map { |key| load(key, options) }
     end
 
-    # Behaves identically to {#values_at} except that it accept an optional
+    # Behaves identically to {#values_at} except that it accepts an optional
     # block. When supplied, the block will be called successively with each
     # supplied key that is not present in the store.  The return value of the
     # block call will be used in place of nil in returned the array of values.
@@ -540,13 +540,18 @@ module Moneta
 
     # (see Defaults#merge!)
     def merge!(pairs, options={}, &block)
-      return super unless @backend.respond_to? :merge!
-      hash = if Hash === pairs
-               pairs
-             else
-               Hash[pairs.to_a]
-             end
-      @backend.merge!(hash, &block)
+      return super unless method = [:merge!, :update].find do |method|
+        @backend.respond_to? method
+      end
+
+      hash = Hash === pairs ? pairs : Hash[pairs.to_a]
+      case method
+      when :merge!
+        @backend.merge!(hash, &block)
+      when :update
+        @backend.update(hash, &block)
+      end
+
       self
     end
   end
