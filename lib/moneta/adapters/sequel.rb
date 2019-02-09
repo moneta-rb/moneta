@@ -124,15 +124,14 @@ module Moneta
       def increment(key, amount = 1, options = {})
         @backend.transaction do
           if existing = @table.where(key_column => key).for_update.get(value_column)
-            total = amount + Integer(existing)
-            raise "no update" unless @table.
-              where(key_column => key).
-              update(value_column => blob(total.to_s)) == 1
-            total
+            amount += Integer(existing)
+            raise IncrementError, "no update" unless @table.
+              where(key_column => key, value_column => existing).
+              update(value_column => blob(amount.to_s)) == 1
           else
             @table.insert(key_column => key, value_column => blob(amount.to_s))
-            amount
           end
+          amount
         end
       rescue ::Sequel::DatabaseError
         # Concurrent modification might throw a bunch of different errors
@@ -242,6 +241,9 @@ module Moneta
       end
 
       # @api private
+      class IncrementError < ::Sequel::DatabaseError; end
+
+      # @api private
       class MySQL < Sequel
         def store(key, value, options = {})
           @table.
@@ -252,14 +254,16 @@ module Moneta
 
         def increment(key, amount = 1, options = {})
           @backend.transaction do
-            if existing = load(key)
-              Integer(existing)
+            # this creates a row-level lock even if there is no existing row (a
+            # "gap lock").
+            if existing = @table.where(key_column => key).for_update.get(value_column)
+              # Integer() will raise an exception if the existing value cannot be parsed
+              amount += Integer(existing)
+              @table.where(key_column => key).update(value_column => amount)
+            else
+              @table.insert(key_column => key, value_column => amount)
             end
-            @table.
-              on_duplicate_key_update(
-                value_column => ::Sequel.+(value_column, ::Sequel[:values].function(value_column))).
-              insert(key_column => key, value_column => amount)
-            load(key).to_i
+            amount
           end
         rescue ::Sequel::SerializationFailure # Thrown on deadlock
           tries ||= 0
@@ -439,9 +443,34 @@ module Moneta
 
       # @api private
       class SQLite < Sequel
+        def initialize(options)
+          @version = backend.get(::Sequel[:sqlite_version].function)
+          # See https://sqlite.org/lang_UPSERT.html
+          @can_upsert = ::Gem::Version.new(@version) >= ::Gem::Version.new('3.24.0')
+          super
+        end
+
         def store(key, value, options = {})
           @table.insert_conflict(:replace).insert(key_column => key, value_column => blob(value))
           value
+        end
+
+        def increment(key, amount = 1, options = {})
+          return super unless @can_upsert
+          update_expr = (::Sequel[@table_name][value_column].cast(Integer) + amount).cast(:blob)
+
+          @backend.transaction do
+            @table.
+              insert_conflict(
+                target: key_column,
+                update: {value_column => update_expr},
+                update_where:
+                  ::Sequel.|(
+                    {value_column => blob("0")},
+                    ::Sequel.~(::Sequel[@table_name][value_column].cast(Integer)) => 0)).
+              insert(key_column => key, value_column => blob(amount.to_s))
+            Integer(load(key))
+          end
         end
 
         def merge!(pairs, options = {}, &block)
