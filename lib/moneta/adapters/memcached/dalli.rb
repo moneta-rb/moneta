@@ -114,18 +114,13 @@ module Moneta
         expires ||= nil
 
         if block_given?
-          keys = pairs.map { |key, _| key }
+          keys = pairs.map { |key, _| key }.to_a
           old_pairs = @backend.get_multi(keys)
-          updates = pairs.each_with_object({}) do |(key, new_value), updates|
-            next unless old_pairs.key? key
-            updates[key] = yield(key, old_pairs[key], new_value)
-          end
-          unless updates.empty?
-            pairs = if pairs.respond_to?(:merge)
-                      pairs.merge(updates)
-                    else
-                      Hash[pairs.to_a].merge!(updates)
-                    end
+          pairs = pairs.map do |key, new_value|
+            if old_pairs.key? key
+              new_value = yield(key, old_pairs[key], new_value)
+            end
+            [key, new_value]
           end
         end
 
