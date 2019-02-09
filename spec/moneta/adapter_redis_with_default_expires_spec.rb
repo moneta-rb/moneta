@@ -1,5 +1,5 @@
 describe 'adapter_redis_with_default_expires', isolate: true do
-  let(:t_res) { 1 }
+  let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
 
   moneta_build do
