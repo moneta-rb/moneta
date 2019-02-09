@@ -102,7 +102,7 @@ module ActiveSupport
       end
 
       def read_entry(key, options)
-        make_entry(@store.load(key, moneta_options(options)))
+        make_entry(@store.load(key, moneta_options(options, false)))
       end
 
       def write_entry(key, entry, options)
@@ -119,7 +119,7 @@ module ActiveSupport
       def read_multi_entries(names, options)
         keys = names.map { |name| normalize_key(name, options) }
         entries = @store.
-          values_at(*keys, **moneta_options(options)).
+          values_at(*keys, **moneta_options(options, false)).
           map(&method(:make_entry))
 
         names.zip(keys, entries).map do |name, key, entry|
@@ -144,9 +144,11 @@ module ActiveSupport
 
       private
 
-      def moneta_options(options)
+      def moneta_options(options, include_expires = true)
         new_options = options ? options.dup : {}
-        new_options[:expires] = new_options.delete(:expires_in).to_r if new_options.include?(:expires_in)
+        if new_options.include?(:expires_in) and include_expires
+          new_options[:expires] = new_options.delete(:expires_in).to_r
+        end
         new_options
       end
     end
