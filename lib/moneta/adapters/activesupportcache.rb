@@ -82,6 +82,36 @@ module Moneta
         self
       end
 
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        @backend.read_multi(*keys)
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        hash = slice(*keys, **options)
+        keys.map { |key| hash[key] }
+      end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        if block_given?
+          existing = slice(*pairs.map { |k, _| k }, **options)
+          pairs = pairs.map do |key, new_value|
+            if existing.key?(key)
+              new_value = yield(key, existing[key], new_value)
+            end
+
+            [key, new_value]
+          end
+        end
+
+        hash = Hash === pairs ? pairs : Hash[pairs.to_a]
+        expires = expires_value(options)
+        @backend.write_multi(hash, options.merge(expires_in: expires ? expires.seconds : nil))
+        self
+      end
+
       private
 
       def expires_value(options, default = @default_expires)
