@@ -11,7 +11,7 @@ module Moneta
       # older versions raise a Sequel::DatabaseError.
       UniqueConstraintViolation = defined?(::Sequel::UniqueConstraintViolation) ? ::Sequel::UniqueConstraintViolation : ::Sequel::DatabaseError
 
-      supports :create, :increment
+      supports :create, :increment, :each_key
       attr_reader :backend, :key_column, :value_column
 
       # @param [Hash] options
@@ -200,6 +200,15 @@ module Moneta
           end
         end
 
+        self
+      end
+
+      # (see Proxy#each_key)
+      def each_key
+        return enum_for(:each_key) { @table.count } unless block_given?
+        @table.select(key_column).each do |row|
+          yield row[key_column]
+        end
         self
       end
 
@@ -413,6 +422,29 @@ module Moneta
               update(value_column => ::Sequel[@table_name][value_column].hstore.merge(hash))
           end
 
+          self
+        end
+
+        def each_key
+          unless block_given?
+            return enum_for(:each_key) do
+              @backend.from(
+                @table.
+                  where(key_column => @row).
+                  select(::Sequel[@table_name][value_column].hstore.each)).count
+            end
+          end
+          first = false
+          @table.
+            where(key_column => @row).
+            select(::Sequel[@table_name][value_column].hstore.skeys).
+            each do |row|
+              if first
+                first = false
+                next
+              end
+              yield row[:skeys]
+            end
           self
         end
 

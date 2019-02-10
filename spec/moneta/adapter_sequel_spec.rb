@@ -1,7 +1,7 @@
 require 'sequel'
 
 describe 'adapter_sequel' do
-  specs = ADAPTER_SPECS.with_values('binary')
+  specs = ADAPTER_SPECS.with_each_key.with_values('binary')
 
   shared_examples :adapter_sequel do
     context 'with MySQL' do
