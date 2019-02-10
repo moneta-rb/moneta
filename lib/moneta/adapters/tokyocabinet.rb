@@ -4,7 +4,13 @@ module Moneta
   module Adapters
     # TokyoCabinet backend
     # @api public
-    class TokyoCabinet < Memory
+    class TokyoCabinet
+      include Defaults
+      include HashAdapter
+      include IncrementSupport
+      include CreateSupport
+      include EachKeySupport
+
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)

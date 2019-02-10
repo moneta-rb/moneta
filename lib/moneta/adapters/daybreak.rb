@@ -4,7 +4,13 @@ module Moneta
   module Adapters
     # Daybreak backend
     # @api public
-    class Daybreak < Memory
+    class Daybreak
+      include Defaults
+      include DBMAdapter
+      include IncrementSupport
+      include CreateSupport
+      include EachKeySupport
+
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [::Daybreak] :backend Use existing backend instance
@@ -37,11 +43,6 @@ module Moneta
       # (see Proxy#create)
       def create(key, value, options = {})
         @backend.lock { super }
-      end
-
-      # (see Proxy#close)
-      def close
-        @backend.close
       end
 
       # (see Proxy#merge!)

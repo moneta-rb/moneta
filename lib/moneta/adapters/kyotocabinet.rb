@@ -4,7 +4,14 @@ module Moneta
   module Adapters
     # KyotoCabinet backend
     # @api public
-    class KyotoCabinet < Memory
+    class KyotoCabinet
+      include Defaults
+      include HashAdapter
+      include IncrementSupport
+      include CreateSupport
+
+      supports :each_key
+
       # @param [Hash] options
       # @option options [String] :file Database file
       # @option options [::KyotoCabinet::DB] :backend Use existing backend instance

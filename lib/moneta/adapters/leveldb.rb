@@ -4,7 +4,13 @@ module Moneta
   module Adapters
     # LevelDB backend
     # @api public
-    class LevelDB < Memory
+    class LevelDB
+      include Defaults
+      include HashAdapter
+      include IncrementSupport
+      include CreateSupport
+      include EachKeySupport
+
       # @param [Hash] options
       # @option options [String] :dir - Database path
       # @option options All other options passed to `LevelDB::DB#new`
