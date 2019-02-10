@@ -8,7 +8,7 @@ module Moneta
     class LMDB
       include Defaults
 
-      supports :create, :increment
+      supports :create, :increment, :each_key
       attr_reader :backend, :db
 
       PUT_FLAGS = [:nooverwrite, :nodupdata, :current, :append, :appenddup]
@@ -87,6 +87,34 @@ module Moneta
       def close
         @backend.close
         nil
+      end
+
+      # (see Proxy#each_key)
+      def each_key
+        return enum_for(:each_key) { @db.size } unless block_given?
+
+        @db.cursor do |cursor|
+          while record = cursor.next
+            yield record[0]
+          end
+        end
+
+        self
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        @backend.transaction { super }
+      end
+
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        @backend.transaction { super }
+      end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        @backend.transaction { super }
       end
     end
   end
