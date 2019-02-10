@@ -383,91 +383,29 @@ module Moneta
     end
   end
 
+  # This provides an each_key implementation that works in most cases.
   # @api private
   module EachKeySupport
-    def self.prepended(base)
-      base.supports(:each_key) if base.respond_to?(:supports)
-      require 'set'
-    end
-
-    # (see Defaults#each_key)
-    def each_key(&block)
+    def each_key
       return enum_for(:each_key) unless block_given?
-      all_keys.each{ |k| yield(k) }
+
+      if @backend.respond_to?(:each_key)
+        @backend.each_key { |key| yield key }
+      elsif @backend.respond_to?(:keys)
+        if keys = @backend.keys
+          keys.each { |key| yield key }
+        end
+      elsif @backend.respond_to?(:each)
+        @backend.each { |key, _| yield key }
+      else
+        raise ::NotImplementedError, "No enumerable found on backend"
+      end
+
       self
     end
 
-    # (see Defaults#create)
-    def create(key, value, options = {})
-      each_key_save(key)
-      super
-    end
-
-    # (see Defaults#store)
-    def store(key, value, options = {})
-      each_key_save(key)
-      super
-    end
-
-    # (see Defaults#[]=)
-    def []=(key, value)
-      each_key_save(key)
-      super
-    end
-
-    # (see Defaults#increment)
-    def increment(key, amount = 1, options = {})
-      each_key_save(key)
-      super
-    end
-
-    # (see Defaults#decrement)
-    def decrement(key, amount = 1, options = {})
-      each_key_save(key)
-      super
-    end
-
-    # (see Defaults#clear)
-    def clear(options = {})
-      all_keys.clear
-      super
-    end
-
-    # (see Defaults#delete)
-    def delete(key, options = {})
-      all_keys.delete(key)
-      super
-    end
-
-    # (see Defaults#key?)
-    def key?(key, options = {})
-      found = super
-      if found then each_key_save(key) else all_keys.delete(key) end
-      found
-    end
-
-    # (see Proxy#load)
-    def load(key, options = {})
-      value = super
-      if value.nil? then all_keys.delete(key) else each_key_save(key) end
-      value
-    end
-
-    # (see Defaults#[])
-    def [](key)
-      value = super
-      if value.nil? then all_keys.delete(key) else each_key_save(key) end
-      value
-    end
-
-    private
-
-    def all_keys
-      @all_keys ||= Set.new
-    end
-
-    def each_key_save(key)
-      @all_keys = Set.new(@all_keys).add(key)
+    def self.included(base)
+      base.supports(:each_key) if base.respond_to?(:supports)
     end
   end
 

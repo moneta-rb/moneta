@@ -22,7 +22,7 @@ module Moneta
   autoload :Transformer,       'moneta/transformer'
   autoload :Utils,             'moneta/utils'
   autoload :WeakCreate,        'moneta/weak'
-  autoload :WeakEachKey,       'moneta/weak'
+  autoload :WeakEachKey,       'moneta/weak_each_key'
   autoload :WeakIncrement,     'moneta/weak'
   autoload :Wrapper,           'moneta/wrapper'
 
