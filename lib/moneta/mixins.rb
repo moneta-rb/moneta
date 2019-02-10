@@ -280,9 +280,11 @@ module Moneta
     #     calls
     # @api public
     def fetch_values(*keys, **options)
-      keys.zip(values_at(*keys, **options)).map do |key, value|
-        if value.nil? && !key?(key)
-          yield key if block_given?
+      values = values_at(*keys, **options)
+      return values unless block_given?
+      keys.zip(values).map do |key, value|
+        if value == nil && !key?(key)
+          yield key
         else
           value
         end
