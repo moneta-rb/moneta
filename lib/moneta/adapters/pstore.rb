@@ -7,6 +7,7 @@ module Moneta
     # @api public
     class PStore
       include Defaults
+      include NilValues
 
       supports :create, :increment, :each_key
       attr_reader :backend

@@ -4,6 +4,7 @@ module Moneta
     # @api public
     class Memory
       include Defaults
+      include NilValues
       include HashAdapter
       include IncrementSupport
       include CreateSupport
