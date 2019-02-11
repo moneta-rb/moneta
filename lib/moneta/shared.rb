@@ -11,6 +11,8 @@ module Moneta
   #
   # @api public
   class Shared < Wrapper
+    not_supports :each_key
+
     # @param [Hash] options
     # @option options [Integer] :port (9000) TCP port
     # @option options [String] :host Server hostname
