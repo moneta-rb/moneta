@@ -39,6 +39,26 @@ module Moneta
         @backend.close
         nil
       end
+
+      # (see Proxy#each_key)
+      def each_key
+        return enum_for(:each_key) { @backend.size } unless block_given?
+        @backend.each { |key, _| yield key }
+        self
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        ret = nil
+        @backend.batch { ret = super }
+        ret
+      end
+
+      # (see Proxy#merge!)
+      def merge!(*keys, **options)
+        @backend.batch { super }
+        self
+      end
     end
   end
 end
