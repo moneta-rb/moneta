@@ -8,7 +8,7 @@ module Moneta
       include Defaults
       include IncrementSupport
 
-      supports :create
+      supports :create, :each_key
       attr_reader :backend
 
       # @param [Hash] options
@@ -35,7 +35,9 @@ module Moneta
            @replace = @backend.prepare("replace into #{@table} values (?, ?)"),
            @delete  = @backend.prepare("delete from #{@table} where k = ?"),
            @clear   = @backend.prepare("delete from #{@table}"),
-           @create  = @backend.prepare("insert into #{@table} values (?, ?)")]
+           @create  = @backend.prepare("insert into #{@table} values (?, ?)"),
+           @keys    = @backend.prepare("select k from #{@table}"),
+           @count   = @backend.prepare("select count(*) from #{@table}")]
       end
 
       # (see Proxy#key?)
@@ -137,6 +139,15 @@ module Moneta
         raise
       else
         @backend.commit if transaction
+        self
+      end
+
+      # (see Proxy#each_key)
+      def each_key
+        return enum_for(:each_key) { @count.execute!.first.first } unless block_given?
+        @keys.execute!.each do |row|
+          yield row.first
+        end
         self
       end
     end
