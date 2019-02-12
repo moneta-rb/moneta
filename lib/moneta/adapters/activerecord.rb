@@ -193,6 +193,61 @@ module Moneta
         @spec = nil
       end
 
+      # (see Proxy#slice)
+      def slice(*keys, lock: false, **options)
+        with_connection do |conn|
+          sel = arel_slice(keys).project(table[key_column], table[value_column])
+          sel = sel.lock if lock
+          result = conn.select_all(sel)
+
+          k = key_column.to_s
+          v = value_column.to_s
+          result.map do |row|
+            [row[k], decode(conn, row[v])]
+          end
+        end
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        hash = Hash[slice(*keys, **options)]
+        keys.map { |key| hash[key] }
+      end
+
+      # (see Proxy#fetch_values)
+      def fetch_values(*keys, **options)
+        return values_at(*keys, **options) unless block_given?
+        hash = Hash[slice(*keys, **options)]
+        keys.map do |key|
+          if hash.key?(key)
+            hash[key]
+          else
+            yield key
+          end
+        end
+      end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        with_connection do |conn|
+          conn.transaction do
+            existing = Hash[slice(*pairs.map { |k, _| k }, lock: true, **options)]
+            update_pairs, insert_pairs = pairs.partition { |k, _| existing.key?(k) }
+            insert_pairs.each { |key, value| conn_ins(conn, key, value) }
+
+            if block_given?
+              update_pairs.map! do |key, new_value|
+                [key, yield(key, existing[key], new_value)]
+              end
+            end
+
+            update_pairs.each { |key, value| conn_upd(conn, key, value) }
+          end
+        end
+
+        self
+      end
+
       private
 
       def connection_pool
@@ -229,6 +284,10 @@ module Moneta
 
       def arel_sel_key(key)
         arel_sel.where(table[key_column].eq(key))
+      end
+
+      def arel_slice(keys)
+        arel_sel.where(table[key_column].eq_any(keys))
       end
 
       def conn_ins(conn, key, value)
