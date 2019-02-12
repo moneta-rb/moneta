@@ -1,4 +1,4 @@
-describe 'transformer_snappy' do
+describe 'transformer_snappy', unstable: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta.build do
       use :Transformer, value: :snappy

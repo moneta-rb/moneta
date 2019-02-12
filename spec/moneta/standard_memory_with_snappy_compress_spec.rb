@@ -1,4 +1,4 @@
-describe 'standard_memory_with_snappy_compress' do
+describe 'standard_memory_with_snappy_compress', unstable: defined?(JRUBY_VERSION) do
   moneta_store :Memory, {compress: :snappy}
 
   moneta_loader do |value|
