@@ -87,6 +87,23 @@ module Moneta
         self
       end
 
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        transaction(true) { super }
+      end
+
+      def fetch_values(*keys, **options)
+        transaction(true) { super }
+      end
+
+      def slice(*keys, **options)
+        transaction(true) { super }
+      end
+
+      def merge!(pairs, options = {})
+        transaction { super }
+      end
+
       protected
 
       class TransactionError < StandardError; end
@@ -97,9 +114,9 @@ module Moneta
 
       def transaction(read_only = false)
         case Thread.current[@id]
-        when read_only, true
+        when read_only, false
           yield
-        when false
+        when true
           raise TransactionError, "Attempt to start read-write transaction inside a read-only transaction"
         else
           begin
