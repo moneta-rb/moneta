@@ -1,7 +1,7 @@
 require 'sequel'
 
 describe 'adapter_sequel' do
-  specs = ADAPTER_SPECS.with_each_key.with_values('binary')
+  specs = ADAPTER_SPECS.with_each_key.with_values(:nil)
 
   shared_examples :adapter_sequel do
     context 'with MySQL' do
@@ -88,7 +88,7 @@ describe 'adapter_sequel' do
     end
 
     # Concurrency is too slow, and binary values cannot be stored in an hstore
-    moneta_specs specs.without_values('binary').without_concurrent
+    moneta_specs specs.without_values(:binary).without_concurrent
   end
 
   describe 'table creation' do

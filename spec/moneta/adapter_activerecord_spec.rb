@@ -1,4 +1,6 @@
 describe 'adapter_activerecord' do
+  activerecord_specs = ADAPTER_SPECS.with_values(:nil).with_each_key
+
   shared_examples :adapter_activerecord do |specs|
     moneta_build do
       Moneta::Adapters::ActiveRecord.new(
@@ -73,7 +75,7 @@ describe 'adapter_activerecord' do
       }
     end
 
-    include_examples :adapter_activerecord, ADAPTER_SPECS.with_each_key
+    include_examples :adapter_activerecord, activerecord_specs
   end
 
   context "with PostgreSQL" do
@@ -93,7 +95,7 @@ describe 'adapter_activerecord' do
       }
     end
 
-    include_examples :adapter_activerecord, ADAPTER_SPECS.with_each_key
+    include_examples :adapter_activerecord, activerecord_specs
   end
 
   context "with SQLite" do
@@ -111,6 +113,6 @@ describe 'adapter_activerecord' do
       }
     end
 
-    include_examples :adapter_activerecord, ADAPTER_SPECS.with_each_key.without_concurrent
+    include_examples :adapter_activerecord, activerecord_specs.without_concurrent
   end
 end
