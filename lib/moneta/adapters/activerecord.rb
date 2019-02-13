@@ -125,7 +125,8 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         with_connection do |conn|
-          conn_ins(conn, key, value) unless conn_upd(conn, key, value) == 1
+          encoded = encode(conn, value)
+          conn_ins(conn, key, encoded) unless conn_upd(conn, key, encoded) == 1
         end
         value
       end
@@ -233,7 +234,7 @@ module Moneta
           conn.transaction do
             existing = Hash[slice(*pairs.map { |k, _| k }, lock: true, **options)]
             update_pairs, insert_pairs = pairs.partition { |k, _| existing.key?(k) }
-            insert_pairs.each { |key, value| conn_ins(conn, key, value) }
+            insert_pairs.each { |key, value| conn_ins(conn, key, encode(conn, value)) }
 
             if block_given?
               update_pairs.map! do |key, new_value|
@@ -241,7 +242,7 @@ module Moneta
               end
             end
 
-            update_pairs.each { |key, value| conn_upd(conn, key, value) }
+            update_pairs.each { |key, value| conn_upd(conn, key, encode(conn, value)) }
           end
         end
 
@@ -304,17 +305,27 @@ module Moneta
         decode(conn, conn.select_value(arel_sel_key(key).project(table[value_column])))
       end
 
+      def encode(conn, value)
+        if value == nil
+          nil
+        elsif conn.respond_to?(:escape_bytea)
+          conn.escape_bytea(value)
+        elsif defined?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter) &&
+              conn.is_a?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter)
+          Arel::Nodes::SqlLiteral.new("X'#{value.unpack('H*').first}'")
+        else
+          value
+        end
+      end
+
       def decode(conn, value)
-        return nil if value.nil?
-        if defined?(::ActiveModel::Type::Binary::Data) &&
+        if value == nil
+          nil
+        elsif defined?(::ActiveModel::Type::Binary::Data) &&
           value.is_a?(::ActiveModel::Type::Binary::Data)
-        then
           value.to_s
-        elsif defined?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
-          conn.is_a?(::ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) &&
-          value.start_with?('\\x')
-        then
-          [value[2..-1]].pack('H*')
+        elsif conn.respond_to?(:unescape_bytea)
+          conn.unescape_bytea(value)
         else
           value
         end
