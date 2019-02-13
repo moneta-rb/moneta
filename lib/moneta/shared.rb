@@ -41,7 +41,7 @@ module Moneta
     def wrap(*args)
       connect
       yield
-    rescue Errno::ECONNRESET, Errno::EPIPE, IOError
+    rescue Errno::ECONNRESET, Errno::EPIPE, IOError, SystemCallError
       @connect_lock.synchronize{ close unless @server }
       tries ||= 0
       (tries += 1) < 3 ? retry : raise
@@ -70,7 +70,7 @@ module Moneta
           @server = Server.new(@adapter, @options)
           @thread = Thread.new { @server.run }
           sleep 0.1 until @server.running?
-        rescue Exception => ex
+        rescue => ex
           @adapter.close if @adapter
           @adapter = nil
           @server = nil
