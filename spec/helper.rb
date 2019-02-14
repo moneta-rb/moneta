@@ -66,7 +66,7 @@ class MonetaSpecs
   }
 
   VALUES = {
-    'nil' => [:choose, '', nil, 0, false],
+    'nil' => [:literal, nil],
     'integer' => :integer,
     'float' => :float,
     'boolean' => :boolean,
@@ -211,7 +211,7 @@ ADAPTER_SPECS = MonetaSpecs.new(
     :increment, :concurrent_increment, :concurrent_create, :persist, :multiprocess,
     :create, :features, :store_large, :not_each_key],
   key: %w(string path),
-  value: %w(string path))
+  value: %w(string path binary))
 STANDARD_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
     :marshallable_key, :marshallable_value, :transform_value, :increment,
