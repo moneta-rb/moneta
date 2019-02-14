@@ -7,6 +7,7 @@ module Moneta
     # @api public
     class DataMapper
       include Defaults
+      include NilValues
 
       supports :create
 

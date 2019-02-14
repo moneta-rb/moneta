@@ -10,7 +10,7 @@ describe 'adapter_datamapper', broken: defined?(JRUBY_VERSION) do
     Moneta::Adapters::DataMapper.new(setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "adapter_datamapper")
   end
 
-  moneta_specs ADAPTER_SPECS.without_increment.with_values(:nil)
+  moneta_specs ADAPTER_SPECS.without_increment.with_values(:nil).without_values(:binary)
     
   it 'does not cross contaminate when storing' do
     first = Moneta::Adapters::DataMapper.new(setup: "mysql://#{mysql_username}:#{mysql_password}@localhost/#{mysql_database1}", table: "datamapper_first")
