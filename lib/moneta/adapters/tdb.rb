@@ -8,8 +8,9 @@ module Moneta
       include Defaults
       include HashAdapter
       include IncrementSupport
-      include CreateSupport
       include EachKeySupport
+
+      supports :create
 
       # @param [Hash] options
       # @option options [String] :file Database file
@@ -26,6 +27,14 @@ module Moneta
       def close
         @backend.close
         nil
+      end
+
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        @backend.insert!(key, value)
+        true
+      rescue ::TDB::ERR::EXISTS
+        false
       end
     end
   end
