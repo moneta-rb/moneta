@@ -216,7 +216,13 @@ module Moneta
 
       # See https://github.com/jeremyevans/sequel/issues/715
       def blob(s)
-        s.empty? ? '' : ::Sequel.blob(s)
+        if s == nil
+          nil
+        elsif s.empty?
+          ''
+        else
+          ::Sequel.blob(s)
+        end
       end
 
       def blob_pairs(pairs)
