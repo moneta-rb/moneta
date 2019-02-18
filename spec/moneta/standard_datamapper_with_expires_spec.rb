@@ -1,4 +1,4 @@
-describe "standard_datamapper_with_expires", isolate: true, broken: defined?(JRUBY_VERSION) do
+describe "standard_datamapper_with_expires", broken: defined?(JRUBY_VERSION) do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
   use_timecop

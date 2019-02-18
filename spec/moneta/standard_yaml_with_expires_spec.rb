@@ -1,4 +1,4 @@
-describe 'standard_yaml_with_expires', isolate: true do
+describe 'standard_yaml_with_expires' do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
   use_timecop

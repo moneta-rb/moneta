@@ -1,4 +1,4 @@
-describe 'adapter_cassandra' do
+describe 'adapter_cassandra', retry: 3 do
   let(:t_res) { 1 }
   let(:min_ttl) { t_res }
 

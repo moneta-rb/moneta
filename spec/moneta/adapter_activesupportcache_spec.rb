@@ -23,8 +23,9 @@ describe 'adapter_activesupportcache' do
     let(:t_res) { 1 }
     let(:min_ttl) { 2 }
     use_timecop
+    start_memcached 11215
 
-    let(:backend) { ActiveSupport::Cache::MemCacheStore.new }
+    let(:backend) { ActiveSupport::Cache::MemCacheStore.new('127.0.0.1:11215') }
     include_examples :adapter_activesupportcache
   end
 

@@ -259,8 +259,9 @@ describe "cache_moneta_store" do
     include_examples :basic_instrumentation
   end
 
-  describe ActiveSupport::Cache::MemCacheStore, isolate: true do
-    let(:store){ described_class.new }
+  describe ActiveSupport::Cache::MemCacheStore do
+    let(:store){ described_class.new('127.0.0.1:11213') }
+    start_memcached 11213
 
     include_examples :basic_store
     include_examples :expiry

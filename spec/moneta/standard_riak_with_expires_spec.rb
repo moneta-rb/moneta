@@ -1,4 +1,4 @@
-describe 'standard_riak_with_expires', isolate: true, unstable: true do
+describe 'standard_riak_with_expires', unstable: true do
   before :all do
     require 'riak'
 

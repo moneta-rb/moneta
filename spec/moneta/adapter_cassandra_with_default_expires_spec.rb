@@ -1,4 +1,4 @@
-describe 'adapter_cassandra_with_default_expires', isolate: true do
+describe 'adapter_cassandra_with_default_expires', isolate: true, retry: 3 do
   let(:t_res) { 1 }
   let(:min_ttl) { t_res }
 
