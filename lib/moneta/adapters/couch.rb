@@ -17,7 +17,7 @@ module Moneta
 
       attr_reader :backend
 
-      supports :create
+      supports :create, :each_key
 
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Couch host
@@ -93,6 +93,30 @@ module Moneta
       rescue
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
+      end
+
+      def each_key
+        return enum_for(:each_key) unless block_given?
+
+        skip = 0
+        limit = 1000
+        total_rows = 1
+        while total_rows > skip do
+          response = @backend.get("_all_docs?limit=#{limit}&skip=#{skip}")
+          case response.status
+          when 200
+            result = MultiJson.load(response.body)
+            total_rows = result['total_rows']
+            skip += result['rows'].length
+            result['rows'].each do |row|
+              key = row['id']
+              yield key
+            end
+          else
+            raise "HTTP error #{response.status}"
+          end
+        end
+        self
       end
 
       private
