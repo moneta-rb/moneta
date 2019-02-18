@@ -90,8 +90,13 @@ module Moneta
           entry = invalidate_entry(key, entry, new_expires) do |new_entry|
             updates[key] = new_entry
           end
-          next if entry.nil?
-          value, _ = entry
+          if entry.nil?
+            value = if block_given?
+                      yield key
+                    end
+          else
+            value, _ = entry
+          end
           value
         end
       end
