@@ -1,0 +1,19 @@
+.backend-feature-matrix th.feature {
+  writing-mode: tb;
+}
+
+.backend-feature-matrix td.feature {
+  text-align: center;
+}
+
+.backend-feature-matrix td.yes {
+  background: #5f5;
+}
+
+.backend-feature-matrix td.no {
+  background: #f44;
+}
+
+.backend-feature-matrix td.unknown {
+  background: #55f;
+}

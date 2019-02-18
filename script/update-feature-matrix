@@ -6,17 +6,19 @@ Bundler.require(:doc)
 
 require 'yaml'
 
-output = "<table>\n\n"
+output = "<table class=\"backend-feature-matrix\">\n"
 output << <<-TAB.lines.map(&:strip).join
   <tr>
     <th>Adapter</th><th>Required gems</th>
-    <th>Multi-thread safe<sup>[1]</sup></th>
-    <th>Multi-process safe<sup>[2]</sup></th>
-    <th>Atomic increment<sup>[3]</sup></th>
-    <th>Atomic create<sup>[4]</sup></th>
-    <th>Native expires<sup>[5]</sup></th>
-    <th>Persistent</th>
-    <th>Key Traversal</th>
+    <th class="feature">Multi-thread safe<sup>1</sup></th>
+    <th class="feature">Multi-process safe<sup>2</sup></th>
+    <th class="feature">Atomic increment<sup>3</sup></th>
+    <th class="feature">Atomic create<sup>4</sup></th>
+    <th class="feature">Native expires<sup>5</sup></th>
+    <th class="feature">Persistent</th>
+    <th class="feature">Key Traversal</th>
+    <th class="feature">Bulk read<sup>6</sup></th>
+    <th class="feature">Bulk write<sup>6</sup></th>
     <th>Description</th>
   </tr>
 TAB
@@ -42,16 +44,22 @@ footnotes = {
   If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak
   `#create` support using the `Moneta::WeakCreate` proxy.
   EOF
-  "native expires" => <<-EOF
+  "native expires" => <<-EOF,
   Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to
   `Moneta#new`.
+  EOF
+  "bulk read and write" => <<-EOF
+  This refers to the ability of some adapters to read/write multiple keys at
+  once.  All adapters include the relevant methods (`#values_at`, `#merge!`,
+  etc.) but where bulk operations are not supported, these are implemented
+  as repeated calls to the backend for each key.
   EOF
 }
 
 YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'feature_matrix.yaml'))) do |document|
   feature_group = document.to_ruby
 
-  output << %{<tr><th colspan="2">#{feature_group['group']}</th><th colspan="7"></th></tr>\n\n}
+  output << %{<tr><th colspan="2">#{feature_group['group']}</th><th colspan="10"></th></tr>\n\n}
 
   feature_group['notes'].each do |k,v|
     footnotes[k] = v
@@ -63,31 +71,31 @@ YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'fea
     output << "<td>#{backend['gems'] || '-'}</td>"
 
     features = backend['features'] | (feature_group['features'] || [])
-    %w{threadsafe multiprocess increment create expires persist each_key}.each do |feature|
-      mark = if features.include? feature
-               "✓"
-             elsif backend['unknown'] && backend['unknown'].include?(feature)
-               "?"
-             else
-               "✗"
-             end
+    %w{threadsafe multiprocess increment create expires persist each_key bulk_read bulk_write}.each do |feature|
+      supported = if features.include? feature
+                    "yes"
+                  elsif backend['unknown'] && backend['unknown'].include?(feature)
+                    "unknown"
+                  else
+                    "no"
+                  end
 
       note = if backend['notes'] && backend['notes'][feature]
-               "<sup>[#{footnotes.keys.index(backend['notes'][feature]) + 1}]</sup>"
+               "<sup>#{footnotes.keys.index(backend['notes'][feature]) + 1}</sup>"
              else
                ''
              end
 
-      colour = case mark
-               when "✓"
-                 '#5F5'
-               when "✗"
-                 '#F44'
-               when '?'
-                 '#55F'
-               end
+      mark = case supported
+              when "yes"
+               "✓"
+              when "no"
+                "✗"
+              when "unknown"
+                '?'
+              end
 
-      output << %{<td style="text-align:center;background:#{colour}">#{mark}#{note}</td>}
+      output << %{<td class="feature #{supported}">#{mark}#{note}</td>}
     end
 
     html_description = if backend['description']
@@ -98,7 +106,6 @@ YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'fea
     output << "<td>#{html_description}</td>"
 
     output << '</tr>'
-    #<td>Client</td><td>-</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5"></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td style="text-align:center;background:#55F">?<sup>[5]</sup></td><td>Moneta client adapter</td></tr>
     output << "\n\n"
   end
 
@@ -108,7 +115,7 @@ end
 output << "</table>\n\n"
 
 footnotes.each_value.each_with_index do |note, idx|
-  output << "* [#{idx+1}]: #{note.lines.map(&:strip).join(" ")}\n"
+  output << "#{idx+1}. #{note.lines.map(&:strip).join(" ")}\n"
 end
 
 readme = File.open('README.md', 'r+')
