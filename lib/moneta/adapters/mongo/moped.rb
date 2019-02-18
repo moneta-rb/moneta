@@ -71,9 +71,9 @@ module Moneta
       end
 
       # (see Proxy#each_key)
-      def each_key(&block)
+      def each_key
         return enum_for(:each_key) unless block_given?
-        @collection.find().each { |doc| yield(doc.fetch('_id').data) }
+        @collection.find.each { |doc| yield from_binary(doc[:_id]) }
         self
       end
 
@@ -115,6 +115,48 @@ module Moneta
       # (see Proxy#clear)
       def clear(options = {})
         @collection.find.remove_all
+        self
+      end
+
+      # (see Proxy#slice)
+      def slice(*keys, **options)
+        query = @collection.find(_id: {:$in => keys.map(&method(:to_binary))})
+        pairs = query.map do |doc|
+          next if doc[@expires_field] && doc[@expires_field] < Time.now
+          [from_binary(doc[:_id]), doc_to_value(doc)]
+        end.compact
+
+        if (expires = expires_at(options, nil)) != nil
+          query.update_all(:$set => { @expires_field => expires || nil })
+        end
+
+        pairs
+      end
+
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        @backend.with(safe: true, consistency: :strong) do |safe|
+          collection = safe[@collection.name]
+          existing = collection.
+            find(_id: {:$in => pairs.map { |key, _| to_binary(key) }.to_a}).
+            map{ |doc| [from_binary(doc[:_id]), doc_to_value(doc)] }.
+            to_h
+
+          update_pairs, insert_pairs = pairs.partition { |key, _| existing.key?(key) }
+          unless insert_pairs.empty?
+            collection.insert(insert_pairs.map do |key, value|
+              value_to_doc(to_binary(key), value, options)
+            end)
+          end
+
+          update_pairs.each do |key, value|
+            value = yield(key, existing[key], value) if block_given?
+            binary = to_binary(key)
+            collection.
+              find(_id: binary).
+              update(value_to_doc(binary, value, options))
+          end
+        end
         self
       end
     end

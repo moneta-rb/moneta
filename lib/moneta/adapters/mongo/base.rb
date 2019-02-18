@@ -19,6 +19,25 @@ module Moneta
         @type_field = options.delete(:type_field) || 'type'
       end
 
+      # (see Proxy#fetch_values)
+      def fetch_values(*keys, **options)
+        return values_at(*keys, **options) unless block_given?
+        hash = Hash[slice(*keys, **options)]
+        keys.map do |key|
+          if hash.key?(key)
+            hash[key]
+          else
+            yield key
+          end
+        end
+      end
+
+      # (see Proxy#values_at)
+      def values_at(*keys, **options)
+        hash = Hash[slice(*keys, **options)]
+        keys.map { |key| hash[key] }
+      end
+
       protected
 
       def doc_to_value(doc)
@@ -33,11 +52,7 @@ module Moneta
           doc[@value_field]
         else
           # In ruby_bson version 2 (and probably up), #to_s no longer returns the binary data
-          if doc[@value_field].is_a? ::BSON::Binary and defined? ::BSON::VERSION and ::BSON::VERSION[0].to_i >= 2
-            doc[@value_field].data
-          else
-            doc[@value_field].to_s
-          end
+          from_binary(doc[@value_field])
         end
       end
 
@@ -72,6 +87,16 @@ module Moneta
       def to_binary(s)
         s = s.dup if s.frozen? || s.encoding != Encoding::ASCII_8BIT
         ::BSON::Binary.new(s)
+      end
+
+      if defined?(::BSON::VERSION) and ::BSON::VERSION[0].to_i >= 2
+        def from_binary(binary)
+          binary.is_a?(::BSON::Binary) ? binary.data : binary.to_s
+        end
+      else
+        def from_binary(binary)
+          binary.to_s
+        end
       end
     end
   end
