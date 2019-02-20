@@ -84,7 +84,18 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        @backend.read_multi(*keys)
+        hash = @backend.read_multi(*keys)
+        if (expires = expires_value(options, nil)) != nil
+          hash.each do |key, value|
+            @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+          end
+        end
+        if options[:raw]
+          hash.each do |key, value|
+            hash[key] = value.to_s if value != nil
+          end
+        end
+        hash
       end
 
       # (see Proxy#values_at)
