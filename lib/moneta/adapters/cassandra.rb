@@ -4,7 +4,6 @@ module Moneta
   module Adapters
     # Cassandra backend
     # @api public
-    # @author Potapov Sergey (aka Blake)
     class Cassandra
       include Defaults
       include ExpiresSupport
@@ -13,52 +12,64 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :keyspace ('moneta') Cassandra keyspace
-      # @option options [String] :column_family ('moneta') Cassandra column family
+      # @option options [String] :table ('moneta') Cassandra table
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (9160) Server port
       # @option options [Integer] :expires Default expiration time
-      # @option options [::Cassandra] :backend Use existing backend instance
+      # @option options [::Cassandra::Session] :backend Use existing session
       # @option options Other options passed to `Cassandra#new`
       def initialize(options = {})
         self.default_expires = options.delete(:expires)
-        @cf = (options.delete(:column_family) || 'moneta').to_sym
-        if options[:backend]
-          @backend = options[:backend]
-        else
-          keyspace = options.delete(:keyspace) || 'moneta'
-          options[:retries] ||= 3
-          options[:connect_timeout] ||= 10
-          options[:timeout] ||= 10
-          @backend = ::Cassandra.new('system',
-                                     "#{options[:host] || '127.0.0.1'}:#{options[:port] || 9160}",
-                                     options)
-          unless @backend.keyspaces.include?(keyspace)
-            cf_def = ::Cassandra::ColumnFamily.new(keyspace: keyspace, name: @cf.to_s)
-            ks_def = ::Cassandra::Keyspace.new(name: keyspace,
-                                               strategy_class: 'SimpleStrategy',
-                                               strategy_options: { 'replication_factor' => '1' },
-                                               replication_factor: 1,
-                                               cf_defs: [cf_def])
-            # Wait for keyspace to be created (issue #24)
-            10.times do
-              begin
-                @backend.add_keyspace(ks_def)
-              rescue Exception => ex
-                warn "Moneta::Adapters::Cassandra - #{ex.message}"
-              end
-              break if @backend.keyspaces.include?(keyspace)
-              sleep 0.1
-            end
+        keyspace = options.delete(:keyspace) || 'moneta'
+        @backend = options.delete(:backend) ||
+          begin
+            ::Cassandra.cluster(options).connect(keyspace)
+          rescue ::Cassandra::Errors::InvalidError
+            @backend = ::Cassandra.cluster(options).connect
+            @backend.execute <<-CQL
+              CREATE KEYSPACE #{keyspace}
+              WITH replication = {
+                'class': 'SimpleStrategy',
+                'replication_factor': 1
+              }
+            CQL
+            @backend.execute("USE " + keyspace)
+            @backend
           end
-          @backend.keyspace = keyspace
-        end
+
+        @table = (options.delete(:column_family) || 'moneta').to_sym
+        @key_column = options.delete(:key_column) || 'key'
+        @value_column = options.delete(:value_column) || 'value'
+        @updated_column = options.delete(:updated_column) || 'updated_at'
+        @expired_column = options.delete(:expired_column) || 'expired'
+        @backend.execute <<-CQL
+          CREATE TABLE IF NOT EXISTS #{@table} (
+            #{@key_column} blob,
+            #{@value_column} blob,
+            #{@updated_column} timeuuid,
+            #{@expired_column} boolean,
+            PRIMARY KEY (#{@key_column}, #{@updated_column})
+          )
+        CQL
+
+        prepare_statements
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        if @backend.exists?(@cf, key)
-          load(key, options) if options.include?(:expires)
+        if (expires = expires_value(options, nil)) != nil
+          # Because Cassandra expires each value in a column, rather than the
+          # whole column, when we want to update the expiry we load the value
+          # and then re-set it in order to update the TTL.
+          return false unless
+            row = @backend.execute(@load, arguments: [key]).first and
+            row[@expired_column] != nil
+          @backend.execute(@update_expires, arguments: [
+            (expires || 0).to_i, timestamp, row[@value_column], key, row[@updated_column]
+          ])
           true
+        elsif row = @backend.execute(@key, arguments: [key]).first
+          row[@expired_column] != nil
         else
           false
         end
@@ -66,37 +77,96 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        if value = @backend.get(@cf, key)
-          expires = expires_value(options, nil)
-          @backend.insert(@cf, key, {'value' => value['value'] }, ttl: expires || nil) if expires != nil
-          value['value']
+        if row = @backend.execute(@load, arguments: [key]).first and row[@expired_column] != nil
+          if (expires = expires_value(options, nil)) != nil
+            @backend.execute(@update_expires, arguments: [
+              (expires || 0).to_i, timestamp, row[@value_column], key, row[@updated_column]
+            ])
+          end
+          row[@value_column]
         end
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        @backend.insert(@cf, key, {'value' => value}, ttl: expires_value(options) || nil)
+        expires = expires_value(options)
+        t = timestamp
+        batch = @backend.batch do |batch|
+          batch.add(@store_delete, arguments: [t, key])
+          batch.add(@store, arguments: [key, value, (expires || 0).to_i, t + 1])
+        end
+        @backend.execute(batch, consistency: :all)
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        if value = load(key, options)
-          @backend.remove(@cf, key)
-          value
+        result = @backend.execute(@delete_value, arguments: [key])
+        if row = result.first and row[@expired_column] != nil
+          @backend.execute(@delete, arguments: [timestamp, key, row[@updated_column]])
+          row[@value_column]
         end
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.clear_column_family!(@cf)
+        @backend.execute(@clear)
         self
       end
 
       # (see Proxy#close)
       def close
-        @backend.disconnect!
+        @backend.close_async
+        @backend = nil
         nil
+      end
+
+      private
+
+      def timestamp
+        (Time.now.to_r * 1_000_000).to_i
+      end
+
+      def prepare_statements
+        @key = @backend.prepare(<<-CQL)
+          SELECT #{@updated_column}, #{@expired_column}
+          FROM #{@table} WHERE #{@key_column} = ?
+          LIMIT 1
+        CQL
+        @store_delete = @backend.prepare(<<-CQL)
+          DELETE FROM #{@table}
+          USING TIMESTAMP ?
+          WHERE #{@key_column} = ?
+        CQL
+        @store = @backend.prepare(<<-CQL)
+          INSERT INTO #{@table} (#{@key_column}, #{@value_column}, #{@updated_column}, #{@expired_column})
+          VALUES (?, ?, now(), false)
+          USING TTL ? AND TIMESTAMP ?
+        CQL
+        @load = @backend.prepare(<<-CQL)
+          SELECT #{@value_column}, #{@updated_column}, #{@expired_column}
+          FROM #{@table}
+          WHERE #{@key_column} = ?
+          LIMIT 1
+        CQL
+        @update_expires = @backend.prepare(<<-CQL)
+          UPDATE #{@table}
+          USING TTL ? AND TIMESTAMP ?
+          SET #{@value_column} = ?, #{@expired_column} = false
+          WHERE #{@key_column} = ? AND #{@updated_column} = ?
+        CQL
+        @clear = @backend.prepare("TRUNCATE #{@table}")
+        @delete_value = @backend.prepare(<<-CQL)
+          SELECT #{@value_column}, #{@updated_column}, #{@expired_column}
+          FROM #{@table}
+          WHERE #{@key_column} = ?
+          LIMIT 1
+        CQL
+        @delete = @backend.prepare(<<-CQL, idempotent: true)
+          DELETE FROM #{@table}
+          USING TIMESTAMP ?
+          WHERE #{@key_column} = ? AND #{@updated_column} = ?
+        CQL
       end
     end
   end
