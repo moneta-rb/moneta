@@ -13,6 +13,7 @@ describe 'adapter_activesupportcache_with_default_expires' do
   context 'using MemoryStore' do
     let(:t_res) { 0.125 }
     let(:min_ttl) { t_res }
+    use_timecop
 
     let(:backend) { ActiveSupport::Cache::MemoryStore.new }
     include_examples :adapter_activesupportcache_with_default_expires
@@ -21,6 +22,7 @@ describe 'adapter_activesupportcache_with_default_expires' do
   context 'using MemCacheStore' do
     let(:t_res) { 1 }
     let(:min_ttl) { 2 }
+    use_timecop
 
     let(:backend) { ActiveSupport::Cache::MemCacheStore.new }
     include_examples :adapter_activesupportcache_with_default_expires
@@ -29,6 +31,7 @@ describe 'adapter_activesupportcache_with_default_expires' do
   context 'using RedisCacheStore' do
     let(:t_res) { 1 }
     let(:min_ttl) { t_res }
+    use_timecop
 
     let(:backend) { ActiveSupport::Cache::RedisCacheStore.new(url: 'redis:///2') }
     include_examples :adapter_activesupportcache_with_default_expires
