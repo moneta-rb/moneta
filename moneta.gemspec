@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.homepage         = 'http://github.com/minad/moneta'
+  s.homepage         = 'http://github.com/moneta-rb/moneta'
   s.licenses         = %w(MIT)
   s.require_paths    = %w(lib)
   s.summary          = %{A unified interface to key/value stores, including Redis, Memcached, TokyoCabinet, ActiveRecord and many more}

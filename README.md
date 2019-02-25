@@ -1,6 +1,6 @@
 # Moneta: A unified interface for key/value stores
 
-[![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/minad/moneta.svg?branch=master)](http://travis-ci.org/minad/moneta) [![Code Climate](https://codeclimate.com/github/minad/moneta.svg)](https://codeclimate.com/github/minad/moneta) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/minad/moneta&title=Moneta&language=&tags=github&category=software)
+[![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/moneta-rb/moneta.svg?branch=master)](http://travis-ci.org/moneta-rb/moneta) [![Code Climate](https://codeclimate.com/github/moneta-rb/moneta.svg)](https://codeclimate.com/github/moneta-rb/moneta) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/moneta-rb/moneta&title=Moneta&language=&tags=github&category=software)
 
 Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta supports the well-known
 NoSQL and document based stores.
@@ -29,7 +29,7 @@ same for template languages.
 * Give people a starting point or example code to start working with their favourite key/value store. Feel free to copy code, please mention Moneta then :)
 * Create a reusable piece of code, since similar things are solved over and over again ([Rails](http://rubyonrails.org/) brings its own cache stores, and many frameworks do the same...)
 
-Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/minad/moneta).
+Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/moneta-rb/moneta).
 
 ------
 
@@ -69,12 +69,12 @@ store.close
 
 ## Links
 
-* Source: <http://github.com/minad/moneta>
-* Bugs:   <http://github.com/minad/moneta/issues>
-* Tests and benchmarks: <http://travis-ci.org/minad/moneta>
+* Source: <http://github.com/moneta-rb/moneta>
+* Bugs:   <http://github.com/moneta-rb/moneta/issues>
+* Tests and benchmarks: <http://travis-ci.org/moneta-rb/moneta>
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
-    * GitHub master: <http://rubydoc.info/github/minad/moneta/master/frames>
+    * GitHub master: <http://rubydoc.info/github/moneta-rb/moneta/master/frames>
 
 ------
 
@@ -129,7 +129,7 @@ to upgrade to a real key/value store.
 
 ### Backend feature matrix
 
-__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/minad/moneta/master/file/README.md#backend-matrix)
+__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/moneta-rb/moneta/master/file/README.md#backend-matrix)
 
 <table>
 
@@ -821,9 +821,9 @@ Person.adapter :memory, Moneta.new(:Redis)
 
 ## Testing and Benchmarks
 
-Testing is done using [Travis-CI](http://travis-ci.org/minad/moneta). Currently we support Ruby >= 1.9.3.
+Testing is done using [Travis-CI](http://travis-ci.org/moneta-rb/moneta). Currently we support Ruby >= 1.9.3.
 
-Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/minad/moneta) for each build. Take a look there
+Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build. Take a look there
 to compare the speed of the different key value stores for different key/value sizes and size distributions.
 Feel free to add your own configurations! The impact of Moneta should be minimal since it is only a thin layer
 on top of the different stores.
@@ -834,7 +834,7 @@ on top of the different stores.
 ## How to contribute?
 
 Always feel free to open an issue on
-https://github.com/minad/moneta/issues if something doesn't work
+https://github.com/moneta-rb/moneta/issues if something doesn't work
 as you expect it to work. Feedback is also very welcome!
 
 My only request about patches is that you please try
@@ -843,7 +843,7 @@ to test them before submitting.
 ### Contribute an adapter
 
 If you want support for another adapter you can at first at it to the list of
-missing adapters at https://github.com/minad/moneta/issues/16
+missing adapters at https://github.com/moneta-rb/moneta/issues/16
 
 If you choose to implement an adapter please also add tests. Usually you
 only have to add a few lines to `script/generate-specs` to generate appropriate
