@@ -6,5 +6,5 @@ describe 'adapter_cassandra_with_default_expires', isolate: true do
     Moneta::Adapters::Cassandra.new(keyspace: 'adapter_cassandra_with_default_expires', expires: min_ttl)
   end
 
-  moneta_specs ADAPTER_SPECS.without_increment.without_create.with_native_expires.with_default_expires.with_values(:nil)
+  moneta_specs ADAPTER_SPECS.without_increment.without_create.with_native_expires.with_default_expires.with_values(:nil).with_each_key
 end
