@@ -24,66 +24,144 @@ end
 class MonetaBenchmarks
   DIR = __FILE__ + '.tmp'
 
-  STORES = {
+  mysql_username = ENV['MONETA_MYSQL_USERNAME'] || 'root'
+  mysql_password = ENV['MONETA_MYSQL_PASSWORD']
+  mysql_database1 = ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'
+  mysql_database2 = ENV['MONETA_MYSQL_DATABSASE2'] || 'moneta2'
+
+  postgres_username = ENV['MONETA_POSTGRES_USERNAME'] || 'postgres'
+  postgres_database1 = ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1'
+  postgres_database2 = ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta2'
+
+  STORES = [
     # SDBM accepts only very short key/value pairs (1k for both)
-    # SDBM: { file: "#{DIR}/sdbm" },
+    {name: "SDBM", sizes: [:small], options: {file: "#{DIR}/sdbm"}},
     # YAML is too slow
-    # YAML: { file: "#{DIR}/yaml" },
-    ActiveRecord: {
-      table: 'activerecord',
-      connection: {
-        adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
-        username: ENV['MONETA_MYSQL_USERNAME'] || 'root',
-        database: ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'
+    #{name: "YAML", options: {file: "#{DIR}/yaml"}},
+    {
+      name: "ActiveRecord (MySQL)",
+      adapter: :ActiveRecord,
+      options: {
+        table: 'activerecord',
+        connection: {
+          adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+          username: mysql_username,
+          database: mysql_database1
+        }
       }
     },
-    ActiveSupportCache: {
-      backend: ActiveSupport::Cache::MemoryStore.new
+    {
+      name: "ActiveRecord (Postgres)",
+      adapter: :ActiveRecord,
+      options: {
+        table: 'activerecord',
+        connection: {
+          adapter: (defined?(JRUBY_VERSION) ? 'jdbcpostgresql' : 'postgresql'),
+          database: postgres_database1,
+          username: postgres_username
+        }
+      }
     },
-    Cassandra: {},
-    Client: {},
-    Couch: {},
-    DBM: { file: "#{DIR}/dbm" },
-    DataMapper: { setup: "mysql://#{ENV['MONETA_MYSQL_USERNAME'] || 'root'}:@localhost/#{ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'}", table: 'datamapper' },
-    Daybreak: { file: "#{DIR}/daybreak" },
-    File: { dir: "#{DIR}/file" },
-    GDBM: { file: "#{DIR}/gdbm" },
-    HBase: {},
-    HashFile: { dir: "#{DIR}/hashfile" },
-    KyotoCabinet: { file: "#{DIR}/kyotocabinet.kch" },
-    LRUHash: {},
-    LevelDB: { dir: "#{DIR}/leveldb" },
-    LocalMemCache: { file: "#{DIR}/lmc" },
-    LMDB: {
-      dir: "#{DIR}/lmdb",
-      writemap: true,
-      mapasync: true,
-      nometasync: true,
-      mapsize: 4096 * 3e2
+    {
+      name: "ActiveSupportCache (Memory)",
+      adapter: :ActiveSupportCache,
+      options: {
+        backend: ::ActiveSupport::Cache::MemoryStore.new
+      }
     },
-    MemcachedDalli: {},
-    MemcachedNative: {},
-    Memory: {},
-    MongoMoped: {},
-    MongoOfficial: {},
-    PStore: { file: "#{DIR}/pstore" },
-    Redis: {},
-    RestClient: { url: 'http://localhost:8808/' },
-    Riak: {},
-    Sequel: { table: 'sequel',
-      db: (defined?(JRUBY_VERSION) ?
-              "jdbc:mysql://localhost/#{ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'}?user=#{ENV['MONETA_MYSQL_USERNAME'] || 'root'}" :
-              "mysql2://#{ENV['MONETA_MYSQL_USERNAME'] || 'root'}:@localhost/#{ENV['MONETA_MYSQL_DATABSASE1'] || 'moneta'}") },
-    Sqlite: { file: ':memory:' },
-    TDB: { file: "#{DIR}/tdb" },
-    TokyoCabinet: { file: "#{DIR}/tokyocabinet" },
-    TokyoTyrant: {},
-  }.tap do |stores|
-    if ENV['MONETA_STORES']
-      store_names = ENV['MONETA_STORES'].split(/\s+/).map(&:to_sym)
-      stores.select! { |k,_| store_names.include? k }
-    end
-  end
+    {
+      name: "ActiveSupportCache (Redis)",
+      adapter: :ActiveSupportCache,
+      options: {
+        backend: ::ActiveSupport::Cache::RedisCacheStore.new
+      }
+    },
+    {name: "Cassandra"},
+    {name: "Client"},
+    {name: "Couch"},
+    {
+      name: "DBM",
+      options: {file: "#{DIR}/dbm"}
+    },
+    {
+      name: "DataMapper",
+      options: {
+        setup: "mysql://#{mysql_username}:@localhost/#{mysql_database1}",
+        table: 'datamapper'
+      }
+    },
+    {
+      name: "Daybreak",
+      options: { file: "#{DIR}/daybreak" },
+    },
+    {
+      name: "File",
+      options: {
+        dir: "#{DIR}/file"
+      }
+    },
+    {name: "GDBM", options: {file: "#{DIR}/gdbm"}},
+    {name: "HBase"},
+    {name: "HashFile", options: { dir: "#{DIR}/hashfile" }},
+    {name: "KyotoCabinet", options: { file: "#{DIR}/kyotocabinet.kch" }},
+    {name: "LRUHash"},
+    {name: "LevelDB", options: { dir: "#{DIR}/leveldb" }},
+    {name: "LocalMemCache", options: { file: "#{DIR}/lmc" }},
+    {
+      name: "LMDB",
+      options: {
+        dir: "#{DIR}/lmdb",
+        writemap: true,
+        mapasync: true,
+        nometasync: true,
+        mapsize: 4096 * 3e2
+      }
+    },
+    {name: "MemcachedDalli"},
+    unless defined?(JRUBY_VERSION)
+      {name: "MemcachedNative"}
+    end,
+    {name: "Memory"},
+    {name: "MongoMoped"},
+    {name: "MongoOfficial"},
+    {name: "PStore", options: { file: "#{DIR}/pstore" }},
+    {name: "Redis"},
+    {name: "RestClient", options: { url: 'http://localhost:8808/' }},
+    {name: "Riak"},
+    {
+      name: "Sequel (MySQL)",
+      adapter: :Sequel,
+      options: {
+        table: 'sequel',
+        db: (defined?(JRUBY_VERSION) ?
+          "jdbc:mysql://localhost/#{mysql_database1}?user=#{mysql_username}" :
+          "mysql2://#{mysql_username}:@localhost/#{mysql_database1}")
+      }
+    },
+    {
+      name: "Sequel (Postgres)",
+      adapter: :Sequel,
+      options:
+        if defined?(JRUBY_VERSION)
+          {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
+        else
+          {
+            db: "postgres://localhost/#{postgres_database1}",
+            user: postgres_username
+          }
+        end.merge(table: 'sequel')
+    },
+    {
+      name: "Sqlite (Memory)",
+      adapter: :Sqlite,
+      options: {
+        file: ':memory:'
+      }
+    },
+    {name: "TDB", options: { file: "#{DIR}/tdb" }},
+    {name: "TokyoCabinet", options: { file: "#{DIR}/tokyocabinet" }},
+    {name: "TokyoTyrant"},
+  ]
 
   CONFIGS = {
     uniform_small: {
@@ -239,25 +317,27 @@ class MonetaBenchmarks
   end
 
   def test_stores
-    STORES.each do |name, options|
+    @stores.each do |spec|
+      adapter = spec[:adapter] || spec[:name].to_sym
+      options = spec[:options] || {}
       begin
-        if name == :DataMapper
+        if adapter == :DataMapper
           begin
             require 'dm-core'
             DataMapper.setup(:default, adapter: :in_memory)
           rescue LoadError => ex
             puts "\e[31mFailed to load DataMapper - #{ex.message}\e[0m"
           end
-        elsif name == :Riak
+        elsif adapter == :Riak
           require 'riak'
           Riak.disable_list_keys_warnings = true
         end
 
-        cache = Moneta.new(name, options.dup)
+        cache = Moneta.new(adapter, options.dup)
         cache['test'] = 'test'
       rescue Exception => ex
-        puts "\e[31m#{name} not benchmarked - #{ex.message}\e[0m"
-        STORES.delete(name)
+        puts "\e[31m#{spec[:name]} not benchmarked - #{ex.message}\e[0m"
+        @stores.delete(spec)
       ensure
         (cache.close rescue nil) if cache
       end
@@ -309,10 +389,13 @@ class MonetaBenchmarks
     end
   end
 
-  def benchmark_store(name, options)
+  def benchmark_store(spec)
+    name = spec[:name]
+    adapter = spec[:adapter] || spec[:name].to_sym
+    options = spec[:options] || {}
     puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34m#{name}\n\e[34m#{SEPARATOR}\e[0m"
 
-    store = Moneta.new(name, options.dup)
+    store = Moneta.new(adapter, options.dup)
 
     @stats[name] = {
       write: [],
@@ -362,8 +445,8 @@ class MonetaBenchmarks
   end
 
   def run_benchmarks
-    STORES.each do |name, options|
-      benchmark_store(name, options)
+    @stores.each do |spec|
+      benchmark_store(spec)
       sleep 1
     end
   end
@@ -381,6 +464,18 @@ class MonetaBenchmarks
       puts "Configuration #{@config_name} not found"
       exit
     end
+
+    @size = @config_name.to_s.split('_').last.to_sym
+    @stores =
+      if ENV['MONETA_STORES']
+        store_names = ENV['MONETA_STORES'].split(/,\s*/)
+        STORES.select { |spec| store_names.any? { |name| name == spec[:name] } }
+      elsif ENV['MONETA_STORES_MATCHING']
+        r = Regex.new(ENV['MONETA_STORES_MATCHING'])
+        STORES.select { |spec| spec.name.match(r) }
+      else
+        STORES
+      end.select { |spec| !spec.key?(:sizes) || spec[:sizes].include?(@size) }
 
     # Disable jruby stdout pollution by memcached
     if defined?(JRUBY_VERSION)
