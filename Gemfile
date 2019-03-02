@@ -19,7 +19,6 @@ gem 'msgpack', platforms: :ruby
 gem 'msgpack-jruby', platforms: :jruby
 gem 'bert', platforms: :ruby
 gem 'php-serialize'
-gem 'nokogiri', '~> 1.6.0'
 
 # Compressors used by Transformer
 gem 'rbzip2', '~> 0.3.0'
