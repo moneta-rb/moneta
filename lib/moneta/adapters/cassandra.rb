@@ -18,32 +18,36 @@ module Moneta
       # @option options [String] :host ('127.0.0.1') Server host name
       # @option options [Integer] :port (9160) Server port
       # @option options [Integer] :expires Default expiration time
-      # @option options [::Cassandra::Session] :backend Use existing session
+      # @option options [String] :key_column ('key') Name of the key column
+      # @option options [String] :value_column ('value') Name of the value column
+      # @option options [String] :updated_column ('updated_at') Name of the column used to track last update
+      # @option options [String] :expired_column ('expired') Name of the column used to track expiry
+      # @option options [Symbol] :read_consistency (:all) Default read consistency
+      # @option options [Symbol] :wtite_consistency (:all) Default write consistency
+      # @option options [::Cassandra::Session] :backend Existing session to use
       # @option options Other options passed to `Cassandra#new`
       def initialize(options = {})
         self.default_expires = options.delete(:expires)
         keyspace = options.delete(:keyspace) || 'moneta'
-        @backend = options.delete(:backend) ||
-          begin
-            ::Cassandra.cluster(options).connect(keyspace)
-          rescue ::Cassandra::Errors::InvalidError
-            @backend = ::Cassandra.cluster(options).connect
-            @backend.execute <<-CQL
-              CREATE KEYSPACE #{keyspace}
-              WITH replication = {
-                'class': 'SimpleStrategy',
-                'replication_factor': 1
-              }
-            CQL
-            @backend.execute("USE " + keyspace)
-            @backend
-          end
 
         @table = (options.delete(:column_family) || 'moneta').to_sym
         @key_column = options.delete(:key_column) || 'key'
         @value_column = options.delete(:value_column) || 'value'
         @updated_column = options.delete(:updated_column) || 'updated_at'
         @expired_column = options.delete(:expired_column) || 'expired'
+        @read_consistency = options.delete(:read_consistency) || :all
+        @write_consistency = options.delete(:write_consistency) || :all
+
+        @backend = options.delete(:backend) ||
+          begin
+            ::Cassandra.cluster(options).connect(keyspace)
+          rescue ::Cassandra::Errors::InvalidError
+            @backend = ::Cassandra.cluster(options).connect
+            create_keyspace(keyspace)
+            @backend.execute("USE " + keyspace)
+            @backend
+          end
+
         @backend.execute <<-CQL
           CREATE TABLE IF NOT EXISTS #{@table} (
             #{@key_column} blob,
@@ -59,18 +63,19 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
+        rc, wc = consistency(options)
         if (expires = expires_value(options, nil)) != nil
           # Because Cassandra expires each value in a column, rather than the
           # whole column, when we want to update the expiry we load the value
           # and then re-set it in order to update the TTL.
           return false unless
-            row = @backend.execute(@load, arguments: [key]).first and
+            row = @backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and
             row[@expired_column] != nil
-          @backend.execute(@update_expires, arguments: [
+          @backend.execute(@update_expires, options.merge(consistency: wc, arguments: [
             (expires || 0).to_i, timestamp, row[@value_column], key, row[@updated_column]
-          ])
+          ]))
           true
-        elsif row = @backend.execute(@key, arguments: [key]).first
+        elsif row = @backend.execute(@key, options.merge(consistency: rc, arguments: [key])).first
           row[@expired_column] != nil
         else
           false
@@ -79,11 +84,12 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        if row = @backend.execute(@load, arguments: [key]).first and row[@expired_column] != nil
+        rc, wc = consistency(options)
+        if row = @backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and row[@expired_column] != nil
           if (expires = expires_value(options, nil)) != nil
-            @backend.execute(@update_expires, arguments: [
+            @backend.execute(@update_expires, options.merge(consistency: wc, arguments: [
               (expires || 0).to_i, timestamp, row[@value_column], key, row[@updated_column]
-            ])
+            ]))
           end
           row[@value_column]
         end
@@ -91,21 +97,23 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
+        _, wc = consistency(options)
         expires = expires_value(options)
         t = timestamp
         batch = @backend.batch do |batch|
           batch.add(@store_delete, arguments: [t, key])
           batch.add(@store, arguments: [key, value, (expires || 0).to_i, t + 1])
         end
-        @backend.execute(batch, consistency: :all)
+        @backend.execute(batch, options.merge(consistency: wc))
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        result = @backend.execute(@delete_value, arguments: [key])
+        rc, wc = consistency(options)
+        result = @backend.execute(@delete_value, options.merge(consistency: rc, arguments: [key]))
         if row = result.first and row[@expired_column] != nil
-          @backend.execute(@delete, arguments: [timestamp, key, row[@updated_column]])
+          @backend.execute(@delete, options.merge(consistency: wc, arguments: [timestamp, key, row[@updated_column]]))
           row[@value_column]
         end
       end
@@ -118,15 +126,16 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @backend.close_async
+        @backend.close
         @backend = nil
         nil
       end
 
       # (see Proxy#each_key)
       def each_key
+        rc, _ = consistency
         return enum_for(:each_key) unless block_given?
-        result = @backend.execute(@each_key, page_size: 100)
+        result = @backend.execute(@each_key, consistency: rc, page_size: 100)
         loop do
           result.each do |row|
             next if row[@expired_column] == nil
@@ -141,7 +150,8 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        result = @backend.execute(@slice, arguments: [keys])
+        rc, wc = consistency(options)
+        result = @backend.execute(@slice, options.merge(consistency: rc, arguments: [keys]))
         expires = expires_value(options, nil)
         updated = [] if expires != nil
         pairs = result.map do |row|
@@ -161,7 +171,7 @@ module Moneta
             end
           end
 
-          @backend.execute(batch)
+          @backend.execute(batch, options.merge(consistency: wc))
         end
 
         pairs
@@ -202,6 +212,7 @@ module Moneta
           end
         end
 
+        rc, wc = consistency(options)
         expires = expires_value(options)
         t = timestamp
         batch = @backend.batch do |batch|
@@ -210,7 +221,7 @@ module Moneta
             batch.add(@store, arguments: [key, value, (expires || 0).to_i, t + 1])
           end
         end
-        @backend.execute(batch, consistency: :all)
+        @backend.execute(batch, options.merge(consistency: wc))
 
         self
       end
@@ -219,6 +230,19 @@ module Moneta
 
       def timestamp
         (Time.now.to_r * 1_000_000).to_i
+      end
+
+      def create_keyspace(keyspace)
+        @backend.execute <<-CQL
+          CREATE KEYSPACE IF NOT EXISTS #{keyspace}
+          WITH replication = {
+            'class': 'SimpleStrategy',
+            'replication_factor': 1
+          }
+        CQL
+      rescue ::Cassandra::Errors::TimeoutError
+        tries ||= 0
+        if (tries += 1) <= 3; retry else raise end
       end
 
       def prepare_statements
@@ -275,6 +299,13 @@ module Moneta
           USING TIMESTAMP ?
           WHERE #{@key_column} IN ?
         CQL
+      end
+
+      def consistency(options={})
+        [
+          options[:read_consistency] || @read_consistency,
+          options[:write_consistency] || @write_consistency
+        ]
       end
     end
   end
