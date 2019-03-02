@@ -1,4 +1,4 @@
-describe 'adapter_localmemcache', broken: true do
+describe 'adapter_localmemcache', unsupported: defined?(JRUBY_VERSION) do
   moneta_build do
     Moneta::Adapters::LocalMemCache.new(file: File.join(tempdir, "adapter_localmemcache"))
   end

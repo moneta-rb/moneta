@@ -1,4 +1,4 @@
-describe 'standard_localmemcache_with_expires', broken: true do
+describe 'standard_localmemcache_with_expires', unsupported: defined?(JRUBY_VERSION) do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
   use_timecop

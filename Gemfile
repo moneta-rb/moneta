@@ -50,7 +50,7 @@ gem 'cassandra-driver'
 gem 'tokyotyrant'
 #gem 'ruby-tokyotyrant', platforms: :ruby
 #gem 'hbaserb'
-#gem 'localmemcache', platforms: :ruby
+gem 'localmemcache', platforms: :ruby
 gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby
 gem 'lmdb', platforms: :mri
