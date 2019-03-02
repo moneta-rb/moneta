@@ -77,7 +77,7 @@ class MonetaBenchmarks
       }
     },
     {name: "Cassandra"},
-    {name: "Client"},
+    {name: "Client (Memory)", adapter: :Client},
     {name: "Couch"},
     {
       name: "DBM",
@@ -161,7 +161,7 @@ class MonetaBenchmarks
     {name: "TDB", options: { file: "#{DIR}/tdb" }},
     {name: "TokyoCabinet", options: { file: "#{DIR}/tokyocabinet" }},
     {name: "TokyoTyrant"},
-  ]
+  ].compact
 
   CONFIGS = {
     uniform_small: {
