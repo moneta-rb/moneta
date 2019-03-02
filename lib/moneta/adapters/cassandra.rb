@@ -186,6 +186,35 @@ module Moneta
         end
       end
 
+      # (see Proxy#merge!)
+      def merge!(pairs, options = {})
+        keys = pairs.map { |k, _| k }.to_a
+        return self if keys.empty?
+
+        if block_given?
+          existing = Hash[slice(*keys, **options)]
+          pairs = pairs.map do |key, new_value|
+            if existing.key?(key)
+              [key, yield(key, existing[key], new_value)]
+            else
+              [key, new_value]
+            end
+          end
+        end
+
+        expires = expires_value(options)
+        t = timestamp
+        batch = @backend.batch do |batch|
+          batch.add(@merge_delete, arguments: [t, keys])
+          pairs.each do |key, value|
+            batch.add(@store, arguments: [key, value, (expires || 0).to_i, t + 1])
+          end
+        end
+        @backend.execute(batch, consistency: :all)
+
+        self
+      end
+
       private
 
       def timestamp
@@ -239,6 +268,11 @@ module Moneta
         @slice = @backend.prepare(<<-CQL)
           SELECT #{@key_column}, #{@value_column}, #{@updated_column}, #{@expired_column}
           FROM #{@table}
+          WHERE #{@key_column} IN ?
+        CQL
+        @merge_delete = @backend.prepare(<<-CQL)
+          DELETE FROM #{@table}
+          USING TIMESTAMP ?
           WHERE #{@key_column} IN ?
         CQL
       end
