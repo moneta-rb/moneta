@@ -8,5 +8,5 @@ describe 'cache_memory_null' do
     end
   end
 
-  moneta_specs ADAPTER_SPECS.without_persist.returnsame
+  moneta_specs ADAPTER_SPECS.without_persist.returnsame.with_each_key
 end

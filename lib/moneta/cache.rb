@@ -101,9 +101,19 @@ module Moneta
       @adapter.close
     end
 
+    # (see Proxy#each_key)
+    def each_key(&block)
+      raise NotImplementedError, 'adapter doesn\'t support #each_key' \
+        unless supports? :each_key
+
+      return enum_for(:each_key) unless block_given?
+      @adapter.each_key(&block)
+      self
+    end
+
     # (see Proxy#features)
     def features
-      @features ||= ((@cache.features + [:create, :increment]) & @adapter.features - [:each_key]).freeze
+      @features ||= ((@cache.features + [:create, :increment, :each_key]) & @adapter.features).freeze
     end
   end
 end

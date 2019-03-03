@@ -9,7 +9,7 @@ describe 'cache_file_memory' do
     end
   end
 
-  moneta_specs ADAPTER_SPECS.returnsame
+  moneta_specs ADAPTER_SPECS.returnsame.with_each_key
 
   it 'stores loaded values in cache' do
     store.adapter['foo'] = 'bar'
