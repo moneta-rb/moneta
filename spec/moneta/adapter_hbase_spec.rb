@@ -1,4 +1,4 @@
-describe 'adapter_hbase', broken: true do
+describe 'adapter_hbase', unstable: true do
   moneta_build do
     Moneta::Adapters::HBase.new(table: 'adapter_hbase')
   end

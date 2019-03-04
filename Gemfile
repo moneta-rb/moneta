@@ -49,7 +49,7 @@ gem 'riak-client'
 gem 'cassandra-driver'
 gem 'tokyotyrant'
 #gem 'ruby-tokyotyrant', platforms: :ruby
-#gem 'hbaserb'
+gem 'hbaserb'
 gem 'localmemcache', platforms: :ruby
 gem 'tdb', platforms: :ruby
 gem 'leveldb-ruby', platforms: :ruby

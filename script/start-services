@@ -3,6 +3,9 @@
 echo Starting TokyoTyrant ...
 /usr/sbin/ttserver -dmn -pid /tmp/ttserver.pid -log /tmp/ttserver.log -port 1978
 
+# Start HBase
+$(dirname $0)/start-hbase
+
 # Waiting for servers to start
 sleep 3
 

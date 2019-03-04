@@ -20,7 +20,10 @@ addons:
 before_install:
   - sudo apt-get install -qq libtokyocabinet9 libtokyocabinet-dev libkyotocabinet16 libkyotocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - downloads
 before_script:
   - mysql -e 'create database moneta;'
   - mysql -e 'create database moneta2;'

@@ -1,0 +1,46 @@
+#!/bin/sh
+
+cd $(dirname $(dirname $0))
+
+mkdir -p hbase
+mkdir -p zookeeper
+mkdir -p downloads
+root=$(pwd)
+
+version=$(curl -sS https://www-us.apache.org/dist/hbase/stable/ | grep -oP '(?<=hbase-)(\d+\.?)+' | head -n1)
+
+echo HBase stable version is $version
+
+if [ ! -f downloads/hbase-$version-bin.tar.gz ]; then
+  echo Downloading HBase ...
+  wget -P downloads http://www-us.apache.org/dist/hbase/stable/hbase-$version-bin.tar.gz
+fi
+
+echo Extracting HBase ...
+cd hbase
+tar -zxf $root/downloads/hbase-$version-bin.tar.gz
+
+echo Configuring HBase ...
+echo "export JAVA_HOME=/usr" >> hbase-$version/conf/hbase-env.sh
+tee <<-EOF > hbase-$version/conf/hbase-site.xml
+<configuration>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>file://$root/hbase</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>$root/zookeeper</value>
+  </property>
+  <property>
+    <name>hbase.unsafe.stream.capability.enforce</name>
+    <value>false</value>
+  </property>
+</configuration>
+EOF
+
+echo Launching HBase ...
+./hbase-$version/bin/start-hbase.sh
+./hbase-$version/bin/hbase-daemon.sh start thrift
+
+cd $root
