@@ -1,6 +1,19 @@
 #!/usr/bin/env ruby
 
+ENV['PARALLEL_TESTS'] = 'yes'
+
 files = Dir['spec/**/*_spec.rb', 'test/**/*_test.rb'].sort
+require 'multi_json'
+
+def tag_args tags
+  tags.flat_map{ |tag| ['--tag', tag] }
+end
+
+def example_ids tags, specs
+  json = `bundle exec rspec -f j --dry-run #{tag_args(tags).join(' ')} -- #{specs.join(' ')}`
+  data = MultiJson.load(json)
+  data['examples'].map{ |example| example['id'] }
+end
 
 # Shuffle specs to ensure equal distribution over the test groups
 # We have to shuffle with the same seed every time because rake is started
@@ -15,7 +28,7 @@ n, max = if ARGV.first and matches = ARGV.first.match(/^(\d+)\/(\d+)$/)
 				 else
 				   [1, 1]
   			 end
-  			 
+
 if n == max
   files = files[(n - 1) * (files.size / max)..-1]
 else
@@ -27,22 +40,22 @@ specs, tests = files.partition { |file| file.match /_spec\.rb$/ }
 puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n" unless specs.empty?
 puts "The following tests will be executed:\n\t#{tests.join "\n\t"}\n\n" unless tests.empty?
 
-def tag_args tags
-  tags.flat_map{ |tag| ['--tag', tag] }
-end
-
 tags = ARGV.dup
 results = []
 unless specs.empty?
+  # run all non :isolate examples in parallel
   results << system(*%w{bundle exec parallel_rspec --},
                     *tag_args(tags | %w{~isolate}),
                     '--',
                     *specs)
 
-  results << system(*%w{bundle exec rspec},
-                    *tag_args(tags | %w{isolate}),
-                    '--',
-                    *specs)
+  # find the example IDs of the isolate examples to be run in serial
+  ids = example_ids(tags, specs) - example_ids(tags | %w{~isolate}, specs)
+  unless ids.empty?
+    results << system(*%w{bundle exec rspec},
+                      '--',
+                      *ids)
+  end
 end
 
 tests.each do |test|

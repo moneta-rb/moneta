@@ -403,6 +403,7 @@ RSpec.configure do |config|
   config.color = true
   #config.tty = true
   #config.formatter = ENV['PARALLEL_TESTS'] ? MonetaParallelFormatter : :progress
+  config.silence_filter_announcements = true if ENV['PARALLEL_TESTS']
 
   # Allow "should" syntax as well as "expect"
   config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
