@@ -317,7 +317,7 @@ class MonetaBenchmarks
   end
 
   def test_stores
-    @stores.each do |spec|
+    @stores.select! do |spec|
       adapter = spec[:adapter] || spec[:name].to_sym
       options = spec[:options] || {}
       begin
@@ -335,9 +335,10 @@ class MonetaBenchmarks
 
         cache = Moneta.new(adapter, options.dup)
         cache['test'] = 'test'
+        true
       rescue Exception => ex
         puts "\e[31m#{spec[:name]} not benchmarked - #{ex.message}\e[0m"
-        @stores.delete(spec)
+        false
       ensure
         (cache.close rescue nil) if cache
       end
@@ -471,8 +472,8 @@ class MonetaBenchmarks
         store_names = ENV['MONETA_STORES'].split(/,\s*/)
         STORES.select { |spec| store_names.any? { |name| name == spec[:name] } }
       elsif ENV['MONETA_STORES_MATCHING']
-        r = Regex.new(ENV['MONETA_STORES_MATCHING'])
-        STORES.select { |spec| spec.name.match(r) }
+        r = Regexp.new(ENV['MONETA_STORES_MATCHING'])
+        STORES.select { |spec| spec[:name].match(r) }
       else
         STORES
       end.select { |spec| !spec.key?(:sizes) || spec[:sizes].include?(@size) }
