@@ -25,8 +25,9 @@ describe 'adapter_activesupportcache_with_default_expires', adapter: :ActiveSupp
     let(:t_res) { 1 }
     let(:min_ttl) { 2 }
     use_timecop
+    start_memcached 11223
 
-    let(:backend) { ActiveSupport::Cache::MemCacheStore.new }
+    let(:backend) { ActiveSupport::Cache::MemCacheStore.new('127.0.0.1:11223') }
     include_examples :adapter_activesupportcache_with_default_expires
   end
 

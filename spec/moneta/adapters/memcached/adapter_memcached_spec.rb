@@ -1,13 +1,13 @@
-describe 'adapter_memcached', retry: 3, adapter: :Memcached do
-  # See https://github.com/memcached/memcached/issues/307
-  let(:t_res) { 1 }
-  let(:min_ttl) { 2 }
+require_relative './helper.rb'
 
-  start_memcached 11216
+describe 'adapter_memcached', adapter: :Memcached do
+  include_context :start_memcached, 11216
 
   moneta_build do
     Moneta::Adapters::Memcached.new(server: "127.0.0.1:11216")
   end
 
-  moneta_specs ADAPTER_SPECS.with_native_expires
+  it "is a Memcached adapter" do
+    expect(store).to be_a_memcached_adapter
+  end
 end
