@@ -19,11 +19,21 @@ module Moneta
       # @option options [Integer] :port (9160) Server port
       # @option options [Integer] :expires Default expiration time
       # @option options [String] :key_column ('key') Name of the key column
-      # @option options [String] :value_column ('value') Name of the value column
-      # @option options [String] :updated_column ('updated_at') Name of the column used to track last update
-      # @option options [String] :expired_column ('expired') Name of the column used to track expiry
-      # @option options [Symbol] :read_consistency (:all) Default read consistency
-      # @option options [Symbol] :wtite_consistency (:all) Default write consistency
+      # @option options [String] :value_column ('value') Name of the value
+      #   column
+      # @option options [String] :updated_column ('updated_at') Name of the
+      #   column used to track last update
+      # @option options [String] :expired_column ('expired') Name of the column
+      #   used to track expiry
+      # @option options [Symbol] :read_consistency (:all) Default read
+      #   consistency
+      # @option options [Symbol] :write_consistency (:all) Default write
+      #   consistency
+      # @option options [Proc, Boolean, Hash] :create_keyspace Provide a proc
+      #   for creating the keyspace, or a Hash of options to use when creating
+      #   it, or set to false to disable.  The Proc will only be called if the
+      #   keyspace does not already exist.
+      # @option options [::Cassandra::Cluster] :cluster Existing cluster to use
       # @option options [::Cassandra::Session] :backend Existing session to use
       # @option options Other options passed to `Cassandra#new`
       def initialize(options = {})
@@ -37,16 +47,19 @@ module Moneta
         @expired_column = options.delete(:expired_column) || 'expired'
         @read_consistency = options.delete(:read_consistency) || :all
         @write_consistency = options.delete(:write_consistency) || :all
+        @create_keyspace = options.delete(:create_keyspace)
 
-        @backend = options.delete(:backend) ||
+        unless @backend = options.delete(:backend)
+          cluster = options.delete(:cluster) || (@own_cluster = ::Cassandra.cluster(options))
           begin
-            ::Cassandra.cluster(options).connect(keyspace)
+            @backend = cluster.connect(keyspace)
           rescue ::Cassandra::Errors::InvalidError
-            @backend = ::Cassandra.cluster(options).connect
+            @backend = cluster.connect
             create_keyspace(keyspace)
             @backend.execute("USE " + keyspace)
             @backend
           end
+        end
 
         @backend.execute <<-CQL
           CREATE TABLE IF NOT EXISTS #{@table} (
@@ -126,8 +139,12 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @backend.close
+        @backend.close_async
         @backend = nil
+        if @own_cluster
+          @own_cluster.close_async
+          @own_cluster = nil
+        end
         nil
       end
 
@@ -233,13 +250,33 @@ module Moneta
       end
 
       def create_keyspace(keyspace)
-        @backend.execute <<-CQL
-          CREATE KEYSPACE IF NOT EXISTS #{keyspace}
-          WITH replication = {
-            'class': 'SimpleStrategy',
-            'replication_factor': 1
+        options = {
+          replication: {
+            class: 'SimpleStrategy',
+            replication_factor: 1
           }
-        CQL
+        }
+
+        case @create_keyspace
+        when Proc
+          return @create_keyspace.call(keyspace)
+        when false
+          return
+        when Hash
+          options.merge!(@create_keyspace)
+        end
+
+        # This is a bit hacky, but works.  Options in Cassandra look like JSON,
+        # but use single quotes instead of double-quotes.
+        require 'multi_json'
+        option_str = options.map do |key, value|
+          key.to_s + ' = ' +  MultiJson.dump(value).gsub('"', "'")
+        end.join(' AND ')
+
+        @backend.execute "CREATE KEYSPACE IF NOT EXISTS %s WITH %s" % [
+          keyspace,
+          option_str
+        ]
       rescue ::Cassandra::Errors::TimeoutError
         tries ||= 0
         if (tries += 1) <= 3; retry else raise end
