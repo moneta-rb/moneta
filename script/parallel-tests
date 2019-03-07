@@ -2,7 +2,6 @@
 
 ENV['PARALLEL_TESTS'] = 'yes'
 
-files = Dir['spec/**/*_spec.rb', 'test/**/*_test.rb'].sort
 require 'multi_json'
 
 def tag_args tags
@@ -15,51 +14,64 @@ def example_ids tags, specs
   data['examples'].map{ |example| example['id'] }
 end
 
-# Shuffle specs to ensure equal distribution over the test groups
-# We have to shuffle with the same seed every time because rake is started
-# multiple times!
-old_seed = srand(43)
-files.shuffle!
-srand(old_seed)
-
-n, max = if ARGV.first and matches = ARGV.first.match(/^(\d+)\/(\d+)$/)
-					 ARGV.shift
-           matches[1..-1].map(&:to_i)
-				 else
-				   [1, 1]
-  			 end
-
-if n == max
-  files = files[(n - 1) * (files.size / max)..-1]
-else
-  files = files[(n - 1) * (files.size / max), files.size / max]
+def run(*args)
+  pid = spawn(*args)
+  Signal.trap("INT") { Process.kill("INT", pid) }
+  Process.wait(pid)
+  $? == 0
+ensure
+  Signal.trap("INT", "DEFAULT")
 end
 
-specs, tests = files.partition { |file| file.match /_spec\.rb$/ }
+tags = ARGV.take_while { |arg| arg[0] != '-' }
+ARGV.shift(tags.length)
+opts = []
+files = nil
+while arg = ARGV.shift
+  case arg
+  when '--'
+    files = ARGV
+    break
+  when '--remainder'
+    files = Dir['spec/**/*_spec.rb', 'test/**/*_test.rb']
+    existing = File.open('.travis.yml').each_line.flat_map do |line|
+      next unless matches = line.match(%r{((?:test|spec)/(?:[\w\.]+/?)*)})
+      path = matches[1]
+      path[-3..-1] == '.rb' ? path : path + '/**/*.rb'
+    end.compact
+    files -= Dir[*existing]
+  else
+    opts << arg
+  end
+end
+
+files ||= Dir['spec', 'test/**/*_test.rb']
+specs, tests = files.partition { |file| file.match /^spec/ }
 
 puts "The following specs will be executed:\n\t#{specs.join "\n\t"}\n\n" unless specs.empty?
 puts "The following tests will be executed:\n\t#{tests.join "\n\t"}\n\n" unless tests.empty?
 
-tags = ARGV.dup
 results = []
 unless specs.empty?
   # run all non :isolate examples in parallel
-  results << system(*%w{bundle exec parallel_rspec --},
-                    *tag_args(tags | %w{~isolate}),
-                    '--',
-                    *specs)
+  results << run(*%w{bundle exec parallel_rspec --},
+                 *opts,
+                 *tag_args(tags | %w{~isolate}),
+                 '--',
+                 *specs)
 
   # find the example IDs of the isolate examples to be run in serial
   ids = example_ids(tags, specs) - example_ids(tags | %w{~isolate}, specs)
   unless ids.empty?
-    results << system(*%w{bundle exec rspec},
-                      '--',
-                      *ids)
+    results << run(*%w{bundle exec rspec},
+                   *opts,
+                   '--',
+                   *ids)
   end
 end
 
 tests.each do |test|
-  results << system(*%w{bundle exec ruby}, test)
+  results << run(*%w{bundle exec ruby}, test)
 end
 
 if results.any?{ |result| !result }

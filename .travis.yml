@@ -34,16 +34,60 @@ env:
   global:
     - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="
   matrix:
-    - SCRIPT='parallel-tests 1/10 ~unstable'
-    - SCRIPT='parallel-tests 2/10 ~unstable'
-    - SCRIPT='parallel-tests 3/10 ~unstable'
-    - SCRIPT='parallel-tests 4/10 ~unstable'
-    - SCRIPT='parallel-tests 5/10 ~unstable'
-    - SCRIPT='parallel-tests 6/10 ~unstable'
-    - SCRIPT='parallel-tests 7/10 ~unstable'
-    - SCRIPT='parallel-tests 8/10 ~unstable'
-    - SCRIPT='parallel-tests 9/10 ~unstable'
-    - SCRIPT='parallel-tests 10/10 ~unstable'
+    - SCRIPT='parallel-tests ~unstable --
+      test/action_dispatch/session_moneta_store_test.rb
+      spec/moneta/adapters/activerecord
+      spec/moneta/adapters/localmemcache
+      spec/moneta/adapters/activesupportcache
+      spec/moneta/adapters/lruhash
+      spec/moneta/adapters/gdbm
+      spec/moneta/adapters/null
+      spec/moneta/adapters/datamapper
+      spec/moneta/adapters/pstore
+      spec/moneta/adapters/daybreak
+      spec/moneta/adapters/redis
+      spec/moneta/adapters/dbm
+      spec/moneta/adapters/restclient
+      spec/moneta/adapters/file
+      spec/moneta/adapters/fog
+      spec/moneta/adapters/sdbm
+      spec/moneta/adapters/tokyocabinet
+      spec/moneta/adapters/leveldb
+      spec/moneta/adapters/tokyotyrant
+      spec/moneta/adapters/lmdb
+      spec/moneta/adapters/yaml
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/adapters/client
+      spec/moneta/adapters/memory
+      spec/moneta/adapters/cookie
+      spec/moneta/adapters/mongo
+      spec/moneta/adapters/tdb
+      spec/moneta/adapters/kyotocabinet
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/adapters/couch
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/adapters/memcached/dalli
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/adapters/memcached/native
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/adapters/cassandra/adapter_cassandra_spec.rb
+      spec/moneta/adapters/cassandra/standard_cassandra_spec.rb
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/adapters/cassandra/adapter_cassandra_with_default_expires_spec.rb
+      spec/moneta/adapters/hashfile
+      spec/moneta/adapters/sqlite
+      spec/moneta/adapters/sequel
+      '
+    - SCRIPT='parallel-tests ~unstable --
+      spec/moneta/proxies
+      '
+    - SCRIPT='parallel-tests ~unstable --remainder'
     - SCRIPT='parallel-tests unstable'
     - SCRIPT='benchmarks uniform_small'
     - SCRIPT='benchmarks uniform_medium'
