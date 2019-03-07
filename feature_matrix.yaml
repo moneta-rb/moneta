@@ -9,72 +9,72 @@ notes:
 backends:
   - adapter: Mongo
     gems: mongo or moped
-    features: [ threadsafe, multiprocess, increment, create, expires ]
+    features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
     description: "[MongoDB](http://www.mongodb.org/) database"
   - adapter: MongoOfficial
     gems: mongo
-    features: [ threadsafe, multiprocess, increment, create, expires ]
+    features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
     description: "[MongoDB](http://www.mongodb.org/) database"
   - adapter: MongoMoped
     gems: moped
-    features: [ threadsafe, multiprocess, increment, create, expires ]
+    features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
     description: "[MongoDB](http://www.mongodb.org/) database"
   - adapter: Redis
     gems: redis
-    features: [ threadsafe, multiprocess, increment, create, expires ]
+    features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
     description: "[Redis](http://redis.io/) database"
   - adapter: ActiveRecord
     gems: activerecord
-    features: [ threadsafe, multiprocess, increment, create ]
+    features: [ threadsafe, multiprocess, increment, create, each_key, bulk_read, bulk_write ]
     description: "[ActiveRecord](https://rubygems.org/gems/activerecord) ORM"
   - adapter: File
-    features: [ threadsafe, multiprocess, increment, create ]
+    features: [ threadsafe, multiprocess, increment, create, each_key ]
     description: "File store"
   - adapter: LMDB
     gems: lmdb
-    features: [ threadsafe, multiprocess, increment, create ]
+    features: [ threadsafe, multiprocess, increment, create, each_key, bulk_read, bulk_write ]
     description: "[Symas Lightning Memory-Mapped Database (LMDB)](http://symas.com/mdb/)"
   - adapter: Sequel
     gems: sequel
-    features: [ threadsafe, multiprocess, increment, create ]
+    features: [ threadsafe, multiprocess, increment, create, each_key, bulk_read, bulk_write ]
     description: "[Sequel](http://sequel.rubyforge.org/) ORM"
   - adapter: TokyoTyrant
     gems: tokyotyrant or ruby-tokyotyrant
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, bulk_read ]
     description: "[TokyoTyrant](http://fallabs.com/tokyotyrant/) database"
   - adapter: PStore
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, each_key, bulk_read, bulk_write ]
     description: "[PStore](http://ruby-doc.org/stdlib/libdoc/pstore/rdoc/PStore.html) store"
     notes:
       multiprocess: poor multiprocess performance
   - adapter: YAML
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, each_key ]
     description: "[YAML](http://www.ruby-doc.org/stdlib/libdoc/yaml/rdoc/YAML/Store.html) store"
     notes:
       multiprocess: poor multiprocess performance
   - adapter: Sqlite
     gems: sqlite3
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, bulk_read, bulk_write, each_key ]
     description: "[Sqlite3](http://sqlite.org/) database"
     unknown: [ threadsafe ]
     notes:
       multiprocess: poor multiprocess performance
   - adapter: Daybreak
     gems: daybreak
-    features: [ multiprocess, increment, create, each_key ]
+    features: [ multiprocess, increment, create, each_key, bulk_write ]
     description: "Incredibly fast pure-ruby key/value store [Daybreak](http://propublica.github.com/daybreak/)"
   - adapter: DBM
-    features: [ increment, create, each_key ]
+    features: [ increment, create, each_key, bulk_read, bulk_write ]
     description: "[Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html)"
   - adapter: GDBM
-    features: [ increment, create, each_key ]
+    features: [ increment, create, each_key, bulk_read, bulk_write ]
     description: "[GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) database"
   - adapter: LevelDB
     gems: leveldb
-    features: [ increment, create, each_key ]
+    features: [ increment, create, each_key, bulk_read, bulk_write ]
     description: "[LevelDB](http://code.google.com/p/leveldb/) database"
   - adapter: SDBM
-    features: [ increment, create, each_key ]
+    features: [ increment, create, each_key, bulk_read, bulk_write ]
     description: "[SDBM](http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html) database"
   - adapter: TDB
     gems: tdb
@@ -82,7 +82,7 @@ backends:
     description: "[TDB](http://tdb.samba.org/) database"
   - adapter: KyotoCabinet
     gems: kyotocabinet-ruby or kyotocabinet-ruby-reanimated
-    features: [ increment, create, each_key ]
+    features: [ increment, create, each_key, bulk_read, bulk_write ]
     description: "[KyotoCabinet](http://fallabs.com/kyotocabinet/) database"
   - adapter: TokyoCabinet
     gems: tokyocabinet
@@ -94,7 +94,7 @@ backends:
     description: "[DataMapper](http://datamapper.org/) ORM"
   - adapter: Couch
     gems: faraday, multi_json
-    features: [ multiprocess, create ]
+    features: [ multiprocess, create, each_key, bulk_read, bulk_write ]
     description: "[CouchDB](http://couchdb.apache.org/) database"
   - adapter: HBase
     gems: hbaserb
@@ -103,7 +103,7 @@ backends:
     description: "[HBase](http://hbase.apache.org/) database"
   - adapter: Cassandra
     gems: cassandra
-    features: [ multiprocess, expires ]
+    features: [ multiprocess, expires, each_key, bulk_read, bulk_write ]
     unknown: [threadsafe]
     description: "[Cassandra](http://cassandra.apache.org/) distributed database"
   - adapter: LocalMemCache
@@ -136,14 +136,14 @@ notes:
 backends:
   - adapter: MemcachedDalli
     gems: dalli
-    features: [ threadsafe, multiprocess, increment, create, expires ]
+    features: [ threadsafe, multiprocess, increment, create, expires, bulk_read, bulk_write ]
     description: "[Memcached](http://memcached.org/) database with Dalli library"
     notes:
       persist: memcached protocol
   - adapter: Memcached
     gems: dalli or memcached
     features: [ multiprocess, increment, create, expires ]
-    unknown: [threadsafe]
+    unknown: [ threadsafe, bulk_read, bulk_write ]
     description: "[Memcached](http://memcached.org/) database"
     notes:
       persist: memcached protocol
@@ -159,12 +159,12 @@ backends:
     notes:
       multiprocess: in-memory multiprocess caveat
   - adapter: LRUHash
-    features: [ multiprocess, increment, create ]
+    features: [ multiprocess, increment, create, each_key ]
     description: "LRU memory store"
     notes:
       multiprocess: in-memory multiprocess caveat
   - adapter: Memory
-    features: [ multiprocess, increment, create, each_key ]
+    features: [ multiprocess, increment, create, each_key, bulk_read, bulk_write ]
     description: Memory store
     notes:
       multiprocess: in-memory multiprocess caveat

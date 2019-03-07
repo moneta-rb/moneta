@@ -18,7 +18,7 @@ output << <<-TAB.lines.map(&:strip).join
     <th class="feature">Persistent</th>
     <th class="feature">Key Traversal</th>
     <th class="feature">Bulk read<sup>6</sup></th>
-    <th class="feature">Bulk write<sup>6</sup></th>
+    <th class="feature">Bulk write<sup>7</sup></th>
     <th>Description</th>
   </tr>
 TAB
@@ -48,11 +48,15 @@ footnotes = {
   Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to
   `Moneta#new`.
   EOF
-  "bulk read and write" => <<-EOF
-  This refers to the ability of some adapters to read/write multiple keys at
-  once.  All adapters include the relevant methods (`#values_at`, `#merge!`,
-  etc.) but where bulk operations are not supported, these are implemented
-  as repeated calls to the backend for each key.
+  "bulk read" => <<-EOF,
+  This indicates that there is some performance gain when fetching
+  multiple values at once using `#values_at`/`#fetch_values` or `#slice`.
+  For instance, the `MGET` instruction in Redis, or the ability to retrieve
+  several rows in one query in SQL.
+  EOF
+  "bulk write" => <<-EOF
+  This indicates that there is some performance gain when storing multiple
+  key/value pairs at once using `#merge!`/`#update`.
   EOF
 }
 
