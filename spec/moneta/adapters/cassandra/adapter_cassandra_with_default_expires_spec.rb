@@ -2,7 +2,7 @@ require_relative './helper.rb'
 
 describe 'adapter_cassandra_with_default_expires', isolate: true, retry: 3, adapter: :Cassandra do
   let(:t_res) { 1 }
-  let(:min_ttl) { t_res }
+  let(:min_ttl) { 2 }
 
   include_context :global_cassandra_cluster
 
