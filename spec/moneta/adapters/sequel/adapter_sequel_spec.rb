@@ -1,80 +1,58 @@
+require_relative './helper.rb'
 
-describe 'adapter_sequel', adapter: :Sequel do
-  before :all do
-    require 'sequel'
-  end
-
+describe ':Sequel adapter', adapter: :Sequel do
   specs = ADAPTER_SPECS.with_each_key.with_values(:nil)
 
-  shared_examples :adapter_sequel do
-    context 'with MySQL' do
-      moneta_build do
-        Moneta::Adapters::Sequel.new(opts.merge(
-          db: if defined?(JRUBY_VERSION)
-                "jdbc:mysql://localhost/#{mysql_database1}?user=#{mysql_username}"
-              else
-                "mysql2://#{mysql_username}:@localhost/#{mysql_database1}"
-              end
-          ))
-      end
-
-      moneta_specs specs
-    end
-
-    context "with SQLite" do
-      moneta_build do
-        Moneta::Adapters::Sequel.new(opts.merge(
-          db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}sqlite://" + File.join(tempdir, 'adapter_sequel.db')))
-      end
-
-      moneta_specs specs.without_concurrent
-    end
-
-    context "with Postgres" do
-      moneta_build do
-        Moneta::Adapters::Sequel.new(opts.merge(
-          if defined?(JRUBY_VERSION)
-            {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
-          else
-            {
-              db: "postgres://localhost/#{postgres_database1}",
-              user: postgres_username
-            }
-          end
+  context 'with MySQL backend' do
+    moneta_build do
+      Moneta::Adapters::Sequel.new(opts.merge(
+        db: if defined?(JRUBY_VERSION)
+              "jdbc:mysql://localhost/#{mysql_database1}?user=#{mysql_username}"
+            else
+              "mysql2://#{mysql_username}:@localhost/#{mysql_database1}"
+            end
         ))
-      end
-
-      moneta_specs specs
     end
 
-    context "with H2", unsupported: !defined?(JRUBY_VERSION) do
-      moneta_build do
-        Moneta::Adapters::Sequel.new(opts.merge(
-          db: "jdbc:h2:" + tempdir))
-      end
-
-      moneta_specs specs
-    end
+    include_examples :adapter_sequel, specs
   end
 
-  context 'with backend optimisations' do
-    let(:opts) { {table: "adapter_sequel"} }
-
-    include_examples :adapter_sequel
-  end
-
-  context 'without backend optimisations' do
-    let(:opts) do
-      {
-        table: "adapter_sequel",
-        optimize: false
-      }
+  context "with SQLite backend" do
+    moneta_build do
+      Moneta::Adapters::Sequel.new(opts.merge(
+        db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}sqlite://" + File.join(tempdir, 'adapter_sequel.db')))
     end
 
-    include_examples :adapter_sequel
+    include_examples :adapter_sequel, specs.without_concurrent
   end
 
-  context "with Postgres HStore" do
+  context "with Postgres backend" do
+    moneta_build do
+      Moneta::Adapters::Sequel.new(opts.merge(
+        if defined?(JRUBY_VERSION)
+          {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
+        else
+          {
+            db: "postgres://localhost/#{postgres_database1}",
+            user: postgres_username
+          }
+        end
+      ))
+    end
+
+    include_examples :adapter_sequel, specs
+  end
+
+  context "with H2 backend", unsupported: !defined?(JRUBY_VERSION) do
+    moneta_build do
+      Moneta::Adapters::Sequel.new(opts.merge(
+        db: "jdbc:h2:" + tempdir))
+    end
+
+    include_examples :adapter_sequel, specs, optimize: false
+  end
+
+  context "with Postgres HStore backend" do
     moneta_build do
       Moneta::Adapters::Sequel.new(
         if defined?(JRUBY_VERSION)
@@ -86,12 +64,13 @@ describe 'adapter_sequel', adapter: :Sequel do
           }
         end.merge(
           table: 'hstore_table1',
-          hstore: 'row')
+          hstore: 'row'
+        )
       )
     end
 
     # Concurrency is too slow, and binary values cannot be stored in an hstore
-    moneta_specs specs.without_values(:binary).without_concurrent
+    include_examples :adapter_sequel, specs.without_values(:binary).without_concurrent, optimize: false
   end
 
   describe 'table creation' do
@@ -107,15 +86,15 @@ describe 'adapter_sequel', adapter: :Sequel do
 
     before { backend.drop_table?(table_name) }
 
-    shared_examples :create_table do
-      it "creates the table" do
-        store = new_store
-        expect(backend.table_exists?(table_name)).to be true
-        expect(backend[table_name].columns).to include(store.key_column, store.value_column)
-      end
-    end
-
     shared_examples :table_creation do
+      shared_examples :create_table do
+        it "creates the table" do
+          store = new_store
+          expect(backend.table_exists?(table_name)).to be true
+          expect(backend[table_name].columns).to include(store.key_column, store.value_column)
+        end
+      end
+
       context "with :db parameter" do
         moneta_build do
           Moneta::Adapters::Sequel.new(opts.merge(db: conn_str, table: table_name))
