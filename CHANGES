@@ -1,3 +1,33 @@
+1.1.0
+
+* Adapters::ActiveRecord - rewrite to use Arel directly; support for Rails 5
+* Moneta::Server - close all connections when stopping
+* Moneta::Shared - recover from socket errors
+* Transformer - add :urlsafe_base64; use this by default for keys with Couch
+  adapter
+* Adapters::MongoMoped - recover from failed increment
+* Moneta::Pool - fix race condition in #pop (#144)
+* Moneta::Client - raise EOFError if a read fails
+* Moneta::Expires - use Rational objects to get much more accurate time
+  resolution
+* Moneta::Lock/Moneta::Pool - allow wrapped methods to call other wrapped
+  methods
+* Adapters::Sequel - add optimisations for MySQL, PostgreSQL and SQLite
+* Adapters::Sequel - add Postgres+HStore backend
+* Add Adapters::ActiveSupportCache
+* Adapters::Sqlite - add :journal_mode option
+* Add table creation options to Sequel and ActiveRecord adapters
+* Adapters::ActiveRecord - support for forking (#159)
+* Adapters::Cassandra - rewrite to use cassandra-driver gem (#81)
+* Adapters::Couch - add a LRUHash to cache document revs
+* Adapters::KyotoCabinet - implement atomic increment
+* Add :each_key feature and implemented on many adapters; add
+  Moneta::WeakEachKey (#143; see feature matrix)
+* Add bulk read/write methods to the spec; added default implementation to
+  Defaults and fast versions in many adapters (#116; see feature matrix)
+* First class support for latest JRuby (#160)
+* Minimum required MRI version is now 2.2.2 (#135)
+
 1.0.0
 
 * Adapters::Sequel - allow usage of Sequel extensions and connection validation
