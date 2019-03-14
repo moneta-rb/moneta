@@ -11,21 +11,28 @@ output = "<table>\n"
 output << <<-TAB.lines.map(&:strip).join
   <tr>
     <th>Adapter</th><th>Required gems</th>
-    <th style="writing-mode:tb">Multi-thread safe<sup>1</sup></th>
-    <th style="writing-mode:tb">Multi-process safe<sup>2</sup></th>
-    <th style="writing-mode:tb">Atomic increment<sup>3</sup></th>
-    <th style="writing-mode:tb">Atomic create<sup>4</sup></th>
-    <th style="writing-mode:tb">Native expires<sup>5</sup></th>
+    <th style="writing-mode:tb">MRI support<sup>1</sup></th>
+    <th style="writing-mode:tb">JRuby support<sup>1</sup></th>
+    <th style="writing-mode:tb">Multi-thread safe<sup>2</sup></th>
+    <th style="writing-mode:tb">Multi-process safe<sup>3</sup></th>
+    <th style="writing-mode:tb">Atomic increment<sup>4</sup></th>
+    <th style="writing-mode:tb">Atomic create<sup>5</sup></th>
+    <th style="writing-mode:tb">Native expires<sup>6</sup></th>
     <th style="writing-mode:tb">Persistent</th>
     <th style="writing-mode:tb">Key Traversal</th>
-    <th style="writing-mode:tb">Bulk read<sup>6</sup></th>
-    <th style="writing-mode:tb">Bulk write<sup>7</sup></th>
+    <th style="writing-mode:tb">Bulk read<sup>7</sup></th>
+    <th style="writing-mode:tb">Bulk write<sup>8</sup></th>
     <th>Description</th>
   </tr>
 TAB
 output << "\n\n"
 
 footnotes = {
+  "platform" => <<-EOF,
+  Indicates that the adapter is expected to work on this platform.  Most adapters will at least
+  work on MRI, but some are curently considered unstable, in which case they are not supported
+  on any platform.
+  EOF
   "multi-thread safe" => <<-EOF,
   Make adapters thread-safe by using `Moneta::Lock` or by passing the option `threadsafe: true` to
   `Moneta#new`. There is also `Moneta::Pool` which can be used to share a store between multiple
@@ -64,7 +71,7 @@ footnotes = {
 YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'feature_matrix.yaml'))) do |document|
   feature_group = document.to_ruby
 
-  output << %{<tr><th colspan="2">#{feature_group['group']}</th><th colspan="10"></th></tr>\n\n}
+  output << %{<tr><th colspan="2">#{feature_group['group']}</th><th colspan="12"></th></tr>\n\n}
 
   feature_group['notes'].each do |k,v|
     footnotes[k] = v
@@ -76,7 +83,8 @@ YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'fea
     output << "<td>#{backend['gems'] || '-'}</td>"
 
     features = backend['features'] | (feature_group['features'] || [])
-    %w{threadsafe multiprocess increment create expires persist each_key bulk_read bulk_write}.each do |feature|
+    features += backend['platforms'] || []
+    %w{MRI JRuby threadsafe multiprocess increment create expires persist each_key bulk_read bulk_write}.each do |feature|
       supported = if features.include? feature
                     "yes"
                   elsif backend['unknown'] && backend['unknown'].include?(feature)
