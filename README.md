@@ -245,6 +245,7 @@ add additional features to storage backends:
 * `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
 * `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use(:Shared) {}`.
 * `Moneta::WeakIncrement` and `Moneta::WeakCreate` to add `#create` and `#increment` support without atomicity (weak) to stores which don't support it.
+* `Moneta::WeakEachKey` to add key traversal to stores that don't support it, with the important caveat that only those keys previously seen by this proxy will be traversed.
 
 ### Serializers and compressors (`Moneta::Transformer`)
 
@@ -292,7 +293,7 @@ Special transformers:
 
 The Moneta API is purposely extremely similar to the Hash API with a few minor additions.
 Every method takes also a optional option hash. In order so support an identical API across stores,
-Moneta does not support iteration or partial matches.
+Moneta does not support partial matches.
 
 ~~~
 #initialize(options)                      options differs per-store, and is used to set up the store.
@@ -324,6 +325,35 @@ Moneta does not support iteration or partial matches.
 
 #create(key, value, options = {})         create entry. This is an atomic operation which is not supported by all stores.
                                           Returns true if the value was created.
+
+#values_at(*keys, **options)              retrieve multiple keys. Returns an array of equal length to the keys.
+                                          Each entry in the array is either the value corresponding to the key
+                                          in the same position, or nil if the key is not available.
+
+#fetch_values(*keys, **options, &block)   retrieve multiple keys. Return is identical to values_at, except that
+                                          when a block is given it will be called once for each key that is not
+                                          available, and the return value of the block will be used in place of
+                                          nil in the array.
+
+#slice(*keys, **options)                  retrieve multiple keys. Returns an enumerable of key-value pairs,
+                                          one for each of the supplied keys that is present in the store.
+
+#merge!(pairs, options = {})              set values for multiple keys. "pairs" must be an enumerable of
+                                          key-value pairs to be stored. Any existing keys will be clobbered.
+
+#merge!(pairs, options = {}, &block)      set values for multiple keys. For each existing key, execute the block
+                                          passing the key, existing value and new value, and store the return
+                                          value.
+
+#update(pairs, options = {}, &block)      same as merge!
+
+#each_key                                 return an enumerable which will yield all keys in the store, one at a
+                                          time. This method is present if and only if the store supports the
+                                          :each_key feature.
+
+#each_key(&block)                         yield all keys in the store to the block, one at a time. Again, this
+                                          method is present if and only if the store supports the :each_key
+                                          feature.
 
 #clear(options = {})                      clear all keys in this store.
 
@@ -426,6 +456,21 @@ cache = Moneta.build do
 end
 ~~~
 
+### Key traversal
+
+Where supported by the store's backend, it is possible to traverse the keys in
+the store using the `#each_key` method. Support for this can be tested by
+calling `store.supports?(:each_key)`, or checking for the presence of
+`:each_key` in `store.features`.
+
+~~~ ruby
+store.each_key # returns an Enumerable
+store.each_key do |key|
+  store.load(key)  # read operations are supported within the block
+  store[key] = "x" # behaviour of write operations is undefined
+end
+~~~
+
 ### Atomic operations
 
 #### Atomic incrementation and raw access
@@ -487,6 +532,24 @@ if the value was created.
 ~~~ ruby
 store.create('key', 'value') # returns true
 store.create('key', 'other value') # returns false
+~~~
+
+#### Atomic bulk operations
+
+All stores support storage and retrieval of multiple keys using
+`#values_at`/`#fetch_values`/`#slice` and `#merge!`/`#update`. Wherever
+possible, these operations are performed atomically. When this is not possible,
+the `#load` and `#store` methods are called once for each key.
+
+~~~ ruby
+store.merge!('key1' => 'value1', 'key2' => 'value2') # stores two keys
+store.values_at('key1', 'key2', 'key3') # returns ['value1', 'value2', nil]
+store.fetch('key1', 'key3') { |k| k + ' missing' } # returns ['key1', 'key3 missing']
+store.slice('key1', 'key2', 'key3') # returns enumerable of ['key1', 'value1'], ['key2', 'value2']
+
+store.merge!('key2' => 'new value2', 'key3' => 'value3') do |key, value, new_value|
+  [value, new_value].join('+')
+end # stores "value3" and "value2+new value2"
 ~~~
 
 #### Shared/distributed synchronization primitives
@@ -848,10 +911,9 @@ to test them before submitting.
 If you want support for another adapter you can at first at it to the list of
 missing adapters at https://github.com/moneta-rb/moneta/issues/16
 
-If you choose to implement an adapter please also add tests. Usually you
-only have to add a few lines to `script/generate-specs` to generate appropriate
-tests for your adapter. Please check also if travis.yml needs changes, for example
-if you need to start additional services.
+If you choose to implement an adapter please also add tests.  Please check also
+if travis.yml needs changes, for example if you need to start additional
+services.
 
 Check if the default settings in Moneta#new are appropriate for your adapter. If
 not specify a better one.
