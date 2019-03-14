@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# coding: utf-8
 
 require 'rubygems'
 require 'bundler/setup'
@@ -6,19 +7,19 @@ Bundler.require(:doc)
 
 require 'yaml'
 
-output = "<table class=\"backend-feature-matrix\">\n"
+output = "<table>\n"
 output << <<-TAB.lines.map(&:strip).join
   <tr>
     <th>Adapter</th><th>Required gems</th>
-    <th class="feature">Multi-thread safe<sup>1</sup></th>
-    <th class="feature">Multi-process safe<sup>2</sup></th>
-    <th class="feature">Atomic increment<sup>3</sup></th>
-    <th class="feature">Atomic create<sup>4</sup></th>
-    <th class="feature">Native expires<sup>5</sup></th>
-    <th class="feature">Persistent</th>
-    <th class="feature">Key Traversal</th>
-    <th class="feature">Bulk read<sup>6</sup></th>
-    <th class="feature">Bulk write<sup>7</sup></th>
+    <th style="writing-mode:tb">Multi-thread safe<sup>1</sup></th>
+    <th style="writing-mode:tb">Multi-process safe<sup>2</sup></th>
+    <th style="writing-mode:tb">Atomic increment<sup>3</sup></th>
+    <th style="writing-mode:tb">Atomic create<sup>4</sup></th>
+    <th style="writing-mode:tb">Native expires<sup>5</sup></th>
+    <th style="writing-mode:tb">Persistent</th>
+    <th style="writing-mode:tb">Key Traversal</th>
+    <th style="writing-mode:tb">Bulk read<sup>6</sup></th>
+    <th style="writing-mode:tb">Bulk write<sup>7</sup></th>
     <th>Description</th>
   </tr>
 TAB
@@ -99,7 +100,16 @@ YAML.parse_stream(File.read(File.join(File.dirname(File.dirname(__FILE__)), 'fea
                 '?'
               end
 
-      output << %{<td class="feature #{supported}">#{mark}#{note}</td>}
+      colour = case supported
+               when "yes"
+                 '#5F5'
+               when "no"
+                 '#F44'
+               when "unknown"
+                 '#55F'
+               end
+
+      output << %{<td style="text-align:center;background:#{colour}">#{mark}#{note}</td>}
     end
 
     html_description = if backend['description']
