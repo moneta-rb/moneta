@@ -38,6 +38,16 @@ module Moneta
            @create  = @backend.prepare("insert into #{@table} values (?, ?)"),
            @keys    = @backend.prepare("select k from #{@table}"),
            @count   = @backend.prepare("select count(*) from #{@table}")]
+
+        version = @backend.execute("select sqlite_version()").first.first
+        if @can_upsert = ::Gem::Version.new(version) >= ::Gem::Version.new('3.24.0')
+          @stmts << (@increment = @backend.prepare <<-SQL)
+            insert into #{@table} values (?, ?)
+            on conflict (k)
+            do update set v = cast(cast(v as integer) + ? as blob)
+            where v = '0' or v = X'30' or cast(v as integer) != 0
+          SQL
+        end
       end
 
       # (see Proxy#key?)
@@ -66,7 +76,11 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.transaction(:exclusive) { return super }
+        @backend.transaction(:exclusive) { return super } unless @can_upsert
+        @backend.transaction do
+          @increment.execute!(key, amount.to_s, amount)
+          return Integer(load(key))
+        end
       end
 
       # (see Proxy#clear)
