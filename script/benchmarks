@@ -5,6 +5,7 @@ require 'benchmark'
 require 'moneta'
 require 'fileutils'
 require 'active_support'
+require 'active_support/cache/moneta_store'
 
 class String
   def random(n)
@@ -63,6 +64,17 @@ class MonetaBenchmarks
       }
     },
     {
+      name: "ActiveRecord (Sqlite)",
+      adapter: :ActiveRecord,
+      options: {
+        table: 'activerecord',
+        connection: {
+          adapter: (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'),
+          database: "#{DIR}/activerecord_sqlite.db"
+        }
+      }
+    },
+    {
       name: "ActiveSupportCache (Memory)",
       adapter: :ActiveSupportCache,
       options: {
@@ -74,6 +86,20 @@ class MonetaBenchmarks
       adapter: :ActiveSupportCache,
       options: {
         backend: ::ActiveSupport::Cache::RedisCacheStore.new
+      }
+    },
+    {
+      name: "ActiveSupportCache (Moneta Memory)",
+      adapter: :ActiveSupportCache,
+      options: {
+        backend: ::ActiveSupport::Cache::MonetaStore.new(store: Moneta.new(:Memory))
+      }
+    },
+    {
+      name: "ActiveSupportCache (Moneta Redis)",
+      adapter: :ActiveSupportCache,
+      options: {
+        backend: ::ActiveSupport::Cache::MonetaStore.new(store: Moneta.new(:Redis))
       }
     },
     {name: "Cassandra"},
@@ -152,10 +178,38 @@ class MonetaBenchmarks
         end.merge(table: 'sequel')
     },
     {
+      name: "Sequel (HStore)",
+      adapter: :Sequel,
+      options:
+        if defined?(JRUBY_VERSION)
+          {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
+        else
+          {
+            db: "postgres://localhost/#{postgres_database1}",
+            user: postgres_username
+          }
+        end.merge(table: 'sequel_hstore', hstore: 'row')
+    },
+    {
+      name: "Sequel (Sqlite)",
+      adapter: :Sequel,
+      options: {
+        table: 'sequel',
+        db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}sqlite://#{DIR}/sequel"
+      }
+    },
+    {
       name: "Sqlite (Memory)",
       adapter: :Sqlite,
       options: {
         file: ':memory:'
+      }
+    },
+    {
+      name: "Sqlite (File)",
+      adapter: :Sqlite,
+      options: {
+        file: "#{DIR}/sqlite"
       }
     },
     {name: "TDB", options: { file: "#{DIR}/tdb" }},
@@ -164,6 +218,16 @@ class MonetaBenchmarks
   ].compact
 
   CONFIGS = {
+    test: {
+      runs: 2,
+      keys: 10,
+      min_key_len: 1,
+      max_key_len: 32,
+      key_dist: :uniform,
+      min_val_len: 0,
+      max_val_len: 256,
+      val_dist: :uniform
+    },
     uniform_small: {
       runs: 3,
       keys: 1000,
@@ -227,8 +291,6 @@ class MonetaBenchmarks
   }
 
   DICT = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'.freeze
-  HEADER = "\n                         Minimum  Maximum    Total     Mean   Stddev    Ops/s"
-  SEPARATOR = '=' * 77
 
   module Rand
     extend self
@@ -254,6 +316,14 @@ class MonetaBenchmarks
         return val.last if val.last >= min && val.last <= max
       end
     end
+  end
+
+  def header
+    (" " * @name_len) + "       Minimum  Maximum    Total     Mean   Stddev    Ops/s"
+  end
+
+  def separator
+    "=" * header.length
   end
 
   def parallel(&block)
@@ -357,26 +427,26 @@ class MonetaBenchmarks
     write_histogram("#{DIR}/key.histogram", key_lens)
     write_histogram("#{DIR}/value.histogram", val_lens)
 
-    puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mComputing keys and values...\n\e[34m#{SEPARATOR}\e[0m"
-    puts %{                         Minimum  Maximum    Total     Mean   Stddev}
-    puts 'Key Length              % 8d % 8d % 8d % 8d % 8d' % [key_lens.min, key_lens.max, key_lens.sum, mean(key_lens), stddev(key_lens)]
-    puts 'Value Length            % 8d % 8d % 8d % 8d % 8d' % [val_lens.min, val_lens.max, val_lens.sum, mean(val_lens), stddev(val_lens)]
+    puts "\n\e[1m\e[34m#{separator}\n\e[34mComputing keys and values...\n\e[34m#{separator}\e[0m"
+    puts " " * @name_len + %{                Minimum  Maximum    Total     Mean   Stddev}
+    puts 'Key Length'.ljust(@name_len) + '               % 8d % 8d % 8d % 8d % 8d' % [key_lens.min, key_lens.max, key_lens.sum, mean(key_lens), stddev(key_lens)]
+    puts 'Value Length'.ljust(@name_len) + '               % 8d % 8d % 8d % 8d % 8d' % [val_lens.min, val_lens.max, val_lens.sum, mean(val_lens), stddev(val_lens)]
   end
 
   def print_config
-    puts "\e[1m\e[36m#{SEPARATOR}\n\e[36mConfig #{@config_name}\n\e[36m#{SEPARATOR}\e[0m"
+    puts "\e[1m\e[36m#{separator}\n\e[36mConfig #{@config_name}\n\e[36m#{separator}\e[0m"
     @config.each do |k,v|
       puts '%-16s = %-10s' % [k,v]
     end
   end
 
   def print_store_stats(name)
-    puts HEADER
+    puts "\n" + header
     [:write, :read, :sum].each do |i|
       ops = (1000 * @config[:runs] * @data.size) / @stats[name][i].sum
-      line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d % 8d' %
+      line = "%-#{@name_len-1}.#{@name_len-1}s %-5s % 8d % 8d % 8d % 8d % 8d % 8d" %
         [name, i, @stats[name][i].min, @stats[name][i].max, @stats[name][i].sum,
-         mean(@stats[name][i]), mean(@stats[name][i]), ops]
+         mean(@stats[name][i]), stddev(@stats[name][i]), ops]
       @summary << [-ops, line << "\n"] if i == :sum
       puts line
     end
@@ -394,7 +464,7 @@ class MonetaBenchmarks
     name = spec[:name]
     adapter = spec[:adapter] || spec[:name].to_sym
     options = spec[:options] || {}
-    puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34m#{name}\n\e[34m#{SEPARATOR}\e[0m"
+    puts "\n\e[1m\e[34m#{separator}\n\e[34m#{name}\n\e[34m#{separator}\e[0m"
 
     store = Moneta.new(adapter, options.dup)
 
@@ -453,7 +523,7 @@ class MonetaBenchmarks
   end
 
   def print_summary
-    puts "\n\e[1m\e[36m#{SEPARATOR}\n\e[36mSummary #{@config_name}: #{@config[:runs]} runs, #{@data.size} keys\n\e[36m#{SEPARATOR}\e[0m#{HEADER}\n"
+    puts "\n\e[1m\e[36m#{separator}\n\e[36mSummary #{@config_name}: #{@config[:runs]} runs, #{@data.size} keys\n\e[36m#{separator}\e[0m\n#{header}\n"
     @summary.sort_by(&:first).each do |entry|
       puts entry.last
     end
@@ -477,6 +547,8 @@ class MonetaBenchmarks
       else
         STORES
       end.select { |spec| !spec.key?(:sizes) || spec[:sizes].include?(@size) }
+
+    @name_len = (@stores.map { |spec| spec[:name] }.map(&:length) + ["Value Length".length]).max + 2
 
     # Disable jruby stdout pollution by memcached
     if defined?(JRUBY_VERSION)
