@@ -110,6 +110,8 @@ module Moneta
     when :Sequel
       # Sequel accept only base64 keys
       transformer[:key] << :base64
+      # If using HStore, binary data is not allowed
+      transformer[:value] << :base64 if options[:hstore]
     when :ActiveRecord, :DataMapper
       # DataMapper and AR accept only base64 keys and values
       transformer[:key] << :base64
