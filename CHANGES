@@ -1,3 +1,8 @@
+1.1.1
+
+* Adapters::Sequel - use prepared statements
+* Adapters::Sqlite - use upsert for increment where supported
+
 1.1.0
 
 * Adapters::ActiveRecord - rewrite to use Arel directly; support for Rails 5
