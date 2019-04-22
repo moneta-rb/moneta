@@ -18,4 +18,11 @@ Gem::Specification.new do |s|
   s.require_paths    = %w(lib)
   s.summary          = %{A unified interface to key/value stores, including Redis, Memcached, TokyoCabinet, ActiveRecord and many more}
   s.required_ruby_version = '>= 2.2.2'
+
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'rspec-retry'
+  s.add_development_dependency 'rantly', '~> 1.2.0'
+  s.add_development_dependency 'parallel_tests'
+  s.add_development_dependency 'timecop'
+  s.add_development_dependency 'rubocop', '~> 0.67.2'
 end
