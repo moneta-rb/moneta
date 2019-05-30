@@ -887,7 +887,7 @@ Person.adapter :memory, Moneta.new(:Redis)
 
 ## Testing and Benchmarks
 
-Testing is done using [Travis-CI](http://travis-ci.org/moneta-rb/moneta). Currently we support Ruby >= 1.9.3.
+Testing is done using [Travis-CI](http://travis-ci.org/moneta-rb/moneta). Currently we support MRI Ruby >= 2.2.2 and JRuby 9.2.x.
 
 Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build. Take a look there
 to compare the speed of the different key value stores for different key/value sizes and size distributions.
