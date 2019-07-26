@@ -7,10 +7,6 @@ module Moneta
     class Sequel
       include Defaults
 
-      # Sequel::UniqueConstraintViolation is defined since sequel 3.44.0
-      # older versions raise a Sequel::DatabaseError.
-      UniqueConstraintViolation = defined?(::Sequel::UniqueConstraintViolation) ? ::Sequel::UniqueConstraintViolation : ::Sequel::DatabaseError
-
       supports :create, :increment, :each_key
       attr_reader :backend, :key_column, :value_column
 
@@ -124,7 +120,7 @@ module Moneta
       def create(key, value, options = {})
         @create.call(key: key, value: blob(value))
         true
-      rescue UniqueConstraintViolation
+      rescue ::Sequel::ConstraintViolation
         false
       end
 
@@ -717,7 +713,7 @@ module Moneta
         def increment(key, amount = 1, options = {})
           return super unless @can_upsert
           @backend.transaction do
-            @increment.call(key: key, value: amount.to_s, amount: amount)
+            @increment.call(key: key, value: blob(amount.to_s), amount: amount)
             Integer(load(key))
           end
         end
@@ -746,10 +742,8 @@ module Moneta
             .insert_conflict(
               target: key_column,
               update: { value_column => update_expr },
-              update_where: ::Sequel.|(
-                { value_column => blob("0") },
-                ::Sequel.~(::Sequel[value_column].cast(Integer)) => 0
-              )
+              update_where: ::Sequel.|({ value_column => blob("0") },
+                                       { ::Sequel.~(::Sequel[value_column].cast(Integer)) => 0 })
             )
             .prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
         end
