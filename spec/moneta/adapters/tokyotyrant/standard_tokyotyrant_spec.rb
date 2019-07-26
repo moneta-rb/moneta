@@ -1,4 +1,5 @@
-describe 'standard_tokyotyrant', isolate: true, adapter: :TokyoTyrant do
-  moneta_store :TokyoTyrant
+describe 'standard_tokyotyrant', adapter: :TokyoTyrant do
+  start_tokyotyrant(10655)
+  moneta_store :TokyoTyrant, port: 10655
   moneta_specs STANDARD_SPECS
 end
