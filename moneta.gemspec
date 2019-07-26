@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'parallel_tests'
   s.add_development_dependency 'timecop'
   s.add_development_dependency 'rubocop', '~> 0.67.2'
+  s.add_development_dependency 'irb'
 end
