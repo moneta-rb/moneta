@@ -48,7 +48,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        transaction {@backend[key] = value }
+        transaction { @backend[key] = value }
       end
 
       # (see Proxy#delete)

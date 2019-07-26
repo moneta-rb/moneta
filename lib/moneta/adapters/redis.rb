@@ -100,7 +100,7 @@ module Moneta
       # (see Defaults#values_at)
       def values_at(*keys, **options)
         with_expiry_update(*keys, default: nil, **options) do
-          @backend.mget *keys
+          @backend.mget(*keys)
         end
       end
 
@@ -112,7 +112,7 @@ module Moneta
           old_values = @backend.mget(*keys)
           updates = pairs.each_with_index.with_object({}) do |(pair, i), updates|
             old_value = old_values[i]
-            if !old_value.nil?
+            if old_value != nil
               key, new_value = pair
               updates[key] = yield(key, old_value, new_value)
             end
@@ -146,7 +146,7 @@ module Moneta
 
       def with_expiry_update(*keys, default: @default_expires, **options)
         expires = expires_value(options, default)
-        if expires.nil?
+        if expires == nil
           yield
         else
           future = nil

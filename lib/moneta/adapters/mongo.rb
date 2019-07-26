@@ -1,4 +1,5 @@
 module Moneta
+  # @api private
   module Adapters
     begin
       require 'moneta/adapters/mongo/official'

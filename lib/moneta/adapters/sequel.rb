@@ -43,7 +43,7 @@ module Moneta
           begin
             raise ArgumentError, 'Option :db is required' unless db = options.delete(:db)
             other_cols = [:table, :create_table, :key_column, :value_column, :hstore]
-            ::Sequel.connect(db, options.reject { |k,_| other_cols.member?(k) }).tap do |backend|
+            ::Sequel.connect(db, options.reject { |k,| other_cols.member?(k) }).tap do |backend|
               if extensions
                 raise ArgumentError, 'Option :extensions must be an Array' unless extensions.is_a?(Array)
                 extensions.map(&:to_sym).each(&backend.method(:extension))
@@ -56,7 +56,7 @@ module Moneta
           end
 
         instance =
-          if optimize.nil? || optimize
+          if optimize == nil || optimize
             case backend.database_type
             when :mysql
               MySQL.allocate
@@ -86,7 +86,7 @@ module Moneta
         @each_key_server = options.delete(:each_key_server)
 
         create_proc = options.delete(:create_table)
-        if create_proc.nil?
+        if create_proc == nil
           create_table
         elsif create_proc
           create_proc.call(@backend)
@@ -231,8 +231,8 @@ module Moneta
 
       protected
 
-      def blob(s)
-        ::Sequel.blob(s) unless s == nil
+      def blob(str)
+        ::Sequel.blob(str) unless str == nil
       end
 
       def blob_pairs(pairs)
@@ -279,41 +279,41 @@ module Moneta
       end
 
       def prepare_key
-        @key = @table.
-          where(key_column => :$key).select(1).
-          prepare(:first, statement_id(:key))
+        @key = @table
+          .where(key_column => :$key).select(1)
+          .prepare(:first, statement_id(:key))
       end
 
       def prepare_load
-        @load = @table.
-          where(key_column => :$key).select(value_column).
-          prepare(:first, statement_id(:load))
+        @load = @table
+          .where(key_column => :$key).select(value_column)
+          .prepare(:first, statement_id(:load))
       end
 
       def prepare_store
-        @store_update = @table.
-          where(key_column => :$key).
-          prepare(:update, statement_id(:store_update), value_column => :$value)
+        @store_update = @table
+          .where(key_column => :$key)
+          .prepare(:update, statement_id(:store_update), value_column => :$value)
       end
 
       def prepare_create
-        @create = @table.
-          prepare(:insert, statement_id(:create), key_column => :$key, value_column => :$value)
+        @create = @table
+          .prepare(:insert, statement_id(:create), key_column => :$key, value_column => :$value)
       end
 
       def prepare_increment
-        @load_for_update = @table.
-          where(key_column => :$key).for_update.
-          select(value_column).
-          prepare(:first, statement_id(:load_for_update))
-        @increment_update ||= @table.
-          where(key_column => :$key, value_column => :$value).
-          prepare(:update, statement_id(:increment_update), value_column => :$new_value)
+        @load_for_update = @table
+          .where(key_column => :$key).for_update
+          .select(value_column)
+          .prepare(:first, statement_id(:load_for_update))
+        @increment_update ||= @table
+          .where(key_column => :$key, value_column => :$value)
+          .prepare(:update, statement_id(:increment_update), value_column => :$new_value)
       end
 
       def prepare_delete
-        @delete = @table.where(key_column => :$key).
-          prepare(:delete, statement_id(:delete))
+        @delete = @table.where(key_column => :$key)
+          .prepare(:delete, statement_id(:delete))
       end
 
       def prepare_slice
@@ -357,9 +357,9 @@ module Moneta
         def merge!(pairs, options = {}, &block)
           @backend.transaction do
             pairs = yield_merge_pairs(pairs, &block) if block_given?
-            @table.
-              on_duplicate_key_update.
-              import([key_column, value_column], blob_pairs(pairs).to_a)
+            @table
+              .on_duplicate_key_update
+              .import([key_column, value_column], blob_pairs(pairs).to_a)
           end
 
           self
@@ -377,15 +377,15 @@ module Moneta
         protected
 
         def prepare_store
-          @store = @table.
-            on_duplicate_key_update.
-            prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
+          @store = @table
+            .on_duplicate_key_update
+            .prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
         end
 
         def prepare_increment
-          @increment_update = @table.
-            where(key_column => :$key).
-            prepare(:update, statement_id(:increment_update), value_column => :$value)
+          @increment_update = @table
+            .where(key_column => :$key)
+            .prepare(:update, statement_id(:increment_update), value_column => :$value)
           super
         end
       end
@@ -414,11 +414,10 @@ module Moneta
         def merge!(pairs, options = {}, &block)
           @backend.transaction do
             pairs = yield_merge_pairs(pairs, &block) if block_given?
-            @table.
-              insert_conflict(
-                target: key_column,
-                update: {value_column => ::Sequel[:excluded][value_column]}).
-              import([key_column, value_column], blob_pairs(pairs).to_a)
+            @table
+              .insert_conflict(target: key_column,
+                               update: { value_column => ::Sequel[:excluded][value_column] })
+              .import([key_column, value_column], blob_pairs(pairs).to_a)
           end
 
           self
@@ -436,31 +435,32 @@ module Moneta
         protected
 
         def prepare_store
-          @store = @table.
-            insert_conflict(
-              target: key_column,
-              update: {value_column => ::Sequel[:excluded][value_column]}).
-            prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
+          @store = @table
+            .insert_conflict(target: key_column,
+                             update: { value_column => ::Sequel[:excluded][value_column] })
+            .prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
         end
 
         def prepare_increment
           update_expr = ::Sequel[:convert_to].function(
             (::Sequel[:convert_from].function(
               ::Sequel[@table_name][value_column],
-              'UTF8').cast(Integer) + :$amount).cast(String),
-            'UTF8')
+              'UTF8'
+            ).cast(Integer) + :$amount).cast(String),
+            'UTF8'
+          )
 
-          @increment = @table.
-            returning(value_column).
-            insert_conflict(target: key_column, update: {value_column => update_expr}).
-            prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
+          @increment = @table
+            .returning(value_column)
+            .insert_conflict(target: key_column, update: { value_column => update_expr })
+            .prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
         end
 
         def prepare_delete
-          @delete = @table.
-            returning(value_column).
-            where(key_column => :$key).
-            prepare(:delete, statement_id(:delete))
+          @delete = @table
+            .returning(value_column)
+            .where(key_column => :$key)
+            .prepare(:delete, statement_id(:delete))
         end
       end
 
@@ -521,10 +521,10 @@ module Moneta
               if @create
                 @create.call(row: @row, key: key, pair: ::Sequel.hstore(key => value))
               else
-                @table.
-                  where(key_column => @row).
-                  exclude(::Sequel[value_column].hstore.key?(key)).
-                  update(value_column => ::Sequel[value_column].hstore.merge(key => value))
+                @table
+                  .where(key_column => @row)
+                  .exclude(::Sequel[value_column].hstore.key?(key))
+                  .update(value_column => ::Sequel[value_column].hstore.merge(key => value))
               end
           end
         end
@@ -571,9 +571,9 @@ module Moneta
               @table
             end
           ds = ds.order(:skeys) unless @table.respond_to?(:use_cursor)
-          ds.where(key_column => @row).
-            select(::Sequel[value_column].hstore.skeys).
-            paged_each do |row|
+          ds.where(key_column => @row)
+            .select(::Sequel[value_column].hstore.skeys)
+            .paged_each do |row|
               yield row[:skeys]
             end
           self
@@ -614,9 +614,9 @@ module Moneta
         end
 
         def prepare_create_row
-          @create_row = @table.
-            insert_ignore.
-            prepare(:insert, statement_id(:hstore_create_row), key_column => :$row, value_column => '')
+          @create_row = @table
+            .insert_ignore
+            .prepare(:insert, statement_id(:hstore_create_row), key_column => :$row, value_column => '')
         end
 
         def prepare_clear
@@ -629,40 +629,40 @@ module Moneta
               ds.where(key_column => @row).select(::Sequel[value_column].hstore.key?(pl.arg))
             end
           else
-            @key = @table.where(key_column => :$row).
-              select(::Sequel[value_column].hstore.key?(:$key).as(:present)).
-              prepare(:first, statement_id(:hstore_key))
+            @key = @table.where(key_column => :$row)
+              .select(::Sequel[value_column].hstore.key?(:$key).as(:present))
+              .prepare(:first, statement_id(:hstore_key))
           end
         end
 
         def prepare_store
-          @store = @table.
-            where(key_column => :$row).
-            prepare(:update, statement_id(:hstore_store), value_column => ::Sequel[value_column].hstore.merge(:$pair))
+          @store = @table
+            .where(key_column => :$row)
+            .prepare(:update, statement_id(:hstore_store), value_column => ::Sequel[value_column].hstore.merge(:$pair))
         end
 
         def prepare_increment
-          pair = ::Sequel[:hstore].function(
-            :$key,
-            (::Sequel[:coalesce].function(
-              ::Sequel[value_column].hstore[:$key].cast(Integer),
-              0) + :$amount).cast(String))
+          pair = ::Sequel[:hstore]
+            .function(:$key, (
+              ::Sequel[:coalesce].function(::Sequel[value_column].hstore[:$key].cast(Integer), 0) +
+              :$amount
+            ).cast(String))
 
-          @increment = @table.
-            returning(::Sequel[value_column].hstore[:$key].as(:value)).
-            where(key_column => :$row).
-            prepare(:update, statement_id(:hstore_increment), value_column => ::Sequel.join([value_column, pair]))
+          @increment = @table
+            .returning(::Sequel[value_column].hstore[:$key].as(:value))
+            .where(key_column => :$row)
+            .prepare(:update, statement_id(:hstore_increment), value_column => ::Sequel.join([value_column, pair]))
         end
 
         def prepare_load
-          @load = @table.where(key_column => :$row).
-            select(::Sequel[value_column].hstore[:$key].as(:value)).
-            prepare(:first, statement_id(:hstore_load))
+          @load = @table.where(key_column => :$row)
+            .select(::Sequel[value_column].hstore[:$key].as(:value))
+            .prepare(:first, statement_id(:hstore_load))
         end
 
         def prepare_delete
-          @delete = @table.where(key_column => :$row).
-            prepare(:update, statement_id(:hstore_delete), value_column => ::Sequel[value_column].hstore.delete(:$key))
+          @delete = @table.where(key_column => :$row)
+            .prepare(:update, statement_id(:hstore_delete), value_column => ::Sequel[value_column].hstore.delete(:$key))
         end
 
         def prepare_create
@@ -670,35 +670,33 @@ module Moneta
           # the hstore `?` (key?) operator.  See
           # https://stackoverflow.com/questions/11940401/escaping-hstore-contains-operators-in-a-jdbc-prepared-statement
           return if defined?(JRUBY_VERSION)
-          @create = @table.
-            where(key_column => :$row).
-            exclude(::Sequel[value_column].hstore.key?(:$key)).
-            prepare(:update, statement_id(:hstore_create), value_column => ::Sequel[value_column].hstore.merge(:$pair))
+          @create = @table
+            .where(key_column => :$row)
+            .exclude(::Sequel[value_column].hstore.key?(:$key))
+            .prepare(:update, statement_id(:hstore_create), value_column => ::Sequel[value_column].hstore.merge(:$pair))
         end
 
         def prepare_values_at
-          @values_at = @table.
-            where(key_column => :$row).
-            select(::Sequel[value_column].hstore[::Sequel.cast(:$keys, :"text[]")].as(:values)).
-            prepare(:first, statement_id(:hstore_values_at))
+          @values_at = @table
+            .where(key_column => :$row)
+            .select(::Sequel[value_column].hstore[::Sequel.cast(:$keys, :"text[]")].as(:values))
+            .prepare(:first, statement_id(:hstore_values_at))
         end
 
         def prepare_slice
-          slice = @table.
-            where(key_column => :$row).
-            select(::Sequel[value_column].hstore.slice(:$keys).as(:pairs))
+          slice = @table
+            .where(key_column => :$row)
+            .select(::Sequel[value_column].hstore.slice(:$keys).as(:pairs))
           @slice = slice.prepare(:first, statement_id(:hstore_slice))
           @slice_for_update = slice.for_update.prepare(:first, statement_id(:hstore_slice_for_update))
         end
 
         def prepare_size
-          @size =
-            @backend.from(
-              @table.
-                where(key_column => :$row).
-                select(::Sequel[value_column].hstore.each)).
-            select { count.function.*.as(:size) }.
-            prepare(:first, statement_id(:hstore_size))
+          @size = @backend
+            .from(@table.where(key_column => :$row)
+                        .select(::Sequel[value_column].hstore.each))
+            .select { count.function.*.as(:size) }
+            .prepare(:first, statement_id(:hstore_size))
         end
       end
 
@@ -736,23 +734,24 @@ module Moneta
         protected
 
         def prepare_store
-          @store = @table.
-            insert_conflict(:replace).
-            prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
+          @store = @table
+            .insert_conflict(:replace)
+            .prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
         end
 
         def prepare_increment
           return super unless @can_upsert
           update_expr = (::Sequel[value_column].cast(Integer) + :$amount).cast(:blob)
-          @increment = @table.
-            insert_conflict(
+          @increment = @table
+            .insert_conflict(
               target: key_column,
-              update: {value_column => update_expr},
-              update_where:
-                ::Sequel.|(
-                  {value_column => blob("0")},
-                  ::Sequel.~(::Sequel[value_column].cast(Integer)) => 0)).
-            prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
+              update: { value_column => update_expr },
+              update_where: ::Sequel.|(
+                { value_column => blob("0") },
+                ::Sequel.~(::Sequel[value_column].cast(Integer)) => 0
+              )
+            )
+            .prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
         end
       end
     end

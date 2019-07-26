@@ -79,7 +79,7 @@ module ActiveSupport
         def write_multi(hash, options = nil)
           options = merged_options(options)
 
-          instrument :write_multi, hash, options do |payload|
+          instrument :write_multi, hash, options do
             entries = hash.each_with_object({}) do |(name, value), memo|
               memo[normalize_key(name, options)] = \
                 Entry.new(value, options.merge(version: normalize_version(name, options)))
@@ -118,12 +118,12 @@ module ActiveSupport
 
       def read_multi_entries(names, options)
         keys = names.map { |name| normalize_key(name, options) }
-        entries = @store.
-          values_at(*keys, **moneta_options(options, false)).
-          map(&method(:make_entry))
+        entries = @store
+          .values_at(*keys, **moneta_options(options, false))
+          .map(&method(:make_entry))
 
         names.zip(keys, entries).map do |name, key, entry|
-          next if entry.nil?
+          next if entry == nil
           delete_entry(key, options) if entry.expired?
           next if entry.expired? || entry.mismatched?(normalize_version(name, options))
 

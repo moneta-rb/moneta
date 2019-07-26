@@ -5,9 +5,9 @@ module Moneta
 
     def without(hash, *keys)
       return hash if hash.empty?
-      if keys.any? {|k| hash.include?(k) }
+      if keys.any? { |k| hash.include?(k) }
         hash = hash.dup
-        keys.each {|k| hash.delete(k) }
+        keys.each { |k| hash.delete(k) }
       end
       hash
     end
@@ -15,7 +15,7 @@ module Moneta
     def only(hash, *keys)
       return hash if hash.empty?
       ret = {}
-      keys.each {|k| ret[k] = hash[k] }
+      keys.each { |k| ret[k] = hash[k] }
       ret
     end
 

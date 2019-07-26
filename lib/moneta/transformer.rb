@@ -19,7 +19,7 @@ module Moneta
   # @api public
   class Transformer < Proxy
     class << self
-      alias_method :original_new, :new
+      alias original_new new
 
       # @param [Moneta store] adapter The underlying store
       # @param [Hash] options
@@ -49,13 +49,13 @@ module Moneta
         raise ArgumentError, 'Invalid value transformer chain' if @value_validator !~ values.map(&:inspect).join
 
         klass = Class.new(self)
-        klass.class_eval <<-end_eval, __FILE__, __LINE__
+        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           def initialize(adapter, options = {})
             super
             #{compile_initializer('key', keys)}
             #{compile_initializer('value', values)}
           end
-        end_eval
+        END_EVAL
 
         key, key_opts = compile_transformer(keys, 'key')
         dump, dump_opts = compile_transformer(values, 'value')
@@ -78,7 +78,7 @@ module Moneta
       end
 
       def compile_key_transformer(klass, key, key_opts)
-        klass.class_eval <<-end_eval, __FILE__, __LINE__
+        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           not_supports :each_key
 
           def key?(key, options = {})
@@ -129,11 +129,11 @@ module Moneta
             @adapter.merge!(t_keys.zip(values), #{without :raw, key_opts}, &block)
             self
           end
-        end_eval
+        END_EVAL
       end
 
       def compile_value_transformer(klass, load, load_opts, dump, dump_opts)
-        klass.class_eval <<-end_eval, __FILE__, __LINE__
+        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           def load(key, options = {})
             value = @adapter.load(key, #{without :raw, load_opts})
             value && !options[:raw] ? #{load} : value
@@ -197,11 +197,11 @@ module Moneta
             @adapter.merge!(t_pairs, #{without :raw, dump_opts}, &block)
             self
           end
-        end_eval
+        END_EVAL
       end
 
       def compile_key_value_transformer(klass, key, key_opts, load, load_opts, dump, dump_opts)
-        klass.class_eval <<-end_eval, __FILE__, __LINE__
+        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           not_supports :each_key
 
           def key?(key, options = {})
@@ -292,7 +292,7 @@ module Moneta
             @adapter.merge!(t_pairs, #{without :raw, key_opts, dump_opts}, &block)
             self
           end
-        end_eval
+        END_EVAL
       end
 
       # Compile option initializer
@@ -305,19 +305,21 @@ module Moneta
         end.join("\n")
       end
 
-      def compile_validator(s)
-        Regexp.new('\A' + s.gsub(/\w+/) do
-                     '(' + TRANSFORMER.select {|k,v| v.first.to_s == $& }.map {|v| ":#{v.first}" }.join('|') + ')'
-                   end.gsub(/\s+/, '') + '\Z')
+      def compile_validator(str)
+        Regexp.new('\A' +
+                   str.gsub(/\w+/) do
+                     '(' + TRANSFORMER.select { |_, v| v.first.to_s == $& }.map { |v| ":#{v.first}" }.join('|') + ')'
+                   end.gsub(/\s+/, '') +
+                   '\Z')
       end
 
       # Returned compiled transformer code string
-      def compile_transformer(transformer, var, i = 2)
+      def compile_transformer(transformer, var, idx = 2)
         value, options = var, []
         transformer.each do |name|
           raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
           require t[3] if t[3]
-          code = t[i]
+          code = t[idx]
           options += code.scan(/options\[:(\w+)\]/).flatten
           value =
             if t[0] == :serialize && var == 'key'
@@ -326,11 +328,11 @@ module Moneta
               code % value
             end
         end
-        return value, options
+        [value, options]
       end
 
       def class_name(keys, values)
-        camel_case = lambda{ |sym| sym.to_s.split('_').map(&:capitalize).join }
+        camel_case = lambda { |sym| sym.to_s.split('_').map(&:capitalize).join }
         (keys.empty? ? '' : keys.map(&camel_case).join + 'Key') +
           (values.empty? ? '' : values.map(&camel_case).join + 'Value')
       end

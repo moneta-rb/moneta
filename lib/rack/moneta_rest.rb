@@ -69,11 +69,11 @@ module Rack
     private
 
     def empty(status)
-      [status, {'Content-Type'=>'application/octet-stream', 'Content-Length' => '0'}, []]
+      [status, { 'Content-Type' => 'application/octet-stream', 'Content-Length' => '0' }, []]
     end
 
     def respond(status, value)
-      [status, {'Content-Type'=>'application/octet-stream', 'Content-Length' => value.bytesize.to_s}, [value]]
+      [status, { 'Content-Type' => 'application/octet-stream', 'Content-Length' => value.bytesize.to_s }, [value]]
     end
   end
 end

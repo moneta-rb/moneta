@@ -91,7 +91,7 @@ module Moneta
 
       # (see Default#create)
       def create(key, value, options = {})
-        @create.execute!(key,value)
+        @create.execute!(key, value)
         true
       rescue SQLite3::ConstraintException
         # If you know a better way to detect whether an insert-ignore
@@ -102,7 +102,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @stmts.each {|s| s.close }
+        @stmts.each { |s| s.close }
         @backend.close
         nil
       end
@@ -134,7 +134,7 @@ module Moneta
 
       # (see Proxy#merge!)
       def merge!(pairs, options = {})
-        transaction = if block_given?; @backend.transaction end
+        transaction = @backend.transaction if block_given?
 
         if block_given?
           existing = Hash[slice(*pairs.map { |k, _| k }.to_a)]

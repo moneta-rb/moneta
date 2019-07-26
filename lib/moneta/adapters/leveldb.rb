@@ -30,7 +30,7 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.each {|k,v| delete(k, options) }
+        @backend.each { |k,| delete(k, options) }
         self
       end
 

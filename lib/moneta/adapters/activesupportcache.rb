@@ -25,7 +25,7 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         @backend.exist?(key).tap do |exists|
-          if exists && !(expires = expires_value(options, nil)).nil?
+          if exists && (expires = expires_value(options, nil)) != nil
             value = @backend.read(key, options)
             @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
           end
@@ -36,7 +36,7 @@ module Moneta
       def load(key, options = {})
         expires = expires_value(options, nil)
         value = @backend.read(key, options)
-        if value and !expires.nil?
+        if value and expires != nil
           @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
         end
         if options[:raw]

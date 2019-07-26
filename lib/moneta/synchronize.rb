@@ -21,7 +21,7 @@ module Moneta
       raise 'Already locked' if @locked
       enter_primitive ? @locked = true : false
     end
-    alias_method :try_lock, :try_enter
+    alias try_lock try_enter
 
     # Enter critical section (blocking)
     #
@@ -36,7 +36,7 @@ module Moneta
       end
       false
     end
-    alias_method :lock, :enter
+    alias lock enter
 
     # Leave critical section
     def leave
@@ -45,7 +45,7 @@ module Moneta
       @locked = false
       nil
     end
-    alias_method :unlock, :leave
+    alias unlock leave
 
     # Is the lock acquired?
     def locked?

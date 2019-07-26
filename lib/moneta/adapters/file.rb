@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'English'
 
 module Moneta
   module Adapters
@@ -35,17 +36,18 @@ module Moneta
       def load(key, options = {})
         ::File.read(store_path(key), mode: 'rb')
       rescue Errno::ENOENT
+        nil
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        temp_file = ::File.join(@dir, "value-#{$$}-#{Thread.current.object_id}")
+        temp_file = ::File.join(@dir, "value-#{$PROCESS_ID}-#{Thread.current.object_id}")
         path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
-        ::File.open(temp_file, 'wb') {|f| f.write(value) }
+        ::File.open(temp_file, 'wb') { |f| f.write(value) }
         ::File.rename(temp_file, path)
         value
-      rescue Exception
+      rescue
         File.unlink(temp_file) rescue nil
         raise
       end
@@ -56,11 +58,12 @@ module Moneta
         ::File.unlink(store_path(key))
         value
       rescue Errno::ENOENT
+        nil
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        temp_dir = "#{@dir}-#{$$}-#{Thread.current.object_id}"
+        temp_dir = "#{@dir}-#{$PROCESS_ID}-#{Thread.current.object_id}"
         ::File.rename(@dir, temp_dir)
         FileUtils.mkpath(@dir)
         self
@@ -96,7 +99,7 @@ module Moneta
           FileUtils.mkpath(::File.dirname(path))
           # Call native java.io.File#createNewFile
           return false unless ::Java::JavaIo::File.new(path).createNewFile
-          ::File.open(path, 'wb+') {|f| f.write(value) }
+          ::File.open(path, 'wb+') { |f| f.write(value) }
           true
         end
       else

@@ -12,8 +12,12 @@ module Moneta
       # @option options [String] :host ('127.0.0.1') Hostname
       # @option options [String] :socket Unix socket file name as alternative to `:port` and `:host`
       def initialize(options = {})
-        @socket = options[:socket] ? UNIXSocket.open(options[:socket]) :
-          TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || 9000)
+        @socket =
+          if options[:socket]
+            UNIXSocket.open(options[:socket])
+          else
+            TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || 9000)
+          end
       end
 
       # (see Proxy#key?)
@@ -83,15 +87,15 @@ module Moneta
       end
 
       def read
-        size = @socket.
-          recv(4).tap do |bytes|
-            raise EOFError.new('failed to read size') unless bytes.bytesize == 4
-          end.
-          unpack('N').
-          first
+        size = @socket
+          .recv(4).tap do |bytes|
+            raise EOFError, 'failed to read size' unless bytes.bytesize == 4
+          end
+          .unpack('N')
+          .first
 
         result = Marshal.load(@socket.recv(size).tap do |bytes|
-          raise EOFError.new("Not enough bytes read") unless bytes.bytesize == size
+          raise EOFError, 'Not enough bytes read' unless bytes.bytesize == size
         end)
 
         raise result if Exception === result

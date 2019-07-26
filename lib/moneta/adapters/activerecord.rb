@@ -40,7 +40,8 @@ module Moneta
       # @param [Hash] options
       # @option options [Object]               :backend A class object inheriting from ActiveRecord::Base to use as a table
       # @option options [String]               :table ('moneta') Table name
-      # @option options [Hash/String/Symbol]   :connection ActiveRecord connection configuration (`Hash` or `String`), or symbol giving the name of a Rails connection (e.g. :production)
+      # @option options [Hash/String/Symbol]   :connection ActiveRecord connection configuration (`Hash` or `String`), or
+      #   symbol giving the name of a Rails connection (e.g. :production)
       # @option options [Proc, Boolean]        :create_table Proc called with a connection if table
       #   needs to be created.  Pass false to skip the create table check all together.
       # @option options [Symbol]               :key_column (:k) The name of the column to use for keys
@@ -87,7 +88,7 @@ module Moneta
 
           table_name = (options.delete(:table) || :moneta).to_sym
           create_table_proc = options.delete(:create_table)
-          if create_table_proc.nil?
+          if create_table_proc == nil
             create_table(table_name)
           elsif create_table_proc
             with_connection(&create_table_proc)
@@ -167,7 +168,7 @@ module Moneta
       rescue ::ActiveRecord::RecordNotUnique
         # This handles the "no row updated" issue, above
         tries ||= 0
-        if (tries += 1) <= 3; retry else raise end
+        (tries += 1) <= 3 ? retry : raise
       end
 
       # (see Proxy#create)
@@ -255,7 +256,7 @@ module Moneta
         self.class.retrieve_or_establish_connection_pool(@spec)
       end
 
-      def create_table table_name
+      def create_table(table_name)
         with_connection do |conn|
           return if conn.table_exists?(table_name)
 
@@ -311,7 +312,7 @@ module Moneta
         elsif conn.respond_to?(:escape_bytea)
           conn.escape_bytea(value)
         elsif defined?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter) &&
-              conn.is_a?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter)
+            conn.is_a?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter)
           Arel::Nodes::SqlLiteral.new("X'#{value.unpack('H*').first}'")
         else
           value
@@ -322,7 +323,7 @@ module Moneta
         if value == nil
           nil
         elsif defined?(::ActiveModel::Type::Binary::Data) &&
-          value.is_a?(::ActiveModel::Type::Binary::Data)
+            value.is_a?(::ActiveModel::Type::Binary::Data)
           value.to_s
         elsif conn.respond_to?(:unescape_bytea)
           conn.unescape_bytea(value)

@@ -1,5 +1,3 @@
-require 'thread'
-
 module Moneta
   # Creates a pool of stores.
   # Each thread gets its own store.

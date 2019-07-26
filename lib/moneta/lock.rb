@@ -16,7 +16,7 @@ module Moneta
 
     def wrap(name, *args, &block)
       if locked?
-        block.call
+        yield
       else
         lock!(&block)
       end

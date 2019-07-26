@@ -30,7 +30,7 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         @bucket.get(key, options.dup).raw_data
-      rescue ::Riak::FailedRequest => ex
+      rescue ::Riak::FailedRequest
         nil
       end
 
@@ -53,7 +53,7 @@ module Moneta
       # (see Proxy#clear)
       def clear(options = {})
         @bucket.keys do |keys|
-          keys.each{ |key| @bucket.delete(key) }
+          keys.each { |key| @bucket.delete(key) }
         end
         self
       end

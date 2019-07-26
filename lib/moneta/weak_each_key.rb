@@ -31,6 +31,8 @@ module Moneta
 
     protected
 
+    attr_reader :all_keys
+
     def wrap(name, *args)
       case name
       when :create, :store, :increment, :create
@@ -61,10 +63,6 @@ module Moneta
       else
         yield
       end
-    end
-
-    def all_keys
-      @all_keys
     end
 
     def each_key_save(key)

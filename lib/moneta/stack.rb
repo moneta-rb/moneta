@@ -42,7 +42,7 @@ module Moneta
 
     # (see Proxy#key?)
     def key?(key, options = {})
-      @stack.any? {|s| s.key?(key, options) }
+      @stack.any? { |s| s.key?(key, options) }
     end
 
     # (see Proxy#load)
@@ -56,21 +56,21 @@ module Moneta
 
     # (see Proxy#store)
     def store(key, value, options = {})
-      @stack.each {|s| s.store(key, value, options) }
+      @stack.each { |s| s.store(key, value, options) }
       value
     end
 
     # (see Proxy#increment)
     def increment(key, amount = 1, options = {})
       last = nil
-      @stack.each {|s| last = s.increment(key, amount, options) }
+      @stack.each { |s| last = s.increment(key, amount, options) }
       last
     end
 
     # (see Proxy#create)
     def create(key, value, options = {})
       last = false
-      @stack.each {|s| last = s.create(key, value, options) }
+      @stack.each { |s| last = s.create(key, value, options) }
       last
     end
 
@@ -84,13 +84,13 @@ module Moneta
 
     # (see Proxy#clear)
     def clear(options = {})
-      @stack.each {|s| s.clear(options) }
+      @stack.each { |s| s.clear(options) }
       self
     end
 
     # (see Proxy#close)
     def close
-      @stack.each {|s| s.close }
+      @stack.each { |s| s.close }
       nil
     end
 

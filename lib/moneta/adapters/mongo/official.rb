@@ -45,7 +45,7 @@ module Moneta
         @backend.use(db)
         @collection = @backend[collection]
         if @backend.command(buildinfo: 1).documents.first['version'] >= '2.2'
-          @collection.indexes.create_one({@expires_field => 1}, expire_after: 0)
+          @collection.indexes.create_one({ @expires_field => 1 }, expire_after: 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
         end
@@ -59,7 +59,7 @@ module Moneta
           expires = expires_at(options, nil)
           # @expires_field must be a Time object (BSON date datatype)
           @collection.update_one({ _id: key },
-                                 '$set' => { @expires_field => expires }) unless expires.nil?
+                                 '$set' => { @expires_field => expires }) unless expires == nil
           doc_to_value(doc)
         end
       end
@@ -84,8 +84,7 @@ module Moneta
       def delete(key, options = {})
         key = to_binary(key)
         if doc = @collection.find(_id: key).find_one_and_delete and
-          !doc[@expires_field] || doc[@expires_field] >= Time.now
-        then
+            !doc[@expires_field] || doc[@expires_field] >= Time.now
           doc_to_value(doc)
         end
       end
@@ -94,8 +93,8 @@ module Moneta
       def increment(key, amount = 1, options = {})
         @collection.find_one_and_update({ _id: to_binary(key) },
                                         { '$inc' => { @value_field => amount } },
-                                        :return_document => :after,
-                                        :upsert => true)[@value_field]
+                                        return_document: :after,
+                                        upsert: true)[@value_field]
       end
 
       # (see Proxy#create)
@@ -122,7 +121,7 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        query = @collection.find(_id: {:$in => keys.map(&method(:to_binary))})
+        query = @collection.find(_id: { :$in => keys.map(&method(:to_binary)) })
         pairs = query.map do |doc|
           next if doc[@expires_field] && doc[@expires_field] < Time.now
           [from_binary(doc[:_id]), doc_to_value(doc)]
@@ -147,7 +146,7 @@ module Moneta
         update_pairs.each do |key, value|
           value = yield(key, existing[key], value) if block_given?
           binary = to_binary(key)
-          @collection.replace_one({_id: binary}, value_to_doc(binary, value, options))
+          @collection.replace_one({ _id: binary }, value_to_doc(binary, value, options))
         end
 
         self

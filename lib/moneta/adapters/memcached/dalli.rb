@@ -87,7 +87,7 @@ module Moneta
         @backend.get_multi(keys).tap do |pairs|
           next if pairs.empty?
           expires = expires_value(options, nil)
-          next if expires.nil?
+          next if expires == nil
           expires = expires.to_i if Numeric === expires
           expires ||= 0
           @backend.multi do

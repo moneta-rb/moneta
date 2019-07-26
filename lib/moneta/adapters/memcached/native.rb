@@ -22,7 +22,7 @@ module Moneta
         self.default_expires = options.delete(:expires)
         @backend = options[:backend] ||
           begin
-            options.merge!(prefix_key: options.delete(:namespace)) if options[:namespace]
+            options[:prefix_key] = options.delete(:namespace) if options[:namespace]
             # We don't want a limitation on the key charset. Therefore we use the binary protocol.
             # It is also faster.
             options[:binary_protocol] = true unless options.include?(:binary_protocol)
@@ -35,13 +35,14 @@ module Moneta
         value = @backend.get(key, false)
         if value
           expires = expires_value(options, nil)
-          unless expires.nil?
+          unless expires == nil
             Numeric === expires and expires = expires.to_i
             @backend.set(key, value, expires || 0, false)
           end
           value
         end
       rescue ::Memcached::NotFound
+        nil
       end
 
       # (see Proxy#store)
@@ -59,20 +60,21 @@ module Moneta
         @backend.delete(key)
         value
       rescue ::Memcached::NotFound
+        nil
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         result = if amount >= 0
-          @backend.increment(key, amount)
-        else
-          @backend.decrement(key, -amount)
-        end
+                   @backend.increment(key, amount)
+                 else
+                   @backend.decrement(key, -amount)
+                 end
         # HACK: Throw error if applied to invalid value
         # see https://github.com/evan/memcached/issues/110
         Utils.to_int((@backend.get(key, false) rescue nil)) if result == 0
         result
-      rescue ::Memcached::NotFound => ex
+      rescue ::Memcached::NotFound
         retry unless create(key, amount.to_s, options)
         amount
       end

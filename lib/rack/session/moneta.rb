@@ -1,6 +1,5 @@
 require 'moneta'
 require 'rack/session/abstract/id'
-require 'thread'
 
 module Rack
   module Session
@@ -44,9 +43,10 @@ module Rack
         with_lock(env) do
           unless sid && session = @pool[sid]
             session = {}
-            begin
+            loop do
               sid = generate_sid
-            end until @pool.create(sid, session)
+              break if @pool.create(sid, session)
+            end
           end
           [sid, session]
         end
@@ -76,4 +76,3 @@ module Rack
     end
   end
 end
-

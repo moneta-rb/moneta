@@ -21,14 +21,14 @@ module Moneta
     def key?(key, options = {})
       # Transformer might raise exception
       load_entry(key, options) != nil
-    rescue Exception
+    rescue
       super(key, Utils.without(options, :expires))
     end
 
     # (see Proxy#load)
     def load(key, options = {})
       return super if options.include?(:raw)
-      value, expires = load_entry(key, options)
+      value, = load_entry(key, options)
       value
     end
 
@@ -64,8 +64,8 @@ module Moneta
           entry = invalidate_entry(key, entry, new_expires) do |new_entry|
             updates[key] = new_entry
           end
-          next if entry.nil?
-          value, _ = entry
+          next if entry == nil
+          value, = entry
           value
         end
       end
@@ -90,12 +90,12 @@ module Moneta
           entry = invalidate_entry(key, entry, new_expires) do |new_entry|
             updates[key] = new_entry
           end
-          if entry.nil?
+          if entry == nil
             value = if block_given?
                       yield key
                     end
           else
-            value, _ = entry
+            value, = entry
           end
           value
         end
@@ -113,26 +113,26 @@ module Moneta
           entry = invalidate_entry(key, entry, new_expires) do |new_entry|
             updates[key] = new_entry
           end
-          next if entry.nil?
-          value, _ = entry
+          next if entry == nil
+          value, = entry
           [key, value]
         end.reject(&:nil?)
       end
     end
 
     # (see Defaults#merge!)
-    def merge!(pairs, options={})
+    def merge!(pairs, options = {})
       expires = expires_at(options)
       options = Utils.without(options, :expires)
 
       block = if block_given?
                 lambda do |key, old_entry, entry|
                   old_entry = invalidate_entry(key, old_entry)
-                  if old_entry.nil?
+                  if old_entry == nil
                     entry # behave as if no replace is happening
                   else
-                    old_value, _ = old_entry
-                    new_value, _ = entry
+                    old_value, = old_entry
+                    new_value, = entry
                     new_entry(yield(key, old_value, new_value), expires)
                   end
                 end

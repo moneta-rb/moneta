@@ -79,5 +79,4 @@ Please check your Moneta builder block:
 }) if args != expected
     end
   end
-
 end

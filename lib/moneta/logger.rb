@@ -29,7 +29,7 @@ module Moneta
       def format(entry)
         args = entry[:args]
         args.pop if Hash === args.last && args.last.empty?
-        args = args.map {|a| dump(a) }.join(', ')
+        args = args.map { |a| dump(a) }.join(', ')
         if entry[:error]
           "#{@prefix}#{entry[:method]}(#{args}) raised error: #{entry[:error].message}\n"
         else
@@ -66,7 +66,7 @@ module Moneta
       ret = yield
       @logger.log(method: method, args: args, return: (method == :clear ? 'self' : ret))
       ret
-    rescue Exception => error
+    rescue => error
       @logger.log(method: method, args: args, error: error)
       raise
     end

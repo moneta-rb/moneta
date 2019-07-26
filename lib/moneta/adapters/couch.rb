@@ -113,7 +113,7 @@ module Moneta
         skip = 0
         limit = 1000
         total_rows = 1
-        while total_rows > skip do
+        while total_rows > skip
           response = @backend.get("_all_docs?" + encode_query(limit: limit, skip: skip))
           case response.status
           when 200

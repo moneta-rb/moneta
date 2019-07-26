@@ -128,8 +128,8 @@ module Moneta
       end
 
       # (see Defaults::ClassMethods#not_supports)
-      def not_supports *features
-        @features_mask = (self.features_mask | features).freeze
+      def not_supports(*features)
+        @features_mask = (features_mask | features).freeze
         super
       end
     end

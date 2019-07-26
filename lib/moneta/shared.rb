@@ -42,7 +42,7 @@ module Moneta
       connect
       yield
     rescue Errno::ECONNRESET, Errno::EPIPE, IOError, SystemCallError
-      @connect_lock.synchronize{ close unless @server }
+      @connect_lock.synchronize { close unless @server }
       tries ||= 0
       (tries += 1) < 3 ? retry : raise
     end

@@ -48,7 +48,7 @@ module Moneta
       def load(key, options = {})
         value = @backend[key]
         # raise if there is an error and the error is not "no record"
-        error if value.nil? && @backend.ecode != ENOREC
+        error if value == nil && @backend.ecode != ENOREC
         value && unpack(value)
       end
 

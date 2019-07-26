@@ -84,9 +84,9 @@ module Moneta
       # BSON will use String#force_encoding to make the string 8-bit
       # ASCII.  This could break unicode text so we should dup in this
       # case, and it also fails with frozen strings.
-      def to_binary(s)
-        s = s.dup if s.frozen? || s.encoding != Encoding::ASCII_8BIT
-        ::BSON::Binary.new(s)
+      def to_binary(str)
+        str = str.dup if str.frozen? || str.encoding != Encoding::ASCII_8BIT
+        ::BSON::Binary.new(str)
       end
 
       if defined?(::BSON::VERSION) and ::BSON::VERSION[0].to_i >= 2

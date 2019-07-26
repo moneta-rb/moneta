@@ -30,12 +30,10 @@ module Moneta
       @stop = false
       @running = true
       begin
-        until @stop
-          mainloop
-        end
+        mainloop until @stop
       ensure
         File.unlink(@socket) if @socket
-        @ios.each{ |io| io.close rescue nil }
+        @ios.each { |io| io.close rescue nil }
       end
     end
 
@@ -74,7 +72,7 @@ module Moneta
     rescue SignalException => ex
       warn "Moneta::Server - #{ex.message}"
       raise if ex.signo == 15 || ex.signo == 2 # SIGTERM or SIGINT
-    rescue Exception => ex
+    rescue => ex
       warn "Moneta::Server - #{ex.message}"
     end
 
@@ -83,15 +81,14 @@ module Moneta
       @clients.delete(io)
     end
 
-    def pack(o)
-      s = Marshal.dump(o)
+    def pack(obj)
+      s = Marshal.dump(obj)
       [s.bytesize].pack('N') << s
     end
 
     def handle(io, buffer)
-      buffer = @clients[io]
       return if buffer.bytesize < 8 # At least 4 bytes for the marshalled array
-      size = buffer[0,4].unpack('N').first
+      size = buffer[0, 4].unpack('N').first
       if size > MAXSIZE
         delete_client(io)
         return
@@ -101,7 +98,7 @@ module Moneta
       method, *args = Marshal.load(buffer.slice!(0, size))
       case method
       when :key?, :load, :delete, :increment, :create
-        io.write(pack @store.send(method, *args))
+        io.write(pack(@store.send(method, *args)))
       when :features
         # all features except each_key are supported
         io.write(pack(@store.features - [:each_key]))
@@ -114,9 +111,9 @@ module Moneta
     rescue IOError => ex
       warn "Moneta::Server - #{ex.message}" unless ex.message =~ /closed/
       delete_client(io)
-    rescue Exception => ex
+    rescue => ex
       warn "Moneta::Server - #{ex.message}"
-      io.write(pack Exception.new(ex.message))
+      io.write(pack(Exception.new(ex.message)))
     end
 
     def start(options)

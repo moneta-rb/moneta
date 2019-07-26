@@ -1,3 +1,7 @@
+# Provides two methods for constructing stores:
+#
+# * {Moneta.new}
+# * {Moneta.build}
 module Moneta
   autoload :Builder,           'moneta/builder'
   autoload :Cache,             'moneta/cache'
@@ -26,9 +30,11 @@ module Moneta
   autoload :WeakIncrement,     'moneta/weak'
   autoload :Wrapper,           'moneta/wrapper'
 
+  # Adapters are classes which wrap databases, services etc., as described in
+  # {file:SPEC.md The Moneta Specification}.
   module Adapters
     autoload :ActiveRecord,    'moneta/adapters/activerecord'
-    autoload :ActiveSupportCache,'moneta/adapters/activesupportcache'
+    autoload :ActiveSupportCache, 'moneta/adapters/activesupportcache'
     autoload :Cassandra,       'moneta/adapters/cassandra'
     autoload :Client,          'moneta/adapters/client'
     autoload :Cookie,          'moneta/adapters/cookie'

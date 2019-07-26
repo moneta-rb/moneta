@@ -11,6 +11,7 @@ module Moneta
 
       supports :create
 
+      # @api private
       class Store
         include ::DataMapper::Resource
         property :k, String, key: true, length: 255

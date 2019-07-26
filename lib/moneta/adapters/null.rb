@@ -6,8 +6,7 @@ module Moneta
       include Defaults
 
       # @param [Hash] options Options hash
-      def initialize(options = {})
-      end
+      def initialize(options = {}); end
 
       # (see Proxy#key?)
       def key?(key, options = {})

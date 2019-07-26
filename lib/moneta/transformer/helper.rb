@@ -5,11 +5,11 @@ module Moneta
       extend self
 
       def escape(value)
-        value.gsub(/[^a-zA-Z0-9_-]+/){ '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }
+        value.gsub(/[^a-zA-Z0-9_-]+/) { '%' + $&.unpack('H2' * $&.bytesize).join('%').upcase }
       end
 
       def unescape(value)
-        value.gsub(/((?:%[0-9a-fA-F]{2})+)/){ [$1.delete('%')].pack('H*') }
+        value.gsub(/((?:%[0-9a-fA-F]{2})+)/) { |matches| [matches[1].delete('%')].pack('H*') }
       end
 
       def hmacverify(value, secret)
@@ -24,7 +24,7 @@ module Moneta
       def truncate(value, maxlen)
         if value.size >= maxlen
           digest = Digest::MD5.hexdigest(value)
-          value = value[0, maxlen-digest.size] << digest
+          value = value[0, maxlen - digest.size] << digest
         end
         value
       end

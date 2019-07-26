@@ -11,7 +11,7 @@ module Moneta
       supports :create, :increment, :each_key
       attr_reader :backend, :db
 
-      PUT_FLAGS = [:nooverwrite, :nodupdata, :current, :append, :appenddup]
+      PUT_FLAGS = %i[nooverwrite nodupdata current append appenddup].freeze
 
       # @param [Hash] options
       # @option options [String] :dir Environment directory
@@ -31,7 +31,7 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        !@db.get(key).nil?
+        @db.get(key) != nil
       end
 
       # (see Proxy#load)

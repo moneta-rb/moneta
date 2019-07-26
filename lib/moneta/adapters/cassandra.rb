@@ -83,10 +83,14 @@ module Moneta
           # and then re-set it in order to update the TTL.
           return false unless
             row = @backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and
-            row[@expired_column] != nil
-          @backend.execute(@update_expires, options.merge(consistency: wc, arguments: [
-            (expires || 0).to_i, timestamp, row[@value_column], key, row[@updated_column]
-          ]))
+              row[@expired_column] != nil
+          @backend.execute(@update_expires,
+                           options.merge(consistency: wc,
+                                         arguments: [(expires || 0).to_i,
+                                                     timestamp,
+                                                     row[@value_column],
+                                                     key,
+                                                     row[@updated_column]]))
           true
         elsif row = @backend.execute(@key, options.merge(consistency: rc, arguments: [key])).first
           row[@expired_column] != nil
@@ -100,9 +104,13 @@ module Moneta
         rc, wc = consistency(options)
         if row = @backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and row[@expired_column] != nil
           if (expires = expires_value(options, nil)) != nil
-            @backend.execute(@update_expires, options.merge(consistency: wc, arguments: [
-              (expires || 0).to_i, timestamp, row[@value_column], key, row[@updated_column]
-            ]))
+            @backend.execute(@update_expires,
+                             options.merge(consistency: wc,
+                                           arguments: [(expires || 0).to_i,
+                                                       timestamp,
+                                                       row[@value_column],
+                                                       key,
+                                                       row[@updated_column]]))
           end
           row[@value_column]
         end
@@ -150,7 +158,7 @@ module Moneta
 
       # (see Proxy#each_key)
       def each_key
-        rc, _ = consistency
+        rc, = consistency
         return enum_for(:each_key) unless block_given?
         result = @backend.execute(@each_key, consistency: rc, page_size: 100)
         loop do
@@ -229,7 +237,7 @@ module Moneta
           end
         end
 
-        rc, wc = consistency(options)
+        _rc, wc = consistency(options)
         expires = expires_value(options)
         t = timestamp
         batch = @backend.batch do |batch|
@@ -270,16 +278,16 @@ module Moneta
         # but use single quotes instead of double-quotes.
         require 'multi_json'
         option_str = options.map do |key, value|
-          key.to_s + ' = ' +  MultiJson.dump(value).gsub('"', "'")
+          key.to_s + ' = ' + MultiJson.dump(value).tr(?", ?')
         end.join(' AND ')
 
-        @backend.execute "CREATE KEYSPACE IF NOT EXISTS %s WITH %s" % [
-          keyspace,
-          option_str
-        ]
+        @backend.execute "CREATE KEYSPACE IF NOT EXISTS %<keyspace>s WITH %<options>s" % {
+          keyspace: keyspace,
+          options: option_str
+        }
       rescue ::Cassandra::Errors::TimeoutError
         tries ||= 0
-        if (tries += 1) <= 3; retry else raise end
+        (tries += 1) <= 3 ? retry : raise
       end
 
       def prepare_statements
@@ -338,7 +346,7 @@ module Moneta
         CQL
       end
 
-      def consistency(options={})
+      def consistency(options = {})
         [
           options[:read_consistency] || @read_consistency,
           options[:write_consistency] || @write_consistency

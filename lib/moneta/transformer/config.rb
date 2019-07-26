@@ -22,7 +22,8 @@ module Moneta
       zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'          ],
       base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                  ],
       urlsafe_base64: [
-                  :encode,    'Base64.urlsafe_decode64(%s)',  'Base64.urlsafe_encode64(%s)',     'base64'        ],
+        :encode,              'Base64.urlsafe_decode64(%s)',  'Base64.urlsafe_encode64(%s)',     'base64'
+      ],
       escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                                ],
       hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first"                            ],
       qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')"                                   ],
@@ -42,13 +43,13 @@ module Moneta
       prefix:   [ :prefix,    nil,                            '(options[:prefix] || @prefix)+%s'                 ],
       spread:   [ :spread,    nil,                            'Helper.spread(%s)'                                ],
       to_s:     [ :string,    nil,                            '%s.to_s'                                          ],
-      inspect:  [ :string,    nil,                            '%s.inspect'                                       ],
-    }
+      inspect:  [ :string,    nil,                            '%s.inspect'                                       ]
+    }.freeze
 
     # Allowed value transformers (Read it like a regular expression!)
-    VALUE_TRANSFORMER = 'serialize? compress? hmac? encode?'
+    VALUE_TRANSFORMER = 'serialize? compress? hmac? encode?'.freeze
 
     # Allowed key transformers (Read it like a regular expression!)
-    KEY_TRANSFORMER = '(serialize | string)? prefix? ((encode? truncate?) | (digest spread?))?'
+    KEY_TRANSFORMER = '(serialize | string)? prefix? ((encode? truncate?) | (digest spread?))?'.freeze
   end
 end

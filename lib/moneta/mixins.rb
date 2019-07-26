@@ -22,10 +22,10 @@ module Moneta
     # @return [OptionMerger]
     # @api public
     def raw
-      @raw_store ||=
+      @raw ||=
         begin
           store = with(raw: true, only: [:load, :store, :create, :delete])
-          store.instance_variable_set(:@raw_store, store)
+          store.instance_variable_set(:@raw, store)
           store
         end
     end
@@ -151,8 +151,7 @@ module Moneta
     # Explicitly close the store
     # @return nil
     # @api public
-    def close
-    end
+    def close; end
 
     # Fetch a value with a key
     #
@@ -338,7 +337,7 @@ module Moneta
     #   @yieldreturn [Object] The value to use for overwriting
     #   @return [self]
     # @api public
-    def merge!(pairs, options={})
+    def merge!(pairs, options = {})
       pairs.each do |key, value|
         if block_given?
           existing = load(key, options)
@@ -391,7 +390,7 @@ module Moneta
       end
     end
 
-    def merge!(pairs, options={})
+    def merge!(pairs, options = {})
       pairs.each do |key, value|
         if block_given? && key?(key, options)
           existing = load(key, options)
@@ -513,7 +512,7 @@ module Moneta
     end
 
     # (see Defaults#merge!)
-    def merge!(pairs, options={}, &block)
+    def merge!(pairs, options = {}, &block)
       return super unless method = [:merge!, :update].find do |method|
         @backend.respond_to? method
       end
@@ -612,8 +611,10 @@ module Moneta
       end
     end
 
-    def self.included(base)
-      base.supports(:expires) if base.respond_to?(:supports)
+    class << self
+      def included(base)
+        base.supports(:expires) if base.respond_to?(:supports)
+      end
     end
   end
 end

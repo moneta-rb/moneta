@@ -87,11 +87,10 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @backend.with(safe: true, consistency: :strong) do |safe|
-          safe[@collection.name].
-            find(_id: to_binary(key)).
-            modify({:$inc => { @value_field => amount }},
-                   new: true,
-                   upsert: true)[@value_field]
+          safe[@collection.name]
+            .find(_id: to_binary(key))
+            .modify({ :$inc => { @value_field => amount } },
+                    new: true, upsert: true)[@value_field]
         end
       rescue ::Moped::Errors::OperationFailure
         tries ||= 0
@@ -120,7 +119,7 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        query = @collection.find(_id: {:$in => keys.map(&method(:to_binary))})
+        query = @collection.find(_id: { :$in => keys.map(&method(:to_binary)) })
         pairs = query.map do |doc|
           next if doc[@expires_field] && doc[@expires_field] < Time.now
           [from_binary(doc[:_id]), doc_to_value(doc)]
@@ -137,10 +136,10 @@ module Moneta
       def merge!(pairs, options = {})
         @backend.with(safe: true, consistency: :strong) do |safe|
           collection = safe[@collection.name]
-          existing = collection.
-            find(_id: {:$in => pairs.map { |key, _| to_binary(key) }.to_a}).
-            map{ |doc| [from_binary(doc[:_id]), doc_to_value(doc)] }.
-            to_h
+          existing = collection
+            .find(_id: { :$in => pairs.map { |key, _| to_binary(key) }.to_a })
+            .map { |doc| [from_binary(doc[:_id]), doc_to_value(doc)] }
+            .to_h
 
           update_pairs, insert_pairs = pairs.partition { |key, _| existing.key?(key) }
           unless insert_pairs.empty?
@@ -152,9 +151,9 @@ module Moneta
           update_pairs.each do |key, value|
             value = yield(key, existing[key], value) if block_given?
             binary = to_binary(key)
-            collection.
-              find(_id: binary).
-              update(value_to_doc(binary, value, options))
+            collection
+              .find(_id: binary)
+              .update(value_to_doc(binary, value, options))
           end
         end
         self

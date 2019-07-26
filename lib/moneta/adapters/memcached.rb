@@ -1,4 +1,5 @@
 module Moneta
+  # @api private
   module Adapters
     # Prefer Dalli over native Memcached!
     #

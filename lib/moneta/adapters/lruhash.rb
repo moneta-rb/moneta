@@ -103,8 +103,7 @@ module Moneta
         end
       end
 
-      private
-
+      # @api private
       class Entry
         attr_accessor :key, :value, :prev, :next
 

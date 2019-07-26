@@ -48,19 +48,20 @@ module Moneta
       # (see Proxy#each_key)
       def each_key
         return enum_for(:each_key) { @backend.count } unless block_given?
-        @backend.each_key{ |arr| yield arr[0] }
+        @backend.each_key { |arr| yield arr[0] }
         self
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         ret = nil
-        success = @backend.accept(key) do |key, value|
-          if value
-            ret = Integer(value) + amount
-          else
-            ret = amount
-          end
+        success = @backend.accept(key) do |_, value|
+          ret =
+            if value
+              Integer(value) + amount
+            else
+              amount
+            end
           ret.to_s
         end
 
