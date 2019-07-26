@@ -16,6 +16,19 @@ module Moneta
     class Couch
       include Defaults
 
+      # @api private
+      class HTTPError < StandardError
+        attr_reader :status, :request_method, :key
+
+        def initialize(status, request_method, key)
+          @status = status
+          @request_method = request_method.to_sym
+          @key = key
+
+          super "HTTP Error: #{@status} (#{@request_method.to_s.upcase} #{@key})"
+        end
+      end
+
       attr_reader :backend
 
       supports :create, :each_key
@@ -58,9 +71,9 @@ module Moneta
         body = value_to_body(value, rev(key))
         response = @backend.put(key, body, 'Content-Type' => 'application/json')
         update_rev_cache(key, response)
-        raise "HTTP error #{response.status} (PUT /#{key})" unless response.status == 201
+        raise HTTPError.new(response.status, :put, key) unless response.status == 201
         value
-      rescue
+      rescue HTTPError
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
       end
@@ -73,10 +86,10 @@ module Moneta
           existing_rev = get_response['etag'][1..-2]
           value = body_to_value(get_response.body)
           delete_response = @backend.delete("#{key}?rev=#{existing_rev}")
-          raise "HTTP error #{response.status}" unless delete_response.status == 200
+          raise HTTPError.new(response.status, :delete, key) unless delete_response.status == 200
           value
         end
-      rescue
+      rescue HTTPError
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
       end
@@ -99,9 +112,9 @@ module Moneta
         when 409
           false
         else
-          raise "HTTP error #{response.status}"
+          raise HTTPError.new(response.status, :put, key)
         end
-      rescue
+      rescue HTTPError
         tries ||= 0
         (tries += 1) < 10 ? retry : raise
       end
@@ -126,7 +139,7 @@ module Moneta
               yield key
             end
           else
-            raise "HTTP error #{response.status}"
+            raise HTTPError.new(response.status, :get, '_all_docs')
           end
         end
         self
@@ -141,7 +154,7 @@ module Moneta
       # (see Proxy#slice)
       def slice(*keys, **options)
         response = @backend.get('_all_docs?' + encode_query(keys: keys, include_docs: true))
-        raise "HTTP error #{response.status}" unless response.status == 200
+        raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
         docs = MultiJson.load(response.body)
         docs["rows"].map do |row|
           next unless row['doc']
@@ -171,7 +184,7 @@ module Moneta
         docs = pairs.map { |key, value| value_to_doc(value, @rev_cache[key], key) }.to_a
         body = MultiJson.dump(docs: docs)
         response = @backend.post('_bulk_docs', body, "Content-Type" => "application/json")
-        raise "HTTP error #{response.status}" unless response.status == 201
+        raise HTTPError.new(response.status, :post, '_bulk_docs') unless response.status == 201
         retries = []
         MultiJson.load(response.body).each do |row|
           if row['ok'] == true
@@ -240,9 +253,10 @@ module Moneta
             break
           when 412
             # Make sure the database really does exist
+            # See https://github.com/apache/couchdb/issues/2073
             break if @backend.head('').status == 200
           else
-            raise "HTTP error #{response.status}"
+            raise HTTPError.new(response.status, :head, '')
           end
 
           # Wait before trying again
@@ -252,7 +266,7 @@ module Moneta
 
       def cache_revs(*keys)
         response = @backend.get('_all_docs?' + encode_query(keys: keys))
-        raise "HTTP error #{response.status}" unless response.status == 200
+        raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
         docs = MultiJson.load(response.body)
         docs['rows'].each do |row|
           next unless row['value']
