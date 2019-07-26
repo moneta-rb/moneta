@@ -1,0 +1,169 @@
+AllCops:
+  UseCache: true
+  Exclude:
+    - hbase/**/*
+    - script/**/*
+    - vendor/**/*
+
+Layout/AlignArray:
+  Exclude:
+    - lib/moneta/transformer/config.rb
+
+Layout/AlignHash:
+  Exclude:
+    - lib/moneta/transformer/config.rb
+
+Layout/DotPosition:
+  EnforcedStyle: leading
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Exclude:
+    - lib/moneta.rb
+    - lib/moneta/transformer/config.rb
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - lib/moneta/transformer/config.rb
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Lint/ShadowedException:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/Void:
+  Exclude:
+    - spec/**/*
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Metrics/LineLength:
+  Max: 160
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Naming/ConstantName:
+  Exclude:
+    - lib/rack/cache/moneta.rb
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Security/MarshalLoad:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: false
+
+Style/CaseEquality:
+  Enabled: false
+
+Style/CharacterLiteral:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/GlobalVars:
+  Exclude:
+    - spec/moneta/adapters/cassandra/helper.rb
+
+Style/FormatString:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: lambda
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/MultilineIfModifier:
+  Enabled: false
+
+Style/MutableConstant:
+  Exclude:
+    - lib/rack/cache/moneta.rb
+
+Style/NilComparison:
+  EnforcedStyle: comparison
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
+
+Style/NonNilCheck:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/PreferredHashMethods:
+  Enabled: false
+
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/SymbolProc:
+  Enabled: false
+
+Style/YodaCondition:
+  Enabled: false

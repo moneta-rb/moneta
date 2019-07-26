@@ -34,7 +34,7 @@ env:
   global:
     - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="
   matrix:
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       test/action_dispatch/session_moneta_store_test.rb
       spec/moneta/adapters/activerecord
       spec/moneta/adapters/localmemcache
@@ -57,7 +57,7 @@ env:
       spec/moneta/adapters/lmdb
       spec/moneta/adapters/yaml
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/client
       spec/moneta/adapters/memory
       spec/moneta/adapters/cookie
@@ -65,41 +65,56 @@ env:
       spec/moneta/adapters/tdb
       spec/moneta/adapters/kyotocabinet
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/couch
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/memcached/dalli
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/memcached/native
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/cassandra/adapter_cassandra_spec.rb
       spec/moneta/adapters/cassandra/standard_cassandra_spec.rb
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/cassandra/adapter_cassandra_with_default_expires_spec.rb
       spec/moneta/adapters/hashfile
       spec/moneta/adapters/sqlite
       spec/moneta/adapters/sequel
       '
-    - SCRIPT='parallel-tests ~unstable --
+    - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/proxies
       '
-    - SCRIPT='parallel-tests ~unstable --remainder'
-    - SCRIPT='parallel-tests unstable'
-    - SCRIPT='benchmarks uniform_small'
-    - SCRIPT='benchmarks uniform_medium'
-    - SCRIPT='benchmarks uniform_large'
-    - SCRIPT='benchmarks normal_small'
-    - SCRIPT='benchmarks normal_medium'
-    - SCRIPT='benchmarks normal_large'
+    - SCRIPT='script/parallel-tests ~unstable --remainder'
+    - SCRIPT='script/parallel-tests unstable'
+    - SCRIPT='script/benchmarks uniform_small'
+    - SCRIPT='script/benchmarks uniform_medium'
+    - SCRIPT='script/benchmarks uniform_large'
+    - SCRIPT='script/benchmarks normal_small'
+    - SCRIPT='script/benchmarks normal_medium'
+    - SCRIPT='script/benchmarks normal_large'
+    - SCRIPT='rubocop lib'
 matrix:
   allow_failures:
     - rvm: rbx-3
-    - env: SCRIPT='parallel-tests unstable'
-script: "bundle exec script/$SCRIPT"
+    - env: SCRIPT='script/parallel-tests unstable'
+  exclude:
+    - rvm: 2.5
+      env: SCRIPT='rubocop lib'
+    - rvm: 2.4
+      env: SCRIPT='rubocop lib'
+    - rvm: 2.3
+      env: SCRIPT='rubocop lib'
+    - rvm: 2.2
+      env: SCRIPT='rubocop lib'
+    - rvm: jruby-9.2
+      env: SCRIPT='rubocop lib'
+    - rvm: rbx-3
+      env: SCRIPT='rubocop lib'
+
+script: "bundle exec $SCRIPT"
 branches:
   only:
     - master
