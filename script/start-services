@@ -1,18 +1,11 @@
 #!/bin/bash
 
-echo Starting TokyoTyrant ...
-/usr/sbin/ttserver -dmn -pid /tmp/ttserver.pid -log /tmp/ttserver.log -port 1978
-
 # Reconfigure CouchDB to use delayed commits for speed: http://guide.couchdb.org/draft/performance.html
 sudo sed -i '/\[couchdb\]/a delayed_commits = true' /etc/couchdb/local.ini
-sudo service couchdb restart
+sudo service couchdb start
 
 # Start HBase
 $(dirname $0)/start-hbase
 
 # Waiting for servers to start
 sleep 3
-
-echo TokyoTyrant status:
-ps aux | grep ttserver
-cat /tmp/ttserver.log

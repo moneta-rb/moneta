@@ -1,3 +1,4 @@
+dist: xenial
 language: ruby
 rvm:
   - 2.6
@@ -8,17 +9,33 @@ rvm:
   - jruby-9.2
   - rbx-3
 services:
+  - mysql
   - riak
-  - couchdb
   - redis
   - cassandra
   - memcached
   - mongodb
   - postgresql
 addons:
+  apt:
+    sources:
+      - cassandra
+      - sourceline: "deb https://apache.bintray.com/couchdb-deb xenial main"
+        key_url: https://couchdb.apache.org/repo/bintray-pubkey.asc
+      - sourceline: "deb https://packagecloud.io/basho/riak/ubuntu/ xenial main"
+        key_url: https://packagecloud.io/basho/riak/gpgkey
+    packages:
+      - cassandra
+      - couchdb
+      - libkyotocabinet-dev
+      - libleveldb-dev
+      - liblzo2-dev
+      - libtdb-dev
+      - libtokyocabinet-dev
+      - tokyotyrant
+      - riak
   postgresql: '9.6'
 before_install:
-  - sudo apt-get install -qq libtokyocabinet9 libtokyocabinet-dev libkyotocabinet16 libkyotocabinet-dev liblzo2-dev libtdb-dev libleveldb-dev tokyotyrant
   - script/start-services
 cache:
   bundler: true
@@ -31,8 +48,6 @@ before_script:
   - psql -c 'create extension hstore;' -U postgres moneta1
   - psql -c 'create database moneta2;' -U postgres
 env:
-  global:
-    - secure: "dtM4n7FP8P0UI9Iq+nsvQ7/yfDqsxhfCO9i8zMxm/f9Kxj5Z/4C7jsXsLA+e\n/7FZ9+ld2QjPSPU0LUiDpj/z81bxyZHwqocQ7Nb0DVvO3JRHpr4/iBQQQHd3\n0jvou3mRbu5mBlUjf1/ALaZA+b+vcnsF9fd86UnkY+ChriylGnM="
   matrix:
     - SCRIPT='script/parallel-tests ~unstable --
       test/action_dispatch/session_moneta_store_test.rb
