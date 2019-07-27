@@ -43,8 +43,10 @@ module Moneta
       def initialize(options = {})
         @value_field = options[:value_field] || 'value'
         @type_field = options[:type_field] || 'type'
-        url = "http://#{options[:host] || '127.0.0.1'}:#{options[:port] || 5984}/#{options[:db] || 'moneta'}"
-        @backend = options[:backend] || ::Faraday.new(url: url)
+        @backend = options[:backend] || begin
+          url = "http://#{options[:host] || '127.0.0.1'}:#{options[:port] || 5984}/#{options[:db] || 'moneta'}"
+          ::Faraday.new(url: url)
+        end
         @rev_cache = Moneta.build do
           use :Lock
           adapter :LRUHash
@@ -55,14 +57,14 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         response = @backend.head(key)
-        update_rev_cache(key, response)
+        cache_response_rev(key, response)
         response.status == 200
       end
 
       # (see Proxy#load)
       def load(key, options = {})
         response = @backend.get(key)
-        update_rev_cache(key, response)
+        cache_response_rev(key, response)
         response.status == 200 ? body_to_value(response.body) : nil
       end
 
@@ -70,7 +72,7 @@ module Moneta
       def store(key, value, options = {})
         body = value_to_body(value, rev(key))
         response = @backend.put(key, body, 'Content-Type' => 'application/json')
-        update_rev_cache(key, response)
+        cache_response_rev(key, response)
         raise HTTPError.new(response.status, :put, key) unless response.status == 201
         value
       rescue HTTPError
@@ -80,7 +82,7 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        clear_rev_cache(key)
+        delete_cached_rev(key)
         get_response = @backend.get(key)
         if get_response.status == 200
           existing_rev = get_response['etag'][1..-2]
@@ -96,8 +98,18 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.delete ''
-        create_db
+        loop do
+          response = @backend.get('_all_docs?' + encode_query(limit: 10000, sorted: false))
+          raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
+          all_docs = MultiJson.load(response.body)
+          break if all_docs['rows'].empty?
+          delete_docs = all_docs['rows'].map do |row|
+            { _id: row['id'], _rev: row['value']['rev'], _deleted: true }
+          end
+          delete_response = @backend.post('_bulk_docs', MultiJson.dump(docs: delete_docs), "Content-Type" => "application/json")
+          raise HTTPError.new(delete_response.status, :post, '_bulk_docs') unless delete_response.status == 201
+        end
+
         self
       end
 
@@ -105,7 +117,7 @@ module Moneta
       def create(key, value, options = {})
         body = value_to_body(value, nil)
         response = @backend.put(key, body, 'Content-Type' => 'application/json')
-        update_rev_cache(key, response)
+        cache_response_rev(key, response)
         case response.status
         when 201
           true
@@ -125,13 +137,12 @@ module Moneta
 
         skip = 0
         limit = 1000
-        total_rows = 1
-        while total_rows > skip
-          response = @backend.get("_all_docs?" + encode_query(limit: limit, skip: skip))
+        loop do
+          response = @backend.get("_all_docs?" + encode_query(limit: limit, skip: skip, sorted: false))
           case response.status
           when 200
             result = MultiJson.load(response.body)
-            total_rows = result['total_rows']
+            break if result['rows'].empty?
             skip += result['rows'].length
             result['rows'].each do |row|
               key = row['id']
@@ -190,7 +201,7 @@ module Moneta
           if row['ok'] == true
             @rev_cache[row['id']] = row['rev']
           elsif row['error'] == 'conflict'
-            clear_rev_cache(row['id'])
+            delete_cached_rev(row['id'])
             retries << pairs.find { |key, _| key == row['id'] }
           else
             raise "Unrecognised response: #{row}"
@@ -246,7 +257,7 @@ module Moneta
       end
 
       def create_db
-        100.times do
+        loop do
           response = @backend.put('', '')
           case response.status
           when 201
@@ -262,6 +273,8 @@ module Moneta
           # Wait before trying again
           sleep 1
         end
+
+        self
       end
 
       def cache_revs(*keys)
@@ -274,24 +287,24 @@ module Moneta
         end
       end
 
-      def update_rev_cache(key, response)
+      def cache_response_rev(key, response)
         case response.status
         when 200, 201
           @rev_cache[key] = response['etag'][1..-2]
         else
-          clear_rev_cache(key)
+          delete_cached_rev(key)
           nil
         end
       end
 
-      def clear_rev_cache(key)
+      def delete_cached_rev(key)
         @rev_cache.delete(key)
       end
 
       def rev(key)
-        @rev_cache[key] || (
-          response = @backend.head(key) and
-          update_rev_cache(key, response)).tap do |rev|
+        @rev_cache[key] || begin
+          response = @backend.head(key)
+          cache_response_rev(key, response)
         end
       end
 
