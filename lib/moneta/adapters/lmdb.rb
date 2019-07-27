@@ -64,8 +64,7 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @backend.transaction do
-          value = @db.get(key)
-          value = Utils.to_int(value) + amount
+          value = Integer(@db.get(key) || 0) + amount
           @db.put(key, value.to_s, Utils.only(options, *PUT_FLAGS))
           value
         end

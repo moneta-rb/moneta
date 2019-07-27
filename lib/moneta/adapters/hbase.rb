@@ -53,7 +53,7 @@ module Moneta
       def increment(key, amount = 1, options = {})
         result = @table.atomic_increment(key, @column, amount)
         # HACK: Throw error if applied to invalid value
-        Utils.to_int(load(key)) if result == 0
+        Integer(load(key)) if result == 0
         result
       end
 

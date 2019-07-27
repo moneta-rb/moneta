@@ -59,7 +59,8 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         transaction do
-          value = Utils.to_int(@backend[key]) + amount
+          existing = @backend[key]
+          value = (existing == nil ? 0 : Integer(existing)) + amount
           @backend[key] = value.to_s
           value
         end

@@ -80,7 +80,7 @@ module Moneta
         ::File.open(path, ::File::RDWR | ::File::CREAT) do |f|
           Thread.pass until f.flock(::File::LOCK_EX)
           content = f.read
-          amount += Utils.to_int(content) unless content.empty?
+          amount += Integer(content) unless content.empty?
           content = amount.to_s
           f.binmode
           f.pos = 0

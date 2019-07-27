@@ -406,7 +406,8 @@ module Moneta
   module IncrementSupport
     # (see Defaults#increment)
     def increment(key, amount = 1, options = {})
-      value = Utils.to_int(load(key, options)) + amount
+      existing = load(key, options)
+      value = (existing == nil ? 0 : Integer(existing)) + amount
       store(key, value.to_s, options)
       value
     end

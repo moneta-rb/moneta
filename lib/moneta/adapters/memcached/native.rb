@@ -72,7 +72,7 @@ module Moneta
                  end
         # HACK: Throw error if applied to invalid value
         # see https://github.com/evan/memcached/issues/110
-        Utils.to_int((@backend.get(key, false) rescue nil)) if result == 0
+        Integer((@backend.get(key, false) rescue 0)) if result == 0
         result
       rescue ::Memcached::NotFound
         retry unless create(key, amount.to_s, options)
