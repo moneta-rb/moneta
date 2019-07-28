@@ -282,7 +282,7 @@ module Moneta
         raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
         docs = MultiJson.load(response.body)
         docs['rows'].each do |row|
-          next unless row['value']
+          next if !row['value'] || row['value']['deleted']
           @rev_cache[row['id']] = row['value']['rev']
         end
       end
