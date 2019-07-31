@@ -104,7 +104,10 @@ class MonetaBenchmarks
     },
     {name: "Cassandra"},
     {name: "Client (Memory)", adapter: :Client},
-    {name: "Couch"},
+    {
+      name: "Couch",
+      clear_options: { await_compact: true }
+    },
     {
       name: "DBM",
       options: {file: "#{DIR}/dbm"}
@@ -480,7 +483,7 @@ class MonetaBenchmarks
       print "%s [%#{2 * @config[:runs]}s] " % [type, state]
 
       @config[:runs].times do |run|
-        store.clear
+        store.clear(spec[:clear_options] || {})
 
         @data.shuffle!
         m1 = Benchmark.measure do

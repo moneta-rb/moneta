@@ -1,6 +1,5 @@
 require 'faraday'
 require 'multi_json'
-require 'uri'
 
 module Moneta
   module Adapters
@@ -55,25 +54,25 @@ module Moneta
       end
 
       # (see Proxy#key?)
+      # @option options [Boolean] :cache_rev (true) Whether to cache the rev of the document for faster updating
       def key?(key, options = {})
-        response = @backend.head(key)
-        cache_response_rev(key, response)
-        response.status == 200
+        cache_rev = options[:cache_rev] != false
+        head(key, cache_rev: cache_rev)
       end
 
       # (see Proxy#load)
+      # @option (see #key?)
       def load(key, options = {})
-        response = @backend.get(key)
-        cache_response_rev(key, response)
-        response.status == 200 ? body_to_value(response.body) : nil
+        cache_rev = options[:cache_rev] != false
+        doc = get(key, cache_rev: cache_rev)
+        doc ? doc_to_value(doc) : nil
       end
 
       # (see Proxy#store)
+      # @option (see #key?)
       def store(key, value, options = {})
-        body = value_to_body(value, rev(key))
-        response = @backend.put(key, body, 'Content-Type' => 'application/json')
-        cache_response_rev(key, response)
-        raise HTTPError.new(response.status, :put, key) unless response.status == 201
+        cache_rev = options[:cache_rev] != false
+        put(key, value_to_doc(value, rev(key)), cache_rev: cache_rev, expect: 201)
         value
       rescue HTTPError
         tries ||= 0
@@ -82,13 +81,11 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        delete_cached_rev(key)
-        get_response = @backend.get(key)
-        if get_response.status == 200
-          existing_rev = get_response['etag'][1..-2]
+        get_response = get(key, returns: :response)
+        if get_response.success?
           value = body_to_value(get_response.body)
-          delete_response = @backend.delete("#{key}?rev=#{existing_rev}")
-          raise HTTPError.new(response.status, :delete, key) unless delete_response.status == 200
+          existing_rev = parse_rev(get_response)
+          request(:delete, key, query: { rev: existing_rev }, expect: 200)
           value
         end
       rescue HTTPError
@@ -97,34 +94,51 @@ module Moneta
       end
 
       # (see Proxy#clear)
+      # @option options [Boolean] :compact (true) Whether to compact the database after clearing
+      # @option options [Boolean] :await_compact (false) Whether to wait for compaction to complete
+      #   before returning.
       def clear(options = {})
         loop do
-          response = @backend.get('_all_docs?' + encode_query(limit: 10000, sorted: false))
-          raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
-          all_docs = MultiJson.load(response.body)
-          break if all_docs['rows'].empty?
-          delete_docs = all_docs['rows'].map do |row|
+          docs = all_docs(limit: 10_000)
+          break if docs['rows'].empty?
+          deletions = docs['rows'].map do |row|
             { _id: row['id'], _rev: row['value']['rev'], _deleted: true }
           end
-          delete_response = @backend.post('_bulk_docs', MultiJson.dump(docs: delete_docs), "Content-Type" => "application/json")
-          raise HTTPError.new(delete_response.status, :post, '_bulk_docs') unless delete_response.status == 201
+          bulk_docs(deletions)
+        end
+
+        # Compact the database unless told not to
+        if options[:compact] != false
+          post('_compact', expect: 202)
+
+          # Performance won't be great while compaction is happening, so by default we wait for it
+          if options[:await_compact]
+            loop do
+              db_info = get('', expect: 200)
+              break unless db_info['compact_running']
+
+              # wait before checking again
+              sleep 1
+            end
+          end
         end
 
         self
       end
 
       # (see Proxy#create)
+      # @option (see #key?)
       def create(key, value, options = {})
-        body = value_to_body(value, nil)
-        response = @backend.put(key, body, 'Content-Type' => 'application/json')
-        cache_response_rev(key, response)
+        cache_rev = options[:cache_rev] != false
+        doc = value_to_doc(value, nil)
+        response = put(key, doc, cache_rev: cache_rev, returns: :response)
         case response.status
         when 201
           true
         when 409
           false
         else
-          raise HTTPError.new(response.status, :put, key)
+          raise HTTPError.new(response.status, :put, @backend.create_url(key))
         end
       rescue HTTPError
         tries ||= 0
@@ -138,19 +152,13 @@ module Moneta
         skip = 0
         limit = 1000
         loop do
-          response = @backend.get("_all_docs?" + encode_query(limit: limit, skip: skip, sorted: false))
-          case response.status
-          when 200
-            result = MultiJson.load(response.body)
-            break if result['rows'].empty?
-            skip += result['rows'].length
-            result['rows'].each do |row|
-              key = row['id']
-              @rev_cache[key] = row['value']['rev']
-              yield key
-            end
-          else
-            raise HTTPError.new(response.status, :get, '_all_docs')
+          docs = all_docs(limit: limit, skip: skip)
+          break if docs['rows'].empty?
+          skip += docs['rows'].length
+          docs['rows'].each do |row|
+            key = row['id']
+            @rev_cache[key] = row['value']['rev']
+            yield key
           end
         end
         self
@@ -164,9 +172,7 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        response = @backend.get('_all_docs?' + encode_query(keys: keys, include_docs: true))
-        raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
-        docs = MultiJson.load(response.body)
+        docs = all_docs(keys: keys, include_docs: true)
         docs["rows"].map do |row|
           next unless row['doc']
           [row['id'], doc_to_value(row['doc'])]
@@ -193,11 +199,8 @@ module Moneta
         end
 
         docs = pairs.map { |key, value| value_to_doc(value, @rev_cache[key], key) }.to_a
-        body = MultiJson.dump(docs: docs)
-        response = @backend.post('_bulk_docs', body, "Content-Type" => "application/json")
-        raise HTTPError.new(response.status, :post, '_bulk_docs') unless response.status == 201
-        retries = []
-        MultiJson.load(response.body).each do |row|
+        results = bulk_docs(docs, returns: :doc)
+        retries = results.each_with_object([]) do |retries, row|
           if row['ok'] == true
             @rev_cache[row['id']] = row['rev']
           elsif row['error'] == 'conflict'
@@ -206,6 +209,7 @@ module Moneta
           else
             raise "Unrecognised response: #{row}"
           end
+          retries
         end
 
         # Recursive call with all conflicts
@@ -252,22 +256,18 @@ module Moneta
         doc
       end
 
-      def value_to_body(value, rev)
-        MultiJson.dump(value_to_doc(value, rev))
-      end
-
       def create_db
         loop do
-          response = @backend.put('', '')
+          response = put('', returns: :response)
           case response.status
           when 201
             break
           when 412
             # Make sure the database really does exist
             # See https://github.com/apache/couchdb/issues/2073
-            break if @backend.head('').status == 200
+            break if head('')
           else
-            raise HTTPError.new(response.status, :head, '')
+            raise HTTPError.new(response.status, :put, '')
           end
 
           # Wait before trying again
@@ -278,19 +278,21 @@ module Moneta
       end
 
       def cache_revs(*keys)
-        response = @backend.get('_all_docs?' + encode_query(keys: keys))
-        raise HTTPError.new(response.status, :get, '_all_docs') unless response.status == 200
-        docs = MultiJson.load(response.body)
+        docs = all_docs(keys: keys)
         docs['rows'].each do |row|
           next if !row['value'] || row['value']['deleted']
           @rev_cache[row['id']] = row['value']['rev']
         end
       end
 
+      def parse_rev(response)
+        response['etag'][1..-2]
+      end
+
       def cache_response_rev(key, response)
         case response.status
         when 200, 201
-          @rev_cache[key] = response['etag'][1..-2]
+          @rev_cache[key] = parse_rev(response)
         else
           delete_cached_rev(key)
           nil
@@ -309,7 +311,60 @@ module Moneta
       end
 
       def encode_query(query)
-        URI.encode_www_form(query.map { |key, value| [key, MultiJson.dump(value)] })
+        query.map { |key, value| [key, MultiJson.dump(value)] }
+      end
+
+      def request(method, key, body = nil, returns: :nil, cache_rev: false, expect: nil, query: nil)
+        url = @backend.build_url(key, query)
+        headers = %i{put post}.include?(method) ? { 'Content-Type' => 'application/json' } : {}
+        response = @backend.run_request(method, url, body || '', headers)
+
+        if cache_rev
+          cache_response_rev(key, response)
+        end
+
+        if expect
+          raise HTTPError.new(response.status, method, url) unless response.status == expect
+        end
+
+        case returns
+        when :response
+          response
+        when :success
+          response.success?
+        when :doc
+          response.success? ? MultiJson.load(response.body) : nil
+        when :nil
+          nil
+        else
+          raise "Unknown returns param: #{returns.inspect}"
+        end
+      end
+
+      def get(key, returns: :doc, **options)
+        request(:get, key, returns: returns, **options)
+      end
+
+      def head(key, returns: :success, **options)
+        request(:head, key, returns: returns, **options)
+      end
+
+      def put(key, doc = nil, returns: :success, **options)
+        body = doc == nil ? '' : MultiJson.dump(doc)
+        request(:put, key, body, returns: returns, **options)
+      end
+
+      def post(key, doc = nil, returns: :success, **options)
+        body = doc == nil ? '' : MultiJson.dump(doc)
+        request(:post, key, body, returns: returns, **options)
+      end
+
+      def all_docs(sorted: false, **params)
+        get('_all_docs', query: encode_query(params.merge(sorted: sorted)), expect: 200)
+      end
+
+      def bulk_docs(docs, returns: :success)
+        post('_bulk_docs', { docs: docs }, returns: returns, expect: 201)
       end
     end
   end

@@ -4,4 +4,54 @@ describe 'adapter_couch', isolate: true, adapter: :Couch do
   end
 
   moneta_specs ADAPTER_SPECS.without_increment.simplevalues_only.without_path.with_each_key
+
+  describe '#clear' do
+    shared_examples :compacts do
+      it 'posts to the _compact endpoint' do
+        expect(store).to receive(:post).with('_compact', any_args)
+        store.clear(options)
+      end
+    end
+
+    context 'without a :compact option' do
+      let(:options) { {} }
+      include_examples :compacts
+    end
+
+    context 'with compact: true' do
+      let(:options) { { compact: true } }
+      include_examples :compacts
+    end
+
+    context 'with compact: false' do
+      it 'does not post to the _compact endpoint' do
+        expect(store).not_to receive(:post).with('_compact', any_args)
+        store.clear(compact: false)
+      end
+    end
+
+    context 'with await_compact: true' do
+      it "waits for compaction to complete" do
+        # This simulates an empty DB, so no deletes
+        expect(store).to receive(:get).with('_all_docs', any_args).ordered { { 'rows' => [] } }
+
+        # Next, compact is called.
+        expect(store).to receive(:post).with('_compact', any_args).ordered
+
+        # We expect the method to call get the DB info as many times as the true value is returned.
+        expect(store).to receive(:get).twice.with('', any_args).ordered { { 'compact_running' => true } }
+        expect(store).to receive(:get).once.with('', any_args).ordered { { 'compact_running' => false } }
+        store.clear(await_compact: true)
+      end
+    end
+
+    context 'with await_compact: false' do
+      it "does not wait for compaction to complete" do
+        expect(store).to receive(:get).with('_all_docs', any_args).ordered { { 'rows' => [] } }
+        expect(store).to receive(:post).with('_compact', any_args).ordered
+        expect(store).not_to receive(:get).with('', any_args).ordered
+        store.clear(await_compact: false)
+      end
+    end
+  end
 end
