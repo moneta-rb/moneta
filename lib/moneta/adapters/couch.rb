@@ -174,8 +174,8 @@ module Moneta
       def slice(*keys, **options)
         docs = all_docs(keys: keys, include_docs: true)
         docs["rows"].map do |row|
-          next unless row['doc']
-          [row['id'], doc_to_value(row['doc'])]
+          next unless doc = row['doc']
+          [row['id'], doc_to_value(doc)]
         end.compact
       end
 
@@ -200,12 +200,13 @@ module Moneta
 
         docs = pairs.map { |key, value| value_to_doc(value, @rev_cache[key], key) }.to_a
         results = bulk_docs(docs, returns: :doc)
-        retries = results.each_with_object([]) do |retries, row|
-          if row['ok'] == true
-            @rev_cache[row['id']] = row['rev']
+        retries = results.each_with_object([]) do |row, retries|
+          ok, id = row.values_at('ok', 'id')
+          if ok
+            @rev_cache[id] = row['rev']
           elsif row['error'] == 'conflict'
-            delete_cached_rev(row['id'])
-            retries << pairs.find { |key, _| key == row['id'] }
+            delete_cached_rev(id)
+            retries << pairs.find { |key,| key == id }
           else
             raise "Unrecognised response: #{row}"
           end
