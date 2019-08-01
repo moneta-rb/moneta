@@ -6,28 +6,28 @@ describe 'adapter_couch', isolate: true, adapter: :Couch do
   moneta_specs ADAPTER_SPECS.without_increment.simplevalues_only.without_path.with_each_key
 
   describe '#clear' do
-    shared_examples :compacts do
-      it 'posts to the _compact endpoint' do
-        expect(store).to receive(:post).with('_compact', any_args)
+    shared_examples :no_compact do
+      it 'does not post to the _compact endpoint' do
+        expect(store).not_to receive(:post).with('_compact', any_args)
         store.clear(options)
       end
     end
 
     context 'without a :compact option' do
       let(:options) { {} }
-      include_examples :compacts
+      include_examples :no_compact
     end
 
     context 'with compact: true' do
-      let(:options) { { compact: true } }
-      include_examples :compacts
+      it 'posts to the _compact endpoint' do
+        expect(store).to receive(:post).with('_compact', any_args)
+        store.clear(compact: true)
+      end
     end
 
     context 'with compact: false' do
-      it 'does not post to the _compact endpoint' do
-        expect(store).not_to receive(:post).with('_compact', any_args)
-        store.clear(compact: false)
-      end
+      let(:options) { { compact: false } }
+      include_examples :no_compact
     end
 
     context 'with await_compact: true' do
@@ -41,7 +41,7 @@ describe 'adapter_couch', isolate: true, adapter: :Couch do
         # We expect the method to call get the DB info as many times as the true value is returned.
         expect(store).to receive(:get).twice.with('', any_args).ordered { { 'compact_running' => true } }
         expect(store).to receive(:get).once.with('', any_args).ordered { { 'compact_running' => false } }
-        store.clear(await_compact: true)
+        store.clear(compact: true, await_compact: true)
       end
     end
 
@@ -50,7 +50,7 @@ describe 'adapter_couch', isolate: true, adapter: :Couch do
         expect(store).to receive(:get).with('_all_docs', any_args).ordered { { 'rows' => [] } }
         expect(store).to receive(:post).with('_compact', any_args).ordered
         expect(store).not_to receive(:get).with('', any_args).ordered
-        store.clear(await_compact: false)
+        store.clear(compact: true, await_compact: false)
       end
     end
   end

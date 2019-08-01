@@ -94,7 +94,7 @@ module Moneta
       end
 
       # (see Proxy#clear)
-      # @option options [Boolean] :compact (true) Whether to compact the database after clearing
+      # @option options [Boolean] :compact (false) Whether to compact the database after clearing
       # @option options [Boolean] :await_compact (false) Whether to wait for compaction to complete
       #   before returning.
       def clear(options = {})
@@ -108,7 +108,7 @@ module Moneta
         end
 
         # Compact the database unless told not to
-        if options[:compact] != false
+        if options[:compact]
           post('_compact', expect: 202)
 
           # Performance won't be great while compaction is happening, so by default we wait for it

@@ -106,7 +106,7 @@ class MonetaBenchmarks
     {name: "Client (Memory)", adapter: :Client},
     {
       name: "Couch",
-      clear_options: { await_compact: true }
+      clear_options: { compact: true, await_compact: true }
     },
     {
       name: "DBM",
