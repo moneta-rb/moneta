@@ -7,6 +7,8 @@ require 'fileutils'
 require 'active_support'
 require 'active_support/cache/moneta_store'
 
+require_relative '../spec/restserver.rb'
+
 class String
   def random(n)
     (1..n).map { self[rand(size),1] }.join
@@ -106,7 +108,13 @@ class MonetaBenchmarks
     {name: "Client (Memory)", adapter: :Client},
     {
       name: "Couch",
-      clear_options: { compact: true, await_compact: true }
+      options: {
+        backend: if defined?(JRUBY_VERSION)
+                   require 'faraday/adapter/manticore'
+                   ::Faraday.new("http://127.0.0.1:5984/moneta") { |f| f.adapter :manticore }
+                 end
+      },
+      clear_options: { compact: true, await_compact: true },
     },
     {
       name: "DBM",
@@ -155,7 +163,17 @@ class MonetaBenchmarks
     {name: "MongoOfficial"},
     {name: "PStore", options: { file: "#{DIR}/pstore" }},
     {name: "Redis"},
-    {name: "RestClient", options: { url: 'http://localhost:8808/' }},
+    {
+      name: "RestClient (Memory)",
+      adapter: :RestClient,
+      options: {
+        url: 'http://127.0.0.1:8808/moneta',
+        backend: if defined?(JRUBY_VERSION)
+                   require 'faraday/adapter/manticore'
+                   ::Faraday.new("http://127.0.0.1:8808/moneta") { |f| f.adapter :manticore }
+                 end
+      }
+    },
     {name: "Riak"},
     {
       name: "Sequel (MySQL)",
@@ -352,41 +370,38 @@ class MonetaBenchmarks
   end
 
   def start_servers
-    parallel do
-      begin
-        Moneta::Server.new(Moneta.new(:Memory)).run
-      rescue Exception => ex
-        puts "\e[31mFailed to start Moneta server - #{ex.message}\e[0m"
-      end
-    end
-
-    parallel do
-      begin
-        require 'rack'
-        require 'webrick'
-        require 'rack/moneta_rest'
-
-        # Keep webrick quiet
-        ::WEBrick::HTTPServer.class_eval do
-          def access_log(config, req, res); end
+    @moneta_server_handle =
+      parallel do
+        begin
+          Moneta::Server.new(Moneta.new(:Memory)).run
+        rescue => ex
+          puts "\e[31mFailed to start Moneta server - #{ex.message}\e[0m"
         end
-        ::WEBrick::BasicLog.class_eval do
-          def log(level, data); end
-        end
-
-        Rack::Server.start(app: Rack::Builder.app do
-                             use Rack::Lint
-                             run Rack::MonetaRest.new(store: :Memory)
-                           end,
-                           environment: :none,
-                           server: :webrick,
-                           Port: 8808)
-      rescue Exception => ex
-        puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
       end
+
+    @restserver_handle = start_restserver(8808)
+
+    Signal.trap "INT" do
+      stop_servers
+      exit
     end
 
     sleep 1 # Wait for servers
+  end
+
+  def stop_servers
+    if @restserver_handle
+      stop_restserver(@restserver_handle)
+      @restserver_handle = nil
+    end
+
+    case @moneta_server_handle
+    when Thread
+      Thread.kill @moneta_server_handle
+    when Integer
+      Process.kill "TERM", @moneta_server_handle
+      Process.wait @moneta_server_handle
+    end
   end
 
   def test_stores
@@ -574,6 +589,7 @@ class MonetaBenchmarks
     generate_data
     run_benchmarks
     print_summary
+    stop_servers
     FileUtils.rm_rf(DIR)
   end
 end

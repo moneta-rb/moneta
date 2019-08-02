@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Reconfigure CouchDB to use delayed commits for speed: http://guide.couchdb.org/draft/performance.html
-sudo sed -i '/\[couchdb\]/a delayed_commits = true' /etc/couchdb/local.ini
-sudo service couchdb start
+# Restart CouchDB
+$(dirname $0)/reconfigure-couchdb
 
 # Start HBase
 $(dirname $0)/start-hbase

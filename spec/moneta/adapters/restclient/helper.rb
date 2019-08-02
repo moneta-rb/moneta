@@ -1,34 +1,12 @@
-require 'rack'
-require 'webrick'
-require 'rack/moneta_rest'
-
-# Keep webrick quiet
-::WEBrick::HTTPServer.class_eval do
-  def access_log(config, req, res); end
-end
-::WEBrick::BasicLog.class_eval do
-  def log(level, data); end
-end
+require_relative '../../../restserver.rb'
 
 RSpec.shared_context :start_restserver do |port|
   before :context do
-    @restserver_thread = Thread.start do
-      Rack::Server.start(
-        :app => Rack::Builder.app do
-          use Rack::Lint
-          map '/moneta' do
-            run Rack::MonetaRest.new(:store => :Memory)
-          end
-        end,
-        :environment => :none,
-        :server => :webrick,
-        :Port => port
-      )
-    end
+    @restserver_handle = start_restserver(port)
   end
 
   after :context do
-    Thread.kill(@restserver_thread)
-    @restserver_thread = nil
+    stop_restserver(@restserver_handle)
+    @restserver_handle = nil
   end
 end

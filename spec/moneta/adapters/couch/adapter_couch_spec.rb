@@ -1,6 +1,10 @@
-describe 'adapter_couch', isolate: true, adapter: :Couch do
+require_relative '../faraday_helper.rb'
+
+describe 'adapter_couch', adapter: :Couch do
+  include_context :faraday_adapter
+
   moneta_build do
-    Moneta::Adapters::Couch.new(db: 'adapter_couch')
+    Moneta::Adapters::Couch.new(db: 'adapter_couch', adapter: faraday_adapter)
   end
 
   moneta_specs ADAPTER_SPECS.without_increment.simplevalues_only.without_path.with_each_key

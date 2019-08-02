@@ -1,5 +1,11 @@
-describe "standard_couch", isolate: true, adapter: :Couch do
-  moneta_store :Couch, db: 'standard_couch'
+require_relative '../faraday_helper.rb'
+
+describe "standard_couch", adapter: :Couch do
+  include_context :faraday_adapter
+
+  moneta_store :Couch do
+    { db: 'standard_couch', adapter: faraday_adapter }
+  end
 
   moneta_loader do |value|
     ::Marshal.load(value.unpack('m').first)

@@ -36,15 +36,25 @@ module Moneta
       # @option options [String] :host ('127.0.0.1') Couch host
       # @option options [String] :port (5984) Couch port
       # @option options [String] :db ('moneta') Couch database
+      # @option options [String] :scheme ('http') HTTP scheme to use
       # @option options [String] :value_field ('value') Document field to store value
       # @option options [String] :type_field ('type') Document field to store value type
-      # @option options [Faraday connection] :backend Use existing backend instance
+      # @option options [Symbol] :adapter Adapter to use with Faraday
+      # @option options [Faraday::Connecton] :backend Use existing backend instance
+      # @option options Other options passed to {Faraday::new} (unless
+      #   :backend option is provided).
       def initialize(options = {})
-        @value_field = options[:value_field] || 'value'
-        @type_field = options[:type_field] || 'type'
-        @backend = options[:backend] || begin
-          url = "http://#{options[:host] || '127.0.0.1'}:#{options[:port] || 5984}/#{options[:db] || 'moneta'}"
-          ::Faraday.new(url: url)
+        @value_field = options.delete(:value_field) || 'value'
+        @type_field = options.delete(:type_field) || 'type'
+        @backend = options.delete(:backend) || begin
+          host = options.delete(:host) || '127.0.0.1'
+          port = options.delete(:port) || 5984
+          db = options.delete(:db) || 'moneta'
+          scheme = options.delete(:scheme) || 'http'
+          block = if faraday_adapter = options.delete(:adapter)
+                    proc { |faraday| faraday.adapter(faraday_adapter) }
+                  end
+          ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block)
         end
         @rev_cache = Moneta.build do
           use :Lock

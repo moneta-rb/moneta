@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Reconfigure CouchDB to use delayed commits for speed: http://guide.couchdb.org/draft/performance.html
+sudo sed -i '/\[couchdb\]/a delayed_commits = true' /etc/couchdb/local.ini
+sudo systemctl restart couchdb
+
+# Display some info about CouchDB
+sudo systemctl status couchdb
+until curl http://localhost:5984/; do
+  sleep 1
+done
+

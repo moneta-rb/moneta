@@ -4,6 +4,7 @@ gemspec
 # Used by multiple backends / transformers
 gem 'multi_json', groups: %i{json couch cassandra}
 gem 'faraday', groups: %i{couch restclient}
+gem 'manticore', groups: %i{couch restclient}, platforms: :jruby
 
 # Serializers used by Transformer
 gem 'tnetstring', group: :tnet
@@ -55,6 +56,10 @@ gem 'memcached', platforms: :ruby, group: :memcached_native
 gem 'jruby-memcached', platforms: :jruby, group: :memcached_native
 gem 'activerecord-jdbch2-adapter', platforms: :jruby, group: :h2
 gem 'ffi-gdbm', platforms: :jruby, group: :gdbm
+group :restclient do
+  gem 'fishwife', platforms: :jruby
+  gem 'rjack-logback', platforms: :jruby
+end
 
 group :datamapper do
   gem 'dm-core'

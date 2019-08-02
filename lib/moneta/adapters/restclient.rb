@@ -11,10 +11,19 @@ module Moneta
 
       # @param [Hash] options
       # @option options [String] :url URL
-      # @option options [Faraday connection] :backend Use existing backend instance
+      # @option options [Symbol] :adapter The adapter to tell Faraday to use
+      # @option options [Faraday::Connection] :backend Use existing backend instance
+      # @option options Other options passed to {Faraday::new} (unless
+      #   :backend option is provided).
       def initialize(options = {})
-        raise ArgumentError, 'Option :url is required' unless url = options[:url]
-        @backend = options[:backend] || ::Faraday.new(url: url)
+        @backend = options.delete(:backend) ||
+          begin
+            raise ArgumentError, 'Option :url is required' unless url = options.delete(:url)
+            block = if faraday_adapter = options.delete(:adapter)
+                      proc { |faraday| faraday.adapter faraday_adapter }
+                    end
+            ::Faraday.new(url, options, &block)
+          end
       end
 
       # (see Proxy#key?)
