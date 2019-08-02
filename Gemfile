@@ -14,7 +14,6 @@ gem 'bert', platforms: :ruby, group: :bert
 gem 'php-serialize', group: :php
 
 group :bson do
-  gem 'bson_ext', platforms: :ruby
   gem 'bson', '>= 2.0.0'
 end
 
@@ -54,7 +53,7 @@ gem 'tokyocabinet', platforms: :ruby, group: :tokyocabinet
 gem 'kyotocabinet-ruby-reanimated', platforms: :ruby, group: :kyotocabinet
 gem 'memcached', platforms: :ruby, group: :memcached_native
 gem 'jruby-memcached', platforms: :jruby, group: :memcached_native
-gem 'activerecord-jdbch2-adapter', platforms: :jruby, group: :h2
+gem 'activerecord-jdbch2-adapter', platforms: :jruby, group: :h2, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'
 gem 'ffi-gdbm', platforms: :jruby, group: :gdbm
 group :restclient do
   gem 'fishwife', platforms: :jruby
