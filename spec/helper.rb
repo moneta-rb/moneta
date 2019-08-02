@@ -300,32 +300,6 @@ module MonetaHelpers
     def use_timecop
       before{ @timecop = true }
     end
-
-    def start_memcached(port)
-      before :context do
-        @memcached = spawn("memcached -p #{port}")
-        sleep 0.5
-      end
-
-      after :context do
-        Process.kill("TERM", @memcached)
-        Process.wait(@memcached)
-        @memcached = nil
-      end
-    end
-
-    def start_tokyotyrant(port)
-      before :context do
-        @tokyotyrant = spawn("ttserver -port #{port} -le -log #{tempdir}/tokyotyrant#{port}.log #{tempdir}/tokyotyrant#{port}.tch")
-        sleep 0.5
-      end
-
-      after :context do
-        Process.kill("TERM", @tokyotyrant)
-        Process.wait(@tokyotyrant)
-        @tokyotyrant = nil
-      end
-    end
   end
 
   module InstanceMethods
@@ -347,33 +321,6 @@ module MonetaHelpers
       else
         Marshal.load(value)
       end
-    end
-
-    def start_restserver
-      require 'rack'
-      require 'webrick'
-      require 'rack/moneta_rest'
-
-      # Keep webrick quiet
-      ::WEBrick::HTTPServer.class_eval do
-        def access_log(config, req, res); end
-      end
-      ::WEBrick::BasicLog.class_eval do
-        def log(level, data); end
-      end
-
-      Thread.start do
-        Rack::Server.start(:app => Rack::Builder.app do
-                             use Rack::Lint
-                             map '/moneta' do
-                               run Rack::MonetaRest.new(:store => :Memory)
-                             end
-                           end,
-                           :environment => :none,
-                           :server => :webrick,
-                           :Port => 8808)
-      end
-      sleep 1
     end
 
     def start_server(*args)

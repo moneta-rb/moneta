@@ -1,4 +1,4 @@
-require_relative './helper.rb'
+require_relative '../memcached_helper.rb'
 
 describe 'standard_memcached', adapter: :Memcached do
   include_context :start_memcached, 11220

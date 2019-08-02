@@ -1,3 +1,5 @@
+require_relative '../memcached_helper.rb'
+
 describe 'adapter_activesupportcache', adapter: :ActiveSupportCache do
   before :all do
     require 'active_support'
@@ -25,7 +27,8 @@ describe 'adapter_activesupportcache', adapter: :ActiveSupportCache do
     let(:t_res) { 1 }
     let(:min_ttl) { 2 }
     use_timecop
-    start_memcached 11215
+
+    include_context :start_memcached, 11215
 
     let(:backend) { ActiveSupport::Cache::MemCacheStore.new('127.0.0.1:11215') }
     include_examples :adapter_activesupportcache

@@ -1,10 +1,11 @@
-describe 'standard_restclient', isolate: true, adapter: :RestClient do
-  before :all do
-    start_restserver
-  end
+require_relative './helper.rb'
 
-  moneta_store :RestClient,
-                   {url: 'http://localhost:8808/moneta/'}
+describe 'standard_restclient', adapter: :RestClient do
+  include_context :start_restserver, 11934
+
+  moneta_store :RestClient do
+    { url: 'http://localhost:11934/moneta' }
+  end
 
   moneta_specs STANDARD_SPECS.without_increment.without_create
 end

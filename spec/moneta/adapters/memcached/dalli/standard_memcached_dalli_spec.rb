@@ -1,4 +1,4 @@
-require_relative '../helper.rb'
+require_relative '../../memcached_helper.rb'
 
 describe 'standard_memcached_dalli', retry: 3, adapter: :Memcached do
   let(:t_res) { 1 }

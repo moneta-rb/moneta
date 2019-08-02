@@ -1,4 +1,4 @@
-require_relative '../helper.rb'
+require_relative '../../memcached_helper.rb'
 
 describe 'adapter_memcached_native', isolate: true, unstable: defined?(JRUBY_VERSION), retry: 3, adapter: :Memcached do
   # See https://github.com/memcached/memcached/issues/307

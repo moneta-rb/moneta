@@ -2,6 +2,7 @@ require 'moneta'
 require 'active_support'
 require 'active_support/cache/moneta_store'
 require 'ostruct'
+require_relative '../moneta/adapters/memcached_helper.rb'
 
 describe "cache_moneta_store" do
   before(:all) do
@@ -261,7 +262,8 @@ describe "cache_moneta_store" do
 
   describe ActiveSupport::Cache::MemCacheStore do
     let(:store){ described_class.new('127.0.0.1:11213') }
-    start_memcached 11213
+
+    include_context :start_memcached, 11213
 
     include_examples :basic_store
     include_examples :expiry
