@@ -10,6 +10,7 @@ module Moneta
   autoload :EachKeySupport,    'moneta/mixins'
   autoload :ExpiresSupport,    'moneta/mixins'
   autoload :Expires,           'moneta/expires'
+  autoload :Fallback,          'moneta/fallback'
   autoload :HashAdapter,       'moneta/mixins'
   autoload :IncrementSupport,  'moneta/mixins'
   autoload :Lock,              'moneta/lock'
