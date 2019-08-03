@@ -8,6 +8,7 @@ module Moneta
   autoload :CreateSupport,     'moneta/mixins'
   autoload :Defaults,          'moneta/mixins'
   autoload :EachKeySupport,    'moneta/mixins'
+  autoload :Enumerable,        'moneta/enumerable'
   autoload :ExpiresSupport,    'moneta/mixins'
   autoload :Expires,           'moneta/expires'
   autoload :Fallback,          'moneta/fallback'
