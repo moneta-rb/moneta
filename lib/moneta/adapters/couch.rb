@@ -64,7 +64,8 @@ module Moneta
       end
 
       # (see Proxy#key?)
-      # @option options [Boolean] :cache_rev (true) Whether to cache the rev of the document for faster updating
+      # @option options [Boolean] :cache_rev (true) Whether to cache the rev of
+      #   the document for faster updating
       def key?(key, options = {})
         cache_rev = options[:cache_rev] != false
         head(key, cache_rev: cache_rev)
@@ -80,9 +81,18 @@ module Moneta
 
       # (see Proxy#store)
       # @option (see #key?)
+      # @option options [Boolean] :batch (false) Whether to do a
+      #   {https://docs.couchdb.org/en/stable/api/database/common.html#api-doc-batch-writes
+      #    batch mode write}
+      # @option options [Boolean] :full_commit Override the server's
+      #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
+      #    commit policy}
       def store(key, value, options = {})
-        cache_rev = options[:cache_rev] != false
-        put(key, value_to_doc(value, rev(key)), cache_rev: cache_rev, expect: 201)
+        put(key, value_to_doc(value, rev(key)),
+            headers: full_commit_header(options[:full_commit]),
+            query: options[:batch] ? { batch: 'ok' } : {},
+            cache_rev: options[:cache_rev] != false,
+            expect: options[:batch] ? 202 : 201)
         value
       rescue HTTPError
         tries ||= 0
@@ -90,12 +100,24 @@ module Moneta
       end
 
       # (see Proxy#delete)
+      # @option options [Boolean] :batch (false) Whether to do a
+      #   {https://docs.couchdb.org/en/stable/api/database/common.html#api-doc-batch-writes
+      #    batch mode write}
+      # @option options [Boolean] :full_commit Override the server's
+      #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
+      #    commit policy}
       def delete(key, options = {})
         get_response = get(key, returns: :response)
         if get_response.success?
           value = body_to_value(get_response.body)
           existing_rev = parse_rev(get_response)
-          request(:delete, key, query: { rev: existing_rev }, expect: 200)
+          query = { rev: existing_rev }
+          query[:batch] = 'ok' if options[:batch]
+          request(:delete, key,
+                  headers: full_commit_header(options[:full_commit]),
+                  query: query,
+                  expect: options[:batch] ? 202 : 200)
+          delete_cached_rev(key)
           value
         end
       rescue HTTPError
@@ -107,6 +129,9 @@ module Moneta
       # @option options [Boolean] :compact (false) Whether to compact the database after clearing
       # @option options [Boolean] :await_compact (false) Whether to wait for compaction to complete
       #   before returning.
+      # @option options [Boolean] :full_commit Override the server's
+      #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
+      #    commit policy}
       def clear(options = {})
         loop do
           docs = all_docs(limit: 10_000)
@@ -114,7 +139,7 @@ module Moneta
           deletions = docs['rows'].map do |row|
             { _id: row['id'], _rev: row['value']['rev'], _deleted: true }
           end
-          bulk_docs(deletions)
+          bulk_docs(deletions, full_commit: options[:full_commit])
         end
 
         # Compact the database unless told not to
@@ -190,6 +215,9 @@ module Moneta
       end
 
       # (see Proxy#merge!)
+      # @option options [Boolean] :full_commit Override the server's
+      #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
+      #    commit policy}
       def merge!(pairs, options = {})
         keys = pairs.map { |key, _| key }.to_a
         cache_revs(*keys.reject { |key| @rev_cache[key] })
@@ -209,7 +237,7 @@ module Moneta
         end
 
         docs = pairs.map { |key, value| value_to_doc(value, @rev_cache[key], key) }.to_a
-        results = bulk_docs(docs, returns: :doc)
+        results = bulk_docs(docs, full_commit: options[:full_commit], returns: :doc)
         retries = results.each_with_object([]) do |row, retries|
           ok, id = row.values_at('ok', 'id')
           if ok
@@ -220,7 +248,6 @@ module Moneta
           else
             raise "Unrecognised response: #{row}"
           end
-          retries
         end
 
         # Recursive call with all conflicts
@@ -232,6 +259,10 @@ module Moneta
       end
 
       private
+
+      def full_commit_header(full_commit)
+        full_commit == nil ? {} : { 'X-Couch-Full-Commit' => (!!full_commit).to_s }
+      end
 
       def body_to_value(body)
         doc_to_value(MultiJson.load(body))
@@ -325,9 +356,9 @@ module Moneta
         query.map { |key, value| [key, MultiJson.dump(value)] }
       end
 
-      def request(method, key, body = nil, returns: :nil, cache_rev: false, expect: nil, query: nil)
+      def request(method, key, body = nil, returns: :nil, cache_rev: false, expect: nil, query: nil, headers: {})
         url = @backend.build_url(key, query)
-        headers = %i{put post}.include?(method) ? { 'Content-Type' => 'application/json' } : {}
+        headers['Content-Type'] = 'application/json' if %i{put post}.include?(method)
         response = @backend.run_request(method, url, body || '', headers)
 
         if cache_rev
@@ -374,8 +405,11 @@ module Moneta
         get('_all_docs', query: encode_query(params.merge(sorted: sorted)), expect: 200)
       end
 
-      def bulk_docs(docs, returns: :success)
-        post('_bulk_docs', { docs: docs }, returns: returns, expect: 201)
+      def bulk_docs(docs, returns: :success, full_commit: nil)
+        post('_bulk_docs', { docs: docs },
+             headers: full_commit_header(full_commit),
+             returns: returns,
+             expect: 201)
       end
     end
   end
