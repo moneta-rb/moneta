@@ -81,13 +81,17 @@ env:
       spec/moneta/adapters/kyotocabinet
       '
     - SCRIPT='script/parallel-tests ~unstable --
-      spec/moneta/adapters/couch
+      spec/moneta/adapters/couch/standard_couch_spec.rb
+      '
+    - SCRIPT='script/parallel-tests ~unstable --
+      spec/moneta/adapters/couch/standard_couch_with_expires_spec.rb
       '
     - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/memcached/dalli
       '
     - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/memcached/native
+      spec/moneta/adapters/couch/adapter_couch_spec.rb
       '
     - SCRIPT='script/parallel-tests ~unstable --
       spec/moneta/adapters/cassandra/adapter_cassandra_spec.rb
