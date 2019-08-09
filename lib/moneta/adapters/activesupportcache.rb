@@ -39,11 +39,7 @@ module Moneta
         if value and expires != nil
           @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
         end
-        if options[:raw]
-          value && value.to_s
-        else
-          value
-        end
+        value
       end
 
       # (see Proxy#store)
