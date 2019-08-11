@@ -235,7 +235,7 @@ class MonetaBenchmarks
     },
     {name: "TDB", options: { file: "#{DIR}/tdb" }},
     {name: "TokyoCabinet", options: { file: "#{DIR}/tokyocabinet" }},
-    {name: "TokyoTyrant"},
+    {name: "TokyoTyrant", options: {port: 10431}},
   ].compact
 
   CONFIGS = {
@@ -381,6 +381,8 @@ class MonetaBenchmarks
 
     @restserver_handle = start_restserver(8808)
 
+    @tokyotyrant_handle = spawn("ttserver -port 10431 -le -log #{DIR}/tokyotyrant.log #{DIR}/tokyotyrant.tch")
+
     Signal.trap "INT" do
       stop_servers
       exit
@@ -402,6 +404,8 @@ class MonetaBenchmarks
       Process.kill "TERM", @moneta_server_handle
       Process.wait @moneta_server_handle
     end
+
+    Process.kill "TERM", @tokyotyrant_handle
   end
 
   def test_stores
