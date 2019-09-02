@@ -1,6 +1,9 @@
 # Moneta: A unified interface for key/value stores
 
-[![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta) [![Build Status](https://secure.travis-ci.org/moneta-rb/moneta.svg?branch=master)](http://travis-ci.org/moneta-rb/moneta) [![Code Climate](https://codeclimate.com/github/moneta-rb/moneta.svg)](https://codeclimate.com/github/moneta-rb/moneta) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/moneta-rb/moneta&title=Moneta&language=&tags=github&category=software)
+[![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta)
+[![Build Status](https://secure.travis-ci.org/moneta-rb/moneta.svg?branch=master)](http://travis-ci.org/moneta-rb/moneta)
+[![Code Climate](https://codeclimate.com/github/moneta-rb/moneta.svg)](https://codeclimate.com/github/moneta-rb/moneta)
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/moneta-rb/moneta&title=Moneta&language=&tags=github&category=software)
 
 Moneta provides a standard interface for interacting with various kinds of key/value stores. Moneta supports the well-known
 NoSQL and document based stores.
@@ -75,6 +78,9 @@ store.close
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
     * GitHub master: <http://rubydoc.info/github/moneta-rb/moneta/master/frames>
+* Changelog: <https://github.com/moneta-rb/moneta/blob/master/CHANGES>
+
+In case you are wondering, Moneta uses [Semantic Versioning](https://semver.org/) since v1.0.0.
 
 ------
 
