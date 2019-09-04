@@ -23,44 +23,44 @@ module Moneta
       # (see Proxy#key?)
       def key?(key, options = {})
         write(:key?, key, options)
-        read
+        read_msg
       end
 
       # (see Proxy#load)
       def load(key, options = {})
         write(:load, key, options)
-        read
+        read_msg
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
         write(:store, key, value, options)
-        read
+        read_msg
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         write(:delete, key, options)
-        read
+        read_msg
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         write(:increment, key, amount, options)
-        read
+        read_msg
       end
 
       # (see Proxy#create)
       def create(key, value, options = {})
         write(:create, key, value, options)
-        read
+        read_msg
       end
 
       # (see Proxy#clear)
       def clear(options = {})
         write(:clear, options)
-        read
+        read_msg
         self
       end
 
@@ -75,7 +75,7 @@ module Moneta
         @features ||=
           begin
             write(:features)
-            read.freeze
+            read_msg.freeze
           end
       end
 
@@ -86,18 +86,24 @@ module Moneta
         @socket.write([s.bytesize].pack('N') << s)
       end
 
-      def read
-        size = @socket
-          .recv(4).tap do |bytes|
-            raise EOFError, 'failed to read size' unless bytes.bytesize == 4
-          end
-          .unpack('N')
-          .first
+      # JRuby doesn't support socket#recv with flags
+      if defined?(JRUBY_VERSION)
+        def read(bytes)
+          received = @socket.read(bytes)
+          raise EOFError, "Server closed socket" unless received && received.bytesize == bytes
+          received
+        end
+      else
+        def read(bytes)
+          received = @socket.recv(bytes, Socket::MSG_WAITALL)
+          raise EOFError, "Server closed socket" unless received && received.bytesize == bytes
+          received
+        end
+      end
 
-        result = Marshal.load(@socket.recv(size).tap do |bytes|
-          raise EOFError, 'Not enough bytes read' unless bytes.bytesize == size
-        end)
-
+      def read_msg
+        size = read(4).unpack('N').first
+        result = Marshal.load(read(size))
         raise result if Exception === result
         result
       end
