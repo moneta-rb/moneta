@@ -34,13 +34,13 @@ module Moneta
 
       def dispatch(method, args)
         case method
-        when :key?, :load, :delete, :increment, :create
-          @store.send(method, *args)
-        when :features
-          # all features except each_key are supported
-          @store.features - [:each_key]
+        when :key?, :load, :delete, :increment, :create, :features
+          @store.public_send(method, *args)
         when :store, :clear
-          @store.send(method, *args)
+          @store.public_send(method, *args)
+          nil
+        when :each_key
+          yield_each(@store.each_key)
           nil
         end
       rescue => ex
@@ -123,6 +123,29 @@ module Moneta
       def pack(obj)
         s = Marshal.dump(obj)
         [s.bytesize].pack('N') << s
+      end
+
+      def yield_each(enumerator)
+        received_break = false
+        loop do
+          case msg = read_msg
+          when %w{NEXT}
+            # This will raise a StopIteration at the end of the enumeration,
+            # which will exit the loop.
+            write(enumerator.next)
+          when %w{BREAK}
+            # This is received when the client wants to stop the enumeration.
+            received_break = true
+            break
+          else
+            # Otherwise, the client is attempting to call another method within
+            # an `each` block.
+            write_dispatch(msg)
+          end
+        end
+      ensure
+        # This tells the client to stop enumerating
+        write(StopIteration.new("Server initiated stop")) unless received_break
       end
     end
 

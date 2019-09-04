@@ -1,6 +1,10 @@
 describe "standard_client_tcp", isolate: true, adapter: :Client do
   before :all do
-    start_server(Moneta::Adapters::Memory.new)
+    @server = start_server(Moneta::Adapters::Memory.new)
+  end
+
+  after :all do
+    @server.stop
   end
 
   moneta_store :Client

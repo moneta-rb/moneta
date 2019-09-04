@@ -3,13 +3,13 @@ describe "shared_tcp", isolate: true, proxy: :Shared do
     tempdir = self.tempdir
     Moneta.build do
       use(:Shared, port: 9001) do
-        adapter :PStore, file: File.join(tempdir, 'shared_tcp')
+        adapter :GDBM, file: File.join(tempdir, 'shared_tcp')
       end
     end
   end
 
   shared_examples :shared_tcp do
-    moneta_specs ADAPTER_SPECS
+    moneta_specs ADAPTER_SPECS.with_each_key
 
     it 'shares values' do
       store['shared_key'] = 'shared_value'
