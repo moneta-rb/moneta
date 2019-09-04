@@ -70,6 +70,37 @@ module Moneta
         nil
       end
 
+      # (see Proxy#each_key)
+      def each_key
+        raise NotImplementedError, 'each_key is not supported' unless supports?(:each_key)
+        return enum_for(:each_key) unless block_given?
+
+        begin
+          write(:each_key)
+          yield_break = false
+
+          loop do
+            write('NEXT')
+
+            # A StopIteration error will be raised by this call if the server
+            # reached the end of the enumeration.  This will stop the loop
+            # automatically.
+            result = read_msg
+
+            # yield_break will be true in the ensure block (below) if anything
+            # happened during the yield to stop further enumeration.
+            yield_break = true
+            yield result
+            yield_break = false
+          end
+        ensure
+          write('BREAK') if yield_break
+          read_msg # nil return from each_key
+        end
+
+        self
+      end
+
       # (see Default#features)
       def features
         @features ||=

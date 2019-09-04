@@ -220,13 +220,14 @@ backends:
   - adapter: Client
     platforms: [ MRI, JRuby ]
     features: [multiprocess]
-    unknown: [ increment, create, expires, persist ]
+    unknown: [ increment, create, expires, persist, each_key ]
     description: "Moneta client adapter"
     notes:
       increment: depends on server
       create: depends on server
       expires: depends on server
       persist: depends on server
+      each_key: depends on server
   - adapter: RestClient
     platforms: [ MRI, JRuby ]
     features: [ multiprocess ]
