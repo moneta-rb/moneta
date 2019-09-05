@@ -2,7 +2,8 @@ module Moneta
   module Adapters
     # LRUHash backend
     #
-    # Based on Hashery::LRUHash but simpler and measures both memory usage and hash size.
+    # Based on {https://rubygems.org/gems/lru_redux lru_redux} but measures
+    # both memory usage and hash size.
     #
     # @api public
     class LRUHash
@@ -28,22 +29,24 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @entry.key?(key)
+        @backend.key?(key)
       end
 
       # (see Proxy#each_key)
       def each_key(&block)
-        return enum_for(:each_key) { @entry.length } unless block_given?
+        return enum_for(:each_key) { @backend.length } unless block_given?
 
-        @entry.each_key { |k| yield(k) }
+        # The backend needs to be duplicated because reading mutates this
+        # store.
+        @backend.dup.each_key { |k| yield(k) }
         self
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        if entry = @entry[key]
-          entry.insert_after(@list)
-          entry.value
+        if value = @backend.delete(key)
+          @backend[key] = value
+          value
         end
       end
 
@@ -52,75 +55,40 @@ module Moneta
         if @max_value && value.bytesize > @max_value
           delete(key)
         else
-          if entry = @entry[key]
-            @size -= entry.value.bytesize if @max_size
-          else
-            @entry[key] = entry = Entry.new
-            entry.key = key
+          if @max_size
+            if old_value = @backend.delete(key)
+              @size -= old_value.bytesize
+            end
+            @size += value.bytesize
           end
-          entry.value = value
-          @size += entry.value.bytesize if @max_size
-          entry.insert_after(@list)
-          delete(@list.prev.key) while @list.next != @list.prev && (@max_size && @size > @max_size || @max_count && @entry.size > @max_count)
+          @backend[key] = value
+          drop while @max_size && @size > @max_size || @max_count && @backend.size > @max_count
         end
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        if entry = @entry.delete(key)
-          @size -= entry.value.bytesize if @max_size
-          entry.unlink
-          entry.value
+        if value = @backend.delete(key) and @max_size
+          @size -= value.bytesize
         end
+        value
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @entry, @size = {}, 0
-        @list = Entry.new
-        @list.prev = @list.next = @list
+        @backend = {}
+        @size = 0
         self
       end
 
-      # (see Proxy#values_at)
-      def values_at(*keys, **options)
-        @entry.values_at(*keys).map do |entry|
-          if entry
-            entry.insert_after(@list)
-            entry.value
-          end
-        end
-      end
-
-      # (see Proxy#slice)
-      def slice(*keys, **options)
-        return super unless @entry.respond_to?(:slice)
-        hash = @entry.slice(*keys)
-        hash.each do |key, entry|
-          entry.insert_after(@list)
-          hash[key] = entry.value
-        end
-      end
-
-      # @api private
-      class Entry
-        attr_accessor :key, :value, :prev, :next
-
-        def unlink
-          @prev.next = @next if @prev
-          @next.prev = @prev if @next
-          @prev = @next = nil
-        end
-
-        def insert_after(entry)
-          if entry.next != self
-            unlink
-            @next = entry.next
-            @prev = entry
-            entry.next.prev = self
-            entry.next = self
-          end
+      # Drops the least-recently-used pair, if any
+      #
+      # @param [Hash] options Options to merge
+      # @return [(Object, String), nil] The dropped pair, if any
+      def drop(options = {})
+        if key = @backend.keys.first
+          [key, delete(key)]
         end
       end
     end

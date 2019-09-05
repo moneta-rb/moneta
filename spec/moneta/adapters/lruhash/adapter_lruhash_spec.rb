@@ -11,9 +11,9 @@ describe 'adapter_lruhash', adapter: :LRUHash do
     (1..1000).each do |i|
       store[i] = 'x'
       store[0].should == 'y'
-      store.instance_variable_get(:@entry).size.should == [10, i+1].min
+      store.instance_variable_get(:@backend).size.should == [10, i+1].min
       (0...[9, i-1].min).each do |j|
-        store.instance_variable_get(:@entry)[i-j].should_not be_nil
+        store.instance_variable_get(:@backend)[i-j].should_not be_nil
       end
       store.key?(i-9).should be false if i > 9
     end
