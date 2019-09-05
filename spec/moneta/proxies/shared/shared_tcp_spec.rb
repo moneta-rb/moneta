@@ -1,4 +1,4 @@
-describe "shared_tcp", isolate: true, proxy: :Shared do
+describe "shared_tcp", proxy: :Shared do
   moneta_build do
     tempdir = self.tempdir
     Moneta.build do
@@ -26,7 +26,7 @@ describe "shared_tcp", isolate: true, proxy: :Shared do
 
     it 'has the underlying adapter' do
       store.load('dummy')
-      expect(store.adapter.adapter).to be_a Moneta::Adapters::PStore
+      expect(store.adapter.adapter).to be_a Moneta::Adapters::GDBM
     end
   end
 

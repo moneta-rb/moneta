@@ -1,15 +1,15 @@
-describe "shared_unix", isolate: true, proxy: :Shared do
+describe "shared_unix", proxy: :Shared do
   moneta_build do
     tempdir = self.tempdir
     Moneta.build do
       use(:Shared, socket: File.join(tempdir, 'shared_unix.socket')) do
-        adapter :PStore, file: File.join(tempdir, 'shared_unix')
+        adapter :GDBM, file: File.join(tempdir, 'shared_unix')
       end
     end
   end
 
   shared_examples :shared_unix do
-    moneta_specs ADAPTER_SPECS
+    moneta_specs ADAPTER_SPECS.with_each_key
 
     it 'shares values' do
       store['shared_key'] = 'shared_value'
@@ -25,7 +25,7 @@ describe "shared_unix", isolate: true, proxy: :Shared do
 
     it "has the underlying adapter" do
       store.load('dummy')
-      expect(store.adapter.adapter).to be_a Moneta::Adapters::PStore
+      expect(store.adapter.adapter).to be_a Moneta::Adapters::GDBM
     end
   end
 
