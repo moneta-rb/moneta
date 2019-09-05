@@ -1,14 +1,10 @@
-describe 'adapter_client', isolate: true, adapter: :Client do
-  before :all do
-    @server = start_server(Moneta::Adapters::Memory.new)
-  end
+require_relative './client_helper.rb'
 
-  after :all do
-    @server.stop
-  end
+describe 'adapter_client', adapter: :Client do
+  include_context :start_server, port: 9002, backend: ->{ Moneta::Adapters::Memory.new }
 
   moneta_build do
-    Moneta::Adapters::Client.new
+    Moneta::Adapters::Client.new(port: 9002)
   end
 
   moneta_specs ADAPTER_SPECS.with_each_key

@@ -323,19 +323,6 @@ module MonetaHelpers
       end
     end
 
-    def start_server(*args)
-      server = Moneta::Server.new(*args)
-      Thread.new { server.run }
-      sleep 0.1 until server.running?
-      server
-    rescue Exception => ex
-      puts "Failed to start server - #{ex.message}"
-      tries ||= 0
-      tries += 1
-      sleep Moneta::Server::TIMEOUT
-      tries < 3 ? retry : raise
-    end
-
     def moneta_property_of(keys: 0, values: 0)
       keys_meta = self.keys_meta
       values_meta = self.values_meta
