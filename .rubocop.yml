@@ -107,6 +107,9 @@ Style/GlobalVars:
   Exclude:
     - spec/moneta/adapters/cassandra/helper.rb
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/FormatString:
   Enabled: false
 
@@ -154,6 +157,9 @@ Style/RescueStandardError:
   EnforcedStyle: implicit
 
 Style/RescueModifier:
+  Enabled: false
+
+Style/SafeNavigation:
   Enabled: false
 
 Style/StringLiterals:
