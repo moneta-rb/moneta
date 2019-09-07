@@ -22,6 +22,11 @@ describe "shared_tcp", proxy: :Shared do
 
   # The first store initialised will be running the server
   context "running as the server" do
+    before do
+      store.load('dummy')
+      expect(store.server?).to be true
+    end
+
     include_examples :shared_tcp
 
     it 'has the underlying adapter' do
@@ -33,6 +38,11 @@ describe "shared_tcp", proxy: :Shared do
   context "running as a client" do
     let!(:server_store) do
       new_store.tap { |store| store.load('dummy') } # Makes a connection
+    end
+
+    before do
+      store.load('dummy')
+      expect(store.server?).to be false
     end
 
     after do
