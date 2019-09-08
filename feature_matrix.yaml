@@ -82,6 +82,7 @@ backends:
     description: "[Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html)"
   - adapter: GDBM
     platforms: [ MRI, JRuby ]
+    gems: ffi-gdbm on JRuby
     features: [ increment, create, each_key, bulk_read, bulk_write ]
     description: "[GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) database"
   - adapter: LevelDB
