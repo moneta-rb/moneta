@@ -44,6 +44,28 @@ module Moneta
     class TimeoutError < ::RuntimeError; end
 
     # @api private
+    class Reply
+      attr_reader :resource
+
+      def initialize
+        @resource = ::ConditionVariable.new
+        @value = nil
+      end
+
+      def resolve(value)
+        raise "Already resolved" if @value
+        @value = value
+        @resource.signal
+        nil
+      end
+
+      def wait(mutex)
+        @resource.wait(mutex)
+        @value
+      end
+    end
+
+    # @api private
     class PoolManager
       def initialize(builder, min: 0, max: nil, ttl: nil, timeout: nil)
         @builder = builder
@@ -64,7 +86,7 @@ module Moneta
         @stopping = false
 
         # Launch the manager thread
-        run
+        @thread = run
       end
 
       def stats
@@ -73,8 +95,9 @@ module Moneta
 
       def stop
         push(:stop)
-        sleep 0.1 while @thread.alive?
         nil
+      ensure
+        @thread.value
       end
 
       def kill!
@@ -83,9 +106,9 @@ module Moneta
       end
 
       def check_out
-        store = push(:check_out, reply: true)
-        raise store if store.is_a? ::Exception
-        store
+        reply = push(:check_out, reply: true)
+        raise reply if Exception === reply
+        reply
       end
 
       def check_in(store)
@@ -95,60 +118,85 @@ module Moneta
       private
 
       def run
-        @thread = Thread.new do
-          # Initialize the store
-          @min.times { @available.push(add_store) }
+        Thread.new do
+          begin
+            populate_stores
 
-          loop do
-            # Time to wait before there will be stores that should be closed
-            ttl = if @ttl && @last_checkout && !@available.empty?
-                    [@ttl - (Time.now - @last_checkout), 0].max
-                  end
-
-            # Time to wait
-            timeout = if @timeout && !@waiting_since.empty?
-                        longest_waiting = @waiting_since.first
-                        [@timeout - (Time.now - longest_waiting), 0].max
-                      end
-
-            # Block until a message arrives, or until we time out for some reason
-            wait = [ttl, timeout].compact.min
-            if tuple = pop(wait)
-              handle(tuple)
-            end
-
-            # If there are checkout requests that have been waiting too long,
-            # feed them timeout errors.
-            while @timeout && !@waiting.empty? && (Time.now - @waiting_since.first) >= @timeout
-              waiting_since = @waiting_since.shift
-              @waiting.shift.push(TimeoutError.new("Waited %<secs>f seconds" % { secs: Time.now - waiting_since }))
-            end
-
-            # If the last checkout was more than timeout ago, drop any available stores
-            if @stopping || (@ttl && @last_checkout && Time.now - @last_checkout >= @ttl)
-              while (@stopping || @stores.length > @min) and store = @available.pop
-                store.close rescue nil
-                @stores.delete(store)
+            until @stopping && @stores.empty?
+              # Block until a message arrives, or until we time out for some reason
+              if request = pop
+                handle_request(request)
               end
-            end
 
-            # Exit the loop if we are done
-            break if @stopping && @stores.empty?
+              # Handle any stale checkout requests
+              handle_timed_out_requests
+              # Drop any stores that are no longer needed
+              remove_unneeded_stores
+            end
+          rescue => e
+            reject_waiting(e.message)
+            raise
           end
         end
       end
 
-      def push(message, what = nil, reply: false)
-        raise ShutdownError, "Pool has been shutdown" if reply && !@thread.alive?
-        queue = reply ? Queue.new : nil
-        @mutex.synchronize do
-          @inbox.push([message, what, queue])
-          @resource.signal
-        end
-        queue.pop if queue
+      def populate_stores
+        return if @stopping
+        @available.push(add_store) while @stores.length < @min
       end
 
-      def pop(timeout = nil)
+      # If the last checkout was more than timeout ago, drop any available stores
+      def remove_unneeded_stores
+        return unless @stopping || (@ttl && @last_checkout && Time.now - @last_checkout >= @ttl)
+        while (@stopping || @stores.length > @min) and store = @available.pop
+          store.close rescue nil
+          @stores.delete(store)
+        end
+      end
+
+      # If there are checkout requests that have been waiting too long,
+      # feed them timeout errors.
+      def handle_timed_out_requests
+        while @timeout && !@waiting.empty? && (Time.now - @waiting_since.first) >= @timeout
+          waiting_since = @waiting_since.shift
+          @waiting.shift.resolve(TimeoutError.new("Waited %<secs>f seconds" % { secs: Time.now - waiting_since }))
+        end
+      end
+
+      # This is called from outside the loop thread
+      def push(message, what = nil, reply: nil)
+        @mutex.synchronize do
+          raise ShutdownError, "Pool has been shutdown" if reply && !@thread.alive?
+          reply &&= Reply.new
+          @inbox.push([message, what, reply])
+          @resource.signal
+          reply.wait(@mutex) if reply
+        end
+      end
+
+      # This method calculates the number of seconds to wait for a signal on
+      # the condition variable, or `nil` if there is no need to time out.
+      #
+      # Calculated based on the `:ttl` and `:timeout` options used during
+      # construction.
+      #
+      # @return [Integer, nil]
+      def timeout
+        # Time to wait before there will be stores that should be closed
+        ttl = if @ttl && @last_checkout && !@available.empty?
+                [@ttl - (Time.now - @last_checkout), 0].max
+              end
+
+        # Time to wait
+        timeout = if @timeout && !@waiting_since.empty?
+                    longest_waiting = @waiting_since.first
+                    [@timeout - (Time.now - longest_waiting), 0].max
+                  end
+
+        [ttl, timeout].compact.min
+      end
+
+      def pop
         @mutex.synchronize do
           @resource.wait(@mutex, timeout) if @inbox.empty?
           @inbox.shift
@@ -161,21 +209,20 @@ module Moneta
         store
       end
 
-      def handle_check_out(queue)
+      def handle_check_out(reply)
         @last_checkout = Time.now
         if @stopping
-          queue.push(ShutdownError.new("Shutting down"))
+          reply.resolve(ShutdownError.new("Shutting down"))
         elsif !@available.empty?
-          queue.push(@available.pop)
+          reply.resolve(@available.pop)
         elsif !@max || @stores.length < @max
           begin
-            store = add_store
-            queue.push(store)
+            reply.resolve(add_store)
           rescue => e
-            queue.push(e)
+            reply.resolve(e)
           end
         else
-          @waiting.push(queue)
+          @waiting.push(reply)
           @waiting_since.push(Time.now) if @timeout
         end
       end
@@ -183,15 +230,19 @@ module Moneta
       def handle_stop
         @stopping = true
         # Reject anyone left waiting
-        while queue = @waiting.shift
-          queue.push(ShutdownError.new("Shutting down"))
+        reject_waiting "Shutting down"
+      end
+
+      def reject_waiting(reason)
+        while reply = @waiting.shift
+          reply.resolve(ShutdownError.new(reason))
         end
         @waiting_since = [] if @timeout
       end
 
       def handle_check_in(store)
         if !@waiting.empty?
-          @waiting.shift.push(store)
+          @waiting.shift.resolve(store)
           @waiting_since.shift if @timeout
         else
           @available.push(store)
@@ -199,15 +250,15 @@ module Moneta
       end
 
       def handle_stats(reply)
-        reply.push(stores: @stores.length,
-                   available: @available.length,
-                   waiting: @waiting.length,
-                   longest_wait: @timeout && !@waiting_since.empty? ? @waiting_since.first.dup : nil,
-                   stopping: @stopping,
-                   last_checkout: @last_checkout && @last_checkout.dup)
+        reply.resolve(stores: @stores.length,
+                      available: @available.length,
+                      waiting: @waiting.length,
+                      longest_wait: @timeout && !@waiting_since.empty? ? @waiting_since.first.dup : nil,
+                      stopping: @stopping,
+                      last_checkout: @last_checkout && @last_checkout.dup)
       end
 
-      def handle(request)
+      def handle_request(request)
         cmd, what, reply = request
         case cmd
         when :check_out
