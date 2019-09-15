@@ -42,7 +42,7 @@ describe "pool", proxy: :Pool do
       double('builder').tap do |builder|
         i = -1
         allow(builder).to receive(:build) do
-          [stores[i+=1]]
+          [stores[i += 1]]
         end
       end
     end
@@ -99,7 +99,7 @@ describe "pool", proxy: :Pool do
     end
 
     shared_examples :min do |min|
-      context "with #{min} stores" do
+      describe "initial number of stores" do
         let(:num) { min }
 
         it "starts with #{min} available stores" do
@@ -109,8 +109,8 @@ describe "pool", proxy: :Pool do
       end
     end
 
-    shared_examples :max do |max|
-      context "with #{max} stores" do
+    shared_examples :max do |max, timeout: 5|
+      describe "maximum number of stores" do
         let(:num) { max }
 
         after do
@@ -118,25 +118,39 @@ describe "pool", proxy: :Pool do
         end
 
         it "blocks after #{max} stores have been created" do
+          # All stores are checked out
           expect(max.times.map { subject.check_out }).to contain_exactly(*stores)
+
+          # Launch threads that make checkout requests (in order).  These will
+          # all block.
           threads = max.times.map { Thread.new { subject.check_out } }
-          Timeout.timeout(5) { sleep 0.1 until subject.stats[:waiting] == max }
+          Timeout.timeout(timeout) { Thread.pass until subject.stats[:waiting] == max }
           expect(threads).to all be_alive
+
+          # Check all stores except the first one back in.  This will cause all
+          # but one of the threads to return
           expect(stores.drop(1).map { |store| subject.check_in(store) }).to all be_nil
-          Timeout.timeout(5) { sleep 0.1 until threads.any? { |t| !t.alive? } }
+          Timeout.timeout(timeout) { Thread.pass until threads.select(&:alive?).length == 1 }
           expect(subject.stats).to include(waiting: 1)
+
+          # Ensure that the stores that were checked back in are the ones that
+          # were given to the waiting threads.
           alive, dead = threads.partition(&:alive?)
           expect(dead.map(&:value)).to contain_exactly(*stores.drop(1))
+
+          # Check the last store back in and make sure it goes to the last
+          # waiting thread.
+          last_thread = alive.first
           expect(subject.check_in(stores.first)).to eq nil
-          Timeout.timeout(5) { sleep 0.1 while alive.first.alive? }
+          Timeout.timeout(timeout) { Thread.pass while last_thread.alive? }
           expect(subject.stats).to include(waiting: 0)
-          expect(alive.first.value).to be stores.first
+          expect(last_thread.value).to be stores.first
         end
       end
     end
 
     shared_examples :ttl do |ttl, min: 0, max: nil|
-      context "with #{ max || min + 10} stores" do
+      describe "closing stores after TTL expiry" do
         let(:num) { max || min + 10 }
 
         it "closes available stores after ttl" do
@@ -144,7 +158,7 @@ describe "pool", proxy: :Pool do
             allow(store).to receive(:close)
           end
 
-          Timeout.timeout(5) { sleep 0.1 until subject.stats[:stores] == min }
+          Timeout.timeout(5) { Thread.pass until subject.stats[:stores] == min }
           expect(stores.length.times.map { subject.check_out }).to contain_exactly(*stores)
           expect(subject.stats).to include(stores: num, available: 0)
           expect(stores.map { |store| subject.check_in(store) }).to all be_nil
@@ -156,7 +170,7 @@ describe "pool", proxy: :Pool do
     end
 
     shared_examples :timeout do |timeout, max:|
-      context "with #{max} stores" do
+      describe "raising an error after timeout" do
         let(:num) { max }
 
         it "raises a timeout error after waiting too long" do
@@ -166,11 +180,11 @@ describe "pool", proxy: :Pool do
             Thread.current.report_on_exception = false if Thread.current.respond_to? :report_on_exception
             subject.check_out
           end
-          Timeout.timeout(timeout) { sleep(timeout / 8) until subject.stats[:waiting] == 1 }
+          Timeout.timeout(timeout) { Thread.pass until subject.stats[:waiting] == 1 }
           expect(subject.stats[:longest_wait]).to be_a Time
           expect(t).to be_alive
           sleep timeout
-          Timeout.timeout(timeout) { sleep(timeout / 8) while t.alive? }
+          Timeout.timeout(timeout) { Thread.pass while t.alive? }
           expect { t.value }.to raise_error Moneta::Pool::TimeoutError
           expect(subject.stats).to include(waiting: 0, longest_wait: nil)
           expect(stores.map { |store| subject.check_in store }).to all be_nil
@@ -187,14 +201,14 @@ describe "pool", proxy: :Pool do
       include_examples :min, 0
     end
 
-    context "with max: 10, timeout: 3" do
-      subject { Moneta::Pool::PoolManager.new(builder, max: 10, timeout: 3) }
+    context "with max: 10, timeout: 4" do
+      subject { Moneta::Pool::PoolManager.new(builder, max: 10, timeout: 4) }
       after { subject.kill! }
 
       include_examples :no_ttl
-      include_examples :max, 10
+      include_examples :max, 10, timeout: 4
       include_examples :min, 0
-      include_examples :timeout, 3, max: 10
+      include_examples :timeout, 4, max: 10
     end
 
     context "with min: 10" do
@@ -212,14 +226,14 @@ describe "pool", proxy: :Pool do
       include_examples :ttl, 1, min: 0
     end
 
-    context "with min: 10, max: 20, ttl: 1, timeout: 3" do
-      subject { Moneta::Pool::PoolManager.new(builder, min: 10, max: 20, ttl: 1, timeout: 3) }
+    context "with min: 10, max: 20, ttl: 1, timeout: 4" do
+      subject { Moneta::Pool::PoolManager.new(builder, min: 10, max: 20, ttl: 1, timeout: 4) }
       after { subject.kill! }
 
       include_examples :min, 10
-      include_examples :max, 20
+      include_examples :max, 20, timeout: 4
       include_examples :ttl, 1, min: 10, max: 20
-      include_examples :timeout, 3, max: 20
+      include_examples :timeout, 4, max: 20
     end
 
     context "with min: 10, max: 10, ttl: 2, timeout: 4" do
@@ -227,39 +241,51 @@ describe "pool", proxy: :Pool do
       after { subject.kill! }
 
       include_examples :min, 10
-      include_examples :max, 10
+      include_examples :max, 10, timeout: 4
       include_examples :ttl, 2, min: 10, max: 10
       include_examples :timeout, 4, max: 10
     end
 
     describe '#check_out' do
-      subject { Moneta::Pool::PoolManager.new(builder, max: 1, timeout: 2) }
+      subject { Moneta::Pool::PoolManager.new(builder, max: 1, timeout: 5) }
       after { subject.kill! }
 
       let(:num) { 1 }
 
       it 'yields the store to requesters first come, first served' do
         store = stores.first
-        procs = (0...10).map { |i| double("proc#{i}") }
-        procs.each do |p|
-          expect(p).to receive(:call).with(store).ordered
-        end
+        procs = (0...10)
+          .map { |i| double("proc#{i}") }
+          .each { |p| expect(p).to receive(:call).with(store).ordered }
 
-        # Give each thread a chance to issue the checkout request in the right order.
+        # Each thread stops immediately after starting.  We can then ensure
+        # that each checkout is called in order.
         threads = procs.map do |p|
-          Thread.new { p.call(subject.check_out) }.tap { sleep 0.1 }
+          Thread.new do
+            Thread.stop
+            p.call(subject.check_out)
+          end
         end
 
         # The first thread should return immediately
-        threads.first.join
+        threads.first.wakeup
+        Timeout.timeout(5) { threads.first.join }
+
+        # Wait for the remaining threads to block, one at a time.
+        threads.drop(1).each_with_index do |thread, i|
+          thread.wakeup
+          Timeout.timeout(5) { Thread.pass until subject.stats[:waiting] == i + 1 }
+        end
 
         # The remaining threads should be waiting for the store to be checked back in
         expect(threads.drop(1)).to all be_alive
         expect(subject.stats).to include(waiting: 9)
 
-        threads.each do |t|
-          t.join
-          subject.check_in(store)
+        Timeout.timeout(5) do
+          threads.each do |t|
+            t.join
+            subject.check_in(store)
+          end
         end
       end
 
@@ -274,7 +300,7 @@ describe "pool", proxy: :Pool do
           Thread.current.report_on_exception = false if Thread.current.respond_to? :report_on_exception
           subject.check_out
         end
-        Timeout.timeout(5) { sleep 0.1 until subject.stats[:waiting] > 0 }
+        Timeout.timeout(5) { Thread.pass until subject.stats[:waiting] > 0 }
         expect(t1).to be_alive
 
         # Meanwhile in another thread, the pool is stopped.
@@ -290,7 +316,7 @@ describe "pool", proxy: :Pool do
 
       it "raises a ShutdownError if a the pool is stopped before requesting a store" do
         subject.stop
-        expect{ subject.check_out }.to raise_error Moneta::Pool::ShutdownError
+        expect { subject.check_out }.to raise_error Moneta::Pool::ShutdownError
       end
     end
   end

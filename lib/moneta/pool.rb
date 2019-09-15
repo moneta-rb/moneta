@@ -47,20 +47,23 @@ module Moneta
     class Reply
       attr_reader :resource
 
-      def initialize
+      def initialize(mutex)
+        @mutex = mutex
         @resource = ::ConditionVariable.new
         @value = nil
       end
 
       def resolve(value)
-        raise "Already resolved" if @value
-        @value = value
-        @resource.signal
+        @mutex.synchronize do
+          raise "Already resolved" if @value
+          @value = value
+          @resource.signal
+        end
         nil
       end
 
-      def wait(mutex)
-        @resource.wait(mutex)
+      def wait
+        @resource.wait(@mutex)
         @value
       end
     end
@@ -167,10 +170,10 @@ module Moneta
       def push(message, what = nil, reply: nil)
         @mutex.synchronize do
           raise ShutdownError, "Pool has been shutdown" if reply && !@thread.alive?
-          reply &&= Reply.new
+          reply &&= Reply.new(@mutex)
           @inbox.push([message, what, reply])
           @resource.signal
-          reply.wait(@mutex) if reply
+          reply.wait if reply
         end
       end
 
@@ -300,6 +303,10 @@ module Moneta
     def stop
       @manager.stop
       nil
+    end
+
+    def stats
+      @manager.stats
     end
 
     protected
