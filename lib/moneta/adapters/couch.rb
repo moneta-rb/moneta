@@ -207,11 +207,13 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        docs = all_docs(keys: keys, include_docs: true)
-        docs["rows"].map do |row|
-          next unless doc = row['doc']
-          [row['id'], doc_to_value(doc)]
-        end.compact
+        keys.each_slice(100).flat_map do |key_slice|
+          docs = all_docs(keys: key_slice, include_docs: true)
+          docs["rows"].map do |row|
+            next unless doc = row['doc']
+            [row['id'], doc_to_value(doc)]
+          end.compact
+        end
       end
 
       # (see Proxy#merge!)
