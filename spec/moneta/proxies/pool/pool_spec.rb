@@ -267,7 +267,9 @@ describe "pool", proxy: :Pool do
           end
         end
 
-        # The first thread should return immediately
+        Timeout.timeout(5) { Thread.pass until threads.all?(&:stop?) }
+
+        # The first thread should return immediately after waking
         threads.first.wakeup
         Timeout.timeout(5) { threads.first.join }
 
