@@ -207,13 +207,11 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        keys.each_slice(100).flat_map do |key_slice|
-          docs = all_docs(keys: key_slice, include_docs: true)
-          docs["rows"].map do |row|
-            next unless doc = row['doc']
-            [row['id'], doc_to_value(doc)]
-          end.compact
-        end
+        docs = all_docs(keys: keys, include_docs: true)
+        docs["rows"].map do |row|
+          next unless doc = row['doc']
+          [row['id'], doc_to_value(doc)]
+        end.compact
       end
 
       # (see Proxy#merge!)
@@ -404,7 +402,16 @@ module Moneta
       end
 
       def all_docs(sorted: false, **params)
-        get('_all_docs', query: encode_query(params.merge(sorted: sorted)), expect: 200)
+        keys = params.delete(:keys)
+        query = encode_query(params.merge(sorted: sorted))
+        if keys
+          post('_all_docs', { keys: keys },
+               query: query,
+               expect: 200,
+               returns: :doc)
+        else
+          get('_all_docs', query: query, expect: 200)
+        end
       end
 
       def bulk_docs(docs, returns: :success, full_commit: nil)

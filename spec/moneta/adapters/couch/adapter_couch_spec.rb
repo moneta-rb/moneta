@@ -106,7 +106,7 @@ describe 'adapter_couch', adapter: :Couch do
     let(:args) { [{'a' => '1'}] }
 
     before do
-      expect(store).to receive(:request).with(:get, '_all_docs', any_args).ordered do
+      expect(store).to receive(:request).with(:post, '_all_docs', any_args).ordered do
         { 'rows' => [] }
       end
 
