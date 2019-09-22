@@ -198,14 +198,32 @@ module Moneta
       # (see Proxy#slice)
       def slice(*keys, lock: false, **options)
         with_connection do |conn|
-          sel = arel_slice(keys).project(table[key_column], table[value_column])
-          sel = sel.lock if lock
-          result = conn.select_all(sel)
+          conn.create_table(:slice_keys, temporary: true) do |t|
+            t.string :key, null: false
+          end
 
-          k = key_column.to_s
-          v = value_column.to_s
-          result.map do |row|
-            [row[k], decode(conn, row[v])]
+          begin
+            temp_table = ::Arel::Table.new(:slice_keys)
+            keys.each do |key|
+              conn.insert ::Arel::InsertManager.new
+                .into(temp_table)
+                .insert([[temp_table[:key], key]])
+            end
+
+            sel = arel_sel
+              .join(temp_table)
+              .on(table[key_column].eq(temp_table[:key]))
+              .project(table[key_column], table[value_column])
+            sel = sel.lock if lock
+            result = conn.select_all(sel)
+
+            k = key_column.to_s
+            v = value_column.to_s
+            result.map do |row|
+              [row[k], decode(conn, row[v])]
+            end
+          ensure
+            conn.drop_table(:slice_keys)
           end
         end
       end
@@ -286,10 +304,6 @@ module Moneta
 
       def arel_sel_key(key)
         arel_sel.where(table[key_column].eq(key))
-      end
-
-      def arel_slice(keys)
-        arel_sel.where(table[key_column].eq_any(keys))
       end
 
       def conn_ins(conn, key, value)
