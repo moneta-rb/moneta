@@ -165,8 +165,9 @@ module Moneta
             end
           end
         end
-      rescue ::ActiveRecord::RecordNotUnique
-        # This handles the "no row updated" issue, above
+      rescue ::ActiveRecord::RecordNotUnique, ::ActiveRecord::Deadlocked
+        # This handles the "no row updated" issue, above, as well as deadlocks
+        # which may occur on some adapters
         tries ||= 0
         (tries += 1) <= 3 ? retry : raise
       end
