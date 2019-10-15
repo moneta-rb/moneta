@@ -20,10 +20,10 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.2.2'
 
   s.add_development_dependency 'rspec', '~> 3.0'
-  s.add_development_dependency 'rspec-retry'
+  s.add_development_dependency 'rspec-retry', '~> 0.6.1'
   s.add_development_dependency 'rantly', '~> 1.2.0'
-  s.add_development_dependency 'parallel_tests'
-  s.add_development_dependency 'timecop'
+  s.add_development_dependency 'parallel_tests', '~> 2.29.2'
+  s.add_development_dependency 'timecop', '~> 0.9.1'
   s.add_development_dependency 'rubocop', '~> 0.67.2'
-  s.add_development_dependency 'irb'
+  s.add_development_dependency 'irb', '~> 1.0.0'
 end
