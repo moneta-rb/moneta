@@ -84,7 +84,8 @@ module Moneta
       # @option options [Boolean] :batch (false) Whether to do a
       #   {https://docs.couchdb.org/en/stable/api/database/common.html#api-doc-batch-writes
       #    batch mode write}
-      # @option options [Boolean] :full_commit Override the server's
+      # @option options [Boolean] :full_commit (nil) Set to `true` or `false`
+      #   to override the server's
       #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
       #    commit policy}
       def store(key, value, options = {})
@@ -103,7 +104,8 @@ module Moneta
       # @option options [Boolean] :batch (false) Whether to do a
       #   {https://docs.couchdb.org/en/stable/api/database/common.html#api-doc-batch-writes
       #    batch mode write}
-      # @option options [Boolean] :full_commit Override the server's
+      # @option options [Boolean] :full_commit (nil) Set to `true` or `false`
+      #   to override the server's
       #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
       #    commit policy}
       def delete(key, options = {})
@@ -129,7 +131,8 @@ module Moneta
       # @option options [Boolean] :compact (false) Whether to compact the database after clearing
       # @option options [Boolean] :await_compact (false) Whether to wait for compaction to complete
       #   before returning.
-      # @option options [Boolean] :full_commit Override the server's
+      # @option options [Boolean] :full_commit (nil) Set to `true` or `false`
+      #   to override the server's
       #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
       #    commit policy}
       def clear(options = {})
@@ -215,7 +218,8 @@ module Moneta
       end
 
       # (see Proxy#merge!)
-      # @option options [Boolean] :full_commit Override the server's
+      # @option options [Boolean] :full_commit (nil) Set to `true` or `false`
+      #   to override the server's
       #   {https://docs.couchdb.org/en/stable/config/couchdb.html#couchdb/delayed_commits
       #    commit policy}
       def merge!(pairs, options = {})

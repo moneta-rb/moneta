@@ -241,17 +241,37 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 In addition it supports proxies (Similar to [Rack middlewares](http://rack.github.com/)) which
 add additional features to storage backends:
 
-* `Moneta::Proxy` and `Moneta::Wrapper` proxy base classes
-* `Moneta::Expires` to add expiration support to stores which don't support it natively. Add it in the builder using `use :Expires`.
-* `Moneta::Stack` to stack multiple stores (Read returns result from first where the key is found, writes go to all stores). Add it in the builder using `use(:Stack) {}`.
-* `Moneta::Transformer` transforms keys and values (Marshal, YAML, JSON, Base64, MD5, ...). Add it in the builder using `use :Transformer`.
-* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g. `Moneta::Adapters::File` + `Moneta::Adapters::LRUHash`). Add it in the builder using `use(:Cache) {}`.
-* `Moneta::Lock` to make store thread safe. Add it in the builder using `use :Lock`.
-* `Moneta::Pool` to create a pool of stores as a means of making the store thread safe. Add it in the builder using `use(:Pool) {}`.
-* `Moneta::Logger` to log database accesses. Add it in the builder using `use :Logger`.
-* `Moneta::Shared` to share a store between multiple processes. Add it in the builder using `use(:Shared) {}`.
-* `Moneta::WeakIncrement` and `Moneta::WeakCreate` to add `#create` and `#increment` support without atomicity (weak) to stores which don't support it.
-* `Moneta::WeakEachKey` to add key traversal to stores that don't support it, with the important caveat that only those keys previously seen by this proxy will be traversed.
+* `Moneta::Proxy` and `Moneta::Wrapper` are the proxy base classes.
+* `Moneta::Cache` combine two stores, one as backend and one as cache (e.g.
+  `Moneta::Adapters::File` + `Moneta::Adapters::LRUHash`). Add it in the
+  builder using `use(:Cache) {}`.
+* `Moneta::Expires` to add expiration support to stores which don't support it
+  natively. Add it in the builder using `use :Expires`.
+* `Moneta::Fallback` use a store as a fallback when exceptions occur (by default the
+  `:Null` adapter is used so that an error results in a no-op). Add it to the
+  builder using `use(:Fallback, rescue: IOError)`
+* `Moneta::Lock` to make store thread safe. Add it in the builder using `use
+  :Lock`.
+* `Moneta::Logger` to log database accesses. Add it in the builder using `use
+  :Logger`.
+* `Moneta::Pool` to create a pool of stores as a means of making the store
+  thread safe. Add it in the builder using `use(:Pool, min: 2, max: 4, ttl: 60,
+  timeout: 5) {}`.
+* `Moneta::Shared` to share a store between multiple processes. Add it in the
+  builder using `use(:Shared) {}`.
+* `Moneta::Stack` to stack multiple stores (Read returns result from first
+  where the key is found, writes go to all stores). Add it in the builder using
+  `use(:Stack) {}`.
+* `Moneta::Transformer` transforms keys and values (Marshal, YAML, JSON,
+  Base64, MD5, ...). Add it in the builder using `use :Transformer`.
+* `Moneta::WeakIncrement` and `Moneta::WeakCreate` to add `#create` and
+  `#increment` support without atomicity (weak) to stores which don't support
+  it.
+* `Moneta::WeakEachKey` to add key traversal to stores that don't support it,
+  with the important caveat that only those keys previously seen by this proxy
+  will be traversed.
+
+Check the YARD documentation for more information and examples.
 
 ### Serializers and compressors (`Moneta::Transformer`)
 

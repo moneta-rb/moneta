@@ -1,3 +1,15 @@
+1.2.0
+
+* Adapters::Sequel - fix for compatibility with new version of JDBC SQLite
+* Adapters::Couch - refactor of error handling, #clear, #merge!, #slice, rev caching
+* Fallback - add fallback proxy (#162)
+* Pool - rewrite to enable limiting of size, gradual shrinking
+* Enumerable - add proxy providing Enumerable API (using #each_key)
+* Adapters::Couch, Adapters::RestClient - add Faraday :adapter option
+* Adapters::Couch - add :full_commit and :batch options to some operations
+* Adapters::LRUHash - rewrite to take advantage of ordered hashes
+* Adapters::ActiveRecord - recover from deadlock during increment
+
 1.1.1
 
 * Adapters::Sequel - use prepared statements
