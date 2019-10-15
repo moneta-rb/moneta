@@ -13,10 +13,18 @@ Gem::Specification.new do |s|
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.homepage         = 'http://github.com/moneta-rb/moneta'
+  s.homepage         = 'https://github.com/moneta-rb/moneta'
   s.licenses         = %w(MIT)
   s.require_paths    = %w(lib)
   s.summary          = %{A unified interface to key/value stores, including Redis, Memcached, TokyoCabinet, ActiveRecord and many more}
+
+  s.metadata = {
+    'bug_tracker_uri'   => 'https://github.com/moneta-rb/moneta/issues',
+    'changelog_uri'     => "https://github.com/moneta-rb/moneta/blob/v#{s.version}/CHANGES",
+    'documentation_uri' => "https://www.rubydoc.info/gems/moneta/#{s.version}",
+    'source_code_uri'   => "https://github.com/moneta-rb/moneta/tree/v#{s.version}",
+  }
+
   s.required_ruby_version = '>= 2.2.2'
 
   s.add_development_dependency 'rspec', '~> 3.0'
