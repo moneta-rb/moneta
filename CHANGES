@@ -1,3 +1,7 @@
+1.2.1
+
+* Transformer - fix :escape transformer deserialize implementation (#168)
+
 1.2.0
 
 * Adapters::Sequel - fix for compatibility with new version of JDBC SQLite
