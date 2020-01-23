@@ -8,7 +8,7 @@ describe 'transformer_key_inspect', proxy: :Transformer do
 
   moneta_loader{ |value| value }
 
-  moneta_specs TRANSFORMER_SPECS.returnsame.simplekeys_only
+  moneta_specs TRANSFORMER_SPECS.returnsame.simplekeys_only.with_not_full_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil

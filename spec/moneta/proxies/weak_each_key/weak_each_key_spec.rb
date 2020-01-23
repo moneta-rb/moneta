@@ -9,8 +9,6 @@ describe 'weak_each_key', proxy: :WeakEachKey do
   moneta_build do
     Moneta.build do
       use :WeakEachKey
-      # use :WeakIncrement
-      # use :WeakCreate
 
       adapter :Fog,
               aws_access_key_id: 'fake_access_key_id',

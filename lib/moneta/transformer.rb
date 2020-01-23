@@ -58,15 +58,16 @@ module Moneta
         END_EVAL
 
         key, key_opts = compile_transformer(keys, 'key')
+        key_load, key_load_opts = compile_transformer(keys.reverse, 'key', 1)
         dump, dump_opts = compile_transformer(values, 'value')
         load, load_opts = compile_transformer(values.reverse, 'value', 1)
 
         if values.empty?
-          compile_key_transformer(klass, key, key_opts)
+          compile_key_transformer(klass, key, key_opts, key_load, key_load_opts)
         elsif keys.empty?
           compile_value_transformer(klass, load, load_opts, dump, dump_opts)
         else
-          compile_key_value_transformer(klass, key, key_opts, load, load_opts, dump, dump_opts)
+          compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, load, load_opts, dump, dump_opts)
         end
 
         klass
@@ -77,12 +78,16 @@ module Moneta
         options.empty? ? 'options' : "Utils.without(options, #{options.map(&:to_sym).map(&:inspect).join(', ')})"
       end
 
-      def compile_key_transformer(klass, key, key_opts)
+      def compile_key_transformer(klass, key, key_opts, key_load, key_load_opts)
         klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          not_supports :each_key
-
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
+          end
+          def each_key(&block)
+            return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
+            @adapter.each_key.lazy.map{ |key| #{key_load} }.each(&block)
+
+            self
           end
           def increment(key, amount = 1, options = {})
             @adapter.increment(#{key}, amount, #{without key_opts})
@@ -200,12 +205,16 @@ module Moneta
         END_EVAL
       end
 
-      def compile_key_value_transformer(klass, key, key_opts, load, load_opts, dump, dump_opts)
+      def compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, load, load_opts, dump, dump_opts)
         klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          not_supports :each_key
-
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
+          end
+          def each_key(&block)
+            return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
+            @adapter.each_key.lazy.map{ |key| #{key_load} }.each(&block)
+
+            self
           end
           def increment(key, amount = 1, options = {})
             @adapter.increment(#{key}, amount, #{without key_opts})
@@ -315,18 +324,25 @@ module Moneta
 
       # Returned compiled transformer code string
       def compile_transformer(transformer, var, idx = 2)
+        # require 'pry'
+        # binding.pry
         value, options = var, []
         transformer.each do |name|
           raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
           require t[3] if t[3]
           code = t[idx]
-          options += code.scan(/options\[:(\w+)\]/).flatten
+          options += code.scan(/options\[:(\w+)\]/).flatten if code
           value =
-            if t[0] == :serialize && var == 'key'
+            if code.nil?
+              value
+            elsif t[0] == :serialize && var == 'key'
               "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
             else
               code % value
             end
+
+          # Once a transformer can't be applied, it breaks the rest of the chain.
+          break if code.nil?
         end
         [value, options]
       end

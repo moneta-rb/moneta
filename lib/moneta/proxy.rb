@@ -22,7 +22,7 @@ module Moneta
       raise NotImplementedError, "each_key is not supported on this proxy" \
         unless supports? :each_key
 
-      return enum_for(:each_key) unless block_given?
+      return enum_for(:each_key) { adapter.each_key.size } unless block_given?
       adapter.each_key(&block)
       self
     end

@@ -9,7 +9,7 @@ describe "shared_unix", isolate: true, proxy: :Shared do
   end
 
   shared_examples :shared_unix do
-    moneta_specs ADAPTER_SPECS
+    moneta_specs ADAPTER_SPECS.with_not_full_each_key
 
     it 'shares values' do
       store['shared_key'] = 'shared_value'

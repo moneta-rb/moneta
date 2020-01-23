@@ -22,14 +22,26 @@ module Moneta
       zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'          ],
       base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                  ],
       urlsafe_base64: [
-        :encode,              'Base64.urlsafe_decode64(%s)',  'Base64.urlsafe_encode64(%s)',     'base64'
+        :encode,
+        'Base64.urlsafe_decode64(%s)',
+        'Base64.urlsafe_encode64(%s)',
+        'base64'
       ],
       escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                                ],
       hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first"                            ],
       qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')"                                   ],
       uuencode: [ :encode,    "%s.unpack('u').first",         "[%s].pack('u')"                                   ],
-      hmac:     [ :hmac,      'Helper.hmacverify(%s, options[:secret] || @secret)',
-                                 'Helper.hmacsign(%s, options[:secret] || @secret)',                'openssl'       ],
+      hmac:     [
+        :hmac,
+        'Helper.hmacverify(%s, options[:secret] || @secret)',
+        'Helper.hmacsign(%s, options[:secret] || @secret)',
+        'openssl'
+      ],
+      prefix:   [
+        :prefix,
+        "%s.sub(@prefix, '')",
+        '(options[:prefix] || @prefix)+%s'
+      ],
       truncate: [ :truncate,  nil,                            'Helper.truncate(%s, @maxlen)',    'digest/md5'    ],
       md5:      [ :digest,    nil,                            '::Digest::MD5.hexdigest(%s)',     'digest/md5'    ],
       rmd160:   [ :digest,    nil,                            '::Digest::RMD160.hexdigest(%s)',  'digest/rmd160' ],
@@ -40,10 +52,14 @@ module Moneta
       city32:   [ :digest,    nil,                            '::CityHash.hash32(%s).to_s(16)',  'cityhash'      ],
       city64:   [ :digest,    nil,                            '::CityHash.hash64(%s).to_s(16)',  'cityhash'      ],
       city128:  [ :digest,    nil,                            '::CityHash.hash128(%s).to_s(16)', 'cityhash'      ],
-      prefix:   [ :prefix,    nil,                            '(options[:prefix] || @prefix)+%s'                 ],
       spread:   [ :spread,    nil,                            'Helper.spread(%s)'                                ],
       to_s:     [ :string,    nil,                            '%s.to_s'                                          ],
-      inspect:  [ :string,    nil,                            '%s.inspect'                                       ]
+      inspect:  [ :string,    nil,                            '%s.inspect'                                       ],
+      unsafe_inspect: [
+        :string,
+        'eval(%s)',
+        '%s.inspect'
+      ],
     }.freeze
 
     # Allowed value transformers (Read it like a regular expression!)
