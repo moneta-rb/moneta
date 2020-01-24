@@ -4,5 +4,5 @@ describe 'standard_lruhash_with_expires', adapter: :LRUHash do
   use_timecop
 
   moneta_store :LRUHash, {expires: true}
-  moneta_specs STANDARD_SPECS.with_expires.without_persist
+  moneta_specs STANDARD_SPECS.with_expires.without_persist.with_each_key
 end

@@ -14,5 +14,5 @@ describe "standard_activerecord", adapter: :ActiveRecord do
     ::Marshal.load(value.unpack('m').first)
   end
 
-  moneta_specs STANDARD_SPECS
+  moneta_specs STANDARD_SPECS.with_each_key
 end

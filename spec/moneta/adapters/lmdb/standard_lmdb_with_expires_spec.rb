@@ -7,5 +7,5 @@ describe 'standard_lmdb_with_expires', unsupported: defined?(JRUBY_VERSION), ada
     {dir: File.join(tempdir, "simple_lmdb_with_expires"), expires: true}
   end
 
-  moneta_specs STANDARD_SPECS.without_concurrent.with_expires
+  moneta_specs STANDARD_SPECS.without_concurrent.with_expires.with_each_key
 end

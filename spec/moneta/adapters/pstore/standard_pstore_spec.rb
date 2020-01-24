@@ -5,5 +5,5 @@ describe 'standard_pstore', unsupported: defined?(JRUBY_VERSION), adapter: :PSto
 
   moneta_loader{ |value| value }
 
-  moneta_specs STANDARD_SPECS
+  moneta_specs STANDARD_SPECS.with_each_key
 end

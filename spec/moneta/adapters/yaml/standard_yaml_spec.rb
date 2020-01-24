@@ -5,5 +5,5 @@ describe 'standard_yaml', adapter: :YAML do
 
   moneta_loader{ |value| value }
 
-  moneta_specs STANDARD_SPECS.without_marshallable_value.without_concurrent
+  moneta_specs STANDARD_SPECS.without_marshallable_value.without_concurrent.with_each_key
 end

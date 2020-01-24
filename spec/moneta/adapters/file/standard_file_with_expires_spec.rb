@@ -7,5 +7,5 @@ describe 'standard_file_with_expires', adapter: :File do
     {dir: File.join(tempdir, "simple_file_with_expires"), expires: true}
   end
 
-  moneta_specs STANDARD_SPECS.with_expires
+  moneta_specs STANDARD_SPECS.with_expires.with_each_key
 end
