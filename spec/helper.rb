@@ -78,12 +78,11 @@ class MonetaSpecs
     'smallhash' => proc{ dict(2){ sized(range 5, 10){ [string(:alnum), string(:alnum)] } } }
   }
 
-  attr_reader :key, :value, :specs, :features, :disabled
+  attr_reader :key, :value, :specs, :features
 
   def initialize(options = {})
     @specs = options.delete(:specs).to_a
     @features = @specs & [:expires, :expires_native, :increment, :each_key, :create]
-    @disabled = options.delete(:disabled).to_a
     @key = options.delete(:key)     || %w(object string binary hash boolean nil integer float)
     @value = options.delete(:value) || %w(object string binary hash boolean nil integer float)
   end
@@ -200,11 +199,7 @@ class MonetaSpecs
   end
 
   def with_each_key
-    new(specs: specs - [:not_each_key] | [:each_key], disabled: disabled - [:each_key])
-  end
-
-  def with_not_full_each_key
-    new(specs: specs - [:not_each_key] | [:each_key], disabled: [:each_key])
+    new(specs: specs - [:not_each_key] | [:each_key])
   end
 
   def without_create
@@ -225,9 +220,8 @@ STANDARD_SPECS = MonetaSpecs.new(
     :features, :store_large, :not_each_key])
 TRANSFORMER_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
-    :transform_value, :increment, :create, :features, :store_large, :not_each_key],
-  # Disable the "each_key" specs given that not all the transformations can be undone to iterate over the original keys
-  disabled: [:each_key])
+    :transform_value, :increment, :create, :features, :store_large,
+    :not_each_key])
 
 module MonetaHelpers
   module ClassMethods
@@ -282,7 +276,7 @@ module MonetaHelpers
       end
 
       specs.specs.sort.each do |s|
-        context "#{s} feature", unless: specs.disabled.include?(s) do
+        context "#{s} feature" do
           include_examples(s)
         end
       end

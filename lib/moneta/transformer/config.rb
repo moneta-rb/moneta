@@ -54,12 +54,7 @@ module Moneta
       city128:  [ :digest,    nil,                            '::CityHash.hash128(%s).to_s(16)', 'cityhash'      ],
       spread:   [ :spread,    nil,                            'Helper.spread(%s)'                                ],
       to_s:     [ :string,    nil,                            '%s.to_s'                                          ],
-      inspect:  [ :string,    nil,                            '%s.inspect'                                       ],
-      unsafe_inspect: [
-        :string,
-        'eval(%s)',
-        '%s.inspect'
-      ],
+      inspect:  [ :string,    nil,                            '%s.inspect'                                       ]
     }.freeze
 
     # Allowed value transformers (Read it like a regular expression!)
@@ -67,5 +62,8 @@ module Moneta
 
     # Allowed key transformers (Read it like a regular expression!)
     KEY_TRANSFORMER = '(serialize | string)? prefix? ((encode? truncate?) | (digest spread?))?'.freeze
+
+    # Key transformers that can be "loaded" (e.g. reversed) and can be used by the key enumeration feature
+    LOAD_KEY_TRANSFORMER = 'serialize? prefix? encode?'.freeze
   end
 end

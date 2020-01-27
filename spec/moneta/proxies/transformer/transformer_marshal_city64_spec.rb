@@ -6,7 +6,7 @@ describe 'transformer_marshal_city64', unsupported: defined?(JRUBY_VERSION), pro
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_not_full_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 
   it 'compile transformer class' do
     store.should_not be_nil

@@ -43,12 +43,14 @@ module Moneta
 
       def compile(keys, values)
         @key_validator ||= compile_validator(KEY_TRANSFORMER)
+        @load_key_validator ||= compile_validator(LOAD_KEY_TRANSFORMER)
         @value_validator ||= compile_validator(VALUE_TRANSFORMER)
 
         raise ArgumentError, 'Invalid key transformer chain' if @key_validator !~ keys.map(&:inspect).join
         raise ArgumentError, 'Invalid value transformer chain' if @value_validator !~ values.map(&:inspect).join
 
         klass = Class.new(self)
+        compile_each_key_support_clause(klass, keys)
         klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           def initialize(adapter, options = {})
             super
@@ -78,12 +80,21 @@ module Moneta
         options.empty? ? 'options' : "Utils.without(options, #{options.map(&:to_sym).map(&:inspect).join(', ')})"
       end
 
+      def compile_each_key_support_clause(klass, keys)
+        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
+          #{'not_supports :each_key' if @load_key_validator !~ keys.map(&:inspect).join}
+        END_EVAL
+      end
+
       def compile_key_transformer(klass, key, key_opts, key_load, key_load_opts)
         klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
           end
           def each_key(&block)
+            raise NotImplementedError, "each_key is not supported on this transformer" \
+              unless supports? :each_key
+
             return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
             @adapter.each_key.lazy.map{ |key| #{key_load} }.each(&block)
 
@@ -211,6 +222,9 @@ module Moneta
             @adapter.key?(#{key}, #{without key_opts})
           end
           def each_key(&block)
+            raise NotImplementedError, "each_key is not supported on this transformer" \
+              unless supports? :each_key
+
             return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
             @adapter.each_key.lazy.map{ |key| #{key_load} }.each(&block)
 
