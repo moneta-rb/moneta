@@ -3,5 +3,5 @@ describe 'standard_mongo_moped', adapter: :Mongo do
   let(:min_ttl) { t_res }
 
   moneta_store :MongoMoped, {db: 'standard_mongo', collection: 'moped'}
-  moneta_specs STANDARD_SPECS.with_native_expires
+  moneta_specs STANDARD_SPECS.with_native_expires.with_each_key
 end

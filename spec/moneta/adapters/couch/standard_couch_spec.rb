@@ -11,5 +11,5 @@ describe "standard_couch", adapter: :Couch do
     ::Marshal.load(value.unpack('m').first)
   end
 
-  moneta_specs STANDARD_SPECS.without_increment
+  moneta_specs STANDARD_SPECS.without_increment.with_each_key
 end

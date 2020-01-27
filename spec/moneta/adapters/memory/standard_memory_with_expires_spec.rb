@@ -4,5 +4,5 @@ describe 'standard_memory_with_expires', adapter: :Memory do
   use_timecop
 
   moneta_store :Memory, {expires: true}
-  moneta_specs STANDARD_SPECS.with_expires.without_persist
+  moneta_specs STANDARD_SPECS.with_expires.without_persist.with_each_key
 end

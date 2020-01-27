@@ -15,5 +15,5 @@ describe 'standard_sequel_with_expires', adapter: :Sequel do
     }
   end
 
-  moneta_specs STANDARD_SPECS.with_expires
+  moneta_specs STANDARD_SPECS.with_expires.with_each_key
 end

@@ -338,8 +338,6 @@ module Moneta
 
       # Returned compiled transformer code string
       def compile_transformer(transformer, var, idx = 2)
-        # require 'pry'
-        # binding.pry
         value, options = var, []
         transformer.each do |name|
           raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
