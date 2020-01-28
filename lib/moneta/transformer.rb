@@ -60,7 +60,7 @@ module Moneta
         END_EVAL
 
         key, key_opts = compile_transformer(keys, 'key')
-        key_load, key_load_opts = compile_transformer(keys.reverse, 'key', 1)
+        key_load, key_load_opts = compile_transformer(keys.reverse, 'key', 1) unless @load_key_validator !~ keys.map(&:inspect).join
         dump, dump_opts = compile_transformer(values, 'value')
         load, load_opts = compile_transformer(values.reverse, 'value', 1)
 
@@ -343,18 +343,15 @@ module Moneta
           raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
           require t[3] if t[3]
           code = t[idx]
-          options += code.scan(/options\[:(\w+)\]/).flatten if code
+          raise "Undefined command for transformer #{name}" unless code
+
+          options += code.scan(/options\[:(\w+)\]/).flatten
           value =
-            if code.nil?
-              value
-            elsif t[0] == :serialize && var == 'key'
+            if t[0] == :serialize && var == 'key'
               "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
             else
               code % value
             end
-
-          # Once a transformer can't be applied, it breaks the rest of the chain.
-          break if code.nil?
         end
         [value, options]
       end
