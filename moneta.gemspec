@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
     'source_code_uri'   => "https://github.com/moneta-rb/moneta/tree/v#{s.version}",
   }
 
-  s.required_ruby_version = '>= 2.2.2'
+  s.required_ruby_version = '>= 2.3.0'
 
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-retry', '~> 0.6.1'
