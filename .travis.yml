@@ -1,11 +1,11 @@
 dist: xenial
 language: ruby
 rvm:
+  - 2.7
   - 2.6
   - 2.5
   - 2.4
   - 2.3
-  - 2.2
   - jruby-9.2.9.0
   - rbx-3
 services:
@@ -36,6 +36,7 @@ addons:
       - riak
   postgresql: '9.6'
 before_install:
+  - gem install bundler
   - script/start-services
 cache:
   bundler: true
@@ -120,6 +121,8 @@ matrix:
     - rvm: rbx-3
     - env: SCRIPT='script/parallel-tests unstable'
   exclude:
+    - rvm: 2.6
+      env: SCRIPT='rubocop lib'
     - rvm: 2.5
       env: SCRIPT='rubocop lib'
     - rvm: 2.4
