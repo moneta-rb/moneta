@@ -178,7 +178,7 @@ shared_examples :store do
   shared_examples :merge! do
     it 'stores values' do
       moneta_property_of(keys: 3, values: 3).check do |keys:, values:|
-        expect(store.public_send(method, pairs.call(keys[0] => values[0], keys[1] => values[1], keys[2] => values[2]))).to be store
+        expect(store.public_send(method, pairs.call({ keys[0] => values[0], keys[1] => values[1], keys[2] => values[2] }))).to be store
         expect(store.key?(keys[0])).to be true
         expect(store[keys[0]]).to eq values[0]
         expect(store.key?(keys[1])).to be true
@@ -192,7 +192,7 @@ shared_examples :store do
     it 'overwrites existing values' do
       moneta_property_of(keys: 2, values: 3).check do |keys:, values:|
         expect(store[keys[0]] = values[0]).to eq values[0]
-        expect(store.public_send(method, pairs.call(keys[0] => values[1], keys[1] => values[2]))).to be store
+        expect(store.public_send(method, pairs.call({ keys[0] => values[1], keys[1] => values[2] }))).to be store
         expect(store.key?(keys[0])).to be true
         expect(store[keys[0]]).to eq values[1]
         expect(store.key?(keys[1])).to be true
@@ -204,7 +204,7 @@ shared_examples :store do
     it 'stores the return value of the block, if given, for keys that will be overwritten' do
       moneta_property_of(keys: 2, values: 4).check do |keys:, values:|
         expect(store[keys[0]] = values[0]).to eq values[0]
-        expect(store.public_send(method, pairs.call(keys[0] => values[1], keys[1] => values[2])) do |key, old_val, new_val|
+        expect(store.public_send(method, pairs.call({ keys[0] => values[1], keys[1] => values[2] })) do |key, old_val, new_val|
           expect(key).to eq keys[0]
           expect(old_val).to eq values[0]
           expect(new_val).to eq values[1]
