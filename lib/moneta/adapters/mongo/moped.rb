@@ -44,7 +44,10 @@ module Moneta
         @backend.use(db)
         @backend.login(user, password) if user && password
         @collection = @backend[collection]
-        if @backend.command(buildinfo: 1)['version'] >= '2.2'
+        if @backend.command(buildinfo: 1)['version'] >= '3.0'
+          # Moped creates indexes in the system.indexes collection which is not writable anymore since Mongo v3
+          warn 'Moneta::Adapters::MongoMoped - You are using the unmaintained Moped gem, expired documents will not be deleted'
+        elsif @backend.command(buildinfo: 1)['version'] >= '2.2'
           @collection.indexes.create({ @expires_field => 1 }, expireAfterSeconds: 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'

@@ -3,7 +3,7 @@ describe 'adapter_mongo', adapter: :Mongo do
   let(:min_ttl) { t_res }
 
   moneta_build do
-    Moneta::Adapters::Mongo.new(db: "adapter_mongo",
+    Moneta::Adapters::Mongo.new(db: File.basename(__FILE__, '.rb'),
                                 collection: 'default')
   end
 

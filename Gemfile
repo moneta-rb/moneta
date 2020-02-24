@@ -23,7 +23,7 @@ group :msgpack do
 end
 
 # Compressors used by Transformer
-gem 'rbzip2', '~> 0.3.0', group: :bzip2
+gem 'rbzip2', '>= 0.3.0', group: :bzip2
 gem 'lz4-ruby', platforms: :ruby, group: :lz4
 gem 'ruby-lzma', platforms: :ruby, group: :lzma
 gem 'lzoruby', platforms: :ruby, group: :lzo
@@ -37,8 +37,8 @@ gem 'cityhash', platforms: :ruby, group: :city
 gem 'daybreak', group: :daybreak
 gem 'activerecord', '~> 5.2', group: :activerecord
 gem 'redis', '~> 4.0.0', group: :redis
-gem 'mongo', '~> 2.1.0', group: :mongo_official
-gem 'moped', '>= 2.0.0', group: :mongo_moped
+gem 'mongo', '>= 2', group: :mongo_official
+gem 'moped', '>= 2', group: :mongo_moped
 gem 'sequel', group: :sequel
 gem 'dalli', group: :memcached_dalli
 gem 'riak-client', group: :riak

@@ -3,7 +3,7 @@ describe 'adapter_mongo_moped_with_default_expires', isolate: true, adapter: :Mo
   let(:min_ttl) { t_res }
 
   moneta_build do
-    Moneta::Adapters::MongoMoped.new(db: "adapter_mongo",
+    Moneta::Adapters::MongoMoped.new(db: File.basename(__FILE__, '.rb'),
                                      collection: 'moped_with_default_expires',
                                      expires: min_ttl)
   end
