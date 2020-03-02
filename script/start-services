@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Restart CouchDB
-$(dirname $0)/reconfigure-couchdb
+# Install and start CouchDB
+$(dirname $0)/start-couchdb
 
-# Start HBase
+# Install and start HBase
 $(dirname $0)/start-hbase
 
 # Waiting for servers to start

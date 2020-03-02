@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+# Copied from https://github.com/apache/couchdb-pkg/blob/master/debian/README.Debian
+COUCHDB_PASSWORD=password
+echo "couchdb couchdb/mode select standalone
+couchdb couchdb/mode seen true
+couchdb couchdb/bindaddress string 127.0.0.1
+couchdb couchdb/bindaddress seen true
+couchdb couchdb/adminpass password ${COUCHDB_PASSWORD}
+couchdb couchdb/adminpass seen true
+couchdb couchdb/adminpass_again password ${COUCHDB_PASSWORD}
+couchdb couchdb/adminpass_again seen true" | sudo debconf-set-selections
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --force-yes couchdb
+
+# Reconfigure CouchDB to use delayed commits for speed: http://guide.couchdb.org/draft/performance.html
+sudo sed -i '/\[couchdb\]/a delayed_commits = true' /etc/couchdb/local.ini
+
+# (Re)start couchdb
+sudo systemctl restart couchdb
+
+# Display some info about CouchDB
+sudo systemctl status couchdb
+until curl http://localhost:5984/; do
+  sleep 1
+done
+
