@@ -26,7 +26,6 @@ addons:
         key_url: https://packagecloud.io/basho/riak/gpgkey
     packages:
       - cassandra
-      - couchdb
       - libkyotocabinet-dev
       - libleveldb-dev
       - liblzo2-dev
