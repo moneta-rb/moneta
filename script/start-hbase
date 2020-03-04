@@ -8,13 +8,13 @@ mkdir -p zookeeper
 mkdir -p downloads
 root=$(pwd)
 
-version=$(curl -sS https://www-us.apache.org/dist/hbase/stable/ | grep -oP '(?<=hbase-)(\d+\.?)+' | head -n1)
+version=$(curl -sS https://downloads.apache.org/hbase/stable/RELEASENOTES.md | grep -oP '(?<=# HBASE\s\s)(\d+\.?)+' | head -n1)
 
 echo HBase stable version is $version
 
 if [ ! -f downloads/hbase-$version-bin.tar.gz ]; then
   echo Downloading HBase ...
-  wget -P downloads http://www-us.apache.org/dist/hbase/stable/hbase-$version-bin.tar.gz
+  wget -P downloads https://downloads.apache.org/hbase/stable/hbase-$version-bin.tar.gz
 fi
 
 echo Extracting HBase ...
