@@ -415,6 +415,7 @@ RSpec.shared_context :setup_moneta_store do |builder|
 
   after do
     if @store
+      @store.clear
       @store.close.should == nil
       @store = nil
     end

@@ -52,6 +52,11 @@ module Moneta
       wrap(:each_key) { super }
     end
 
+    # (see Proxy#each_key)
+    def each_key
+      wrap(:each_key) { super }
+    end
+
     # (see Proxy#values_at)
     def values_at(*keys, **options)
       wrap(:values_at, keys, options) { super }
