@@ -11,8 +11,6 @@ module Moneta
   #
   # @api public
   class Shared < Wrapper
-    not_supports :each_key
-
     # @param [Hash] options
     # @option options [Integer] :port (9000) TCP port
     # @option options [String] :host Server hostname
@@ -25,7 +23,7 @@ module Moneta
 
     # (see Proxy#close)
     def close
-      if @server
+      if server?
         @server.stop
         @thread.join
         @server = @thread = nil
@@ -36,13 +34,20 @@ module Moneta
       end
     end
 
+    # Returns true if this wrapper is running as the server
+    #
+    # @return [Boolean] wrapper is a server
+    def server?
+      @server != nil
+    end
+
     protected
 
     def wrap(*args)
       connect
       yield
     rescue Errno::ECONNRESET, Errno::EPIPE, IOError, SystemCallError
-      @connect_lock.synchronize { close unless @server }
+      @connect_lock.synchronize { close unless server? }
       tries ||= 0
       (tries += 1) < 3 ? retry : raise
     end
@@ -52,21 +57,22 @@ module Moneta
       @connect_lock.synchronize do
         @adapter ||= Adapters::Client.new(@options)
       end
-    rescue Errno::ECONNREFUSED, Errno::ENOENT => ex
+    rescue Errno::ECONNREFUSED, Errno::ENOENT, IOError => ex
       start_server
       tries ||= 0
       warn "Moneta::Shared - Failed to connect: #{ex.message}" if tries > 0
-      (tries += 1) < 3 ? retry : raise
+      (tries += 1) < 10 ? retry : raise
     end
 
     # TODO: Implement this using forking (MRI) and threading (JRuby)
     # to get maximal performance
     def start_server
       @connect_lock.synchronize do
+        return if server?
         begin
           raise "Adapter already set" if @adapter
           @adapter = Lock.new(@builder.build.last)
-          raise "Server already set" if @server
+          raise "Server already set" if server?
           @server = Server.new(@adapter, @options)
           @thread = Thread.new { @server.run }
           sleep 0.1 until @server.running?

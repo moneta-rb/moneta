@@ -6,7 +6,7 @@ rvm:
   - 2.4
   - 2.3
   - 2.2
-  - jruby-9.2
+  - jruby-9.2.9.0
   - rbx-3
 services:
   - mysql
@@ -128,7 +128,7 @@ matrix:
       env: SCRIPT='rubocop lib'
     - rvm: 2.2
       env: SCRIPT='rubocop lib'
-    - rvm: jruby-9.2
+    - rvm: jruby-9.2.9.0
       env: SCRIPT='rubocop lib'
     - rvm: rbx-3
       env: SCRIPT='rubocop lib'

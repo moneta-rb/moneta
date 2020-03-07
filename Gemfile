@@ -94,7 +94,9 @@ end
 
 # Rails integration testing
 group :rails do
-  gem 'actionpack', '~> 5.0'
+  git 'https://github.com/rails/rails.git', branch: '5-2-stable' do
+    gem 'actionpack'
+  end
   gem 'minitest', '~> 5.0'
 end
 

@@ -1,15 +1,15 @@
-describe "shared_tcp", isolate: true, proxy: :Shared do
+describe "shared_tcp", proxy: :Shared do
   moneta_build do
     tempdir = self.tempdir
     Moneta.build do
       use(:Shared, port: 9001) do
-        adapter :PStore, file: File.join(tempdir, 'shared_tcp')
+        adapter :GDBM, file: File.join(tempdir, 'shared_tcp')
       end
     end
   end
 
   shared_examples :shared_tcp do
-    moneta_specs ADAPTER_SPECS
+    moneta_specs ADAPTER_SPECS.with_each_key
 
     it 'shares values' do
       store['shared_key'] = 'shared_value'
@@ -22,17 +22,27 @@ describe "shared_tcp", isolate: true, proxy: :Shared do
 
   # The first store initialised will be running the server
   context "running as the server" do
+    before do
+      store.load('dummy')
+      expect(store.server?).to be true
+    end
+
     include_examples :shared_tcp
 
     it 'has the underlying adapter' do
       store.load('dummy')
-      expect(store.adapter.adapter).to be_a Moneta::Adapters::PStore
+      expect(store.adapter.adapter).to be_a Moneta::Adapters::GDBM
     end
   end
 
   context "running as a client" do
     let!(:server_store) do
       new_store.tap { |store| store.load('dummy') } # Makes a connection
+    end
+
+    before do
+      store.load('dummy')
+      expect(store.server?).to be false
     end
 
     after do

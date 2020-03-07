@@ -15,6 +15,7 @@ module Moneta
     protected
 
     def wrap(name, *args, &block)
+      self.locks ||= Set.new
       if locked?
         yield
       else
@@ -22,8 +23,12 @@ module Moneta
       end
     end
 
+    def locks=(locks)
+      Thread.current.thread_variable_set('Moneta::Lock', locks)
+    end
+
     def locks
-      Thread.current['Moneta::Lock'] ||= Set.new
+      Thread.current.thread_variable_get('Moneta::Lock')
     end
 
     def lock!(&block)

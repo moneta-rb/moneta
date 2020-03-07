@@ -1,9 +1,9 @@
-describe "standard_client_tcp", isolate: true, adapter: :Client do
-  before :all do
-    start_server(Moneta::Adapters::Memory.new)
-  end
+require_relative './client_helper.rb'
 
-  moneta_store :Client
+describe "standard_client_tcp", adapter: :Client do
+  include_context :start_server, port: 9003, backend: ->{ Moneta::Adapters::Memory.new }
+
+  moneta_store :Client, port: 9003
   moneta_specs STANDARD_SPECS
 
   it 'supports multiple clients' do
