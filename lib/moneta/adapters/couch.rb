@@ -138,7 +138,7 @@ module Moneta
       def clear(options = {})
         loop do
           docs = all_docs(limit: 10_000)
-          break if docs['rows'].empty?
+          break if !docs || docs['rows'].empty?
           deletions = docs['rows'].map do |row|
             { _id: row['id'], _rev: row['value']['rev'], _deleted: true }
           end
