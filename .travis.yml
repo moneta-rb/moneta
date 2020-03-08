@@ -16,17 +16,15 @@ services:
   - memcached
   - mongodb
   - postgresql
+  - couchdb
 addons:
   apt:
     sources:
       - cassandra
-      - sourceline: "deb https://apache.bintray.com/couchdb-deb xenial main"
-        key_url: https://couchdb.apache.org/repo/bintray-pubkey.asc
       - sourceline: "deb https://packagecloud.io/basho/riak/ubuntu/ xenial main"
         key_url: https://packagecloud.io/basho/riak/gpgkey
     packages:
       - cassandra
-      - couchdb
       - libkyotocabinet-dev
       - libleveldb-dev
       - liblzo2-dev

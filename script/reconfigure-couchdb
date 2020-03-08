@@ -7,7 +7,8 @@ sudo systemctl restart couchdb
 
 # Display some info about CouchDB
 sudo systemctl status couchdb
-until curl http://localhost:5984/; do
-  sleep 1
-done
+
+sleep 1
+curl -X PUT http://127.0.0.1:5984/_users
+curl -X PUT http://127.0.0.1:5984/_replicator
 
