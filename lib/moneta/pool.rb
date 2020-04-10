@@ -310,7 +310,6 @@ module Moneta
       end
     end
 
-
     # Tells the manager to close all stores.  It will not be possible to use
     # the store after this.
     def stop
