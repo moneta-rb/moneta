@@ -3,8 +3,9 @@ describe 'adapter_mongo_moped', adapter: :Mongo do
   let(:min_ttl) { t_res }
 
   moneta_build do
-    Moneta::Adapters::MongoMoped.new(db: File.basename(__FILE__, '.rb'),
-                                     collection: 'moped')
+    Moneta::Adapters::MongoMoped.new(mongo_config(
+      db: File.basename(__FILE__, '.rb'), collection: 'moped'
+    ))
   end
 
   moneta_specs ADAPTER_SPECS.with_each_key.with_native_expires.simplevalues_only
