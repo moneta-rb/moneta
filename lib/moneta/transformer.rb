@@ -349,12 +349,14 @@ module Moneta
           raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
           require t[3] if t[3]
           code = t[idx]
+          code ||= compile_prefix(name: name, transformer: t, value: value) if idx == 4 && var == 'key'
+
           raise "Undefined command for transformer #{name}" unless code
 
           options += code.scan(/options\[:(\w+)\]/).flatten
           value =
             if t[0] == :serialize && var == 'key' && idx == 4
-              "(tmp = #{value}; false === tmp ? tmp : #{code % 'tmp'})"
+              "(tmp = #{value}; (false === tmp || '' === tmp) ? false : #{code % 'tmp'})"
             elsif t[0] == :serialize && var == 'key'
               "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
             else
@@ -368,6 +370,13 @@ module Moneta
         camel_case = lambda { |sym| sym.to_s.split('_').map(&:capitalize).join }
         (keys.empty? ? '' : keys.map(&camel_case).join + 'Key') +
           (values.empty? ? '' : values.map(&camel_case).join + 'Value')
+      end
+
+      def compile_prefix(name:, transformer:, value:)
+        return unless [:encode, :serialize].include?(transformer[0])
+
+        load_val, _ = compile_transformer([name], value, 1)
+        "(#{load_val} rescue '')"
       end
     end
   end

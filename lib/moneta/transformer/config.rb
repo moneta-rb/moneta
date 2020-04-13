@@ -3,16 +3,16 @@ module Moneta
     # Available key/value transformers
     TRANSFORMER = {
       # Name:   [ Type,       Load,                           Dump,                              Library        Test      ],
-      bencode:  [ :serialize, '::BEncode.load(%s)',           '::BEncode.dump(%s)',              'bencode'       , 'true' ],
-      bert:     [ :serialize, '::BERT.decode(%s)',            '::BERT.encode(%s)',               'bert'          , 'true' ],
-      bson:     [ :serialize, 'Helper::BSON.load(%s)',        'Helper::BSON.dump(%s)',           'bson'          , 'true' ],
-      json:     [ :serialize, '::MultiJson.load(%s)',         '::MultiJson.dump(%s)',            'multi_json'    , 'true' ],
-      marshal:  [ :serialize, '::Marshal.load(%s)',           '::Marshal.dump(%s)',              nil             , 'true' ],
-      msgpack:  [ :serialize, '::MessagePack.unpack(%s)',     '::MessagePack.pack(%s)',          'msgpack'       , 'true' ],
-      ox:       [ :serialize, '::Ox.parse_obj(%s)',           '::Ox.dump(%s)',                   'ox'            , 'true' ],
-      php:      [ :serialize, '::PHP.unserialize(%s)',        '::PHP.serialize(%s)',             'php_serialize' , 'true' ],
-      tnet:     [ :serialize, '::TNetstring.parse(%s).first', '::TNetstring.dump(%s)',           'tnetstring'    , 'true' ],
-      yaml:     [ :serialize, '::YAML.load(%s)',              '::YAML.dump(%s)',                 'yaml'          , 'true' ],
+      bencode:  [ :serialize, '::BEncode.load(%s)',           '::BEncode.dump(%s)',              'bencode'      ],
+      bert:     [ :serialize, '::BERT.decode(%s)',            '::BERT.encode(%s)',               'bert'         ],
+      bson:     [ :serialize, 'Helper::BSON.load(%s)',        'Helper::BSON.dump(%s)',           'bson'         ],
+      json:     [ :serialize, '::MultiJson.load(%s)',         '::MultiJson.dump(%s)',            'multi_json'   ],
+      marshal:  [ :serialize, '::Marshal.load(%s)',           '::Marshal.dump(%s)',              nil            ],
+      msgpack:  [ :serialize, '::MessagePack.unpack(%s)',     '::MessagePack.pack(%s)',          'msgpack'      ],
+      ox:       [ :serialize, '::Ox.parse_obj(%s)',           '::Ox.dump(%s)',                   'ox'           ],
+      php:      [ :serialize, '::PHP.unserialize(%s)',        '::PHP.serialize(%s)',             'php_serialize'],
+      tnet:     [ :serialize, '::TNetstring.parse(%s).first', '::TNetstring.dump(%s)',           'tnetstring'   ],
+      yaml:     [ :serialize, '::YAML.load(%s)',              '::YAML.dump(%s)',                 'yaml'         ],
       bzip2:    [ :compress,  'Helper.bunzip2(%s)',           'Helper.bzip2(%s)',                'rbzip2'       ],
       lz4:      [ :compress,  '::LZ4.uncompress(%s)',         '::LZ4.compress(%s)',              'lz4-ruby'     ],
       lzma:     [ :compress,  '::LZMA.decompress(%s)',        '::LZMA.compress(%s)',             'lzma'         ],
@@ -25,7 +25,7 @@ module Moneta
         :encode,
         'Base64.urlsafe_decode64(%s)',
         'Base64.urlsafe_encode64(%s)',
-        'base64'
+        'base64',
       ],
       escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)',                              ],
       hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first",                          ],
@@ -69,6 +69,6 @@ module Moneta
     LOAD_KEY_TRANSFORMER = 'serialize? prefix? encode?'.freeze
 
     # Key transformers that can be "tested for success" with a dumped key and can be used by the key enumeration feature
-    TEST_KEY_TRANSFORMER = 'serialize? prefix?'.freeze
+    TEST_KEY_TRANSFORMER = 'serialize? prefix? encode?'.freeze
   end
 end
