@@ -17,12 +17,12 @@ module Moneta
       adapter = @proxies.first
       if Array === adapter
         klass, options, block = adapter
-        adapter = new_proxy(klass, options, &block)
+        adapter = new_proxy(klass, options.dup, &block)
         check_arity(klass, adapter, 1)
       end
       @proxies[1..-1].inject([adapter]) do |result, proxy|
         klass, options, block = proxy
-        proxy = new_proxy(klass, result.last, options, &block)
+        proxy = new_proxy(klass, result.last, options.dup, &block)
         check_arity(klass, proxy, 2)
         result << proxy
       end
