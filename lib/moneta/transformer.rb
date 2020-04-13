@@ -44,6 +44,7 @@ module Moneta
       def compile(keys, values)
         @key_validator ||= compile_validator(KEY_TRANSFORMER)
         @load_key_validator ||= compile_validator(LOAD_KEY_TRANSFORMER)
+        @test_key_validator ||= compile_validator(TEST_KEY_TRANSFORMER)
         @value_validator ||= compile_validator(VALUE_TRANSFORMER)
 
         raise ArgumentError, 'Invalid key transformer chain' if @key_validator !~ keys.map(&:inspect).join
@@ -60,16 +61,17 @@ module Moneta
         END_EVAL
 
         key, key_opts = compile_transformer(keys, 'key')
-        key_load, key_load_opts = compile_transformer(keys.reverse, 'key', 1) unless @load_key_validator !~ keys.map(&:inspect).join
+        key_load, key_load_opts = compile_transformer(keys.reverse, 'key', 1) if @load_key_validator =~ keys.map(&:inspect).join
+        key_test, key_test_opts = compile_transformer(keys.reverse, 'key', 4) if @test_key_validator =~ keys.map(&:inspect).join
         dump, dump_opts = compile_transformer(values, 'value')
         load, load_opts = compile_transformer(values.reverse, 'value', 1)
 
         if values.empty?
-          compile_key_transformer(klass, key, key_opts, key_load, key_load_opts)
+          compile_key_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts)
         elsif keys.empty?
           compile_value_transformer(klass, load, load_opts, dump, dump_opts)
         else
-          compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, load, load_opts, dump, dump_opts)
+          compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts, load, load_opts, dump, dump_opts)
         end
 
         klass
@@ -86,7 +88,9 @@ module Moneta
         END_EVAL
       end
 
-      def compile_key_transformer(klass, key, key_opts, key_load, key_load_opts)
+      def compile_key_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts)
+        if_key_test = key_load && key_test ? "if #{key_test}" : ''
+
         klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
@@ -95,8 +99,8 @@ module Moneta
             raise NotImplementedError, "each_key is not supported on this transformer" \
               unless supports? :each_key
 
-            return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
-            @adapter.each_key.lazy.map{ |key| #{key_load} }.each(&block)
+            return enum_for(:each_key) unless block_given?
+            @adapter.each_key.lazy.map{ |key| #{key_load} #{if_key_test} }.reject(&:nil?).each(&block)
 
             self
           end
@@ -216,7 +220,9 @@ module Moneta
         END_EVAL
       end
 
-      def compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, load, load_opts, dump, dump_opts)
+      def compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts, load, load_opts, dump, dump_opts)
+        if_key_test = key_load && key_test ? "if #{key_test}" : ''
+
         klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
           def key?(key, options = {})
             @adapter.key?(#{key}, #{without key_opts})
@@ -226,7 +232,7 @@ module Moneta
               unless supports? :each_key
 
             return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
-            @adapter.each_key.lazy.map{ |key| #{key_load} }.each(&block)
+            @adapter.each_key.lazy.map{ |key| #{key_load} #{if_key_test} }.reject(&:nil?).each(&block)
 
             self
           end
@@ -347,7 +353,9 @@ module Moneta
 
           options += code.scan(/options\[:(\w+)\]/).flatten
           value =
-            if t[0] == :serialize && var == 'key'
+            if t[0] == :serialize && var == 'key' && idx == 4
+              "(tmp = #{value}; false === tmp ? tmp : #{code % 'tmp'})"
+            elsif t[0] == :serialize && var == 'key'
               "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
             else
               code % value

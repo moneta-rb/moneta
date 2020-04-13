@@ -2,35 +2,35 @@ module Moneta
   class Transformer
     # Available key/value transformers
     TRANSFORMER = {
-      # Name:   [ Type,       Load,                           Dump,                              Library         ],
-      bencode:  [ :serialize, '::BEncode.load(%s)',           '::BEncode.dump(%s)',              'bencode'       ],
-      bert:     [ :serialize, '::BERT.decode(%s)',            '::BERT.encode(%s)',               'bert'          ],
-      bson:     [ :serialize, 'Helper::BSON.load(%s)',        'Helper::BSON.dump(%s)',           'bson'          ],
-      json:     [ :serialize, '::MultiJson.load(%s)',         '::MultiJson.dump(%s)',            'multi_json'    ],
-      marshal:  [ :serialize, '::Marshal.load(%s)',           '::Marshal.dump(%s)'                               ],
-      msgpack:  [ :serialize, '::MessagePack.unpack(%s)',     '::MessagePack.pack(%s)',          'msgpack'       ],
-      ox:       [ :serialize, '::Ox.parse_obj(%s)',           '::Ox.dump(%s)',                   'ox'            ],
-      php:      [ :serialize, '::PHP.unserialize(%s)',        '::PHP.serialize(%s)',           'php_serialize' ],
-      tnet:     [ :serialize, '::TNetstring.parse(%s).first', '::TNetstring.dump(%s)',           'tnetstring'    ],
-      yaml:     [ :serialize, '::YAML.load(%s)',              '::YAML.dump(%s)',                 'yaml'          ],
-      bzip2:    [ :compress,  'Helper.bunzip2(%s)',           'Helper.bzip2(%s)',                'rbzip2'        ],
-      lz4:      [ :compress,  '::LZ4.uncompress(%s)',         '::LZ4.compress(%s)',              'lz4-ruby'      ],
-      lzma:     [ :compress,  '::LZMA.decompress(%s)',        '::LZMA.compress(%s)',             'lzma'          ],
-      lzo:      [ :compress,  '::LZO.decompress(%s)',         '::LZO.compress(%s)',              'lzoruby'       ],
-      snappy:   [ :compress,  '::Snappy.inflate(%s)',         '::Snappy.deflate(%s)',            'snappy'        ],
-      quicklz:  [ :compress,  '::QuickLZ.decompress(%s)',     '::QuickLZ.compress(%s)',          'qlzruby'       ],
-      zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'          ],
-      base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                  ],
+      # Name:   [ Type,       Load,                           Dump,                              Library        Test      ],
+      bencode:  [ :serialize, '::BEncode.load(%s)',           '::BEncode.dump(%s)',              'bencode'       , 'true' ],
+      bert:     [ :serialize, '::BERT.decode(%s)',            '::BERT.encode(%s)',               'bert'          , 'true' ],
+      bson:     [ :serialize, 'Helper::BSON.load(%s)',        'Helper::BSON.dump(%s)',           'bson'          , 'true' ],
+      json:     [ :serialize, '::MultiJson.load(%s)',         '::MultiJson.dump(%s)',            'multi_json'    , 'true' ],
+      marshal:  [ :serialize, '::Marshal.load(%s)',           '::Marshal.dump(%s)',              nil             , 'true' ],
+      msgpack:  [ :serialize, '::MessagePack.unpack(%s)',     '::MessagePack.pack(%s)',          'msgpack'       , 'true' ],
+      ox:       [ :serialize, '::Ox.parse_obj(%s)',           '::Ox.dump(%s)',                   'ox'            , 'true' ],
+      php:      [ :serialize, '::PHP.unserialize(%s)',        '::PHP.serialize(%s)',             'php_serialize' , 'true' ],
+      tnet:     [ :serialize, '::TNetstring.parse(%s).first', '::TNetstring.dump(%s)',           'tnetstring'    , 'true' ],
+      yaml:     [ :serialize, '::YAML.load(%s)',              '::YAML.dump(%s)',                 'yaml'          , 'true' ],
+      bzip2:    [ :compress,  'Helper.bunzip2(%s)',           'Helper.bzip2(%s)',                'rbzip2'       ],
+      lz4:      [ :compress,  '::LZ4.uncompress(%s)',         '::LZ4.compress(%s)',              'lz4-ruby'     ],
+      lzma:     [ :compress,  '::LZMA.decompress(%s)',        '::LZMA.compress(%s)',             'lzma'         ],
+      lzo:      [ :compress,  '::LZO.decompress(%s)',         '::LZO.compress(%s)',              'lzoruby'      ],
+      snappy:   [ :compress,  '::Snappy.inflate(%s)',         '::Snappy.deflate(%s)',            'snappy'       ],
+      quicklz:  [ :compress,  '::QuickLZ.decompress(%s)',     '::QuickLZ.compress(%s)',          'qlzruby'      ],
+      zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'         ],
+      base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')",                                ],
       urlsafe_base64: [
         :encode,
         'Base64.urlsafe_decode64(%s)',
         'Base64.urlsafe_encode64(%s)',
         'base64'
       ],
-      escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                                ],
-      hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first"                            ],
-      qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')"                                   ],
-      uuencode: [ :encode,    "%s.unpack('u').first",         "[%s].pack('u')"                                   ],
+      escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)',                              ],
+      hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first",                          ],
+      qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')",                                 ],
+      uuencode: [ :encode,    "%s.unpack('u').first",         "[%s].pack('u')",                                 ],
       hmac:     [
         :hmac,
         'Helper.hmacverify(%s, options[:secret] || @secret)',
@@ -40,21 +40,23 @@ module Moneta
       prefix:   [
         :prefix,
         "%s.sub(@prefix, '')",
-        '(options[:prefix] || @prefix)+%s'
+        '(options[:prefix] || @prefix)+%s',
+        nil,
+        "%s.start_with?(@prefix)",
       ],
-      truncate: [ :truncate,  nil,                            'Helper.truncate(%s, @maxlen)',    'digest/md5'    ],
-      md5:      [ :digest,    nil,                            '::Digest::MD5.hexdigest(%s)',     'digest/md5'    ],
-      rmd160:   [ :digest,    nil,                            '::Digest::RMD160.hexdigest(%s)',  'digest/rmd160' ],
-      sha1:     [ :digest,    nil,                            '::Digest::SHA1.hexdigest(%s)',    'digest/sha1'   ],
-      sha256:   [ :digest,    nil,                            '::Digest::SHA256.hexdigest(%s)',  'digest/sha2'   ],
-      sha384:   [ :digest,    nil,                            '::Digest::SHA384.hexdigest(%s)',  'digest/sha2'   ],
-      sha512:   [ :digest,    nil,                            '::Digest::SHA512.hexdigest(%s)',  'digest/sha2'   ],
-      city32:   [ :digest,    nil,                            '::CityHash.hash32(%s).to_s(16)',  'cityhash'      ],
-      city64:   [ :digest,    nil,                            '::CityHash.hash64(%s).to_s(16)',  'cityhash'      ],
-      city128:  [ :digest,    nil,                            '::CityHash.hash128(%s).to_s(16)', 'cityhash'      ],
-      spread:   [ :spread,    nil,                            'Helper.spread(%s)'                                ],
-      to_s:     [ :string,    nil,                            '%s.to_s'                                          ],
-      inspect:  [ :string,    nil,                            '%s.inspect'                                       ]
+      truncate: [ :truncate,  nil,                            'Helper.truncate(%s, @maxlen)',    'digest/md5'   ],
+      md5:      [ :digest,    nil,                            '::Digest::MD5.hexdigest(%s)',     'digest/md5'   ],
+      rmd160:   [ :digest,    nil,                            '::Digest::RMD160.hexdigest(%s)',  'digest/rmd160'],
+      sha1:     [ :digest,    nil,                            '::Digest::SHA1.hexdigest(%s)',    'digest/sha1'  ],
+      sha256:   [ :digest,    nil,                            '::Digest::SHA256.hexdigest(%s)',  'digest/sha2'  ],
+      sha384:   [ :digest,    nil,                            '::Digest::SHA384.hexdigest(%s)',  'digest/sha2'  ],
+      sha512:   [ :digest,    nil,                            '::Digest::SHA512.hexdigest(%s)',  'digest/sha2'  ],
+      city32:   [ :digest,    nil,                            '::CityHash.hash32(%s).to_s(16)',  'cityhash'     ],
+      city64:   [ :digest,    nil,                            '::CityHash.hash64(%s).to_s(16)',  'cityhash'     ],
+      city128:  [ :digest,    nil,                            '::CityHash.hash128(%s).to_s(16)', 'cityhash'     ],
+      spread:   [ :spread,    nil,                            'Helper.spread(%s)'                               ],
+      to_s:     [ :string,    nil,                            '%s.to_s'                                         ],
+      inspect:  [ :string,    nil,                            '%s.inspect'                                      ]
     }.freeze
 
     # Allowed value transformers (Read it like a regular expression!)
@@ -65,5 +67,8 @@ module Moneta
 
     # Key transformers that can be "loaded" (e.g. reversed) and can be used by the key enumeration feature
     LOAD_KEY_TRANSFORMER = 'serialize? prefix? encode?'.freeze
+
+    # Key transformers that can be "tested for success" with a dumped key and can be used by the key enumeration feature
+    TEST_KEY_TRANSFORMER = 'serialize? prefix?'.freeze
   end
 end
