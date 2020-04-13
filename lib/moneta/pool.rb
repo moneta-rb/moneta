@@ -298,18 +298,6 @@ module Moneta
     # by the manager after the ttl
     def close; end
 
-    def each_key(&block)
-      wrap(:each_key) do
-        raise NotImplementedError, "each_key is not supported on this proxy" \
-          unless supports? :each_key
-
-        return enum_for(:each_key) { adapter ? adapter.each_key.size : check_out! { adapter.each_key.size } } unless block_given?
-
-        adapter.each_key(&block)
-        self
-      end
-    end
-
     # Tells the manager to close all stores.  It will not be possible to use
     # the store after this.
     def stop

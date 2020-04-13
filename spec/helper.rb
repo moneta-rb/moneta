@@ -418,7 +418,6 @@ RSpec.shared_context :setup_moneta_store do |builder|
   after do
     RSpec::Mocks.space.proxy_for(@store).reset
     if @store
-      @store.clear
       @store.close.should == nil
       @store = nil
     end
