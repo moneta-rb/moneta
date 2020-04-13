@@ -8,7 +8,7 @@ describe "standard_couch_with_expires", adapter: :Couch do
   include_context :faraday_adapter
 
   moneta_store :Couch do
-    { db: 'standard_couch_with_expires', adapter: faraday_adapter, expires: true }
+    { db: 'standard_couch_with_expires', adapter: faraday_adapter, expires: true, login: 'admin', password: 'password' }
   end
 
   moneta_loader do |value|

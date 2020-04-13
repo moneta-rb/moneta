@@ -4,7 +4,7 @@ describe 'adapter_couch', adapter: :Couch do
   include_context :faraday_adapter
 
   moneta_build do
-    Moneta::Adapters::Couch.new(db: 'adapter_couch', adapter: faraday_adapter)
+    Moneta::Adapters::Couch.new(db: 'adapter_couch', adapter: faraday_adapter, login: 'admin', password: 'password')
   end
 
   moneta_specs ADAPTER_SPECS.without_increment.simplevalues_only.without_path.with_each_key
