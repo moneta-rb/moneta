@@ -50,7 +50,7 @@ gem 'tdb', platforms: :ruby, group: :tdb
 gem 'leveldb-ruby', platforms: :ruby, group: :leveldb
 gem 'lmdb', platforms: :mri, group: :lmdb
 gem 'tokyocabinet', platforms: :ruby, group: :tokyocabinet
-gem 'kyotocabinet-ruby-reanimated', platforms: :ruby, group: :kyotocabinet
+gem 'kyotocabinet-ruby-reanimated', platforms: [:ruby_23, :ruby_24, :ruby_25, :ruby_26], group: :kyotocabinet
 gem 'memcached', platforms: :ruby, group: :memcached_native
 gem 'jruby-memcached', platforms: :jruby, group: :memcached_native
 gem 'activerecord-jdbch2-adapter', platforms: :jruby, group: :h2, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'

@@ -39,6 +39,8 @@ module Moneta
       # @option options [String] :scheme ('http') HTTP scheme to use
       # @option options [String] :value_field ('value') Document field to store value
       # @option options [String] :type_field ('type') Document field to store value type
+      # @option options [String] :login Login name to use for HTTP basic authentication
+      # @option options [String] :password Password to use for HTTP basic authentication
       # @option options [Symbol] :adapter Adapter to use with Faraday
       # @option options [Faraday::Connecton] :backend Use existing backend instance
       # @option options Other options passed to {Faraday::new} (unless
@@ -51,10 +53,14 @@ module Moneta
           port = options.delete(:port) || 5984
           db = options.delete(:db) || 'moneta'
           scheme = options.delete(:scheme) || 'http'
+          login = options.delete(:login)
+          password = options.delete(:password)
           block = if faraday_adapter = options.delete(:adapter)
                     proc { |faraday| faraday.adapter(faraday_adapter) }
                   end
-          ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block)
+          ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block).tap do |connection|
+            connection.basic_auth(login, password) if login && password
+          end
         end
         @rev_cache = Moneta.build do
           use :Lock

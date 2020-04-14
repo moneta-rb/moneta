@@ -1,12 +1,12 @@
 dist: xenial
 language: ruby
 rvm:
+  - 2.7
   - 2.6
   - 2.5
   - 2.4
   - 2.3
-  - 2.2
-  - jruby-9.2
+  - jruby-9.2.9.0
   - rbx-3
 services:
   - mysql
@@ -26,7 +26,6 @@ addons:
         key_url: https://packagecloud.io/basho/riak/gpgkey
     packages:
       - cassandra
-      - couchdb
       - libkyotocabinet-dev
       - libleveldb-dev
       - liblzo2-dev
@@ -36,6 +35,7 @@ addons:
       - riak
   postgresql: '9.6'
 before_install:
+  - gem install bundler
   - script/start-services
 cache:
   bundler: true
@@ -47,6 +47,10 @@ before_script:
   - psql -c 'create database moneta1;' -U postgres
   - psql -c 'create extension hstore;' -U postgres moneta1
   - psql -c 'create database moneta2;' -U postgres
+  # FIXME: remove this once moneta no longer generates hundreds of warnings
+  # in Ruby 2.7
+  - if echo $RUBY_VERSION | grep -q 'ruby-2.7'; then export RUBYOPT='-W0'; fi
+  - export
 env:
   matrix:
     - SCRIPT='script/parallel-tests ~unstable --
@@ -120,6 +124,8 @@ matrix:
     - rvm: rbx-3
     - env: SCRIPT='script/parallel-tests unstable'
   exclude:
+    - rvm: 2.6
+      env: SCRIPT='rubocop lib'
     - rvm: 2.5
       env: SCRIPT='rubocop lib'
     - rvm: 2.4
@@ -128,7 +134,7 @@ matrix:
       env: SCRIPT='rubocop lib'
     - rvm: 2.2
       env: SCRIPT='rubocop lib'
-    - rvm: jruby-9.2
+    - rvm: jruby-9.2.9.0
       env: SCRIPT='rubocop lib'
     - rvm: rbx-3
       env: SCRIPT='rubocop lib'
