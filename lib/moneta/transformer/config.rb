@@ -20,17 +20,17 @@ module Moneta
       snappy:   [ :compress,  '::Snappy.inflate(%s)',         '::Snappy.deflate(%s)',            'snappy'       ],
       quicklz:  [ :compress,  '::QuickLZ.decompress(%s)',     '::QuickLZ.compress(%s)',          'qlzruby'      ],
       zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'         ],
-      base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')",                                ],
+      base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                 ],
       urlsafe_base64: [
         :encode,
         'Base64.urlsafe_decode64(%s)',
         'Base64.urlsafe_encode64(%s)',
-        'base64',
+        'base64'
       ],
-      escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)',                              ],
-      hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first",                          ],
-      qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')",                                 ],
-      uuencode: [ :encode,    "%s.unpack('u').first",         "[%s].pack('u')",                                 ],
+      escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                               ],
+      hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first"                           ],
+      qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')"                                  ],
+      uuencode: [ :encode,    "%s.unpack('u').first",         "[%s].pack('u')"                                  ],
       hmac:     [
         :hmac,
         'Helper.hmacverify(%s, options[:secret] || @secret)',
@@ -42,7 +42,7 @@ module Moneta
         "%s.sub(@prefix, '')",
         '(options[:prefix] || @prefix)+%s',
         nil,
-        "%s.start_with?(@prefix)",
+        "%s.start_with?(@prefix)"
       ],
       truncate: [ :truncate,  nil,                            'Helper.truncate(%s, @maxlen)',    'digest/md5'   ],
       md5:      [ :digest,    nil,                            '::Digest::MD5.hexdigest(%s)',     'digest/md5'   ],

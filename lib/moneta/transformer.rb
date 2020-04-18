@@ -375,7 +375,7 @@ module Moneta
       def compile_prefix(name:, transformer:, value:)
         return unless [:encode, :serialize].include?(transformer[0])
 
-        load_val, _ = compile_transformer([name], value, 1)
+        load_val, = compile_transformer([name], value, 1)
         "(#{load_val} rescue '')"
       end
     end
