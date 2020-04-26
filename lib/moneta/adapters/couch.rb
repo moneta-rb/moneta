@@ -48,20 +48,19 @@ module Moneta
       def initialize(options = {})
         @value_field = options.delete(:value_field) || 'value'
         @type_field = options.delete(:type_field) || 'type'
+        login = options.delete(:login)
+        password = options.delete(:password)
         @backend = options.delete(:backend) || begin
           host = options.delete(:host) || '127.0.0.1'
           port = options.delete(:port) || 5984
           db = options.delete(:db) || 'moneta'
           scheme = options.delete(:scheme) || 'http'
-          login = options.delete(:login)
-          password = options.delete(:password)
           block = if faraday_adapter = options.delete(:adapter)
                     proc { |faraday| faraday.adapter(faraday_adapter) }
                   end
-          ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block).tap do |connection|
-            connection.basic_auth(login, password) if login && password
-          end
+          ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block)
         end
+        @backend.basic_auth(login, password) if login && password
         @rev_cache = Moneta.build do
           use :Lock
           adapter :LRUHash

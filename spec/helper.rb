@@ -270,6 +270,9 @@ module MonetaHelpers
       let(:postgres_database1) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1' }
       let(:postgres_database2) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta2' }
 
+      let(:couch_login) { ENV['COUCH_LOGIN'] || 'admin' }
+      let(:couch_password) { ENV['COUCH_PASSWORD'] || 'password' }
+
       before do
         store = new_store
         store.clear
