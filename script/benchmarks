@@ -36,6 +36,9 @@ class MonetaBenchmarks
   postgres_database1 = ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1'
   postgres_database2 = ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta2'
 
+  couch_login = ENV['COUCH_LOGIN'] || 'admin'
+  couch_password = ENV['COUCH_PASSWORD'] || 'password'
+
   STORES = [
     # SDBM accepts only very short key/value pairs (1k for both)
     {name: "SDBM", sizes: [:small], options: {file: "#{DIR}/sdbm"}},
@@ -112,7 +115,9 @@ class MonetaBenchmarks
         backend: if defined?(JRUBY_VERSION)
                    require 'faraday/adapter/manticore'
                    ::Faraday.new("http://127.0.0.1:5984/moneta") { |f| f.adapter :manticore }
-                 end
+                 end,
+        login: couch_login,
+        password: couch_password
       },
       clear_options: { compact: true, await_compact: true },
     },
