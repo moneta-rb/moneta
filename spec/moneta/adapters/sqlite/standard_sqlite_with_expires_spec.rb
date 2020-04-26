@@ -11,5 +11,5 @@ describe 'standard_sqlite_with_expires', unsupported: defined?(JRUBY_VERSION), a
     }
   end
 
-  moneta_specs STANDARD_SPECS.with_expires.without_concurrent
+  moneta_specs STANDARD_SPECS.with_expires.without_concurrent.with_each_key
 end

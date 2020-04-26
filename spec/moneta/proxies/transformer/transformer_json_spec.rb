@@ -10,7 +10,7 @@ describe 'transformer_json', proxy: :Transformer do
     ::MultiJson.load(value)
   end
 
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil

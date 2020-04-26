@@ -7,5 +7,5 @@ describe 'standard_tokyocabinet_with_expires', unsupported: defined?(JRUBY_VERSI
     {file: File.join(tempdir, "simple_tokyocabinet_with_expires"), expires: true}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires.with_each_key
 end

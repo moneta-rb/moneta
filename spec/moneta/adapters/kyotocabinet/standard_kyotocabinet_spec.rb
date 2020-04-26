@@ -3,5 +3,5 @@ describe 'standard_kyotocabinet', unsupported: defined?(JRUBY_VERSION) || ::Gem:
     {file: File.join(tempdir, "simple_kyotocabinet.kch")}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_each_key
 end

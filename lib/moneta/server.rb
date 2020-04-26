@@ -4,6 +4,9 @@ module Moneta
   # Moneta server to be used together with Moneta::Adapters::Client
   # @api public
   class Server
+    TIMEOUT = 1
+    MAXSIZE = 0x100000
+
     # @api private
     class Connection
       def initialize(io, store)
@@ -103,7 +106,7 @@ module Moneta
       Socket.new(Socket::AF_INET, Socket::SOCK_STREAM).tap do |socket|
         begin
           socket.sendmsg_nonblock('probe')
-        rescue Errno::EPIPE
+        rescue Errno::EPIPE, Errno::ENOTCONN
           def sendmsg(msg)
             @io.sendmsg_nonblock(msg)
           end
@@ -197,9 +200,6 @@ module Moneta
     end
 
     private
-
-    TIMEOUT = 1
-    MAXSIZE = 0x100000
 
     def mainloop
       if ready = IO.select(@reads, @writes, @ios, TIMEOUT)

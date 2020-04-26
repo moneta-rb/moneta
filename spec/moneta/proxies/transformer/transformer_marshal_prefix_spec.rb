@@ -6,7 +6,7 @@ describe 'transformer_marshal_prefix', proxy: :Transformer do
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_persist
+  moneta_specs STANDARD_SPECS.without_persist.with_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil

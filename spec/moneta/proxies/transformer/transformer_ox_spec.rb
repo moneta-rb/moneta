@@ -10,7 +10,7 @@ describe 'transformer_ox', unsupported: defined?(JRUBY_VERSION), proxy: :Transfo
     ::Ox.parse_obj(value)
   end
 
-  moneta_specs TRANSFORMER_SPECS.without_keys_or_values(:binary, :float)
+  moneta_specs TRANSFORMER_SPECS.without_keys_or_values(:binary, :float).with_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil

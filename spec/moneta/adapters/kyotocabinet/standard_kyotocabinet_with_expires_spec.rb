@@ -10,5 +10,5 @@ describe 'standard_kyotocabinet_with_expires', unsupported: defined?(JRUBY_VERSI
     }
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires.with_each_key
 end

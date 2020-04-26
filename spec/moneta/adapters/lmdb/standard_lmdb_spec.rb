@@ -3,5 +3,5 @@ describe 'standard_lmdb', unsupported: defined?(JRUBY_VERSION), adapter: :LMDB d
     {dir: File.join(tempdir, "simple_lmdb")}
   end
 
-  moneta_specs STANDARD_SPECS.without_concurrent
+  moneta_specs STANDARD_SPECS.without_concurrent.with_each_key
 end

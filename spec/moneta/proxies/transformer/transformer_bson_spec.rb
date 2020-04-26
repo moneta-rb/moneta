@@ -14,8 +14,8 @@ describe 'transformer_bson', proxy: :Transformer do
     end
   end
 
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
-  
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
+
   it 'compile transformer class' do
     store.should_not be_nil
     Moneta::Transformer::BsonKeyBsonValue.should_not be_nil

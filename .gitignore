@@ -11,3 +11,5 @@ Gemfile.lock
 logs
 secure
 .bundle
+.ruby-version
+.byebug_history

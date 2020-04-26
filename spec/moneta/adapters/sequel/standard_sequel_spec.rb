@@ -10,5 +10,5 @@ describe 'standard_sequel', adapter: :Sequel do
     }
   end
 
-  moneta_specs STANDARD_SPECS
+  moneta_specs STANDARD_SPECS.with_each_key
 end

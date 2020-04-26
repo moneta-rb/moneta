@@ -5,5 +5,5 @@ describe 'standard_memory_with_json_serializer', adapter: :Memory do
     ::MultiJson.load(value)
   end
 
-  moneta_specs STANDARD_SPECS.without_marshallable.simplekeys_only.simplevalues_only.without_persist
+  moneta_specs STANDARD_SPECS.without_marshallable.simplekeys_only.simplevalues_only.without_persist.with_each_key
 end

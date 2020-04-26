@@ -3,8 +3,10 @@ describe 'adapter_mongo_official', adapter: :Mongo do
   let(:min_ttl) { t_res }
 
   moneta_build do
-    Moneta::Adapters::MongoOfficial.new(db: "adapter_mongo",
-                                        collection: 'official')
+    Moneta::Adapters::MongoOfficial.new(mongo_config(
+      db: File.basename(__FILE__, '.rb'),
+      collection: 'official'
+    ))
   end
 
   moneta_specs ADAPTER_SPECS.with_each_key.with_native_expires.simplevalues_only

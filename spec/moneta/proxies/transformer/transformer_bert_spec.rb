@@ -9,9 +9,9 @@ describe 'transformer_bert', unsupported: defined?(JRUBY_VERSION), proxy: :Trans
   moneta_loader do |value|
     ::BERT.decode(value)
   end
-  
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
-  
+
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
+
   it 'compile transformer class' do
     store.should_not be_nil
     Moneta::Transformer::BertKeyBertValue.should_not be_nil

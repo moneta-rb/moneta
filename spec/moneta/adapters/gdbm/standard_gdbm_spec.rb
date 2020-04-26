@@ -3,5 +3,5 @@ describe 'standard_gdbm', adapter: :GDBM do
     {file: File.join(tempdir, "simple_gdbm")}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_each_key
 end

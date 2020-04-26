@@ -7,5 +7,5 @@ describe 'standard_daybreak_with_expires', adapter: :Daybreak do
     {file: File.join(tempdir, "simple_daybreak_with_expires"), expires: true}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires.with_each_key
 end

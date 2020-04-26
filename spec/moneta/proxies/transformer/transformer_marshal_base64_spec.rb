@@ -11,7 +11,7 @@ describe 'transformer_marshal_base64', proxy: :Transformer do
     ::Marshal.load(value.unpack('m').first)
   end
 
-  moneta_specs STANDARD_SPECS.without_persist
+  moneta_specs STANDARD_SPECS.without_persist.with_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil

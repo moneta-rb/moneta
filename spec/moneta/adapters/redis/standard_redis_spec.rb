@@ -3,5 +3,5 @@ describe 'standard_redis', adapter: :Redis do
   let(:min_ttl) { t_res }
 
   moneta_store :Redis, db: 4
-  moneta_specs STANDARD_SPECS.with_native_expires
+  moneta_specs STANDARD_SPECS.with_native_expires.with_each_key
 end

@@ -10,7 +10,7 @@ describe 'transformer_marshal_hmac', proxy: :Transformer do
     ::Marshal.load(::Moneta::Transformer::Helper.hmacverify(value, 'secret'))
   end
 
-  moneta_specs STANDARD_SPECS.without_persist
+  moneta_specs STANDARD_SPECS.without_persist.with_each_key
 
   it 'compile transformer class' do
     store.should_not be_nil
