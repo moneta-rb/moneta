@@ -214,7 +214,7 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 
 <tr><th colspan="2">Network clients</th><th colspan="12"></th></tr>
 
-<tr><td>Client</td><td>-</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>Moneta client adapter</td></tr>
+<tr><td>Client</td><td>-</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>Moneta client adapter</td></tr>
 
 <tr><td>RestClient</td><td>-</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#55F">?<sup>13</sup></td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>Moneta REST client adapter</td></tr>
 
@@ -913,12 +913,15 @@ Person.adapter :memory, Moneta.new(:Redis)
 
 ## Testing and Benchmarks
 
-Testing is done using [Travis-CI](http://travis-ci.org/moneta-rb/moneta). Currently we support MRI Ruby >= 2.2.2 and JRuby 9.2.x.
+Testing is done using [Travis-CI](http://travis-ci.org/moneta-rb/moneta).
+Currently we support MRI Ruby >= 2.3.0 and the JRuby >= 9.2.9.0.
 
-Benchmarks for each store are done on [Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build. Take a look there
-to compare the speed of the different key value stores for different key/value sizes and size distributions.
-Feel free to add your own configurations! The impact of Moneta should be minimal since it is only a thin layer
-on top of the different stores.
+Benchmarks for each store are done on
+[Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build. Take a look
+there to compare the speed of the different key value stores for different
+key/value sizes and size distributions.  Feel free to add your own
+configurations! The impact of Moneta should be minimal since it is only a thin
+layer on top of the different stores.
 
 
 ------

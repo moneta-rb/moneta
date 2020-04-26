@@ -2,6 +2,6 @@
 git log --format='%aN <%aE>' |\
 sed -e 's/hiddenbek/Scott Wadden/g' |\
 sed -e 's/Asmod4n/Hendrik Beskow/' |\
-grep -v 'hannes.georg@xing.com\|spotapov\|yehuda-katzs-mac\|wycats ' |\
+grep -v 'asppsa@gmail.com\|hannes.georg@xing.com\|spotapov\|yehuda-katzs-mac\|wycats ' |\
 sort -u | sort > CONTRIBUTORS
 

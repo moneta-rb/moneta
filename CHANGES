@@ -1,3 +1,12 @@
+1.3.0
+
+* Transformer - add :each_key support (#170)
+* Server - add :each_key support, use non-blocking IO (#165)
+* Builder - dup options before passing to adapter/proxy (#174)
+* Adapter::Couch - add HTTP basic auth support
+* Support MRI 2.7.0 (#172)
+* Minimum required MRI version is now 2.3.0 (#172)
+
 1.2.1
 
 * Transformer - fix :escape transformer deserialize implementation (#168)
