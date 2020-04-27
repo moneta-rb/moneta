@@ -8,9 +8,8 @@ shared_examples :concurrent_increment do
         increments = (0...100).map { [] }
         100.times do
           100.times do |j|
-            increments[j] << s.increment(j.to_s, 1, expires: false).tap do
-              Thread.pass if rand(1000) >= 995
-            end
+            increments[j] << s.increment(j.to_s, 1, expires: false)
+            Thread.pass if rand(1000) >= 995
           end
         end
         increments
