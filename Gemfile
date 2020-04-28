@@ -103,3 +103,8 @@ group :doc, optional: true do
   gem 'kramdown', '~> 1.17.0'
   gem 'yard', '~> 0.9.20'
 end
+
+# Used for running a dev console
+group :console, optional: true do
+  gem 'irb'
+end
