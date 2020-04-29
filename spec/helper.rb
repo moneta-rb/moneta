@@ -286,23 +286,9 @@ module MonetaHelpers
       end
     end
 
-    # Used to test time-dependent specs (e.g. expiry at different positions
-    # within a second). Once close to the start of the second, and once close
-    # to the end.
-    def usecs
-      [1e4, 99e4].map(&:to_i)
-    end
-
-    def at_each_usec(&block)
-      usecs.each do |usec|
-        context "at #{usec} microseconds", isolate: true do
-          include_examples :at_usec, usec, &block
-        end
-      end
-    end
-
     def use_timecop
-      before{ @timecop = true }
+      before { @timecop = true }
+      after { Timecop.return }
     end
   end
 
@@ -350,6 +336,20 @@ module MonetaHelpers
       else
         sleep seconds
       end
+    end
+
+    def time_till_next(tick)
+      now = Time.now.to_f
+      tick - (now % tick)
+    end
+
+    # advance to the moment just after a tick. 1e-2 is needed in some
+    # environments (JRuby) to be able to pass the "not in earlier half" test.
+    def advance_next_tick
+      tick = t_res
+      offset = time_till_next(tick) + 1e-2
+      advance offset
+      raise "not in earlier half of tick" unless Time.now.to_f % tick < tick / 2.0
     end
   end
 end
@@ -430,22 +430,6 @@ RSpec.shared_context :setup_moneta_store do |builder|
     if @moneta_tempdir
       FileUtils.remove_dir(@moneta_tempdir)
     end
-  end
-end
-
-RSpec.shared_examples :at_usec do |usec|
-  before do
-    now = Time.now
-    # 1000us is a rough guess at how many microseconds this code will take to run
-    if now.usec + 1000 > usec
-      advance(1 - 1e-6 * (now.usec - usec))
-    else
-      advance(1e-6 * (usec - now.usec))
-    end
-  end
-
-  after do
-    Timecop.return if @timecop
   end
 end
 
