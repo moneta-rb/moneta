@@ -1,14 +1,8 @@
-describe 'standard_sequel', adapter: :Sequel do
-  moneta_store :Sequel do
-    {
-      db: if defined?(JRUBY_VERSION)
-            "jdbc:mysql://localhost/#{mysql_database1}?user=#{mysql_username}"
-          else
-            "mysql2://#{mysql_username}:@localhost/#{mysql_database1}"
-          end,
-      table: "simple_sequel"
-    }
-  end
+require_relative './helper.rb'
 
+describe 'standard_sequel', adapter: :Sequel do
+  include_context :sequel
+
+  moneta_store(:Sequel) { postgres_options.merge(table: "standard_sequel") }
   moneta_specs STANDARD_SPECS.with_each_key
 end
