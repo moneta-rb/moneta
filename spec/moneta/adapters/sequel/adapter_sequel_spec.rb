@@ -1,17 +1,13 @@
 require_relative './helper.rb'
 
 describe ':Sequel adapter', adapter: :Sequel do
+  include_context :sequel
+
   specs = ADAPTER_SPECS.with_each_key.with_values(:nil)
 
   context 'with MySQL backend' do
     moneta_build do
-      Moneta::Adapters::Sequel.new(opts.merge(
-        db: if defined?(JRUBY_VERSION)
-              "jdbc:mysql://localhost/#{mysql_database1}?user=#{mysql_username}"
-            else
-              "mysql2://#{mysql_username}:@localhost/#{mysql_database1}"
-            end
-        ))
+      Moneta::Adapters::Sequel.new(opts.merge(db: mysql_uri))
     end
 
     include_examples :adapter_sequel, specs
@@ -19,8 +15,7 @@ describe ':Sequel adapter', adapter: :Sequel do
 
   context "with SQLite backend" do
     moneta_build do
-      Moneta::Adapters::Sequel.new(opts.merge(
-        db: "#{defined?(JRUBY_VERSION) && 'jdbc:'}sqlite://" + File.join(tempdir, 'adapter_sequel.db')))
+      Moneta::Adapters::Sequel.new(opts.merge(db: sqlite_uri('adapter_sequel.db')))
     end
 
     include_examples :adapter_sequel, specs.without_concurrent
@@ -28,16 +23,7 @@ describe ':Sequel adapter', adapter: :Sequel do
 
   context "with Postgres backend" do
     moneta_build do
-      Moneta::Adapters::Sequel.new(opts.merge(
-        if defined?(JRUBY_VERSION)
-          {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
-        else
-          {
-            db: "postgres://localhost/#{postgres_database1}",
-            user: postgres_username
-          }
-        end
-      ))
+      Moneta::Adapters::Sequel.new(opts.merge(postgres_options))
     end
 
     include_examples :adapter_sequel, specs
@@ -45,8 +31,7 @@ describe ':Sequel adapter', adapter: :Sequel do
 
   context "with H2 backend", unsupported: !defined?(JRUBY_VERSION) do
     moneta_build do
-      Moneta::Adapters::Sequel.new(opts.merge(
-        db: "jdbc:h2:" + tempdir))
+      Moneta::Adapters::Sequel.new(opts.merge(db: h2_uri))
     end
 
     include_examples :adapter_sequel, specs, optimize: false
@@ -54,19 +39,7 @@ describe ':Sequel adapter', adapter: :Sequel do
 
   context "with Postgres HStore backend" do
     moneta_build do
-      Moneta::Adapters::Sequel.new(
-        if defined?(JRUBY_VERSION)
-          {db: "jdbc:postgresql://localhost/#{postgres_database1}?user=#{postgres_username}"}
-        else
-          {
-            db: "postgres://localhost/#{postgres_database1}",
-            user: postgres_username
-          }
-        end.merge(
-          table: 'hstore_table1',
-          hstore: 'row'
-        )
-      )
+      Moneta::Adapters::Sequel.new(postgres_hstore_options)
     end
 
     # Concurrency is too slow, and binary values cannot be stored in an hstore
