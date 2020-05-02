@@ -1,3 +1,4 @@
+require 'faraday'
 require 'rack'
 require 'rack/moneta_rest'
 
@@ -31,6 +32,15 @@ def start_restserver(port)
   )
 
   Thread.start { server.start }
+
+  begin
+    Faraday.get("http://127.0.0.1:#{port}")
+  rescue Faraday::ConnectionFailed
+    tries ||= 5
+    tries -= 1
+    tries > 0 ? retry : raise
+  end
+
   server
 end
 
