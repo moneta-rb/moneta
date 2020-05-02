@@ -22,6 +22,11 @@ module Moneta
           end
       end
 
+      def close(options = {})
+        @backend.flush if options[:sync]
+        @backend.close
+      end
+
       # (see Proxy#load)
       def load(key, options = {})
         @backend.load if options[:sync]

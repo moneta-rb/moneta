@@ -275,7 +275,7 @@ module MonetaHelpers
 
       before do
         store = new_store
-        store.clear
+        store.clear(sync: true)
         store.close
       end
 
