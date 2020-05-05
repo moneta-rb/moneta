@@ -38,7 +38,12 @@ def start_restserver(port)
   rescue Faraday::ConnectionFailed
     tries ||= 5
     tries -= 1
-    tries > 0 ? retry : raise
+    if tries > 0
+      sleep 0.1
+      retry
+    else
+      raise
+    end
   end
 
   server
