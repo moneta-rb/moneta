@@ -38,7 +38,6 @@ gem 'daybreak', group: :daybreak
 gem 'activerecord', '~> 5.2', group: :activerecord
 gem 'redis', '~> 4.0.0', group: :redis
 gem 'mongo', '>= 2', group: :mongo_official
-gem 'moped', '>= 2', group: :mongo_moped
 gem 'sequel', group: :sequel
 gem 'dalli', group: :memcached_dalli
 gem 'riak-client', group: :riak
