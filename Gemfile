@@ -14,7 +14,7 @@ gem 'bert', platforms: :ruby, group: :bert
 gem 'php-serialize', group: :php
 
 group :bson do
-  gem 'bson', '>= 2.0.0'
+  gem 'bson', '>= 4.0.0'
 end
 
 group :msgpack do
