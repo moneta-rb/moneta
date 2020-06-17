@@ -60,8 +60,6 @@ module Moneta
     autoload :MemcachedNative, 'moneta/adapters/memcached/native'
     autoload :Memory,          'moneta/adapters/memory'
     autoload :Mongo,           'moneta/adapters/mongo'
-    autoload :MongoMoped,      'moneta/adapters/mongo/moped'
-    autoload :MongoOfficial,   'moneta/adapters/mongo/official'
     autoload :Null,            'moneta/adapters/null'
     autoload :PStore,          'moneta/adapters/pstore'
     autoload :Redis,           'moneta/adapters/redis'

@@ -164,8 +164,7 @@ class MonetaBenchmarks
       {name: "MemcachedNative"}
     end,
     {name: "Memory"},
-    {name: "MongoMoped"},
-    {name: "MongoOfficial"},
+    {name: "Mongo"},
     {name: "PStore", options: { file: "#{DIR}/pstore" }},
     {name: "Redis"},
     {

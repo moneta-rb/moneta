@@ -5,7 +5,7 @@ describe 'adapter_mongo_with_default_expires', isolate: true, adapter: :Mongo do
   moneta_build do
     Moneta::Adapters::Mongo.new(mongo_config(
     	db: File.basename(__FILE__, '.rb'),
-      collection: 'with_default_expires',
+      collection: 'adapter_mongo_with_default_expires',
       expires: min_ttl
     ))
   end
