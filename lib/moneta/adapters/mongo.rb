@@ -64,13 +64,18 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        key = to_binary(key)
-        doc = @collection.find(_id: key).limit(1).first
-        if doc && (!doc[@expires_field] || doc[@expires_field] >= Time.now)
-          expires = expires_at(options, nil)
-          # @expires_field must be a Time object (BSON date datatype)
-          @collection.update_one({ _id: key },
-                                 '$set' => { @expires_field => expires }) unless expires == nil
+        view = @collection.find(:$and => [
+                                  { _id: to_binary(key) },
+                                  not_expired
+                                ])
+
+        doc = view.limit(1).first
+
+        if doc
+          update_expiry(options, nil) do |expires|
+            view.update_one(:$set => { @expires_field => expires })
+          end
+
           doc_to_value(doc)
         end
       end
@@ -102,8 +107,8 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @collection.find_one_and_update({ _id: to_binary(key) },
-                                        { '$inc' => { @value_field => amount } },
+        @collection.find_one_and_update({ :$and => [{ _id: to_binary(key) }, not_expired] },
+                                        { :$inc => { @value_field => amount } },
                                         return_document: :after,
                                         upsert: true)[@value_field]
       end
@@ -132,13 +137,14 @@ module Moneta
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        query = @collection.find(_id: { :$in => keys.map(&method(:to_binary)) })
-        pairs = query
-          .filter { |doc| !doc[@expires_field] || doc[@expires_field] >= Time.now }
-          .map { |doc| [from_binary(doc[:_id]), doc_to_value(doc)] }
+        view = @collection.find(:$and => [
+                                  { _id: { :$in => keys.map(&method(:to_binary)) } },
+                                  not_expired
+                                ])
+        pairs = view.map { |doc| [from_binary(doc[:_id]), doc_to_value(doc)] }
 
-        if (expires = expires_at(options, nil)) != nil
-          query.update_many(:$set => { @expires_field => expires || nil })
+        update_expiry(options, nil) do |expires|
+          view.update_many(:$set => { @expires_field => expires })
         end
 
         pairs
@@ -232,13 +238,22 @@ module Moneta
         ::BSON::Binary.new(str)
       end
 
-      if defined?(::BSON::VERSION) and ::BSON::VERSION[0].to_i >= 2
-        def from_binary(binary)
-          binary.is_a?(::BSON::Binary) ? binary.data : binary.to_s
-        end
-      else
-        def from_binary(binary)
-          binary.to_s
+      def from_binary(binary)
+        binary.is_a?(::BSON::Binary) ? binary.data : binary.to_s
+      end
+
+      def not_expired
+        {
+          :$or => [
+            { @expires_field => nil },
+            { @expires_field => { :$gte => Time.now } }
+          ]
+        }
+      end
+
+      def update_expiry(options, default)
+        if (expires = expires_at(options, default)) != nil
+          yield(expires || nil)
         end
       end
     end
