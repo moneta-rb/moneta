@@ -9,17 +9,7 @@ notes:
 backends:
   - adapter: Mongo
     platforms: [ MRI, JRuby ]
-    gems: mongo or moped
-    features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
-    description: "[MongoDB](http://www.mongodb.org/) database"
-  - adapter: MongoOfficial
-    platforms: [ MRI, JRuby ]
     gems: mongo
-    features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
-    description: "[MongoDB](http://www.mongodb.org/) database"
-  - adapter: MongoMoped
-    platforms: [ MRI, JRuby ]
-    gems: moped
     features: [ threadsafe, multiprocess, increment, create, expires, each_key, bulk_read, bulk_write ]
     description: "[MongoDB](http://www.mongodb.org/) database"
   - adapter: Redis
