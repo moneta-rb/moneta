@@ -120,7 +120,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
     * [Simple Samba database TDB](http://tdb.samba.org/) (`:TDB`)
 * Document databases:
     * [CouchDB](http://couchdb.apache.org/) (`:Couch`)
-    * [MongoDB](http://www.mongodb.org/) (`:Mongo`, `:MongoOffical` or `:MongoMoped`)
+    * [MongoDB](http://www.mongodb.org/) (`:Mongo`)
 * Moneta network protocols:
     * Moneta key/value client (`:Client` works with `Moneta::Server`)
     * Moneta HTTP/REST client (`:RestClient` works with `Rack::MonetaRest`)
@@ -142,11 +142,7 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 
 <tr><th colspan="2">Persistent stores</th><th colspan="12"></th></tr>
 
-<tr><td>Mongo</td><td>mongo or moped</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
-
-<tr><td>MongoOfficial</td><td>mongo</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
-
-<tr><td>MongoMoped</td><td>moped</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
+<tr><td>Mongo</td><td>mongo</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://www.mongodb.org/">MongoDB</a> database</td></tr>
 
 <tr><td>Redis</td><td>redis</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://redis.io/">Redis</a> database</td></tr>
 
