@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 require File.dirname(__FILE__) + '/lib/moneta/version'
 require 'date'
 
@@ -19,18 +18,18 @@ Gem::Specification.new do |s|
   s.summary          = %{A unified interface to key/value stores, including Redis, Memcached, TokyoCabinet, ActiveRecord and many more}
 
   s.metadata = {
-    'bug_tracker_uri'   => 'https://github.com/moneta-rb/moneta/issues',
-    'changelog_uri'     => "https://github.com/moneta-rb/moneta/blob/v#{s.version}/CHANGES",
+    'bug_tracker_uri' => 'https://github.com/moneta-rb/moneta/issues',
+    'changelog_uri' => "https://github.com/moneta-rb/moneta/blob/v#{s.version}/CHANGES",
     'documentation_uri' => "https://www.rubydoc.info/gems/moneta/#{s.version}",
-    'source_code_uri'   => "https://github.com/moneta-rb/moneta/tree/v#{s.version}",
+    'source_code_uri' => "https://github.com/moneta-rb/moneta/tree/v#{s.version}",
   }
 
   s.required_ruby_version = '>= 2.3.0'
 
+  s.add_development_dependency 'parallel_tests', '~> 2.29.2'
+  s.add_development_dependency 'rantly', '~> 1.2.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-retry', '~> 0.6.1'
-  s.add_development_dependency 'rantly', '~> 1.2.0'
-  s.add_development_dependency 'parallel_tests', '~> 2.29.2'
+  s.add_development_dependency 'rubocop', '~> 0.81.0'
   s.add_development_dependency 'timecop', '~> 0.9.1'
-  s.add_development_dependency 'rubocop', '~> 0.67.2'
 end

@@ -6,11 +6,7 @@ AllCops:
     - script/**/*
     - vendor/**/*
 
-Layout/AlignArray:
-  Exclude:
-    - lib/moneta/transformer/config.rb
-
-Layout/AlignHash:
+Layout/ArrayAlignment:
   Exclude:
     - lib/moneta/transformer/config.rb
 
@@ -25,6 +21,13 @@ Layout/ExtraSpacing:
     - lib/moneta.rb
     - lib/moneta/transformer/config.rb
 
+Layout/HashAlignment:
+  Exclude:
+    - lib/moneta/transformer/config.rb
+
+Layout/LineLength:
+  Max: 160
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
@@ -38,11 +41,17 @@ Layout/SpaceInsideArrayLiteralBrackets:
 Lint/AssignmentInCondition:
   Enabled: false
 
+Lint/RaiseException:
+  Enabled: true
+
 Lint/ShadowedException:
   Enabled: false
 
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: true
 
 Lint/UnusedMethodArgument:
   Enabled: false
@@ -66,9 +75,6 @@ Metrics/CyclomaticComplexity:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
-
-Metrics/LineLength:
-  Max: 160
 
 Metrics/MethodLength:
   Enabled: false
@@ -119,6 +125,15 @@ Style/FormatString:
 
 Style/GuardClause:
   Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
 Style/IfUnlessModifier:
   Enabled: false
