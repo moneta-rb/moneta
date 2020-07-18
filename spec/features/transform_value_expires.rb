@@ -22,20 +22,4 @@ shared_examples :transform_value_expires do
     store.store('key', 'unmarshalled value', raw: true)
     expect(store.load('key', raw: true)).to eq 'unmarshalled value'
   end
-
-  it 'might raise exception on invalid value' do
-    store.store('key', 'unmarshalled value', raw: true)
-
-    begin
-      expect(store['key']).to eq load_value('unmarshalled value')
-      expect(store.delete('key')).to eq load_value('unmarshalled value')
-    rescue Exception => ex
-      expect do
-        store['key']
-      end.to raise_error
-      expect do
-        store.delete('key')
-      end.to raise_error
-    end
-  end
 end
