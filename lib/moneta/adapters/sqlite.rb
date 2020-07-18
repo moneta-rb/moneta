@@ -30,14 +30,14 @@ module Moneta
           @backend.journal_mode = journal_mode.to_s
         end
         @stmts =
-          [@exists  = @backend.prepare("select exists(select 1 from #{@table} where k = ?)"),
-           @select  = @backend.prepare("select v from #{@table} where k = ?"),
+          [@exists = @backend.prepare("select exists(select 1 from #{@table} where k = ?)"),
+           @select = @backend.prepare("select v from #{@table} where k = ?"),
            @replace = @backend.prepare("replace into #{@table} values (?, ?)"),
-           @delete  = @backend.prepare("delete from #{@table} where k = ?"),
-           @clear   = @backend.prepare("delete from #{@table}"),
-           @create  = @backend.prepare("insert into #{@table} values (?, ?)"),
-           @keys    = @backend.prepare("select k from #{@table}"),
-           @count   = @backend.prepare("select count(*) from #{@table}")]
+           @delete = @backend.prepare("delete from #{@table} where k = ?"),
+           @clear = @backend.prepare("delete from #{@table}"),
+           @create = @backend.prepare("insert into #{@table} values (?, ?)"),
+           @keys = @backend.prepare("select k from #{@table}"),
+           @count = @backend.prepare("select count(*) from #{@table}")]
 
         version = @backend.execute("select sqlite_version()").first.first
         if @can_upsert = ::Gem::Version.new(version) >= ::Gem::Version.new('3.24.0')

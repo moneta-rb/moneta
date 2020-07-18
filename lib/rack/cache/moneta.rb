@@ -14,21 +14,20 @@ module Rack
 
       def resolve(uri)
         cache = Rack::Cache::Moneta[uri.to_s.sub(%r{^moneta://}, '')] ||=
-                  begin
-                    options = parse_query(uri.query)
-                    options.keys.each do |key|
-                      options[key.to_sym] =
-                        case value = options.delete(key)
-                        when 'true'
-                          true
-                        when 'false'
-                          false
-                        else
-                          value
-                        end
-                    end
-                    ::Moneta.new(uri.host.to_sym, options)
-                  end
+          begin
+            options = parse_query(uri.query).map do |key, value|
+              [key.to_sym,
+               case value
+               when 'true'
+                 true
+               when 'false'
+                 false
+               else
+                 value
+               end]
+            end
+            ::Moneta.new(uri.host.to_sym, options.to_h)
+          end
         new(cache)
       end
     end
