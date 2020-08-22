@@ -26,7 +26,11 @@ module Moneta
       # number as a time to live in seconds.
       def key?(key, options = {})
         with_expiry_update(key, default: nil, **options) do
-          @backend.exists(key)
+          if @backend.respond_to?(:exists?)
+            @backend.exists?(key)
+          else
+            @backend.exists(key)
+          end
         end
       end
 
