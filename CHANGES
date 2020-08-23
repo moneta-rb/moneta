@@ -1,3 +1,9 @@
+1.4.0
+
+* Adapters::Mongo - drop support for moped gem (#182)
+* Adapters::Redis - use #exists? where available (#189)
+* Some reorganisation of code into more separate files (#177)
+
 1.3.0
 
 * Transformer - add :each_key support (#170)
