@@ -1,7 +1,12 @@
-#!/bin/sh
-git log --format='%aN <%aE>' |\
-sed -e 's/hiddenbek/Scott Wadden/g' |\
-sed -e 's/Asmod4n/Hendrik Beskow/' |\
-grep -v 'asppsa@gmail.com\|hannes.georg@xing.com\|spotapov\|yehuda-katzs-mac\|wycats ' |\
-sort -u | sort > CONTRIBUTORS
+#!/usr/bin/env ruby
 
+contributors = `git log --format='%aN <%aE>'`
+  .gsub(/hiddenbek/, 'Scott Wadden')
+  .gsub(/Asmod4n/, 'Hendrik Beskow')
+  .lines
+  .uniq
+  .reject { |line| line.match? /asppsa@gmail.com|hannes.georg@xing.com|spotapov|yehuda-katzs-mac|wycats / }
+  .sort { |str1, str2| str1.casecmp(str2) }
+
+file = File.open('CONTRIBUTORS', 'w')
+file << contributors.join
