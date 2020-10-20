@@ -4,13 +4,13 @@ describe 'expires_memory_with_default_expires', isolate: true, proxy: :Expires d
 
   use_timecop
 
-  moneta_build do
+  moneta_build do |metadata: nil, **options|
     min_ttl = self.min_ttl
     Moneta.build do
-      use :Expires, expires: min_ttl
+      use :Expires, expires: min_ttl, metadata: metadata
       adapter :Memory
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_transform.with_expires.with_default_expires.without_persist.returnsame.with_each_key
+  moneta_specs STANDARD_SPECS.without_transform.with_expires.with_default_expires.without_persist.returnsame.with_each_key.with_metadata
 end
