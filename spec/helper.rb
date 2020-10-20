@@ -82,7 +82,7 @@ class MonetaSpecs
 
   def initialize(options = {})
     @specs = options.delete(:specs).to_a
-    @features = @specs & [:expires, :expires_native, :increment, :each_key, :create]
+    @features = @specs & [:expires, :expires_native, :increment, :each_key, :create, :metadata]
     @key = options.delete(:key)     || %w(object string binary hash boolean nil integer float)
     @value = options.delete(:value) || %w(object string binary hash boolean nil integer float)
   end
@@ -205,6 +205,10 @@ class MonetaSpecs
   def without_create
     new(specs: specs - [:create, :concurrent_create, :create_expires] + [:not_create])
   end
+
+  def with_metadata
+    new(specs: specs | %i(metadata))
+  end
 end
 
 ADAPTER_SPECS = MonetaSpecs.new(
@@ -235,9 +239,11 @@ module MonetaHelpers
 
     def moneta_store store_name, options={}, &block
       name = self.description
-      builder = proc do
+      builder = proc do |**proc_options|
         if block
-          options = instance_exec(&block)
+          options = instance_exec(**proc_options, &block)
+        else
+          options.merge!(proc_options)
         end
 
         Moneta.new(store_name, options.merge(logger: {file: File.join(tempdir, "#{name}.log")}))
@@ -310,8 +316,8 @@ module MonetaHelpers
       @moneta_tempdir ||= Dir.mktmpdir
     end
 
-    def new_store
-      instance_eval(&@moneta_store_builder)
+    def new_store(**options)
+      instance_exec(**options, &@moneta_store_builder)
     end
 
     def store
