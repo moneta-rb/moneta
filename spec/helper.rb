@@ -10,7 +10,6 @@ require 'rantly'
 require 'rantly/rspec_extensions'
 # rantly/shrinks
 require 'timecop'
-require_relative 'support/mongo_helper'
 
 class MonetaParallelFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def start(*args)
@@ -366,7 +365,6 @@ RSpec.configure do |config|
 
   config.extend MonetaHelpers::ClassMethods
   config.include MonetaHelpers::InstanceMethods
-  config.include MongoHelper, adapter: :Mongo
 end
 
 # FIXME: Get rid of this once raise_error expectations no longer generate

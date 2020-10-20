@@ -29,7 +29,7 @@ module Moneta
       # @option options [String] :user Username used to authenticate
       # @option options [String] :password Password used to authenticate
       # @option options [Integer] :port (MongoDB default port) MongoDB server port
-      # @option options [String] :db ('moneta') MongoDB database
+      # @option options [String] :database ('moneta') MongoDB database
       # @option options [Integer] :expires Default expiration time
       # @option options [String] :expires_field ('expiresAt') Document field to store expiration time
       # @option options [String] :value_field ('value') Document field to store value
@@ -43,8 +43,12 @@ module Moneta
         @type_field = options.delete(:type_field) || 'type'
 
         collection = options.delete(:collection) || 'moneta'
-        db = options.delete(:db) || 'moneta'
-        @backend = options[:backend] ||
+
+        if options.key?(:db)
+          warn('Moneta::Adapters::Mongo - the :db option is deprecated and will be removed in a future version. Use :database instead')
+        end
+        database = options.delete(:database) || options.delete(:db) || 'moneta'
+        backend = options[:backend] ||
           begin
             host = options.delete(:host) || '127.0.0.1'
             port = options.delete(:port) || DEFAULT_PORT
@@ -53,7 +57,8 @@ module Moneta
             end
             ::Mongo::Client.new(["#{host}:#{port}"], options)
           end
-        @backend.use(db)
+
+        @backend = backend.use(database)
         @collection = @backend[collection]
         if @backend.command(buildinfo: 1).documents.first['version'] >= '2.2'
           @collection.indexes.create_one({ @expires_field => 1 }, expire_after: 0)
