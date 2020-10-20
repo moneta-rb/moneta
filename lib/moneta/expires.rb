@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'set'
 
 module Moneta
@@ -8,15 +9,22 @@ module Moneta
   #
   # @api public
   class Expires < Proxy
+    extend Forwardable
     include ExpiresSupport
+
+    def_delegator :adapter, :metadata_names
 
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
+    # @option options [<Symbol>] :metadata A list of metadata field names to
+    #   use
     # @option options [String] :expires Default expiration time
     def initialize(adapter, options = {})
       raise 'Store already supports feature :expires' if adapter.supports?(:expires)
       if !adapter.supports?(:metadata) || !adapter.metadata_names.include?(:expires)
-        adapter = Metadata.new(adapter, options.merge(names: [:expires]))
+        metadata = options.delete(:metadata) || []
+        metadata.push(:expires) unless metadata.include?(:expires)
+        adapter = Metadata.new(adapter, options.merge(metadata: metadata))
       end
       self.default_expires = options[:expires]
       super
@@ -26,21 +34,21 @@ module Moneta
     def key?(key, options = {})
       return super if options.include?(:raw)
       begin
-        nil != load_or_expire(key: key, load_metadata: true, options: Utils.without(options, :load_metadata))
+        nil != load_or_expire(key: key, return_metadata: true, options: Utils.without(options, :return_metadata))
       rescue
         # Fallback for if the key is present but can't be loaded
         super(key, Utils.without(options, :expires))
       end
     end
 
-    # (see Proxy#load)
+    # (see Metadata#load)
     def load(key, options = {})
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
-      load_or_expire(key: key, load_metadata: load_metadata, options: options)
+      return_metadata = options[:return_metadata]
+      load_or_expire(key: key, return_metadata: return_metadata, options: options)
     end
 
-    # (see Proxy#store)
+    # (see Metadata#store)
     def store(key, value, options = {})
       return super if options.include?(:raw)
       expires = expires_at(options)
@@ -48,17 +56,17 @@ module Moneta
       super(key, value, options_with_metadata)
     end
 
-    # (see Proxy#delete)
+    # (see Metadata#delete)
     def delete(key, options = {})
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
-      if struct = load_or_expire(key: key, load_metadata: true, options: options, allow_expiry_update: false)
+      return_metadata = options[:return_metadata]
+      if struct = load_or_expire(key: key, return_metadata: true, options: options, allow_expiry_update: false)
         super(key, options)
-        load_metadata ? struct : struct.value
+        return_metadata ? struct : struct.value
       end
     end
 
-    # (see Proxy#store)
+    # (see Metadata#store)
     def create(key, value, options = {})
       return super if options.include?(:raw)
       expires = expires_at(options)
@@ -66,30 +74,28 @@ module Moneta
       @adapter.create(key, value, options_with_metadata)
     end
 
-    # (see Defaults#values_at)
-    def values_at(*keys, **options)
+    # (see Metadata#values_at)
+    def values_at(*keys, return_metadata: false, **options)
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
       expires = expires_at(options, nil)
-      options = Utils.without(options, :expires).merge(load_metadata: true)
-
+      options = Utils.without(options, :expires).merge(return_metadata: true)
       structs = @adapter.values_at(*keys, **options)
+
       keys.zip(structs).map do |key, struct|
         next if struct == nil || delete_if_expired(key: key, struct: struct)
         if expires != nil
           options_with_metadata = update_options_with_metadata(expires: expires, options: options, metadata: struct.to_h)
           struct = @adapter.store(key, struct.value, options_with_metadata)
         end
-        load_metadata ? struct : struct.value
+        return_metadata ? struct : struct.value
       end
     end
 
-    # (see Defaults#fetch_values)
-    def fetch_values(*keys, **options)
+    # (see Metadata#fetch_values)
+    def fetch_values(*keys, return_metadata: false, **options)
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
       expires = expires_at(options, nil)
-      options = Utils.without(options, :expires).merge(load_metadata: true)
+      options = Utils.without(options, :expires).merge(return_metadata: true)
 
       substituted = Set.new
       block = if block_given?
@@ -114,16 +120,16 @@ module Moneta
             struct = @adapter.store(key, struct.value, options_with_metadata)
           end
         end
-        load_metadata ? struct : struct.value
+        return_metadata ? struct : struct.value
       end
     end
 
-    # (see Defaults#slice)
+    # (see Metadata#slice)
     def slice(*keys, **options)
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
+      return_metadata = options[:return_metadata]
       expires = expires_at(options, nil)
-      options = Utils.without(options, :expires).merge(load_metadata: true)
+      options = Utils.without(options, :expires).merge(return_metadata: true)
 
       @adapter.slice(*keys, **options).each_with_object([]) do |(key, struct), slice|
         next if delete_if_expired(key: key, struct: struct)
@@ -131,22 +137,22 @@ module Moneta
           options_with_metadata = update_options_with_metadata(expires: expires, options: options, metadata: struct.to_h)
           struct = @adapter.store(key, struct.value, options_with_metadata)
         end
-        slice.push [key, load_metadata ? struct : struct.value]
+        slice.push [key, return_metadata ? struct : struct.value]
       end
     end
 
-    # (see Defaults#merge!)
+    # (see Metadata#merge!)
     def merge!(pairs, options = {})
-      load_metadata = options[:load_metadata]
+      yield_metadata = options[:yield_metadata]
       expires = expires_at(options)
-      options = Utils.without(options, :expires).merge(load_metadata: true)
+      options = Utils.without(options, :expires).merge(yield_metadata: true)
       options_with_metadata = update_options_with_metadata(expires: expires, options: options)
 
       block = if block_given?
                 lambda do |key, old_struct, struct|
                   next struct if delete_if_expired(key: key, struct: old_struct)
 
-                  if load_metadata
+                  if yield_metadata
                     yield key, old_struct, struct
                   else
                     struct.value = yield key, old_struct.value, struct.value
@@ -161,8 +167,8 @@ module Moneta
 
     private
 
-    def load_or_expire(key:, options:, load_metadata: false, allow_expiry_update: true)
-      options = options.merge(load_metadata: true)
+    def load_or_expire(key:, options:, return_metadata: false, allow_expiry_update: true)
+      options = options.merge(return_metadata: true)
       struct = @adapter.load(key, options)
       return if struct == nil
       struct =
@@ -175,7 +181,7 @@ module Moneta
           struct
         end
 
-      struct && (load_metadata ? struct : struct.value)
+      struct && (return_metadata ? struct : struct.value)
     end
 
     def delete_if_expired(key:, struct:)

@@ -5,16 +5,22 @@ module Moneta
   class Metadata < Proxy
     attr_reader :metadata_names
 
-    # FIXME
+    supports :metadata
+
+    # @param [Moneta store] adapter The underlying store
+    # @param [Hash] options
+    # @option options [<Symbol>] :metadata A list of metadata field names to
+    #   use
     def initialize(adapter, options = {})
       raise 'Store already supports feature :metadata' if adapter.supports?(:metadata)
-      @metadata_names = options.delete(:names).to_a.freeze
+      @metadata_names = options.delete(:metadata).to_a.freeze
       super
       raise ":value is reserved" if metadata_names.include?(:value)
       @struct = Struct.new(:value, *metadata_names)
     end
 
-    # (see Defaults#create)
+    # (see Proxy#create)
+    # @option options [{Symbol => String}] :metadata A hash of metadata values to store
     def create(key, value, options = {})
       return super if options.include?(:raw)
       metadata_hash = options[:metadata].to_h
@@ -22,54 +28,57 @@ module Moneta
       super(key, values, options)
     end
 
-    # (see Defaults#delete)
+    # (see Proxy#delete)
+    # @option options [Boolean] :return_metadata If true, return a struct including all metadata
     def delete(key, options = {})
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
+      return_metadata = options[:return_metadata]
       values = super(key, options)
-      if values != nil
-        load_metadata ? @struct.new(*values) : values.first
-      end
+      return_metadata ? values_to_struct(values) : values_to_value(values)
     end
 
-    # (see Defaults#fetch_values)
-    def fetch_values(*keys, load_metadata: false, raw: false, **options)
+    # (see Proxy#fetch_values)
+    # @param return_metadata [Boolean] :return_metadata If true, each fetched value
+    #   is returned as a struct including all metadata
+    def fetch_values(*keys, return_metadata: false, raw: false, **options)
       return super if raw
       block = if block_given?
                 lambda { |key| [yield(key)] }
               end
 
-      values_array = @adapter.fetch_values(*keys, **options, &block)
-      if load_metadata
-        values_array.map { |values| values && @struct.new(*values) }
-      else
-        values_array.map { |values| values && values.first }
-      end
+      @adapter
+        .fetch_values(*keys, **options, &block)
+        .map(&method(return_metadata ? :values_to_struct : :values_to_value))
     end
 
-    # (see Defaults#load)
+    # (see Proxy#load)
+    # @option options [Boolean] :return_metadata If true, return a struct
+    #   including all metadata
     def load(key, options = {})
       return super if options.include?(:raw)
-      load_metadata = options[:load_metadata]
+      return_metadata = options[:return_metadata]
       values = super(key, options)
-      unless values == nil
-        raise 'invalid value' unless Array === values
-        load_metadata ? @struct.new(*values) : values.first
-      end
+      return_metadata ? values_to_struct(values) : values_to_value(values)
     end
 
-    # (see Defaults#merge!)
+    # (see Proxy#merge!)
+    # @option options [Boolean] :yield_metadata If true, and a block is
+    #   provided, the block will receive structs including all metadata for
+    #   each existing value.  This can be used to merge any existing metadata.
+    # @option options [{Symbol => String}] :metadata The metadata that should
+    #   be associated with all stored values.
     def merge!(pairs, options = {})
       return super if options.include?(:raw)
 
       block = if block_given?
-                load_metadata = options[:load_metadata]
-                lambda do |key, old_values, values|
-                  if load_metadata
-                    struct = yield(key, @struct.new(*old_values), @struct.new(*values))
+                return_metadata = options[:yield_metadata]
+                lambda do |key, *old_and_new|
+                  if return_metadata
+                    struct = yield(key, *old_and_new.map(&method(:values_to_struct)))
                     struct.to_a
                   else
-                    values[0] = yield(key, old_values.first, values.first)
+                    values = old_and_new.last
+                    values[0] = yield(key, *old_and_new.map(&method(:values_to_value)))
                     values
                   end
                 end
@@ -84,36 +93,41 @@ module Moneta
       self
     end
 
-    # (see Defaults#slice)
-    def slice(*keys, load_metadata: false, raw: false, **options)
+    # (see Proxy#slice)
+    # @param [Boolean] return_metadata if true, each value returned will be a
+    #   struct including all metadata
+    def slice(*keys, return_metadata: false, raw: false, **options)
       return super if raw
       values_slice = @adapter.slice(*keys, **options)
-      if load_metadata
-        values_slice.map { |key, values| [key, @struct.new(*values)] }
+      if return_metadata
+        values_slice.map { |key, values| [key, values_to_struct(values)] }
       else
-        values_slice.map { |key, values| [key, values.first] }
+        values_slice.map { |key, values| [key, values_to_value(values)] }
       end
     end
 
-    # (see Defaults#store)
+    # (see Proxy#store)
+    # @option options [{Symbol => String}] :metadata A hash of metadata to
+    #   store
+    # @option options [Boolean] :return_metadata If true, this method will return
+    #   a struct including the metadata that was stored
     def store(key, value, options = {})
       return super if options.include?(:raw)
       metadata_hash = options[:metadata].to_h
-      load_metadata = options[:load_metadata]
+      return_metadata = options[:return_metadata]
       values = value_with_metadata_hash(value, metadata_hash)
       super(key, values, options)
-      load_metadata ? @struct.new(*values) : value
+      return_metadata ? values_to_struct(values) : value
     end
 
-    # (see Defaults#values_at)
-    def values_at(*keys, load_metadata: false, raw: false, **options)
+    # (see Proxy#values_at)
+    # @param [Boolean] return_metadata If true, each value loaded will be
+    #   returned as a struct including any metadata.
+    def values_at(*keys, return_metadata: false, raw: false, **options)
       return super if raw
-      values_array = @adapter.values_at(*keys, **options)
-      if load_metadata
-        values_array.map { |values| values && @struct.new(*values) }
-      else
-        values_array.map { |values| values && values.first }
-      end
+      @adapter
+        .values_at(*keys, **options)
+        .map(&method(return_metadata ? :values_to_struct : :values_to_value))
     end
 
     private
@@ -130,9 +144,17 @@ module Moneta
       metadata_values.dup.unshift(value)
     end
 
-    class << self
-      def included(base)
-        base.supports(:metadata) if base.respond_to?(:supports)
+    def values_to_struct(values)
+      if values
+        raise 'invalid value' unless Array === values
+        @struct.new(*values)
+      end
+    end
+
+    def values_to_value(values)
+      if values
+        raise 'invalid value' unless Array === values
+        values.first
       end
     end
   end
