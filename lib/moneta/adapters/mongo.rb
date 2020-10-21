@@ -116,6 +116,9 @@ module Moneta
                                         { :$inc => { @value_field => amount } },
                                         return_document: :after,
                                         upsert: true)[@value_field]
+      rescue ::Mongo::Error::OperationFailure
+        tries ||= 0
+        (tries += 1) < 3 ? retry : raise
       end
 
       # (see Proxy#create)
