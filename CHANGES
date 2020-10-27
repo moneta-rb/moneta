@@ -1,3 +1,8 @@
+1.4.1
+
+* Adapters::Mongo - deprecate :db option, document :database option (#194)
+* Adapters::Mongo - add retries to increment operation
+
 1.4.0
 
 * Adapters::Mongo - drop support for moped gem (#182)
