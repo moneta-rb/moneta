@@ -99,7 +99,7 @@ end
 
 # Used for generating the feature matrix
 group :doc, optional: true do
-  gem 'kramdown', '~> 1.17.0'
+  gem 'kramdown', '~> 2.3.0'
   gem 'yard', '~> 0.9.20'
 end
 
