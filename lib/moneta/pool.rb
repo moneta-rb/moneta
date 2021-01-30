@@ -87,6 +87,7 @@ module Moneta
         @waiting_since = [] if @timeout
         @last_checkout = nil
         @stopping = false
+        @idle_time = nil
 
         # Launch the manager thread
         @thread = run
@@ -126,10 +127,16 @@ module Moneta
             populate_stores
 
             until @stopping && @stores.empty?
+              loop_start = Time.now
+
               # Block until a message arrives, or until we time out for some reason
-              if request = pop
-                handle_request(request)
-              end
+              request = pop
+
+              # Record how long we were idle, for stats purposes
+              @idle_time = Time.now - loop_start
+
+              # If a message arrived, handle it
+              handle_request(request) if request
 
               # Handle any stale checkout requests
               handle_timed_out_requests
@@ -258,7 +265,8 @@ module Moneta
                       waiting: @waiting.length,
                       longest_wait: @timeout && !@waiting_since.empty? ? @waiting_since.first.dup : nil,
                       stopping: @stopping,
-                      last_checkout: @last_checkout && @last_checkout.dup)
+                      last_checkout: @last_checkout && @last_checkout.dup,
+                      idle_time: @idle_time.dup)
       end
 
       def handle_request(request)
