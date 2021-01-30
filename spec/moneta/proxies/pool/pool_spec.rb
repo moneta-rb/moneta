@@ -153,7 +153,7 @@ describe "pool", proxy: :Pool do
       describe "closing stores after TTL expiry" do
         let(:num) { max || min + 10 }
 
-        it "closes available stores after ttl" do
+        it "closes unneeded stores after ttl" do
           stores.each do |store|
             allow(store).to receive(:close)
           end
@@ -165,6 +165,32 @@ describe "pool", proxy: :Pool do
           expect(subject.stats).to include(stores: num, available: num)
           sleep ttl
           expect(subject.stats).to include(stores: min, available: min)
+        end
+      end
+    end
+
+    shared_examples :ttl_with_nonzero_min do |ttl:, min:, max: nil|
+      describe "TTL check" do
+        let(:num) { max || min + 10 }
+
+        # This is testing that a very specific bug is fixed - see
+        # https://github.com/moneta-rb/moneta/issues/197.  A better long-term
+        # solution would be to have more granular tests of the functions in the
+        # PoolManager
+        it "doesn't cause a busy-loop when there are available stores" do
+          # Check a store in and out - now the manager needs to decide whether to close
+          # stores after ttl seconds.
+          store = subject.check_out
+          subject.check_in(store)
+          sleep ttl
+          expect(subject.stats[:available]).to be > 0
+
+          # needs to be less than the TTL, but otherwise not important.
+          sleep_time = ttl / 2.0
+          sleep sleep_time
+
+          # during the sleep, the pool manager should have been idle.
+          expect(subject.stats[:idle_time]).to be >= sleep_time
         end
       end
     end
@@ -233,6 +259,7 @@ describe "pool", proxy: :Pool do
       include_examples :min, 10
       include_examples :max, 20, timeout: 4
       include_examples :ttl, 1, min: 10, max: 20
+      include_examples :ttl_with_nonzero_min, ttl: 1, min: 10, max: 20
       include_examples :timeout, 4, max: 20
     end
 
@@ -243,6 +270,7 @@ describe "pool", proxy: :Pool do
       include_examples :min, 10
       include_examples :max, 10, timeout: 4
       include_examples :ttl, 2, min: 10, max: 10
+      include_examples :ttl_with_nonzero_min, ttl: 2, min: 10, max: 10
       include_examples :timeout, 4, max: 10
     end
 
@@ -292,7 +320,7 @@ describe "pool", proxy: :Pool do
       end
 
       it "raises a ShutdownError if the pool is stopped while waiting for a store" do
-        # Exaust the pool
+        # Exhaust the pool
         store = stores.first
         allow(store).to receive(:close).once
         expect(subject.check_out).to eq store

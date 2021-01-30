@@ -193,7 +193,7 @@ module Moneta
       # @return [Integer, nil]
       def timeout
         # Time to wait before there will be stores that should be closed
-        ttl = if @ttl && @last_checkout && !@available.empty?
+        ttl = if @ttl && @last_checkout && stores_available? && stores_unneeded?
                 [@ttl - (Time.now - @last_checkout), 0].max
               end
 
@@ -204,6 +204,18 @@ module Moneta
                   end
 
         [ttl, timeout].compact.min
+      end
+
+      def stores_available?
+        !@available.empty?
+      end
+
+      def stores_unneeded?
+        @stores.length > @min
+      end
+
+      def stores_maxed?
+        @max != nil && @stores.length == @max
       end
 
       def pop
@@ -225,7 +237,7 @@ module Moneta
           reply.resolve(ShutdownError.new("Shutting down"))
         elsif !@available.empty?
           reply.resolve(@available.pop)
-        elsif !@max || @stores.length < @max
+        elsif !stores_maxed?
           begin
             reply.resolve(add_store)
           rescue => e
