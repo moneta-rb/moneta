@@ -221,7 +221,9 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 3. Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 4. If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
 5. If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
-6. Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to `Moneta#new`.
+6. Add expiration support by using `Moneta::Expires` or by passing the option
+   `expires: true` (or `expires: <seconds>` if you want all values to expire by
+   default) to `Moneta#new`.
 7. This indicates that there is some performance gain when fetching multiple values at once using `#values_at`/`#fetch_values` or `#slice`. For instance, the `MGET` instruction in Redis, or the ability to retrieve several rows in one query in SQL.
 8. This indicates that there is some performance gain when storing multiple key/value pairs at once using `#merge!`/`#update`.
 9. Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
