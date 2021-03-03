@@ -36,7 +36,7 @@ gem 'cityhash', platforms: :ruby, group: :city
 # Backends
 gem 'daybreak', group: :daybreak
 gem 'activerecord', '~> 5.2', group: :activerecord
-gem 'redis', '~> 4.0.0', group: :redis
+gem 'redis', '~> 4.2', group: :redis
 gem 'mongo', '>= 2', group: :mongo_official
 gem 'sequel', group: :sequel
 gem 'dalli', group: :memcached_dalli
