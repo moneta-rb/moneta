@@ -74,7 +74,7 @@ describe "cache_moneta_store" do
       end
       expect(result['rabbit']).to eq rabbit
       expect(result['irish whisky']).to eq 'irish whisky was missing'
-      expect(store.fetch 'irish whisky').to eq 'irish whisky was missing'
+      expect(store.fetch('irish whisky')).to eq 'irish whisky was missing'
     end
   end
 
@@ -88,9 +88,9 @@ describe "cache_moneta_store" do
 
     it 'writes multiple values with expiration time' do
       store.write_multi({
-        'rabbit' => white_rabbit,
-        'irish whisky' => 'Jameson'
-      }, expires_in: 0.2.second)
+                          'rabbit' => white_rabbit,
+                          'irish whisky' => 'Jameson'
+                        }, expires_in: 0.2.second)
 
       expect(store.read_multi('rabbit', 'irish whisky')).to eq \
         'rabbit' => white_rabbit,
@@ -234,23 +234,23 @@ describe "cache_moneta_store" do
     end
 
     context "with :Memory store" do
-      let(:store){ described_class.new(store: :Memory) }
+      let(:store) { described_class.new(store: :Memory) }
       include_examples :moneta_store
     end
 
     context "with existing :Memory store" do
-      let(:store){ described_class.new(store: ::Moneta.new(:Memory)) }
+      let(:store) { described_class.new(store: ::Moneta.new(:Memory)) }
       include_examples :moneta_store
     end
 
-    context "with Redis store" do
-      let(:store) {described_class.new(store: :Redis) }
+    context "with Redis store", adapter: :Redis do
+      let(:store) { described_class.new(store: :Redis) }
       include_examples :moneta_store
     end
   end
 
   describe ActiveSupport::Cache::MemoryStore do
-    let(:store){ described_class.new }
+    let(:store) { described_class.new }
 
     include_examples :basic_store
     include_examples :expiry
@@ -258,8 +258,8 @@ describe "cache_moneta_store" do
     include_examples :basic_instrumentation
   end
 
-  describe ActiveSupport::Cache::MemCacheStore do
-    let(:store){ described_class.new('127.0.0.1:11213') }
+  describe ActiveSupport::Cache::MemCacheStore, memcached: true do
+    let(:store) { described_class.new('127.0.0.1:11213') }
 
     include_context :start_memcached, 11213
 
@@ -270,8 +270,8 @@ describe "cache_moneta_store" do
     include_examples :increment_decrement_instrumentation
   end
 
-  describe ActiveSupport::Cache::RedisCacheStore do
-    let(:store){ described_class.new(url: 'redis:///3') }
+  describe ActiveSupport::Cache::RedisCacheStore, redis: true do
+    let(:store) { described_class.new(url: "redis:///3") }
 
     include_examples :basic_store
     include_examples :expiry
