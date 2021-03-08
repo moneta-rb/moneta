@@ -2,9 +2,11 @@ RSpec.shared_context :sequel do
   def mysql_uri database=nil
     database ||= mysql_database1
     if defined?(JRUBY_VERSION)
-      "jdbc:mysql://localhost/#{database}?user=#{mysql_username}&useSSL=false"
+      uri = "jdbc:mysql://#{mysql_host}:#{mysql_port}/#{database}?user=#{mysql_username}&useSSL=false"
+      uri += "&password=#{mysql_password}" if mysql_password
+      uri
     else
-      "mysql2://#{mysql_username}:@localhost/#{database}"
+      "mysql2://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{database}"
     end
   end
 
@@ -15,11 +17,14 @@ RSpec.shared_context :sequel do
   def postgres_options database=nil
     database ||= postgres_database1
     if defined?(JRUBY_VERSION)
-      {db: "jdbc:postgresql://localhost/#{database}?user=#{postgres_username}"}
+      uri = "jdbc:postgresql://localhost/#{database}?user=#{postgres_username}"
+      uri += "&password=#{postgres_password}" if postgres_password
+      {db: uri}
     else
       {
         db: "postgres://localhost/#{database}",
-        user: postgres_username
+        user: postgres_username,
+        password: postgres_password
       }
     end
   end
@@ -33,7 +38,7 @@ RSpec.shared_context :sequel do
   def h2_uri
     "jdbc:h2:" + tempdir
   end
-end 
+end
 
 RSpec.shared_examples :adapter_sequel do |specs, optimize: true|
   shared_examples :each_key_server do

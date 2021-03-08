@@ -5,7 +5,7 @@ describe ':Sequel adapter', adapter: :Sequel do
 
   specs = ADAPTER_SPECS.with_each_key.with_values(:nil)
 
-  context 'with MySQL backend' do
+  context 'with MySQL backend', mysql: true do
     moneta_build do
       Moneta::Adapters::Sequel.new(opts.merge(db: mysql_uri))
     end
@@ -13,7 +13,7 @@ describe ':Sequel adapter', adapter: :Sequel do
     include_examples :adapter_sequel, specs
   end
 
-  context "with SQLite backend" do
+  context "with SQLite backend", sqlite: true do
     moneta_build do
       Moneta::Adapters::Sequel.new(opts.merge(db: sqlite_uri('adapter_sequel.db')))
     end
@@ -21,7 +21,7 @@ describe ':Sequel adapter', adapter: :Sequel do
     include_examples :adapter_sequel, specs.without_concurrent
   end
 
-  context "with Postgres backend" do
+  context "with Postgres backend", postgres: true do
     moneta_build do
       Moneta::Adapters::Sequel.new(opts.merge(postgres_options))
     end
@@ -37,7 +37,7 @@ describe ':Sequel adapter', adapter: :Sequel do
     include_examples :adapter_sequel, specs, optimize: false
   end
 
-  context "with Postgres HStore backend" do
+  context "with Postgres HStore backend", postgres: true do
     moneta_build do
       Moneta::Adapters::Sequel.new(postgres_hstore_options)
     end

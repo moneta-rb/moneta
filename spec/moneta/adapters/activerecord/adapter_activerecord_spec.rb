@@ -58,32 +58,39 @@ describe 'adapter_activerecord', adapter: :ActiveRecord do
     end
   end
 
-  context "with MySQL" do
+  context "with MySQL", mysql: true do
     let(:connection1) do
       {
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+        host: mysql_host,
+        port: mysql_port,
         database: mysql_database1,
-        username: mysql_username
+        username: mysql_username,
+        password: mysql_password
       }
     end
 
     let(:connection2) do
       {
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+        host: mysql_host,
+        port: mysql_port,
         database: mysql_database2,
-        username: mysql_username
+        username: mysql_username,
+        password: mysql_password
       }
     end
 
     include_examples :adapter_activerecord, activerecord_specs
   end
 
-  context "with PostgreSQL" do
+  context "with PostgreSQL", postgres: true do
     let(:connection1) do
       {
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcpostgresql' : 'postgresql'),
         database: postgres_database1,
-        username: postgres_username
+        username: postgres_username,
+        password: postgres_password
       }
     end
 
@@ -91,14 +98,15 @@ describe 'adapter_activerecord', adapter: :ActiveRecord do
       {
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcpostgresql' : 'postgresql'),
         database: postgres_database2,
-        username: postgres_username
+        username: postgres_username,
+        password: postgres_password
       }
     end
 
     include_examples :adapter_activerecord, activerecord_specs
   end
 
-  context "with SQLite" do
+  context "with SQLite", sqlite: true do
     let(:connection1) do
       {
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcsqlite3' : 'sqlite3'),
