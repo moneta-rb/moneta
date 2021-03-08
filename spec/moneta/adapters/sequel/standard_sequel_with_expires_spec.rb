@@ -1,6 +1,6 @@
 require_relative './helper.rb'
 
-describe 'standard_sequel_with_expires', adapter: :Sequel do
+describe 'standard_sequel_with_expires', adapter: :Sequel, postgres: true do
   include_context :sequel
 
   let(:t_res) { 0.125 }
