@@ -213,11 +213,18 @@ ADAPTER_SPECS = MonetaSpecs.new(
     :create, :features, :store_large, :not_each_key],
   key: %w(string path),
   value: %w(string path binary))
+
+NATIVE_EXPIRY_SPECS = MonetaSpecs.new(
+  specs: [:create, :expires, :create_expires],
+  key: %w(string path),
+  value: %w(string path binary))
+
 STANDARD_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
     :marshallable_key, :marshallable_value, :transform_value, :increment,
     :concurrent_increment, :concurrent_create, :persist, :multiprocess, :create,
     :features, :store_large, :not_each_key])
+
 TRANSFORMER_SPECS = MonetaSpecs.new(
   specs: [:null, :store, :returndifferent,
     :transform_value, :increment, :create, :features, :store_large,
