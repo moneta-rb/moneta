@@ -7,20 +7,412 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  adapters:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
+
       matrix:
-        ruby-version: [3.0, 2.7, 2.6, 2.5, 2.4, 2.3, jruby]
+        ruby-version: [2.7, 2.6, 2.5, 2.4, 2.3, jruby]
+        adapter:
+          - Client
+          - Cookie
+          - Daybreak
+          #- dbm
+          - File
+          - Fog
+          - GDBM
+          - HashFile
+          #- HBase
+          - KyotoCabinet
+          - LevelDB
+          - LMDB
+          - LocalMemCache
+          - LRUHash
+          - Memory
+          - 'Null'
+          - PStore
+          - RestClient
+          #- riak
+          - SDBM
+          - TDB
+          - TokyoCabinet
+          - TokyoTyrant
+          - YAML
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Apt update
+      run: sudo apt-get update
+
+    - name: Apt install dependencies
+      run: sudo apt-get install -y libkyotocabinet-dev libleveldb-dev liblzo2-dev libtdb-dev libtokyocabinet-dev tokyotyrant libgdbm-dev
+
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler: latest
         bundler-cache: true
-    - name: Run tests
-      run: bundle exec rspec
+
+    - name: Rspec
+      run: bundle exec rspec -t ~unstable -t adapter:${{ matrix.adapter }}
+
+  couch:
+    name: "Couch adapter"
+    runs-on: ubuntu-latest
+
+    services:
+      couch:
+        image: couchdb
+        env:
+          COUCHDB_USER: admin
+          COUCHDB_PASSWORD: password
+        options: >-
+          --health-cmd "curl -s http://127.0.0.1:5984/"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5984:5984
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak cassandra postgresql mysql datamapper memcached_native leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t adapter:Couch
+
+  cassandra:
+    name: "Cassandra adapter"
+    runs-on: ubuntu-latest
+
+    services:
+      cassandra:
+        image: cassandra
+        options: >-
+          --health-cmd "cqlsh -e \"SELECT cql_version FROM system.local\""
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 9042:9042
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch postgresql mysql datamapper memcached_native leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t adapter:Cassandra
+
+  mysql-adapters:
+    name: "MySQL adapters"
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql
+        env:
+          MYSQL_ROOT_PASSWORD: moneta
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 3306:3306
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.4, jruby]
+
+    env:
+      BUNDLE_WITHOUT: riak couch cassandra postgresql memcached_native leveldb
+      MYSQL_HOST: 127.0.0.1
+      MONETA_MYSQL_PASSWORD: moneta
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Apt update
+      run: sudo apt-get update
+
+    - name: Apt install mysql packages
+      run: sudo apt-get install -y libmysqlclient-dev
+
+    - name: Create Database moneta
+      run: mysqladmin -h 127.0.0.1 -u root create moneta
+      env:
+        MYSQL_PWD: moneta
+
+    - name: Create Database moneta2
+      run: mysqladmin -h 127.0.0.1 -u root create moneta2
+      env:
+        MYSQL_PWD: moneta
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t mysql
+
+  postgres-adapters:
+    name: "Postgres adapters"
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: moneta
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: riak couch cassandra mysql memcached_native leveldb
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: moneta
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Database moneta1
+      run: createdb moneta1
+
+    - name: Create Database moneta2
+      run: createdb moneta2
+
+    - name: Add hstore support to moneta1
+      run: psql -c 'create extension hstore;' moneta1
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t postgres
+
+  sqlite-adapters:
+    name: "SQLite adapters"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: riak couch cassandra mysql postgres memcached_native leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t sqlite
+
+  redis:
+    name: "Redis adapters"
+    runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t adapter:Redis -t redis
+
+  memcached:
+    name: "Memcached adapters"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Apt update
+      run: sudo apt-get update
+
+    - name: Apt install memcached
+      run: sudo apt-get install -y memcached libsasl2-dev
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t ~unstable -t adapter:Memcached -t memcached
+
+  mongo:
+    name: "Mongo adapter"
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo
+        options: >-
+          --health-cmd "mongo --eval db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3] #, jruby] - FIXME reenable once https://github.com/mongodb/mongo-ruby-driver/pull/2143 is released
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t adapter:Mongo
+
+  residual-specs:
+    name: "Proxies and other specs"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: [2.7, 2.3, jruby]
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native redis leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Apt update
+      run: sudo apt-get update
+
+    - name: Apt install dependencies
+      run: sudo apt-get install -y libgdbm-dev
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t ~unstable --exclude-pattern "./spec/{moneta/adapters/**/*,active_support/**/*}"
+
+    - name: Minitest
+      run: bundle exec ruby test/action_dispatch/session_moneta_store_test.rb
+
+  rubocop:
+    name: "Rubocop"
+    runs-on: ubuntu-latest
+
+    env:
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native redis leveldb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rubocop
+      run: bundle exec rubocop lib
