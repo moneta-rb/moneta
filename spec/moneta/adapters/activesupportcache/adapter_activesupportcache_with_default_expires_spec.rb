@@ -23,7 +23,7 @@ describe 'adapter_activesupportcache_with_default_expires', adapter: :ActiveSupp
     include_examples :adapter_activesupportcache_with_default_expires
   end
 
-  context 'using MemCacheStore' do
+  context 'using MemCacheStore', memcached: true do
     let(:t_res) { 1 }
     let(:min_ttl) { 2 }
     use_timecop
@@ -39,7 +39,7 @@ describe 'adapter_activesupportcache_with_default_expires', adapter: :ActiveSupp
     let(:min_ttl) { t_res }
     use_timecop
 
-    let(:backend) { ActiveSupport::Cache::RedisCacheStore.new(url: 'redis:///2') }
+    let(:backend) { ActiveSupport::Cache::RedisCacheStore.new(url: "redis://#{redis_host}:#{redis_port}/2") }
     include_examples :adapter_activesupportcache_with_default_expires
   end
 

@@ -23,7 +23,7 @@ describe 'adapter_activesupportcache', adapter: :ActiveSupportCache do
     include_examples :adapter_activesupportcache
   end
 
-  context 'using MemCacheStore' do
+  context 'using MemCacheStore', memcached: true do
     let(:t_res) { 1 }
     let(:min_ttl) { 2 }
     use_timecop
@@ -34,12 +34,12 @@ describe 'adapter_activesupportcache', adapter: :ActiveSupportCache do
     include_examples :adapter_activesupportcache
   end
 
-  context 'using RedisCacheStore' do
+  context 'using RedisCacheStore', redis: true do
     let(:t_res) { 1 }
     let(:min_ttl) { t_res }
     use_timecop
 
-    let(:backend) { ActiveSupport::Cache::RedisCacheStore.new(url: 'redis:///1') }
+    let(:backend) { ActiveSupport::Cache::RedisCacheStore.new(url: "redis://#{redis_host}:#{redis_port}/1") }
     include_examples :adapter_activesupportcache
   end
 

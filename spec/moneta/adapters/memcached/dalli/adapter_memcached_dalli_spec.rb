@@ -7,9 +7,19 @@ describe 'adapter_memcached_dalli', retry: 3, adapter: :Memcached do
 
   include_context :start_memcached, 11212
 
-  moneta_build do
-    Moneta::Adapters::MemcachedDalli.new(server: "127.0.0.1:11212")
+  describe 'without default expires' do
+    moneta_build do
+      Moneta::Adapters::MemcachedDalli.new(server: "127.0.0.1:11212")
+    end
+
+    moneta_specs ADAPTER_SPECS.with_native_expires
   end
 
-  moneta_specs ADAPTER_SPECS.with_native_expires
+  describe 'with default expires' do
+    moneta_build do
+      Moneta::Adapters::MemcachedDalli.new(server: '127.0.0.1:11212', expires: min_ttl)
+    end
+
+    moneta_specs NATIVE_EXPIRY_SPECS.with_default_expires
+  end
 end
