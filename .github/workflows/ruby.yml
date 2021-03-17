@@ -121,7 +121,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch postgresql mysql datamapper memcached_native leveldb
+      BUNDLE_WITHOUT: activerecord riak couch postgresql mysql datamapper memcached_native leveldb lzo
 
     steps:
     - uses: actions/checkout@v2
@@ -308,7 +308,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper leveldb
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper leveldb lzo
 
     steps:
     - uses: actions/checkout@v2
