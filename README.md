@@ -1,7 +1,7 @@
 # Moneta: A unified interface for key/value stores
 
 [![Gem Version](https://badge.fury.io/rb/moneta.svg)](http://rubygems.org/gems/moneta)
-[![Build Status](https://secure.travis-ci.org/moneta-rb/moneta.svg?branch=master)](http://travis-ci.org/moneta-rb/moneta)
+[![Build Status](https://github.com/moneta-rb/moneta/actions/workflows/ruby.yml/badge.svg)](https://github.com/moneta-rb/moneta/actions/workflows/ruby.yml)
 [![Code Climate](https://codeclimate.com/github/moneta-rb/moneta.svg)](https://codeclimate.com/github/moneta-rb/moneta)
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=min4d&url=https://github.com/moneta-rb/moneta&title=Moneta&language=&tags=github&category=software)
 
@@ -32,7 +32,7 @@ same for template languages.
 * Give people a starting point or example code to start working with their favourite key/value store. Feel free to copy code, please mention Moneta then :)
 * Create a reusable piece of code, since similar things are solved over and over again ([Rails](http://rubyonrails.org/) brings its own cache stores, and many frameworks do the same...)
 
-Moneta is tested thoroughly using [Travis-CI](http://travis-ci.org/moneta-rb/moneta).
+Moneta is tested thoroughly using [GitHub Actions](https://github.com/moneta-rb/moneta/actions).
 
 ------
 
@@ -74,7 +74,7 @@ store.close
 
 * Source: <http://github.com/moneta-rb/moneta>
 * Bugs:   <http://github.com/moneta-rb/moneta/issues>
-* Tests and benchmarks: <http://travis-ci.org/moneta-rb/moneta>
+* Tests and benchmarks: <https://github.com/moneta-rb/moneta/actions>
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
     * GitHub master: <http://rubydoc.info/github/moneta-rb/moneta/master/frames>
@@ -911,15 +911,16 @@ Person.adapter :memory, Moneta.new(:Redis)
 
 ## Testing and Benchmarks
 
-Testing is done using [Travis-CI](http://travis-ci.org/moneta-rb/moneta).
+Testing is done using [GitHub Actions](https://github.com/moneta-rb/moneta/actions).
 Currently we support MRI Ruby >= 2.3.0 and the JRuby >= 9.2.9.0.
 
-Benchmarks for each store are done on
-[Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build. Take a look
-there to compare the speed of the different key value stores for different
-key/value sizes and size distributions.  Feel free to add your own
-configurations! The impact of Moneta should be minimal since it is only a thin
-layer on top of the different stores.
+~~Benchmarks for each store are done on
+[Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build.~~  At the
+time of writing, benchmarks still need to be migrated from Travis to GitHub
+Actions.  Take a look there to compare the speed of the different key value
+stores for different key/value sizes and size distributions.  Feel free to add
+your own configurations! The impact of Moneta should be minimal since it is
+only a thin layer on top of the different stores.
 
 
 ------
@@ -939,8 +940,8 @@ If you want support for another adapter you can at first at it to the list of
 missing adapters at https://github.com/moneta-rb/moneta/issues/16
 
 If you choose to implement an adapter please also add tests.  Please check also
-if travis.yml needs changes, for example if you need to start additional
-services.
+if anything in `.github/workflows` needs changes, for example if you need to
+start additional services.
 
 Check if the default settings in Moneta#new are appropriate for your adapter. If
 not specify a better one.
