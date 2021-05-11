@@ -1,6 +1,6 @@
 require 'timeout'
 
-describe "pool", proxy: :Pool do
+describe "pool", proxy: :Pool, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) < ::Gem::Version.new('2.4.0') do
   describe "Moneta::Pool" do
     # To test the pool, we create the store once and pass the same object around
     # whenever a new store is requested.
