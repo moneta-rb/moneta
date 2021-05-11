@@ -1,3 +1,7 @@
+1.4.2
+
+* Pool - fix busy-loop issue (#197)
+
 1.4.1
 
 * Adapters::Mongo - deprecate :db option, document :database option (#194)
