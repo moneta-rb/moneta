@@ -5,11 +5,7 @@ module Moneta
     # YAML::Store backend
     # @api public
     class YAML < PStore
-      protected
-
-      def new_store(options)
-        ::YAML::Store.new(options[:file])
-      end
+      backend { |file:| ::YAML::Store.new(file) }
     end
   end
 end
