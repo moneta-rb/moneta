@@ -36,7 +36,7 @@ module Moneta
           entries.each { |k| yield(k) }
           self
         else
-          return enum_for(:each_key) { ::Dir.entries(config.dir).length - 2 }
+          enum_for(:each_key) { ::Dir.entries(config.dir).length - 2 }
         end
       end
 
