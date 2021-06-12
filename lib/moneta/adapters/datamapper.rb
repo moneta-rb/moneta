@@ -7,6 +7,7 @@ module Moneta
     # @api public
     class DataMapper
       include Defaults
+      include Config
       include NilValues
 
       supports :create
@@ -19,15 +20,18 @@ module Moneta
         self.raise_on_save_failure = true
       end
 
+      config :setup, required: true
+      config :repository, default: :moneta, coerce: :to_sym
+      config :table, default: :moneta, coerce: :to_sym
+
       # @param [Hash] options
       # @option options [String] :setup Datamapper setup string
       # @option options [String/Symbol] :repository (:moneta) Repository name
       # @option options [String/Symbol] :table (:moneta) Table name
       def initialize(options = {})
-        raise ArgumentError, 'Option :setup is required' unless options[:setup]
-        @repository = (options.delete(:repository) || :moneta).to_sym
-        Store.storage_names[@repository] = (options.delete(:table) || :moneta).to_s
-        ::DataMapper.setup(@repository, options[:setup])
+        configure(options)
+        Store.storage_names[config.repository] = config.table.to_s
+        ::DataMapper.setup(config.repository, config.setup)
         context { Store.auto_upgrade! }
       end
 
@@ -91,7 +95,7 @@ module Moneta
       private
 
       def context
-        ::DataMapper.repository(@repository) { yield }
+        ::DataMapper.repository(config.repository) { yield }
       end
     end
   end
