@@ -187,13 +187,13 @@ group :postgresql, optional: true do
 end
 
 # Rack integration testing
-group :rack, optional: true do
+group :rack do
   gem 'rack'
   gem 'rack-cache'
 end
 
 # Rails integration testing
-group :rails, optional: true do
+group :rails do
   gem 'actionpack', '~> 5.2.0'
   gem 'minitest', '~> 5.0'
 end

@@ -61,7 +61,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t ~unstable -t adapter:${{ matrix.adapter }}
+      run: bundle exec rspec -t ~unstable -t adapter:${{ matrix.adapter }} -- spec/moneta -- spec/moneta
 
   couch:
     name: "Couch adapter"
@@ -99,7 +99,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t adapter:Couch
+      run: bundle exec rspec -t adapter:Couch -- spec/moneta
 
   cassandra:
     name: "Cassandra adapter"
@@ -134,7 +134,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t adapter:Cassandra
+      run: bundle exec rspec -t adapter:Cassandra -- spec/moneta
 
   mysql-adapters:
     name: "MySQL adapters"
@@ -189,7 +189,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t mysql
+      run: bundle exec rspec -t mysql -- spec/moneta
 
   postgres-adapters:
     name: "Postgres adapters"
@@ -238,7 +238,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t postgres
+      run: bundle exec rspec -t postgres -- spec/moneta
 
   sqlite-adapters:
     name: "SQLite adapters"
@@ -262,7 +262,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t sqlite
+      run: bundle exec rspec -t sqlite -- spec/moneta
 
   redis:
     name: "Redis adapters"
@@ -297,7 +297,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t adapter:Redis -t redis
+      run: bundle exec rspec -t adapter:Redis -t redis -- spec/moneta
 
   memcached:
     name: "Memcached adapters"
@@ -327,7 +327,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t ~unstable -t adapter:Memcached -t memcached
+      run: bundle exec rspec -t ~unstable -t adapter:Memcached -t memcached -- spec/moneta
 
   mongo:
     name: "Mongo adapter"
@@ -362,7 +362,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t adapter:Mongo
+      run: bundle exec rspec -t adapter:Mongo -- spec/moneta
 
   residual-specs:
     name: "Proxies and other specs"
