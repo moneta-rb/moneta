@@ -42,7 +42,7 @@ jobs:
           - YAML
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native lzo
 
     steps:
     - uses: actions/checkout@v2
@@ -51,7 +51,7 @@ jobs:
       run: sudo apt-get update
 
     - name: Apt install dependencies
-      run: sudo apt-get install -y libkyotocabinet-dev libleveldb-dev liblzo2-dev libtdb-dev libtokyocabinet-dev tokyotyrant libgdbm-dev
+      run: sudo apt-get install -y libkyotocabinet-dev libleveldb-dev libtdb-dev libtokyocabinet-dev tokyotyrant libgdbm-dev
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -158,7 +158,7 @@ jobs:
         ruby-version: [2.7, 2.4, jruby]
 
     env:
-      BUNDLE_WITHOUT: riak couch cassandra postgresql memcached_native leveldb
+      BUNDLE_WITHOUT: riak couch cassandra postgresql memcached_native leveldb lzo tdb
       MYSQL_HOST: 127.0.0.1
       MONETA_MYSQL_PASSWORD: moneta
 
@@ -213,7 +213,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: riak couch cassandra mysql memcached_native leveldb
+      BUNDLE_WITHOUT: riak couch cassandra mysql memcached_native leveldb lzo tdb
       PGHOST: localhost
       PGUSER: postgres
       PGPASSWORD: moneta
@@ -249,7 +249,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: riak couch cassandra mysql postgres memcached_native leveldb
+      BUNDLE_WITHOUT: riak couch cassandra mysql postgres memcached_native leveldb lzo tdb
 
     steps:
     - uses: actions/checkout@v2
@@ -284,7 +284,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb lzo tdb
 
     steps:
     - uses: actions/checkout@v2
@@ -349,7 +349,7 @@ jobs:
         ruby-version: [2.7, 2.3] #, jruby] - FIXME reenable once https://github.com/mongodb/mongo-ruby-driver/pull/2143 is released
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb lzo tdb
 
     steps:
     - uses: actions/checkout@v2
@@ -373,7 +373,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native redis leveldb
+      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native redis leveldb tdb
 
     steps:
     - uses: actions/checkout@v2
@@ -382,7 +382,7 @@ jobs:
       run: sudo apt-get update
 
     - name: Apt install dependencies
-      run: sudo apt-get install -y libgdbm-dev
+      run: sudo apt-get install -y libgdbm-dev liblzo2-dev
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
