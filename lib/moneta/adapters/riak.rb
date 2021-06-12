@@ -5,21 +5,20 @@ module Moneta
     # Riak backend
     # @api public
     # @author Potapov Sergey (aka Blake)
-    class Riak
-      include Defaults
+    class Riak < Adapter
+      config :bucket, default: 'moneta'
+      config :content_type, default: 'application/octet-stream'
 
-      attr_reader :backend
+      backend { |**options| ::Riak::Client.new(options) }
 
       # @param [Hash] options
       # @option options [String] :bucket ('moneta') Bucket name
       # @option options [String] :content_type ('application/octet-stream') Default content type
-      # @option options All other options passed to `Riak::Client#new`
       # @option options [::Riak::Client] :backend Use existing backend instance
+      # @option options All other options passed to `Riak::Client#new`
       def initialize(options = {})
-        bucket = options.delete(:bucket) || 'moneta'
-        @content_type = options.delete(:content_type) || 'application/octet-stream'
-        @backend = options[:backend] || ::Riak::Client.new(options)
-        @bucket = @backend.bucket(bucket)
+        super
+        @bucket = backend.bucket(config.bucket)
       end
 
       # (see Proxy#key?)
@@ -44,7 +43,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         obj = ::Riak::RObject.new(@bucket, key)
-        obj.content_type = options[:content_type] || @content_type
+        obj.content_type = options[:content_type] || config.content_type
         obj.raw_data = value
         obj.store(options.dup)
         value
