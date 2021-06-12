@@ -9,19 +9,13 @@ module Moneta
 
       supports :create, :increment
 
-      config :expires
-
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :server ('127.0.0.1:11211') Memcached server
+      #   @option options [Integer] :expires Default expiration time
+      #   @option options [::Dalli::Client] :backend Use existing backend instance
+      #   @option options Other options passed to `Dalli::Client#new`
       backend { |server: '127.0.0.1:11211', **options| ::Dalli::Client.new(server, options) }
-
-      # @param [Hash] options
-      # @option options [String] :server ('127.0.0.1:11211') Memcached server
-      # @option options [Integer] :expires Default expiration time
-      # @option options [::Dalli::Client] :backend Use existing backend instance
-      # @option options Other options passed to `Dalli::Client#new`
-      def initialize(options = {})
-        super
-        self.default_expires = config.expires
-      end
 
       # (see Proxy#load)
       def load(key, options = {})

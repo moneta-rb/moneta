@@ -14,7 +14,6 @@ module Moneta
     def initialize(adapter, options = {})
       raise 'Store already supports feature :expires' if adapter.supports?(:expires)
       super
-      self.default_expires = options[:expires]
     end
 
     # (see Proxy#key?)

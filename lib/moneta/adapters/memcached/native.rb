@@ -9,25 +9,19 @@ module Moneta
 
       supports :create, :increment
 
-      config :expires
-
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :server ('127.0.0.1:11211') Memcached server
+      #   @option options [String] :namespace Key namespace
+      #   @option options [Integer] :expires (604800) Default expiration time
+      #   @option options [::Memcached] :backend Use existing backend instance
+      #   @option options Other options passed to `Memcached#new`
       backend do |server: '127.0.0.1:11211', namespace: nil, **options|
         options[:prefix_key] = namespace if namespace
         # We don't want a limitation on the key charset. Therefore we use the binary protocol.
         # It is also faster.
         options[:binary_protocol] = true unless options.include?(:binary_protocol)
         ::Memcached.new(server, options)
-      end
-
-      # @param [Hash] options
-      # @option options [String] :server ('127.0.0.1:11211') Memcached server
-      # @option options [String] :namespace Key namespace
-      # @option options [Integer] :expires (604800) Default expiration time
-      # @option options [::Memcached] :backend Use existing backend instance
-      # @option options Other options passed to `Memcached#new`
-      def initialize(options = {})
-        super
-        self.default_expires = config.expires
       end
 
       # (see Proxy#load)
