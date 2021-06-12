@@ -3,6 +3,7 @@ module Moneta
   # @api public
   class Proxy
     include Defaults
+    include Config
 
     attr_reader :adapter
 
@@ -10,6 +11,7 @@ module Moneta
     # @param [Hash] options
     def initialize(adapter, options = {})
       @adapter = adapter
+      configure(**options)
     end
 
     # (see Defaults#key?)
@@ -132,6 +134,33 @@ module Moneta
         @features_mask = (features_mask | features).freeze
         super
       end
+    end
+
+    # Overrides the default implementation of the config method to:
+    #
+    # * pass the adapter's config, if this proxy has no configuration of its
+    #   own
+    # * return a merged configuration, allowing the proxy have precedence over
+    #   the adapter
+    def config
+      unless @proxy_config
+        config = super
+        adapter_config = adapter&.config
+
+        @proxy_config =
+          if config && adapter_config
+            adapter_members = adapter_config.members - config.members
+            members = config.members + adapter_members
+            struct = Struct.new(*members)
+
+            values = config.values + adapter_config.to_h.values_at(*adapter_members)
+            struct.new(*values)
+          else
+            config || adapter_config
+          end
+      end
+
+      @proxy_config
     end
   end
 end
