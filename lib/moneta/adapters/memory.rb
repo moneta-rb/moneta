@@ -2,19 +2,17 @@ module Moneta
   module Adapters
     # Memory backend using a hash to store the entries
     # @api public
-    class Memory
-      include Defaults
+    class Memory < Adapter
       include NilValues
       include HashAdapter
       include IncrementSupport
       include CreateSupport
       include EachKeySupport
 
-      # @param [Hash] options Options hash
-      # @option options [Hash] :backend Use existing backend instance
-      def initialize(options = {})
-        @backend = options[:backend] || {}
-      end
+      # @!method initialize(options = {})
+      #   @param [Hash] options Options hash
+      #   @option options [Hash] :backend Use existing backend instance
+      backend { {} }
     end
   end
 end
