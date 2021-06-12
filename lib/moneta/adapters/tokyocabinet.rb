@@ -4,29 +4,31 @@ module Moneta
   module Adapters
     # TokyoCabinet backend
     # @api public
-    class TokyoCabinet
-      include Defaults
+    class TokyoCabinet < Adapter
       include HashAdapter
       include IncrementSupport
       include CreateSupport
       include EachKeySupport
 
-      # @param [Hash] options
-      # @option options [String] :file Database file
-      # @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)
-      # @option options [::TokyoCabinet::*DB] :backend Use existing backend instance
-      def initialize(options = {})
-        if options[:backend]
-          @backend = options[:backend]
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :file Database file
+      #   @option options [Symbol] :type (:hdb) Database type (:bdb and :hdb possible)
+      #   @option options [::TokyoCabinet::*DB] :backend Use existing backend instance
+      backend do |file:, type: :hdb|
+        case type
+        when :bdb
+          ::TokyoCabinet::BDB.new.tap do |backend|
+            backend.open(file, ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT) or
+              raise backend.errmsg(backend.ecode)
+          end
+        when :hdb
+          ::TokyoCabinet::HDB.new.tap do |backend|
+            backend.open(file, ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT) or
+              raise backend.errmsg(backend.ecode)
+          end
         else
-          raise ArgumentError, 'Option :file is required' unless options[:file]
-          if options[:type] == :bdb
-            @backend = ::TokyoCabinet::BDB.new
-            @backend.open(options[:file], ::TokyoCabinet::BDB::OWRITER | ::TokyoCabinet::BDB::OCREAT)
-          else
-            @backend = ::TokyoCabinet::HDB.new
-            @backend.open(options[:file], ::TokyoCabinet::HDB::OWRITER | ::TokyoCabinet::HDB::OCREAT)
-          end or raise @backend.errmsg(@backend.ecode)
+          raise ArgumentError, ":type must be :bdb or :hdb"
         end
       end
 
