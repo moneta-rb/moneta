@@ -1,98 +1,199 @@
 source 'https://rubygems.org'
 gemspec
 
-# Used by multiple backends / transformers
-gem 'multi_json', groups: %i{json couch cassandra}
-gem 'faraday', groups: %i{couch restclient}
-gem 'manticore', groups: %i{couch restclient}, platforms: :jruby
+group :transformers, optional: true do
+  # Serializers used by Transformer
+  group :json, optional: true do
+    gem 'multi_json'
+  end
 
-# Serializers used by Transformer
-gem 'tnetstring', group: :tnet
-gem 'bencode', group: :bencode
-gem 'ox', platforms: :ruby, group: :ox
-gem 'bert', platforms: :ruby, group: :bert
-gem 'php-serialize', group: :php
+  group :tnet, optional: true do
+    gem 'tnetstring'
+  end
 
-group :bson do
-  gem 'bson', '>= 4.0.0'
+  group :bencode, optional: true do
+    gem 'bencode'
+  end
+
+  group :ox, optional: true do
+    gem 'ox', platforms: :ruby
+  end
+
+  group :bert, optional: true do
+    gem 'bert', platforms: :ruby
+  end
+
+  group :php, optional: true do
+    gem 'php-serialize'
+  end
+
+  group :bson, optional: true do
+    gem 'bson', '>= 4.0.0'
+  end
+
+  group :msgpack, optional: true do
+    gem 'msgpack', platforms: :ruby
+    gem 'msgpack-jruby', platforms: :jruby
+  end
+
+  # Compressors used by Transformer
+  group :bzip2, optional: true do
+    gem 'rbzip2', '>= 0.3.0'
+  end
+
+  group :lz4, optional: true do
+    gem 'lz4-ruby', platforms: :ruby
+  end
+
+  group :lzma, optional: true do
+    gem 'ruby-lzma', platforms: :ruby
+  end
+
+  group :lzo, optional: true do
+    gem 'lzoruby', platforms: :ruby
+  end
+
+  group :snappy, optional: true do
+    gem 'snappy', platforms: :ruby
+  end
+
+  group :quicklz, optional: true do
+    gem 'qlzruby', platforms: :ruby
+  end
+
+  # Hash transformer library
+  group :city, optional: true do
+    gem 'cityhash', platforms: :ruby
+  end
 end
-
-group :msgpack do
-  gem 'msgpack', platforms: :ruby
-  gem 'msgpack-jruby', platforms: :jruby
-end
-
-# Compressors used by Transformer
-gem 'rbzip2', '>= 0.3.0', group: :bzip2
-gem 'lz4-ruby', platforms: :ruby, group: :lz4
-gem 'ruby-lzma', platforms: :ruby, group: :lzma
-gem 'lzoruby', platforms: :ruby, group: :lzo
-gem 'snappy', platforms: :ruby, group: :snappy
-gem 'qlzruby', platforms: :ruby, group: :quicklz
-
-# Hash transformer library
-gem 'cityhash', platforms: :ruby, group: :city
 
 # Backends
-gem 'daybreak', group: :daybreak
-gem 'activerecord', '~> 5.2', group: :activerecord
-gem 'redis', '~> 4.2', group: :redis
-gem 'mongo', '>= 2', group: :mongo_official
-gem 'sequel', group: :sequel
-gem 'dalli', group: :memcached_dalli
-gem 'riak-client', group: :riak
-gem 'cassandra-driver', group: :cassandra
-gem 'tokyotyrant', group: :tokyotyrant
-gem 'hbaserb', group: :hbase
-gem 'localmemcache', platforms: :ruby, group: :localmemcache
-gem 'tdb', platforms: :ruby, group: :tdb
-gem 'leveldb-ruby', platforms: :ruby, group: :leveldb
-gem 'lmdb', platforms: :mri, group: :lmdb
-gem 'tokyocabinet', platforms: :ruby, group: :tokyocabinet
-gem 'kyotocabinet-ruby-reanimated', platforms: [:ruby_23, :ruby_24, :ruby_25, :ruby_26], group: :kyotocabinet
-gem 'memcached', platforms: :ruby, group: :memcached_native
-gem 'jruby-memcached', platforms: :jruby, group: :memcached_native
-gem 'activerecord-jdbch2-adapter', platforms: :jruby, group: :h2, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'
-gem 'ffi-gdbm', platforms: :jruby, group: :gdbm
-group :restclient do
-  gem 'fishwife', platforms: :jruby
-  gem 'rjack-logback', platforms: :jruby
+group :Daybreak, optional: true do
+  gem 'daybreak', platforms: :ruby
 end
 
-group :datamapper do
+group :ActiveRecord, optional: true do
+  gem 'activerecord', '~> 5.2'
+end
+
+group :Redis, optional: true do
+  gem 'redis', '~> 4.2'
+end
+
+group :Mongo, optional: true do
+  gem 'mongo', '>= 2'
+end
+
+group :Sequel, optional: true do
+  gem 'sequel'
+end
+
+group :Memcached, optional: true do
+  group :MemcachedDalli, optional: true do
+    gem 'dalli'
+  end
+
+  group :MemcachedNative, optional: true do
+    gem 'memcached', platforms: :ruby, group: :memcached_native
+    gem 'jruby-memcached', platforms: :jruby, group: :memcached_native
+  end
+end
+
+group :Riak, optional: true do
+  gem 'riak-client'
+end
+
+group :Cassandra, optional: true do
+  gem 'cassandra-driver'
+  gem 'multi_json'
+end
+
+group :TokyoTyrant, optional: true do
+  gem 'tokyotyrant'
+end
+
+group :HBase, optional: true do
+  gem 'hbaserb'
+end
+
+group :LocalMemCache, optional: true do
+  gem 'localmemcache', platforms: :ruby
+end
+
+group :TDB, optional: true do
+  gem 'tdb', platforms: :ruby
+end
+
+group :LevelDB, optional: true do
+  gem 'leveldb-ruby', platforms: :ruby
+end
+
+group :LMDB, optional: true do
+  gem 'lmdb', platforms: :mri
+end
+
+group :TokyoCabinet, optional: true do
+  gem 'tokyocabinet', platforms: :ruby
+end
+
+group :KyotoCabinet, optional: true do
+  gem 'kyotocabinet-ruby-reanimated', platforms: [:ruby_23, :ruby_24, :ruby_25, :ruby_26]
+end
+
+group :H2, optional: true do
+  gem 'activerecord-jdbch2-adapter', platforms: :jruby, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'
+end
+
+group :GDBM, optional: true do
+  gem 'ffi-gdbm', platforms: :jruby
+end
+
+group :RestClient, optional: true do
+  gem 'fishwife', platforms: :jruby
+  gem 'rjack-logback', platforms: :jruby
+  gem 'multi_json'
+end
+
+group :DataMapper, optional: true do
   gem 'dm-core'
   gem 'dm-migrations'
   gem 'dm-mysql-adapter'
 end
 
-group :fog do
+group :Fog, optional: true do
   gem 'fog-aws', '>= 1.11.1'
   gem 'mime-types'
 end
 
-group :mysql do
+# Used by multiple backends / transformers
+group :RestClient, optional: true do
+  gem 'faraday'
+  gem 'manticore',  platforms: :jruby
+end
+
+group :mysql, optional: true do
   gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
   gem 'mysql2', platforms: :ruby
 end
 
-group :sqlite do
+group :sqlite, optional: true do
   gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
   gem 'sqlite3', '~> 1.3.6', platforms: :ruby
 end
 
-group :postgresql do
+group :postgresql, optional: true do
   gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
   gem 'pg', platforms: :ruby
 end
 
 # Rack integration testing
-group :rack do
+group :rack, optional: true do
   gem 'rack'
   gem 'rack-cache'
 end
 
 # Rails integration testing
-group :rails do
+group :rails, optional: true do
   gem 'actionpack', '~> 5.2.0'
   gem 'minitest', '~> 5.0'
 end

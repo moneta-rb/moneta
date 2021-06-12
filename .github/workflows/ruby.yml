@@ -42,7 +42,7 @@ jobs:
           - YAML
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native lzo
+      BUNDLE_WITH: ${{ matrix.adapter }}
 
     steps:
     - uses: actions/checkout@v2
@@ -86,7 +86,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak cassandra postgresql mysql datamapper memcached_native leveldb lzo tdb
+      BUNDLE_WITH: RestClient
 
     steps:
     - uses: actions/checkout@v2
@@ -121,7 +121,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch postgresql mysql datamapper memcached_native leveldb lzo tdb
+      BUNDLE_WITH: Cassandra
 
     steps:
     - uses: actions/checkout@v2
@@ -158,7 +158,7 @@ jobs:
         ruby-version: [2.7, 2.4, jruby]
 
     env:
-      BUNDLE_WITHOUT: riak couch cassandra postgresql memcached_native leveldb lzo tdb
+      BUNDLE_WITH: ActiveRecord Sequel DataMapper mysql
       MYSQL_HOST: 127.0.0.1
       MONETA_MYSQL_PASSWORD: moneta
 
@@ -213,7 +213,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: riak couch cassandra mysql memcached_native leveldb lzo tdb
+      BUNDLE_WITH: ActiveRecord Sequel DataMapper postgresql
       PGHOST: localhost
       PGUSER: postgres
       PGPASSWORD: moneta
@@ -249,7 +249,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: riak couch cassandra mysql postgres memcached_native leveldb lzo tdb
+      BUNDLE_WITH: ActiveRecord Sequel DataMapper sqlite
 
     steps:
     - uses: actions/checkout@v2
@@ -284,7 +284,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb lzo tdb
+      BUNDLE_WITH: Redis
 
     steps:
     - uses: actions/checkout@v2
@@ -308,7 +308,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper leveldb lzo tdb
+      BUNDLE_WITH: Memcached
 
     steps:
     - uses: actions/checkout@v2
@@ -349,7 +349,7 @@ jobs:
         ruby-version: [2.7, 2.3] #, jruby] - FIXME reenable once https://github.com/mongodb/mongo-ruby-driver/pull/2143 is released
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native leveldb lzo tdb
+      BUNDLE_WITH: Mongo
 
     steps:
     - uses: actions/checkout@v2
@@ -373,7 +373,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native redis leveldb tdb
+      BUNDLE_WITH: transformers rack rails GDBM
 
     steps:
     - uses: actions/checkout@v2
@@ -400,9 +400,6 @@ jobs:
   rubocop:
     name: "Rubocop"
     runs-on: ubuntu-latest
-
-    env:
-      BUNDLE_WITHOUT: activerecord riak couch cassandra postgresql mysql datamapper memcached_native redis leveldb
 
     steps:
     - uses: actions/checkout@v2
