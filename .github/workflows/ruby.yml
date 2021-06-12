@@ -61,7 +61,7 @@ jobs:
         bundler-cache: true
 
     - name: Rspec
-      run: bundle exec rspec -t ~unstable -t adapter:${{ matrix.adapter }} -- spec/moneta -- spec/moneta
+      run: bundle exec rspec -t ~unstable -t adapter:${{ matrix.adapter }} -- spec/moneta
 
   couch:
     name: "Couch adapter"
