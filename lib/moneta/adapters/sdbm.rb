@@ -4,23 +4,17 @@ module Moneta
   module Adapters
     # SDBM backend
     # @api public
-    class SDBM
-      include Defaults
+    class SDBM < Adapter
       include DBMAdapter
       include IncrementSupport
       include CreateSupport
       include EachKeySupport
 
-      # @param [Hash] options
-      # @option options [String] :file Database file
-      # @option options [::SDBM] :backend Use existing backend instance
-      def initialize(options = {})
-        @backend = options[:backend] ||
-          begin
-            raise ArgumentError, 'Option :file is required' unless options[:file]
-            ::SDBM.new(options[:file])
-          end
-      end
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :file Database file
+      #   @option options [::SDBM] :backend Use existing backend instance
+      backend { |file:| ::SDBM.new(file) }
     end
   end
 end
