@@ -19,7 +19,7 @@ module Moneta
 
       backend do |keyspace: 'moneta', cluster: nil, create_keyspace: nil, **options|
         cluster ||= ::Cassandra.cluster(options).tap do |own_cluster|
-          @own_cluster = cluster
+          @own_cluster = own_cluster
         end
 
         begin
