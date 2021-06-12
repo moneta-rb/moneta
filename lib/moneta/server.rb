@@ -4,14 +4,17 @@ module Moneta
   # Moneta server to be used together with Moneta::Adapters::Client
   # @api public
   class Server
-    TIMEOUT = 1
-    MAXSIZE = 0x100000
+    include Config
+
+    config :timeout, default: 1
+    config :max_size, default: 0x100000
 
     # @api private
     class Connection
-      def initialize(io, store)
+      def initialize(io, store, max_size)
         @io = io
         @store = store
+        @max_size = max_size
         @fiber = Fiber.new { run }
       end
 
@@ -58,7 +61,7 @@ module Moneta
 
       def read_msg
         size = read(4).unpack('N').first
-        throw :closed, 'Message too big' if size > MAXSIZE
+        throw :closed, 'Message too big' if size > @max_size
         Marshal.load(read(size))
       end
 
@@ -155,9 +158,13 @@ module Moneta
     # @param [Hash] options
     # @option options [Integer] :port (9000) TCP port
     # @option options [String] :socket Alternative Unix socket file name
+    # @option options [Integer] :timeout (1) Number of seconds to timeout on IO.select
+    # @option options [Integer] :max_size (0x100000) Maximum number of bytes
+    #   allowed to be sent by clients in requests
     def initialize(store, options = {})
+      options = configure(**options)
       @store = store
-      @server = start(options)
+      @server = start(**options)
       @ios = [@server]
       @reads = @ios.dup
       @writes = []
@@ -187,7 +194,7 @@ module Moneta
         @ios
           .reject { |io| io == @server }
           .each { |io| close_connection(io) }
-        File.unlink(@socket) if @socket rescue nil
+        File.unlink(config.socket) if config.socket rescue nil
       end
     end
 
@@ -202,7 +209,7 @@ module Moneta
     private
 
     def mainloop
-      if ready = IO.select(@reads, @writes, @ios, TIMEOUT)
+      if ready = IO.select(@reads, @writes, @ios, config.timeout)
         reads, writes, errors = ready
         errors.each { |io| close_connection(io) }
 
@@ -229,7 +236,7 @@ module Moneta
 
     def accept_connection
       io = @server.accept
-      @connections[io] = Connection.new(io, @store)
+      @connections[io] = Connection.new(io, @store, config.max_size)
       @ios << io
       resume(io)
     ensure
@@ -261,21 +268,21 @@ module Moneta
       end
     end
 
-    def start(options)
-      if @socket = options[:socket]
+    def start(host: '127.0.0.1', port: 9000, socket: nil)
+      if socket
         begin
-          UNIXServer.open(@socket)
+          UNIXServer.open(socket)
         rescue Errno::EADDRINUSE
-          if client = (UNIXSocket.open(@socket) rescue nil)
+          if client = (UNIXSocket.open(socket) rescue nil)
             client.close
             raise
           end
-          File.unlink(@socket)
+          File.unlink(socket)
           tries ||= 0
           (tries += 1) < 3 ? retry : raise
         end
       else
-        TCPServer.open(options[:host] || '127.0.0.1', options[:port] || 9000)
+        TCPServer.open(host, port)
       end
     end
 
