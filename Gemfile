@@ -94,8 +94,8 @@ group :Memcached, optional: true do
   end
 
   group :MemcachedNative, optional: true do
-    gem 'memcached', platforms: :ruby, group: :memcached_native
-    gem 'jruby-memcached', platforms: :jruby, group: :memcached_native
+    gem 'memcached', platforms: :ruby
+    gem 'jruby-memcached', platforms: :jruby
   end
 end
 
