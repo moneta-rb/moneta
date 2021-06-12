@@ -148,10 +148,12 @@ group :GDBM, optional: true do
   gem 'ffi-gdbm', platforms: :jruby
 end
 
-group :RestClient, optional: true do
+group :RestClient do
+  gem 'faraday'
+  gem 'multi_json'
+  gem 'manticore',  platforms: :jruby
   gem 'fishwife', platforms: :jruby
   gem 'rjack-logback', platforms: :jruby
-  gem 'multi_json'
 end
 
 group :DataMapper, optional: true do
@@ -163,12 +165,6 @@ end
 group :Fog, optional: true do
   gem 'fog-aws', '>= 1.11.1'
   gem 'mime-types'
-end
-
-# Used by multiple backends / transformers
-group :RestClient, optional: true do
-  gem 'faraday'
-  gem 'manticore',  platforms: :jruby
 end
 
 group :mysql, optional: true do
