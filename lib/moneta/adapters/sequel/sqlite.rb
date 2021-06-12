@@ -10,7 +10,7 @@ module Moneta
         end
 
         def store(key, value, options = {})
-          @table.insert_conflict(:replace).insert(key_column => key, value_column => blob(value))
+          @table.insert_conflict(:replace).insert(config.key_column => key, config.value_column => blob(value))
           value
         end
 
@@ -25,7 +25,7 @@ module Moneta
         def merge!(pairs, options = {}, &block)
           @backend.transaction do
             pairs = yield_merge_pairs(pairs, &block) if block_given?
-            @table.insert_conflict(:replace).import([key_column, value_column], blob_pairs(pairs).to_a)
+            @table.insert_conflict(:replace).import([config.key_column, config.value_column], blob_pairs(pairs).to_a)
           end
 
           self
@@ -36,20 +36,20 @@ module Moneta
         def prepare_store
           @store = @table
             .insert_conflict(:replace)
-            .prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
+            .prepare(:insert, statement_id(:store), config.key_column => :$key, config.value_column => :$value)
         end
 
         def prepare_increment
           return super unless @can_upsert
-          update_expr = (::Sequel[value_column].cast(Integer) + :$amount).cast(:blob)
+          update_expr = (::Sequel[config.value_column].cast(Integer) + :$amount).cast(:blob)
           @increment = @table
             .insert_conflict(
-              target: key_column,
-              update: { value_column => update_expr },
-              update_where: ::Sequel.|({ value_column => blob("0") },
-                                       { ::Sequel.~(::Sequel[value_column].cast(Integer)) => 0 })
+              target: config.key_column,
+              update: { config.value_column => update_expr },
+              update_where: ::Sequel.|({ config.value_column => blob("0") },
+                                       { ::Sequel.~(::Sequel[config.value_column].cast(Integer)) => 0 })
             )
-            .prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
+            .prepare(:insert, statement_id(:increment), config.key_column => :$key, config.value_column => :$value)
         end
       end
     end

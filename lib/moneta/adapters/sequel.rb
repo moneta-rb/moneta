@@ -4,16 +4,31 @@ module Moneta
   module Adapters
     # Sequel backend
     # @api public
-    class Sequel
-      include Defaults
-
+    class Sequel < Adapter
       autoload :MySQL, 'moneta/adapters/sequel/mysql'
       autoload :Postgres, 'moneta/adapters/sequel/postgres'
       autoload :PostgresHStore, 'moneta/adapters/sequel/postgres_hstore'
       autoload :SQLite, 'moneta/adapters/sequel/sqlite'
 
       supports :create, :increment, :each_key
-      attr_reader :backend, :key_column, :value_column
+
+      config :table, default: :moneta, coerce: :to_sym
+      config :optimize, default: true
+      config :create_table, default: true
+      config :key_column, default: :k
+      config :value_column, default: :v
+      config :hstore, coerce: :to_s
+      config :each_key_server
+
+      backend do |db:, extensions: [], connection_validation_timeout: nil, **options|
+        ::Sequel.connect(db, options).tap do |backend|
+          extensions.map(&:to_sym).each(&backend.method(:extension))
+
+          if connection_validation_timeout
+            backend.pool.connection_validation_timeout = connection_validation_timeout
+          end
+        end
+      end
 
       # @param [Hash] options
       # @option options [String] :db Sequel database
@@ -22,7 +37,7 @@ module Moneta
       # @option options [Integer] :connection_validation_timeout (nil) Sequel connection_validation_timeout
       # @option options [Sequel::Database] :backend Use existing backend instance
       # @option options [Boolean] :optimize (true) Set to false to prevent database-specific optimisations
-      # @option options [Proc, Boolean] :create_table Provide a Proc for creating the table, or
+      # @option options [Proc, Boolean] :create_table (true) Provide a Proc for creating the table, or
       #   set to false to disable table creation all together.  If a Proc is given, it will be
       #   called regardless of whether the table exists already.
       # @option options [Symbol] :key_column (:k) The name of the key column
@@ -37,32 +52,21 @@ module Moneta
       #   in conjunction with Sequel's `:servers` option
       # @option options All other options passed to `Sequel#connect`
       def initialize(options = {})
-        extensions = options.delete(:extensions)
-        connection_validation_timeout = options.delete(:connection_validation_timeout)
-        optimize = options.delete(:optimize)
-        @backend = options.delete(:backend) ||
-          connect(extensions: extensions, connection_validation_timeout: connection_validation_timeout, **options)
+        super
 
-        if hstore = options.delete(:hstore)
-          @row = hstore.to_s
+        if config.hstore
           extend Sequel::PostgresHStore
-        elsif optimize == nil || optimize
+        elsif config.optimize
           add_optimizations
         end
 
-        @table_name = (options.delete(:table) || :moneta).to_sym
-        @key_column = options.delete(:key_column) || :k
-        @value_column = options.delete(:value_column) || :v
-        @each_key_server = options.delete(:each_key_server)
-
-        create_proc = options.delete(:create_table)
-        if create_proc == nil
+        if config.create_table.respond_to?(:call)
+          config.create_table.call(backend)
+        elsif config.create_table
           create_table
-        elsif create_proc
-          create_proc.call(@backend)
         end
 
-        @table = @backend[@table_name]
+        @table = backend[config.table]
         prepare_statements
       end
 
@@ -74,7 +78,7 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         if row = @load.call(key: key)
-          row[value_column]
+          row[config.value_column]
         end
       end
 
@@ -100,9 +104,9 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.transaction do
+        backend.transaction do
           if existing = @load_for_update.call(key: key)
-            existing_value = existing[value_column]
+            existing_value = existing[config.value_column]
             amount += Integer(existing_value)
             raise IncrementError, "no update" unless @increment_update.call(
               key: key,
@@ -135,13 +139,13 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @backend.disconnect
+        backend.disconnect
         nil
       end
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        @slice.all(keys).map! { |row| [row[key_column], row[value_column]] }
+        @slice.all(keys).map! { |row| [row[config.key_column], row[config.value_column]] }
       end
 
       # (see Proxy#values_at)
@@ -165,10 +169,10 @@ module Moneta
 
       # (see Proxy#merge!)
       def merge!(pairs, options = {})
-        @backend.transaction do
+        backend.transaction do
           existing = Hash[slice_for_update(pairs)]
           update_pairs, insert_pairs = pairs.partition { |k, _| existing.key?(k) }
-          @table.import([key_column, value_column], blob_pairs(insert_pairs))
+          @table.import([config.key_column, config.value_column], blob_pairs(insert_pairs))
 
           if block_given?
             update_pairs.map! do |key, new_value|
@@ -187,8 +191,10 @@ module Moneta
       # (see Proxy#each_key)
       def each_key
         return enum_for(:each_key) { @table.count } unless block_given?
-        if @each_key_server
-          @table.server(@each_key_server).order(key_column).select(key_column).paged_each do |row|
+
+        key_column = config.key_column
+        if config.each_key_server
+          @table.server(config.each_key_server).order(key_column).select(key_column).paged_each do |row|
             yield row[key_column]
           end
         else
@@ -200,21 +206,6 @@ module Moneta
       end
 
       protected
-
-      # @api private
-      def connect(db:, extensions: nil, connection_validation_timeout: nil, **options)
-        other_cols = [:table, :create_table, :key_column, :value_column, :hstore]
-        ::Sequel.connect(db, options.reject { |k,| other_cols.member?(k) }).tap do |backend|
-          if extensions
-            raise ArgumentError, 'Option :extensions must be an Array' unless extensions.is_a?(Array)
-            extensions.map(&:to_sym).each(&backend.method(:extension))
-          end
-
-          if connection_validation_timeout
-            backend.pool.connection_validation_timeout = connection_validation_timeout
-          end
-        end
-      end
 
       # @api private
       def add_optimizations
@@ -243,9 +234,9 @@ module Moneta
       end
 
       def create_table
-        key_column = self.key_column
-        value_column = self.value_column
-        @backend.create_table?(@table_name) do
+        key_column = config.key_column
+        value_column = config.value_column
+        backend.create_table?(config.table) do
           String key_column, null: false, primary_key: true
           File value_column
         end
@@ -253,7 +244,7 @@ module Moneta
 
       def slice_for_update(pairs)
         @slice_for_update.all(pairs.map { |k, _| k }.to_a).map! do |row|
-          [row[key_column], row[value_column]]
+          [row[config.key_column], row[config.value_column]]
         end
       end
 
@@ -266,7 +257,7 @@ module Moneta
       end
 
       def statement_id(id)
-        "moneta_#{@table_name}_#{id}".to_sym
+        "moneta_#{config.table}_#{id}".to_sym
       end
 
       def prepare_statements
@@ -281,49 +272,49 @@ module Moneta
 
       def prepare_key
         @key = @table
-          .where(key_column => :$key).select(1)
+          .where(config.key_column => :$key).select(1)
           .prepare(:first, statement_id(:key))
       end
 
       def prepare_load
         @load = @table
-          .where(key_column => :$key).select(value_column)
+          .where(config.key_column => :$key).select(config.value_column)
           .prepare(:first, statement_id(:load))
       end
 
       def prepare_store
         @store_update = @table
-          .where(key_column => :$key)
-          .prepare(:update, statement_id(:store_update), value_column => :$value)
+          .where(config.key_column => :$key)
+          .prepare(:update, statement_id(:store_update), config.value_column => :$value)
       end
 
       def prepare_create
         @create = @table
-          .prepare(:insert, statement_id(:create), key_column => :$key, value_column => :$value)
+          .prepare(:insert, statement_id(:create), config.key_column => :$key, config.value_column => :$value)
       end
 
       def prepare_increment
         @load_for_update = @table
-          .where(key_column => :$key).for_update
-          .select(value_column)
+          .where(config.key_column => :$key).for_update
+          .select(config.value_column)
           .prepare(:first, statement_id(:load_for_update))
         @increment_update ||= @table
-          .where(key_column => :$key, value_column => :$value)
-          .prepare(:update, statement_id(:increment_update), value_column => :$new_value)
+          .where(config.key_column => :$key, config.value_column => :$value)
+          .prepare(:update, statement_id(:increment_update), config.value_column => :$new_value)
       end
 
       def prepare_delete
-        @delete = @table.where(key_column => :$key)
+        @delete = @table.where(config.key_column => :$key)
           .prepare(:delete, statement_id(:delete))
       end
 
       def prepare_slice
         @slice_for_update = ::Sequel::Dataset::PlaceholderLiteralizer.loader(@table) do |pl, ds|
-          ds.filter(key_column => pl.arg).select(key_column, value_column).for_update
+          ds.filter(config.key_column => pl.arg).select(config.key_column, config.value_column).for_update
         end
 
         @slice = ::Sequel::Dataset::PlaceholderLiteralizer.loader(@table) do |pl, ds|
-          ds.filter(key_column => pl.arg).select(key_column, value_column)
+          ds.filter(config.key_column => pl.arg).select(config.key_column, config.value_column)
         end
       end
 
