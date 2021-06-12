@@ -71,5 +71,10 @@ module Moneta
     def merge!(pairs, options = {})
       wrap(:merge!, pairs, options) { super }
     end
+
+    # (see Proxy#config)
+    def config
+      wrap(:config) { super }
+    end
   end
 end
