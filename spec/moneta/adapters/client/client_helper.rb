@@ -12,13 +12,14 @@ RSpec.shared_context :start_server do |**options|
       puts "Failed to start server - #{ex.message}"
       tries ||= 0
       tries += 1
-      sleep Moneta::Server::TIMEOUT
+      timeout = options[:timeout] || Moneta::Server.config_defaults[:timeout]
+      sleep 1
       tries < 3 ? retry : raise
     end
   end
 
   after :context do
-    @server.stop
-    @thread.join
+    @server&.stop
+    @thread&.join
   end
 end
