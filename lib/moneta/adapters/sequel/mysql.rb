@@ -14,7 +14,7 @@ module Moneta
             # "gap lock").
             if row = @load_for_update.call(key: key)
               # Integer() will raise an exception if the existing value cannot be parsed
-              amount += Integer(row[value_column])
+              amount += Integer(row[config.value_column])
               @increment_update.call(key: key, value: amount)
             else
               @create.call(key: key, value: amount)
@@ -31,17 +31,17 @@ module Moneta
             pairs = yield_merge_pairs(pairs, &block) if block_given?
             @table
               .on_duplicate_key_update
-              .import([key_column, value_column], blob_pairs(pairs).to_a)
+              .import([config.key_column, config.value_column], blob_pairs(pairs).to_a)
           end
 
           self
         end
 
         def each_key
-          return super unless block_given? && @each_key_server && @table.respond_to?(:stream)
+          return super unless block_given? && config.each_key_server && @table.respond_to?(:stream)
           # Order is not required when streaming
-          @table.server(@each_key_server).select(key_column).paged_each do |row|
-            yield row[key_column]
+          @table.server(config.each_key_server).select(config.key_column).paged_each do |row|
+            yield row[config.key_column]
           end
           self
         end
@@ -51,13 +51,13 @@ module Moneta
         def prepare_store
           @store = @table
             .on_duplicate_key_update
-            .prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
+            .prepare(:insert, statement_id(:store), config.key_column => :$key, config.value_column => :$value)
         end
 
         def prepare_increment
           @increment_update = @table
-            .where(key_column => :$key)
-            .prepare(:update, statement_id(:increment_update), value_column => :$value)
+            .where(config.key_column => :$key)
+            .prepare(:update, statement_id(:increment_update), config.value_column => :$value)
           super
         end
       end
