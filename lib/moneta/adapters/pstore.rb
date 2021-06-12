@@ -5,63 +5,61 @@ module Moneta
   module Adapters
     # PStore backend
     # @api public
-    class PStore
-      include Defaults
+    class PStore < Adapter
       include NilValues
 
       supports :create, :increment, :each_key
-      attr_reader :backend
+
+      backend do |file:, threadsafe: false|
+        FileUtils.mkpath(::File.dirname(file))
+        ::PStore.new(file, threadsafe)
+      end
 
       # @param [Hash] options
       # @option options [String] :file PStore file
+      # @option options [Boolean] :threadsafe Makes the PStore thread-safe
       # @option options [::PStore] :backend Use existing backend instance
       def initialize(options = {})
-        @backend = options[:backend] ||
-          begin
-            raise ArgumentError, 'Option :file is required' unless options[:file]
-            FileUtils.mkpath(::File.dirname(options[:file]))
-            new_store(options)
-          end
-
+        super
         @id = "Moneta::Adapters::PStore(#{object_id})"
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        transaction(true) { @backend.root?(key) }
+        transaction(true) { backend.root?(key) }
       end
 
       # (see Proxy#each_key)
       def each_key(&block)
-        return enum_for(:each_key) { transaction(true) { @backend.roots.size } } unless block_given?
+        return enum_for(:each_key) { transaction(true) { backend.roots.size } } unless block_given?
 
         transaction(true) do
-          @backend.roots.each { |k| yield(k) }
+          backend.roots.each { |k| yield(k) }
         end
         self
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        transaction(true) { @backend[key] }
+        transaction(true) { backend[key] }
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        transaction { @backend[key] = value }
+        transaction { backend[key] = value }
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        transaction { @backend.delete(key) }
+        transaction { backend.delete(key) }
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         transaction do
-          existing = @backend[key]
+          existing = backend[key]
           value = (existing == nil ? 0 : Integer(existing)) + amount
-          @backend[key] = value.to_s
+          backend[key] = value.to_s
           value
         end
       end
@@ -69,10 +67,10 @@ module Moneta
       # (see Proxy#create)
       def create(key, value, options = {})
         transaction do
-          if @backend.root?(key)
+          if backend.root?(key)
             false
           else
-            @backend[key] = value
+            backend[key] = value
             true
           end
         end
@@ -81,8 +79,8 @@ module Moneta
       # (see Proxy#clear)
       def clear(options = {})
         transaction do
-          @backend.roots.each do |key|
-            @backend.delete(key)
+          backend.roots.each do |key|
+            backend.delete(key)
           end
         end
         self
@@ -109,10 +107,6 @@ module Moneta
 
       class TransactionError < StandardError; end
 
-      def new_store(options)
-        ::PStore.new(options[:file], options[:threadsafe])
-      end
-
       def transaction(read_only = false)
         case Thread.current[@id]
         when read_only, false
@@ -122,7 +116,7 @@ module Moneta
         else
           begin
             Thread.current[@id] = read_only
-            @backend.transaction(read_only) { yield }
+            backend.transaction(read_only) { yield }
           ensure
             Thread.current[@id] = nil
           end
