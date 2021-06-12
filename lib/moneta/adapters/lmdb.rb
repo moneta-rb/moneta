@@ -5,28 +5,25 @@ module Moneta
   module Adapters
     # LMDB backend
     # @api public
-    class LMDB
-      include Defaults
-
+    class LMDB < Adapter
       supports :create, :increment, :each_key
-      attr_reader :backend, :db
 
       PUT_FLAGS = %i[nooverwrite nodupdata current append appenddup].freeze
+
+      config :db, default: 'moneta'
+
+      backend do |dir:, **options|
+        FileUtils.mkpath(dir)
+        ::LMDB.new(dir, options)
+      end
 
       # @param [Hash] options
       # @option options [String] :dir Environment directory
       # @option options [::LMDB::Environment] :backend Use existing backend instance
-      # @option options [String or nil] :db Database name
-      def initialize(options)
-        db = options.delete(:db)
-        @backend = options.delete(:backend) ||
-          begin
-            raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
-            FileUtils.mkpath(dir)
-            ::LMDB.new(dir, options)
-          end
-
-        @db = @backend.database(db, create: true)
+      # @option options [String or nil] :db ('moneta') Database name
+      def initialize(options = {})
+        super
+        @db = backend.database(config.db, create: true)
       end
 
       # (see Proxy#key?)
@@ -47,7 +44,7 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        @backend.transaction do
+        backend.transaction do
           if value = @db.get(key)
             @db.delete(key)
             value
@@ -63,7 +60,7 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.transaction do
+        backend.transaction do
           value = Integer(@db.get(key) || 0) + amount
           @db.put(key, value.to_s, Utils.only(options, *PUT_FLAGS))
           value
@@ -72,7 +69,7 @@ module Moneta
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        @backend.transaction do
+        backend.transaction do
           if @db.get(key)
             false
           else
@@ -84,7 +81,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @backend.close
+        backend.close
         nil
       end
 
@@ -103,17 +100,17 @@ module Moneta
 
       # (see Proxy#values_at)
       def values_at(*keys, **options)
-        @backend.transaction { super }
+        backend.transaction { super }
       end
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        @backend.transaction { super }
+        backend.transaction { super }
       end
 
       # (see Proxy#merge!)
       def merge!(pairs, options = {})
-        @backend.transaction { super }
+        backend.transaction { super }
       end
     end
   end
