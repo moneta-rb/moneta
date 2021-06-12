@@ -4,21 +4,17 @@ module Moneta
   module Adapters
     # Redis backend
     # @api public
-    class Redis
-      include Defaults
+    class Redis < Adapter
       include ExpiresSupport
 
       supports :create, :increment, :each_key
-      attr_reader :backend
 
-      # @param [Hash] options
-      # @option options [Integer] :expires Default expiration time
-      # @option options [::Redis] :backend Use existing backend instance
-      # @option options Other options passed to `Redis#new`
-      def initialize(options = {})
-        self.default_expires = options.delete(:expires)
-        @backend = options[:backend] || ::Redis.new(options)
-      end
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [Integer] :expires Default expiration time
+      #   @option options [::Redis] :backend Use existing backend instance
+      #   @option options Other options passed to `Redis#new`
+      backend { |**options| ::Redis.new(options) }
 
       # (see Proxy#key?)
       #
@@ -85,7 +81,7 @@ module Moneta
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        expires = expires_value(options, @default_expires)
+        expires = expires_value(options, config.expires)
 
         if @backend.setnx(key, value)
           update_expires(key, expires)
@@ -148,7 +144,7 @@ module Moneta
         end
       end
 
-      def with_expiry_update(*keys, default: @default_expires, **options)
+      def with_expiry_update(*keys, default: config.expires, **options)
         expires = expires_value(options, default)
         if expires == nil
           yield
