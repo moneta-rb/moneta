@@ -3,9 +3,11 @@
 # * {Moneta.new}
 # * {Moneta.build}
 module Moneta
+  autoload :Adapter,           'moneta/adapter'
   autoload :Builder,           'moneta/builder'
   autoload :Cache,             'moneta/cache'
   autoload :CreateSupport,     'moneta/create_support'
+  autoload :Config,            'moneta/config'
   autoload :DBMAdapter,        'moneta/dbm_adapter'
   autoload :Defaults,          'moneta/defaults'
   autoload :EachKeySupport,    'moneta/each_key_support'
