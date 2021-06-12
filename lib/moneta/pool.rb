@@ -309,9 +309,9 @@ module Moneta
     #   store to become available.  If not specified, will wait forever.
     # @yield A builder context for speciying how to construct stores
     def initialize(options = {}, &block)
-      super(nil)
       @id = "Moneta::Pool(#{object_id})"
       @manager = PoolManager.new(Builder.new(&block), **options)
+      super(nil, options)
     end
 
     # Closing has no effect on the pool, as stores are closed in the background
