@@ -42,7 +42,7 @@ jobs:
           - YAML
 
     env:
-      BUNDLE_WITH: ${{ matrix.adapter }}
+      BUNDLE_WITH: ${{ matrix.adapter }} snappy
 
     steps:
     - uses: actions/checkout@v2
