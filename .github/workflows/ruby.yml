@@ -373,7 +373,7 @@ jobs:
         ruby-version: [2.7, 2.3, jruby]
 
     env:
-      BUNDLE_WITH: transformers rack rails GDBM
+      BUNDLE_WITH: transformers GDBM Fog
 
     steps:
     - uses: actions/checkout@v2
