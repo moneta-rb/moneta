@@ -69,7 +69,7 @@ end
 
 # Backends
 group :Daybreak, optional: true do
-  gem 'daybreak', platforms: :ruby
+  gem 'daybreak'
 end
 
 group :ActiveRecord, optional: true do
