@@ -4,25 +4,19 @@ module Moneta
   module Adapters
     # LocalMemCache backend
     # @api public
-    class LocalMemCache
-      include Defaults
+    class LocalMemCache < Adapter
       include HashAdapter
 
-      # @param [Hash] options
-      # @option options [String] :file Database file
-      # @option options [::LocalMemCache] :backend Use existing backend instance
-      def initialize(options = {})
-        @backend = options[:backend] ||
-          begin
-            raise ArgumentError, 'Option :file is required' unless options[:file]
-            ::LocalMemCache.new(filename: options[:file])
-          end
-      end
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :file Database file
+      #   @option options [::LocalMemCache] :backend Use existing backend instance
+      backend { |file:| ::LocalMemCache.new(filename: file) }
 
       # (see Proxy#delete)
       def delete(key, options = {})
         value = load(key, options)
-        @backend.delete(key)
+        backend.delete(key)
         value
       end
     end
