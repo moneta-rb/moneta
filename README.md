@@ -77,8 +77,8 @@ store.close
 * Tests and benchmarks: <https://github.com/moneta-rb/moneta/actions>
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
-    * GitHub master: <http://rubydoc.info/github/moneta-rb/moneta/master/frames>
-* Changelog: <https://github.com/moneta-rb/moneta/blob/master/CHANGES>
+    * GitHub main: <http://rubydoc.info/github/moneta-rb/moneta/main/frames>
+* Changelog: <https://github.com/moneta-rb/moneta/blob/main/CHANGES>
 
 In case you are wondering, Moneta uses [Semantic Versioning](https://semver.org/) since v1.0.0.
 
@@ -135,7 +135,7 @@ to upgrade to a real key/value store.
 
 ### Backend feature matrix
 
-__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/moneta-rb/moneta/master/file/README.md#backend-matrix)
+__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/moneta-rb/moneta/main/file/README.md#backend-matrix)
 
 <table>
 <tr><th>Adapter</th><th>Required gems</th><th style="writing-mode:tb">MRI support<sup>1</sup></th><th style="writing-mode:tb">JRuby support<sup>1</sup></th><th style="writing-mode:tb">Multi-thread safe<sup>2</sup></th><th style="writing-mode:tb">Multi-process safe<sup>3</sup></th><th style="writing-mode:tb">Atomic increment<sup>4</sup></th><th style="writing-mode:tb">Atomic create<sup>5</sup></th><th style="writing-mode:tb">Native expires<sup>6</sup></th><th style="writing-mode:tb">Persistent</th><th style="writing-mode:tb">Key Traversal</th><th style="writing-mode:tb">Bulk read<sup>7</sup></th><th style="writing-mode:tb">Bulk write<sup>8</sup></th><th>Description</th></tr>
