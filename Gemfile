@@ -2,11 +2,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :transformers, optional: true do
-  # Serializers used by Transformer
-  group :json, optional: true do
-    gem 'multi_json'
-  end
-
   group :tnet, optional: true do
     gem 'tnetstring'
   end
@@ -105,7 +100,6 @@ end
 
 group :Cassandra, optional: true do
   gem 'cassandra-driver'
-  gem 'multi_json'
 end
 
 group :TokyoTyrant, optional: true do
@@ -150,7 +144,6 @@ end
 
 group :RestClient do
   gem 'faraday'
-  gem 'multi_json'
   gem 'webrick'
 end
 

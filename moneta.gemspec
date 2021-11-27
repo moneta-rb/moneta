@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.3.0'
 
+  s.add_development_dependency 'multi_json', '~> 1.15.0'
   s.add_development_dependency 'parallel_tests', '~> 2.29.2'
   s.add_development_dependency 'rantly', '~> 1.2.0'
   s.add_development_dependency 'rspec', '~> 3.0'
