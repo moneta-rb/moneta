@@ -1,4 +1,6 @@
-describe 'transformer_bson', proxy: :Transformer do
+# Currently broken in JRuby 9.3 - see https://github.com/jruby/jruby/issues/6941
+
+describe 'transformer_bson', proxy: :Transformer, broken: defined?(JRUBY_VERSION) && ::Gem::Version.new(JRUBY_VERSION) >= ::Gem::Version.new('9.3.0.0') do
   moneta_build do
     Moneta.build do
       use :Transformer, key: :bson, value: :bson
