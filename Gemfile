@@ -151,9 +151,7 @@ end
 group :RestClient do
   gem 'faraday'
   gem 'multi_json'
-  gem 'manticore',  platforms: :jruby
-  gem 'fishwife', platforms: :jruby
-  gem 'rjack-logback', platforms: :jruby
+  gem 'webrick'
 end
 
 group :DataMapper, optional: true do
