@@ -210,7 +210,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: [2.7, 2.4, jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper postgresql
