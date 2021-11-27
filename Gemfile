@@ -85,7 +85,7 @@ end
 
 group :Memcached, optional: true do
   group :MemcachedDalli, optional: true do
-    gem 'dalli'
+    gem 'dalli', '~> 2.7.11'
   end
 
   group :MemcachedNative, optional: true do
