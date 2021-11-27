@@ -127,8 +127,8 @@ module Moneta
         key = to_binary(key)
         @collection.insert_one(value_to_doc(key, value, options))
         true
-      rescue ::Mongo::Error::OperationFailure => ex
-        raise unless ex.message =~ /^E11000 / # duplicate key error
+      rescue ::Mongo::Error::OperationFailure => error
+        raise unless error.code == 11000 # duplicate key error
         false
       end
 
