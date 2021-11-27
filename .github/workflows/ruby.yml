@@ -111,8 +111,8 @@ jobs:
         options: >-
           --health-cmd "cqlsh -e \"SELECT cql_version FROM system.local\""
           --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-timeout 10s
+          --health-retries 10
         ports:
           - 9042:9042
 
