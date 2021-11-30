@@ -27,7 +27,7 @@ describe 'adapter_redis', adapter: :Redis do
         Moneta::Adapters::Redis.new(host: redis_host, port: redis_port, db: 6)
       end
 
-      it do
+      it 'returns nil' do
         allow(store.backend).to receive(:get).and_return(nil)
         expect(store.delete(nil)).to eq(nil)
       end
