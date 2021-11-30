@@ -67,7 +67,7 @@ module Moneta
           future = @backend.get(key)
           @backend.del(key)
         end
-        future&.value
+        future.value
       end
 
       # (see Proxy#increment)
