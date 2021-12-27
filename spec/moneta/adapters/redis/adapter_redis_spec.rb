@@ -28,8 +28,7 @@ describe 'adapter_redis', adapter: :Redis do
       end
 
       it 'returns nil' do
-        allow(store.backend).to receive(:get).and_return(nil)
-        expect(store.delete(nil)).to eq(nil)
+        expect(store.delete('non_existent_key')).to eq(nil)
       end
     end
   end
