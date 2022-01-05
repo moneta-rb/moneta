@@ -17,4 +17,19 @@ describe 'adapter_redis', adapter: :Redis do
 
     moneta_specs NATIVE_EXPIRY_SPECS.with_default_expires
   end
+
+  describe '.delete' do
+    context 'when @backend.get returns nil' do
+      let(:redis_host) { 'localhost' }
+      let(:redis_port) { '6379' }
+
+      moneta_build do
+        Moneta::Adapters::Redis.new(host: redis_host, port: redis_port, db: 6)
+      end
+
+      it 'returns nil' do
+        expect(store.delete('non_existent_key')).to eq(nil)
+      end
+    end
+  end
 end
