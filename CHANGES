@@ -1,3 +1,7 @@
+1.4.3
+
+* Moneta::Adapters::Redis - fix delete method bug
+
 1.4.2
 
 * Pool - fix busy-loop issue (#197)
