@@ -80,7 +80,7 @@ group :Mongo, optional: true do
 end
 
 group :Sequel, optional: true do
-  gem 'sequel'
+  gem 'sequel', '5.52.0'
 end
 
 group :Memcached, optional: true do
