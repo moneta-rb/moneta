@@ -33,12 +33,12 @@ module Moneta
       config :login
       config :password
       config :adapter
+      config :skip_create_db
 
       backend do |scheme: 'http', host: '127.0.0.1', port: 5984, db: 'moneta', adapter: nil, **options|
-        block = if adapter
-                  proc { |faraday| faraday.adapter(adapter) }
-                end
-        ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block)
+        ::Faraday.new "#{scheme}://#{host}:#{port}/#{db}", options do |faraday|
+          faraday.adapter adapter if adapter
+        end
       end
 
       # @param [Hash] options
@@ -56,12 +56,21 @@ module Moneta
       #   :backend option is provided).
       def initialize(options = {})
         super
-        backend.basic_auth(config.login, config.password) if config.login && config.password
+
+        if config.login && config.password
+          # Faraday 1.x had a `basic_auth` function
+          if backend.respond_to? :basic_auth
+            backend.basic_auth(config.login, config.password)
+          else
+            backend.request :authorization, :basic, config.login, config.password
+          end
+        end
+
         @rev_cache = Moneta.build do
           use :Lock
           adapter :LRUHash
         end
-        create_db
+        create_db unless config.skip_create_db
       end
 
       # (see Proxy#key?)

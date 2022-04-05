@@ -13,10 +13,9 @@ module Moneta
       #   @option options Other options passed to {Faraday::new} (unless
       #     :backend option is provided).
       backend do |url:, adapter: nil, **options|
-        block = if adapter
-                  proc { |faraday| faraday.adapter adapter }
-                end
-        ::Faraday.new(url, options, &block)
+        ::Faraday.new(url, options) do |faraday|
+          faraday.adapter adapter if adapter
+        end
       end
 
       # (see Proxy#key?)
