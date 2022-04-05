@@ -197,7 +197,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:13.6
         env:
           POSTGRES_PASSWORD: moneta
         options: >-
