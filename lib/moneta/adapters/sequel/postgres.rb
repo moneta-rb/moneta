@@ -36,7 +36,7 @@ module Moneta
         end
 
         def each_key
-          return super unless block_given? && !@each_key_server && @table.respond_to?(:use_cursor)
+          return super unless block_given? && !config.each_key_server && @table.respond_to?(:use_cursor)
           # With a cursor, this will Just Work.
           @table.select(config.key_column).paged_each do |row|
             yield row[config.key_column]
