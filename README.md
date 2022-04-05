@@ -912,7 +912,8 @@ Person.adapter :memory, Moneta.new(:Redis)
 ## Testing and Benchmarks
 
 Testing is done using [GitHub Actions](https://github.com/moneta-rb/moneta/actions).
-Currently we support MRI Ruby >= 2.3.0 and the JRuby >= 9.2.9.0.
+Currently we support MRI Ruby >= 2.4.0 (but not yet 3.x) and the JRuby >=
+9.2.9.0. MRI 2.3.0 should mostly still work, but is no longer tested in CI.
 
 ~~Benchmarks for each store are done on
 [Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build.~~  At the
