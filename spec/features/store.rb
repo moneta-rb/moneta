@@ -1,106 +1,106 @@
 shared_examples :store do
   it 'writes values to keys that like a Hash' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      store[keys[0]] = values[0]
-      store[keys[0]].should == values[0]
-      store.load(keys[0]).should == values[0]
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      store[m.keys[0]] = m.values[0]
+      store[m.keys[0]].should == m.values[0]
+      store.load(m.keys[0]).should == m.values[0]
     end
   end
 
   it 'returns true from #key? if a key is available' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      store[keys[0]] = values[0]
-      store.key?(keys[0]).should be true
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      store[m.keys[0]] = m.values[0]
+      store.key?(m.keys[0]).should be true
     end
   end
 
   it 'stores values with #store' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      value = values[0]
-      store.store(keys[0], value).should equal(value)
-      store[keys[0]].should == values[0]
-      store.load(keys[0]).should == values[0]
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      value = m.values[0]
+      store.store(m.keys[0], value).should equal(value)
+      store[m.keys[0]].should == m.values[0]
+      store.load(m.keys[0]).should == m.values[0]
     end
   end
 
   it 'stores values after clear' do
-    moneta_property_of(keys: 2, values: 2).check do |keys:, values:|
-      store[keys[0]] = values[0]
-      store[keys[1]] = values[1]
+    moneta_property_of(keys: 2, values: 2).check do |m|
+      store[m.keys[0]] = m.values[0]
+      store[m.keys[1]] = m.values[1]
       store.clear.should equal(store)
-      store[keys[0]] = values[0]
-      store[keys[0]].should == values[0]
-      store[keys[1]].should be_nil
+      store[m.keys[0]] = m.values[0]
+      store[m.keys[0]].should == m.values[0]
+      store[m.keys[1]].should be_nil
     end
   end
 
   it 'removes and returns a value from the backing store via delete if it exists' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      store[keys[0]] = values[0]
-      store.delete(keys[0]).should == values[0]
-      store.key?(keys[0]).should be false
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      store[m.keys[0]] = m.values[0]
+      store.delete(m.keys[0]).should == m.values[0]
+      store.key?(m.keys[0]).should be false
     end
   end
 
   it 'overwrites existing values' do
-    moneta_property_of(keys: 1, values: 2).check do |keys:, values:|
-      store[keys[0]] = values[0]
-      store[keys[0]].should == values[0]
-      store[keys[0]] = values[1]
-      store[keys[0]].should == values[1]
+    moneta_property_of(keys: 1, values: 2).check do |m|
+      store[m.keys[0]] = m.values[0]
+      store[m.keys[0]].should == m.values[0]
+      store[m.keys[0]] = m.values[1]
+      store[m.keys[0]].should == m.values[1]
     end
   end
 
   it 'stores frozen values' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      value = values[0].freeze
-      (store[keys[0]] = value).should equal(value)
-      store[keys[0]].should == values[0]
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      value = m.values[0].freeze
+      (store[m.keys[0]] = value).should equal(value)
+      store[m.keys[0]].should == m.values[0]
     end
   end
 
   it 'stores frozen keys' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      key = keys[0].freeze
-      store[key] = values[0]
-      store[keys[0]].should == values[0]
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      key = m.keys[0].freeze
+      store[key] = m.values[0]
+      store[m.keys[0]].should == m.values[0]
     end
   end
 
   it 'fetches a key with a default value with fetch, if the key is available' do
-    moneta_property_of(keys: 1, values: 2).check do |keys:, values:|
-      next if values[0].nil?
-      store[keys[0]] = values[0]
-      store.fetch(keys[0], values[1]).should == values[0]
+    moneta_property_of(keys: 1, values: 2).check do |m|
+      next if m.values[0].nil?
+      store[m.keys[0]] = m.values[0]
+      store.fetch(m.keys[0], m.values[1]).should == m.values[0]
     end
   end
 
   it 'does not run the block in fetch if the key is available' do
-    moneta_property_of(keys: 1, values: 1).check do |keys:, values:|
-      next if values[0].nil?
-      store[keys[0]] = values[0]
+    moneta_property_of(keys: 1, values: 1).check do |m|
+      next if m.values[0].nil?
+      store[m.keys[0]] = m.values[0]
       unaltered = 'unaltered'
-      store.fetch(keys[0]) { unaltered = 'altered' }
+      store.fetch(m.keys[0]) { unaltered = 'altered' }
       unaltered.should == 'unaltered'
     end
   end
 
   shared_examples :values_at do |name|
     it 'retrieves stored values' do
-      moneta_property_of(keys: 3, values: 3).check do |keys:, values:|
-        store[keys[0]] = values[0]
-        store[keys[1]] = values[1]
-        store[keys[2]] = values[2]
-        expect(store.public_send(name, keys[1], keys[2], keys[0])).to eq [values[1], values[2], values[0]]
+      moneta_property_of(keys: 3, values: 3).check do |m|
+        store[m.keys[0]] = m.values[0]
+        store[m.keys[1]] = m.values[1]
+        store[m.keys[2]] = m.values[2]
+        expect(store.public_send(name, m.keys[1], m.keys[2], m.keys[0])).to eq [m.values[1], m.values[2], m.values[0]]
         store.clear
       end
     end
 
     it 'returns nil in place of missing values' do
-      moneta_property_of(keys: 3, values: 2).check do |keys:, values:|
-        store[keys[0]] = values[0]
-        store[keys[1]] = values[1]
-        expect(store.public_send(name, keys[1], keys[2], keys[0])).to eq [values[1], nil, values[0]]
+      moneta_property_of(keys: 3, values: 2).check do |m|
+        store[m.keys[0]] = m.values[0]
+        store[m.keys[1]] = m.values[1]
+        expect(store.public_send(name, m.keys[1], m.keys[2], m.keys[0])).to eq [m.values[1], nil, m.values[0]]
         store.clear
       end
     end
@@ -114,29 +114,29 @@ shared_examples :store do
     include_examples :values_at, :fetch_values
 
     it 'yields to the block, if given, for keys that are not in the store' do
-      moneta_property_of(keys: 4, values: 3).check do |keys:, values:|
-        store[keys[0]] = values[0]
-        store[keys[1]] = values[1]
-        store[keys[2]] = values[2]
+      moneta_property_of(keys: 4, values: 3).check do |m|
+        store[m.keys[0]] = m.values[0]
+        store[m.keys[1]] = m.values[1]
+        store[m.keys[2]] = m.values[2]
 
         expect do |b|
-          store.fetch_values(keys[0], keys[1], keys[2], keys[3], &b)
-        end.to yield_with_args(keys[3])
+          store.fetch_values(m.keys[0], m.keys[1], m.keys[2], m.keys[3], &b)
+        end.to yield_with_args(m.keys[3])
 
         store.clear
       end
     end
 
     it 'uses the value of the block, if given, for keys that are not in the store' do
-      moneta_property_of(keys: 4, values: 4).check do |keys:, values:|
-        store[keys[0]] = values[0]
-        store[keys[1]] = values[1]
-        store[keys[2]] = values[2]
+      moneta_property_of(keys: 4, values: 4).check do |m|
+        store[m.keys[0]] = m.values[0]
+        store[m.keys[1]] = m.values[1]
+        store[m.keys[2]] = m.values[2]
 
-        expect(store.fetch_values(keys[0], keys[1], keys[2], keys[3]) do |key|
-          expect(key).to eq keys[3]
-          values[3]
-        end).to eq [values[0], values[1], values[2], values[3]]
+        expect(store.fetch_values(m.keys[0], m.keys[1], m.keys[2], m.keys[3]) do |key|
+          expect(key).to eq m.keys[3]
+          m.values[3]
+        end).to eq [m.values[0], m.values[1], m.values[2], m.values[3]]
 
         store.clear
       end
@@ -149,26 +149,26 @@ shared_examples :store do
 
   describe '#slice' do
     it 'returns pairs of stored keys and values' do
-      moneta_property_of(keys: 3, values: 3).check do |keys:, values:|
-        store[keys[0]] = values[0]
-        store[keys[1]] = values[1]
-        store[keys[2]] = values[2]
+      moneta_property_of(keys: 3, values: 3).check do |m|
+        store[m.keys[0]] = m.values[0]
+        store[m.keys[1]] = m.values[1]
+        store[m.keys[2]] = m.values[2]
 
-        expect(store.slice(*[keys[0], keys[1], keys[2]].shuffle).to_a).to \
-          contain_exactly([keys[0], values[0]], [keys[1], values[1]], [keys[2], values[2]])
+        expect(store.slice(*[m.keys[0], m.keys[1], m.keys[2]].shuffle).to_a).to \
+          contain_exactly([m.keys[0], m.values[0]], [m.keys[1], m.values[1]], [m.keys[2], m.values[2]])
 
         store.clear
       end
     end
 
     it 'does not return pairs for any keys absent from the store' do
-      moneta_property_of(keys: 4, values: 3).check do |keys:, values:|
-        store[keys[0]] = values[0]
-        store[keys[1]] = values[1]
-        store[keys[2]] = values[2]
+      moneta_property_of(keys: 4, values: 3).check do |m|
+        store[m.keys[0]] = m.values[0]
+        store[m.keys[1]] = m.values[1]
+        store[m.keys[2]] = m.values[2]
 
-        expect(store.slice(*[keys[0], keys[1], keys[2], keys[3]].shuffle).to_a).to \
-          contain_exactly([keys[0], values[0]], [keys[1], values[1]], [keys[2], values[2]])
+        expect(store.slice(*[m.keys[0], m.keys[1], m.keys[2], m.keys[3]].shuffle).to_a).to \
+          contain_exactly([m.keys[0], m.values[0]], [m.keys[1], m.values[1]], [m.keys[2], m.values[2]])
 
         store.clear
       end
@@ -177,44 +177,44 @@ shared_examples :store do
 
   shared_examples :merge! do
     it 'stores values' do
-      moneta_property_of(keys: 3, values: 3).check do |keys:, values:|
-        expect(store.public_send(method, pairs.call({ keys[0] => values[0], keys[1] => values[1], keys[2] => values[2] }))).to be store
-        expect(store.key?(keys[0])).to be true
-        expect(store[keys[0]]).to eq values[0]
-        expect(store.key?(keys[1])).to be true
-        expect(store[keys[1]]).to eq values[1]
-        expect(store.key?(keys[2])).to be true
-        expect(store[keys[2]]).to eq values[2]
+      moneta_property_of(keys: 3, values: 3).check do |m|
+        expect(store.public_send(method, pairs.call({ m.keys[0] => m.values[0], m.keys[1] => m.values[1], m.keys[2] => m.values[2] }))).to be store
+        expect(store.key?(m.keys[0])).to be true
+        expect(store[m.keys[0]]).to eq m.values[0]
+        expect(store.key?(m.keys[1])).to be true
+        expect(store[m.keys[1]]).to eq m.values[1]
+        expect(store.key?(m.keys[2])).to be true
+        expect(store[m.keys[2]]).to eq m.values[2]
         store.clear
       end
     end
 
     it 'overwrites existing values' do
-      moneta_property_of(keys: 2, values: 3).check do |keys:, values:|
-        expect(store[keys[0]] = values[0]).to eq values[0]
-        expect(store.public_send(method, pairs.call({ keys[0] => values[1], keys[1] => values[2] }))).to be store
-        expect(store.key?(keys[0])).to be true
-        expect(store[keys[0]]).to eq values[1]
-        expect(store.key?(keys[1])).to be true
-        expect(store[keys[1]]).to eq values[2]
+      moneta_property_of(keys: 2, values: 3).check do |m|
+        expect(store[m.keys[0]] = m.values[0]).to eq m.values[0]
+        expect(store.public_send(method, pairs.call({ m.keys[0] => m.values[1], m.keys[1] => m.values[2] }))).to be store
+        expect(store.key?(m.keys[0])).to be true
+        expect(store[m.keys[0]]).to eq m.values[1]
+        expect(store.key?(m.keys[1])).to be true
+        expect(store[m.keys[1]]).to eq m.values[2]
         store.clear
       end
     end
 
     it 'stores the return value of the block, if given, for keys that will be overwritten' do
-      moneta_property_of(keys: 2, values: 4).check do |keys:, values:|
-        expect(store[keys[0]] = values[0]).to eq values[0]
-        expect(store.public_send(method, pairs.call({ keys[0] => values[1], keys[1] => values[2] })) do |key, old_val, new_val|
-          expect(key).to eq keys[0]
-          expect(old_val).to eq values[0]
-          expect(new_val).to eq values[1]
-          values[3]
+      moneta_property_of(keys: 2, values: 4).check do |m|
+        expect(store[m.keys[0]] = m.values[0]).to eq m.values[0]
+        expect(store.public_send(method, pairs.call({ m.keys[0] => m.values[1], m.keys[1] => m.values[2] })) do |key, old_val, new_val|
+          expect(key).to eq m.keys[0]
+          expect(old_val).to eq m.values[0]
+          expect(new_val).to eq m.values[1]
+          m.values[3]
         end).to be store
 
-        expect(store.key?(keys[0])).to be true
-        expect(store[keys[0]]).to eq values[3]
-        expect(store.key?(keys[1])).to be true
-        expect(store[keys[1]]).to eq values[2]
+        expect(store.key?(m.keys[0])).to be true
+        expect(store[m.keys[0]]).to eq m.values[3]
+        expect(store.key?(m.keys[1])).to be true
+        expect(store[m.keys[1]]).to eq m.values[2]
         store.clear
       end
     end
