@@ -156,9 +156,9 @@ module Moneta
             # +multi+ call. This will cause in error in redis >= 5.0.
             #
             # In order to continue supporting redis versions < 4.6, the following
-            # fallback has been introduced and can be removed once moneta 
+            # fallback has been introduced and can be removed once moneta
             # no longer supports redis < 4.6.
-            
+
             pipeline_handle = pipeline || @backend
             future = yield(pipeline_handle)
             keys.each { |key| update_expires(pipeline_handle, key, expires) }
