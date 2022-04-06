@@ -1,3 +1,12 @@
+1.5.0
+
+* Adapters - internally, most (all?) adapters now inherit from a base Adapter class
+* Adapters - adapter configuration is now accessed via a `config` method on
+             each adapter - see the code for examples.  This shouldn't affect
+             users unless they were directly modifying adapters' attributes.
+* Redis - fix deprecation warnings for Redis 4.6+ multi/pipelined handling (#215)
+* Mongo - slight improvement to error handling
+
 1.4.2
 
 * Pool - fix busy-loop issue (#197)
