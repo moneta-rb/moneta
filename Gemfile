@@ -147,10 +147,12 @@ group :RestClient do
   gem 'webrick'
 end
 
-group :DataMapper, optional: true do
-  gem 'dm-core'
-  gem 'dm-migrations'
-  gem 'dm-mysql-adapter'
+unless RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
+  group :DataMapper, optional: true do
+    gem 'dm-core'
+    gem 'dm-migrations'
+    gem 'dm-mysql-adapter'
+  end
 end
 
 group :Fog, optional: true do

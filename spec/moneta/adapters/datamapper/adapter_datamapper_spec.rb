@@ -1,4 +1,4 @@
-describe 'adapter_datamapper', broken: defined?(JRUBY_VERSION), adapter: :DataMapper, mysql: true do
+describe 'adapter_datamapper', unsupported: defined?(JRUBY_VERSION) || RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0'), adapter: :DataMapper, mysql: true do
   before :all do
     require 'dm-core'
 
