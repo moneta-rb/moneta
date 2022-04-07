@@ -335,9 +335,7 @@ module MonetaHelpers
         value_values = values.times.map { call(values_meta) }
         guard value_values.uniq.length == value_values.length
 
-        [[:keys, key_values], [:values, value_values]].
-          reject { |key, value| value.empty? }.
-          to_h
+        Struct.new(:keys, :values).new(key_values, value_values)
       end
     end
 
