@@ -99,7 +99,7 @@ group :Riak, optional: true do
 end
 
 group :Cassandra, optional: true do
-  gem 'cassandra-driver'
+  gem 'cassandra-driver' if RUBY_ENGINE != 'ruby' || Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0')
 end
 
 group :TokyoTyrant, optional: true do
@@ -131,7 +131,7 @@ group :TokyoCabinet, optional: true do
 end
 
 group :KyotoCabinet, optional: true do
-  gem 'kyotocabinet-ruby-reanimated', platforms: [:ruby_23, :ruby_24, :ruby_25, :ruby_26]
+  gem 'kyotocabinet-ruby-reanimated', platforms: :ruby if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.7.0')
 end
 
 group :H2, optional: true do
@@ -198,4 +198,5 @@ end
 # Used for running a dev console
 group :console, optional: true do
   gem 'irb'
+  gem 'rdoc'
 end

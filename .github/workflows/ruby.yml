@@ -106,7 +106,6 @@ jobs:
   cassandra:
     name: "Cassandra adapter"
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     services:
       cassandra:
@@ -121,7 +120,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.0', '2.7', '2.4', jruby]
+        ruby-version: ['2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: Cassandra
