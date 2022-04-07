@@ -89,8 +89,8 @@ group :Memcached, optional: true do
   end
 
   group :MemcachedNative, optional: true do
-    gem 'memcached', platforms: :ruby
     gem 'jruby-memcached', platforms: :jruby
+    gem 'memcached', platforms: :ruby
   end
 end
 
@@ -99,7 +99,9 @@ group :Riak, optional: true do
 end
 
 group :Cassandra, optional: true do
-  gem 'cassandra-driver' if RUBY_ENGINE != 'ruby' || Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0')
+  install_if lambda { RUBY_ENGINE != 'ruby' || Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0') } do
+    gem 'cassandra-driver'
+  end
 end
 
 group :TokyoTyrant, optional: true do
@@ -131,7 +133,9 @@ group :TokyoCabinet, optional: true do
 end
 
 group :KyotoCabinet, optional: true do
-  gem 'kyotocabinet-ruby-reanimated', platforms: :ruby if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.7.0')
+  install_if lambda { Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.7.0') } do
+    gem 'kyotocabinet-ruby-reanimated', platforms: :ruby
+  end
 end
 
 group :H2, optional: true do
@@ -147,8 +151,8 @@ group :RestClient do
   gem 'webrick'
 end
 
-unless RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
-  group :DataMapper, optional: true do
+group :DataMapper, optional: true do
+  install_if lambda { RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0') } do
     gem 'dm-core'
     gem 'dm-migrations'
     gem 'dm-mysql-adapter'
@@ -176,7 +180,9 @@ group :postgresql, optional: true do
 end
 
 group :SDBM, optional: true do
-  gem 'sdbm', platforms: :ruby if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
+  install_if lambda { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0') } do
+    gem 'sdbm', platforms: :ruby
+  end
 end
 
 # Rack integration testing
