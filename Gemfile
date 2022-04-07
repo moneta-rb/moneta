@@ -173,6 +173,10 @@ group :postgresql, optional: true do
   gem 'pg', platforms: :ruby
 end
 
+group :SDBM, optional: true do
+  gem 'sdbm', platforms: :ruby if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
+end
+
 # Rack integration testing
 group :rack do
   gem 'rack'
