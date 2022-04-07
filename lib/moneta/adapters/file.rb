@@ -16,7 +16,7 @@ module Moneta
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
       def initialize(options = {})
-        configure(options)
+        configure(**options)
         FileUtils.mkpath(config.dir)
         raise "#{config.dir} is not a directory" unless ::File.directory?(config.dir)
       end
