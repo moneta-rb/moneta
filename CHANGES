@@ -1,3 +1,7 @@
+1.5.1
+
+* Adapters::File - fix an implicit hash issue in Ruby 3 (#222)
+
 1.5.0
 
 * Adapters - internally, most (all?) adapters now inherit from a base Adapter class
