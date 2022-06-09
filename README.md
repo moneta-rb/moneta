@@ -106,7 +106,7 @@ Out of the box, it supports the following backends. Use the backend name symbol 
 * Key/value databases:
     * [Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html) (`:DBM`)
     * [Cassandra](http://cassandra.apache.org/) (`:Cassandra`)
-    * [Daybreak](http://propublica.github.com/daybreak/) (`:Daybreak`)
+    * [Daybreak](https://propublica.github.io/daybreak/) (`:Daybreak`)
     * [GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) (`:GDBM`)
     * [HBase](http://hbase.apache.org/) (`:HBase`)
     * [LevelDB](http://code.google.com/p/leveldb/) (`:LevelDB`)
