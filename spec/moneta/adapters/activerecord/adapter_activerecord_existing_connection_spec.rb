@@ -8,6 +8,7 @@ describe 'adapter_activerecord_existing_connection', adapter: :ActiveRecord, mys
     ActiveRecord::Base.configurations = {
       default_env => {
         'adapter' => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+        'socket' => mysql_socket,
         'host' => mysql_host,
         'port' => mysql_port,
         'database' => mysql_database1,
