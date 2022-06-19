@@ -4,9 +4,12 @@ RSpec.shared_context :sequel do
     if defined?(JRUBY_VERSION)
       uri = "jdbc:mysql://#{mysql_host}:#{mysql_port}/#{database}?user=#{mysql_username}&useSSL=false"
       uri += "&password=#{mysql_password}" if mysql_password
+      uri += "&socket=#{mysql_socket}" if mysql_socket
       uri
     else
-      "mysql2://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{database}"
+      uri = "mysql2://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{database}"
+      uri += "?socket=#{mysql_socket}" if mysql_socket
+      uri
     end
   end
 

@@ -6,6 +6,7 @@ describe "standard_activerecord", adapter: :ActiveRecord, mysql: true, broken: :
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
         host: mysql_host,
         port: mysql_port,
+        socket: mysql_socket,
         database: mysql_database1,
         username: mysql_username,
         password: mysql_password
