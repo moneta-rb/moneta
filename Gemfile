@@ -53,7 +53,9 @@ group :transformers, optional: true do
   end
 
   group :quicklz, optional: true do
-    gem 'qlzruby', platforms: :ruby
+    install_if lambda { RUBY_ENGINE != 'ruby' || Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0') } do
+      gem 'qlzruby', platforms: :ruby
+    end
   end
 
   # Hash transformer library
