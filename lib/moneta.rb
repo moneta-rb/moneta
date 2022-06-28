@@ -144,7 +144,7 @@ module Moneta
     a = Adapters.const_get(name).new(options)
     build do
       use :Logger, Hash === logger ? logger : {} if logger
-      use :Expires, expires: options[:expires] if !a.supports?(:expires) && expires
+      use :Expires, expires: options[:expires] if expires && !a.supports?(:expires)
       use :Transformer, transformer
       use :Lock if threadsafe
       adapter a
