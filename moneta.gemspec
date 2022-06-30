@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.email            = %w{mail@daniel-mendler.de wycats@gmail.com hannes.georg@googlemail.com me@asph.dev}
   s.description      = 'A unified interface to key/value stores'
   s.extra_rdoc_files = %w{README.md SPEC.md LICENSE}
-  s.files            = `git ls-files`.split("\n")
-  s.test_files       = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files            = Dir.glob('**/*') # all files
+  s.test_files       = Dir.glob('{test,spec,features}/*')
+  s.executables      = Dir.glob('bin/*').map{ |f| File.basename(f) }
   s.homepage         = 'https://github.com/moneta-rb/moneta'
   s.licenses         = %w(MIT)
   s.require_paths    = %w(lib)
