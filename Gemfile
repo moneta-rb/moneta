@@ -64,7 +64,7 @@ group :Daybreak, optional: true do
 end
 
 group :ActiveRecord, optional: true do
-  gem 'activerecord', '~> 5.2'
+  gem 'activerecord', '~> 6.1'
 end
 
 group :Redis, optional: true do
@@ -135,7 +135,7 @@ group :KyotoCabinet, optional: true do
 end
 
 group :H2, optional: true do
-  gem 'activerecord-jdbch2-adapter', platforms: :jruby, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'
+  gem 'activerecord-jdbch2-adapter', platforms: :jruby, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '61-stable'
 end
 
 group :GDBM, optional: true do
@@ -189,7 +189,7 @@ end
 
 # Rails integration testing
 group :rails do
-  gem 'actionpack', '~> 5.2.0'
+  gem 'actionpack', '~> 6.1'
   gem 'minitest', '~> 5.0'
 end
 
