@@ -70,7 +70,7 @@ group :Daybreak, optional: true do
 end
 
 group :ActiveRecord, optional: true do
-  gem 'activerecord', '~> 5.2'
+  gem 'activerecord', '5.2.7'
 end
 
 group :Redis, optional: true do
