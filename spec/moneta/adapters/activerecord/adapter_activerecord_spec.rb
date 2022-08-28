@@ -1,4 +1,4 @@
-describe 'adapter_activerecord', adapter: :ActiveRecord do
+describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
   activerecord_specs = ADAPTER_SPECS.with_values(:nil).with_each_key
 
   shared_examples :adapter_activerecord do |specs|
