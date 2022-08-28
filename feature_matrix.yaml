@@ -30,7 +30,7 @@ backends:
     platforms: [ MRI ]
     gems: lmdb
     features: [ threadsafe, multiprocess, increment, create, each_key, bulk_read, bulk_write ]
-    description: "[Symas Lightning Memory-Mapped Database (LMDB)](http://symas.com/mdb/)"
+    description: "[Symas Lightning Memory-Mapped Database (LMDB)](http://symas.com/lmdb)"
   - adapter: Sequel
     platforms: [ MRI, JRuby ]
     gems: sequel
