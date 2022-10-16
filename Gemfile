@@ -52,12 +52,6 @@ group :transformers, optional: true do
     gem 'snappy', platforms: :ruby
   end
 
-  group :quicklz, optional: true do
-    install_if lambda { RUBY_ENGINE != 'ruby' || Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0') } do
-      gem 'qlzruby', platforms: :ruby
-    end
-  end
-
   # Hash transformer library
   group :city, optional: true do
     gem 'cityhash', platforms: :ruby
