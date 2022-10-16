@@ -1,6 +1,6 @@
 require_relative '../memcached_helper'
 
-describe 'adapter_activesupportcache_with_default_expires', adapter: :ActiveSupportCache do
+describe 'adapter_activesupportcache_with_default_expires', adapter: :ActiveSupportCache, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
   before :all do
     require 'active_support'
     require 'active_support/cache/moneta_store'
