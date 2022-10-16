@@ -167,7 +167,7 @@ end
 
 group :sqlite, optional: true do
   gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
-  gem 'sqlite3', '~> 1.3.6', platforms: :ruby
+  gem 'sqlite3', '~> 1.5.3', platforms: :ruby
 end
 
 group :postgresql, optional: true do
