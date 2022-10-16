@@ -9,7 +9,7 @@ describe 'standard_datamapper_with_repository', unsupported: defined?(JRUBY_VERS
   moneta_store :DataMapper do
     {
       repository: :repo,
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + mysql_socket ? "?socket=#{mysql_socket}" : "",
+      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + (mysql_socket ? "?socket=#{mysql_socket}" : ""),
       table: "simple_datamapper_with_repository"
     }
   end

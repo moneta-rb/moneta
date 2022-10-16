@@ -6,9 +6,13 @@ describe 'adapter_datamapper', unsupported: defined?(JRUBY_VERSION) || RUBY_ENGI
     DataMapper.setup(:default, adapter: :in_memory)
   end
 
+  let :database_uri do
+    "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + (mysql_socket ? "?socket=#{mysql_socket}" : "")
+  end
+
   moneta_build do
     Moneta::Adapters::DataMapper.new(
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + mysql_socket ? "?socket=#{mysql_socket}" : "",
+      setup: database_uri,
       table: "adapter_datamapper"
     )
   end
@@ -17,14 +21,14 @@ describe 'adapter_datamapper', unsupported: defined?(JRUBY_VERSION) || RUBY_ENGI
 
   it 'does not cross contaminate when storing' do
     first = Moneta::Adapters::DataMapper.new(
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + mysql_socket ? "?socket=#{mysql_socket}" : "",
+      setup: database_uri,
       table: "datamapper_first"
     )
     first.clear
 
     second = Moneta::Adapters::DataMapper.new(
       repository: :sample,
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + mysql_socket ? "?socket=#{mysql_socket}" : "",
+      setup: database_uri,
       table: "datamapper_second"
     )
     second.clear
@@ -38,14 +42,14 @@ describe 'adapter_datamapper', unsupported: defined?(JRUBY_VERSION) || RUBY_ENGI
 
   it 'does not cross contaminate when deleting' do
     first = Moneta::Adapters::DataMapper.new(
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + mysql_socket ? "?socket=#{mysql_socket}" : "",
+      setup: database_uri,
       table: "datamapper_first"
     )
     first.clear
 
     second = Moneta::Adapters::DataMapper.new(
       repository: :sample,
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + mysql_socket ? "?socket=#{mysql_socket}" : "",
+      setup: database_uri,
       table: "datamapper_second"
     )
     second.clear
