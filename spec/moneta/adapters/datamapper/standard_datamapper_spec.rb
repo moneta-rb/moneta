@@ -8,7 +8,7 @@ describe "standard_datamapper", unsupported: defined?(JRUBY_VERSION) || RUBY_ENG
 
   moneta_store :DataMapper do
     {
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}",
+      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + (mysql_socket ? "?socket=#{mysql_socket}" : ""),
       table: "simple_datamapper"
     }
   end

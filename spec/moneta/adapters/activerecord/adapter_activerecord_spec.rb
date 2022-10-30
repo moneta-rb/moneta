@@ -64,6 +64,7 @@ describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
         host: mysql_host,
         port: mysql_port,
+        socket: mysql_socket,
         database: mysql_database1,
         username: mysql_username,
         password: mysql_password
@@ -75,6 +76,7 @@ describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
         host: mysql_host,
         port: mysql_port,
+        socket: mysql_socket,
         database: mysql_database2,
         username: mysql_username,
         password: mysql_password
