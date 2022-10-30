@@ -145,7 +145,7 @@ module Moneta
     def config
       unless @proxy_config
         config = super
-        adapter_config = adapter&.config
+        adapter_config = adapter.config if adapter.class.include?(Config)
 
         @proxy_config =
           if config && adapter_config
