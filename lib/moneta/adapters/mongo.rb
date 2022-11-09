@@ -164,9 +164,11 @@ module Moneta
         existing = Hash[slice(*pairs.map { |key, _| key })]
         update_pairs, insert_pairs = pairs.partition { |key, _| existing.key?(key) }
 
-        @collection.insert_many(insert_pairs.map do |key, value|
-          value_to_doc(to_binary(key), value, options)
-        end)
+        unless insert_pairs.empty?
+          @collection.insert_many(insert_pairs.map do |key, value|
+            value_to_doc(to_binary(key), value, options)
+          end)
+        end
 
         update_pairs.each do |key, value|
           value = yield(key, existing[key], value) if block_given?
