@@ -343,7 +343,7 @@ jobs:
 
     services:
       mongo:
-        image: mongo
+        image: mongo:4.4
         options: >-
           --health-cmd "mongo --eval db"
           --health-interval 10s
