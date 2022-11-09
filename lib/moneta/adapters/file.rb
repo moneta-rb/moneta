@@ -7,14 +7,18 @@ module Moneta
     # @api public
     class File
       include Defaults
+      include Config
+
       supports :create, :increment, :each_key
+
+      config :dir, required: true
 
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
       def initialize(options = {})
-        raise ArgumentError, 'Option :dir is required' unless @dir = options[:dir]
-        FileUtils.mkpath(@dir)
-        raise "#{@dir} is not a directory" unless ::File.directory?(@dir)
+        configure(**options)
+        FileUtils.mkpath(config.dir)
+        raise "#{config.dir} is not a directory" unless ::File.directory?(config.dir)
       end
 
       # (see Proxy#key?)
@@ -24,12 +28,16 @@ module Moneta
 
       # (see Proxy#each_key)
       def each_key(&block)
-        entries = ::Dir.entries(@dir).reject { |k| ::File.directory?(::File.join(@dir, k)) }
+        entries = ::Dir.entries(config.dir).reject do |k|
+          ::File.directory?(::File.join(config.dir, k))
+        end
 
-        return enum_for(:each_key) { ::Dir.entries(@dir).length - 2 } unless block_given?
-
-        entries.each { |k| yield(k) }
-        self
+        if block_given?
+          entries.each { |k| yield(k) }
+          self
+        else
+          enum_for(:each_key) { ::Dir.entries(config.dir).length - 2 }
+        end
       end
 
       # (see Proxy#load)
@@ -41,7 +49,7 @@ module Moneta
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        temp_file = ::File.join(@dir, "value-#{$PROCESS_ID}-#{Thread.current.object_id}")
+        temp_file = ::File.join(config.dir, "value-#{$PROCESS_ID}-#{Thread.current.object_id}")
         path = store_path(key)
         FileUtils.mkpath(::File.dirname(path))
         ::File.open(temp_file, 'wb') { |f| f.write(value) }
@@ -63,9 +71,9 @@ module Moneta
 
       # (see Proxy#clear)
       def clear(options = {})
-        temp_dir = "#{@dir}-#{$PROCESS_ID}-#{Thread.current.object_id}"
-        ::File.rename(@dir, temp_dir)
-        FileUtils.mkpath(@dir)
+        temp_dir = "#{config.dir}-#{$PROCESS_ID}-#{Thread.current.object_id}"
+        ::File.rename(config.dir, temp_dir)
+        FileUtils.mkpath(config.dir)
         self
       rescue Errno::ENOENT
         self
@@ -120,7 +128,7 @@ module Moneta
       protected
 
       def store_path(key)
-        ::File.join(@dir, key)
+        ::File.join(config.dir, key)
       end
     end
   end

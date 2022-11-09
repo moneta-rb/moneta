@@ -2,11 +2,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :transformers, optional: true do
-  # Serializers used by Transformer
-  group :json, optional: true do
-    gem 'multi_json'
-  end
-
   group :tnet, optional: true do
     gem 'tnetstring'
   end
@@ -57,10 +52,6 @@ group :transformers, optional: true do
     gem 'snappy', platforms: :ruby
   end
 
-  group :quicklz, optional: true do
-    gem 'qlzruby', platforms: :ruby
-  end
-
   # Hash transformer library
   group :city, optional: true do
     gem 'cityhash', platforms: :ruby
@@ -85,17 +76,17 @@ group :Mongo, optional: true do
 end
 
 group :Sequel, optional: true do
-  gem 'sequel'
+  gem 'sequel', '5.52.0'
 end
 
 group :Memcached, optional: true do
   group :MemcachedDalli, optional: true do
-    gem 'dalli'
+    gem 'dalli', '~> 2.7.11'
   end
 
   group :MemcachedNative, optional: true do
-    gem 'memcached', platforms: :ruby
     gem 'jruby-memcached', platforms: :jruby
+    gem 'memcached', platforms: :ruby
   end
 end
 
@@ -104,8 +95,9 @@ group :Riak, optional: true do
 end
 
 group :Cassandra, optional: true do
-  gem 'cassandra-driver'
-  gem 'multi_json'
+  install_if lambda { RUBY_ENGINE != 'ruby' || Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0') } do
+    gem 'cassandra-driver'
+  end
 end
 
 group :TokyoTyrant, optional: true do
@@ -137,7 +129,9 @@ group :TokyoCabinet, optional: true do
 end
 
 group :KyotoCabinet, optional: true do
-  gem 'kyotocabinet-ruby-reanimated', platforms: [:ruby_23, :ruby_24, :ruby_25, :ruby_26]
+  install_if lambda { Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.7.0') } do
+    gem 'kyotocabinet-ruby-reanimated', platforms: :ruby
+  end
 end
 
 group :H2, optional: true do
@@ -150,16 +144,15 @@ end
 
 group :RestClient do
   gem 'faraday'
-  gem 'multi_json'
-  gem 'manticore',  platforms: :jruby
-  gem 'fishwife', platforms: :jruby
-  gem 'rjack-logback', platforms: :jruby
+  gem 'webrick'
 end
 
 group :DataMapper, optional: true do
-  gem 'dm-core'
-  gem 'dm-migrations'
-  gem 'dm-mysql-adapter'
+  install_if lambda { RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.0.0') } do
+    gem 'dm-core'
+    gem 'dm-migrations'
+    gem 'dm-mysql-adapter'
+  end
 end
 
 group :Fog, optional: true do
@@ -174,12 +167,18 @@ end
 
 group :sqlite, optional: true do
   gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
-  gem 'sqlite3', '~> 1.3.6', platforms: :ruby
+  gem 'sqlite3', '~> 1.5.3', platforms: :ruby
 end
 
 group :postgresql, optional: true do
   gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
   gem 'pg', platforms: :ruby
+end
+
+group :SDBM, optional: true do
+  install_if lambda { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0') } do
+    gem 'sdbm', platforms: :ruby
+  end
 end
 
 # Rack integration testing
@@ -203,4 +202,5 @@ end
 # Used for running a dev console
 group :console, optional: true do
   gem 'irb'
+  gem 'rdoc'
 end

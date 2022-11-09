@@ -28,7 +28,7 @@ describe 'adapter_mongo', adapter: :Mongo do
   end
 
   it 'uses the database specified via the :database option' do
-    expect(store.backend.database.name).to eq database
+    expect(store.config.database).to eq database
   end
 
   it 'uses the database specified via the :db option' do
@@ -36,6 +36,6 @@ describe 'adapter_mongo', adapter: :Mongo do
       db: database,
       collection: 'adapter_mongo'
     )
-    expect(store.backend.database.name).to eq database
+    expect(store.config.database).to eq database
   end
 end

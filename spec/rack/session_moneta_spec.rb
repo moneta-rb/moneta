@@ -4,30 +4,50 @@ require 'rack/mock'
 require 'thread'
 
 describe Rack::Session::Moneta do
-  session_key = Rack::Session::Moneta::DEFAULT_OPTIONS[:key]
-  session_match = /#{session_key}=([0-9a-fA-F]+);/
-  incrementor = lambda do |env|
-    env["rack.session"]["counter"] ||= 0
-    env["rack.session"]["counter"] += 1
-    Rack::Response.new(env["rack.session"].inspect).to_a
+  use_timecop
+
+  let(:session_key) { Rack::Session::Moneta::DEFAULT_OPTIONS[:key] }
+  let(:session_match) { /#{session_key}=([0-9a-fA-F]+);/ }
+
+  let :incrementor_proc do
+    lambda do |env|
+      env["rack.session"]["counter"] ||= 0
+      env["rack.session"]["counter"] += 1
+      Rack::Response.new(env["rack.session"].inspect).to_a
+    end
   end
-  drop_session = Rack::Lint.new(proc do |env|
-                                  env['rack.session.options'][:drop] = true
-                                  incrementor.call(env)
-                                end)
-  renew_session = Rack::Lint.new(proc do |env|
-                                   env['rack.session.options'][:renew] = true
-                                   incrementor.call(env)
-                                 end)
-  defer_session = Rack::Lint.new(proc do |env|
-                                   env['rack.session.options'][:defer] = true
-                                   incrementor.call(env)
-                                 end)
-  skip_session = Rack::Lint.new(proc do |env|
-                                  env['rack.session.options'][:skip] = true
-                                  incrementor.call(env)
-                                end)
-  incrementor = Rack::Lint.new(incrementor)
+
+  let :drop_session do
+    Rack::Lint.new(proc do |env|
+                     env['rack.session.options'][:drop] = true
+                     incrementor_proc.call(env)
+                   end)
+  end
+
+  let :renew_session do
+    Rack::Lint.new(proc do |env|
+                     env['rack.session.options'][:renew] = true
+                     incrementor_proc.call(env)
+                   end)
+  end
+
+  let :defer_session do
+    Rack::Lint.new(proc do |env|
+                     env['rack.session.options'][:defer] = true
+                     incrementor_proc.call(env)
+                   end)
+  end
+
+  let :skip_session do
+    Rack::Lint.new(proc do |env|
+                     env['rack.session.options'][:skip] = true
+                     incrementor_proc.call(env)
+                   end)
+  end
+
+  let :incrementor do
+    Rack::Lint.new(incrementor_proc)
+  end
 
   it 'supports different constructors' do
     Rack::Session::Moneta.new(incrementor, :store => :Memory)
@@ -96,8 +116,7 @@ describe Rack::Session::Moneta do
     res = Rack::MockRequest.new(pool).get('/', "HTTP_COOKIE" => cookie)
     res["Set-Cookie"].should == cookie
     res.body.should include '"counter"=>2'
-    puts 'Sleeping to expire session' if $DEBUG
-    sleep 4
+    advance 4
     res = Rack::MockRequest.new(pool).get('/', "HTTP_COOKIE" => cookie)
     res["Set-Cookie"].should_not == cookie
     res.body.should include '"counter"=>1'

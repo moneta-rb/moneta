@@ -14,8 +14,8 @@ describe 'enumerable', proxy: :Enumerable do
   end
 
   it 'allows enumeration over key-value pairs' do
-    moneta_property_of(keys: 100, values: 100) do |keys:, values:|
-      pairs = keys.zip(values)
+    moneta_property_of(keys: 100, values: 100) do |m|
+      pairs = m.keys.zip(m.values)
       store.merge!(pairs)
       expect(store.to_a).to contain_exactly(*pairs)
       expect(store.each.to_a).to contain_exactly(*pairs)

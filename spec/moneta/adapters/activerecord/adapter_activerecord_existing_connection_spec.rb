@@ -1,4 +1,4 @@
-describe 'adapter_activerecord_existing_connection', adapter: :ActiveRecord, mysql: true do
+describe 'adapter_activerecord_existing_connection', adapter: :ActiveRecord, mysql: true, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
   before :all do
     require 'active_record'
   end
@@ -8,6 +8,7 @@ describe 'adapter_activerecord_existing_connection', adapter: :ActiveRecord, mys
     ActiveRecord::Base.configurations = {
       default_env => {
         'adapter' => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
+        'socket' => mysql_socket,
         'host' => mysql_host,
         'port' => mysql_port,
         'database' => mysql_database1,

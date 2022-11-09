@@ -77,8 +77,8 @@ store.close
 * Tests and benchmarks: <https://github.com/moneta-rb/moneta/actions>
 * API documentation:
     * Latest Gem: <http://rubydoc.info/gems/moneta/frames>
-    * GitHub master: <http://rubydoc.info/github/moneta-rb/moneta/master/frames>
-* Changelog: <https://github.com/moneta-rb/moneta/blob/master/CHANGES>
+    * GitHub main: <http://rubydoc.info/github/moneta-rb/moneta/main/frames>
+* Changelog: <https://github.com/moneta-rb/moneta/blob/main/CHANGES>
 
 In case you are wondering, Moneta uses [Semantic Versioning](https://semver.org/) since v1.0.0.
 
@@ -106,11 +106,11 @@ Out of the box, it supports the following backends. Use the backend name symbol 
 * Key/value databases:
     * [Berkeley DB using DBM interface or NDBM (Depends on Ruby environment)](http://www.ruby-doc.org/stdlib/libdoc/dbm/rdoc/DBM.html) (`:DBM`)
     * [Cassandra](http://cassandra.apache.org/) (`:Cassandra`)
-    * [Daybreak](http://propublica.github.com/daybreak/) (`:Daybreak`)
+    * [Daybreak](https://propublica.github.io/daybreak/) (`:Daybreak`)
     * [GDBM](http://www.ruby-doc.org/stdlib/libdoc/gdbm/rdoc/GDBM.html) (`:GDBM`)
     * [HBase](http://hbase.apache.org/) (`:HBase`)
     * [LevelDB](http://code.google.com/p/leveldb/) (`:LevelDB`)
-    * [LMDB](http://symas.com/mdb/) (`:LMDB`)
+    * [LMDB](http://symas.com/lmdb) (`:LMDB`)
     * [Redis](http://redis.io/) (`:Redis`)
     * [Riak](http://docs.basho.com/) (`:Riak`)
     * [SDBM](http://www.ruby-doc.org/stdlib/libdoc/sdbm/rdoc/SDBM.html) (`:SDBM`)
@@ -135,7 +135,7 @@ to upgrade to a real key/value store.
 
 ### Backend feature matrix
 
-__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/moneta-rb/moneta/master/file/README.md#backend-matrix)
+__NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable on rubydoc.info than on github. [Go there!](http://rubydoc.info/github/moneta-rb/moneta/main/file/README.md#backend-matrix)
 
 <table>
 <tr><th>Adapter</th><th>Required gems</th><th style="writing-mode:tb">MRI support<sup>1</sup></th><th style="writing-mode:tb">JRuby support<sup>1</sup></th><th style="writing-mode:tb">Multi-thread safe<sup>2</sup></th><th style="writing-mode:tb">Multi-process safe<sup>3</sup></th><th style="writing-mode:tb">Atomic increment<sup>4</sup></th><th style="writing-mode:tb">Atomic create<sup>5</sup></th><th style="writing-mode:tb">Native expires<sup>6</sup></th><th style="writing-mode:tb">Persistent</th><th style="writing-mode:tb">Key Traversal</th><th style="writing-mode:tb">Bulk read<sup>7</sup></th><th style="writing-mode:tb">Bulk write<sup>8</sup></th><th>Description</th></tr>
@@ -150,7 +150,7 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 
 <tr><td>File</td><td>-</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#F44">✗</td><td>File store</td></tr>
 
-<tr><td>LMDB</td><td>lmdb</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://symas.com/mdb/">Symas Lightning Memory-Mapped Database (LMDB)</a></td></tr>
+<tr><td>LMDB</td><td>lmdb</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://symas.com/lmdb">Symas Lightning Memory-Mapped Database (LMDB)</a></td></tr>
 
 <tr><td>Sequel</td><td>sequel</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#F44">✗</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td style="text-align:center;background:#5F5">✓</td><td><a href="http://sequel.rubyforge.org/">Sequel</a> ORM</td></tr>
 
@@ -221,9 +221,7 @@ __NOTE:__ <a name="backend-matrix"></a>The backend matrix is much more readable 
 3. Share a Moneta store between multiple processes using `Moneta::Shared` (See below).
 4. If a store provides atomic increment it can be used with `Moneta::Semaphore`. You can add weak `#increment` support using the `Moneta::WeakIncrement` proxy.
 5. If a store provides atomic creation it can be used with `Moneta::Mutex`. You can add weak `#create` support using the `Moneta::WeakCreate` proxy.
-6. Add expiration support by using `Moneta::Expires` or by passing the option
-   `expires: true` (or `expires: <seconds>` if you want all values to expire by
-   default) to `Moneta#new`.
+6. Add expiration support by using `Moneta::Expires` or by passing the option `expires: true` to `Moneta#new`.
 7. This indicates that there is some performance gain when fetching multiple values at once using `#values_at`/`#fetch_values` or `#slice`. For instance, the `MGET` instruction in Redis, or the ability to retrieve several rows in one query in SQL.
 8. This indicates that there is some performance gain when storing multiple key/value pairs at once using `#merge!`/`#update`.
 9. Sqlite/YAML/PStore are multiprocess safe, but the performance suffers badly since the whole database file must be locked for writing. Use a key/value server if you want multiprocess concurrency!
@@ -912,7 +910,8 @@ Person.adapter :memory, Moneta.new(:Redis)
 ## Testing and Benchmarks
 
 Testing is done using [GitHub Actions](https://github.com/moneta-rb/moneta/actions).
-Currently we support MRI Ruby >= 2.3.0 and the JRuby >= 9.2.9.0.
+Currently we support MRI Ruby >= 2.4.0 (but not yet 3.x) and the JRuby >=
+9.2.9.0. MRI 2.3.0 should mostly still work, but is no longer tested in CI.
 
 ~~Benchmarks for each store are done on
 [Travis-CI](http://travis-ci.org/moneta-rb/moneta) for each build.~~  At the

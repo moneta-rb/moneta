@@ -4,12 +4,16 @@ module Moneta
   module Adapters
     # Sqlite3 backend
     # @api public
-    class Sqlite
-      include Defaults
+    class Sqlite < Adapter
       include IncrementSupport
 
       supports :create, :each_key
-      attr_reader :backend
+
+      config :table, default: 'moneta'
+      config :busy_timeout, default: 1000
+      config :journal_mode
+
+      backend { |file:| ::SQLite3::Database.new(file) }
 
       # @param [Hash] options
       # @option options [String] :file Database file
@@ -18,31 +22,29 @@ module Moneta
       # @option options [::Sqlite3::Database] :backend Use existing backend instance
       # @option options [String, Symbol] :journal_mode Set the journal mode for the connection
       def initialize(options = {})
-        @table = options[:table] || 'moneta'
-        @backend = options[:backend] ||
-          begin
-            raise ArgumentError, 'Option :file is required' unless options[:file]
-            ::SQLite3::Database.new(options[:file])
-          end
-        @backend.busy_timeout(options[:busy_timeout] || 1000)
-        @backend.execute("create table if not exists #{@table} (k blob not null primary key, v blob)")
-        if journal_mode = options[:journal_mode]
-          @backend.journal_mode = journal_mode.to_s
-        end
-        @stmts =
-          [@exists = @backend.prepare("select exists(select 1 from #{@table} where k = ?)"),
-           @select = @backend.prepare("select v from #{@table} where k = ?"),
-           @replace = @backend.prepare("replace into #{@table} values (?, ?)"),
-           @delete = @backend.prepare("delete from #{@table} where k = ?"),
-           @clear = @backend.prepare("delete from #{@table}"),
-           @create = @backend.prepare("insert into #{@table} values (?, ?)"),
-           @keys = @backend.prepare("select k from #{@table}"),
-           @count = @backend.prepare("select count(*) from #{@table}")]
+        super
 
-        version = @backend.execute("select sqlite_version()").first.first
+        backend.busy_timeout(config.busy_timeout)
+        backend.execute("create table if not exists #{config.table} (k blob not null primary key, v blob)")
+
+        if journal_mode = config.journal_mode
+          backend.journal_mode = journal_mode.to_s
+        end
+
+        @stmts =
+          [@exists = backend.prepare("select exists(select 1 from #{config.table} where k = ?)"),
+           @select = backend.prepare("select v from #{config.table} where k = ?"),
+           @replace = backend.prepare("replace into #{config.table} values (?, ?)"),
+           @delete = backend.prepare("delete from #{config.table} where k = ?"),
+           @clear = backend.prepare("delete from #{config.table}"),
+           @create = backend.prepare("insert into #{config.table} values (?, ?)"),
+           @keys = backend.prepare("select k from #{config.table}"),
+           @count = backend.prepare("select count(*) from #{config.table}")]
+
+        version = backend.execute("select sqlite_version()").first.first
         if @can_upsert = ::Gem::Version.new(version) >= ::Gem::Version.new('3.24.0')
-          @stmts << (@increment = @backend.prepare <<-SQL)
-            insert into #{@table} values (?, ?)
+          @stmts << (@increment = backend.prepare <<-SQL)
+            insert into #{config.table} values (?, ?)
             on conflict (k)
             do update set v = cast(cast(v as integer) + ? as blob)
             where v = '0' or v = X'30' or cast(v as integer) != 0
@@ -76,8 +78,8 @@ module Moneta
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        @backend.transaction(:exclusive) { return super } unless @can_upsert
-        @backend.transaction do
+        backend.transaction(:exclusive) { return super } unless @can_upsert
+        backend.transaction do
           @increment.execute!(key, amount.to_s, amount)
           return Integer(load(key))
         end
@@ -103,14 +105,14 @@ module Moneta
       # (see Proxy#close)
       def close
         @stmts.each { |s| s.close }
-        @backend.close
+        backend.close
         nil
       end
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        query = "select k, v from #{@table} where k in (#{(['?'] * keys.length).join(',')})"
-        @backend.execute(query, keys)
+        query = "select k, v from #{config.table} where k in (#{(['?'] * keys.length).join(',')})"
+        backend.execute(query, keys)
       end
 
       # (see Proxy#values_at)
@@ -134,7 +136,7 @@ module Moneta
 
       # (see Proxy#merge!)
       def merge!(pairs, options = {})
-        transaction = @backend.transaction if block_given?
+        transaction = backend.transaction if block_given?
 
         if block_given?
           existing = Hash[slice(*pairs.map { |k, _| k }.to_a)]
@@ -146,13 +148,13 @@ module Moneta
           pairs = pairs.to_a
         end
 
-        query = "replace into #{@table} (k, v) values" + (['(?, ?)'] * pairs.length).join(',')
-        @backend.query(query, pairs.flatten).close
+        query = "replace into #{config.table} (k, v) values" + (['(?, ?)'] * pairs.length).join(',')
+        backend.query(query, pairs.flatten).close
       rescue
-        @backend.rollback if transaction
+        backend.rollback if transaction
         raise
       else
-        @backend.commit if transaction
+        backend.commit if transaction
         self
       end
 

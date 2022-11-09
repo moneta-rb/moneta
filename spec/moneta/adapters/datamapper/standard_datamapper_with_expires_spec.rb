@@ -1,4 +1,4 @@
-describe "standard_datamapper_with_expires", broken: defined?(JRUBY_VERSION), adapter: :DataMapper, mysql: true do
+describe "standard_datamapper_with_expires", unsupported: defined?(JRUBY_VERSION) || RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0'), adapter: :DataMapper, mysql: true do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
   use_timecop
@@ -12,7 +12,7 @@ describe "standard_datamapper_with_expires", broken: defined?(JRUBY_VERSION), ad
 
   moneta_store :DataMapper do
     {
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}",
+      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + (mysql_socket ? "?socket=#{mysql_socket}" : ""),
       table: "simple_datamapper_with_expires",
       expires: true
     }

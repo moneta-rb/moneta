@@ -3,8 +3,6 @@ module Moneta
   #
   #
   module ExpiresSupport
-    attr_accessor :default_expires
-
     protected
 
     # Calculates the time when something will expire.
@@ -19,7 +17,7 @@ module Moneta
     # @return [false] if it should not expire
     # @return [Time] the time when something should expire
     # @return [nil] if it is not known
-    def expires_at(options, default = @default_expires)
+    def expires_at(options, default = config.expires)
       value = expires_value(options, default)
       Numeric === value ? Time.now + value : value
     end
@@ -36,7 +34,7 @@ module Moneta
     # @return [false] if it should not expire
     # @return [Numeric] seconds until expiration
     # @return [nil] if it is not known
-    def expires_value(options, default = @default_expires)
+    def expires_value(options, default = config.expires)
       case value = options[:expires]
       when 0, false
         false
@@ -54,6 +52,7 @@ module Moneta
     class << self
       def included(base)
         base.supports(:expires) if base.respond_to?(:supports)
+        base.config :expires
       end
     end
   end

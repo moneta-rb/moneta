@@ -1,5 +1,5 @@
 module Moneta
   # Moneta version number
   # @api public
-  VERSION = '1.4.3'.freeze
+  VERSION = '1.5.1'.freeze
 end

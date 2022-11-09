@@ -2,19 +2,20 @@ name: Ruby CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   adapters:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     strategy:
       fail-fast: false
 
       matrix:
-        ruby-version: [2.7, 2.6, 2.5, 2.4, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.6', '2.5', '2.4', jruby]
         adapter:
           - Client
           - Cookie
@@ -66,6 +67,7 @@ jobs:
   couch:
     name: "Couch adapter"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     services:
       couch:
@@ -83,7 +85,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: RestClient
@@ -111,14 +113,14 @@ jobs:
         options: >-
           --health-cmd "cqlsh -e \"SELECT cql_version FROM system.local\""
           --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-timeout 10s
+          --health-retries 10
         ports:
           - 9042:9042
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: Cassandra
@@ -139,6 +141,7 @@ jobs:
   mysql-adapters:
     name: "MySQL adapters"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     services:
       mysql:
@@ -155,7 +158,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.4, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper mysql
@@ -194,10 +197,11 @@ jobs:
   postgres-adapters:
     name: "Postgres adapters"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     services:
       postgres:
-        image: postgres
+        image: postgres:13.6
         env:
           POSTGRES_PASSWORD: moneta
         options: >-
@@ -210,7 +214,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper postgresql
@@ -243,10 +247,11 @@ jobs:
   sqlite-adapters:
     name: "SQLite adapters"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper sqlite
@@ -267,6 +272,7 @@ jobs:
   redis:
     name: "Redis adapters"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     services:
       redis:
@@ -281,7 +287,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: Redis
@@ -302,10 +308,11 @@ jobs:
   memcached:
     name: "Memcached adapters"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: Memcached
@@ -332,10 +339,11 @@ jobs:
   mongo:
     name: "Mongo adapter"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     services:
       mongo:
-        image: mongo
+        image: mongo:4.4
         options: >-
           --health-cmd "mongo --eval db"
           --health-interval 10s
@@ -346,7 +354,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3] #, jruby] - FIXME reenable once https://github.com/mongodb/mongo-ruby-driver/pull/2143 is released
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: Mongo
@@ -367,10 +375,11 @@ jobs:
   residual-specs:
     name: "Proxies and other specs"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     strategy:
       matrix:
-        ruby-version: [2.7, 2.3, jruby]
+        ruby-version: ['3.0', '2.7', '2.4', jruby]
 
     env:
       BUNDLE_WITH: transformers GDBM Fog
@@ -400,6 +409,7 @@ jobs:
   rubocop:
     name: "Rubocop"
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     steps:
     - uses: actions/checkout@v2
@@ -407,7 +417,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: '3.0'
         bundler: latest
         bundler-cache: true
 

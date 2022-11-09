@@ -1,4 +1,4 @@
-describe 'adapter_activerecord', adapter: :ActiveRecord do
+describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
   activerecord_specs = ADAPTER_SPECS.with_values(:nil).with_each_key
 
   shared_examples :adapter_activerecord do |specs|
@@ -64,6 +64,7 @@ describe 'adapter_activerecord', adapter: :ActiveRecord do
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
         host: mysql_host,
         port: mysql_port,
+        socket: mysql_socket,
         database: mysql_database1,
         username: mysql_username,
         password: mysql_password
@@ -75,6 +76,7 @@ describe 'adapter_activerecord', adapter: :ActiveRecord do
         adapter: (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'),
         host: mysql_host,
         port: mysql_port,
+        socket: mysql_socket,
         database: mysql_database2,
         username: mysql_username,
         password: mysql_password

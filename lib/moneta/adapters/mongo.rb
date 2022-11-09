@@ -14,14 +14,33 @@ module Moneta
     #     db['key'] = {a: 1, b: 2}
     #
     # @api public
-    class Mongo
-      include Defaults
+    class Mongo < Adapter
       include ExpiresSupport
 
       supports :each_key, :create, :increment
-      attr_reader :backend
 
-      DEFAULT_PORT = 27017
+      config :collection, default: 'moneta'
+
+      config :db
+      config :database, default: 'moneta' do |database:, db:, **|
+        if db
+          warn('Moneta::Adapters::Mongo - the :db option is deprecated and will be removed in a future version. Use :database instead')
+          db
+        else
+          database
+        end
+      end
+
+      config :expires_field, default: 'expiresAt'
+      config :value_field, default: 'value'
+      config :type_field, default: 'type'
+
+      backend do |host: '127.0.0.1', port: 27017, **options|
+        options[:logger] ||= ::Logger.new(STDERR).tap do |logger|
+          logger.level = ::Logger::ERROR
+        end
+        ::Mongo::Client.new(["#{host}:#{port}"], options)
+      end
 
       # @param [Hash] options
       # @option options [String] :collection ('moneta') MongoDB collection name
@@ -37,31 +56,13 @@ module Moneta
       # @option options [::Mongo::Client] :backend Use existing backend instance
       # @option options Other options passed to `Mongo::MongoClient#new`
       def initialize(options = {})
-        self.default_expires = options.delete(:expires)
-        @expires_field = options.delete(:expires_field) || 'expiresAt'
-        @value_field = options.delete(:value_field) || 'value'
-        @type_field = options.delete(:type_field) || 'type'
+        super
 
-        collection = options.delete(:collection) || 'moneta'
+        @database = backend.use(config.database)
+        @collection = @database[config.collection]
 
-        if options.key?(:db)
-          warn('Moneta::Adapters::Mongo - the :db option is deprecated and will be removed in a future version. Use :database instead')
-        end
-        database = options.delete(:database) || options.delete(:db) || 'moneta'
-        backend = options[:backend] ||
-          begin
-            host = options.delete(:host) || '127.0.0.1'
-            port = options.delete(:port) || DEFAULT_PORT
-            options[:logger] ||= ::Logger.new(STDERR).tap do |logger|
-              logger.level = ::Logger::ERROR
-            end
-            ::Mongo::Client.new(["#{host}:#{port}"], options)
-          end
-
-        @backend = backend.use(database)
-        @collection = @backend[collection]
-        if @backend.command(buildinfo: 1).documents.first['version'] >= '2.2'
-          @collection.indexes.create_one({ @expires_field => 1 }, expire_after: 0)
+        if @database.command(buildinfo: 1).documents.first['version'] >= '2.2'
+          @collection.indexes.create_one({ config.expires_field => 1 }, expire_after: 0)
         else
           warn 'Moneta::Adapters::Mongo - You are using MongoDB version < 2.2, expired documents will not be deleted'
         end
@@ -78,7 +79,7 @@ module Moneta
 
         if doc
           update_expiry(options, nil) do |expires|
-            view.update_one(:$set => { @expires_field => expires })
+            view.update_one(:$set => { config.expires_field => expires })
           end
 
           doc_to_value(doc)
@@ -105,7 +106,7 @@ module Moneta
       def delete(key, options = {})
         key = to_binary(key)
         if doc = @collection.find(_id: key).find_one_and_delete and
-            !doc[@expires_field] || doc[@expires_field] >= Time.now
+            !doc[config.expires_field] || doc[config.expires_field] >= Time.now
           doc_to_value(doc)
         end
       end
@@ -113,9 +114,9 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         @collection.find_one_and_update({ :$and => [{ _id: to_binary(key) }, not_expired] },
-                                        { :$inc => { @value_field => amount } },
+                                        { :$inc => { config.value_field => amount } },
                                         return_document: :after,
-                                        upsert: true)[@value_field]
+                                        upsert: true)[config.value_field]
       rescue ::Mongo::Error::OperationFailure
         tries ||= 0
         (tries += 1) < 3 ? retry : raise
@@ -126,8 +127,8 @@ module Moneta
         key = to_binary(key)
         @collection.insert_one(value_to_doc(key, value, options))
         true
-      rescue ::Mongo::Error::OperationFailure => ex
-        raise unless ex.message =~ /^E11000 / # duplicate key error
+      rescue ::Mongo::Error::OperationFailure => error
+        raise unless error.code == 11000 # duplicate key error
         false
       end
 
@@ -139,7 +140,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @backend.close
+        @database.close
         nil
       end
 
@@ -152,7 +153,7 @@ module Moneta
         pairs = view.map { |doc| [from_binary(doc[:_id]), doc_to_value(doc)] }
 
         update_expiry(options, nil) do |expires|
-          view.update_many(:$set => { @expires_field => expires })
+          view.update_many(:$set => { config.expires_field => expires })
         end
 
         pairs
@@ -163,9 +164,11 @@ module Moneta
         existing = Hash[slice(*pairs.map { |key, _| key })]
         update_pairs, insert_pairs = pairs.partition { |key, _| existing.key?(key) }
 
-        @collection.insert_many(insert_pairs.map do |key, value|
-          value_to_doc(to_binary(key), value, options)
-        end)
+        unless insert_pairs.empty?
+          @collection.insert_many(insert_pairs.map do |key, value|
+            value_to_doc(to_binary(key), value, options)
+          end)
+        end
 
         update_pairs.each do |key, value|
           value = yield(key, existing[key], value) if block_given?
@@ -198,18 +201,18 @@ module Moneta
       private
 
       def doc_to_value(doc)
-        case doc[@type_field]
+        case doc[config.type_field]
         when 'Hash'
           doc = doc.dup
           doc.delete('_id')
-          doc.delete(@type_field)
-          doc.delete(@expires_field)
+          doc.delete(config.type_field)
+          doc.delete(config.expires_field)
           doc
         when 'Number'
-          doc[@value_field]
+          doc[config.value_field]
         else
           # In ruby_bson version 2 (and probably up), #to_s no longer returns the binary data
-          from_binary(doc[@value_field])
+          from_binary(doc[config.value_field])
         end
       end
 
@@ -217,22 +220,22 @@ module Moneta
         case value
         when Hash
           value.merge('_id' => key,
-                      @type_field => 'Hash',
-                      # @expires_field must be a Time object (BSON date datatype)
-                      @expires_field => expires_at(options) || nil)
+                      config.type_field => 'Hash',
+                      # expires_field must be a Time object (BSON date datatype)
+                      config.expires_field => expires_at(options) || nil)
         when Float, Integer
           { '_id' => key,
-            @type_field => 'Number',
-            @value_field => value,
-            # @expires_field must be a Time object (BSON date datatype)
-            @expires_field => expires_at(options) || nil }
+            config.type_field => 'Number',
+            config.value_field => value,
+            # expires_field must be a Time object (BSON date datatype)
+            config.expires_field => expires_at(options) || nil }
         when String
           intvalue = value.to_i
           { '_id' => key,
-            @type_field => 'String',
-            @value_field => intvalue.to_s == value ? intvalue : to_binary(value),
+            config.type_field => 'String',
+            config.value_field => intvalue.to_s == value ? intvalue : to_binary(value),
             # @expires_field must be a Time object (BSON date datatype)
-            @expires_field => expires_at(options) || nil }
+            config.expires_field => expires_at(options) || nil }
         else
           raise ArgumentError, "Invalid value type: #{value.class}"
         end
@@ -253,8 +256,8 @@ module Moneta
       def not_expired
         {
           :$or => [
-            { @expires_field => nil },
-            { @expires_field => { :$gte => Time.now } }
+            { config.expires_field => nil },
+            { config.expires_field => { :$gte => Time.now } }
           ]
         }
       end

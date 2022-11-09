@@ -4,10 +4,12 @@ module Moneta
   module Adapters
     # HBase thrift backend
     # @api public
-    class HBase
-      include Defaults
+    class HBase < Adapter
+      config :column, 'value'
+      config :table, 'moneta'
+      config :column_family, 'moneta'
 
-      attr_reader :backend
+      backend { |host: '127.0.0.1', port: 9090| HBaseRb::Client.new(host, port) }
 
       # TODO: Add create support using checkAndPut if added to thrift api
       # https://issues.apache.org/jira/browse/HBASE-3307
@@ -22,14 +24,10 @@ module Moneta
       # @option options [String] :column ('value') Column
       # @option options [::HBaseRb::Client] :backend Use existing backend instance
       def initialize(options = {})
-        options[:column] ||= 'value'
-        options[:table] ||= 'moneta'
-        cf = (options[:column_family] || 'moneta')
-        @column = "#{cf}:#{options[:column]}"
-        @backend = options[:backend] ||
-          HBaseRb::Client.new(options[:host] || '127.0.0.1', options[:port] || '9090')
-        @backend.create_table(options[:table], cf) unless @backend.has_table?(options[:table])
-        @table = @backend.get_table(options[:table])
+        super
+        @column = [config.column_family, config.column].join(':')
+        backend.create_table(config.table, config.column_family) unless backend.has_table?(config.table)
+        @table = backend.get_table(config.table)
       end
 
       # (see Proxy#key?)
@@ -75,7 +73,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @backend.close
+        backend.close
         nil
       end
 

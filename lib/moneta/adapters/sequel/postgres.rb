@@ -12,14 +12,14 @@ module Moneta
         def increment(key, amount = 1, options = {})
           result = @increment.call(key: key, value: blob(amount.to_s), amount: amount)
           if row = result.first
-            row[value_column].to_i
+            row[config.value_column].to_i
           end
         end
 
         def delete(key, options = {})
           result = @delete.call(key: key)
           if row = result.first
-            row[value_column]
+            row[config.value_column]
           end
         end
 
@@ -27,19 +27,19 @@ module Moneta
           @backend.transaction do
             pairs = yield_merge_pairs(pairs, &block) if block_given?
             @table
-              .insert_conflict(target: key_column,
-                               update: { value_column => ::Sequel[:excluded][value_column] })
-              .import([key_column, value_column], blob_pairs(pairs).to_a)
+              .insert_conflict(target: config.key_column,
+                               update: { config.value_column => ::Sequel[:excluded][config.value_column] })
+              .import([config.key_column, config.value_column], blob_pairs(pairs).to_a)
           end
 
           self
         end
 
         def each_key
-          return super unless block_given? && !@each_key_server && @table.respond_to?(:use_cursor)
+          return super unless block_given? && !config.each_key_server && @table.respond_to?(:use_cursor)
           # With a cursor, this will Just Work.
-          @table.select(key_column).paged_each do |row|
-            yield row[key_column]
+          @table.select(config.key_column).paged_each do |row|
+            yield row[config.key_column]
           end
           self
         end
@@ -48,30 +48,30 @@ module Moneta
 
         def prepare_store
           @store = @table
-            .insert_conflict(target: key_column,
-                             update: { value_column => ::Sequel[:excluded][value_column] })
-            .prepare(:insert, statement_id(:store), key_column => :$key, value_column => :$value)
+            .insert_conflict(target: config.key_column,
+                             update: { config.value_column => ::Sequel[:excluded][config.value_column] })
+            .prepare(:insert, statement_id(:store), config.key_column => :$key, config.value_column => :$value)
         end
 
         def prepare_increment
           update_expr = ::Sequel[:convert_to].function(
             (::Sequel[:convert_from].function(
-              ::Sequel[@table_name][value_column],
+              ::Sequel[config.table][config.value_column],
               'UTF8'
             ).cast(Integer) + :$amount).cast(String),
             'UTF8'
           )
 
           @increment = @table
-            .returning(value_column)
-            .insert_conflict(target: key_column, update: { value_column => update_expr })
-            .prepare(:insert, statement_id(:increment), key_column => :$key, value_column => :$value)
+            .returning(config.value_column)
+            .insert_conflict(target: config.key_column, update: { config.value_column => update_expr })
+            .prepare(:insert, statement_id(:increment), config.key_column => :$key, config.value_column => :$value)
         end
 
         def prepare_delete
           @delete = @table
-            .returning(value_column)
-            .where(key_column => :$key)
+            .returning(config.value_column)
+            .where(config.key_column => :$key)
             .prepare(:delete, statement_id(:delete))
         end
       end

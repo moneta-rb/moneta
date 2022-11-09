@@ -4,19 +4,18 @@ module Moneta
   module Adapters
     # Fog backend (Cloud storage services)
     # @api public
-    class Fog
-      include Defaults
+    class Fog < Adapter
+      config :dir, required: true
 
-      attr_reader :backend
+      backend { |**options| ::Fog::Storage.new(options) }
 
       # @param [Hash] options
       # @option options [String] :dir Fog directory
       # @option options [::Fog::Storage] :backend Use existing backend instance
       # @option options Other options passed to `Fog::Storage#new`
       def initialize(options = {})
-        raise ArgumentError, 'Option :dir is required' unless dir = options.delete(:dir)
-        @backend = options[:backend] || ::Fog::Storage.new(options)
-        @directory = @backend.directories.get(dir) || @backend.directories.create(key: dir)
+        super
+        @directory = backend.directories.get(config.dir) || backend.directories.create(key: config.dir)
       end
 
       # (see Proxy#key?)

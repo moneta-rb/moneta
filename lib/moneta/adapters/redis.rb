@@ -4,32 +4,28 @@ module Moneta
   module Adapters
     # Redis backend
     # @api public
-    class Redis
-      include Defaults
+    class Redis < Adapter
       include ExpiresSupport
 
       supports :create, :increment, :each_key
-      attr_reader :backend
 
-      # @param [Hash] options
-      # @option options [Integer] :expires Default expiration time
-      # @option options [::Redis] :backend Use existing backend instance
-      # @option options Other options passed to `Redis#new`
-      def initialize(options = {})
-        self.default_expires = options.delete(:expires)
-        @backend = options[:backend] || ::Redis.new(options)
-      end
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [Integer] :expires Default expiration time
+      #   @option options [::Redis] :backend Use existing backend instance
+      #   @option options Other options passed to `Redis#new`
+      backend { |**options| ::Redis.new(options) }
 
       # (see Proxy#key?)
       #
       # This method considers false and 0 as "no-expire" and every positive
       # number as a time to live in seconds.
       def key?(key, options = {})
-        with_expiry_update(key, default: nil, **options) do
-          if @backend.respond_to?(:exists?)
-            @backend.exists?(key)
+        with_expiry_update(key, default: nil, **options) do |pipeline_handle|
+          if pipeline_handle.respond_to?(:exists?)
+            pipeline_handle.exists?(key)
           else
-            @backend.exists(key)
+            pipeline_handle.exists(key)
           end
         end
       end
@@ -44,8 +40,8 @@ module Moneta
 
       # (see Proxy#load)
       def load(key, options = {})
-        with_expiry_update(key, default: nil, **options) do
-          @backend.get(key)
+        with_expiry_update(key, default: nil, **options) do |pipeline_handle|
+          pipeline_handle.get(key)
         end
       end
 
@@ -63,17 +59,17 @@ module Moneta
       # (see Proxy#delete)
       def delete(key, options = {})
         future = nil
-        @backend.pipelined do
-          future = @backend.get(key)
-          @backend.del(key)
+        @backend.pipelined do |pipeline|
+          future = pipeline.get(key)
+          pipeline.del(key)
         end
         future&.value
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
-        with_expiry_update(key, **options) do
-          @backend.incrby(key, amount)
+        with_expiry_update(key, **options) do |pipeline_handle|
+          pipeline_handle.incrby(key, amount)
         end
       end
 
@@ -85,10 +81,10 @@ module Moneta
 
       # (see Defaults#create)
       def create(key, value, options = {})
-        expires = expires_value(options, @default_expires)
+        expires = expires_value(options, config.expires)
 
         if @backend.setnx(key, value)
-          update_expires(key, expires)
+          update_expires(@backend, key, expires)
           true
         else
           false
@@ -103,8 +99,8 @@ module Moneta
 
       # (see Defaults#values_at)
       def values_at(*keys, **options)
-        with_expiry_update(*keys, default: nil, **options) do
-          @backend.mget(*keys)
+        with_expiry_update(*keys, default: nil, **options) do |pipeline_handle|
+          pipeline_handle.mget(*keys)
         end
       end
 
@@ -130,8 +126,8 @@ module Moneta
           end
         end
 
-        with_expiry_update(*keys, **options) do
-          @backend.mset(*pairs.to_a.flatten(1))
+        with_expiry_update(*keys, **options) do |pipeline_handle|
+          pipeline_handle.mset(*pairs.to_a.flatten(1))
         end
 
         self
@@ -139,24 +135,33 @@ module Moneta
 
       protected
 
-      def update_expires(key, expires)
+      def update_expires(pipeline_handle, key, expires)
         case expires
         when false
-          @backend.persist(key)
+          pipeline_handle.persist(key)
         when Numeric
-          @backend.pexpire(key, (expires * 1000).to_i)
+          pipeline_handle.pexpire(key, (expires * 1000).to_i)
         end
       end
 
-      def with_expiry_update(*keys, default: @default_expires, **options)
+      def with_expiry_update(*keys, default: config.expires, **options)
         expires = expires_value(options, default)
         if expires == nil
-          yield
+          yield(@backend)
         else
           future = nil
-          @backend.multi do
-            future = yield
-            keys.each { |key| update_expires(key, expires) }
+          @backend.multi do |pipeline|
+            # as of redis 4.6 calling redis methods on the redis client itself
+            # is deprecated in favor of a pipeline handle provided by the
+            # +multi+ call. This will cause in error in redis >= 5.0.
+            #
+            # In order to continue supporting redis versions < 4.6, the following
+            # fallback has been introduced and can be removed once moneta
+            # no longer supports redis < 4.6.
+
+            pipeline_handle = pipeline || @backend
+            future = yield(pipeline_handle)
+            keys.each { |key| update_expires(pipeline_handle, key, expires) }
           end
           future.value
         end

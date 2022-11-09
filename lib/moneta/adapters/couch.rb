@@ -12,9 +12,7 @@ module Moneta
     #     db['key'] = {a: 1, b: 2}
     #
     # @api public
-    class Couch
-      include Defaults
-
+    class Couch < Adapter
       # @api private
       class HTTPError < StandardError
         attr_reader :status, :request_method, :key
@@ -28,9 +26,20 @@ module Moneta
         end
       end
 
-      attr_reader :backend
-
       supports :create, :each_key
+
+      config :value_field, default: 'value'
+      config :type_field, default: 'type'
+      config :login
+      config :password
+      config :adapter
+      config :skip_create_db
+
+      backend do |scheme: 'http', host: '127.0.0.1', port: 5984, db: 'moneta', adapter: nil, **options|
+        ::Faraday.new "#{scheme}://#{host}:#{port}/#{db}", options do |faraday|
+          faraday.adapter adapter if adapter
+        end
+      end
 
       # @param [Hash] options
       # @option options [String] :host ('127.0.0.1') Couch host
@@ -46,26 +55,22 @@ module Moneta
       # @option options Other options passed to {Faraday::new} (unless
       #   :backend option is provided).
       def initialize(options = {})
-        @value_field = options.delete(:value_field) || 'value'
-        @type_field = options.delete(:type_field) || 'type'
-        login = options.delete(:login)
-        password = options.delete(:password)
-        @backend = options.delete(:backend) || begin
-          host = options.delete(:host) || '127.0.0.1'
-          port = options.delete(:port) || 5984
-          db = options.delete(:db) || 'moneta'
-          scheme = options.delete(:scheme) || 'http'
-          block = if faraday_adapter = options.delete(:adapter)
-                    proc { |faraday| faraday.adapter(faraday_adapter) }
-                  end
-          ::Faraday.new("#{scheme}://#{host}:#{port}/#{db}", options, &block)
+        super
+
+        if config.login && config.password
+          # Faraday 1.x had a `basic_auth` function
+          if backend.respond_to? :basic_auth
+            backend.basic_auth(config.login, config.password)
+          else
+            backend.request :authorization, :basic, config.login, config.password
+          end
         end
-        @backend.basic_auth(login, password) if login && password
+
         @rev_cache = Moneta.build do
           use :Lock
           adapter :LRUHash
         end
-        create_db
+        create_db unless config.skip_create_db
       end
 
       # (see Proxy#key?)
@@ -278,15 +283,15 @@ module Moneta
       end
 
       def doc_to_value(doc)
-        case doc[@type_field]
+        case doc[config.type_field]
         when 'Hash'
           doc = doc.dup
           doc.delete('_id')
           doc.delete('_rev')
-          doc.delete(@type_field)
+          doc.delete(config.type_field)
           doc
         else
-          doc[@value_field]
+          doc[config.value_field]
         end
       end
 
@@ -294,11 +299,11 @@ module Moneta
         doc =
           case value
           when Hash
-            value.merge(@type_field => 'Hash')
+            value.merge(config.type_field => 'Hash')
           when String
-            { @value_field => value, @type_field => 'String' }
+            { config.value_field => value, config.type_field => 'String' }
           when Float, Integer
-            { @value_field => value, @type_field => 'Number' }
+            { config.value_field => value, config.type_field => 'Number' }
           else
             raise ArgumentError, "Invalid value type: #{value.class}"
           end

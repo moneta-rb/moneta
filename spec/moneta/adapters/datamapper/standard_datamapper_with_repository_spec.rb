@@ -1,4 +1,4 @@
-describe 'standard_datamapper_with_repository', broken: defined?(JRUBY_VERSION), adapter: :DataMapper, mysql: true do
+describe 'standard_datamapper_with_repository', unsupported: defined?(JRUBY_VERSION) || RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0'), adapter: :DataMapper, mysql: true do
   before :all do
     require 'dm-core'
 
@@ -9,7 +9,7 @@ describe 'standard_datamapper_with_repository', broken: defined?(JRUBY_VERSION),
   moneta_store :DataMapper do
     {
       repository: :repo,
-      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}",
+      setup: "mysql://#{mysql_username}:#{mysql_password}@#{mysql_host}:#{mysql_port}/#{mysql_database1}" + (mysql_socket ? "?socket=#{mysql_socket}" : ""),
       table: "simple_datamapper_with_repository"
     }
   end

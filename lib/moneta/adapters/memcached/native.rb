@@ -4,30 +4,24 @@ module Moneta
   module Adapters
     # Memcached backend (using gem memcached)
     # @api public
-    class MemcachedNative
-      include Defaults
+    class MemcachedNative < Adapter
       include ExpiresSupport
 
       supports :create, :increment
-      attr_reader :backend
 
-      # @param [Hash] options
-      # @option options [String] :server ('127.0.0.1:11211') Memcached server
-      # @option options [String] :namespace Key namespace
-      # @option options [Integer] :expires (604800) Default expiration time
-      # @option options [::Memcached] :backend Use existing backend instance
-      # @option options Other options passed to `Memcached#new`
-      def initialize(options = {})
-        server = options.delete(:server) || '127.0.0.1:11211'
-        self.default_expires = options.delete(:expires)
-        @backend = options[:backend] ||
-          begin
-            options[:prefix_key] = options.delete(:namespace) if options[:namespace]
-            # We don't want a limitation on the key charset. Therefore we use the binary protocol.
-            # It is also faster.
-            options[:binary_protocol] = true unless options.include?(:binary_protocol)
-            ::Memcached.new(server, options)
-          end
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [String] :server ('127.0.0.1:11211') Memcached server
+      #   @option options [String] :namespace Key namespace
+      #   @option options [Integer] :expires (604800) Default expiration time
+      #   @option options [::Memcached] :backend Use existing backend instance
+      #   @option options Other options passed to `Memcached#new`
+      backend do |server: '127.0.0.1:11211', namespace: nil, **options|
+        options[:prefix_key] = namespace if namespace
+        # We don't want a limitation on the key charset. Therefore we use the binary protocol.
+        # It is also faster.
+        options[:binary_protocol] = true unless options.include?(:binary_protocol)
+        ::Memcached.new(server, options)
       end
 
       # (see Proxy#load)

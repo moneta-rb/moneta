@@ -1,18 +1,7 @@
 require 'faraday'
 require 'rack'
 require 'rack/moneta_rest'
-
-MONETA_RESTSERVER_LOGGER =
-  if defined?(JRUBY_VERSION)
-    require 'rjack-logback'
-    RJack::Logback.config_console( :level => :off )
-    require 'fishwife'
-    nil
-  else
-    require 'webrick'
-    # Keep webrick quiet
-    WEBrick::Log.new($stderr, WEBrick::BasicLog::ERROR)
-  end
+require 'webrick'
 
 class MonetaRestServerShutdown < StandardError; end
 
@@ -25,10 +14,10 @@ def start_restserver(port)
       end
     end,
     :environment => 'none',
-    :server => defined?(JRUBY_VERSION) ? :Fishwife : :webrick,
+    :server => :webrick,
     :Port => port,
     :AccessLog => [],
-    :Logger => MONETA_RESTSERVER_LOGGER
+    :Logger => WEBrick::Log.new($stderr, WEBrick::BasicLog::ERROR)
   )
 
   Thread.start { server.start }

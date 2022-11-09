@@ -4,20 +4,19 @@ module Moneta
   module Adapters
     # Moneta client backend
     # @api public
-    class Client
-      include Defaults
-
-      # @param [Hash] options
-      # @option options [Integer] :port (9000) TCP port
-      # @option options [String] :host ('127.0.0.1') Hostname
-      # @option options [String] :socket Unix socket file name as alternative to `:port` and `:host`
-      def initialize(options = {})
-        @socket =
-          if options[:socket]
-            UNIXSocket.open(options[:socket])
-          else
-            TCPSocket.open(options[:host] || '127.0.0.1', options[:port] || 9000)
-          end
+    class Client < Adapter
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [TCPSocket | UNIXSocket] :backend an open socket to use
+      #   @option options [Integer] :port (9000) TCP port
+      #   @option options [String] :host ('127.0.0.1') Hostname
+      #   @option options [String] :socket Unix socket file name as alternative to `:port` and `:host`
+      backend do |socket: nil, host: '127.0.0.1', port: 9000|
+        if socket
+          UNIXSocket.open(socket)
+        else
+          TCPSocket.open(host, port)
+        end
       end
 
       # (see Proxy#key?)
@@ -66,7 +65,7 @@ module Moneta
 
       # (see Proxy#close)
       def close
-        @socket.close
+        backend.close
         nil
       end
 
@@ -114,19 +113,19 @@ module Moneta
 
       def write(*args)
         s = Marshal.dump(args)
-        @socket.write([s.bytesize].pack('N') << s)
+        backend.write([s.bytesize].pack('N') << s)
       end
 
       # JRuby doesn't support socket#recv with flags
       if defined?(JRUBY_VERSION)
         def read(bytes)
-          received = @socket.read(bytes)
+          received = backend.read(bytes)
           raise EOFError, "Server closed socket" unless received && received.bytesize == bytes
           received
         end
       else
         def read(bytes)
-          received = @socket.recv(bytes, Socket::MSG_WAITALL)
+          received = backend.recv(bytes, Socket::MSG_WAITALL)
           raise EOFError, "Server closed socket" unless received && received.bytesize == bytes
           received
         end

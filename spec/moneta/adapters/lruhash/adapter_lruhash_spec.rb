@@ -52,8 +52,10 @@ describe 'adapter_lruhash', adapter: :LRUHash do
 
   it 'adds a value that is as large as the default max_size when max_size is missing' do
     store = Moneta::Adapters::LRUHash.new
+    expect(store.config.max_size).to eq Moneta::Adapters::LRUHash.config_defaults[:max_size]
+
     large_item = 'Really big'
-    allow(large_item).to receive(:bytesize).and_return(Moneta::Adapters::LRUHash::DEFAULT_MAX_SIZE)
+    allow(large_item).to receive(:bytesize).and_return(Moneta::Adapters::LRUHash.config_defaults[:max_size])
     store[:really_big] = large_item
     store[:really_big].should eq(large_item)
   end
@@ -61,7 +63,7 @@ describe 'adapter_lruhash', adapter: :LRUHash do
   it 'does not add values that are larger than the default max_size when max_size is missing' do
     store = Moneta::Adapters::LRUHash.new
     large_item = 'Really big'
-    allow(large_item).to receive(:bytesize).and_return(Moneta::Adapters::LRUHash::DEFAULT_MAX_SIZE + 1)
+    allow(large_item).to receive(:bytesize).and_return(Moneta::Adapters::LRUHash.config_defaults[:max_size] + 1)
     store[:really_big] = large_item
     store[:really_big].should be_nil
   end
@@ -69,7 +71,7 @@ describe 'adapter_lruhash', adapter: :LRUHash do
   it 'adds values that are larger than the default max_size when max_size is nil' do
     store = Moneta::Adapters::LRUHash.new(max_size: nil)
     large_item = 'Really big'
-    allow(large_item).to receive(:bytesize).and_return(Moneta::Adapters::LRUHash::DEFAULT_MAX_SIZE + 1)
+    allow(large_item).to receive(:bytesize).and_return(Moneta::Adapters::LRUHash.config_defaults[:max_size] + 1)
     store[:really_big] = large_item
     store[:really_big].should eq(large_item)
   end
@@ -94,7 +96,8 @@ describe 'adapter_lruhash', adapter: :LRUHash do
   end
 
   it 'only allows the default number of items when max_count is missing' do
-    stub_const('Moneta::Adapters::LRUHash::DEFAULT_MAX_COUNT', 5)
+    defaults = Moneta::Adapters::LRUHash.config_defaults
+    allow(Moneta::Adapters::LRUHash).to receive(:config_defaults).and_return(defaults.merge(max_count: 5))
     store = Moneta::Adapters::LRUHash.new(max_value: nil, max_size: nil)
     (1..6).each { |n| store[n] = n }
     store.key?(1).should be false
@@ -103,8 +106,9 @@ describe 'adapter_lruhash', adapter: :LRUHash do
     store[6].should eq(6)
   end
 
-  it 'adds more values than DEFAULT_MAX_COUNT allows when max_count is nil' do
-    stub_const('Moneta::Adapters::LRUHash::DEFAULT_MAX_COUNT', 5)
+  it 'adds more values than the default max_count allows when max_count is nil' do
+    defaults = Moneta::Adapters::LRUHash.config_defaults
+    allow(Moneta::Adapters::LRUHash).to receive(:config_defaults).and_return(defaults.merge(max_count: 5))
     store = Moneta::Adapters::LRUHash.new(max_count: nil, max_value: nil, max_size: nil)
     (1..6).each { |n| store[n] = n }
     store[1].should eq(1)

@@ -2,32 +2,23 @@ module Moneta
   module Adapters
     # ActiveSupport::Cache::Store adapter
     # @api public
-    class ActiveSupportCache
-      include Defaults
+    class ActiveSupportCache < Adapter
       include ExpiresSupport
 
       supports :increment
 
-      # @param [Hash] options
-      # @option options [Numeric] :expires default expiration in seconds
-      def initialize(options = {})
-        self.default_expires = options.delete(:expires)
-        @backend =
-          if options[:backend]
-            options[:backend]
-          elsif defined?(Rails)
-            Rails.cache
-          else
-            raise ArgumentError, 'Option :backend is required'
-          end
-      end
+      # @!method initialize(options = {})
+      #   @param [Hash] options
+      #   @option options [ActiveSupport::Cache::Store] :backend (Rails.cache) Cache store to use
+      #   @option options [Numeric] :expires default expiration in seconds
+      backend { Rails.cache if defined?(Rails) }
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        @backend.exist?(key).tap do |exists|
+        backend.exist?(key).tap do |exists|
           if exists && (expires = expires_value(options, nil)) != nil
-            value = @backend.read(key, options)
-            @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+            value = backend.read(key, options)
+            backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
           end
         end
       end
@@ -35,9 +26,9 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         expires = expires_value(options, nil)
-        value = @backend.read(key, options)
+        value = backend.read(key, options)
         if value and expires != nil
-          @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+          backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
         end
         value
       end
@@ -45,7 +36,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         expires = expires_value(options)
-        @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+        backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
         value
       end
 
@@ -53,11 +44,11 @@ module Moneta
       def increment(key, amount = 1, options = {})
         expires = expires_value(options)
         options.delete(:raw)
-        existing = Integer(@backend.fetch(key, options.merge(raw: true)) { 0 })
+        existing = Integer(backend.fetch(key, options.merge(raw: true)) { 0 })
         if amount > 0
-          @backend.increment(key, amount, options.merge(expires_in: expires ? expires.seconds : nil))
+          backend.increment(key, amount, options.merge(expires_in: expires ? expires.seconds : nil))
         elsif amount < 0
-          @backend.decrement(key, -amount, options.merge(expires_in: expires ? expires.seconds : nil))
+          backend.decrement(key, -amount, options.merge(expires_in: expires ? expires.seconds : nil))
         else
           existing
         end
@@ -65,25 +56,25 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        value = @backend.read(key, options)
+        value = backend.read(key, options)
         if value != nil
-          @backend.delete(key, options)
+          backend.delete(key, options)
           options[:raw] ? value.to_s : value
         end
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.clear
+        backend.clear
         self
       end
 
       # (see Proxy#slice)
       def slice(*keys, **options)
-        hash = @backend.read_multi(*keys)
+        hash = backend.read_multi(*keys)
         if (expires = expires_value(options, nil)) != nil
           hash.each do |key, value|
-            @backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+            backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
           end
         end
         if options[:raw]
@@ -115,13 +106,13 @@ module Moneta
 
         hash = Hash === pairs ? pairs : Hash[pairs.to_a]
         expires = expires_value(options)
-        @backend.write_multi(hash, options.merge(expires_in: expires ? expires.seconds : nil))
+        backend.write_multi(hash, options.merge(expires_in: expires ? expires.seconds : nil))
         self
       end
 
       private
 
-      def expires_value(options, default = @default_expires)
+      def expires_value(options, default = config.expires)
         super.tap { options.delete(:expires) unless options.frozen? }
       end
     end

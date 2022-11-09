@@ -4,13 +4,33 @@ module Moneta
   module Adapters
     # Cassandra backend
     # @api public
-    class Cassandra
-      include Defaults
+    class Cassandra < Adapter
       include ExpiresSupport
 
-      attr_reader :backend
-
       supports :each_key
+
+      config :table, default: 'moneta'
+      config :key_column, default: 'key'
+      config :value_column, default: 'value'
+      config :updated_column, default: 'updated_at'
+      config :expired_column, default: 'expired'
+      config :read_consistency, default: :all
+      config :write_consistency, default: :all
+
+      backend do |keyspace: 'moneta', cluster: nil, create_keyspace: nil, **options|
+        cluster ||= ::Cassandra.cluster(options).tap do |own_cluster|
+          @own_cluster = own_cluster
+        end
+
+        begin
+          cluster.connect(keyspace)
+        rescue ::Cassandra::Errors::InvalidError
+          backend = cluster.connect
+          create_keyspace(backend, keyspace, create_keyspace)
+          backend.execute("USE " + keyspace)
+          backend
+        end
+      end
 
       # @param [Hash] options
       # @option options [String] :keyspace ('moneta') Cassandra keyspace
@@ -35,39 +55,17 @@ module Moneta
       #   keyspace does not already exist.
       # @option options [::Cassandra::Cluster] :cluster Existing cluster to use
       # @option options [::Cassandra::Session] :backend Existing session to use
-      # @option options Other options passed to `Cassandra#new`
+      # @option options Other options passed to `Cassandra#cluster`
       def initialize(options = {})
-        self.default_expires = options.delete(:expires)
-        keyspace = options.delete(:keyspace) || 'moneta'
+        super
 
-        @table = (options.delete(:column_family) || 'moneta').to_sym
-        @key_column = options.delete(:key_column) || 'key'
-        @value_column = options.delete(:value_column) || 'value'
-        @updated_column = options.delete(:updated_column) || 'updated_at'
-        @expired_column = options.delete(:expired_column) || 'expired'
-        @read_consistency = options.delete(:read_consistency) || :all
-        @write_consistency = options.delete(:write_consistency) || :all
-        @create_keyspace = options.delete(:create_keyspace)
-
-        unless @backend = options.delete(:backend)
-          cluster = options.delete(:cluster) || (@own_cluster = ::Cassandra.cluster(options))
-          begin
-            @backend = cluster.connect(keyspace)
-          rescue ::Cassandra::Errors::InvalidError
-            @backend = cluster.connect
-            create_keyspace(keyspace)
-            @backend.execute("USE " + keyspace)
-            @backend
-          end
-        end
-
-        @backend.execute <<-CQL
-          CREATE TABLE IF NOT EXISTS #{@table} (
-            #{@key_column} blob,
-            #{@value_column} blob,
-            #{@updated_column} timeuuid,
-            #{@expired_column} boolean,
-            PRIMARY KEY (#{@key_column}, #{@updated_column})
+        backend.execute <<-CQL
+          CREATE TABLE IF NOT EXISTS #{config.table} (
+            #{config.key_column} blob,
+            #{config.value_column} blob,
+            #{config.updated_column} timeuuid,
+            #{config.expired_column} boolean,
+            PRIMARY KEY (#{config.key_column}, #{config.updated_column})
           )
         CQL
 
@@ -82,18 +80,18 @@ module Moneta
           # whole column, when we want to update the expiry we load the value
           # and then re-set it in order to update the TTL.
           return false unless
-            row = @backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and
-              row[@expired_column] != nil
-          @backend.execute(@update_expires,
-                           options.merge(consistency: wc,
-                                         arguments: [(expires || 0).to_i,
-                                                     timestamp,
-                                                     row[@value_column],
-                                                     key,
-                                                     row[@updated_column]]))
+            row = backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and
+              row[config.expired_column] != nil
+          backend.execute(@update_expires,
+                          options.merge(consistency: wc,
+                                        arguments: [(expires || 0).to_i,
+                                                    timestamp,
+                                                    row[config.value_column],
+                                                    key,
+                                                    row[config.updated_column]]))
           true
-        elsif row = @backend.execute(@key, options.merge(consistency: rc, arguments: [key])).first
-          row[@expired_column] != nil
+        elsif row = backend.execute(@key, options.merge(consistency: rc, arguments: [key])).first
+          row[config.expired_column] != nil
         else
           false
         end
@@ -102,17 +100,17 @@ module Moneta
       # (see Proxy#load)
       def load(key, options = {})
         rc, wc = consistency(options)
-        if row = @backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and row[@expired_column] != nil
+        if row = backend.execute(@load, options.merge(consistency: rc, arguments: [key])).first and row[config.expired_column] != nil
           if (expires = expires_value(options, nil)) != nil
-            @backend.execute(@update_expires,
-                             options.merge(consistency: wc,
-                                           arguments: [(expires || 0).to_i,
-                                                       timestamp,
-                                                       row[@value_column],
-                                                       key,
-                                                       row[@updated_column]]))
+            backend.execute(@update_expires,
+                            options.merge(consistency: wc,
+                                          arguments: [(expires || 0).to_i,
+                                                      timestamp,
+                                                      row[config.value_column],
+                                                      key,
+                                                      row[config.updated_column]]))
           end
-          row[@value_column]
+          row[config.value_column]
         end
       end
 
@@ -121,33 +119,33 @@ module Moneta
         _, wc = consistency(options)
         expires = expires_value(options)
         t = timestamp
-        batch = @backend.batch do |batch|
+        batch = backend.batch do |batch|
           batch.add(@store_delete, arguments: [t, key])
           batch.add(@store, arguments: [key, value, (expires || 0).to_i, t + 1])
         end
-        @backend.execute(batch, options.merge(consistency: wc))
+        backend.execute(batch, options.merge(consistency: wc))
         value
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
         rc, wc = consistency(options)
-        result = @backend.execute(@delete_value, options.merge(consistency: rc, arguments: [key]))
-        if row = result.first and row[@expired_column] != nil
-          @backend.execute(@delete, options.merge(consistency: wc, arguments: [timestamp, key, row[@updated_column]]))
-          row[@value_column]
+        result = backend.execute(@delete_value, options.merge(consistency: rc, arguments: [key]))
+        if row = result.first and row[config.expired_column] != nil
+          backend.execute(@delete, options.merge(consistency: wc, arguments: [timestamp, key, row[config.updated_column]]))
+          row[config.value_column]
         end
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        @backend.execute(@clear)
+        backend.execute(@clear)
         self
       end
 
       # (see Proxy#close)
       def close
-        @backend.close_async
+        backend.close_async
         @backend = nil
         if @own_cluster
           @own_cluster.close_async
@@ -160,11 +158,11 @@ module Moneta
       def each_key
         rc, = consistency
         return enum_for(:each_key) unless block_given?
-        result = @backend.execute(@each_key, consistency: rc, page_size: 100)
+        result = backend.execute(@each_key, consistency: rc, page_size: 100)
         loop do
           result.each do |row|
-            next if row[@expired_column] == nil
-            yield row[@key_column]
+            next if row[config.expired_column] == nil
+            yield row[config.key_column]
           end
 
           break if result.last_page?
@@ -176,27 +174,27 @@ module Moneta
       # (see Proxy#slice)
       def slice(*keys, **options)
         rc, wc = consistency(options)
-        result = @backend.execute(@slice, options.merge(consistency: rc, arguments: [keys]))
+        result = backend.execute(@slice, options.merge(consistency: rc, arguments: [keys]))
         expires = expires_value(options, nil)
         updated = [] if expires != nil
         pairs = result.map do |row|
-          next if row[@expired_column] == nil
+          next if row[config.expired_column] == nil
           if expires != nil
-            updated << [row[@key_column], row[@value_column], row[@updated_column]]
+            updated << [row[config.key_column], row[config.value_column], row[config.updated_column]]
           end
-          [row[@key_column], row[@value_column]]
+          [row[config.key_column], row[config.value_column]]
         end.compact
 
         if expires != nil && !updated.empty?
           ttl = (expires || 0).to_i
           t = timestamp
-          batch = @backend.batch do |batch|
+          batch = backend.batch do |batch|
             updated.each do |key, value, updated|
               batch.add(@update_expires, arguments: [ttl, t, value, key, updated])
             end
           end
 
-          @backend.execute(batch, options.merge(consistency: wc))
+          backend.execute(batch, options.merge(consistency: wc))
         end
 
         pairs
@@ -240,13 +238,13 @@ module Moneta
         _rc, wc = consistency(options)
         expires = expires_value(options)
         t = timestamp
-        batch = @backend.batch do |batch|
+        batch = backend.batch do |batch|
           batch.add(@merge_delete, arguments: [t, keys])
           pairs.each do |key, value|
             batch.add(@store, arguments: [key, value, (expires || 0).to_i, t + 1])
           end
         end
-        @backend.execute(batch, options.merge(consistency: wc))
+        backend.execute(batch, options.merge(consistency: wc))
 
         self
       end
@@ -257,7 +255,7 @@ module Moneta
         (Time.now.to_r * 1_000_000).to_i
       end
 
-      def create_keyspace(keyspace)
+      def create_keyspace(backend, keyspace, create_keyspace)
         options = {
           replication: {
             class: 'SimpleStrategy',
@@ -265,13 +263,13 @@ module Moneta
           }
         }
 
-        case @create_keyspace
+        case create_keyspace
         when Proc
-          return @create_keyspace.call(keyspace)
+          return create_keyspace.call(keyspace)
         when false
           return
         when Hash
-          options.merge!(@create_keyspace)
+          options.merge!(create_keyspace)
         end
 
         # This is a bit hacky, but works.  Options in Cassandra look like JSON,
@@ -281,7 +279,7 @@ module Moneta
           key.to_s + ' = ' + MultiJson.dump(value).tr(?", ?')
         end.join(' AND ')
 
-        @backend.execute "CREATE KEYSPACE IF NOT EXISTS %<keyspace>s WITH %<options>s" % {
+        backend.execute "CREATE KEYSPACE IF NOT EXISTS %<keyspace>s WITH %<options>s" % {
           keyspace: keyspace,
           options: option_str
         }
@@ -291,65 +289,65 @@ module Moneta
       end
 
       def prepare_statements
-        @key = @backend.prepare(<<-CQL)
-          SELECT #{@updated_column}, #{@expired_column}
-          FROM #{@table} WHERE #{@key_column} = ?
+        @key = backend.prepare(<<-CQL)
+          SELECT #{config.updated_column}, #{config.expired_column}
+          FROM #{config.table} WHERE #{config.key_column} = ?
           LIMIT 1
         CQL
-        @store_delete = @backend.prepare(<<-CQL)
-          DELETE FROM #{@table}
+        @store_delete = backend.prepare(<<-CQL)
+          DELETE FROM #{config.table}
           USING TIMESTAMP ?
-          WHERE #{@key_column} = ?
+          WHERE #{config.key_column} = ?
         CQL
-        @store = @backend.prepare(<<-CQL)
-          INSERT INTO #{@table} (#{@key_column}, #{@value_column}, #{@updated_column}, #{@expired_column})
+        @store = backend.prepare(<<-CQL)
+          INSERT INTO #{config.table} (#{config.key_column}, #{config.value_column}, #{config.updated_column}, #{config.expired_column})
           VALUES (?, ?, now(), false)
           USING TTL ? AND TIMESTAMP ?
         CQL
-        @load = @backend.prepare(<<-CQL)
-          SELECT #{@value_column}, #{@updated_column}, #{@expired_column}
-          FROM #{@table}
-          WHERE #{@key_column} = ?
+        @load = backend.prepare(<<-CQL)
+          SELECT #{config.value_column}, #{config.updated_column}, #{config.expired_column}
+          FROM #{config.table}
+          WHERE #{config.key_column} = ?
           LIMIT 1
         CQL
-        @update_expires = @backend.prepare(<<-CQL)
-          UPDATE #{@table}
+        @update_expires = backend.prepare(<<-CQL)
+          UPDATE #{config.table}
           USING TTL ? AND TIMESTAMP ?
-          SET #{@value_column} = ?, #{@expired_column} = false
-          WHERE #{@key_column} = ? AND #{@updated_column} = ?
+          SET #{config.value_column} = ?, #{config.expired_column} = false
+          WHERE #{config.key_column} = ? AND #{config.updated_column} = ?
         CQL
-        @clear = @backend.prepare("TRUNCATE #{@table}")
-        @delete_value = @backend.prepare(<<-CQL)
-          SELECT #{@value_column}, #{@updated_column}, #{@expired_column}
-          FROM #{@table}
-          WHERE #{@key_column} = ?
+        @clear = backend.prepare("TRUNCATE #{config.table}")
+        @delete_value = backend.prepare(<<-CQL)
+          SELECT #{config.value_column}, #{config.updated_column}, #{config.expired_column}
+          FROM #{config.table}
+          WHERE #{config.key_column} = ?
           LIMIT 1
         CQL
-        @delete = @backend.prepare(<<-CQL, idempotent: true)
-          DELETE FROM #{@table}
+        @delete = backend.prepare(<<-CQL, idempotent: true)
+          DELETE FROM #{config.table}
           USING TIMESTAMP ?
-          WHERE #{@key_column} = ? AND #{@updated_column} = ?
+          WHERE #{config.key_column} = ? AND #{config.updated_column} = ?
         CQL
-        @each_key = @backend.prepare(<<-CQL)
-          SELECT #{@key_column}, #{@expired_column}
-          FROM #{@table}
+        @each_key = backend.prepare(<<-CQL)
+          SELECT #{config.key_column}, #{config.expired_column}
+          FROM #{config.table}
         CQL
-        @slice = @backend.prepare(<<-CQL)
-          SELECT #{@key_column}, #{@value_column}, #{@updated_column}, #{@expired_column}
-          FROM #{@table}
-          WHERE #{@key_column} IN ?
+        @slice = backend.prepare(<<-CQL)
+          SELECT #{config.key_column}, #{config.value_column}, #{config.updated_column}, #{config.expired_column}
+          FROM #{config.table}
+          WHERE #{config.key_column} IN ?
         CQL
-        @merge_delete = @backend.prepare(<<-CQL)
-          DELETE FROM #{@table}
+        @merge_delete = backend.prepare(<<-CQL)
+          DELETE FROM #{config.table}
           USING TIMESTAMP ?
-          WHERE #{@key_column} IN ?
+          WHERE #{config.key_column} IN ?
         CQL
       end
 
       def consistency(options = {})
         [
-          options[:read_consistency] || @read_consistency,
-          options[:write_consistency] || @write_consistency
+          options[:read_consistency] || config.read_consistency,
+          options[:write_consistency] || config.write_consistency
         ]
       end
     end

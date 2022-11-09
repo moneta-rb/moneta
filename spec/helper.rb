@@ -269,6 +269,7 @@ module MonetaHelpers
       # want to run the tests but don't want to grant root access to moneta
       let(:mysql_host) { ENV['MYSQL_HOST'] || 'localhost' }
       let(:mysql_port) { ENV['MYSQL_TCP_PORT'] || '3306' }
+      let(:mysql_socket) { ENV['MYSQL_SOCKET'] }
       let(:mysql_username) { ENV['MONETA_MYSQL_USERNAME'] || 'root' }
       let(:mysql_password) { ENV['MONETA_MYSQL_PASSWORD'] }
       let(:mysql_database1) { ENV['MONETA_MYSQL_DATABASE1'] || 'moneta' }
@@ -335,9 +336,7 @@ module MonetaHelpers
         value_values = values.times.map { call(values_meta) }
         guard value_values.uniq.length == value_values.length
 
-        [[:keys, key_values], [:values, value_values]].
-          reject { |key, value| value.empty? }.
-          to_h
+        Struct.new(:keys, :values).new(key_values, value_values)
       end
     end
 

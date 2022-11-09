@@ -1,3 +1,5 @@
+require 'uri'
+
 describe 'transformer_marshal_escape', proxy: :Transformer do
   moneta_build do
     Moneta.build do

@@ -3,9 +3,11 @@
 # * {Moneta.new}
 # * {Moneta.build}
 module Moneta
+  autoload :Adapter,           'moneta/adapter'
   autoload :Builder,           'moneta/builder'
   autoload :Cache,             'moneta/cache'
   autoload :CreateSupport,     'moneta/create_support'
+  autoload :Config,            'moneta/config'
   autoload :DBMAdapter,        'moneta/dbm_adapter'
   autoload :Defaults,          'moneta/defaults'
   autoload :EachKeySupport,    'moneta/each_key_support'
@@ -142,7 +144,7 @@ module Moneta
     a = Adapters.const_get(name).new(options)
     build do
       use :Logger, Hash === logger ? logger : {} if logger
-      use :Expires, expires: options[:expires] if !a.supports?(:expires) && expires
+      use :Expires, expires: options[:expires] if expires && !a.supports?(:expires)
       use :Transformer, transformer
       use :Lock if threadsafe
       adapter a

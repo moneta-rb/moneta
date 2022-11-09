@@ -5,12 +5,10 @@ module Moneta
   module Adapters
     # ActiveRecord as key/value stores
     # @api public
-    class ActiveRecord
-      include Defaults
-
+    class ActiveRecord < Adapter
       supports :create, :increment, :each_key
 
-      attr_reader :table, :key_column, :value_column
+      attr_reader :table
       delegate :with_connection, to: :connection_pool
 
       @connection_lock = ::Mutex.new
@@ -37,9 +35,30 @@ module Moneta
         end
       end
 
+      config :key_column, default: :k
+      config :value_column, default: :v
+
+      backend required: false do |table: :moneta, connection: nil, create_table: nil|
+        @spec = spec_for_connection(connection)
+
+        # Ensure the table name is a symbol.
+        table_name = table.to_sym
+
+        if create_table == nil
+          default_create_table(table_name)
+        elsif create_table
+          with_connection(&create_table)
+        end
+
+        @table = ::Arel::Table.new(table_name)
+
+        # backend is only used if there's an existing ActiveRecord model
+        nil
+      end
+
       # @param [Hash] options
       # @option options [Object]               :backend A class object inheriting from ActiveRecord::Base to use as a table
-      # @option options [String]               :table ('moneta') Table name
+      # @option options [String,Symbol]        :table (:moneta) Table name
       # @option options [Hash/String/Symbol]   :connection ActiveRecord connection configuration (`Hash` or `String`), or
       #   symbol giving the name of a Rails connection (e.g. :production)
       # @option options [Proc, Boolean]        :create_table Proc called with a connection if table
@@ -47,54 +66,12 @@ module Moneta
       # @option options [Symbol]               :key_column (:k) The name of the column to use for keys
       # @option options [Symbol]               :value_column (:v) The name of the column to use for values
       def initialize(options = {})
-        @key_column = options.delete(:key_column) || :k
-        @value_column = options.delete(:value_column) || :v
+        super
 
-        if backend = options.delete(:backend)
+        # If a :backend was provided, use it to set the spec and table
+        if backend
           @spec = backend.connection_pool.spec
-          @table = ::Arel::Table.new(backend.table_name.to_sym)
-        else
-          # Feed the connection info into ActiveRecord and get back a name to use for getting the
-          # connection pool
-          connection = options.delete(:connection)
-          @spec =
-            case connection
-            when Symbol
-              connection
-            when Hash, String
-              # Normalize the connection specification to a hash
-              resolver = ::ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new \
-                'dummy' => connection
-
-              # Turn the config into a standardised hash, sans a couple of bits
-              hash = resolver.resolve(:dummy)
-              hash.delete('name')
-              hash.delete(:password) # For security
-              # Make a name unique to this config
-              name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
-              # Add into configurations unless its already there (initially done without locking for
-              # speed)
-              unless self.class.configurations.key? name
-                self.class.connection_lock.synchronize do
-                  self.class.configurations[name] = connection \
-                    unless self.class.configurations.key? name
-                end
-              end
-
-              name.to_sym
-            else
-              ::ActiveRecord::Base.connection_pool.spec.name.to_s
-            end
-
-          table_name = (options.delete(:table) || :moneta).to_sym
-          create_table_proc = options.delete(:create_table)
-          if create_table_proc == nil
-            create_table(table_name)
-          elsif create_table_proc
-            with_connection(&create_table_proc)
-          end
-
-          @table = ::Arel::Table.new(table_name)
+          @table = ::Arel::Table.new(backend.table_name)
         end
       end
 
@@ -110,8 +87,8 @@ module Moneta
       # (see Proxy#each_key)
       def each_key(&block)
         with_connection do |conn|
-          return enum_for(:each_key) { conn.select_value(arel_sel.project(table[key_column].count)) } unless block_given?
-          conn.select_values(arel_sel.project(table[key_column])).each { |k| yield(k) }
+          return enum_for(:each_key) { conn.select_value(arel_sel.project(table[config.key_column].count)) } unless block_given?
+          conn.select_values(arel_sel.project(table[config.key_column])).each { |k| yield(k) }
         end
         self
       end
@@ -136,10 +113,10 @@ module Moneta
       def delete(key, options = {})
         with_connection do |conn|
           conn.transaction do
-            sel = arel_sel_key(key).project(table[value_column]).lock
+            sel = arel_sel_key(key).project(table[config.value_column]).lock
             value = decode(conn, conn.select_value(sel))
 
-            del = arel_del.where(table[key_column].eq(key))
+            del = arel_del.where(table[config.key_column].eq(key))
             conn.delete(del)
 
             value
@@ -155,7 +132,7 @@ module Moneta
             amount
           rescue ::ActiveRecord::RecordNotUnique
             conn.transaction do
-              sel = arel_sel_key(key).project(table[value_column]).lock
+              sel = arel_sel_key(key).project(table[config.value_column]).lock
               value = decode(conn, conn.select_value(sel))
               value = (value ? Integer(value) : 0) + amount
               # Re-raise if the upate affects no rows (i.e. row deleted after attempted insert,
@@ -213,13 +190,13 @@ module Moneta
 
             sel = arel_sel
               .join(temp_table)
-              .on(table[key_column].eq(temp_table[:key]))
-              .project(table[key_column], table[value_column])
+              .on(table[config.key_column].eq(temp_table[:key]))
+              .project(table[config.key_column], table[config.value_column])
             sel = sel.lock if lock
             result = conn.select_all(sel)
 
-            k = key_column.to_s
-            v = value_column.to_s
+            k = config.key_column.to_s
+            v = config.value_column.to_s
             result.map do |row|
               [row[k], decode(conn, row[v])]
             end
@@ -275,7 +252,7 @@ module Moneta
         self.class.retrieve_or_establish_connection_pool(@spec)
       end
 
-      def create_table(table_name)
+      def default_create_table(table_name)
         with_connection do |conn|
           return if conn.table_exists?(table_name)
 
@@ -283,10 +260,10 @@ module Moneta
           self.class.connection_lock.synchronize do
             conn.create_table(table_name, id: false) do |t|
               # Do not use binary key (Issue #17)
-              t.string key_column, null: false
-              t.binary value_column
+              t.string config.key_column, null: false
+              t.binary config.value_column
             end
-            conn.add_index(table_name, key_column, unique: true)
+            conn.add_index(table_name, config.key_column, unique: true)
           end
         end
       end
@@ -304,21 +281,21 @@ module Moneta
       end
 
       def arel_sel_key(key)
-        arel_sel.where(table[key_column].eq(key))
+        arel_sel.where(table[config.key_column].eq(key))
       end
 
       def conn_ins(conn, key, value)
         ins = ::Arel::InsertManager.new.into(table)
-        ins.insert([[table[key_column], key], [table[value_column], value]])
+        ins.insert([[table[config.key_column], key], [table[config.value_column], value]])
         conn.insert ins
       end
 
       def conn_upd(conn, key, value)
-        conn.update arel_upd.where(table[key_column].eq(key)).set([[table[value_column], value]])
+        conn.update arel_upd.where(table[config.key_column].eq(key)).set([[table[config.value_column], value]])
       end
 
       def conn_sel_value(conn, key)
-        decode(conn, conn.select_value(arel_sel_key(key).project(table[value_column])))
+        decode(conn, conn.select_value(arel_sel_key(key).project(table[config.value_column])))
       end
 
       def encode(conn, value)
@@ -344,6 +321,38 @@ module Moneta
           conn.unescape_bytea(value)
         else
           value
+        end
+      end
+
+      # Feed the connection info into ActiveRecord and get back a name to use
+      # for getting the connection pool
+      def spec_for_connection(connection)
+        case connection
+        when Symbol
+          connection
+        when Hash, String
+          # Normalize the connection specification to a hash
+          resolver = ::ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new \
+            'dummy' => connection
+
+          # Turn the config into a standardised hash, sans a couple of bits
+          hash = resolver.resolve(:dummy)
+          hash.delete('name')
+          hash.delete(:password) # For security
+          # Make a name unique to this config
+          name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
+          # Add into configurations unless its already there (initially done without locking for
+          # speed)
+          unless self.class.configurations.key? name
+            self.class.connection_lock.synchronize do
+              self.class.configurations[name] = connection \
+                unless self.class.configurations.key? name
+            end
+          end
+
+          name.to_sym
+        else
+          ::ActiveRecord::Base.connection_pool.spec.name.to_s
         end
       end
     end
