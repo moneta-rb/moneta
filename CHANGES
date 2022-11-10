@@ -1,3 +1,9 @@
+1.5.2
+
+* Proxy - handle returning config when the adapter does not use config
+* Avoid calling `supports?(:expires)` when expiry isn't needed
+* Adapters::Mongo - fix `merge!` behaviour when no values are inserted
+
 1.5.1
 
 * Adapters::File - fix an implicit hash issue in Ruby 3 (#222)
