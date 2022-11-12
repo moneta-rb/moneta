@@ -6,40 +6,24 @@ module Moneta
     # ActiveRecord as key/value stores
     # @api public
     class ActiveRecord < Adapter
+      autoload :V5, 'moneta/adapters/activerecord/v5'
+      include ::Moneta::Adapters::ActiveRecord::V5 if ::ActiveRecord.version < ::Gem::Version.new('6.0.0')
+
+      @connection_lock = ::Mutex.new
+      class << self
+        attr_reader :connection_lock
+      end
+
       supports :create, :increment, :each_key
 
       attr_reader :table
       delegate :with_connection, to: :connection_pool
 
-      @connection_lock = ::Mutex.new
-      class << self
-        attr_reader :connection_lock
-        delegate :configurations, :configurations=, :connection_handler, to: ::ActiveRecord::Base
-
-        def retrieve_connection_pool(spec_name)
-          connection_handler.retrieve_connection_pool(spec_name.to_s)
-        end
-
-        def establish_connection(spec_name)
-          connection_lock.synchronize do
-            if connection_pool = retrieve_connection_pool(spec_name)
-              connection_pool
-            else
-              connection_handler.establish_connection(spec_name.to_sym)
-            end
-          end
-        end
-
-        def retrieve_or_establish_connection_pool(spec_name)
-          retrieve_connection_pool(spec_name) || establish_connection(spec_name)
-        end
-      end
-
       config :key_column, default: :k
       config :value_column, default: :v
 
       backend required: false do |table: :moneta, connection: nil, create_table: nil|
-        @spec = spec_for_connection(connection)
+        establish_connection_pool_from_connection(connection)
 
         # Ensure the table name is a symbol.
         table_name = table.to_sym
@@ -70,7 +54,7 @@ module Moneta
 
         # If a :backend was provided, use it to set the spec and table
         if backend
-          @spec = backend.connection_pool.spec
+          establish_connection_pool_from_backend
           @table = ::Arel::Table.new(backend.table_name)
         end
       end
@@ -170,7 +154,7 @@ module Moneta
       # (see Proxy#close)
       def close
         @table = nil
-        @spec = nil
+        @connection_pool = nil
       end
 
       # (see Proxy#slice)
@@ -248,8 +232,32 @@ module Moneta
 
       private
 
-      def connection_pool
-        self.class.retrieve_or_establish_connection_pool(@spec)
+      attr_reader :connection_pool
+
+      def establish_connection_pool_from_backend
+        @connection_pool = backend.connection_pool
+      end
+
+      def establish_connection_pool_from_connection(connection)
+        @connection_pool =
+          if connection
+            owner_name =
+              case connection
+              when Symbol, String
+                connection.to_s
+              when Hash
+                'moneta?' + URI.encode_www_form(connection.to_a.sort)
+              end
+
+            connection_handler = ::ActiveRecord::Base.connection_handler
+            connection_handler.retrieve_connection_pool(owner_name) ||
+              self.class.connection_lock.synchronize do
+                connection_handler.retrieve_connection_pool(owner_name) ||
+                  connection_handler.establish_connection(connection, owner_name: owner_name)
+              end
+          else
+            ::ActiveRecord::Base.connection_pool
+          end
       end
 
       def default_create_table(table_name)
@@ -321,38 +329,6 @@ module Moneta
           conn.unescape_bytea(value)
         else
           value
-        end
-      end
-
-      # Feed the connection info into ActiveRecord and get back a name to use
-      # for getting the connection pool
-      def spec_for_connection(connection)
-        case connection
-        when Symbol
-          connection
-        when Hash, String
-          # Normalize the connection specification to a hash
-          resolver = ::ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new \
-            'dummy' => connection
-
-          # Turn the config into a standardised hash, sans a couple of bits
-          hash = resolver.resolve(:dummy)
-          hash.delete('name')
-          hash.delete(:password) # For security
-          # Make a name unique to this config
-          name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
-          # Add into configurations unless its already there (initially done without locking for
-          # speed)
-          unless self.class.configurations.key? name
-            self.class.connection_lock.synchronize do
-              self.class.configurations[name] = connection \
-                unless self.class.configurations.key? name
-            end
-          end
-
-          name.to_sym
-        else
-          ::ActiveRecord::Base.connection_pool.spec.name.to_s
         end
       end
     end
