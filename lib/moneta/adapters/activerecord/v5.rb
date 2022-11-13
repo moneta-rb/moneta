@@ -33,44 +33,41 @@ module Moneta
         protected
 
         def connection_pool
-          self.class.retrieve_or_establish_connection_pool(@spec)
-        end
+          if backend
+            backend.connection_pool
+          elsif config.connection
+            @spec ||=
+              case config.connection
+              when Symbol
+                config.connection
+              when Hash, String
+                # Normalize the connection specification to a hash
+                resolver = ::ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new \
+                  'dummy' => config.connection
 
-        def establish_connection_pool_from_backend
-          @spec = backend.connection_pool.spec
-        end
-
-        # Feed the connection info into ActiveRecord and get back a name to use
-        # for getting the connection pool
-        def establish_connection_pool_from_connection(connection)
-          @spec =
-            case connection
-            when Symbol
-              connection
-            when Hash, String
-              # Normalize the connection specification to a hash
-              resolver = ::ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new \
-                'dummy' => connection
-
-              # Turn the config into a standardised hash, sans a couple of bits
-              hash = resolver.resolve(:dummy)
-              hash.delete('name')
-              hash.delete(:password) # For security
-              # Make a name unique to this config
-              name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
-              # Add into configurations unless its already there (initially done without locking for
-              # speed)
-              unless self.class.configurations.key? name
-                self.class.connection_lock.synchronize do
-                  self.class.configurations[name] = connection \
-                    unless self.class.configurations.key? name
+                # Turn the config into a standardised hash, sans a couple of bits
+                hash = resolver.resolve(:dummy)
+                hash.delete('name')
+                hash.delete(:username) # For security
+                hash.delete(:password) # For security
+                # Make a name unique to this config
+                name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
+                # Add into configurations unless its already there (initially done without locking for
+                # speed)
+                unless self.class.configurations.key? name
+                  self.class.connection_lock.synchronize do
+                    self.class.configurations[name] = config.connection \
+                      unless self.class.configurations.key? name
+                  end
                 end
+
+                name.to_sym
               end
 
-              name.to_sym
-            else
-              ::ActiveRecord::Base.connection_pool.spec.name.to_s
-            end
+            self.class.retrieve_or_establish_connection_pool(@spec)
+          else
+            ::ActiveRecord::Base.connection_pool
+          end
         end
       end
     end

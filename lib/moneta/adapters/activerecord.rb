@@ -21,10 +21,9 @@ module Moneta
 
       config :key_column, default: :k
       config :value_column, default: :v
+      config :connection
 
-      backend required: false do |table: :moneta, connection: nil, create_table: nil|
-        establish_connection_pool_from_connection(connection)
-
+      backend required: false do |table: :moneta, create_table: nil|
         # Ensure the table name is a symbol.
         table_name = table.to_sym
 
@@ -52,11 +51,8 @@ module Moneta
       def initialize(options = {})
         super
 
-        # If a :backend was provided, use it to set the spec and table
-        if backend
-          establish_connection_pool_from_backend
-          @table = ::Arel::Table.new(backend.table_name)
-        end
+        # If a :backend was provided, use it to set the table
+        @table = ::Arel::Table.new(backend.table_name) if backend
       end
 
       # (see Proxy#key?)
@@ -232,32 +228,29 @@ module Moneta
 
       private
 
-      attr_reader :connection_pool
+      def connection_pool
+        if backend
+          backend.connection_pool
+        elsif config.connection
+          @owner_name ||=
+            case config.connection
+            when Symbol, String
+              config.connection.to_s
+            when Hash
+              hash = config.connection.clone
+              [:username, 'username', :password, 'password'].each { |key| hash.delete(key) }
+              'moneta?' + URI.encode_www_form(config.connection.to_a.sort)
+            end
 
-      def establish_connection_pool_from_backend
-        @connection_pool = backend.connection_pool
-      end
-
-      def establish_connection_pool_from_connection(connection)
-        @connection_pool =
-          if connection
-            owner_name =
-              case connection
-              when Symbol, String
-                connection.to_s
-              when Hash
-                'moneta?' + URI.encode_www_form(connection.to_a.sort)
-              end
-
-            connection_handler = ::ActiveRecord::Base.connection_handler
-            connection_handler.retrieve_connection_pool(owner_name) ||
-              self.class.connection_lock.synchronize do
-                connection_handler.retrieve_connection_pool(owner_name) ||
-                  connection_handler.establish_connection(connection, owner_name: owner_name)
-              end
-          else
-            ::ActiveRecord::Base.connection_pool
-          end
+          connection_handler = ::ActiveRecord::Base.connection_handler
+          connection_handler.retrieve_connection_pool(@owner_name) ||
+            self.class.connection_lock.synchronize do
+              connection_handler.retrieve_connection_pool(@owner_name) ||
+                connection_handler.establish_connection(config.connection, owner_name: @owner_name)
+            end
+        else
+          ::ActiveRecord::Base.connection_pool
+        end
       end
 
       def default_create_table(table_name)
