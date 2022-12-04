@@ -203,14 +203,14 @@ describe "cache_moneta_store" do
 
       increment = @events.shift
       expect(increment.name).to eq 'cache_increment.active_support'
-      expect(increment.payload).to eq(key: 'pearl jam', amount: 1, store: described_class.to_s)
+      expect(increment.payload).to include(key: 'pearl jam', amount: 1)
     end
 
     it 'notifies on #decrement' do
       store.decrement 'placebo'
       decrement = @events.shift
       expect(decrement.name).to eq 'cache_decrement.active_support'
-      expect(decrement.payload).to eq(key: 'placebo', amount: 1, store: described_class.to_s)
+      expect(decrement.payload).to include(key: 'placebo', amount: 1)
     end
   end
 
@@ -229,7 +229,7 @@ describe "cache_moneta_store" do
 
         clear = @events.shift
         expect(clear.name).to eq 'cache_clear.active_support'
-        expect(clear.payload).to eq(key: nil)
+        expect(clear.payload).to include(key: nil)
       end
     end
 
