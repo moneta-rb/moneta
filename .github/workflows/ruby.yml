@@ -269,6 +269,38 @@ jobs:
     - name: Rspec
       run: bundle exec rspec -t sqlite -- spec/moneta
 
+  rails5:
+    name: "Rails 5"
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.ruby-version == '3.0' }}
+
+    strategy:
+      matrix:
+        ruby-version: ['2.7', '2.5', jruby]
+
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/rails5.gemfile
+      BUNDLE_WITH: sqlite active_support_cache
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec ActiveRecord
+      run: bundle exec rspec -t sqlite -- spec/moneta/adapters/activerecord
+
+    - name: Rspec ActiveSupport::Cache
+      run: bundle exec rspec -- spec/active_support spec/moneta/adapters/activesupportcache
+
+    - name: Minitest
+      run: bundle exec ruby test/action_dispatch/session_moneta_store_test.rb
+
   redis:
     name: "Redis adapters"
     runs-on: ubuntu-latest

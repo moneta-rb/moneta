@@ -1,0 +1,32 @@
+source 'https://rubygems.org'
+gemspec path: '..'
+
+gem 'activerecord', '~> 5.2'
+gem 'actionpack', '~> 5.2'
+gem 'minitest', '~> 5.0'
+
+# Backends
+group :H2, optional: true do
+  gem 'activerecord-jdbch2-adapter', platforms: :jruby, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'
+end
+
+group :mysql, optional: true do
+  gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
+  gem 'mysql2', platforms: :ruby
+end
+
+group :sqlite, optional: true do
+  gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
+  gem 'sqlite3', '~> 1.5.3', platforms: :ruby
+end
+
+group :postgresql, optional: true do
+  gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
+  gem 'pg', platforms: :ruby
+end
+
+# Needed for testing ActiveSupport::Cache
+group :active_support_cache, optional: true do
+  gem 'redis', '~> 4.2'
+  gem 'dalli', '~> 2.7.11'
+end
