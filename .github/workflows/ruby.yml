@@ -274,6 +274,17 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
     strategy:
       matrix:
         ruby-version: ['2.7', '2.5', jruby-9.3]
@@ -284,6 +295,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Apt update
+      run: sudo apt-get update
+
+    - name: Apt install memcached
+      run: sudo apt-get install -y memcached libsasl2-dev
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
