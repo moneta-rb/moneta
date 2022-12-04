@@ -1,42 +1,49 @@
 require 'active_record'
-require 'uri'
 
 module Moneta
   module Adapters
     # ActiveRecord as key/value stores
     # @api public
     class ActiveRecord < Adapter
-      autoload :V5, 'moneta/adapters/activerecord/v5'
-      include ::Moneta::Adapters::ActiveRecord::V5 if ::ActiveRecord.version < ::Gem::Version.new('6.0.0')
+      autoload :V5Backend, 'moneta/adapters/activerecord/v5_backend'
+      autoload :Backend, 'moneta/adapters/activerecord/backend'
 
-      @connection_lock = ::Mutex.new
+      @table_create_lock = ::Mutex.new
+
       class << self
-        attr_reader :connection_lock
+        attr_reader :table_create_lock
       end
 
       supports :create, :increment, :each_key
 
       attr_reader :table
+      delegate :connection_pool, to: :@backend
       delegate :with_connection, to: :connection_pool
 
       config :key_column, default: :k
       config :value_column, default: :v
-      config :connection
 
-      backend required: false do |table: :moneta, create_table: nil|
+      backend do |table: :moneta, create_table: true, **options|
         # Ensure the table name is a symbol.
         table_name = table.to_sym
 
-        if create_table == nil
-          default_create_table(table_name)
-        elsif create_table
-          with_connection(&create_table)
+        backend =
+          if ::ActiveRecord.version < ::Gem::Version.new('6.0.0')
+            ::Moneta::Adapters::ActiveRecord::V5Backend.new(table: table_name, **options)
+          else
+            ::Moneta::Adapters::ActiveRecord::Backend.new(table: table_name, **options)
+          end
+
+        case create_table
+        when Proc
+          backend.connection_pool.with_connection(&create_table)
+        when true
+          backend.connection_pool.with_connection do |conn|
+            default_create_table(conn, table_name)
+          end
         end
 
-        @table = ::Arel::Table.new(table_name)
-
-        # backend is only used if there's an existing ActiveRecord model
-        nil
+        backend
       end
 
       # @param [Hash] options
@@ -50,9 +57,7 @@ module Moneta
       # @option options [Symbol]               :value_column (:v) The name of the column to use for values
       def initialize(options = {})
         super
-
-        # If a :backend was provided, use it to set the table
-        @table = ::Arel::Table.new(backend.table_name) if backend
+        @table = ::Arel::Table.new(backend.table_name)
       end
 
       # (see Proxy#key?)
@@ -228,37 +233,13 @@ module Moneta
 
       private
 
-      def connection_pool
-        if backend
-          backend.connection_pool
-        elsif config.connection
-          @owner_name ||=
-            case config.connection
-            when Symbol, String
-              config.connection.to_s
-            when Hash
-              hash = config.connection.clone
-              [:username, 'username', :password, 'password'].each { |key| hash.delete(key) }
-              'moneta?' + URI.encode_www_form(config.connection.to_a.sort)
-            end
-
-          connection_handler = ::ActiveRecord::Base.connection_handler
-          connection_handler.retrieve_connection_pool(@owner_name) ||
-            self.class.connection_lock.synchronize do
-              connection_handler.retrieve_connection_pool(@owner_name) ||
-                connection_handler.establish_connection(config.connection, owner_name: @owner_name)
-            end
-        else
-          ::ActiveRecord::Base.connection_pool
-        end
-      end
-
-      def default_create_table(table_name)
-        with_connection do |conn|
+      def default_create_table(conn, table_name)
+        # From 6.1, we can use the `if_not_exists?` check
+        if ::ActiveRecord.version < ::Gem::Version.new('6.1.0')
           return if conn.table_exists?(table_name)
 
           # Prevent multiple connections from attempting to create the table simultaneously.
-          self.class.connection_lock.synchronize do
+          self.class.table_create_lock.synchronize do
             conn.create_table(table_name, id: false) do |t|
               # Do not use binary key (Issue #17)
               t.string config.key_column, null: false
@@ -266,6 +247,13 @@ module Moneta
             end
             conn.add_index(table_name, config.key_column, unique: true)
           end
+        else
+          conn.create_table(table_name, id: false, if_not_exists: true) do |t|
+            # Do not use binary key (Issue #17)
+            t.string config.key_column, null: false
+            t.binary config.value_column
+          end
+          conn.add_index(table_name, config.key_column, unique: true, if_not_exists: true)
         end
       end
 
