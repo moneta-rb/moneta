@@ -276,7 +276,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['2.7', '2.5', jruby]
+        ruby-version: ['2.7', '2.5', jruby-9.3]
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/rails5.gemfile
