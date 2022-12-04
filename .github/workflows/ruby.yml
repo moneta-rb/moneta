@@ -8,7 +8,7 @@ on:
 
 jobs:
   adapters:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     continue-on-error: ${{ matrix.ruby-version == '3.0' }}
 
     strategy:
