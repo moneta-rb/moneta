@@ -1,4 +1,4 @@
-describe 'standard_activesupportcache', adapter: :ActiveSupportCache, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
+describe 'standard_activesupportcache', adapter: :ActiveSupportCache do
   before :context do
     require 'active_support'
   end
