@@ -59,14 +59,16 @@ class MonetaStoreTest < ActionDispatch::IntegrationTest
     with_test_route_set do
       get '/set_session_value'
       assert_response :success
-      assert cookies['_session_id']
-      session_cookie = cookies.get_cookie('_session_id')
+
+      session_cookie = cookies['_session_id']
+      assert session_cookie
 
       get '/call_reset_session'
       assert_response :success
       assert_not_equal [], headers['Set-Cookie']
 
-      cookies.merge(session_cookie) # replace our new session_id with our old, pre-reset session_id
+      # replace our new session_id with our old, pre-reset session_id
+      cookies['_session_id'] = session_cookie
 
       get '/get_session_value'
       assert_response :success
