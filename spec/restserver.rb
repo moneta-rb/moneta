@@ -24,7 +24,7 @@ def start_restserver(port)
 
   begin
     Faraday.get("http://127.0.0.1:#{port}")
-  rescue Faraday::ConnectionFailed
+  rescue Faraday::ConnectionFailed, Errno::EBADF
     tries ||= 5
     tries -= 1
     if tries > 0
