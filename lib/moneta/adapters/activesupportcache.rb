@@ -15,20 +15,29 @@ module Moneta
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        backend.exist?(key).tap do |exists|
-          if exists && (expires = expires_value(options, nil)) != nil
-            value = backend.read(key, options)
-            backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+        exists =
+          begin
+            backend_exist?(key)
+          rescue ArgumentError, TypeError
+            # these errors happen when certain adapters try to deserialize
+            # values, which means there's something present
+            true
           end
+
+        if exists && (expires = expires_value(options, nil)) != nil
+          value = backend_read(key, **options)
+          backend_write(key, value, expires_in: expires ? expires.seconds : nil, **options)
         end
+
+        exists
       end
 
       # (see Proxy#load)
       def load(key, options = {})
         expires = expires_value(options, nil)
-        value = backend.read(key, options)
+        value = backend_read(key, **options)
         if value and expires != nil
-          backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+          backend_write(key, value, expires_in: expires ? expires.seconds : nil, **options)
         end
         value
       end
@@ -36,7 +45,7 @@ module Moneta
       # (see Proxy#store)
       def store(key, value, options = {})
         expires = expires_value(options)
-        backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+        backend_write(key, value, expires_in: expires ? expires.seconds : nil, **options)
         value
       end
 
@@ -44,11 +53,11 @@ module Moneta
       def increment(key, amount = 1, options = {})
         expires = expires_value(options)
         options.delete(:raw)
-        existing = Integer(backend.fetch(key, options.merge(raw: true)) { 0 })
+        existing = Integer(backend_fetch(key, raw: true, **options) { 0 })
         if amount > 0
-          backend.increment(key, amount, options.merge(expires_in: expires ? expires.seconds : nil))
+          backend_increment(key, amount, expires_in: expires ? expires.seconds : nil, **options)
         elsif amount < 0
-          backend.decrement(key, -amount, options.merge(expires_in: expires ? expires.seconds : nil))
+          backend_decrement(key, -amount, expires_in: expires ? expires.seconds : nil, **options)
         else
           existing
         end
@@ -56,9 +65,9 @@ module Moneta
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        value = backend.read(key, options)
+        value = backend_read(key, options)
         if value != nil
-          backend.delete(key, options)
+          backend_delete(key, **options)
           options[:raw] ? value.to_s : value
         end
       end
@@ -74,7 +83,7 @@ module Moneta
         hash = backend.read_multi(*keys)
         if (expires = expires_value(options, nil)) != nil
           hash.each do |key, value|
-            backend.write(key, value, options.merge(expires_in: expires ? expires.seconds : nil))
+            backend_write(key, value, expires_in: expires ? expires.seconds : nil, **options)
           end
         end
         if options[:raw]
@@ -106,7 +115,7 @@ module Moneta
 
         hash = Hash === pairs ? pairs : Hash[pairs.to_a]
         expires = expires_value(options)
-        backend.write_multi(hash, options.merge(expires_in: expires ? expires.seconds : nil))
+        backend_write_multi(hash, expires_in: expires ? expires.seconds : nil, **options)
         self
       end
 
@@ -115,6 +124,52 @@ module Moneta
       def expires_value(options, default = config.expires)
         super.tap { options.delete(:expires) unless options.frozen? }
       end
+
+      delegate :decrement, :delete, :exist?, :fetch, :increment, :read, :write, :write_multi,
+               to: :@backend,
+               prefix: :backend
+      private :backend_decrement, :backend_delete, :backend_exist?,
+              :backend_fetch, :backend_increment, :backend_read,
+              :backend_write, :backend_write_multi
+
+      # @api private
+      module Rails5Support
+        private
+
+        def backend_decrement(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_delete(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_exist?(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_fetch(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_increment(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_read(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_write(*args, **options)
+          super(*args, options)
+        end
+
+        def backend_write_multi(*args, **options)
+          super(*args, options)
+        end
+      end
+
+      prepend Rails5Support if ::ActiveSupport.version < ::Gem::Version.new('6.1.0')
     end
   end
 end

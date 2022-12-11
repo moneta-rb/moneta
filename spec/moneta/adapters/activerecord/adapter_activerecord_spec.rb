@@ -1,13 +1,13 @@
-describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
+describe 'adapter_activerecord', adapter: :ActiveRecord do
   activerecord_specs = ADAPTER_SPECS.with_values(:nil).with_each_key
 
   shared_examples :adapter_activerecord do |specs|
     moneta_build do
       Moneta::Adapters::ActiveRecord.new(
         table: 'adapter_activerecord',
-        connection: connection1)
+        connection: connection1
+      )
     end
-
 
     moneta_specs specs
 
@@ -16,9 +16,9 @@ describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.
       store['foo/bar'] = '2'
       store.with_connection do |conn|
         count = conn.select_value \
-          store.table.
-            where(store.table[:k].eq('foo/bar')).
-            project(store.table[:k].count)
+          store.table
+          .where(store.table[:k].eq('foo/bar'))
+          .project(store.table[:k].count)
         expect(count).to eq 1
       end
     end
@@ -26,10 +26,12 @@ describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.
     it 'supports different tables same database' do
       store1 = Moneta::Adapters::ActiveRecord.new(
         table: 'adapter_activerecord1',
-        connection: connection1)
+        connection: connection1
+      )
       store2 = Moneta::Adapters::ActiveRecord.new(
         table: 'adapter_activerecord2',
-        connection: connection1)
+        connection: connection1
+      )
 
       store1['key'] = 'value1'
       store2['key'] = 'value2'
@@ -43,10 +45,12 @@ describe 'adapter_activerecord', adapter: :ActiveRecord, broken: ::Gem::Version.
     it 'supports different databases same table' do
       store1 = Moneta::Adapters::ActiveRecord.new(
         table: 'adapter_activerecord',
-        connection: connection1)
+        connection: connection1
+      )
       store2 = Moneta::Adapters::ActiveRecord.new(
         table: 'adapter_activerecord',
-        connection: connection2)
+        connection: connection2
+      )
 
       store1['key'] = 'value1'
       store2['key'] = 'value2'

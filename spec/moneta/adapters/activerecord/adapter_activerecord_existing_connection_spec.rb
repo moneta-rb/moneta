@@ -1,4 +1,4 @@
-describe 'adapter_activerecord_existing_connection', adapter: :ActiveRecord, mysql: true, broken: ::Gem::Version.new(RUBY_ENGINE_VERSION) >= ::Gem::Version.new('3.0.0') do
+describe 'adapter_activerecord_existing_connection', adapter: :ActiveRecord, mysql: true do
   before :all do
     require 'active_record'
   end
