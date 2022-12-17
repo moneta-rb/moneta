@@ -4,16 +4,16 @@ describe 'expires_file', proxy: :Expires do
 
   use_timecop
 
-  moneta_build do
+  moneta_build do |metadata: nil, **options|
     tempdir = self.tempdir
     Moneta.build do
-      use :Expires
+      use :Expires, metadata: metadata
       use :Transformer, key: [:marshal, :escape], value: :marshal
       adapter :File, dir: File.join(tempdir, "expires-file")
     end
   end
 
-  moneta_specs STANDARD_SPECS.with_expires.stringvalues_only.with_each_key
+  moneta_specs STANDARD_SPECS.with_expires.stringvalues_only.with_each_key.with_metadata
 
   it 'deletes expired value in underlying file storage' do
     store.store('foo', 'bar', expires: 2)

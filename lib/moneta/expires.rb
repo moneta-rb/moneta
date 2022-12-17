@@ -1,3 +1,6 @@
+require 'forwardable'
+require 'set'
+
 module Moneta
   # Adds expiration support to the underlying store
   #
@@ -6,183 +9,194 @@ module Moneta
   #
   # @api public
   class Expires < Proxy
+    extend Forwardable
     include ExpiresSupport
+
+    def_delegator :adapter, :metadata_names
 
     # @param [Moneta store] adapter The underlying store
     # @param [Hash] options
+    # @option options [<Symbol>] :metadata A list of metadata field names to
+    #   use
     # @option options [String] :expires Default expiration time
     def initialize(adapter, options = {})
       raise 'Store already supports feature :expires' if adapter.supports?(:expires)
+      if !adapter.supports?(:metadata) || !adapter.metadata_names.include?(:expires)
+        metadata = options.delete(:metadata) || []
+        metadata.push(:expires) unless metadata.include?(:expires)
+        adapter = Metadata.new(adapter, options.merge(metadata: metadata))
+      end
+      self.default_expires = options[:expires]
       super
     end
 
     # (see Proxy#key?)
     def key?(key, options = {})
-      # Transformer might raise exception
-      load_entry(key, options) != nil
-    rescue
-      super(key, Utils.without(options, :expires))
-    end
-
-    # (see Proxy#load)
-    def load(key, options = {})
       return super if options.include?(:raw)
-      value, = load_entry(key, options)
-      value
-    end
-
-    # (see Proxy#store)
-    def store(key, value, options = {})
-      return super if options.include?(:raw)
-      expires = expires_at(options)
-      super(key, new_entry(value, expires), Utils.without(options, :expires))
-      value
-    end
-
-    # (see Proxy#delete)
-    def delete(key, options = {})
-      return super if options.include?(:raw)
-      value, expires = super
-      value if !expires || Time.now <= Time.at(expires)
-    end
-
-    # (see Proxy#store)
-    def create(key, value, options = {})
-      return super if options.include?(:raw)
-      expires = expires_at(options)
-      @adapter.create(key, new_entry(value, expires), Utils.without(options, :expires))
-    end
-
-    # (see Defaults#values_at)
-    def values_at(*keys, **options)
-      return super if options.include?(:raw)
-      new_expires = expires_at(options, nil)
-      options = Utils.without(options, :expires)
-      with_updates(options) do |updates|
-        keys.zip(@adapter.values_at(*keys, **options)).map do |key, entry|
-          entry = invalidate_entry(key, entry, new_expires) do |new_entry|
-            updates[key] = new_entry
-          end
-          next if entry == nil
-          value, = entry
-          value
-        end
+      begin
+        nil != load_or_expire(key: key, return_metadata: true, options: Utils.without(options, :return_metadata))
+      rescue
+        # Fallback for if the key is present but can't be loaded
+        super(key, Utils.without(options, :expires))
       end
     end
 
-    # (see Defaults#fetch_values)
-    def fetch_values(*keys, **options)
+    # (see Metadata#load)
+    def load(key, options = {})
       return super if options.include?(:raw)
-      new_expires = expires_at(options, nil)
-      options = Utils.without(options, :expires)
-      substituted = {}
+      return_metadata = options[:return_metadata]
+      load_or_expire(key: key, return_metadata: return_metadata, options: options)
+    end
+
+    # (see Metadata#store)
+    def store(key, value, options = {})
+      return super if options.include?(:raw)
+      expires = expires_at(options)
+      options_with_metadata = update_options_with_metadata(expires: expires, options: options)
+      super(key, value, options_with_metadata)
+    end
+
+    # (see Metadata#delete)
+    def delete(key, options = {})
+      return super if options.include?(:raw)
+      return_metadata = options[:return_metadata]
+      if struct = load_or_expire(key: key, return_metadata: true, options: options, allow_expiry_update: false)
+        super(key, options)
+        return_metadata ? struct : struct.value
+      end
+    end
+
+    # (see Metadata#store)
+    def create(key, value, options = {})
+      return super if options.include?(:raw)
+      expires = expires_at(options)
+      options_with_metadata = update_options_with_metadata(expires: expires, options: options)
+      @adapter.create(key, value, options_with_metadata)
+    end
+
+    # (see Metadata#values_at)
+    def values_at(*keys, return_metadata: false, **options)
+      return super if options.include?(:raw)
+      expires = expires_at(options, nil)
+      options = Utils.without(options, :expires).merge(return_metadata: true)
+      structs = @adapter.values_at(*keys, **options)
+
+      keys.zip(structs).map do |key, struct|
+        next if struct == nil || delete_if_expired(key: key, struct: struct)
+        if expires != nil
+          options_with_metadata = update_options_with_metadata(expires: expires, options: options, metadata: struct.to_h)
+          struct = @adapter.store(key, struct.value, options_with_metadata)
+        end
+        return_metadata ? struct : struct.value
+      end
+    end
+
+    # (see Metadata#fetch_values)
+    def fetch_values(*keys, return_metadata: false, **options)
+      return super if options.include?(:raw)
+      expires = expires_at(options, nil)
+      options = Utils.without(options, :expires).merge(return_metadata: true)
+
+      substituted = Set.new
       block = if block_given?
                 lambda do |key|
-                  substituted[key] = true
+                  substituted << key
                   yield key
                 end
               end
 
-      with_updates(options) do |updates|
-        keys.zip(@adapter.fetch_values(*keys, **options, &block)).map do |key, entry|
-          next entry if substituted[key]
-          entry = invalidate_entry(key, entry, new_expires) do |new_entry|
-            updates[key] = new_entry
+      structs = @adapter.fetch_values(*keys, **options, &block)
+      keys.zip(structs).map do |key, struct|
+        unless substituted.include? key
+          next if struct == nil
+          if delete_if_expired(key: key, struct: struct)
+            if block_given?
+              struct.value = yield key
+            else
+              next
+            end
+          elsif expires != nil
+            options_with_metadata = update_options_with_metadata(expires: expires, options: options, metadata: struct.to_h)
+            struct = @adapter.store(key, struct.value, options_with_metadata)
           end
-          if entry == nil
-            value = if block_given?
-                      yield key
-                    end
-          else
-            value, = entry
-          end
-          value
         end
+        return_metadata ? struct : struct.value
       end
     end
 
-    # (see Defaults#slice)
+    # (see Metadata#slice)
     def slice(*keys, **options)
       return super if options.include?(:raw)
-      new_expires = expires_at(options, nil)
-      options = Utils.without(options, :expires)
+      return_metadata = options[:return_metadata]
+      expires = expires_at(options, nil)
+      options = Utils.without(options, :expires).merge(return_metadata: true)
 
-      with_updates(options) do |updates|
-        @adapter.slice(*keys, **options).map do |key, entry|
-          entry = invalidate_entry(key, entry, new_expires) do |new_entry|
-            updates[key] = new_entry
-          end
-          next if entry == nil
-          value, = entry
-          [key, value]
-        end.reject(&:nil?)
+      @adapter.slice(*keys, **options).each_with_object([]) do |(key, struct), slice|
+        next if delete_if_expired(key: key, struct: struct)
+        if expires != nil
+          options_with_metadata = update_options_with_metadata(expires: expires, options: options, metadata: struct.to_h)
+          struct = @adapter.store(key, struct.value, options_with_metadata)
+        end
+        slice.push [key, return_metadata ? struct : struct.value]
       end
     end
 
-    # (see Defaults#merge!)
+    # (see Metadata#merge!)
     def merge!(pairs, options = {})
+      yield_metadata = options[:yield_metadata]
       expires = expires_at(options)
-      options = Utils.without(options, :expires)
+      options = Utils.without(options, :expires).merge(yield_metadata: true)
+      options_with_metadata = update_options_with_metadata(expires: expires, options: options)
 
       block = if block_given?
-                lambda do |key, old_entry, entry|
-                  old_entry = invalidate_entry(key, old_entry)
-                  if old_entry == nil
-                    entry # behave as if no replace is happening
+                lambda do |key, old_struct, struct|
+                  next struct if delete_if_expired(key: key, struct: old_struct)
+
+                  if yield_metadata
+                    yield key, old_struct, struct
                   else
-                    old_value, = old_entry
-                    new_value, = entry
-                    new_entry(yield(key, old_value, new_value), expires)
+                    struct.value = yield key, old_struct.value, struct.value
+                    struct
                   end
                 end
               end
 
-      entry_pairs = pairs.map do |key, value|
-        [key, new_entry(value, expires)]
-      end
-      @adapter.merge!(entry_pairs, options, &block)
+      @adapter.merge!(pairs, options_with_metadata, &block)
       self
     end
 
     private
 
-    def load_entry(key, options)
-      new_expires = expires_at(options, nil)
-      options = Utils.without(options, :expires)
-      entry = @adapter.load(key, options)
-      invalidate_entry(key, entry, new_expires) do |new_entry|
-        @adapter.store(key, new_entry, options)
-      end
-    end
-
-    def invalidate_entry(key, entry, new_expires = nil)
-      if entry != nil
-        value, expires = entry
-        if expires && Time.now > Time.at(expires)
-          delete(key)
-          entry = nil
-        elsif new_expires != nil
-          yield new_entry(value, new_expires) if block_given?
+    def load_or_expire(key:, options:, return_metadata: false, allow_expiry_update: true)
+      options = options.merge(return_metadata: true)
+      struct = @adapter.load(key, options)
+      return if struct == nil
+      struct =
+        if delete_if_expired(key: key, struct: struct)
+          nil
+        elsif allow_expiry_update && (expires = expires_at(options, nil)) != nil
+          options_with_metadata = update_options_with_metadata(expires: expires, options: options, metadata: struct.to_h)
+          @adapter.store(key, struct.value, options_with_metadata)
+        else
+          struct
         end
-      end
-      entry
+
+      struct && (return_metadata ? struct : struct.value)
     end
 
-    def new_entry(value, expires)
-      if expires
-        [value, expires.to_r]
-      elsif Array === value || value == nil
-        [value]
+    def delete_if_expired(key:, struct:)
+      if struct.expires && Time.now > Time.at(struct.expires)
+        @adapter.delete key
+        true
       else
-        value
+        false
       end
     end
 
-    def with_updates(options)
-      updates = {}
-      yield(updates).tap do
-        @adapter.merge!(updates, options) unless updates.empty?
-      end
+    def update_options_with_metadata(expires:, options:, metadata: nil)
+      metadata ||= options[:metadata].to_h
+      Utils.without(options, :expires, :metadata).merge \
+        metadata: metadata.merge(expires: expires ? expires.to_r : nil)
     end
   end
 end

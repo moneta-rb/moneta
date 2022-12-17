@@ -19,6 +19,7 @@ module Moneta
   autoload :IncrementSupport,  'moneta/increment_support'
   autoload :Lock,              'moneta/lock'
   autoload :Logger,            'moneta/logger'
+  autoload :Metadata,          'moneta/metadata'
   autoload :Mutex,             'moneta/synchronize'
   autoload :NilValues,         'moneta/nil_values'
   autoload :OptionMerger,      'moneta/optionmerger'
