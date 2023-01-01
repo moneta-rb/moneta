@@ -24,18 +24,18 @@ module Moneta
     def initialize(adapter, options = {})
       super
 
-      if config.key
+      if config.key.empty?
+        @key_decodable = true
+      else
         @key_transforms = load_transforms(config.key, options)
         @key_decodable = @key_transforms.all?(&:decodable?)
         @key_encoder = make_encoder(@key_transforms)
         if @key_decodable
           @key_decoder = make_decoder(@key_transforms)
         end
-      else
-        @key_decodable = true
       end
 
-      if config.value
+      unless config.value.empty?
         @value_transforms = load_transforms(config.value, options)
         raise "Not all value transforms are decodable (#{@value_transforms.reject(&:decodable?)})" unless @value_transforms.all?(&:decodable?)
         @value_encoder = make_encoder(@value_transforms)
@@ -199,7 +199,6 @@ module Moneta
     end
 
     def load_transforms(names, options)
-      names = [names] if names.is_a?(Symbol)
       names.map do |transform_name|
         ::Moneta::Transforms.module_for(transform_name).new(**options)
       end

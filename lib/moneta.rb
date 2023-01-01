@@ -115,7 +115,13 @@ module Moneta
     serializer = options.include?(:serializer) ? options.delete(:serializer) : :marshal
     key_serializer = options.include?(:key_serializer) ? options.delete(:key_serializer) : serializer
     value_serializer = options.include?(:value_serializer) ? options.delete(:value_serializer) : serializer
-    transformer = { key: [key_serializer, :prefix], value: [value_serializer], prefix: options.delete(:prefix) }
+    transformer = { key: [key_serializer], value: [value_serializer] }
+
+    if prefix = options.delete(:prefix) and !prefix.empty?
+      transformer[:key] << :prefix
+      transformer[:prefix] = prefix
+    end
+
     transformer[:value] << (Symbol === compress ? compress : :zlib) if compress
     raise ArgumentError, 'Name must be Symbol' unless Symbol === name
     case name
