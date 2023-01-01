@@ -18,373 +18,208 @@ module Moneta
   #
   # @api public
   class Transformer < Proxy
-    class << self
-      alias original_new new
+    config :key
+    config :value
 
-      # @param [Moneta store] adapter The underlying store
-      # @param [Hash] options
-      # @return [Transformer] new Moneta transformer
-      # @option options [Array] :key List of key transformers in the order in which they should be applied
-      # @option options [Array] :value List of value transformers in the order in which they should be applied
-      # @option options [String] :prefix Prefix string for key namespacing (Used by the :prefix key transformer)
-      # @option options [String] :secret HMAC secret to verify values (Used by the :hmac value transformer)
-      # @option options [Integer] :maxlen Maximum key length (Used by the :truncate key transformer)
-      def new(adapter, options = {})
-        keys = [options[:key]].flatten.compact
-        values = [options[:value]].flatten.compact
-        raise ArgumentError, 'Option :key or :value is required' if keys.empty? && values.empty?
-        options[:prefix] ||= '' if keys.include?(:prefix)
-        name = class_name(keys, values)
-        const_set(name, compile(keys, values)) unless const_defined?(name)
-        const_get(name).original_new(adapter, options)
-      end
+    def initialize(adapter, options = {})
+      super
 
-      private
-
-      def compile(keys, values)
-        @key_validator ||= compile_validator(KEY_TRANSFORMER)
-        @load_key_validator ||= compile_validator(LOAD_KEY_TRANSFORMER)
-        @test_key_validator ||= compile_validator(TEST_KEY_TRANSFORMER)
-        @value_validator ||= compile_validator(VALUE_TRANSFORMER)
-
-        raise ArgumentError, 'Invalid key transformer chain' if @key_validator !~ keys.map(&:inspect).join
-        raise ArgumentError, 'Invalid value transformer chain' if @value_validator !~ values.map(&:inspect).join
-
-        klass = Class.new(self)
-        compile_each_key_support_clause(klass, keys)
-        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          def initialize(adapter, options = {})
-            super
-            #{compile_initializer('key', keys)}
-            #{compile_initializer('value', values)}
-          end
-        END_EVAL
-
-        key, key_opts = compile_transformer(keys, 'key')
-        key_load, key_load_opts = compile_transformer(keys.reverse, 'key', 1) if @load_key_validator =~ keys.map(&:inspect).join
-        key_test, key_test_opts = compile_transformer(keys.reverse, 'key', 4) if @test_key_validator =~ keys.map(&:inspect).join
-        dump, dump_opts = compile_transformer(values, 'value')
-        load, load_opts = compile_transformer(values.reverse, 'value', 1)
-
-        if values.empty?
-          compile_key_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts)
-        elsif keys.empty?
-          compile_value_transformer(klass, load, load_opts, dump, dump_opts)
-        else
-          compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts, load, load_opts, dump, dump_opts)
+      if config.key
+        @key_transforms = load_transforms(config.key, options)
+        @key_decodable = @key_transforms.all?(&:decodable?)
+        @key_encoder = make_encoder(@key_transforms)
+        if @key_decodable
+          @key_decoder = make_decoder(@key_transforms)
         end
-
-        klass
+      else
+        @key_decodable = true
       end
 
-      def without(*options)
-        options = options.flatten.uniq
-        options.empty? ? 'options' : "Utils.without(options, #{options.map(&:to_sym).map(&:inspect).join(', ')})"
+      if config.value
+        @value_transforms = load_transforms(config.value, options)
+        raise "Not all value transforms are decodable (#{@value_transforms.reject(&:decodable?)})" unless @value_transforms.all?(&:decodable?)
+        @value_encoder = make_encoder(@value_transforms)
+        @value_decoder = make_decoder(@value_transforms)
       end
+    end
 
-      def compile_each_key_support_clause(klass, keys)
-        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          #{'not_supports :each_key' if @load_key_validator !~ keys.map(&:inspect).join}
-        END_EVAL
+    def supports?(feature)
+      supported = super
+      if supported && feature == :each_key && !@key_decodable
+        false
+      else
+        supported
       end
+    end
 
-      def compile_key_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts)
-        if_key_test = key_load && key_test ? "if #{key_test}" : ''
-
-        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          def key?(key, options = {})
-            @adapter.key?(#{key}, #{without key_opts})
-          end
-          def each_key(&block)
-            raise NotImplementedError, "each_key is not supported on this transformer" \
-              unless supports? :each_key
-
-            return enum_for(:each_key) unless block_given?
-            @adapter.each_key.lazy.map{ |key| #{key_load} #{if_key_test} }.reject(&:nil?).each(&block)
-
-            self
-          end
-          def increment(key, amount = 1, options = {})
-            @adapter.increment(#{key}, amount, #{without key_opts})
-          end
-          def load(key, options = {})
-            @adapter.load(#{key}, #{without :raw, key_opts})
-          end
-          def store(key, value, options = {})
-            @adapter.store(#{key}, value, #{without :raw, key_opts})
-          end
-          def delete(key, options = {})
-            @adapter.delete(#{key}, #{without :raw, key_opts})
-          end
-          def create(key, value, options = {})
-            @adapter.create(#{key}, value, #{without :raw, key_opts})
-          end
-          def values_at(*keys, **options)
-            t_keys = keys.map { |key| #{key} }
-            @adapter.values_at(*t_keys, **#{without :raw, key_opts})
-          end
-          def fetch_values(*keys, **options)
-            t_keys = keys.map { |key| #{key} }
-
-            block = if block_given?
-                      key_lookup = Hash[t_keys.zip(keys)]
-                      lambda { |t_key| yield key_lookup[t_key] }
-                    end
-            @adapter.fetch_values(*t_keys, **#{without :raw, key_opts}, &block)
-          end
-          def slice(*keys, **options)
-            t_keys = keys.map { |key| #{key} }
-            key_lookup = Hash[t_keys.zip(keys)]
-            @adapter.slice(*t_keys, **#{without :raw, key_opts}).map do |key, value|
-              [key_lookup[key], value]
-            end
-          end
-          def merge!(pairs, options = {})
-            keys, values = pairs.to_a.transpose
-            keys ||= []
-            values ||= []
-            t_keys = keys.map { |key| #{key} }
-            block = if block_given?
-                      key_lookup = Hash[t_keys.zip(keys)]
-                      lambda { |k, old, new| yield(key_lookup[k], old, new) }
-                    end
-            @adapter.merge!(t_keys.zip(values), #{without :raw, key_opts}, &block)
-            self
-          end
-        END_EVAL
-      end
-
-      def compile_value_transformer(klass, load, load_opts, dump, dump_opts)
-        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          def load(key, options = {})
-            value = @adapter.load(key, #{without :raw, load_opts})
-            value && !options[:raw] ? #{load} : value
-          end
-          def store(key, value, options = {})
-            @adapter.store(key, options[:raw] ? value : #{dump}, #{without :raw, dump_opts})
-            value
-          end
-          def delete(key, options = {})
-            value = @adapter.delete(key, #{without :raw, load_opts})
-            value && !options[:raw] ? #{load} : value
-          end
-          def create(key, value, options = {})
-            @adapter.create(key, options[:raw] ? value : #{dump}, #{without :raw, dump_opts})
-          end
-          def values_at(*keys, **options)
-            values = @adapter.values_at(*keys, **#{without :raw, load_opts})
-            values.map do |value|
-              value && !options[:raw] ? #{load} : value
-            end
-          end
-          def fetch_values(*keys, **options, &orig_block)
-            substituted = {}
-            block = if block_given?
-                      lambda { |key| substituted[key] = true; yield key }
-                    end
-
-            values = @adapter.fetch_values(*keys, **#{without :raw, load_opts}, &block)
-            if options[:raw]
-              values
-            else
-              keys.map(&substituted.method(:key?)).zip(values).map do |substituted, value|
-                if substituted || !value
-                  value
-                else
-                  #{load}
-                end
-              end
-            end
-          end
-          def slice(*keys, **options)
-            @adapter.slice(*keys, **#{without :raw, load_opts}).map do |key, value|
-              [key, value && !options[:raw] ? #{load} : value]
-            end
-          end
-          def merge!(pairs, options = {}, &orig_block)
-            block = if block_given?
-                      if options[:raw]
-                        orig_block
-                      else
-                        lambda do |k, old_val, new_val|
-                          value = old_val; old_val = #{load}
-                          value = new_val; new_val = #{load}
-                          value = yield(k, old_val, new_val)
-                          #{dump}
-                        end
-                      end
-                    end
-
-            t_pairs = options[:raw] ? pairs : pairs.map { |key, value| [key, #{dump}] }
-            @adapter.merge!(t_pairs, #{without :raw, dump_opts}, &block)
-            self
-          end
-        END_EVAL
-      end
-
-      def compile_key_value_transformer(klass, key, key_opts, key_load, key_load_opts, key_test, key_test_opts, load, load_opts, dump, dump_opts)
-        if_key_test = key_load && key_test ? "if #{key_test}" : ''
-
-        klass.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          def key?(key, options = {})
-            @adapter.key?(#{key}, #{without key_opts})
-          end
-          def each_key(&block)
-            raise NotImplementedError, "each_key is not supported on this transformer" \
-              unless supports? :each_key
-
-            return enum_for(:each_key) { @adapter.each_key.size } unless block_given?
-            @adapter.each_key.lazy.map{ |key| #{key_load} #{if_key_test} }.reject(&:nil?).each(&block)
-
-            self
-          end
-          def increment(key, amount = 1, options = {})
-            @adapter.increment(#{key}, amount, #{without key_opts})
-          end
-          def load(key, options = {})
-            value = @adapter.load(#{key}, #{without :raw, key_opts, load_opts})
-            value && !options[:raw] ? #{load} : value
-          end
-          def store(key, value, options = {})
-            @adapter.store(#{key}, options[:raw] ? value : #{dump}, #{without :raw, key_opts, dump_opts})
-            value
-          end
-          def delete(key, options = {})
-            value = @adapter.delete(#{key}, #{without :raw, key_opts, load_opts})
-            value && !options[:raw] ? #{load} : value
-          end
-          def create(key, value, options = {})
-            @adapter.create(#{key}, options[:raw] ? value : #{dump}, #{without :raw, key_opts, dump_opts})
-          end
-          def values_at(*keys, **options)
-            t_keys = keys.map { |key| #{key} }
-            values = @adapter.values_at(*t_keys, **#{without :raw, key_opts, load_opts})
-            values.map do |value|
-              value && !options[:raw] ? #{load} : value
-            end
-          end
-          def fetch_values(*keys, **options)
-            t_keys = keys.map { |key| #{key} }
-            key_lookup = Hash[t_keys.zip(keys)]
-            substituted = {}
-            block = if block_given?
-                      lambda do |t_key|
-                        key = key_lookup[t_key]
-                        substituted[key] = true
-                        yield key
-                      end
-                    end
-
-            values = @adapter.fetch_values(*t_keys, **#{without :raw, key_opts, load_opts}, &block)
-
-            if options[:raw]
-              values
-            else
-              keys.map(&substituted.method(:key?)).zip(values).map do |substituted, value|
-                if substituted || !value
-                  value
-                else
-                  #{load}
-                end
-              end
-            end
-          end
-          def slice(*keys, **options)
-            t_keys = keys.map { |key| #{key} }
-            key_lookup = Hash[t_keys.zip(keys)]
-            @adapter.slice(*t_keys, **#{without :raw, key_opts, load_opts}).map do |key, value|
-              [key_lookup[key], value && !options[:raw] ? #{load} : value]
-            end
-          end
-          def merge!(pairs, options = {})
-            keys, values = pairs.to_a.transpose
-            keys ||= []
-            values ||= []
-            t_keys = keys.map { |key| #{key} }
-            key_lookup = Hash[t_keys.zip(keys)]
-
-            block = if block_given?
-                      if options[:raw]
-                        lambda do |k, old_val, new_val|
-                          yield(key_lookup[k], old_val, new_val)
-                        end
-                      else
-                        lambda do |k, old_val, new_val|
-                          value = old_val; old_val = #{load}
-                          value = new_val; new_val = #{load}
-                          value = yield(key_lookup[k], old_val, new_val)
-                          #{dump}
-                        end
-                      end
-                    end
-            t_pairs = if options[:raw]
-                        t_keys.zip(values)
-                      else
-                        t_keys.zip(values.map { |value| #{dump} })
-                      end
-            @adapter.merge!(t_pairs, #{without :raw, key_opts, dump_opts}, &block)
-            self
-          end
-        END_EVAL
-      end
-
-      # Compile option initializer
-      def compile_initializer(type, transformers)
-        transformers.map do |name|
-          t = TRANSFORMER[name]
-          (t[1].to_s + t[2].to_s).scan(/@\w+/).uniq.map do |opt|
-            "raise ArgumentError, \"Option #{opt[1..-1]} is required for #{name} #{type} transformer\" unless #{opt} = options[:#{opt[1..-1]}]\n"
-          end
-        end.join("\n")
-      end
-
-      def compile_validator(str)
-        Regexp.new('\A' +
-                   str.gsub(/\w+/) do
-                     '(' + TRANSFORMER.select { |_, v| v.first.to_s == $& }.map { |v| ":#{v.first}" }.join('|') + ')'
-                   end.gsub(/\s+/, '') +
-                   '\Z')
-      end
-
-      # Returned compiled transformer code string
-      def compile_transformer(transformer, var, idx = 2)
-        value, options = var, []
-        transformer.each do |name|
-          raise ArgumentError, "Unknown transformer #{name}" unless t = TRANSFORMER[name]
-          require t[3] if t[3]
-          code = t[idx]
-          code ||= compile_prefix(name: name, transformer: t, value: value) if idx == 4 && var == 'key'
-
-          raise "Undefined command for transformer #{name}" unless code
-
-          options += code.scan(/options\[:(\w+)\]/).flatten
-          value =
-            if t[0] == :serialize && var == 'key' && idx == 4
-              "(tmp = #{value}; (false === tmp || '' === tmp) ? false : #{code % 'tmp'})"
-            elsif t[0] == :serialize && var == 'key'
-              "(tmp = #{value}; String === tmp ? tmp : #{code % 'tmp'})"
-            else
-              code % value
-            end
+    def features
+      @features ||=
+        begin
+          features = super
+          features -= [:each_key] unless supports?(:each_key)
+          features.freeze
         end
-        [value, options]
+    end
+
+    def key?(key, options = {})
+      super(encode_key(key), options)
+    end
+
+    def each_key
+      raise NotImplementedError, "each_key is not supported on this transformer" \
+        unless supports? :each_key
+
+      return super unless block_given?
+
+      super do |key|
+        next unless encoded_key?(key)
+        yield decode_key(key)
       end
+    end
 
-      def class_name(keys, values)
-        camel_case = lambda { |sym| sym.to_s.split('_').map(&:capitalize).join }
-        (keys.empty? ? '' : keys.map(&camel_case).join + 'Key') +
-          (values.empty? ? '' : values.map(&camel_case).join + 'Value')
+    def increment(key, amount = 1, options = {})
+      super(encode_key(key), amount, options)
+    end
+
+    def create(key, value, options = {})
+      super(encode_key(key), encode_value(value, options[:raw]), options)
+    end
+
+    def load(key, options = {})
+      decode_value(super(encode_key(key), options), options[:raw])
+    end
+
+    def store(key, value, options = {})
+      super(encode_key(key), encode_value(value, options[:raw]), options)
+      value
+    end
+
+    def delete(key, options = {})
+      decode_value(super(encode_key(key), options), options[:raw])
+    end
+
+    def values_at(*keys, raw: false, **options)
+      super(*keys.map { |key| encode_key(key) }, **options).map { |value| decode_value(value, raw) }
+    end
+
+    def fetch_values(*keys, raw: false, **options)
+      if block_given?
+        encoded_keys = keys.map { |key| encode_key(key) }
+        dictionary = encoded_keys.zip(keys).to_h
+
+        encoded_values =
+          super(*encoded_keys, **options) do |encoded_key|
+            decoded_value = yield dictionary[encoded_key]
+            encode_value(decoded_value, raw) if decoded_value != nil
+          end
+
+        encoded_values.map { |value| decode_value(value, raw) }
+      else
+        values_at(*keys, **options)
       end
+    end
 
-      def compile_prefix(name:, transformer:, value:)
-        return unless [:encode, :serialize].include?(transformer[0])
+    def slice(*keys, raw: false, **options)
+      encoded_keys = keys.map { |key| encode_key(key) }
+      dictionary = encoded_keys.zip(keys).to_h
 
-        load_val, = compile_transformer([name], value, 1)
-        "(#{load_val} rescue '')"
+      encoded_pairs = super(*encoded_keys, **options)
+      encoded_pairs.map do |encoded_key, encoded_value|
+        [dictionary[encoded_key], decode_value(encoded_value, raw)]
+      end
+    end
+
+    def merge!(pairs, options = {})
+      encoded_pairs = pairs.map { |key, value| [encode_key(key), encode_value(value, options[:raw])] }
+      if block_given?
+        key_dictionary = encoded_pairs.map(&:first).zip(pairs.map(&:first)).to_h
+        value_dictionary = encoded_pairs.map(&:last).zip(pairs.map(&:last)).to_h
+
+        super(encoded_pairs, options) do |encoded_key, existing_encoded_value, new_encoded_value|
+          key = key_dictionary[encoded_key]
+          existing_value = decode_value(existing_encoded_value, options[:raw])
+          new_value = value_dictionary[new_encoded_value]
+          value = yield(key, existing_value, new_value)
+          encode_value(value, options[:raw])
+        end
+      else
+        super(encoded_pairs, options)
+      end
+    end
+
+    private
+
+    # Assume that the key is correctly encoded provided the outer key
+    # transform, if any, recognises the key, or if it returns nil (meaning
+    # that it doesn't know)
+    def encoded_key?(key)
+      if @key_transforms
+        key_transform = @key_transforms.last
+        key_transform.encoded?(key) != false
+      else
+        true
+      end
+    end
+
+    def encode_key(key)
+      if @key_encoder
+        @key_encoder.call(key)
+      else
+        key
+      end
+    end
+
+    def decode_key(key)
+      raise "keys are not decodable" unless @key_decodable
+      if key == nil
+        nil
+      elsif @key_decoder
+        @key_decoder.call(key)
+      else
+        key
+      end
+    end
+
+    def encode_value(value, raw)
+      if @value_encoder && !raw
+        @value_encoder.call(value)
+      else
+        value
+      end
+    end
+
+    def decode_value(value, raw)
+      if value == nil
+        nil
+      elsif @value_decoder && !raw
+        @value_decoder.call(value)
+      else
+        value
+      end
+    end
+
+    def load_transforms(names, options)
+      names = [names] if names.is_a?(Symbol)
+      names.map do |transform_name|
+        ::Moneta::Transforms.module_for(transform_name).new(**options)
+      end
+    end
+
+    def make_encoder(transforms)
+      lambda do |value|
+        transforms.reduce(value) do |value, transform|
+          transform.encode(value)
+        end
+      end
+    end
+
+    def make_decoder(transforms)
+      reversed = transforms.reverse
+      lambda do |value|
+        reversed.reduce(value) do |value, transform|
+          transform.decode(value)
+        end
       end
     end
   end
 end
-
-require 'moneta/transformer/helper'
-require 'moneta/transformer/config'

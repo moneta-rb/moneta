@@ -30,6 +30,8 @@ module Moneta
   autoload :Shared,            'moneta/shared'
   autoload :Stack,             'moneta/stack'
   autoload :Transformer,       'moneta/transformer'
+  autoload :Transform,         'moneta/transform'
+  autoload :Transforms,        'moneta/transforms'
   autoload :Utils,             'moneta/utils'
   autoload :WeakCreate,        'moneta/weak'
   autoload :WeakEachKey,       'moneta/weak_each_key'
