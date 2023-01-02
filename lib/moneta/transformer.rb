@@ -18,8 +18,13 @@ module Moneta
   #
   # @api public
   class Transformer < Proxy
-    config :key
-    config :value
+    config :key do |key:, **_|
+      [key].flatten.compact
+    end
+
+    config :value do |value:, **_|
+      [value].flatten.compact
+    end
 
     def initialize(adapter, options = {})
       super
