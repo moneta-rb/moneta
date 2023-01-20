@@ -275,6 +275,7 @@ module MonetaHelpers
       let(:mysql_database1) { ENV['MONETA_MYSQL_DATABASE1'] || 'moneta' }
       let(:mysql_database2) { ENV['MONETA_MYSQL_DATABASE2'] || 'moneta2' }
 
+      let(:postgres_port) { ENV['PGPORT'] || '5432' }
       let(:postgres_username) { ENV['PGUSER'] || 'postgres' }
       let(:postgres_password) { ENV['PGPASSWORD'] }
       let(:postgres_database1) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1' }
