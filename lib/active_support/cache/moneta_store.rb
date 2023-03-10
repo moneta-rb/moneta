@@ -101,37 +101,38 @@ module ActiveSupport
         end
       end
 
-      def read_entry(key, options)
+      def read_entry(key, **options)
         make_entry(@store.load(key, moneta_options(options, false)))
       end
 
-      def write_entry(key, entry, options)
+      def write_entry(key, entry, **options)
         value = options[:raw] ? entry.value.to_s : entry
         @store.store(key, value, moneta_options(options))
         true
       end
 
-      def delete_entry(key, options)
+      def delete_entry(key, **options)
         @store.delete(key, moneta_options(options))
         true
       end
 
-      def read_multi_entries(names, options)
+      def read_multi_entries(names, **options)
         keys = names.map { |name| normalize_key(name, options) }
         entries = @store
           .values_at(*keys, **moneta_options(options, false))
           .map(&method(:make_entry))
 
+        delete_options = moneta_options(options)
         names.zip(keys, entries).map do |name, key, entry|
           next if entry == nil
-          delete_entry(key, options) if entry.expired?
+          @store.delete(key, delete_options) if entry.expired?
           next if entry.expired? || entry.mismatched?(normalize_version(name, options))
 
           [name, entry.value]
         end.compact.to_h
       end
 
-      def write_multi_entries(hash, options)
+      def write_multi_entries(hash, **options)
         pairs = if options[:raw]
                   hash.transform_values { |entry| entry.value.to_s }
                 else
@@ -141,6 +142,31 @@ module ActiveSupport
         @store.merge!(pairs, moneta_options(options))
         hash
       end
+
+      # Before Rails 6.1, the `*_entry` methods didn't use keyword args
+      module Rails5Support
+        def read_entry(key, options)
+          super(key, **options)
+        end
+
+        def write_entry(key, entry, options)
+          super(key, entry, **options)
+        end
+
+        def delete_entry(key, options)
+          super(key, **options)
+        end
+
+        def read_multi_entries(names, options)
+          super(names, **options)
+        end
+
+        def write_multi_entries(hash, options)
+          super(hash, **options)
+        end
+      end
+
+      prepend Rails5Support if ActiveSupport.version < ::Gem::Version.new('6.1.0')
 
       private
 

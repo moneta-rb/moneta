@@ -1,59 +1,49 @@
 require 'active_record'
-require 'uri'
 
 module Moneta
   module Adapters
     # ActiveRecord as key/value stores
     # @api public
     class ActiveRecord < Adapter
+      autoload :V5Backend, 'moneta/adapters/activerecord/v5_backend'
+      autoload :Backend, 'moneta/adapters/activerecord/backend'
+
+      @table_create_lock = ::Mutex.new
+
+      class << self
+        attr_reader :table_create_lock
+      end
+
       supports :create, :increment, :each_key
 
       attr_reader :table
+      delegate :connection_pool, to: :@backend
       delegate :with_connection, to: :connection_pool
-
-      @connection_lock = ::Mutex.new
-      class << self
-        attr_reader :connection_lock
-        delegate :configurations, :configurations=, :connection_handler, to: ::ActiveRecord::Base
-
-        def retrieve_connection_pool(spec_name)
-          connection_handler.retrieve_connection_pool(spec_name.to_s)
-        end
-
-        def establish_connection(spec_name)
-          connection_lock.synchronize do
-            if connection_pool = retrieve_connection_pool(spec_name)
-              connection_pool
-            else
-              connection_handler.establish_connection(spec_name.to_sym)
-            end
-          end
-        end
-
-        def retrieve_or_establish_connection_pool(spec_name)
-          retrieve_connection_pool(spec_name) || establish_connection(spec_name)
-        end
-      end
 
       config :key_column, default: :k
       config :value_column, default: :v
 
-      backend required: false do |table: :moneta, connection: nil, create_table: nil|
-        @spec = spec_for_connection(connection)
-
+      backend do |table: :moneta, create_table: true, **options|
         # Ensure the table name is a symbol.
         table_name = table.to_sym
 
-        if create_table == nil
-          default_create_table(table_name)
-        elsif create_table
-          with_connection(&create_table)
+        backend =
+          if ::ActiveRecord.version < ::Gem::Version.new('6.0.0')
+            ::Moneta::Adapters::ActiveRecord::V5Backend.new(table: table_name, **options)
+          else
+            ::Moneta::Adapters::ActiveRecord::Backend.new(table: table_name, **options)
+          end
+
+        case create_table
+        when Proc
+          backend.connection_pool.with_connection(&create_table)
+        when true
+          backend.connection_pool.with_connection do |conn|
+            default_create_table(conn, table_name)
+          end
         end
 
-        @table = ::Arel::Table.new(table_name)
-
-        # backend is only used if there's an existing ActiveRecord model
-        nil
+        backend
       end
 
       # @param [Hash] options
@@ -67,12 +57,7 @@ module Moneta
       # @option options [Symbol]               :value_column (:v) The name of the column to use for values
       def initialize(options = {})
         super
-
-        # If a :backend was provided, use it to set the spec and table
-        if backend
-          @spec = backend.connection_pool.spec
-          @table = ::Arel::Table.new(backend.table_name)
-        end
+        @table = ::Arel::Table.new(backend.table_name)
       end
 
       # (see Proxy#key?)
@@ -170,7 +155,7 @@ module Moneta
       # (see Proxy#close)
       def close
         @table = nil
-        @spec = nil
+        @connection_pool = nil
       end
 
       # (see Proxy#slice)
@@ -248,16 +233,13 @@ module Moneta
 
       private
 
-      def connection_pool
-        self.class.retrieve_or_establish_connection_pool(@spec)
-      end
-
-      def default_create_table(table_name)
-        with_connection do |conn|
+      def default_create_table(conn, table_name)
+        # From 6.1, we can use the `if_not_exists?` check
+        if ::ActiveRecord.version < ::Gem::Version.new('6.1.0')
           return if conn.table_exists?(table_name)
 
           # Prevent multiple connections from attempting to create the table simultaneously.
-          self.class.connection_lock.synchronize do
+          self.class.table_create_lock.synchronize do
             conn.create_table(table_name, id: false) do |t|
               # Do not use binary key (Issue #17)
               t.string config.key_column, null: false
@@ -265,6 +247,13 @@ module Moneta
             end
             conn.add_index(table_name, config.key_column, unique: true)
           end
+        else
+          conn.create_table(table_name, id: false, if_not_exists: true) do |t|
+            # Do not use binary key (Issue #17)
+            t.string config.key_column, null: false
+            t.binary config.value_column
+          end
+          conn.add_index(table_name, config.key_column, unique: true, if_not_exists: true)
         end
       end
 
@@ -321,38 +310,6 @@ module Moneta
           conn.unescape_bytea(value)
         else
           value
-        end
-      end
-
-      # Feed the connection info into ActiveRecord and get back a name to use
-      # for getting the connection pool
-      def spec_for_connection(connection)
-        case connection
-        when Symbol
-          connection
-        when Hash, String
-          # Normalize the connection specification to a hash
-          resolver = ::ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new \
-            'dummy' => connection
-
-          # Turn the config into a standardised hash, sans a couple of bits
-          hash = resolver.resolve(:dummy)
-          hash.delete('name')
-          hash.delete(:password) # For security
-          # Make a name unique to this config
-          name = 'moneta?' + URI.encode_www_form(hash.to_a.sort)
-          # Add into configurations unless its already there (initially done without locking for
-          # speed)
-          unless self.class.configurations.key? name
-            self.class.connection_lock.synchronize do
-              self.class.configurations[name] = connection \
-                unless self.class.configurations.key? name
-            end
-          end
-
-          name.to_sym
-        else
-          ::ActiveRecord::Base.connection_pool.spec.name.to_s
         end
       end
     end

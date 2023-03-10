@@ -8,6 +8,7 @@ spec/tmp
 .#*
 script/benchmarks.tmp
 Gemfile.lock
+gemfiles/*.lock
 logs
 secure
 .bundle
