@@ -76,7 +76,7 @@ group :Mongo, optional: true do
 end
 
 group :Sequel, optional: true do
-  gem 'sequel', '5.52.0'
+  gem 'sequel', '5.66.0'
 end
 
 group :Memcached, optional: true do
