@@ -25,7 +25,7 @@ RSpec.shared_context :sequel do
       {db: uri}
     else
       {
-        db: "postgres://localhost/#{database}",
+        db: "postgres://localhost:#{postgres_port}/#{database}",
         user: postgres_username,
         password: postgres_password
       }
