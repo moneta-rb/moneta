@@ -213,9 +213,16 @@ module Moneta
         end
 
         def prepare_values_at
+          # Sequel's hstore_ops gets confused if we try to construct this
+          # directly, because the CAST is not an array literal, or a PG array
+          lookup = ::Sequel::SQL::PlaceholderLiteralString.new(
+            ['(', '->', ')'],
+            [config.value_column, ::Sequel.cast(:$keys, :"text[]")]
+          )
+
           @values_at = @table
             .where(config.key_column => :$row)
-            .select(::Sequel[config.value_column].hstore[::Sequel.cast(:$keys, :"text[]")].as(:values))
+            .select(lookup.as(:values))
             .prepare(:first, statement_id(:hstore_values_at))
         end
 
