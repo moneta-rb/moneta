@@ -14,5 +14,5 @@ describe 'adapter_cassandra_with_default_expires', isolate: true, retry: 3, adap
       create_keyspace: { durable_writes: false })
   end
 
-  moneta_specs ADAPTER_SPECS.without_increment.without_create.with_native_expires.with_default_expires.with_values(:nil).with_each_key
+  moneta_specs DEFAULT_EXPIRES_SPECS
 end

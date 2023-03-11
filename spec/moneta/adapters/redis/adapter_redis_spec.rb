@@ -15,6 +15,6 @@ describe 'adapter_redis', adapter: :Redis do
       Moneta::Adapters::Redis.new(host: redis_host, port: redis_port, db: 6, expires: min_ttl)
     end
 
-    moneta_specs NATIVE_EXPIRY_SPECS.with_default_expires
+    moneta_specs DEFAULT_EXPIRES_SPECS
   end
 end

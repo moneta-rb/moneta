@@ -20,6 +20,6 @@ describe 'adapter_memcached_native', isolate: true, unstable: defined?(JRUBY_VER
       Moneta::Adapters::MemcachedNative.new(server: '127.0.0.1:11214', expires: min_ttl)
     end
 
-    moneta_specs NATIVE_EXPIRY_SPECS.with_default_expires
+    moneta_specs DEFAULT_EXPIRES_SPECS
   end
 end

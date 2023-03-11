@@ -10,5 +10,5 @@ describe 'adapter_mongo_with_default_expires', isolate: true, adapter: :Mongo do
     )
   end
 
-  moneta_specs ADAPTER_SPECS.with_each_key.with_expires.with_default_expires.simplevalues_only
+  moneta_specs DEFAULT_EXPIRES_SPECS
 end
