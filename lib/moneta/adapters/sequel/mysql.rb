@@ -9,21 +9,10 @@ module Moneta
         end
 
         def increment(key, amount = 1, options = {})
-          @backend.transaction do
-            # this creates a row-level lock even if there is no existing row (a
-            # "gap lock").
-            if row = @load_for_update.call(key: key)
-              # Integer() will raise an exception if the existing value cannot be parsed
-              amount += Integer(row[config.value_column])
-              @increment_update.call(key: key, value: amount)
-            else
-              @create.call(key: key, value: amount)
-            end
-            amount
+          @backend.transaction(retry_on: [::Sequel::SerializationFailure]) do
+            @increment.call(key: key, amount: amount)
+            Integer(load(key))
           end
-        rescue ::Sequel::SerializationFailure # Thrown on deadlock
-          tries ||= 0
-          (tries += 1) <= 3 ? retry : raise
         end
 
         def merge!(pairs, options = {}, &block)
@@ -55,10 +44,9 @@ module Moneta
         end
 
         def prepare_increment
-          @increment_update = @table
-            .where(config.key_column => :$key)
-            .prepare(:update, statement_id(:increment_update), config.value_column => :$value)
-          super
+          @increment = @table
+            .on_duplicate_key_update(config.value_column => ::Sequel.cast(config.value_column, Integer) + :$amount)
+            .prepare(:insert, statement_id(:increment_insert), config.key_column => :$key, config.value_column => :$amount)
         end
       end
     end
