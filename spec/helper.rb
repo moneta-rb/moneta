@@ -194,10 +194,6 @@ class MonetaSpecs
     new(specs: specs - [:store, :store_large, :transform_value, :marshallable_value])
   end
 
-  def with_default_expires
-    new(specs: specs + [:default_expires])
-  end
-
   def with_each_key
     new(specs: specs - [:not_each_key] | [:each_key])
   end
@@ -230,9 +226,10 @@ TRANSFORMER_SPECS = MonetaSpecs.new(
     :transform_value, :increment, :create, :features, :store_large,
     :not_each_key])
 
+DEFAULT_EXPIRES_SPECS = MonetaSpecs.new(specs: [:default_expires])
+
 module MonetaHelpers
   module ClassMethods
-
     def moneta_store store_name, options={}, &block
       name = self.description
       builder = proc do
@@ -264,28 +261,6 @@ module MonetaHelpers
       let(:values_meta) do
         [:branch, *specs.value.map{ |k| MonetaSpecs::VALUES[k] }.compact]
       end
-
-      # Used by tests that rely on MySQL.  These env vars can be used if you
-      # want to run the tests but don't want to grant root access to moneta
-      let(:mysql_host) { ENV['MYSQL_HOST'] || 'localhost' }
-      let(:mysql_port) { ENV['MYSQL_TCP_PORT'] || '3306' }
-      let(:mysql_socket) { ENV['MYSQL_SOCKET'] }
-      let(:mysql_username) { ENV['MONETA_MYSQL_USERNAME'] || 'root' }
-      let(:mysql_password) { ENV['MONETA_MYSQL_PASSWORD'] }
-      let(:mysql_database1) { ENV['MONETA_MYSQL_DATABASE1'] || 'moneta' }
-      let(:mysql_database2) { ENV['MONETA_MYSQL_DATABASE2'] || 'moneta2' }
-
-      let(:postgres_port) { ENV['PGPORT'] || '5432' }
-      let(:postgres_username) { ENV['PGUSER'] || 'postgres' }
-      let(:postgres_password) { ENV['PGPASSWORD'] }
-      let(:postgres_database1) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1' }
-      let(:postgres_database2) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta2' }
-
-      let(:couch_login) { ENV['COUCH_LOGIN'] || 'admin' }
-      let(:couch_password) { ENV['COUCH_PASSWORD'] || 'password' }
-
-      let(:redis_host) { ENV.fetch('REDIS_HOST', 'localhost') }
-      let(:redis_port) { ENV.fetch('REDIS_PORT', '6379') }
 
       before do
         store = new_store
@@ -423,8 +398,29 @@ def marshal_error
   end
 end
 
-
 RSpec.shared_context :setup_moneta_store do |builder|
+  # Used by tests that rely on MySQL.  These env vars can be used if you
+  # want to run the tests but don't want to grant root access to moneta
+  let(:mysql_host) { ENV['MYSQL_HOST'] || 'localhost' }
+  let(:mysql_port) { ENV['MYSQL_TCP_PORT'] || '3306' }
+  let(:mysql_socket) { ENV['MYSQL_SOCKET'] }
+  let(:mysql_username) { ENV['MONETA_MYSQL_USERNAME'] || 'root' }
+  let(:mysql_password) { ENV['MONETA_MYSQL_PASSWORD'] }
+  let(:mysql_database1) { ENV['MONETA_MYSQL_DATABASE1'] || 'moneta' }
+  let(:mysql_database2) { ENV['MONETA_MYSQL_DATABASE2'] || 'moneta2' }
+
+  let(:postgres_port) { ENV['PGPORT'] || '5432' }
+  let(:postgres_username) { ENV['PGUSER'] || 'postgres' }
+  let(:postgres_password) { ENV['PGPASSWORD'] }
+  let(:postgres_database1) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta1' }
+  let(:postgres_database2) { ENV['MONETA_POSTGRES_DATABSASE1'] || 'moneta2' }
+
+  let(:couch_login) { ENV['COUCH_LOGIN'] || 'admin' }
+  let(:couch_password) { ENV['COUCH_PASSWORD'] || 'password' }
+
+  let(:redis_host) { ENV.fetch('REDIS_HOST', 'localhost') }
+  let(:redis_port) { ENV.fetch('REDIS_PORT', '6379') }
+
   before do
     @moneta_store_builder = builder
   end
