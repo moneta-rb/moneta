@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+FILES=$(dirname $0)/../FILES
+
+$(dirname $0)/update-files
+if ! git diff-index --quiet --cached HEAD -- $FILES; then
+  echo "FILES not up-to-date":
+  git diff --cached $FILES
+  exit 1
+fi
