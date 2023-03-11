@@ -135,7 +135,7 @@ group :KyotoCabinet, optional: true do
 end
 
 group :H2, optional: true do
-  gem 'activerecord-jdbch2-adapter', platforms: :jruby, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '61-stable'
+  gem 'jdbc-h2'
 end
 
 group :GDBM, optional: true do

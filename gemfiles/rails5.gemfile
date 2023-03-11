@@ -6,10 +6,6 @@ gem 'actionpack', '~> 5.2'
 gem 'minitest', '~> 5.0'
 
 # Backends
-group :H2, optional: true do
-  gem 'activerecord-jdbch2-adapter', platforms: :jruby, github: 'jruby/activerecord-jdbc-adapter', glob: 'activerecord-jdbch2-adapter/*.gemspec', branch: '52-stable'
-end
-
 group :mysql, optional: true do
   gem 'activerecord-jdbcmysql-adapter', platforms: :jruby
   gem 'mysql2', platforms: :ruby
