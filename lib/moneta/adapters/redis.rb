@@ -106,7 +106,8 @@ module Moneta
 
       # (see Defaults#merge!)
       def merge!(pairs, options = {})
-        keys = pairs.map { |key, _| key }
+        keys = pairs.map { |key, _| key }.to_a
+        return self if keys.empty?
 
         if block_given?
           old_values = @backend.mget(*keys)
