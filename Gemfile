@@ -140,6 +140,9 @@ end
 
 group :GDBM, optional: true do
   gem 'ffi-gdbm', platforms: :jruby
+  install_if lambda { RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.1.0') } do
+    gem 'gdbm'
+  end
 end
 
 group :RestClient do
