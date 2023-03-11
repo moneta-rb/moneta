@@ -3,5 +3,5 @@
 set -e
 
 cd $(dirname $0)/..
-git ls-files -- lib [A-Z][A-Z]* | grep -v '^FILES$' > FILES
+git ls-files -- lib [A-Z][A-Z]* | grep -vx FILES > FILES
 git add FILES
