@@ -1,17 +1,13 @@
-require File.dirname(__FILE__) + '/lib/moneta/version'
-require 'date'
+require_relative './lib/moneta/version'
 
 Gem::Specification.new do |s|
   s.name             = 'moneta'
   s.version          = Moneta::VERSION
-  s.date             = Date.today.to_s
   s.authors          = ['Daniel Mendler', 'Yehuda Katz', 'Hannes Georg', 'Alastair Pharo']
   s.email            = %w{mail@daniel-mendler.de wycats@gmail.com hannes.georg@googlemail.com me@asph.dev}
   s.description      = 'A unified interface to key/value stores'
   s.extra_rdoc_files = %w{README.md SPEC.md LICENSE}
-  s.files            = `git ls-files`.split("\n")
-  s.test_files       = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables      = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files            = File.read("#{__dir__}/FILES").lines.map(&:chomp)
   s.homepage         = 'https://github.com/moneta-rb/moneta'
   s.licenses         = %w(MIT)
   s.require_paths    = %w(lib)
@@ -21,7 +17,7 @@ Gem::Specification.new do |s|
     'bug_tracker_uri' => 'https://github.com/moneta-rb/moneta/issues',
     'changelog_uri' => "https://github.com/moneta-rb/moneta/blob/v#{s.version}/CHANGES",
     'documentation_uri' => "https://www.rubydoc.info/gems/moneta/#{s.version}",
-    'source_code_uri' => "https://github.com/moneta-rb/moneta/tree/v#{s.version}",
+    'source_code_uri' => "https://github.com/moneta-rb/moneta/tree/v#{s.version}"
   }
 
   s.required_ruby_version = '>= 2.3.0'

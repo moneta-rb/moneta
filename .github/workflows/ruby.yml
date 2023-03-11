@@ -445,8 +445,8 @@ jobs:
     - name: Minitest
       run: bundle exec ruby test/action_dispatch/session_moneta_store_test.rb
 
-  rubocop:
-    name: "Rubocop"
+  checks:
+    name: "General checks"
     runs-on: ubuntu-latest
 
     steps:
@@ -458,6 +458,9 @@ jobs:
         ruby-version: '3.1'
         bundler: latest
         bundler-cache: true
+
+    - name: Check FILES
+      run: ./script/check-files
 
     - name: Rubocop
       run: bundle exec rubocop lib
