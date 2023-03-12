@@ -29,7 +29,7 @@ describe ':Sequel adapter', adapter: :Sequel do
     include_examples :adapter_sequel, specs
   end
 
-  context "with H2 backend", unsupported: !defined?(JRUBY_VERSION) do
+  context "with H2 backend", h2: true, unsupported: !defined?(JRUBY_VERSION) do
     moneta_build do
       Moneta::Adapters::Sequel.new(opts.merge(db: h2_uri))
     end

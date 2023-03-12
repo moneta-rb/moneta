@@ -264,6 +264,30 @@ jobs:
     - name: Rspec
       run: bundle exec rspec -t sqlite -- spec/moneta
 
+  h2-adapters:
+    name: "H2 adapters"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: [jruby]
+
+    env:
+      BUNDLE_WITH: Sequel H2
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec
+      run: bundle exec rspec -t h2 -- spec/moneta
+
   rails5:
     name: "Rails 5"
     runs-on: ubuntu-latest
