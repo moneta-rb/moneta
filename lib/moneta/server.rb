@@ -107,16 +107,14 @@ module Moneta
 
       # Detect support for socket#sendmsg_nonblock
       Socket.new(Socket::AF_INET, Socket::SOCK_STREAM).tap do |socket|
-        begin
-          socket.sendmsg_nonblock('probe')
-        rescue Errno::EPIPE, Errno::ENOTCONN
-          def sendmsg(msg)
-            @io.sendmsg_nonblock(msg)
-          end
-        rescue NotImplementedError
-          def sendmsg(msg)
-            @io.write_nonblock(msg)
-          end
+        socket.sendmsg_nonblock('probe')
+      rescue Errno::EPIPE, Errno::ENOTCONN
+        def sendmsg(msg)
+          @io.sendmsg_nonblock(msg)
+        end
+      rescue NotImplementedError
+        def sendmsg(msg)
+          @io.write_nonblock(msg)
         end
       end
 
