@@ -148,8 +148,10 @@ module Moneta
           pairs = pairs.to_a
         end
 
-        query = "replace into #{config.table} (k, v) values" + (['(?, ?)'] * pairs.length).join(',')
-        backend.query(query, pairs.flatten).close
+        unless pairs.empty?
+          query = "replace into #{config.table} (k, v) values" + (['(?, ?)'] * pairs.length).join(',')
+          backend.query(query, pairs.flatten).close
+        end
       rescue
         backend.rollback if transaction
         raise

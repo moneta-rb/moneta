@@ -141,6 +141,8 @@ module Moneta
           end
           def merge!(pairs, options = {})
             keys, values = pairs.to_a.transpose
+            keys ||= []
+            values ||= []
             t_keys = keys.map { |key| #{key} }
             block = if block_given?
                       key_lookup = Hash[t_keys.zip(keys)]
@@ -296,6 +298,8 @@ module Moneta
           end
           def merge!(pairs, options = {})
             keys, values = pairs.to_a.transpose
+            keys ||= []
+            values ||= []
             t_keys = keys.map { |key| #{key} }
             key_lookup = Hash[t_keys.zip(keys)]
 

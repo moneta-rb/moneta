@@ -176,6 +176,10 @@ shared_examples :store do
   end
 
   shared_examples :merge! do
+    it 'can be called with an empty object' do
+      expect { store.public_send(method, pairs.call({})) }.not_to raise_error
+    end
+
     it 'stores values' do
       moneta_property_of(keys: 3, values: 3).check do |m|
         expect(store.public_send(method, pairs.call({ m.keys[0] => m.values[0], m.keys[1] => m.values[1], m.keys[2] => m.values[2] }))).to be store
