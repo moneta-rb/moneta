@@ -112,19 +112,17 @@ module Moneta
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         with_connection do |conn|
-          begin
-            conn_ins(conn, key, amount.to_s)
-            amount
-          rescue ::ActiveRecord::RecordNotUnique
-            conn.transaction do
-              sel = arel_sel_key(key).project(table[config.value_column]).lock
-              value = decode(conn, conn.select_value(sel))
-              value = (value ? Integer(value) : 0) + amount
-              # Re-raise if the upate affects no rows (i.e. row deleted after attempted insert,
-              # before select for update)
-              raise unless conn_upd(conn, key, value.to_s) == 1
-              value
-            end
+          conn_ins(conn, key, amount.to_s)
+          amount
+        rescue ::ActiveRecord::RecordNotUnique
+          conn.transaction do
+            sel = arel_sel_key(key).project(table[config.value_column]).lock
+            value = decode(conn, conn.select_value(sel))
+            value = (value ? Integer(value) : 0) + amount
+            # Re-raise if the upate affects no rows (i.e. row deleted after attempted insert,
+            # before select for update)
+            raise unless conn_upd(conn, key, value.to_s) == 1
+            value
           end
         end
       rescue ::ActiveRecord::RecordNotUnique, ::ActiveRecord::Deadlocked
