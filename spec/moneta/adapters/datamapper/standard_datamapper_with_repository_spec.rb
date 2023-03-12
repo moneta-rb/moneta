@@ -15,7 +15,7 @@ describe 'standard_datamapper_with_repository', unsupported: defined?(JRUBY_VERS
   end
 
   moneta_loader do |value|
-    ::Marshal.load(value.unpack('m').first)
+    ::Marshal.load(value.unpack1('m'))
   end
 
   moneta_specs STANDARD_SPECS.without_increment

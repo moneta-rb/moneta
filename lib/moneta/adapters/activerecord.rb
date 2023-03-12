@@ -294,7 +294,7 @@ module Moneta
           conn.escape_bytea(value)
         elsif defined?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter) &&
             conn.is_a?(::ActiveRecord::ConnectionAdapters::SQLite3Adapter)
-          Arel::Nodes::SqlLiteral.new("X'#{value.unpack('H*').first}'")
+          Arel::Nodes::SqlLiteral.new("X'#{value.unpack1('H*')}'")
         else
           value
         end

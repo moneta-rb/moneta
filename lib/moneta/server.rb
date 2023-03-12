@@ -60,7 +60,7 @@ module Moneta
       end
 
       def read_msg
-        size = read(4).unpack('N').first
+        size = read(4).unpack1('N')
         throw :closed, 'Message too big' if size > @max_size
         Marshal.load(read(size))
       end

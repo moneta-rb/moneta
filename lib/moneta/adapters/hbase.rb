@@ -95,7 +95,7 @@ module Moneta
       def unpack(value)
         if value.bytesize == 8
           # Unpack 8 byte big endian
-          value.unpack('Q>').first.to_s
+          value.unpack1('Q>').to_s
         elsif value.bytesize >= 9 && value[-1] == ?\0
           # Remove nul character
           value[0..-2]

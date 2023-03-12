@@ -7,7 +7,7 @@ describe 'transformer_marshal_uuencode', proxy: :Transformer do
   end
 
   moneta_loader do |value|
-    ::Marshal.load(value.unpack('u').first)
+    ::Marshal.load(value.unpack1('u'))
   end
 
   moneta_specs STANDARD_SPECS.without_persist.with_each_key
