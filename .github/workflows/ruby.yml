@@ -336,6 +336,54 @@ jobs:
     - name: Minitest
       run: bundle exec ruby test/action_dispatch/session_moneta_store_test.rb
 
+  rails6:
+    name: "Rails 6"
+    runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    strategy:
+      matrix:
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby-9.3]
+
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/rails6.gemfile
+      BUNDLE_WITH: sqlite active_support_cache
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Apt update
+      run: sudo apt-get update
+
+    - name: Apt install memcached
+      run: sudo apt-get install -y memcached libsasl2-dev
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler: latest
+        bundler-cache: true
+
+    - name: Rspec ActiveRecord
+      run: bundle exec rspec -t sqlite -- spec/moneta/adapters/activerecord
+
+    - name: Rspec ActiveSupport::Cache
+      run: bundle exec rspec -- spec/active_support spec/moneta/adapters/activesupportcache
+
+    - name: Minitest
+      run: bundle exec ruby test/action_dispatch/session_moneta_store_test.rb
+
   redis:
     name: "Redis adapters"
     runs-on: ubuntu-latest
