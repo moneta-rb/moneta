@@ -1,3 +1,15 @@
+1.6.0
+
+* Adapters - Support for Rails 6.1 and above (Adapters::ActiveRecord,
+             Adapters::ActiveSupportCache, ActiveSupportCache::MonetaStore)
+* Adapters::YAML - add `theadsafe` option
+* Adapters::Sequel - fix deadlock issue with #increment on MySQL in newer
+                     Sequel versions (#244)
+* Adapters::Sequel - fix issue with Postgres HStore on newer Postgres (#243)
+* Adapters - fixed an issue many adapters had where #merge! errored if passed
+             an empty hash (#246)
+* Support changes - Drop support for 2.3 and 2.4, add support for 3.x
+
 1.5.2
 
 * Proxy - handle returning config when the adapter does not use config
