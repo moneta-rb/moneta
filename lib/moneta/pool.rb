@@ -123,30 +123,28 @@ module Moneta
 
       def run
         Thread.new do
-          begin
-            populate_stores
+          populate_stores
 
-            until @stopping && @stores.empty?
-              loop_start = Time.now
+          until @stopping && @stores.empty?
+            loop_start = Time.now
 
-              # Block until a message arrives, or until we time out for some reason
-              request = pop
+            # Block until a message arrives, or until we time out for some reason
+            request = pop
 
-              # Record how long we were idle, for stats purposes
-              @idle_time = Time.now - loop_start
+            # Record how long we were idle, for stats purposes
+            @idle_time = Time.now - loop_start
 
-              # If a message arrived, handle it
-              handle_request(request) if request
+            # If a message arrived, handle it
+            handle_request(request) if request
 
-              # Handle any stale checkout requests
-              handle_timed_out_requests
-              # Drop any stores that are no longer needed
-              remove_unneeded_stores
-            end
-          rescue => e
-            reject_waiting(e.message)
-            raise
+            # Handle any stale checkout requests
+            handle_timed_out_requests
+            # Drop any stores that are no longer needed
+            remove_unneeded_stores
           end
+        rescue => e
+          reject_waiting(e.message)
+          raise
         end
       end
 

@@ -131,7 +131,7 @@ module Moneta
       def unpack(value)
         if value.bytesize == 4
           # Unpack 4 byte integer
-          value.unpack(@pack).first.to_s
+          value.unpack1(@pack).to_s
         elsif value.bytesize >= 5 && value[-1] == ?\0
           # Remove nul character
           value[0..-2]

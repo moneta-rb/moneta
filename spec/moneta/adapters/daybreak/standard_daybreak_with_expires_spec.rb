@@ -1,4 +1,4 @@
-describe 'standard_daybreak_with_expires', adapter: :Daybreak do
+describe 'standard_daybreak_with_expires', broken: ::Gem::Version.new(RUBY_VERSION) >= ::Gem::Version.new('3.2.0'), adapter: :Daybreak do
   let(:t_res) { 0.125 }
   let(:min_ttl) { t_res }
   use_timecop

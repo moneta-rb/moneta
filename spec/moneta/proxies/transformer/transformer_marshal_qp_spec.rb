@@ -8,7 +8,7 @@ describe 'transformer_marshal_qp', proxy: :Transformer do
   end
 
   moneta_loader do |value|
-    ::Marshal.load(value.unpack('M').first)
+    ::Marshal.load(value.unpack1('M'))
   end
 
   moneta_specs STANDARD_SPECS.without_persist.with_each_key

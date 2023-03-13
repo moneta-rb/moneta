@@ -1,4 +1,4 @@
-describe 'transformer_bert', unsupported: defined?(JRUBY_VERSION), proxy: :Transformer do
+describe 'transformer_bert', unsupported: defined?(JRUBY_VERSION), broken: ::Gem::Version.new(RUBY_VERSION) >= ::Gem::Version.new('3.2.0'), proxy: :Transformer do
   moneta_build do
     Moneta.build do
       use :Transformer, key: :bert, value: :bert

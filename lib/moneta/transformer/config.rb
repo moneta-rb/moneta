@@ -20,7 +20,7 @@ module Moneta
       snappy:   [ :compress,  '::Snappy.inflate(%s)',         '::Snappy.deflate(%s)',            'snappy'       ],
       quicklz:  [ :compress,  '::QuickLZ.decompress(%s)',     '::QuickLZ.compress(%s)',          'qlzruby'      ],
       zlib:     [ :compress,  '::Zlib::Inflate.inflate(%s)',  '::Zlib::Deflate.deflate(%s)',     'zlib'         ],
-      base64:   [ :encode,    "%s.unpack('m0').first",        "[%s].pack('m0')"                                 ],
+      base64:   [ :encode,    "%s.unpack1('m0')",        "[%s].pack('m0')"                                 ],
       urlsafe_base64: [
         :encode,
         'Base64.urlsafe_decode64(%s)',
@@ -28,9 +28,9 @@ module Moneta
         'base64'
       ],
       escape:   [ :encode,    'Helper.unescape(%s)',          'Helper.escape(%s)'                               ],
-      hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack('H*').first"                           ],
-      qp:       [ :encode,    "%s.unpack('M').first",         "[%s].pack('M')"                                  ],
-      uuencode: [ :encode,    "%s.unpack('u').first",         "[%s].pack('u')"                                  ],
+      hex:      [ :encode,    "[%s].pack('H*')",              "%s.unpack1('H*')"                           ],
+      qp:       [ :encode,    "%s.unpack1('M')",         "[%s].pack('M')"                                  ],
+      uuencode: [ :encode,    "%s.unpack1('u')",         "[%s].pack('u')"                                  ],
       hmac:     [
         :hmac,
         'Helper.hmacverify(%s, options[:secret] || @secret)',

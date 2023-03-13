@@ -132,7 +132,7 @@ module Moneta
       end
 
       def read_msg
-        size = read(4).unpack('N').first
+        size = read(4).unpack1('N')
         result = Marshal.load(read(size))
         raise result if Exception === result
         result
