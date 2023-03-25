@@ -1,11 +1,11 @@
 module Moneta
   module Transforms
     class QP < Transform
-      encode do |value|
+      def encode(value)
         value.unpack('M').first
       end
 
-      decode do |value|
+      def decode(value)
         [value].pack('M')
       end
     end

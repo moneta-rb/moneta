@@ -5,27 +5,6 @@ module Moneta
     class << self
       attr_reader :encoder, :decoder, :test_encoding
 
-      def encode(proc = nil, &block)
-        @encoder = proc || block
-      end
-
-      def decode(proc = nil, &block)
-        @decoder = proc || block
-        decodable!
-      end
-
-      def decodable!
-        @decodable = true
-      end
-
-      def decodable?
-        @decodable || false
-      end
-
-      def encoding_test(proc = nil, &block)
-        @test_encoding = proc || block
-      end
-
       def delegate_to(object, methods = nil)
         extend Forwardable
 
@@ -44,34 +23,31 @@ module Moneta
 
         if decode && object.respond_to?(decode)
           def_delegator object, decode, :decode
-          decodable!
         end
       end
     end
 
-    def initialize(decodable: self.class.decodable?, **_)
-      @decodable = decodable
-    end
-
-    def encode(value)
-      encoder = self.class.encoder
-      raise "Encoder not defined" unless encoder
-      encoder.call(value)
-    end
+    def initialize(**_); end
 
     def decodable?
-      @decodable || self.class.decodable?
+      respond_to? :decode
     end
 
-    def decode(value)
-      raise "Not decodable" unless decodable?
-      self.class.decoder.call(value)
-    end
-
-    def encoded?(value)
-      if self.class.test_encoding
-        self.class.test_encoding.call(value)
+    def method_missing(method, *args)
+      case method
+      when :encode
+        raise "Encoder not defined"
+      when :decode
+        raise "Not decodable"
+      when :encoded?
+        nil
+      else
+        super
       end
+    end
+
+    def respond_to_missing?(method, _)
+      method == :encoded?
     end
   end
 end

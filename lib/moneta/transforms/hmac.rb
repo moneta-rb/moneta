@@ -4,7 +4,7 @@ module Moneta
   module Transforms
     class HMAC < Transform
       def initialize(algorithm: 'sha256', secret:, **options)
-        super(decodable: true)
+        super
 
         @digest = OpenSSL::Digest.new(algorithm)
         @secret = secret

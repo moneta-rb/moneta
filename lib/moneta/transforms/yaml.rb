@@ -4,7 +4,7 @@ module Moneta
   module Transforms
     class YAML < Transform
       def initialize(safe: false, **options)
-        super(decodable: true)
+        super
         @load_method =
           if safe
             ::YAML.method(:safe_load)

@@ -3,11 +3,11 @@ require 'bencode'
 module Moneta
   module Transforms
     class BEncode < Transform
-      encode do |value|
+      def encode(value)
         ::BEncode.dump(value)
       end
 
-      decode do |value|
+      def decode(value)
         # BEncode needs a mutable string
         ::BEncode.load(value.dup)
       end

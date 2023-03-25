@@ -3,11 +3,11 @@ require 'bson'
 module Moneta
   module Transforms
     class BSON < Transform
-      encode do |value|
+      def encode(value)
         ::BSON::Document['v' => value].to_bson.to_s
       end
 
-      decode do |value|
+      def decode(value)
         ::BSON::Document.from_bson(::BSON::ByteBuffer.new(value))['v']
       end
     end

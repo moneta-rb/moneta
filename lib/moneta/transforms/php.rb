@@ -4,7 +4,7 @@ module Moneta
   module Transforms
     class PHP < Transform
       def initialize(session: false, **options)
-        super(decodable: true)
+        super
         @session = session
       end
 

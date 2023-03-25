@@ -4,7 +4,7 @@ module Moneta
   module Transforms
     class Base64 < Transform
       def initialize(url_safe: false, strict: false, **options)
-        super(decodable: true)
+        super
 
         raise "Cannot use strict and url_safe together" if url_safe && strict
         @url_safe = url_safe

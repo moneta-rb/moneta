@@ -3,7 +3,7 @@ require 'cityhash'
 module Moneta
   module Transforms
     class City64 < Transform
-      encode do |value|
+      def encode(value)
         ::CityHash.hash64(value).to_s(16)
       end
     end

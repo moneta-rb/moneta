@@ -3,11 +3,11 @@ require 'zlib'
 module Moneta
   module Transforms
     class Zlib < Transform
-      encode do |value|
+      def encode(value)
         ::Zlib::Deflate.deflate(value)
       end
 
-      decode do |value|
+      def decode(value)
         ::Zlib::Inflate.inflate(value)
       end
     end

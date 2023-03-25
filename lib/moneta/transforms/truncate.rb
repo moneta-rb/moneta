@@ -4,7 +4,7 @@ module Moneta
   module Transforms
     class Truncate < Transform
       def initialize(maxlen: 32)
-        super(decodable: false)
+        super
         @maxlen = maxlen
       end
 

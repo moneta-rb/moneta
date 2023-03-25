@@ -2,7 +2,7 @@ module Moneta
   module Transforms
     class Prefix < Transform
       def initialize(prefix:, **options)
-        super(decodable: true)
+        super
 
         raise "prefix must be a string" unless prefix.is_a? String
         @prefix = prefix

@@ -1,11 +1,11 @@
 module Moneta
   module Transforms
     class Hex < Transform
-      encode do |value|
+      def encode(value)
         value.unpack('H*').first
       end
 
-      decode do |value|
+      def decode(value)
         [value].pack('H*')
       end
     end
