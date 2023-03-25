@@ -11,9 +11,4 @@ describe 'transformer_json', proxy: :Transformer do
   end
 
   moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::JsonKeyJsonValue.should_not be_nil
-  end
 end

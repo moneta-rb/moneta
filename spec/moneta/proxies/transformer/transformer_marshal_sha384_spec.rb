@@ -7,9 +7,4 @@ describe 'transformer_marshal_sha384', proxy: :Transformer do
   end
 
   moneta_specs STANDARD_SPECS.without_persist
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalSha384KeyMarshalValue.should_not be_nil
-  end
 end

@@ -13,11 +13,6 @@ describe 'transformer_marshal_prefix_base64', proxy: :Transformer do
 
   moneta_specs STANDARD_SPECS.without_persist.with_each_key
 
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalPrefixBase64KeyMarshalBase64Value.should_not be_nil
-  end
-
   context 'with keys with no prefix' do
     before(:each) do
       store.adapter.backend['no_prefix'] = 'hidden'

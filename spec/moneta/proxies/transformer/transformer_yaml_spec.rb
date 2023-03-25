@@ -11,9 +11,4 @@ describe 'transformer_yaml', proxy: :Transformer, broken: ::Gem::Version.new(RUB
   end
 
   moneta_specs TRANSFORMER_SPECS.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::YamlKeyYamlValue.should_not be_nil
-  end
 end

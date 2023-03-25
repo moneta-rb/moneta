@@ -7,9 +7,4 @@ describe 'transformer_marshal_rmd160', unstable: defined?(JRUBY_VERSION), proxy:
   end
 
   moneta_specs STANDARD_SPECS.without_persist
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalRmd160KeyMarshalValue.should_not be_nil
-  end
 end

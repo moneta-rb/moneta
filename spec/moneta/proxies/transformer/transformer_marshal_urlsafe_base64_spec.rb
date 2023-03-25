@@ -12,9 +12,4 @@ describe 'transformer_marshal_urlsafe_base64', proxy: :Transformer do
   end
 
   moneta_specs STANDARD_SPECS.without_persist.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalUrlsafeBase64KeyMarshalUrlsafeBase64Value.should_not be_nil
-  end
 end

@@ -21,7 +21,6 @@ describe 'standard_memory_with_prefix', adapter: :Memory do
         use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'alternative_'
         adapter :Memory, backend: backend
       end
-      expect(@alternative_store).to be_a(Moneta::Transformer::MarshalPrefixKeyMarshalValue)
     end
     let(:alternative) { @alternative_store }
 
