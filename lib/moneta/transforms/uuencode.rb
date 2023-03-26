@@ -2,11 +2,11 @@ module Moneta
   module Transforms
     class UUEncode < Transform
       def encode(value)
-        value.unpack('u').first
+        [value].pack('u')
       end
 
       def decode(value)
-        [value].pack('u')
+        value.unpack1('u')
       end
     end
   end
