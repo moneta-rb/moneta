@@ -70,6 +70,10 @@ module Moneta
       super(encode_key(key), options)
     end
 
+    # Yields keys from the underlying store that it is possible to decode.  The
+    # method tries to avoid decoding any keys that are definitely invalid by
+    # checking the `decodable?` method, but also ignores any keys that throw
+    # errors while decoding.
     def each_key
       raise NotImplementedError, "each_key is not supported on this transformer" \
         unless supports? :each_key
@@ -79,6 +83,9 @@ module Moneta
       super do |key|
         next unless encoded_key?(key)
         yield decode_key(key)
+      rescue
+        # Silently ignore any error raised trying to decode the key.
+        next
       end
     end
 
