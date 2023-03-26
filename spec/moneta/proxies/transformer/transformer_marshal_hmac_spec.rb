@@ -1,3 +1,5 @@
+require 'openssl'
+
 describe 'transformer_marshal_hmac', proxy: :Transformer do
   moneta_build do
     Moneta.build do
@@ -7,7 +9,12 @@ describe 'transformer_marshal_hmac', proxy: :Transformer do
   end
 
   moneta_loader do |value|
-    ::Marshal.load(::Moneta::Transformer::Helper.hmacverify(value, 'secret'))
+    digest = ::OpenSSL::Digest.new('sha256')
+    hash = value.byteslice(0, digest.digest_length)
+    rest = value.byteslice(digest.digest_length..-1)
+    mac = OpenSSL::HMAC.digest(digest, 'secret', rest)
+    raise 'hmac failed' unless hash == mac
+    ::Marshal.load(rest)
   end
 
   moneta_specs STANDARD_SPECS.without_persist.with_each_key

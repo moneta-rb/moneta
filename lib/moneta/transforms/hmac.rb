@@ -16,13 +16,13 @@ module Moneta
 
       def encoded?(value)
         hash = value.byteslice(0, @digest.digest_length)
-        rest = value.byteslice(@digest.digest_length)
+        rest = value.byteslice(@digest.digest_length..-1)
         hash == OpenSSL::HMAC.digest(@digest, @secret, rest)
       end
 
       def decode(value)
         raise "value does not have correct HMAC" unless encoded? value
-        value.byteslice(@digest.digest_length)
+        value.byteslice(@digest.digest_length..-1)
       end
     end
   end
