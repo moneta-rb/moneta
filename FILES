@@ -74,9 +74,6 @@ lib/moneta/stack.rb
 lib/moneta/synchronize.rb
 lib/moneta/transform.rb
 lib/moneta/transformer.rb
-lib/moneta/transformer/config.rb
-lib/moneta/transformer/helper.rb
-lib/moneta/transformer/helper/bson.rb
 lib/moneta/transforms.rb
 lib/moneta/transforms/base64.rb
 lib/moneta/transforms/bencode.rb
