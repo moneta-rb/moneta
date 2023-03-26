@@ -1,6 +1,5 @@
 describe 'transformer_marshal_qp', proxy: :Transformer do
   moneta_build do
-
     Moneta.build do
       use :Transformer, key: [:marshal, :qp], value: [:marshal, :qp]
       adapter :Memory
