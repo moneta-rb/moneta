@@ -36,9 +36,9 @@ module Moneta
     def method_missing(method, *args)
       case method
       when :encode
-        raise "Encoder not defined"
+        raise NotImplementedError, "Encoder not defined"
       when :decode
-        raise "Not decodable"
+        raise NotImplementedError, "Not decodable"
       when :encoded?
         nil
       else
