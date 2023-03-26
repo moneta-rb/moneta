@@ -2,7 +2,7 @@ module Moneta
   module Transforms
     class Hex < Transform
       def encode(value)
-        value.unpack('H*').first
+        value.unpack1('H*')
       end
 
       def decode(value)
