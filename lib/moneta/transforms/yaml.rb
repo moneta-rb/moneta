@@ -2,7 +2,7 @@ require 'yaml'
 
 module Moneta
   module Transforms
-    class YAML < Transform
+    class YAML < Transform::Serializer
       def initialize(safe: false, **options)
         super
         @load_method =
@@ -24,11 +24,11 @@ module Moneta
         @dump_positional_options, @dump_keyword_options = setup_yaml_options(@dump_method, options)
       end
 
-      def encode(value)
+      def serialize(value)
         @dump_method.call(value, *@dump_positional_options, **@dump_keyword_options)
       end
 
-      def decode(value)
+      def deserialize(value)
         @load_method.call(value, *@load_positional_options, **@load_keyword_options)
       end
 

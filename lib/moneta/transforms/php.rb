@@ -2,13 +2,13 @@ require 'php_serialize'
 
 module Moneta
   module Transforms
-    class PHP < Transform
+    class PHP < Transform::Serializer
       def initialize(session: false, **options)
         super
         @session = session
       end
 
-      def encode(value)
+      def serialize(value)
         if @session
           ::PHP.serialize_session(value)
         else
@@ -16,7 +16,7 @@ module Moneta
         end
       end
 
-      def decode(value)
+      def deserialize(value)
         ::PHP.unserialize(value)
       end
     end

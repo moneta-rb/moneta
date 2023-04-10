@@ -2,9 +2,9 @@ require 'forwardable'
 
 module Moneta
   class Transform
-    class << self
-      attr_reader :encoder, :decoder, :test_encoding
+    autoload :Serializer, "moneta/transform/serializer"
 
+    class << self
       def delegate_to(object, methods = nil)
         extend Forwardable
 

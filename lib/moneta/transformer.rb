@@ -26,13 +26,15 @@ module Moneta
       [value].flatten.compact
     end
 
+    config :serialize_keys_unless_string, default: true
+
     def initialize(adapter, options = {})
       super
 
       if config.key.empty?
         @key_decodable = true
       else
-        @key_transforms = load_transforms(config.key, options)
+        @key_transforms = load_transforms(config.key, options.merge(serialize_unless_string: config.serialize_keys_unless_string))
         @key_decodable = @key_transforms.all?(&:decodable?)
         @key_encoder = make_encoder(@key_transforms)
         if @key_decodable
