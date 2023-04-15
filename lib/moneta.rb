@@ -97,6 +97,7 @@ module Moneta
   # @option options [Symbol] :key_serializer (options[:serializer]) Serializer used for key, disable with nil
   # @option options [Symbol] :value_serializer (options[:serializer]) Serializer used for value, disable with nil
   # @option options [String] :prefix Key prefix used for namespacing (default none)
+  # @option options [Boolean] :serialize_keys_unless_string (true) Controls how key serializers work - see (See Moneta::Tranformer)
   # @option options All other options passed to the adapter
   #
   # Supported adapters:
@@ -116,6 +117,7 @@ module Moneta
     key_serializer = options.include?(:key_serializer) ? options.delete(:key_serializer) : serializer
     value_serializer = options.include?(:value_serializer) ? options.delete(:value_serializer) : serializer
     transformer = { key: [key_serializer], value: [value_serializer] }
+    transformer[:serialize_keys_unless_string] = options.delete(:serialize_keys_unless_string) if options.include?(:serialize_keys_unless_string)
 
     if prefix = options.delete(:prefix) and !prefix.empty?
       transformer[:key] << :prefix
