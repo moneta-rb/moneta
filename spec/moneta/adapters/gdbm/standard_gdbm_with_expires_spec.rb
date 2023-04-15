@@ -7,5 +7,5 @@ describe 'standard_gdbm_with_expires', adapter: :GDBM do
     {file: File.join(tempdir, "simple_gdbm_with_expires"), expires: true}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires
 end

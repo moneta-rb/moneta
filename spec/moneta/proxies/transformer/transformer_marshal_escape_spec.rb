@@ -12,5 +12,5 @@ describe 'transformer_marshal_escape', proxy: :Transformer do
     ::Marshal.load(::URI.decode_www_form_component(value))
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 end

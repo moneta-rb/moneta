@@ -8,5 +8,5 @@ describe 'transformer_key_yaml', proxy: :Transformer do
 
   moneta_loader{ |value| value }
 
-  moneta_specs TRANSFORMER_SPECS.returnsame.with_each_key
+  moneta_specs TRANSFORMER_SPECS.returnsame
 end

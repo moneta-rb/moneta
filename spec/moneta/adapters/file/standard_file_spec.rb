@@ -3,5 +3,5 @@ describe 'standard_file', adapter: :File do
     {dir: File.join(tempdir, "simple_file")}
   end
 
-  moneta_specs STANDARD_SPECS.with_each_key
+  moneta_specs STANDARD_SPECS
 end

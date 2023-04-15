@@ -13,7 +13,7 @@ describe 'expires_file', proxy: :Expires do
     end
   end
 
-  moneta_specs STANDARD_SPECS.with_expires.stringvalues_only.with_each_key
+  moneta_specs STANDARD_SPECS.with_expires.stringvalues_only
 
   it 'deletes expired value in underlying file storage' do
     store.store('foo', 'bar', expires: 2)

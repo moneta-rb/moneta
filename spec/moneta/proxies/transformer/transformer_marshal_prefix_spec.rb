@@ -6,7 +6,7 @@ describe 'transformer_marshal_prefix', proxy: :Transformer do
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 
   context 'sharing the backend with a store without the prefix' do
     let :other_store do

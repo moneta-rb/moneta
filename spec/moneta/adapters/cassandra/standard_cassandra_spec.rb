@@ -14,5 +14,5 @@ describe "standard_cassandra", retry: 3, adapter: :Cassandra, unsupported: RUBY_
     }
   end
 
-  moneta_specs STANDARD_SPECS.without_increment.without_create.with_native_expires.with_each_key
+  moneta_specs STANDARD_SPECS.without_increment.without_create.with_native_expires
 end

@@ -3,5 +3,5 @@ describe 'standard_tdb', unsupported: defined?(JRUBY_VERSION), adapter: :TDB do
     {file: File.join(tempdir, "simple_tdb")}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_each_key
+  moneta_specs STANDARD_SPECS.without_multiprocess
 end

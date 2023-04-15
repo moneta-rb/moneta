@@ -10,5 +10,5 @@ describe 'standard_redis', adapter: :Redis do
     }
   end
 
-  moneta_specs STANDARD_SPECS.with_native_expires.with_each_key
+  moneta_specs STANDARD_SPECS.with_native_expires
 end

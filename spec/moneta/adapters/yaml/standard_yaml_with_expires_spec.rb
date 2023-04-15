@@ -9,5 +9,5 @@ describe 'standard_yaml_with_expires', adapter: :YAML do
 
   moneta_loader{ |value| value }
 
-  moneta_specs STANDARD_SPECS.without_marshallable_value.with_expires.without_concurrent.with_each_key
+  moneta_specs STANDARD_SPECS.without_marshallable_value.with_expires.without_concurrent
 end

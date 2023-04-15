@@ -3,5 +3,5 @@ describe 'standard_sqlite', unsupported: defined?(JRUBY_VERSION), adapter: :Sqli
     {file: File.join(tempdir, "standard_sqlite")}
   end
 
-  moneta_specs STANDARD_SPECS.without_concurrent.with_each_key
+  moneta_specs STANDARD_SPECS.without_concurrent
 end

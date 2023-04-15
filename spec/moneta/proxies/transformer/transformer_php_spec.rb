@@ -10,5 +10,5 @@ describe 'transformer_php', proxy: :Transformer do
     ::PHP.unserialize(value)
   end
 
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
 end

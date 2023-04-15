@@ -10,5 +10,5 @@ describe 'transformer_marshal', proxy: :Transformer do
     ::Marshal.load(value)
   end
 
-  moneta_specs TRANSFORMER_SPECS.with_each_key
+  moneta_specs TRANSFORMER_SPECS
 end

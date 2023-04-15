@@ -10,7 +10,7 @@ describe 'transformer_marshal_prefix_base64', proxy: :Transformer do
     ::Marshal.load(value.unpack1('m'))
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 
   context 'sharing the backend with a store without the prefix' do
     let :other_store do

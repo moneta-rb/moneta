@@ -14,5 +14,5 @@ describe 'standard_sequel_with_expires', adapter: :Sequel, postgres: true do
     )
   end
 
-  moneta_specs STANDARD_SPECS.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.with_expires
 end

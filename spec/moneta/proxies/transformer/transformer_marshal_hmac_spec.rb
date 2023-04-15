@@ -17,5 +17,5 @@ describe 'transformer_marshal_hmac', proxy: :Transformer do
     ::Marshal.load(rest)
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 end

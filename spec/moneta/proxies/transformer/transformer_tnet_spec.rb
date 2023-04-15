@@ -10,5 +10,5 @@ describe 'transformer_tnet', proxy: :Transformer do
     ::TNetstring.parse(value).first
   end
 
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
 end

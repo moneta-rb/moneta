@@ -3,5 +3,5 @@ describe 'standard_daybreak', broken: ::Gem::Version.new(RUBY_VERSION) >= ::Gem:
     {file: File.join(tempdir, "simple_daybreak")}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_each_key
+  moneta_specs STANDARD_SPECS.without_multiprocess
 end

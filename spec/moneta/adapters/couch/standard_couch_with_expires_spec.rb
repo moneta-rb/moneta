@@ -15,5 +15,5 @@ describe "standard_couch_with_expires", adapter: :Couch do
     ::Marshal.load(value.unpack1('m'))
   end
 
-  moneta_specs STANDARD_SPECS.without_increment.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.without_increment.with_expires
 end

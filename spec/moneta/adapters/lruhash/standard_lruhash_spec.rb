@@ -1,4 +1,4 @@
 describe 'standard_lruhash', adapter: :LRUHash do
   moneta_store :LRUHash
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 end
