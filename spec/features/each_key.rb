@@ -5,15 +5,15 @@ shared_examples :each_key do
     end
 
     it 'returns collection with the stored key/s' do
-      expect { store.store('1st_key', 'value') }
-        .to change { each_key.call.to_a }
-        .from([])
-        .to(['1st_key'])
+      moneta_property_of(keys: 2).check do |m|
+        store.clear
+        key1, key2 = m.keys
+        store.store(key1, 'value')
+        expect(each_key.call.to_a).to contain_exactly(key1)
 
-      expect { store.store('2nd_key', 'value') }
-        .to change { each_key.call.to_a.sort }
-        .from(['1st_key'])
-        .to(['1st_key', '2nd_key'].sort)
+        store.store(m.keys[1], 'value')
+        expect(each_key.call.to_a).to contain_exactly(key1, key2)
+      end
     end
 
     it 'when a lazy size implementation exist it returns the size of the collection or nil' do
