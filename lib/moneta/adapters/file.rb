@@ -49,6 +49,7 @@ module Moneta
       def store(key, value, options = {})
         temp_file = config.dir.join("value-#{Process.pid}-#{Thread.current.object_id}")
         path = store_path(key)
+        raise "path is a directory" if path.directory?
         path.dirname.mkpath
         temp_file.write(value, mode: 'wb')
         temp_file.rename(path.to_path)
