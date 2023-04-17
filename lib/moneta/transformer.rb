@@ -34,7 +34,10 @@ module Moneta
       if config.key.empty?
         @key_decodable = true
       else
-        @key_transforms = load_transforms(config.key, options.merge(serialize_unless_string: config.serialize_keys_unless_string))
+        @key_transforms = load_transforms(
+          config.key,
+          options.merge(serialize_unless_string: config.serialize_keys_unless_string)
+        )
         @key_decodable = @key_transforms.all?(&:decodable?)
         @key_encoder = make_encoder(@key_transforms)
         if @key_decodable
@@ -44,7 +47,8 @@ module Moneta
 
       unless config.value.empty?
         @value_transforms = load_transforms(config.value, options)
-        raise "Not all value transforms are decodable (#{@value_transforms.reject(&:decodable?)})" unless @value_transforms.all?(&:decodable?)
+        raise "Not all value transforms are decodable (#{@value_transforms.reject(&:decodable?)})" \
+          unless @value_transforms.all?(&:decodable?)
         @value_encoder = make_encoder(@value_transforms)
         @value_decoder = make_decoder(@value_transforms)
       end
@@ -212,9 +216,14 @@ module Moneta
       end
     end
 
-    def load_transforms(names, options)
-      names.map do |transform_name|
-        ::Moneta::Transforms.module_for(transform_name).new(**options)
+    def load_transforms(transforms, options)
+      transforms.map do |transform|
+        case transform
+        when Symbol, String
+          ::Moneta::Transforms.module_for(transform).new(**options)
+        else
+          transform
+        end
       end
     end
 
