@@ -1,14 +1,14 @@
+inherit_gem:
+  syntax_tree: config/rubocop.yml
+
 AllCops:
   TargetRubyVersion: 2.5.0
+  NewCops: enable
   UseCache: true
   Exclude:
     - hbase/**/*
     - script/**/*
     - vendor/**/*
-
-Layout/ArrayAlignment:
-  Exclude:
-    - lib/moneta/transformer/config.rb
 
 Layout/DotPosition:
   EnforcedStyle: leading
@@ -19,24 +19,15 @@ Layout/EmptyLineAfterGuardClause:
 Layout/ExtraSpacing:
   Exclude:
     - lib/moneta.rb
-    - lib/moneta/transformer/config.rb
-
-Layout/HashAlignment:
-  Exclude:
-    - lib/moneta/transformer/config.rb
 
 Layout/LineLength:
-  Max: 160
+  Max: 120
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
-
-Layout/SpaceInsideArrayLiteralBrackets:
-  Exclude:
-    - lib/moneta/transformer/config.rb
 
 Lint/AssignmentInCondition:
   Enabled: false
@@ -138,13 +129,7 @@ Style/HashTransformValues:
 Style/IfUnlessModifier:
   Enabled: false
 
-Style/Lambda:
-  EnforcedStyle: lambda
-
 Style/ModuleFunction:
-  Enabled: false
-
-Style/MultilineIfModifier:
   Enabled: false
 
 Style/MutableConstant:
@@ -179,12 +164,6 @@ Style/RescueModifier:
   Enabled: false
 
 Style/SafeNavigation:
-  Enabled: false
-
-Style/StringLiterals:
-  Enabled: false
-
-Style/SymbolArray:
   Enabled: false
 
 Style/SymbolProc:

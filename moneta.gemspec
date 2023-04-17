@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rantly', '~> 1.2.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-retry', '~> 0.6.1'
-  s.add_development_dependency 'rubocop', '~> 0.81.0'
+  s.add_development_dependency 'rubocop', '~> 1.50.2'
+  s.add_development_dependency 'syntax_tree', '~> 6.0.2'
   s.add_development_dependency 'timecop', '~> 0.9.1'
 end
