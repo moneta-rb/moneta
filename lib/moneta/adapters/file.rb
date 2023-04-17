@@ -1,5 +1,4 @@
-require 'fileutils'
-require 'English'
+require 'pathname'
 
 module Moneta
   module Adapters
@@ -11,82 +10,91 @@ module Moneta
 
       supports :create, :increment, :each_key
 
-      config :dir, required: true
+      config :dir, required: true do |dir:, **_|
+        ::Pathname.new(dir).expand_path
+      end
 
       # @param [Hash] options
       # @option options [String] :dir Directory where files will be stored
       def initialize(options = {})
         configure(**options)
-        FileUtils.mkpath(config.dir)
-        raise "#{config.dir} is not a directory" unless ::File.directory?(config.dir)
+        config.dir.mkpath
+        raise "#{config.dir} is not a directory" unless config.dir.directory?
       end
 
       # (see Proxy#key?)
       def key?(key, options = {})
-        ::File.exist?(store_path(key))
+        store_path(key).file?
       end
 
       # (see Proxy#each_key)
       def each_key(&block)
-        entries = ::Dir.entries(config.dir).reject do |k|
-          ::File.directory?(::File.join(config.dir, k))
+        return enum_for(:each_key) unless block_given?
+
+        config.dir.find do |pathname|
+          yield pathname.relative_path_from(config.dir).to_path unless pathname.directory?
         end
 
-        if block_given?
-          entries.each { |k| yield(k) }
-          self
-        else
-          enum_for(:each_key) { ::Dir.entries(config.dir).length - 2 }
-        end
+        self
       end
 
       # (see Proxy#load)
       def load(key, options = {})
-        ::File.read(store_path(key), mode: 'rb')
+        store_path(key).read(mode: 'rb')
       rescue Errno::ENOENT
         nil
       end
 
       # (see Proxy#store)
       def store(key, value, options = {})
-        temp_file = ::File.join(config.dir, "value-#{$PROCESS_ID}-#{Thread.current.object_id}")
+        temp_file = config.dir.join("value-#{Process.pid}-#{Thread.current.object_id}")
         path = store_path(key)
-        FileUtils.mkpath(::File.dirname(path))
-        ::File.open(temp_file, 'wb') { |f| f.write(value) }
-        ::File.rename(temp_file, path)
+        path.dirname.mkpath
+        temp_file.write(value, mode: 'wb')
+        temp_file.rename(path.to_path)
         value
       rescue
-        File.unlink(temp_file) rescue nil
+        temp_file.unlink rescue nil
         raise
       end
 
       # (see Proxy#delete)
       def delete(key, options = {})
-        value = load(key, options)
-        ::File.unlink(store_path(key))
-        value
+        temp_file = config.dir.join("value-#{Process.pid}-#{Thread.current.object_id}")
+        path = store_path(key)
+        path.rename(temp_file.to_path)
+
+        temp_file.read.tap do
+          temp_file.unlink
+          path.ascend.lazy.drop(1).each do |path|
+            break if (path <=> config.dir) <= 0
+            path.unlink
+          rescue
+            break
+          end
+        end
       rescue Errno::ENOENT
         nil
       end
 
       # (see Proxy#clear)
       def clear(options = {})
-        temp_dir = "#{config.dir}-#{$PROCESS_ID}-#{Thread.current.object_id}"
-        ::File.rename(config.dir, temp_dir)
-        FileUtils.mkpath(config.dir)
+        temp_dir = Pathname.new("#{config.dir}-#{Process.pid}-#{Thread.current.object_id}")
+        config.dir.rename(temp_dir.to_path)
+        config.dir.mkpath
         self
       rescue Errno::ENOENT
         self
       ensure
-        FileUtils.rm_rf(temp_dir)
+        temp_dir.rmtree
       end
 
       # (see Proxy#increment)
       def increment(key, amount = 1, options = {})
         path = store_path(key)
-        FileUtils.mkpath(::File.dirname(path))
-        ::File.open(path, ::File::RDWR | ::File::CREAT) do |f|
-          Thread.pass until f.flock(::File::LOCK_EX)
+        path.dirname.mkpath
+        path.open(::File::RDWR | ::File::CREAT) do |f|
+          Thread.pass until f.flock(::File::LOCK_EX | ::File::LOCK_NB)
           content = f.read
           amount += Integer(content) unless content.empty?
           content = amount.to_s
@@ -98,37 +106,25 @@ module Moneta
         end
       end
 
-      # HACK: The implementation using File::EXCL is not atomic under JRuby 1.7.4
-      # See https://github.com/jruby/jruby/issues/827
-      if defined?(JRUBY_VERSION)
-        # (see Proxy#create)
-        def create(key, value, options = {})
-          path = store_path(key)
-          FileUtils.mkpath(::File.dirname(path))
-          # Call native java.io.File#createNewFile
-          return false unless ::Java::JavaIo::File.new(path).createNewFile
-          ::File.open(path, 'wb+') { |f| f.write(value) }
-          true
+      # (see Proxy#create)
+      def create(key, value, options = {})
+        path = store_path(key)
+        path.dirname.mkpath
+        path.open(::File::WRONLY | ::File::CREAT | ::File::EXCL) do |f|
+          f.binmode
+          f.write(value)
         end
-      else
-        # (see Proxy#create)
-        def create(key, value, options = {})
-          path = store_path(key)
-          FileUtils.mkpath(::File.dirname(path))
-          ::File.open(path, ::File::WRONLY | ::File::CREAT | ::File::EXCL) do |f|
-            f.binmode
-            f.write(value)
-          end
-          true
-        rescue Errno::EEXIST
-          false
-        end
+        true
+      rescue Errno::EEXIST
+        false
       end
 
       protected
 
       def store_path(key)
-        ::File.join(config.dir, key)
+        config.dir.join(key).cleanpath.expand_path.tap do |pathname|
+          raise "not a descendent" unless pathname.ascend.lazy.drop(1).include?(config.dir)
+        end
       end
     end
   end
