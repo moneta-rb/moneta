@@ -10,24 +10,8 @@ AllCops:
     - script/**/*
     - vendor/**/*
 
-Layout/DotPosition:
-  EnforcedStyle: leading
-
-Layout/EmptyLineAfterGuardClause:
-  Enabled: false
-
-Layout/ExtraSpacing:
-  Exclude:
-    - lib/moneta.rb
-
 Layout/LineLength:
   Max: 120
-
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
-
-Layout/MultilineOperationIndentation:
-  EnforcedStyle: indented
 
 Lint/AssignmentInCondition:
   Enabled: false
@@ -66,6 +50,7 @@ Metrics/CyclomaticComplexity:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+    - moneta.gemspec
 
 Metrics/MethodLength:
   Enabled: false
