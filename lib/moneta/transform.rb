@@ -4,8 +4,9 @@ module Moneta
   # Handles encoding/decoding of arbitrary objects into something that can be stored in a backend.  Most transforms
   # encode to string.
   #
-  # @abstract Subclasses should implement {#encode} and {#decode} or use {.delegate_to} to delegate to another object.
-  #   They may also implement {#encoded?} if it is possible to efficiently test the
+  # @abstract Subclasses should implement {#encode} and {#decode} or use {Moneta::Serializer.delegate_to} to delegate to
+  #   another object. They may also implement {#encoded?} if it is possible to efficiently test whether something was
+  #   encoded (e.g. using a magic number).
   class Transform
     autoload :Serializer, "moneta/transform/serializer"
 
@@ -30,8 +31,8 @@ module Moneta
     #     delegate_to ::CGI, %[escapeURIComponent unescapeURIComponent]
     #   end
     #
-    # @param {Module} object The object to delegate to
-    # @param {[Symbol,Symbol]} methods The methods on +object+ to delegate to
+    # @param object [Module] The object to delegate to
+    # @param methods [<Symbol,Symbol>] The methods on +object+ to delegate to
     def self.delegate_to(object, methods = nil)
       extend Forwardable
 
