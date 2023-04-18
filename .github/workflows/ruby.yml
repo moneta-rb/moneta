@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
 
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
         adapter:
           - Client
           - Cookie
@@ -83,7 +83,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: RestClient
@@ -118,7 +118,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['2.7', '2.5', jruby]
+        ruby-version: ['2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: Cassandra
@@ -155,7 +155,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper mysql
@@ -210,7 +210,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper postgresql
@@ -246,7 +246,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper sqlite
@@ -305,7 +305,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['2.7', '2.5', jruby-9.3]
+        ruby-version: ['2.7', '2.6', jruby-9.3]
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/rails5.gemfile
@@ -353,7 +353,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: Redis
@@ -377,7 +377,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: Memcached
@@ -418,7 +418,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: Mongo
@@ -442,7 +442,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.5', jruby]
+        ruby-version: ['3.2', '3.1', '3.0', '2.7', '2.6', jruby]
 
     env:
       BUNDLE_WITH: transformers GDBM Fog
