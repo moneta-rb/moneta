@@ -208,6 +208,6 @@ group :console, optional: true do
   gem "rdoc"
 end
 
-install_if lambda { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.6.0") } do
-  gem "syntax_tree", "~> 6.0.2"
-end
+# We need this installed to use Rubocop, but it's only supported on Ruby 2.7+,
+# and Ruby 2.6 seems to have trouble ignoring it if we use install_if.
+gem "syntax_tree", "~> 6.0.2" if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.7.0")
