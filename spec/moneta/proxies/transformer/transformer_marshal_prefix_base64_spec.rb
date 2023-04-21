@@ -1,7 +1,7 @@
 describe 'transformer_marshal_prefix_base64', proxy: :Transformer do
   moneta_build do
     Moneta.build do
-      use :Transformer, key: [:marshal, :prefix, :base64], value: [:marshal, :base64], prefix: 'moneta'
+      use :Transformer, key: [:marshal, :prefix, :base64], value: [:marshal, :base64], prefix: 'moneta', serialize_keys_unless_string: false
       adapter :Memory
     end
   end
@@ -10,11 +10,11 @@ describe 'transformer_marshal_prefix_base64', proxy: :Transformer do
     ::Marshal.load(value.unpack1('m'))
   end
 
-  moneta_specs STANDARD_SPECS.without_persist
+  moneta_specs STANDARD_SPECS.without_persist.with_each_key
 
   context 'sharing the backend with a store without the prefix' do
     let :other_store do
-      ::Moneta::Adapters::Memory.new(backend: store.adapter.backend)
+      ::Moneta::Adapters::Memory.new(backend: store.adapter.backend, serialize_keys_unless_string: false)
     end
 
     it "doesn't include unprefixed keys in calls to #each_key" do
@@ -30,7 +30,7 @@ describe 'transformer_marshal_prefix_base64', proxy: :Transformer do
     let :other_store do
       backend = self.backend
       Moneta.build do
-        use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'alternative'
+        use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'alternative', serialize_keys_unless_string: false
         adapter :Memory, backend: backend
       end
     end

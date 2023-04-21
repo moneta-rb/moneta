@@ -1,12 +1,12 @@
 describe 'transformer_marshal_prefix', proxy: :Transformer do
   moneta_build do
     Moneta.build do
-      use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'moneta'
+      use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'moneta', serialize_keys_unless_string: false
       adapter :Memory
     end
   end
 
-  moneta_specs STANDARD_SPECS.without_persist
+  moneta_specs STANDARD_SPECS.without_persist.with_each_key
 
   context 'sharing the backend with a store without the prefix' do
     let :other_store do
@@ -26,7 +26,7 @@ describe 'transformer_marshal_prefix', proxy: :Transformer do
     let :other_store do
       backend = self.backend
       Moneta.build do
-        use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'alternative'
+        use :Transformer, key: [:marshal, :prefix], value: :marshal, prefix: 'alternative', serialize_keys_unless_string: false
         adapter :Memory, backend: backend
       end
     end
