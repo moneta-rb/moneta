@@ -14,7 +14,7 @@ describe 'transformer_marshal_prefix_base64', proxy: :Transformer do
 
   context 'sharing the backend with a store without the prefix' do
     let :other_store do
-      ::Moneta::Adapters::Memory.new(backend: store.adapter.backend)
+      ::Moneta::Adapters::Memory.new(backend: store.adapter.backend, serialize_keys_unless_string: false)
     end
 
     it "doesn't include unprefixed keys in calls to #each_key" do
