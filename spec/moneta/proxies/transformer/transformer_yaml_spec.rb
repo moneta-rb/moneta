@@ -10,5 +10,5 @@ describe 'transformer_yaml', proxy: :Transformer, broken: ::Gem::Version.new(RUB
     ::YAML.load(value)
   end
 
-  moneta_specs TRANSFORMER_SPECS.with_each_key
+  moneta_specs TRANSFORMER_SPECS
 end
