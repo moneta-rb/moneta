@@ -16,5 +16,5 @@ describe 'transformer_bson', proxy: :Transformer, broken: defined?(JRUBY_VERSION
     end
   end
 
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
 end
