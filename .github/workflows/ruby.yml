@@ -45,7 +45,7 @@ jobs:
       BUNDLE_WITH: ${{ matrix.adapter }} snappy
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Apt update
       run: sudo apt-get update
@@ -89,7 +89,7 @@ jobs:
       BUNDLE_WITH: RestClient
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -124,7 +124,7 @@ jobs:
       BUNDLE_WITH: Cassandra
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -163,7 +163,7 @@ jobs:
       MONETA_MYSQL_PASSWORD: moneta
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Apt update
       run: sudo apt-get update
@@ -219,7 +219,7 @@ jobs:
       PGPASSWORD: moneta
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Create Database moneta1
       run: createdb moneta1
@@ -252,7 +252,7 @@ jobs:
       BUNDLE_WITH: ActiveRecord Sequel DataMapper sqlite
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -276,7 +276,7 @@ jobs:
       BUNDLE_WITH: Sequel H2
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -312,7 +312,7 @@ jobs:
       BUNDLE_WITH: sqlite active_support_cache
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Apt update
       run: sudo apt-get update
@@ -359,7 +359,7 @@ jobs:
       BUNDLE_WITH: Redis
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -383,7 +383,7 @@ jobs:
       BUNDLE_WITH: Memcached
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Apt update
       run: sudo apt-get update
@@ -424,7 +424,7 @@ jobs:
       BUNDLE_WITH: Mongo
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
@@ -448,7 +448,7 @@ jobs:
       BUNDLE_WITH: transformers GDBM Fog
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Apt update
       run: sudo apt-get update
@@ -474,7 +474,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
