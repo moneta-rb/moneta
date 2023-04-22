@@ -3,7 +3,7 @@ require "bson"
 module Moneta
   module Transforms
     # Serializes objects to binary strings using the {https://rubygems.org/gems/bson bson gem}
-    class BSON < Transforms::Serializer
+    class BSON < Transform::Serializer
       # Serialize to BSON
       #
       # @param value [Object]
