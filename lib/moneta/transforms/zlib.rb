@@ -1,7 +1,8 @@
-require 'zlib'
+require "zlib"
 
 module Moneta
   module Transforms
+    # Compresses strings using zlib/gzip.
     class Zlib < Transform
       def encode(value)
         ::Zlib::Deflate.deflate(value)

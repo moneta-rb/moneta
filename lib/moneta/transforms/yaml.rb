@@ -1,7 +1,8 @@
-require 'yaml'
+require "yaml"
 
 module Moneta
   module Transforms
+    # Serializes objects to text as YAML
     class YAML < Transform::Serializer
       def initialize(safe: false, **options)
         super

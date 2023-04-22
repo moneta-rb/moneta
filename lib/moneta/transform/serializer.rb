@@ -39,6 +39,17 @@ module Moneta
       #
       # @param object [Module] The object to delegate to
       # @param methods [<Symbol,Symbol>] The methods on +object+ to delegate to
+      #
+      # @!macro [attach] transform_serializer_delegate_to
+      #   @!method serialize(value)
+      #     Delegates to $1
+      #     @param value [Object]
+      #     @return [Object]
+      #
+      #   @!method deserialize(value)
+      #     Delegates to $1
+      #     @param value [Object]
+      #     @return [Object]
       def self.delegate_to(object, methods = nil)
         extend Forwardable
 
@@ -74,7 +85,7 @@ module Moneta
       # string.
       #
       # @param value [Object] object to encode
-      # @return [String] The serialized string
+      # @return [Object] The serialized object (usually string)
       def encode(value)
         if @serialize_unless_string && String === value
           value
@@ -85,7 +96,7 @@ module Moneta
 
       # Calls {#deserialize} if implemented and if +serialize_unless_string+ was disabled
       #
-      # @param value [String] object to decode
+      # @param value [Object] object to decode
       # @return [Object] the decoded object
       # @raise [NotImplementedError] if this serializer cannot do deserialization
       def decode(value)
@@ -99,6 +110,20 @@ module Moneta
       def decodable?
         !@serialize_unless_string && respond_to?(:deserialize)
       end
+
+      # @!method serialize(value)
+      #   This method will be called by {#encode} except when the value being encoded is a string, and the object is in
+      #   +serialize_unless_string+ mode.
+      #   @abstract All Subclasses should implement this method
+      #   @param value [Object] the thing to encode
+      #   @return [Object]
+      #
+      # @!method decode(value)
+      #   This method will be called by {#decode} except when in +serialize_unless_string+ mode (in which case
+      #   deserialization is disabled).
+      #   @abstract Subclasses where it is possible to deserialize again should implement this method
+      #   @param value [Object] the thing to decode
+      #   @return [Object]
     end
   end
 end

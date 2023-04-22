@@ -1,4 +1,4 @@
-require 'digest/sha2'
+require "digest/sha2"
 
 module Moneta
   module Transforms

@@ -1,4 +1,4 @@
-require 'snappy'
+require "snappy"
 
 module Moneta
   module Transforms

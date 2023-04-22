@@ -2,6 +2,7 @@ require 'base64'
 
 module Moneta
   module Transforms
+    # Encodes text as Base64 using the stdlib +base64+ library
     class Base64 < Transform
       def initialize(url_safe: false, strict: false, **options)
         super

@@ -1,4 +1,4 @@
-require 'tnetstring'
+require "tnetstring"
 
 module Moneta
   module Transforms
