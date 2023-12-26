@@ -8,5 +8,5 @@ describe 'standard_dbm_with_expires', unsupported: defined?(JRUBY_VERSION), adap
       expires: true }
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires
 end

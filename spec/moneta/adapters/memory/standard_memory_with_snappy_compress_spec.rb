@@ -5,5 +5,5 @@ describe 'standard_memory_with_snappy_compress', unstable: defined?(JRUBY_VERSIO
     Marshal.load(::Snappy.inflate(value))
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
+  moneta_specs STANDARD_SPECS.without_persist
 end

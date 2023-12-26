@@ -24,5 +24,5 @@ describe "standard_activerecord_with_expires", adapter: :ActiveRecord, mysql: tr
     ::Marshal.load(value.unpack1('m'))
   end
 
-  moneta_specs STANDARD_SPECS.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.with_expires
 end

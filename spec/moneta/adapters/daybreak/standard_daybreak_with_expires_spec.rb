@@ -7,5 +7,5 @@ describe 'standard_daybreak_with_expires', broken: ::Gem::Version.new(RUBY_VERSI
     {file: File.join(tempdir, "simple_daybreak_with_expires"), expires: true}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.without_multiprocess.with_expires
 end

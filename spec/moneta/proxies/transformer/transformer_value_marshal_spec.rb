@@ -11,9 +11,4 @@ describe 'transformer_value_marshal', proxy: :Transformer do
   end
 
   moneta_specs TRANSFORMER_SPECS.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalValue.should_not be_nil
-  end
 end

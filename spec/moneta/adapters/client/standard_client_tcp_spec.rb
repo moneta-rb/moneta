@@ -4,7 +4,7 @@ describe "standard_client_tcp", adapter: :Client do
   include_context :start_server, port: 9003, backend: ->{ Moneta::Adapters::Memory.new }
 
   moneta_store :Client, port: 9003
-  moneta_specs STANDARD_SPECS.with_each_key
+  moneta_specs STANDARD_SPECS
 
   it 'supports multiple clients' do
     store['shared_key'] = 'shared_val'

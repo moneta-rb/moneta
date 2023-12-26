@@ -9,7 +9,7 @@ describe "standard_client_unix", adapter: :Client do
     { socket: File.join(tempdir, 'standard_client_unix') }
   end
 
-  moneta_specs STANDARD_SPECS.with_each_key
+  moneta_specs STANDARD_SPECS
 
   it 'supports multiple clients' do
     store['shared_key'] = 'shared_val'

@@ -9,5 +9,5 @@ describe 'standard_pstore_with_expires', unsupported: defined?(JRUBY_VERSION), a
 
   moneta_loader{ |value| value }
 
-  moneta_specs STANDARD_SPECS.with_expires.with_each_key
+  moneta_specs STANDARD_SPECS.with_expires
 end

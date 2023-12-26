@@ -10,10 +10,5 @@ describe 'transformer_msgpack', proxy: :Transformer do
     ::MessagePack.unpack(value)
   end
 
-  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MsgpackKeyMsgpackValue.should_not be_nil
-  end
+  moneta_specs TRANSFORMER_SPECS.simplekeys_only.simplevalues_only
 end

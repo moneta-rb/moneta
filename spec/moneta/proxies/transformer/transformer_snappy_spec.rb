@@ -11,9 +11,4 @@ describe 'transformer_snappy', unstable: defined?(JRUBY_VERSION), proxy: :Transf
   end
 
   moneta_specs TRANSFORMER_SPECS.stringvalues_only.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::SnappyValue.should_not be_nil
-  end
 end

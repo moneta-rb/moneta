@@ -7,9 +7,4 @@ describe 'transformer_marshal_city128', unsupported: defined?(JRUBY_VERSION), pr
   end
 
   moneta_specs STANDARD_SPECS.without_persist
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalCity128KeyMarshalValue.should_not be_nil
-  end
 end

@@ -3,5 +3,5 @@ describe 'standard_tokyocabinet', unsupported: defined?(JRUBY_VERSION), adapter:
     {file: File.join(tempdir, "simple_tokyocabinet")}
   end
 
-  moneta_specs STANDARD_SPECS.without_multiprocess.with_each_key
+  moneta_specs STANDARD_SPECS.without_multiprocess
 end

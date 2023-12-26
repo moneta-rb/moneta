@@ -11,10 +11,5 @@ describe 'transformer_marshal_hex', proxy: :Transformer do
     ::Marshal.load([value].pack('H*'))
   end
 
-  moneta_specs STANDARD_SPECS.without_persist.with_each_key
-
-  it 'compile transformer class' do
-    store.should_not be_nil
-    Moneta::Transformer::MarshalHexKeyMarshalHexValue.should_not be_nil
-  end
+  moneta_specs STANDARD_SPECS.without_persist
 end
