@@ -64,7 +64,7 @@ group :Daybreak, optional: true do
 end
 
 group :ActiveRecord, optional: true do
-  gem 'activerecord', '~> 6.1'
+  gem 'activerecord', '~> 7.0'
 end
 
 group :Redis, optional: true do
@@ -170,7 +170,7 @@ end
 
 group :sqlite, optional: true do
   gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
-  gem 'sqlite3', '~> 1.5.3', platforms: :ruby
+  gem 'sqlite3', '~> 1.6.1', platforms: :ruby
 end
 
 group :postgresql, optional: true do
@@ -192,7 +192,7 @@ end
 
 # Rails integration testing
 group :rails do
-  gem 'actionpack', '~> 6.1'
+  gem 'actionpack', '~> 7.0'
   gem 'minitest', '~> 5.0'
 end
 
